@@ -16,11 +16,11 @@ import Loading from '../../../../../components/page/Loading';
 import SelectComponent from '../../../../../components/SelectPlan/';
 import { SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
 import {
+  AN_ERROR_OCCURRED,
   FOCUS_INVESTIGATION,
   FOCUS_INVESTIGATIONS,
   HOME,
   INVESTIGATION,
-  JURISDICTION_LOADING_ERROR,
   MEASURE,
   NUMERATOR_OF_DENOMINATOR_UNITS,
   PLAN_SELECT_PLACEHOLDER,
@@ -65,6 +65,7 @@ import jurisdictionReducer, {
 } from '../../../../../store/ducks/jurisdictions';
 import plansReducer, {
   fetchPlans,
+  FetchPlansAction,
   getPlanById,
   getPlansArray,
   getPlansIdArray,
@@ -87,7 +88,12 @@ import tasksReducer, {
 } from '../../../../../store/ducks/tasks';
 import MarkCompleteLink, { MarkCompleteLinkProps } from './helpers/MarkCompleteLink';
 import StatusBadge, { StatusBadgeProps } from './helpers/StatusBadge';
-import { buildHandlers, fetchData, getDetailViewPlanInvestigationContainer } from './helpers/utils';
+import {
+  buildHandlers,
+  fetchData,
+  getDetailViewPlanInvestigationContainer,
+  supersetCall,
+} from './helpers/utils';
 import './style.css';
 
 /** register reducers */
@@ -152,15 +158,12 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
       const supersetParams = superset.getFormData(2000, [
         { comparator: InterventionType.FI, operator: '==', subject: PLAN_INTERVENTION_TYPE },
       ]);
-      supersetService(SUPERSET_PLANS_SLICE, supersetParams)
-        .then((result: Plan[]) => {
-          if (result) {
-            fetchPlansActionCreator(result);
-          } else {
-            displayError(new Error(JURISDICTION_LOADING_ERROR));
-          }
-        })
-        .catch((error: Error) => displayError(error));
+      supersetCall<FetchPlansAction>(
+        SUPERSET_PLANS_SLICE,
+        fetchPlansActionCreator,
+        supersetService,
+        supersetParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
     }
     /**
      * We do not need to re-run since this effect doesn't depend on any values from props or state
