@@ -3,9 +3,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import Select from 'react-select';
 import {
-  Alert,
   Col,
   FormGroup,
   FormText,
@@ -24,7 +22,6 @@ import HeaderBreadcrumb, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
   ADD_NEW_CSV,
-  EXPORT_STUDENT_LIST,
   HOME,
   STUDENTS_TITLE,
   UPLOADED_STUDENT_LISTS,
@@ -36,6 +33,7 @@ import filesReducer, {
   reducerName as filesReducerName,
 } from '../../../../store/ducks/opensrp/files/index';
 import { uploadedStudentsLists } from '../dummy-data/dummy';
+import { StudentExportForm } from '../StudentExportForm';
 /** register the plans reducer */
 reducerRegistry.register(filesReducerName, filesReducer);
 /** interface to describe props for StudentListView component */
@@ -62,40 +60,27 @@ export const StudentListView = (props: any) => {
      * We do not need to re-run since this effect doesn't depend on any values from api yet
      */
   }, []);
-  // const apimockData: File[] = [...uploadedStudentsLists];
-  const selectProps: any = {
-    noOptionsMessage: 'No options',
-    // onChange: this.change,
-    options: [
-      { value: 'chocolate', label: 'Chocolate' },
-      { value: 'strawberry', label: 'Strawberry' },
-      { value: 'vanilla', label: 'Vanilla' },
-    ],
-    placeholder: 'Select',
-  };
   /** Overide renderRows to render html inside td */
   let listViewProps;
   if (props.files.length) {
     const rowData = [...props.files];
-    const rows = rowData.map((items: any, itemKey: any) => {
+    const rows = rowData.map((items: any, itemsKey: any) => {
       return (
-        <tr key={itemKey}>
-          {Object.keys(items).map((item: any) => {
+        <tr key={itemsKey}>
+          {Object.keys(items).map((item: any, itemKey) => {
             const value = items[item];
             if (value && isNaN(value) && value.includes('.csv')) {
               return (
-                <td>
+                <td key={itemKey}>
                   {value}
                   &nbsp;
                   <a href={items.url} download={true}>
                     (Downloads)
                   </a>
-                  {/* {delete items.url}
-                  {delete items.identifier} */}
                 </td>
               );
             } else if (value && item !== 'url' && item !== 'identifier') {
-              return <td>{value}</td>;
+              return <td key={itemKey}>{value}</td>;
             } else {
               return null;
             }
@@ -161,12 +146,6 @@ export const StudentListView = (props: any) => {
     text: ADD_NEW_CSV,
     to: UPLOAD_STUDENT_CSV_URL,
   };
-  const downloadStudentList = {
-    classNameProp: 'btn btn-primary float-left mt-5',
-    text: 'Download',
-    to: '/student/download',
-  };
-
   return (
     <div>
       <Helmet>
@@ -185,20 +164,7 @@ export const StudentListView = (props: any) => {
         <Col>{listViewProps ? <ListView {...listViewProps} /> : null} </Col>
       </Row>
       <hr />
-      <Row id="export-row">
-        <Col>
-          <h3 className="mb-3 mt-5 page-title">{EXPORT_STUDENT_LIST}</h3>
-          {/* Download Form goes here */}
-          <Alert color="light">Export Country based on Geographical level!</Alert>
-          <span>Geographical level to include</span> &nbsp;
-          <div style={{ display: 'inline-block', width: '24rem' }}>
-            <Select {...selectProps} />
-          </div>
-          <Col className="xs">
-            <LinkAsButton {...downloadStudentList} />
-          </Col>
-        </Col>
-      </Row>
+      <StudentExportForm />
     </div>
   );
 };
