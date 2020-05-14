@@ -505,8 +505,6 @@ class IrsPlan extends React.Component<
       return <Loading />;
     }
 
-    const hideMap = HIDE_MAP_FOR_INTERVENTIONS.includes(newPlan.plan_intervention_type);
-
     const pageLabel =
       (isFinalizedPlan && planById && planById.plan_title) ||
       (isDraftPlan && planById && format(DRAFT_PLAN_TITLE, planById.plan_title)) ||
@@ -593,7 +591,7 @@ class IrsPlan extends React.Component<
         <HeaderBreadcrumbs {...breadCrumbProps} />
         {planHeaderRow}
 
-        {gisidaWrapperProps && !hideMap ? (
+        {gisidaWrapperProps ? (
           <Row>
             <Col>
               <div className="map irs-plan-map">
@@ -1257,6 +1255,12 @@ class IrsPlan extends React.Component<
    */
   private getGisidaWrapperProps(): GisidaProps | null {
     const { country, isLoadingGeoms, filteredJurisdictionIds, newPlan } = this.state;
+
+    // don't compute gisidaWrapperProps if map will not be displayed
+    if (newPlan && HIDE_MAP_FOR_INTERVENTIONS.includes(newPlan.plan_intervention_type)) {
+      return null;
+    }
+
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
 
@@ -1953,9 +1957,9 @@ class IrsPlan extends React.Component<
           {
             Header: '',
             accessor: (j: JurisdictionRow) => {
-              if (!j.isChildless) {
-                return <span />;
-              }
+              // if (!j.isChildless) {
+              //   return <span />;
+              // }
               const cellProps = {
                 jurisdictionId: j.jurisdiction_id,
                 planId: j.planId,
