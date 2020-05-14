@@ -1832,17 +1832,23 @@ class IrsPlan extends React.Component<
     }
   }
 
-  private getParentAssignedTeam(
+  private getParentAssignedTeamsIds(
     parentId: string,
-    assignmentArr: Assignment[],
-    results: string[] = []
+    assignmentArr: Jurisdiction[],
+    ids: string[] = []
   ) {
-    const parentAssignmentsArray = assignmentArr.filter(
-      (a: Assignment) => a.jurisdiction === parentId
+    if (!ids.length) {
+      ids.push(parentId);
+    }
+    const parentAssignmentsArray = assignmentArr.find(
+      (a: Jurisdiction) => a.jurisdiction_id === parentId
     );
-    let assignedTeams = parentAssignmentsArray.map((a: Assignment) => a.organization);
-    assignedTeams = [...assignedTeams, ...results];
-    return assignedTeams;
+    const newParentId = parentAssignmentsArray && parentAssignmentsArray.parent_id;
+    if (newParentId) {
+      ids.push(newParentId);
+      this.getParentAssignedTeamsIds(newParentId, assignmentArr, ids);
+    }
+    return ids;
   }
 
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
@@ -1976,8 +1982,13 @@ class IrsPlan extends React.Component<
               // if (!j.isChildless) {
               //   return <span />;
               // }
+              const parentAssignedTeamIds = j.parent_id
+                ? this.getParentAssignedTeamsIds(j.parent_id, filteredJurisdictions)
+                : [];
+
               const cellProps = {
                 jurisdictionId: j.jurisdiction_id,
+                parentIds: parentAssignedTeamIds,
                 planId: j.planId,
               } as AssignTeamCellProps;
               return <AssignTeamTableCell {...cellProps} />;
@@ -1997,14 +2008,18 @@ class IrsPlan extends React.Component<
     }
 
     const data: JurisdictionRow[] = filteredJurisdictions.map((j: Jurisdiction) => {
-      let assignedTeams = assignmentsArray
-        .filter((a: Assignment) => a.jurisdiction === j.jurisdiction_id)
-        .map((a: Assignment) => a.organization);
       const parentId = j.parent_id;
+      let assignedTeamsIds: string[] = [j.jurisdiction_id];
       if (parentId) {
-        const parentAssignedTeamIds = this.getParentAssignedTeam(parentId, assignmentsArray);
-        assignedTeams = [...assignedTeams, ...parentAssignedTeamIds];
+        const parentAssignedTeamIds = this.getParentAssignedTeamsIds(
+          parentId,
+          filteredJurisdictions
+        );
+        assignedTeamsIds = [j.jurisdiction_id, ...parentAssignedTeamIds];
       }
+      const assignedTeams = assignmentsArray
+        .filter((a: Assignment) => assignedTeamsIds.includes(a.jurisdiction))
+        .map((a: Assignment) => a.organization);
       return {
         ...j,
         assignedTeams,

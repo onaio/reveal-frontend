@@ -36,6 +36,7 @@ export interface AssignTeamCellProps {
   jurisdictionId: string;
   organizationsById: { [key: string]: Organization } | null;
   planId: string;
+  parentIds?: string[];
 }
 
 /** Component that will be rendered in IRS planning table cells
@@ -51,6 +52,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     jurisdictionId,
     organizationsById,
     planId,
+    parentIds,
   } = props;
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -92,6 +94,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     onSaveAssignmentsButtonClick,
     onToggle: () => setIsActive(!isActive),
     organizationsById,
+    parentIds,
     planId,
     target: getButtonId(jurisdictionId),
   };

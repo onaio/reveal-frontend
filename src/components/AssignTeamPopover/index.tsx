@@ -16,6 +16,7 @@ export interface AssignTeamPopoverProps {
   organizationsById: { [key: string]: Organization } | null; // all the organizations
   planId: string; // the id of the current Plan
   target: string; // the id of the adjacent button which toggles the popup
+  parentIds?: string[];
 }
 
 /** default Component for AssignTeamPopover */
@@ -30,12 +31,14 @@ const AssignTeamPopover = (props: AssignTeamPopoverProps) => {
     organizationsById,
     planId,
     target,
+    parentIds,
   } = props;
 
   // define props for the child Organization Select component
   const organizationSelectProps = {
     jurisdictionId,
     name: formName,
+    parentIds,
     planId,
   };
 

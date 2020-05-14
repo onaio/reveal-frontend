@@ -44,6 +44,7 @@ export interface OrganizationSelectProps {
   resetPlanAssignmentsAction: typeof resetPlanAssignments;
   serviceClass: typeof OpenSRPService /** the OpenSRP service */;
   value: SelectOption[];
+  parentIds?: string[];
 }
 
 /** default props for OrganizationSelect */
@@ -144,17 +145,27 @@ const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProp
   const organizationsById = getOrganizationsById(state);
   const assignments = getAssignmentsArrayByPlanId(state, ownProps.planId);
   const organizations = getOrganizationsArray(state);
-  const selectOptions = assignments
-    .filter((a: Assignment) => a.jurisdiction === ownProps.jurisdictionId)
-    .map(
-      (a: Assignment) =>
-        ({
-          label:
-            (organizationsById[a.organization] && organizationsById[a.organization].name) ||
-            a.organization,
-          value: a.organization,
-        } as SelectOption)
-    );
+  let idsToCheckAssignments = [ownProps.jurisdictionId];
+  if (ownProps.parentIds && ownProps.parentIds.length) {
+    idsToCheckAssignments = [ownProps.jurisdictionId, ...ownProps.parentIds];
+  }
+  const uniqueOptionsIds: string[] = [];
+  const selectOptions: SelectOption[] = [];
+  assignments.forEach((a: Assignment) => {
+    if (
+      idsToCheckAssignments.includes(a.jurisdiction) &&
+      !uniqueOptionsIds.includes(a.organization)
+    ) {
+      uniqueOptionsIds.push(a.organization);
+      selectOptions.push({
+        label:
+          (organizationsById[a.organization] && organizationsById[a.organization].name) ||
+          a.organization,
+        value: a.organization,
+      } as SelectOption);
+    }
+  });
+
   return {
     ...ownProps,
     assignments,
