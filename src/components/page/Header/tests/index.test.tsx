@@ -7,6 +7,8 @@ import HeaderComponentWithRouter from '..';
 
 const history = createBrowserHistory();
 
+jest.mock('../../../../configs/env');
+
 describe('components/page/Header', () => {
   beforeEach(() => {
     jest.resetAllMocks();

@@ -52,6 +52,26 @@ export type SUPERSET_GOALS_SLICE = typeof SUPERSET_GOALS_SLICE;
 export const SUPERSET_TASKS_SLICE = 4;
 export type SUPERSET_TASKS_SLICE = typeof SUPERSET_TASKS_SLICE;
 
+/** Do you want to enable team assignment? */
+export const ENABLE_ASSIGN = true;
+
+/** Do you want to enable the IRS features? */
+export const ENABLE_IRS = true;
+
+/** Do you want to enable the Focus Investigation features? */
+export const ENABLE_FI = true;
+
+export const ENABLE_PRACTITIONERS = true;
+
+/** Do you want to enable the users page? */
+export const ENABLE_USERS = true;
+
+/** Do you want to enable the about page? */
+export const ENABLE_ABOUT = true;
+
+/** Do you want to enable views dealing with teams */
+export const ENABLE_TEAMS = true;
+
 export const SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES = '11,12';
 export type SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES = typeof SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES;
 export const SUPERSET_IRS_REPORTING_PLANS_SLICE = '13';
@@ -117,10 +137,10 @@ export const SUPERSET_MDA_POINT_REPORTING_FOCUS_AREAS_COLUMNS = '0';
 export type SUPERSET_MDA_POINT_REPORTING_FOCUS_AREAS_COLUMNS = typeof SUPERSET_MDA_POINT_REPORTING_FOCUS_AREAS_COLUMNS;
 export const REACT_APP_VERSION = 'v0.4.2';
 
-export const REACT_APP_NAME = 'Reveal-frontend';
-
 export const ENABLED_PLAN_TYPES = ['FI', 'IRS', 'MDA', 'MDA-Point'];
 export type ENABLED_PLAN_TYPES = typeof ENABLED_PLAN_TYPES;
 
 export const ENABLED_FI_REASONS = ['Case Triggered', 'Routine'];
 export type ENABLED_FI_REASONS = typeof ENABLED_FI_REASONS;
+
+export const WEBSITE_NAME = 'Reveal';
