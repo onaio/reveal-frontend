@@ -97,3 +97,7 @@ export const EXPRESS_OAUTH_GET_STATE_URL = 'http://localhost:3000/oauth/state';
 export const EXPRESS_OAUTH_LOGOUT_URL = 'http://localhost:3000/logout';
 
 export const BACKEND_ACTIVE = true;
+
+export const REACT_APP_VERSION = process.env.REACT_APP_VERSION;
+
+export const REACT_APP_NAME = process.env.REACT_APP_NAME;
