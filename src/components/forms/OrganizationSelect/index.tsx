@@ -156,23 +156,21 @@ const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProp
     ownProps.parentIds && ownProps.parentIds.length
       ? [ownProps.jurisdictionId, ...ownProps.parentIds]
       : [ownProps.jurisdictionId];
-  const parentAssignments: string[] = [];
+  // const parentAssignments: string[] = [];
   const uniqueOptionsIds: string[] = [];
   const selectOptions: SelectOption[] = [];
   assignments.forEach((a: Assignment) => {
-    if (idsToCheckAssignments.includes(a.jurisdiction)) {
-      if (a.jurisdiction !== ownProps.jurisdictionId) {
-        parentAssignments.push(a.organization);
-      }
-      if (!uniqueOptionsIds.includes(a.organization)) {
-        uniqueOptionsIds.push(a.organization);
-        selectOptions.push({
-          label:
-            (organizationsById[a.organization] && organizationsById[a.organization].name) ||
-            a.organization,
-          value: a.organization,
-        } as SelectOption);
-      }
+    if (
+      idsToCheckAssignments.includes(a.jurisdiction) &&
+      !uniqueOptionsIds.includes(a.organization)
+    ) {
+      uniqueOptionsIds.push(a.organization);
+      selectOptions.push({
+        label:
+          (organizationsById[a.organization] && organizationsById[a.organization].name) ||
+          a.organization,
+        value: a.organization,
+      } as SelectOption);
     }
   });
 
@@ -180,7 +178,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProp
     ...ownProps,
     assignments,
     organizations,
-    parentAssignments,
     value: selectOptions,
   };
 };

@@ -58,7 +58,7 @@ Object {
   "jurisdictionId": "outpost-number-one",
   "name": "plan-assignment-form-outpost-number-one",
   "organizations": Array [],
-  "parentAssignments": Array [],
+  "parentAssignments": undefined,
   "parentIds": undefined,
   "planId": "alpha",
   "resetPlanAssignmentsAction": [Function],

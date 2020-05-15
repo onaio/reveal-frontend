@@ -17,6 +17,7 @@ export interface AssignTeamPopoverProps {
   planId: string; // the id of the current Plan
   target: string; // the id of the adjacent button which toggles the popup
   parentIds?: string[];
+  parentAssignments?: string[];
 }
 
 /** default Component for AssignTeamPopover */
@@ -32,12 +33,14 @@ const AssignTeamPopover = (props: AssignTeamPopoverProps) => {
     planId,
     target,
     parentIds,
+    parentAssignments,
   } = props;
 
   // define props for the child Organization Select component
   const organizationSelectProps = {
     jurisdictionId,
     name: formName,
+    parentAssignments,
     parentIds,
     planId,
   };
@@ -50,6 +53,9 @@ const AssignTeamPopover = (props: AssignTeamPopoverProps) => {
     toggle: () => onToggle(),
   };
 
+  // hide clear all button if we have parent assignments
+  const hasParentAssignments = parentAssignments ? parentAssignments.length > 0 : false;
+
   return (
     <Popover {...popoverProps} style={{ minWidth: '16rem' }}>
       <PopoverHeader>{SELECT_TEAMS_TO_ASSIGN}</PopoverHeader>
@@ -60,14 +66,16 @@ const AssignTeamPopover = (props: AssignTeamPopoverProps) => {
               <OrganizationSelect {...organizationSelectProps} />
             </FormGroup>
             <FormGroup>
-              <Button
-                color="default"
-                onClick={onClearAssignmentsButtonClick}
-                size="xs"
-                outline={true}
-              >
-                {CLEAR}
-              </Button>
+              {!hasParentAssignments && (
+                <Button
+                  color="default"
+                  onClick={onClearAssignmentsButtonClick}
+                  size="xs"
+                  outline={true}
+                >
+                  {CLEAR}
+                </Button>
+              )}
               <Button color="primary" onClick={onSaveAssignmentsButtonClick} size="xs">
                 {SAVE}
               </Button>

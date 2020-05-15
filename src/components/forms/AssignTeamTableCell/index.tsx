@@ -37,6 +37,7 @@ export interface AssignTeamCellProps {
   organizationsById: { [key: string]: Organization } | null;
   planId: string;
   parentIds?: string[];
+  parentAssignments?: string[];
 }
 
 /** Component that will be rendered in IRS planning table cells
@@ -53,6 +54,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     organizationsById,
     planId,
     parentIds,
+    parentAssignments,
   } = props;
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -94,6 +96,7 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     onSaveAssignmentsButtonClick,
     onToggle: () => setIsActive(!isActive),
     organizationsById,
+    parentAssignments,
     parentIds,
     planId,
     target: getButtonId(jurisdictionId),
@@ -135,15 +138,18 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): AssignTeamCellPr
     ownProps.parentIds && ownProps.parentIds.length
       ? [ownProps.jurisdictionId, ...ownProps.parentIds]
       : [ownProps.jurisdictionId];
+  const parentAssignments: string[] = [];
   const uniqueOptionsIds: string[] = [];
   const assignments: Assignment[] = [];
   assignmentsArray.forEach((a: Assignment) => {
-    if (
-      idsToCheckAssignments.includes(a.jurisdiction) &&
-      !uniqueOptionsIds.includes(a.organization)
-    ) {
-      uniqueOptionsIds.push(a.organization);
-      assignments.push(a);
+    if (idsToCheckAssignments.includes(a.jurisdiction)) {
+      if (a.jurisdiction !== ownProps.jurisdictionId) {
+        parentAssignments.push(a.organization);
+      }
+      if (!uniqueOptionsIds.includes(a.organization)) {
+        uniqueOptionsIds.push(a.organization);
+        assignments.push(a);
+      }
     }
   });
 
@@ -152,6 +158,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): AssignTeamCellPr
     assignments,
     assignmentsArray,
     organizationsById,
+    parentAssignments,
   } as AssignTeamCellProps;
 };
 
