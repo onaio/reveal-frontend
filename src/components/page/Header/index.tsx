@@ -15,6 +15,7 @@ import {
   UncontrolledDropdown,
 } from 'reactstrap';
 import logo from '../../../assets/images/logo.png';
+import thaiLogo from '../../../assets/images/thai-logo.png';
 import {
   BACKEND_ACTIVE,
   CLIENT_LABEL,
@@ -26,6 +27,7 @@ import {
   ENABLE_PRACTITIONERS,
   ENABLE_TEAMS,
   ENABLE_USERS,
+  REACT_APP_PRODUCTION_INST,
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
@@ -107,6 +109,11 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
       <div>
         <Navbar light={true} expand="md">
           <nav className="navbar navbar-expand-md navbar-light header-logo-navbar">
+            {REACT_APP_PRODUCTION_INST === TH_PRODUCTION_INST && (
+              <Link to="/" className="navbar-brand">
+                <img src={thaiLogo} alt={WEBSITE_NAME} style={{ transform: 'scale(1.8)' }} />
+              </Link>
+            )}
             <Link to="/" className="navbar-brand">
               <img src={logo} alt={WEBSITE_NAME} />
             </Link>

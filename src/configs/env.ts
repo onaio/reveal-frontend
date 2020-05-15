@@ -299,3 +299,6 @@ export type ENABLED_PLAN_TYPES = typeof ENABLED_PLAN_TYPES;
 /** list of FI reasons enabled */
 export const ENABLED_FI_REASONS = String(process.env.REACT_APP_ENABLED_FI_REASONS || '').split(',');
 export type ENABLED_FI_REASONS = typeof ENABLED_FI_REASONS;
+
+export const REACT_APP_PRODUCTION_INST = process.env.REACT_APP_PRODUCTION_INST;
+export type REACT_APP_PRODUCTION_INST = typeof REACT_APP_PRODUCTION_INST;
