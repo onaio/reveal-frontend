@@ -30,6 +30,7 @@ Object {
       "name": "Demo Team",
     },
   ],
+  "parentAssignments": Array [],
   "planId": "alpha",
   "resetPlanAssignmentsAction": [Function],
   "serviceClass": [Function],
