@@ -13,6 +13,21 @@ Object {
       >
         <img
           alt="Reveal"
+          src="thai-logo.png"
+          style={
+            Object {
+              "transform": "scale(1.8)",
+            }
+          }
+        />
+      </Link>
+      <Link
+        className="navbar-brand"
+        replace={false}
+        to="/"
+      >
+        <img
+          alt="Reveal"
           src="logo.png"
         />
       </Link>
@@ -297,6 +312,21 @@ Object {
     <nav
       className="navbar navbar-expand-md navbar-light header-logo-navbar"
     >
+      <Link
+        className="navbar-brand"
+        replace={false}
+        to="/"
+      >
+        <img
+          alt="Reveal"
+          src="thai-logo.png"
+          style={
+            Object {
+              "transform": "scale(1.8)",
+            }
+          }
+        />
+      </Link>
       <Link
         className="navbar-brand"
         replace={false}

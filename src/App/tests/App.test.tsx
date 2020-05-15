@@ -63,8 +63,13 @@ describe('App', () => {
       </Provider>
     );
     // before resolving get oauth state request, the user is logged out
-    expect(wrapper.text()).toMatchInlineSnapshot(`"HomeLoginReveal-frontend: v0.4.2"`);
+    expect(wrapper.text()).toMatchInlineSnapshot(
+      `"HomePlanManage PlansIRSAssignMonitorFocus InvestigationIRS ReportingAdminTeamsPractitionersUsersAboutLoginReveal-frontend: v0.4.2"`
+    );
     expect(toJson(wrapper.find('footer'))).toMatchSnapshot('footer');
+    expect(wrapper.text()).toMatchInlineSnapshot(
+      `"HomePlanManage PlansIRSAssignMonitorFocus InvestigationIRS ReportingAdminTeamsPractitionersUsersAboutLoginReveal-frontend: v0.4.2"`
+    );
     await new Promise<unknown>(resolve => setImmediate(resolve));
     wrapper.update();
     expect(fetch.mock.calls).toEqual([['http://localhost:3000/oauth/state']]);
