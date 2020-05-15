@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/forms/StudentExportForm renders correctly: jurisdiction-select form label 1`] = `
+<Label
+  for="jurisdictions-1-id"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="jurisdictions-1-id"
+  >
+    Geographical level to include
+  </label>
+</Label>
+`;
+
+exports[`components/forms/StudentExportForm renders correctly: submit button 1`] = `
+<button
+  aria-label={null}
+  className="btn btn-md btn btn-primary btn btn-primary"
+  id="studentexportform-submit-button"
+  onClick={[Function]}
+  type="submit"
+>
+  Download
+</button>
+`;
