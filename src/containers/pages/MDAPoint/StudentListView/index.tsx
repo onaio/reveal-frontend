@@ -63,36 +63,22 @@ export const StudentListView = (props: any) => {
   /** Overide renderRows to render html inside td */
   let listViewProps;
   if (props.files.length) {
-    const rowData = [...props.files];
-    const rows = rowData.map((items: any, itemsKey: any) => {
-      return (
-        <tr key={itemsKey}>
-          {Object.keys(items).map((item: any, itemKey) => {
-            const value = items[item];
-            if (value && isNaN(value) && value.includes('.csv')) {
-              return (
-                <td key={itemKey}>
-                  {value}
-                  &nbsp;
-                  <a href={items.url} download={true}>
-                    (Downloads)
-                  </a>
-                </td>
-              );
-            } else if (value && item !== 'url' && item !== 'identifier') {
-              return <td key={itemKey}>{value}</td>;
-            } else {
-              return null;
-            }
-          })}
-        </tr>
-      );
-    });
     listViewProps = {
+      data: props.files.map((row: File, key: number) => {
+        return [
+          <p key={key}>
+            {row.fileName} &nbsp;
+            <a href={row.url} download={true}>
+              (Downloads)
+            </a>
+          </p>,
+          row.owner,
+          row.fileSize,
+          row.fileLength,
+          row.lastUpdated,
+        ];
+      }),
       headerItems: ['File Name', 'Owner', 'File Size', 'Number of Students', 'Upload Date'],
-      renderRows: () => {
-        return <tbody>{rows}</tbody>;
-      },
       tableClass: 'table table-bordered',
     };
   }
