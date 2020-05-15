@@ -19,11 +19,6 @@ export interface JurisdictionFormField {
   jurisdictions: PlanJurisdictionFormField;
 }
 export const StudentExportForm = () => {
-  // const [selectedValue, setSelectedValue] = useState<string | null>(null);
-  // const selectChange = (e: any) => {
-  //   setSelectedValue(e.value);
-  // };
-  //   document.querySelector('.jurisdiction__single-value').innerText
   const defaultInitialValues: JurisdictionFormField = {
     jurisdictions: {
       id: '',
@@ -89,7 +84,7 @@ export const StudentExportForm = () => {
                 </FormGroup>
                 <Button
                   type="submit"
-                  id="planform-submit-button"
+                  id="studentexportform-submit-button"
                   className="btn btn-md btn btn-primary"
                   color="primary"
                 >
