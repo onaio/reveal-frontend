@@ -152,10 +152,10 @@ const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProp
   const organizationsById = getOrganizationsById(state);
   const assignments = getAssignmentsArrayByPlanId(state, ownProps.planId);
   const organizations = getOrganizationsArray(state);
-  let idsToCheckAssignments = [ownProps.jurisdictionId];
-  if (ownProps.parentIds && ownProps.parentIds.length) {
-    idsToCheckAssignments = [ownProps.jurisdictionId, ...ownProps.parentIds];
-  }
+  const idsToCheckAssignments =
+    ownProps.parentIds && ownProps.parentIds.length
+      ? [ownProps.jurisdictionId, ...ownProps.parentIds]
+      : [ownProps.jurisdictionId];
   const parentAssignments: string[] = [];
   const uniqueOptionsIds: string[] = [];
   const selectOptions: SelectOption[] = [];

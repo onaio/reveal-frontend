@@ -131,9 +131,22 @@ export { AssignTeamTableCell };
 const mapStateToProps = (state: Partial<Store>, ownProps: any): AssignTeamCellProps => {
   const organizationsById = getOrganizationsById(state);
   const assignmentsArray = getAssignmentsArrayByPlanId(state, ownProps.planId);
-  const assignments = assignmentsArray.filter(
-    (a: Assignment) => a.jurisdiction === ownProps.jurisdictionId
-  );
+  const idsToCheckAssignments =
+    ownProps.parentIds && ownProps.parentIds.length
+      ? [ownProps.jurisdictionId, ...ownProps.parentIds]
+      : [ownProps.jurisdictionId];
+  const uniqueOptionsIds: string[] = [];
+  const assignments: Assignment[] = [];
+  assignmentsArray.forEach((a: Assignment) => {
+    if (
+      idsToCheckAssignments.includes(a.jurisdiction) &&
+      !uniqueOptionsIds.includes(a.organization)
+    ) {
+      uniqueOptionsIds.push(a.organization);
+      assignments.push(a);
+    }
+  });
+
   return {
     ...ownProps,
     assignments,

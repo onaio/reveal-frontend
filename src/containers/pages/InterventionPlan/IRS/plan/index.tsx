@@ -1979,9 +1979,6 @@ class IrsPlan extends React.Component<
           {
             Header: '',
             accessor: (j: JurisdictionRow) => {
-              // if (!j.isChildless) {
-              //   return <span />;
-              // }
               const parentAssignedTeamIds = j.parent_id
                 ? this.getParentAssignedTeamsIds(j.parent_id, filteredJurisdictions)
                 : [];
