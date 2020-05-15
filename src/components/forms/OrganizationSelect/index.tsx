@@ -75,6 +75,7 @@ export const OrganizationSelect = (props: OrganizationSelectProps) => {
     jurisdictionId,
     name,
     organizations,
+    parentAssignments,
     planId,
     resetPlanAssignmentsAction,
     serviceClass,
@@ -96,18 +97,23 @@ export const OrganizationSelect = (props: OrganizationSelectProps) => {
     const filteredAssignments: Assignment[] = assignments.filter(
       (a: Assignment) => a.jurisdiction !== jurisdictionId
     );
-    /** nextValues is an empty array -> means change-event was a remove-options-event */
-    if (!nextValues) {
+    const assignmentsToRemove = parentAssignments || [];
+    /** nextValues is an empty array or has same size as parrents assignment array
+     *  -> means change-event was a remove-options-event
+     */
+    if (!nextValues || (nextValues && nextValues.length === assignmentsToRemove.length)) {
       resetPlanAssignmentsAction({ [planId]: filteredAssignments });
     } else {
-      const newAssignments: Assignment[] = nextValues.map(
-        (v: SelectOption) =>
-          ({
-            jurisdiction: jurisdictionId,
-            organization: v.value,
-            plan: planId,
-          } as Assignment)
-      );
+      const newAssignments: Assignment[] = nextValues
+        .filter((v: SelectOption) => !assignmentsToRemove.includes(v.value))
+        .map(
+          (v: SelectOption) =>
+            ({
+              jurisdiction: jurisdictionId,
+              organization: v.value,
+              plan: planId,
+            } as Assignment)
+        );
       const nextAssignments: Assignment[] = [...filteredAssignments, ...newAssignments];
       fetchAssignmentsAction(nextAssignments);
     }
@@ -155,7 +161,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProp
   const selectOptions: SelectOption[] = [];
   assignments.forEach((a: Assignment) => {
     if (idsToCheckAssignments.includes(a.jurisdiction)) {
-      if (a.jurisdiction !== ownProps.planId) {
+      if (a.jurisdiction !== ownProps.jurisdictionId) {
         parentAssignments.push(a.organization);
       }
       if (!uniqueOptionsIds.includes(a.organization)) {
