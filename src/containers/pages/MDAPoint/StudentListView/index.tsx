@@ -16,6 +16,7 @@ import {
   Row,
 } from 'reactstrap';
 import { Store } from 'redux';
+import { StudentExportForm } from '../../../../components/forms/StudentExportForm';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -33,7 +34,6 @@ import filesReducer, {
   reducerName as filesReducerName,
 } from '../../../../store/ducks/opensrp/files/index';
 import { uploadedStudentsLists } from '../dummy-data/dummy';
-import { StudentExportForm } from '../StudentExportForm';
 /** register the plans reducer */
 reducerRegistry.register(filesReducerName, filesReducer);
 /** interface to describe props for StudentListView component */
