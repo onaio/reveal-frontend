@@ -974,6 +974,15 @@ export const propsForUpdatingPlans: Partial<PlanFormProps> = {
     'caseNum',
     'opensrpEventId',
     'jurisdictions',
+    'activities',
+    'date',
+    'end',
+    'fiReason',
+    'fiStatus',
+    'start',
+    'taskGenerationStatus',
+    'title',
+    'version',
   ],
 };
 
