@@ -100,6 +100,7 @@ describe('/components/AssignTeamPopover', () => {
         1: organization,
       },
       parentAssignments: ['tucker', 'caboose'],
+      parentIds: ['blue-base'],
     };
     const wrapper = mount(
       <Provider store={store}>
@@ -108,6 +109,9 @@ describe('/components/AssignTeamPopover', () => {
     );
     expect(wrapper.find('Popover').length).toBe(1);
     expect(wrapper.find('PopoverHeader').text()).toEqual('Select Teams to Assign');
+    expect(wrapper.find('OrganizationSelect').props()).toMatchSnapshot(
+      'organization select props with parent assignments'
+    );
     // hides cancel button
     expect(wrapper.find('Button').length).toBe(1);
     expect(wrapper.find('Button').text()).toEqual('Save');

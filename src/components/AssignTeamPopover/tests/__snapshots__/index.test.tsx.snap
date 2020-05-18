@@ -66,3 +66,25 @@ Object {
   "value": Array [],
 }
 `;
+
+exports[`/components/AssignTeamPopover renders correctly with parent assignments present: organization select props with parent assignments 1`] = `
+Object {
+  "assignments": Array [],
+  "fetchAssignmentsAction": [Function],
+  "fetchOrganizationsAction": [Function],
+  "jurisdictionId": "outpost-number-one",
+  "name": "plan-assignment-form-outpost-number-one",
+  "organizations": Array [],
+  "parentAssignments": Array [
+    "tucker",
+    "caboose",
+  ],
+  "parentIds": Array [
+    "blue-base",
+  ],
+  "planId": "alpha",
+  "resetPlanAssignmentsAction": [Function],
+  "serviceClass": [Function],
+  "value": Array [],
+}
+`;
