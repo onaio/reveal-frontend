@@ -86,4 +86,30 @@ describe('/components/AssignTeamPopover', () => {
         .text()
     ).toEqual('Save');
   });
+
+  it('renders correctly with parent assignments present', () => {
+    const organization: Organization = {
+      active: true,
+      id: 1,
+      identifier: 'id',
+      name: 'name',
+    };
+    const newProps = {
+      ...props,
+      organizationsById: {
+        1: organization,
+      },
+      parentAssignments: ['tucker', 'caboose'],
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <AssignTeamPopover {...newProps} />
+      </Provider>
+    );
+    expect(wrapper.find('Popover').length).toBe(1);
+    expect(wrapper.find('PopoverHeader').text()).toEqual('Select Teams to Assign');
+    // hides cancel button
+    expect(wrapper.find('Button').length).toBe(1);
+    expect(wrapper.find('Button').text()).toEqual('Save');
+  });
 });
