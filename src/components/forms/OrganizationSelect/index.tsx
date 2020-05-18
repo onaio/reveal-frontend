@@ -105,12 +105,12 @@ export const OrganizationSelect = (props: OrganizationSelectProps) => {
       resetPlanAssignmentsAction({ [planId]: filteredAssignments });
     } else {
       const newAssignments: Assignment[] = nextValues
-        .filter((v: SelectOption) => !assignmentsToRemove.includes(v.value))
+        .filter((assignment: SelectOption) => !assignmentsToRemove.includes(assignment.value))
         .map(
-          (v: SelectOption) =>
+          (assignment: SelectOption) =>
             ({
               jurisdiction: jurisdictionId,
-              organization: v.value,
+              organization: assignment.value,
               plan: planId,
             } as Assignment)
         );
@@ -156,7 +156,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProp
     ownProps.parentIds && ownProps.parentIds.length
       ? [ownProps.jurisdictionId, ...ownProps.parentIds]
       : [ownProps.jurisdictionId];
-  // const parentAssignments: string[] = [];
   const uniqueOptionsIds: string[] = [];
   const selectOptions: SelectOption[] = [];
   assignments.forEach((a: Assignment) => {

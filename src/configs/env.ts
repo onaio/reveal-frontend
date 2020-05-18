@@ -253,5 +253,5 @@ export type BACKEND_ACTIVE = typeof BACKEND_ACTIVE;
 
 export const HIDE_MAP_FOR_INTERVENTIONS = String(
   process.env.REACT_APP_HIDE_MAP_FOR_INTERVENTIONS || ' '
-).split(' ');
+).split(',');
 export type HIDE_MAP_FOR_INTERVENTIONS = typeof HIDE_MAP_FOR_INTERVENTIONS;
