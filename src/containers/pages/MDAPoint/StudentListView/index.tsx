@@ -1,8 +1,9 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router';
 import {
   Col,
   FormGroup,
@@ -47,9 +48,26 @@ export const defaultStudentListViewProps: StudentListViewProps = {
   files: null,
 };
 
-export const StudentListView = (props: any) => {
+export const buildListViewData: (rowData: File[]) => ReactNode[][] | undefined = rowData => {
+  return rowData.map((row: File, key: number) => {
+    return [
+      <p key={key}>
+        {row.fileName} &nbsp;
+        <a href={row.url} download={true}>
+          (Downloads)
+        </a>
+      </p>,
+      row.owner,
+      row.fileSize,
+      row.fileLength,
+      row.lastUpdated,
+    ];
+  });
+};
+
+export const StudentListView = (props: StudentListViewProps & RouteComponentProps) => {
   React.useEffect(() => {
-    if (!props.files.length) {
+    if (!(props.files && props.files.length)) {
       /**
        * Fetch files incase the files are not available e.g when page is refreshed
        */
@@ -62,22 +80,9 @@ export const StudentListView = (props: any) => {
   }, []);
   /** Overide renderRows to render html inside td */
   let listViewProps;
-  if (props.files.length) {
+  if (props.files && props.files.length) {
     listViewProps = {
-      data: props.files.map((row: File, key: number) => {
-        return [
-          <p key={key}>
-            {row.fileName} &nbsp;
-            <a href={row.url} download={true}>
-              (Downloads)
-            </a>
-          </p>,
-          row.owner,
-          row.fileSize,
-          row.fileLength,
-          row.lastUpdated,
-        ];
-      }),
+      data: buildListViewData(props.files),
       headerItems: ['File Name', 'Owner', 'File Size', 'Number of Students', 'Upload Date'],
       tableClass: 'table table-bordered',
     };
@@ -147,7 +152,11 @@ export const StudentListView = (props: any) => {
         </Col>
       </Row>
       <Row id="table-row">
-        <Col>{listViewProps ? <ListView {...listViewProps} /> : null} </Col>
+        <Col>
+          {listViewProps && props.files && props.files.length ? (
+            <ListView {...listViewProps} />
+          ) : null}
+        </Col>
       </Row>
       <hr />
       <StudentExportForm />
