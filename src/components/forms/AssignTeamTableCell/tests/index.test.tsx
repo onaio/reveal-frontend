@@ -114,4 +114,35 @@ describe('/containers/forms/AssignTeamTableCell', () => {
     assignTeamPopoverProps = wrapper.find('AssignTeamPopover').props() as AssignTeamPopoverProps;
     expect(assignTeamPopoverProps.isActive).toBeFalsy();
   });
+
+  it('renders correctly with parent assignments', () => {
+    store.dispatch(fetchOrganizations(fixtures.organizations));
+    store.dispatch(fetchAssignments(fixtures.assignments));
+    const props = {
+      assignPopover: <div id="custom-popover" />,
+      jurisdictionId: 'outpost-number-one',
+      parentIds: ['blue-base'],
+      planId: 'alpha',
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <AssignTeamTableCell {...props} />
+      </Provider>
+    );
+
+    expect(toJson(wrapper.find('button#plan-assignment-outpost-number-one'))).toMatchSnapshot(
+      'AssignTeamButton for outpost-number-one assignment'
+    );
+
+    expect(toJson(wrapper.find('span.assignment-label'))).toMatchSnapshot(
+      'Team Count Text with parent assignments'
+    );
+
+    store.dispatch(fetchAssignments(fixtures.assignments));
+    wrapper.update();
+    expect(toJson(wrapper.find('span.assignment-label'))).toMatchSnapshot(
+      'Updated teams with parent assignments'
+    );
+  });
 });
