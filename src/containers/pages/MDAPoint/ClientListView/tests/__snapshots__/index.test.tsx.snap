@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`containers/pages/MDAPoints/StudentListView works with the Redux store 1`] = `
+exports[`containers/pages/MDAPoints/ClientListView works with the Redux store 1`] = `
 Object {
   "children": Array [
     <thead
@@ -59,7 +59,7 @@ Object {
 }
 `;
 
-exports[`containers/pages/MDAPoints/StudentListView works with the Redux store 2`] = `
+exports[`containers/pages/MDAPoints/ClientListView works with the Redux store 2`] = `
 Object {
   "children": <tr
     className="listview-tr"
@@ -82,7 +82,7 @@ Object {
 }
 `;
 
-exports[`containers/pages/MDAPoints/StudentListView works with the Redux store 3`] = `
+exports[`containers/pages/MDAPoints/ClientListView works with the Redux store 3`] = `
 Object {
   "children": Array [
     <tr

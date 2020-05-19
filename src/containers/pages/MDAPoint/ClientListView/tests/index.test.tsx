@@ -78,7 +78,7 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
     expect(wrapper.find('HeaderBreadcrumb').props()).toEqual({
       currentPage: {
         label: 'Students',
-        url: '/students',
+        url: '/clients/students',
       },
       pages: [
         {
@@ -111,7 +111,7 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
     expect(wrapper.find('HeaderBreadcrumb').props()).toEqual({
       currentPage: {
         label: 'Students',
-        url: '/students',
+        url: '/clients/students',
       },
       pages: [
         {
