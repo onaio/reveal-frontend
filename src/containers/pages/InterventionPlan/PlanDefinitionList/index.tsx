@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { SearchForm } from '../../../../components/forms/Search';
+import { UserSelectFilter } from '../../../../components/forms/UserFilter';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
@@ -27,6 +28,7 @@ import {
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
   QUERY_PARAM_TITLE,
+  QUERY_PARAM_USER,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { getQueryParams } from '../../../../helpers/utils';
@@ -36,6 +38,7 @@ import planDefinitionReducer, {
   makePlanDefinitionsArraySelector,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
+
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
@@ -124,7 +127,10 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <SearchForm history={props.history} location={props.location} />
+      <Row>
+        <SearchForm history={props.history} location={props.location} />
+        <UserSelectFilter serviceClass={OpenSRPService} />
+      </Row>
       <Row>
         <Col>
           <ListView {...listViewProps} />
@@ -155,8 +161,10 @@ interface DispatchedStateProps {
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
+  const userName = getQueryParams(ownProps.location)[QUERY_PARAM_USER] as string;
   const planDefinitionsArray = makePlanDefinitionsArraySelector()(state, {
     title: searchedTitle,
+    userName,
   });
 
   return {
