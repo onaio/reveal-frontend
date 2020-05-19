@@ -217,9 +217,13 @@ const PlanForm = (props: PlanFormProps) => {
     );
   }
 
+  /** if plan is updated or saved redirect to plans page */
+  if (areWeDoneHere) {
+    return <Redirect to={redirectAfterAction} />;
+  }
+
   return (
     <div className="form-container">
-      {areWeDoneHere === true && <Redirect to={redirectAfterAction} />}
       <Formik
         initialValues={initialValues}
         /* tslint:disable-next-line jsx-no-lambda */
