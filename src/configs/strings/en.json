@@ -947,13 +947,25 @@
     "message": "Age",
     "description": "the length of time that a person has lived or a thing has existed"
   },
+  "CLIENTS_TITLE": {
+    "message": "Clients",
+    "description": "title: the children receiving MDA"
+  },
+  "CLIENTS_LISTS": {
+    "message": "Uploaded Client Lists",
+    "description": "Upload Client List to opensrp"
+  },
+  "EXPORT_CLIENT_LIST": {
+    "message": "Export Client List",
+    "description": "button text: to download a CSV of clients per jurisdiction"
+  },
   "STUDENTS_TITLE": {
     "message": "Students",
     "description": "title: the children receiving MDA"
   },
   "UPLOADED_STUDENT_LISTS": {
     "message": "Uploaded Student Lists",
-    "description": "Export Student List"
+    "description": "Upload Student List to opensrp"
   },
   "EXPORT_STUDENT_LIST": {
     "message": "Export Student List",

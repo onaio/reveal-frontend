@@ -468,3 +468,6 @@ export const STUDENTS_TITLE = translate('STUDENTS_TITLE', 'Students');
 export const UPLOADED_STUDENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Student Lists');
 export const EXPORT_STUDENT_LIST = translate('EXPORT_STUDENT_LIST', 'Export Student List');
 export const ADD_NEW_CSV = translate('ADD_NEW_CSV', 'Add New CSV');
+export const CLIENTS_TITLE = translate('STUDENTS_TITLE', 'Students');
+export const UPLOADED_CLIENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Student Lists');
+export const EXPORT_CLIENT_LIST = translate('EXPORT_STUDENT_LIST', 'Export Student List');
