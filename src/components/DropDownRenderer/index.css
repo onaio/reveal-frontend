@@ -1,0 +1,9 @@
+.filter-bar-btns {
+  color: black;
+  min-height: 35px;
+}
+
+.filter-bar-btns span {
+  font-size: 16px !important;
+  margin: 5px;
+}
