@@ -212,7 +212,8 @@ describe('containers/pages/IRS/plan', () => {
         </Router>
       </Provider>
     );
-    await flushPromises();
+    await mockRead();
+    wrapper.update();
     /**@todo Investigate why match snapshot is not awaiting for async
      * The snapshot returned is that of Loading component despite execution
      * proceeding past this
