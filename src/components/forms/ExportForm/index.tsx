@@ -2,7 +2,8 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React from 'react';
 import { Alert, Button, Col, FormGroup, Label, Row } from 'reactstrap';
 import * as Yup from 'yup';
-import { EXPORT_STUDENT_LIST, REQUIRED } from '../../../configs/lang';
+import { ENABLE_MDA_POINT } from '../../../configs/env';
+import { EXPORT_CLIENT_LIST, EXPORT_STUDENT_LIST, REQUIRED } from '../../../configs/lang';
 import JurisdictionSelect from '../JurisdictionSelect';
 export const JurisdictionSchema = Yup.object().shape({
   jurisdictions: Yup.object().shape({
@@ -10,7 +11,7 @@ export const JurisdictionSchema = Yup.object().shape({
     name: Yup.string(),
   }),
 });
-/** interface to describe props for StudentExportForm component */
+/** interface to describe props for ExportForm component */
 export interface PlanJurisdictionFormField {
   id: string;
   name: string;
@@ -18,7 +19,7 @@ export interface PlanJurisdictionFormField {
 export interface JurisdictionFormField {
   jurisdictions: PlanJurisdictionFormField;
 }
-export const StudentExportForm = () => {
+export const ExportForm = () => {
   const defaultInitialValues: JurisdictionFormField = {
     jurisdictions: {
       id: '',
@@ -29,7 +30,9 @@ export const StudentExportForm = () => {
     <div>
       <Row id="export-row">
         <Col>
-          <h3 className="mb-3 mt-5 page-title">{EXPORT_STUDENT_LIST}</h3>
+          <h3 className="mb-3 mt-5 page-title">
+            {ENABLE_MDA_POINT ? EXPORT_STUDENT_LIST : EXPORT_CLIENT_LIST}
+          </h3>
           {/* Download Form goes here */}
           <Alert color="light">Export Country based on Geographical level!</Alert>
           <Formik
@@ -98,4 +101,4 @@ export const StudentExportForm = () => {
     </div>
   );
 };
-export default StudentExportForm;
+export default ExportForm;

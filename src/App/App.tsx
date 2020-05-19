@@ -83,7 +83,7 @@ import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
-import ConnectedStudentListView from '../containers/pages/MDAPoint/StudentListView';
+import ConnectedClientListView from '../containers/pages/MDAPoint/ClientListView';
 import ConnectedAssignPractitioner from '../containers/pages/OrganizationViews/AssignPractitioners';
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
@@ -348,7 +348,7 @@ const App = (props: AppProps) => {
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={false}
                 path={STUDENTS_LIST_URL}
-                component={ConnectedStudentListView}
+                component={ConnectedClientListView}
               />
               {/* Practitioner listing page */}
               <ConnectedPrivateRoute
