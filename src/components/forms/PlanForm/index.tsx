@@ -38,6 +38,7 @@ import {
   INTERVENTION_TYPE_LABEL,
   IRS_TITLE,
   LOCATIONS,
+  MDA_POINT_TITLE,
   PLAN_END_DATE_LABEL,
   PLAN_START_DATE_LABEL,
   PLAN_TITLE_LABEL,
@@ -63,7 +64,7 @@ import {
   planActivities,
   planStatusDisplay,
 } from '../../../configs/settings';
-import { PLAN_LIST_URL } from '../../../constants';
+import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
@@ -76,6 +77,7 @@ import {
   getGoalUnitFromActionCode,
   getNameTitle,
   IRSActivities,
+  MDAPointActivities,
   PlanActivityFormFields,
   PlanFormFields,
   PlanJurisdictionFormFields,
@@ -162,6 +164,7 @@ const PlanForm = (props: PlanFormProps) => {
   const editMode: boolean = initialValues.identifier !== '';
   const irsActivities = getFormActivities(IRSActivities);
   const fiActivities = getFormActivities(FIActivities);
+  const mdaPointActivities = getFormActivities(MDAPointActivities);
 
   const disAllowedStatusChoices: string[] = [];
   if (editMode) {
@@ -194,6 +197,9 @@ const PlanForm = (props: PlanFormProps) => {
     if (values.interventionType === InterventionType.IRS) {
       return irsActivities;
     }
+    if (values.interventionType === InterventionType.MDAPoint) {
+      return mdaPointActivities;
+    }
 
     return allFormActivities;
   }
@@ -211,9 +217,13 @@ const PlanForm = (props: PlanFormProps) => {
     );
   }
 
+  /** if plan is updated or saved redirect to plans page */
+  if (areWeDoneHere) {
+    return <Redirect to={redirectAfterAction} />;
+  }
+
   return (
     <div className="form-container">
-      {areWeDoneHere === true && <Redirect to={redirectAfterAction} />}
       <Formik
         initialValues={initialValues}
         /* tslint:disable-next-line jsx-no-lambda */
@@ -295,8 +305,12 @@ const PlanForm = (props: PlanFormProps) => {
                   const target = e.target as HTMLInputElement;
                   if (target.value === InterventionType.IRS) {
                     setFieldValue('activities', irsActivities);
-                  } else {
+                  }
+                  if (target.value === InterventionType.FI) {
                     setFieldValue('activities', fiActivities);
+                  }
+                  if (target.value === InterventionType.MDAPoint) {
+                    setFieldValue('activities', mdaPointActivities);
                   }
                   setFieldValue('jurisdictions', [initialJurisdictionValues]);
                   handleChange(e);
@@ -305,6 +319,7 @@ const PlanForm = (props: PlanFormProps) => {
               >
                 <option value={InterventionType.FI}>{FOCUS_INVESTIGATION}</option>
                 <option value={InterventionType.IRS}>{IRS_TITLE}</option>
+                <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>
               </Field>
               <ErrorMessage
                 name="interventionType"
@@ -420,7 +435,8 @@ const PlanForm = (props: PlanFormProps) => {
                           </div>
                         </fieldset>
                       ))}
-                      {values.interventionType === InterventionType.IRS &&
+                      {(values.interventionType === InterventionType.IRS ||
+                        values.interventionType === InterventionType.MDAPoint) &&
                         allowMoreJurisdictions === true && (
                           <button
                             type="button"
@@ -715,7 +731,9 @@ const PlanForm = (props: PlanFormProps) => {
                                 required={true}
                                 disabled={
                                   disabledFields.includes('activities') ||
-                                  disabledActivityFields.includes('goalValue')
+                                  disabledActivityFields.includes('goalValue') ||
+                                  values.activities[index].actionCode ===
+                                    MDA_POINT_ADVERSE_EFFECTS_CODE
                                 }
                                 className={
                                   errors.activities &&

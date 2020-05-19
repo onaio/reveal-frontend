@@ -432,6 +432,80 @@ export const planActivityWithEmptyfields: PlanActivities = {
       ],
     },
   },
+  pointAdverseMDA: {
+    action: {
+      code: 'MDA Adverse Event(s)',
+      description: '',
+      goalId: 'Point_adverse_effect_MDA',
+      identifier: '',
+      prefix: 6,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'MDA_Point_Adverse_Event',
+      },
+      taskTemplate: 'MDA_Point_Adverse_Event',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'MDA Adverse Event(s)',
+    },
+    goal: {
+      description: '',
+      id: 'Point_adverse_effect_MDA',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 2,
+            },
+          },
+          due: '',
+          measure: 'Percent of people who reported adverse events',
+        },
+      ],
+    },
+  },
+  pointDispenseMDA: {
+    action: {
+      code: 'MDA Dispense',
+      description: '',
+      goalId: 'Point_dispense_MDA',
+      identifier: '',
+      prefix: 6,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'MDA_Point_Dispense',
+      },
+      taskTemplate: 'MDA_Point_Dispense',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: 'MDA Dispense',
+    },
+    goal: {
+      description: '',
+      id: 'Point_dispense_MDA',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 2,
+            },
+          },
+          due: goalDue.toISOString(),
+          measure: 'Percent of eligible people',
+        },
+      ],
+    },
+  },
 };
 
 export const expectedActivityEmptyField = {
@@ -626,6 +700,32 @@ export const extractedActivitiesFromForms = [
     goalDue: goalDue.toISOString(),
     goalPriority: 'medium-priority',
     goalValue: 3,
+    timingPeriodEnd: timingPeriodEnd.toISOString(),
+    timingPeriodStart: timingPeriodStart.toISOString(),
+  },
+  {
+    actionCode: 'MDA Adverse Event(s)',
+    actionDescription: 'Report any adverse events from medication',
+    actionIdentifier: '',
+    actionReason: 'Routine',
+    actionTitle: 'MDA Adverse Event(s)',
+    goalDescription: 'Report any adverse events from medication',
+    goalDue: goalDue.toISOString(),
+    goalPriority: 'medium-priority',
+    goalValue: 2,
+    timingPeriodEnd: timingPeriodEnd.toISOString(),
+    timingPeriodStart: timingPeriodStart.toISOString(),
+  },
+  {
+    actionCode: 'MDA Dispense',
+    actionDescription: 'Dispense medication to each eligible person',
+    actionIdentifier: '',
+    actionReason: 'Routine',
+    actionTitle: 'MDA Dispense',
+    goalDescription: 'Dispense medication to each eligible person',
+    goalDue: goalDue.toISOString(),
+    goalPriority: 'medium-priority',
+    goalValue: 2,
     timingPeriodEnd: timingPeriodEnd.toISOString(),
     timingPeriodStart: timingPeriodStart.toISOString(),
   },
@@ -956,6 +1056,81 @@ export const planActivities: PlanActivities = {
           },
           due: goalDue.toISOString(),
           measure: 'Number of mosquito collection activities completed',
+        },
+      ],
+    },
+  },
+
+  pointAdverseMDA: {
+    action: {
+      code: 'MDA Adverse Event(s)',
+      description: 'Report any adverse events from medication',
+      goalId: 'Point_adverse_effect_MDA',
+      identifier: '',
+      prefix: 6,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'MDA_Point_Adverse_Event',
+      },
+      taskTemplate: 'MDA_Point_Adverse_Event',
+      timingPeriod: {
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
+      },
+      title: 'MDA Adverse Event(s)',
+    },
+    goal: {
+      description: 'Report any adverse events from medication',
+      id: 'Point_adverse_effect_MDA',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 2,
+            },
+          },
+          due: timingPeriodEnd.toISOString(),
+          measure: 'Percent of people who reported adverse events',
+        },
+      ],
+    },
+  },
+  pointDispenseMDA: {
+    action: {
+      code: 'MDA Dispense',
+      description: 'Dispense medication to each eligible person',
+      goalId: 'Point_dispense_MDA',
+      identifier: '',
+      prefix: 6,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'MDA_Point_Dispense',
+      },
+      taskTemplate: 'MDA_Point_Dispense',
+      timingPeriod: {
+        end: timingPeriodEnd.toISOString(),
+        start: timingPeriodStart.toISOString(),
+      },
+      title: 'MDA Dispense',
+    },
+    goal: {
+      description: 'Dispense medication to each eligible person',
+      id: 'Point_dispense_MDA',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 2,
+            },
+          },
+          due: timingPeriodEnd.toISOString(),
+          measure: 'Percent of eligible people',
         },
       ],
     },
