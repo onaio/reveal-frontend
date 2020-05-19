@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/forms/StudentExportForm renders correctly: jurisdiction-select form label 1`] = `
+exports[`components/forms/ExportForm renders correctly: jurisdiction-select form label 1`] = `
 <Label
   for="jurisdictions-1-id"
   tag="label"
@@ -23,21 +23,11 @@ exports[`components/forms/StudentExportForm renders correctly: jurisdiction-sele
 </Label>
 `;
 
-exports[`components/forms/StudentExportForm renders correctly: submit button 1`] = `
-<button
-  aria-label={null}
-  className="btn btn-md btn btn-primary btn btn-primary"
-  id="studentexportform-submit-button"
-  onClick={[Function]}
-  type="submit"
->
-  Download
-</button>
-`;
+exports[`components/forms/ExportForm renders correctly: submit button 1`] = `null`;
 
-exports[`components/forms/StudentExportForm renders jurisdictions fields correctly: jurisdictions.id field 1`] = `null`;
+exports[`components/forms/ExportForm renders jurisdictions fields correctly: jurisdictions.id field 1`] = `null`;
 
-exports[`components/forms/StudentExportForm renders jurisdictions fields correctly: jurisdictions.id label 1`] = `
+exports[`components/forms/ExportForm renders jurisdictions fields correctly: jurisdictions.id label 1`] = `
 <Label
   for="jurisdictions-1-id"
   tag="label"
@@ -60,7 +50,7 @@ exports[`components/forms/StudentExportForm renders jurisdictions fields correct
 </Label>
 `;
 
-exports[`components/forms/StudentExportForm renders jurisdictions fields correctly: jurisdictions.name field 1`] = `
+exports[`components/forms/ExportForm renders jurisdictions fields correctly: jurisdictions.name field 1`] = `
 <input
   id="jurisdictions-name"
   name="jurisdictions.name"
