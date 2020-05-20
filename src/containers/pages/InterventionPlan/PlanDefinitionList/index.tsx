@@ -135,10 +135,10 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <Row>
+      <div style={{ display: 'inline-block' }}>
         <SearchForm history={props.history} location={props.location} />
-        <UserSelectFilter serviceClass={OpenSRPService} />
-      </Row>
+      </div>
+      <UserSelectFilter serviceClass={OpenSRPService} />
       <Row>
         <Col>
           <ListView {...listViewProps} />
