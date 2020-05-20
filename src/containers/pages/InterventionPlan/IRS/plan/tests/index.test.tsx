@@ -137,49 +137,6 @@ describe('containers/pages/IRS/plan', () => {
     wrapper.unmount();
   });
 
-  it('renders correctly if props.planById.plan_status is active', async () => {
-    store.dispatch(fetchPlanRecords([irsPlanRecordActiveResponse as PlanRecordResponse]));
-    const supersetServiceMock: any = jest.fn(() => Promise.resolve(jurisidictionResults));
-    const loadPlanMock: any = jest.spyOn(serviceCalls, 'loadPlan');
-
-    const mockRead = jest.fn();
-    OpenSRPService.prototype.read = mockRead;
-    mockRead
-      .mockReturnValueOnce(Promise.resolve([fixtures.assignment1])) // First organization
-      .mockReturnValueOnce(Promise.resolve([fixtures.assignment2])) // Second organization
-      .mockReturnValueOnce(Promise.resolve(locationResults))
-      .mockReturnValueOnce(Promise.resolve(jurisdictionGeo));
-
-    const { id } = irsPlanRecordActive;
-    const props = {
-      history,
-      location: jest.fn(),
-      match: {
-        isExact: true,
-        params: { id },
-        path: `${INTERVENTION_IRS_URL}/plan/:id`,
-        url: `${INTERVENTION_IRS_URL}/plan/${id}`,
-      },
-      supersetService: supersetServiceMock,
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedIrsPlan {...props} />
-        </Router>
-      </Provider>
-    );
-    await flushPromises();
-    /**@todo Investigate why match snapshot is not awaiting for async
-     * The snapshot returned is that of Loading component despite execution
-     * proceeding past this
-     */
-    expect(loadPlanMock).not.toBeCalled();
-    expect(mockRead.mock.calls.length).toBe(4);
-    expect(supersetServiceMock.mock.calls.length).toBe(1);
-    wrapper.unmount();
-  });
-
   it('renders correctly if props.planById.plan_status is draft', async () => {
     store.dispatch(fetchPlanRecords([irsPlanRecordDraftResponse as PlanRecordResponse]));
     const supersetServiceMock: any = jest.fn(() => Promise.resolve(jurisidictionResults));
@@ -214,6 +171,49 @@ describe('containers/pages/IRS/plan', () => {
     );
     await mockRead();
     wrapper.update();
+    /**@todo Investigate why match snapshot is not awaiting for async
+     * The snapshot returned is that of Loading component despite execution
+     * proceeding past this
+     */
+    expect(loadPlanMock).not.toBeCalled();
+    expect(mockRead.mock.calls.length).toBe(4);
+    expect(supersetServiceMock.mock.calls.length).toBe(1);
+    wrapper.unmount();
+  });
+
+  it('renders correctly if props.planById.plan_status is active', async () => {
+    store.dispatch(fetchPlanRecords([irsPlanRecordActiveResponse as PlanRecordResponse]));
+    const supersetServiceMock: any = jest.fn(() => Promise.resolve(jurisidictionResults));
+    const loadPlanMock: any = jest.spyOn(serviceCalls, 'loadPlan');
+
+    const mockRead = jest.fn();
+    OpenSRPService.prototype.read = mockRead;
+    mockRead
+      .mockReturnValueOnce(Promise.resolve([fixtures.assignment1])) // First organization
+      .mockReturnValueOnce(Promise.resolve([fixtures.assignment2])) // Second organization
+      .mockReturnValueOnce(Promise.resolve(locationResults))
+      .mockReturnValueOnce(Promise.resolve(jurisdictionGeo));
+
+    const { id } = irsPlanRecordActive;
+    const props = {
+      history,
+      location: jest.fn(),
+      match: {
+        isExact: true,
+        params: { id },
+        path: `${INTERVENTION_IRS_URL}/plan/:id`,
+        url: `${INTERVENTION_IRS_URL}/plan/${id}`,
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIrsPlan {...props} />
+        </Router>
+      </Provider>
+    );
+    await flushPromises();
     /**@todo Investigate why match snapshot is not awaiting for async
      * The snapshot returned is that of Loading component despite execution
      * proceeding past this

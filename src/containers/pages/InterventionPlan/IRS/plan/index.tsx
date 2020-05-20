@@ -40,7 +40,6 @@ import {
   SAVE_PLAN_NO_JURISDICTIONS_ERROR,
   SELECT_JURISDICTIONS,
   SPRAY_AREA_HEADER,
-  STUDENTS_LABEL,
   TEAMS_ASSIGNMENT,
   TYPE_LABEL,
 } from '../../../../../configs/lang';
@@ -1951,13 +1950,13 @@ class IrsPlan extends React.Component<
         ],
       },
       {
-        Header: isMdaPoint ? STUDENTS_LABEL : TYPE_LABEL,
+        Header: TYPE_LABEL,
         columns: [
           {
             Header: '',
             accessor: (j: JurisdictionRow) => {
               if (isMdaPoint) {
-                return <span onClick={stopPropagationAndPreventDefault}>{j.planId}</span>;
+                return <span onClick={stopPropagationAndPreventDefault}>{j.geographic_level}</span>;
               }
               return (
                 <span onClick={stopPropagationAndPreventDefault}>
