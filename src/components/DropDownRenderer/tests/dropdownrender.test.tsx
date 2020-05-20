@@ -1,7 +1,7 @@
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
-import { DropDownRenderer, DropDownRendererProps } from '../utilComponents';
+import { DropDownRenderer, DropDownRendererProps } from '..';
 
 const props: DropDownRendererProps = {
   renderMenu: () => 'sample',

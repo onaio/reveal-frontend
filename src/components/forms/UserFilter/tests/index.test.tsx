@@ -4,9 +4,9 @@ import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import UserSelectFilter from '..';
-import { OpenSRPService } from '../../../../../services/opensrp';
-import { openMRSUsers } from '../../../PractitionerForm/UserIdSelect/tests/fixtures';
+import { UserSelectFilter } from '..';
+import { OpenSRPService } from '../../../../services/opensrp';
+import { openMRSUsers } from '../../PractitionerForm/UserIdSelect/tests/fixtures';
 
 // tslint:disable-next-line:no-var-requires
 const fetch = require('jest-fetch-mock');

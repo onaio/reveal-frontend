@@ -8,8 +8,6 @@ import { FILTER, USER } from '../../../configs/lang';
 import { QUERY_PARAM_USER } from '../../../constants';
 import { getQueryParams } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
-import store from '../../../store';
-import { fetchPlanDefinitions } from '../../../store/ducks/opensrp/PlanDefinition';
 import { DropDownRenderer } from '../../DropDownRenderer';
 import UserIdSelect, { Option } from '../PractitionerForm/UserIdSelect';
 import './index.css';
@@ -25,24 +23,30 @@ const defaultProps = {
   serviceClass: OpenSRPService,
 };
 
+export type BaseUserSelectFilterPropTypes = BaseUserSelectFilterProps & RouteComponentProps;
+
+export const defaultHandler = (option: Option, props: BaseUserSelectFilterPropTypes) => {
+  const targetValue = option.label;
+  const allQueryParams = getQueryParams(props.location);
+  // modify just the search and leave the rest
+  allQueryParams[QUERY_PARAM_USER] = targetValue;
+
+  props.history.push(`${props.match.url}?${queryString.stringify(allQueryParams)}`);
+};
+
 /** presentational component that renders a filter where you can select an openMRS user
  * that then filters plans that the user has access to.
  *
  * This component is a wrapper around the UserIdSelect component
  */
-export const BaseUserSelectFilter = (props: BaseUserSelectFilterProps & RouteComponentProps) => {
+export const BaseUserSelectFilter = (props: BaseUserSelectFilterPropTypes) => {
   const onChangeHandler = (option: Option) => {
     // a custom onChangeHandler will override the default implementation
     if (props.onChangeHandler) {
       props.onChangeHandler(option);
       return;
     }
-    const targetValue = option.label;
-    const allQueryParams = getQueryParams(props.location);
-    // modify just the search and leave the rest
-    allQueryParams[QUERY_PARAM_USER] = targetValue;
-
-    props.history.push(`${props.match.url}?${queryString.stringify(allQueryParams)}`);
+    defaultHandler(option, props);
   };
 
   const userIdSelectProps = {
@@ -81,13 +85,3 @@ export const BaseUserSelectFilter = (props: BaseUserSelectFilterProps & RouteCom
 const UserSelectFilter = withRouter(BaseUserSelectFilter);
 UserSelectFilter.defaultProps = defaultProps;
 export { UserSelectFilter };
-
-export const PlansByUserFilter = async (userName: string) => {
-  const servant = new OpenSRPService(`plans/user/${userName}`);
-  servant
-    .list()
-    .then(response => {
-      store.dispatch(fetchPlanDefinitions(response, [userName]));
-    })
-    .catch(err => err);
-};
