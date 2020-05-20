@@ -21,6 +21,7 @@ export const existingState = {
     },
   },
   plans: {
+    planIdsByUserNames: {},
     planRecordsById: {},
     plansById: {
       'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f': globalFixtures.plan1,

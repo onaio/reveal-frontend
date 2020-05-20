@@ -30,6 +30,7 @@ import {
   QUERY_PARAM_TITLE,
   QUERY_PARAM_USER,
 } from '../../../../constants';
+import { loadPlansByUserFilter } from '../../../../helpers/dataLoading/plans';
 import { displayError } from '../../../../helpers/errors';
 import { getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -47,6 +48,7 @@ interface PlanListProps {
   fetchPlans: typeof fetchPlanDefinitions;
   plans: PlanDefinition[];
   service: typeof OpenSRPService;
+  userName: string | null;
 }
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
@@ -80,6 +82,12 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
       setLoading(false);
     }
   }
+
+  useEffect(() => {
+    if (props.userName) {
+      loadPlansByUserFilter(props.userName, props.fetchPlans).catch(err => displayError(err));
+    }
+  }, [props.userName]);
 
   useEffect(() => {
     loadData().catch(err => displayError(err));
@@ -145,6 +153,7 @@ const defaultProps: PlanListProps = {
   fetchPlans: fetchPlanDefinitions,
   plans: [],
   service: OpenSRPService,
+  userName: null,
 };
 
 PlanDefinitionList.defaultProps = defaultProps;
@@ -156,6 +165,7 @@ export { PlanDefinitionList };
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
   plans: PlanDefinition[];
+  userName: string | null;
 }
 
 /** map state to props */
@@ -169,6 +179,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 
   return {
     plans: planDefinitionsArray,
+    userName,
   };
 };
 
