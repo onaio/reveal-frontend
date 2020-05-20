@@ -63,7 +63,7 @@ describe('App', () => {
       </Provider>
     );
     // before resolving get oauth state request, the user is logged out
-    expect(wrapper.text()).toMatchInlineSnapshot(`"HomeLoginreveal-frontend: 0.4.2-rc7"`);
+    expect(wrapper.text()).toMatchInlineSnapshot(`"HomeLoginReveal-frontend: v0.4.2"`);
     expect(toJson(wrapper.find('footer'))).toMatchSnapshot('footer');
     await new Promise<unknown>(resolve => setImmediate(resolve));
     wrapper.update();
