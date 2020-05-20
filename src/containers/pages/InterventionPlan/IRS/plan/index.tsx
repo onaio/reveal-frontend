@@ -1259,7 +1259,11 @@ class IrsPlan extends React.Component<
     const { country, isLoadingGeoms, filteredJurisdictionIds, newPlan } = this.state;
 
     // don't compute gisidaWrapperProps if map will not be displayed
-    if (newPlan && HIDE_MAP_FOR_INTERVENTIONS.includes(newPlan.plan_intervention_type)) {
+    if (
+      newPlan &&
+      HIDE_MAP_FOR_INTERVENTIONS &&
+      HIDE_MAP_FOR_INTERVENTIONS.includes(newPlan.plan_intervention_type)
+    ) {
       return null;
     }
 

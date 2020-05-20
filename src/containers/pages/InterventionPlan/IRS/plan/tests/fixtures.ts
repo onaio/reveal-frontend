@@ -161,3 +161,11 @@ export const jurisdictionGeo = {
   },
   id: '2942',
 };
+
+export const divDocumentCreator = (ids: string[]) => {
+  ids.forEach((id: string) => {
+    const div = document.createElement('div');
+    div.setAttribute('id', `plan-assignment-${id}`);
+    document.body.appendChild(div);
+  });
+};
