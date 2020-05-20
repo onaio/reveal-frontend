@@ -5,7 +5,11 @@ import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { FIReasonType, FIStatusType } from '../../components/forms/PlanForm/types';
-import { descendingOrderSort, removeNullJurisdictionPlans } from '../../helpers/utils';
+import {
+  descendingOrderSort,
+  getPlanRecordFromRecordResponse,
+  removeNullJurisdictionPlans,
+} from '../../helpers/utils';
 
 /** the reducer name */
 export const reducerName = 'plans';
@@ -142,6 +146,7 @@ export interface FetchPlansAction extends AnyAction {
 /** FetchPlanRecordsAction interface for PLAN_RECORDS_FETCHED */
 export interface FetchPlanRecordsAction extends AnyAction {
   planRecordsById: { [key: string]: PlanRecord };
+  planIdsByUserNames: Dictionary<string[]>;
   type: typeof PLAN_RECORDS_FETCHED;
 }
 
@@ -161,6 +166,7 @@ export type PlanActionTypes =
 /** interface for Plan state */
 interface PlanState {
   planRecordsById: { [key: string]: PlanRecord } | {};
+  planIdsByUserNames: Dictionary<string[]> | {};
   plansById: { [key: string]: Plan } | {};
 }
 
@@ -169,6 +175,7 @@ export type ImmutablePlanState = PlanState & SeamlessImmutable.ImmutableObject<P
 
 /** initial Plan state */
 const initialState: ImmutablePlanState = SeamlessImmutable({
+  planIdsByUserNames: {},
   planRecordsById: {},
   plansById: {},
 });
@@ -184,6 +191,7 @@ export default function reducer(state = initialState, action: PlanActionTypes): 
     case PLAN_RECORDS_FETCHED:
       return SeamlessImmutable({
         ...state,
+        planIdsByUserNames: { ...state.planIdsByUserNames, ...action.planIdsByUserNames },
         planRecordsById: { ...state.planRecordsById, ...action.planRecordsById },
       });
     case REMOVE_PLANS:
@@ -231,32 +239,26 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => {
 
 /** fetchPlanRecords - action creator setting planRecordsById
  * @param {PlanRecord[]} planList - an array of plan record objects
+ * @param {string} userName - openMRS user who has access to this plans.
  */
-export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlanRecordsAction => ({
-  planRecordsById: keyBy(
-    planList.map((plan: PlanRecordResponse) => {
-      const thePlan: PlanRecord = {
-        id: plan.identifier,
-        plan_date: plan.date,
-        plan_effective_period_end: plan.effective_period_end,
-        plan_effective_period_start: plan.effective_period_start,
-        plan_fi_reason: plan.fi_reason,
-        plan_fi_status: plan.fi_status,
-        plan_id: plan.identifier,
-        plan_intervention_type: plan.intervention_type,
-        plan_status: plan.status as PlanStatus,
-        plan_title: plan.title,
-        plan_version: plan.version,
-      };
-      if (plan.jurisdictions) {
-        thePlan.plan_jurisdictions_ids = [...plan.jurisdictions];
-      }
-      return thePlan;
-    }),
-    plan => plan.id
-  ),
-  type: PLAN_RECORDS_FETCHED,
-});
+export const fetchPlanRecords = (
+  planList: PlanRecordResponse[] = [],
+  userName: string | null = null
+): FetchPlanRecordsAction => {
+  const planIds: string[] = [];
+  const planRecords: PlanRecord[] = [];
+  planList.forEach(plan => {
+    const derivedPlan = getPlanRecordFromRecordResponse(plan);
+    planIds.push(derivedPlan.id);
+    planRecords.push(derivedPlan);
+  });
+  const idsByUserName = userName ? { [userName]: planIds } : {};
+  return {
+    planIdsByUserNames: idsByUserName,
+    planRecordsById: keyBy(planRecords, plan => plan.id),
+    type: PLAN_RECORDS_FETCHED,
+  };
+};
 
 // selectors
 
@@ -389,7 +391,24 @@ export interface PlanFilters {
   reason?: FIReasonType /** plan FI reason */;
   statusList?: string[] /** array of plan statuses */;
   title?: string /** plan title */;
+  userName?: string /** openMRS user, filter out plans that the user does not have access to */;
 }
+
+/** gets the planByIds object.
+ * @param {string} state - the redux store
+ */
+export const PlansByIdsBaseSelector = (planKey?: string) => (
+  state: Partial<Store>
+): Dictionary<Plan[]> => {
+  return (state as any)[reducerName][planKey ? planKey : 'plansById'];
+};
+
+/** get state slice with information on username to planIds mapping
+ * @param {string} state - the redux store
+ */
+export const planIdsByUserNamesBaseSelector = (state: Partial<Store>) => {
+  return (state as any)[reducerName].planIdsByUserNames;
+};
 
 /** plansArrayBaseSelector select an array of all plans
  * @param state - the redux store
@@ -440,6 +459,13 @@ export const getReason = (_: Partial<Store>, props: PlanFilters) => props.reason
  * @param props - the plan filters object
  */
 export const getTitle = (_: Partial<Store>, props: PlanFilters) => props.title;
+
+/** getUserName
+ * Gets userName from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getUserName = (_: Partial<Store>, props: PlanFilters) => props.userName;
 
 /** getPlansArrayByInterventionType
  * Gets an array of Plan objects filtered by interventionType
@@ -521,6 +547,28 @@ export const getPlansArrayByTitle = (planKey?: string) =>
       : plans
   );
 
+/**
+ * Gets an array of Plan objects filtered by plan userName
+ * @param {Partial<Store>} state - the redux store
+ * @param {PlanFilters} props - the plan filters object
+ */
+export const getPlansArrayByUserName = (planKey?: string) =>
+  createSelector(
+    [planIdsByUserNamesBaseSelector, PlansByIdsBaseSelector(planKey), getUserName],
+    (planIdsByUserNames, plansByIds, userName) => {
+      // get planIds listed under this userName
+      let planIds = userName ? planIdsByUserNames[userName] : [];
+      planIds = planIds ? planIds : [];
+
+      // user planIds from above to get the plan objects.
+      const plansOfInterest = userName
+        ? planIds.map((planId: string) => plansByIds[planId])
+        : values(plansByIds);
+
+      return plansOfInterest;
+    }
+  );
+
 /** makePlansArraySelector
  * Returns a selector that gets an array of Plan objects filtered by one or all
  * of the following:
@@ -530,6 +578,7 @@ export const getPlansArrayByTitle = (planKey?: string) =>
  *    - FI plan reason
  *    - plan jurisdiction parent_id
  *    - plan title
+ *    - assigned openMRS user
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *
@@ -542,7 +591,7 @@ export const getPlansArrayByTitle = (planKey?: string) =>
  * @param {PlanFilters} props - the plan filters object
  * @param {string} sortField - sort by field
  */
-export const makePlansArraySelector = (planKey?: string, sortField?: string) => {
+export const makePlansArraySelector = (planKey?: keyof PlanState, sortField?: string) => {
   return createSelector(
     [
       getPlansArrayByInterventionType(planKey),
@@ -551,13 +600,17 @@ export const makePlansArraySelector = (planKey?: string, sortField?: string) => 
       getPlansArrayByReason(planKey),
       getPlansArrayByParentJurisdictionId(planKey),
       getPlansArrayByTitle(planKey),
+      getPlansArrayByUserName(planKey),
     ],
-    (plans, plans2, plans3, plans4, plans5, plans6) =>
-      sortField
-        ? descendingOrderSort(
-            intersect([plans, plans2, plans3, plans4, plans5, plans6], JSON.stringify),
-            sortField
-          )
-        : intersect([plans, plans2, plans3, plans4, plans5, plans6], JSON.stringify)
+    (plans, plans2, plans3, plans4, plans5, plans6, plans7) => {
+      let allPlans: Plan[] = intersect(
+        [plans, plans2, plans3, plans4, plans5, plans6, plans7],
+        JSON.stringify
+      );
+      if (sortField) {
+        allPlans = descendingOrderSort(allPlans, sortField);
+      }
+      return allPlans;
+    }
   );
 };
