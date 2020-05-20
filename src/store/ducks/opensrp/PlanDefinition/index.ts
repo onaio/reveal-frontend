@@ -56,16 +56,16 @@ export type PlanDefinitionActionTypes =
 /**
  * Fetch Plan Definitions action creator
  * @param {PlanDefinition[]} planList - list of plan definition objects
- * @param {string[]} userNames - openMRS user who has access to this plans.
+ * @param {string | null} userName - openMRS user who has access to this plans.
  */
 export const fetchPlanDefinitions = (
   planList: PlanDefinition[] = [],
-  userNames: string[] = []
+  userName: string | null = null
 ): FetchPlanDefinitionsAction => {
   const planIdsByUserName: Dictionary<string[]> = {};
-  if (userNames.length > 0) {
+  if (userName) {
     const plansIds = planList.map(plan => plan.identifier);
-    userNames.forEach(userName => (planIdsByUserName[userName] = plansIds));
+    planIdsByUserName[userName] = plansIds;
   }
   return {
     planDefinitionsById: keyBy(planList, 'identifier'),

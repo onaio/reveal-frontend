@@ -152,16 +152,14 @@ describe('reducers/opensrp/PlanDefinition.reselect.userNameFilter', () => {
 
   it('userName filter works correctly', () => {
     const sampleUserName = 'user';
-    store.dispatch(fetchPlanDefinitions(fixtures.plans as PlanDefinition[], [sampleUserName]));
+    store.dispatch(fetchPlanDefinitions(fixtures.plans as PlanDefinition[], sampleUserName));
     expect(plansArraySelector(store.getState(), { userName: 'nonExistent' })).toEqual([]);
     expect(plansArraySelector(store.getState(), { userName: sampleUserName })).toEqual(
       fixtures.plans
     );
     // dispatch call (x+1) should not overwrite the work done by dispatch call x.
     const anotherUserName = 'user2';
-    store.dispatch(
-      fetchPlanDefinitions([fixtures.plans[0]] as PlanDefinition[], [anotherUserName])
-    );
+    store.dispatch(fetchPlanDefinitions([fixtures.plans[0]] as PlanDefinition[], anotherUserName));
     expect(plansArraySelector(store.getState(), { userName: anotherUserName })).toEqual([
       fixtures.plans[0],
     ]);
