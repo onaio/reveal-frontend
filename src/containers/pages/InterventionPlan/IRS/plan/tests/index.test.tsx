@@ -287,15 +287,15 @@ describe('containers/pages/IRS/plan', () => {
     wrapper.update();
     expect(wrapper.find('.table-bread-crumbs li').length).toEqual(1);
     expect(wrapper.find('.table-bread-crumbs li').text()).toEqual('Lusaka');
+    /**
+     * to do
+     * find a way to mock mapbox Map and
+     * mock getGisidaMapById function from utils to return the mocked Map
+     */
     expect(getGisidaMapByIdSpy).toHaveBeenCalledWith('map-1');
 
     expect(loadPlanMock).not.toBeCalled();
     expect(mockRead.mock.calls.length).toBe(4);
     expect(supersetServiceMock.mock.calls.length).toBe(1);
-
-    /**
-     * to do
-     * find a way to mock mapbox map
-     */
   });
 });
