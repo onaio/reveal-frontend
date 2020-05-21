@@ -70,30 +70,21 @@ export class OpenSRPService extends OpenSRPServiceWeb {
   ) {
     super(baseURL, endpoint, getPayload);
   }
-  /** create method
-   * Send a POST request to the general endpoint containing the new object data
-   * Successful requests will result in a HTTP status 201 response with no body
-   * @param {T} data - the data to be POSTed
-   * @param {params} params - the url params object
-   * @param {HTTPMethod} method - the HTTP method
-   * @returns the object returned by API
-   */
-  public async create<T>(data: T, params: any = null, method: HTTPMethod = 'POST'): Promise<{}> {
-    const url = OpenSRPService.getURL(this.generalURL, params);
-    const payload = {
-      ...this.getOptions(this.signal, method),
-      'Cache-Control': 'no-cache',
-      Pragma: 'no-cache',
-      body: JSON.stringify(data),
-    };
-    const response = await fetch(url, payload);
 
-    if (!response.ok || response.status !== 201) {
+  public async readFile(
+    id: string | number,
+    params: URLParams | null = null,
+    method: HTTPMethod = 'GET'
+  ): Promise<any> {
+    const url = OpenSRPService.getURL(`${this.generalURL}/${id}`, params);
+    const response = await fetch(url, this.getOptions(this.signal, method));
+
+    if (!response.ok) {
       throw new Error(
-        `OpenSRPService create on ${this.endpoint} failed, HTTP status ${response.status}`
+        `OpenSRPService read on ${this.endpoint} failed, HTTP status ${response.status}`
       );
     }
 
-    return {};
+    return await response.blob();
   }
 }

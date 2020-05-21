@@ -1,5 +1,5 @@
-import download from 'downloadjs';
 import { toast } from 'react-toastify';
+import { OPENSRP_API_BASE_URL } from '../../../../../configs/env';
 import { FILE_UPLOAD_FAILED, FILE_UPLOADED_SUCCESSFULLY } from '../../../../../configs/lang';
 import { OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT } from '../../../../../constants';
 import { growl } from '../../../../../helpers/utils';
@@ -21,47 +21,16 @@ export const loadFiles = async () => {
       growl(err.message, { type: toast.TYPE.ERROR });
     });
 };
-/**
- * Fetches csv data from server and downloads the same
- * Todo:
- * Use Opensrpservice to make this call
- * @param {string} url - identifier eg 342515535161162.csv
- * @param {string} fileName - csv file name
- */
-export const fetchCsvData = (url: string, fileName: string) => async () => {
-  const response = await fetch(
-    `https://reveal-stage.smartregister.org/opensrp/rest/upload/download/${url}`,
-    {
-      headers: {
-        Authorization: `Bearer ${getAccessToken(store.getState())}`,
-      },
-      method: 'GET',
-    }
-  )
-    .then(resp => {
-      if (!resp.ok) {
-        throw new Error(`Submission Export Failed, HTTP status ${resp.status}`);
-      }
-      return resp.blob();
-    })
-    .then(blob => {
-      download(blob, fileName, 'text/csv');
-    });
-  return response;
-};
 
 export const postUploadedFile = async (data: any, setStateIfDone: () => void) => {
   const bearer = `Bearer ${getAccessToken(store.getState())}`;
-  await fetch(
-    'https://reveal-stage.smartregister.org/opensrp/rest/upload/?event_name=Child%20Registration',
-    {
-      body: data,
-      headers: {
-        Authorization: bearer,
-      },
-      method: 'POST',
-    }
-  )
+  await fetch(`${OPENSRP_API_BASE_URL}/upload/?event_name=Child%20Registration`, {
+    body: data,
+    headers: {
+      Authorization: bearer,
+    },
+    method: 'POST',
+  })
     .then(response => response.json())
     .then(async () => {
       growl(FILE_UPLOADED_SUCCESSFULLY, {
@@ -75,5 +44,27 @@ export const postUploadedFile = async (data: any, setStateIfDone: () => void) =>
         onClose: () => setStateIfDone(),
         type: toast.TYPE.ERROR,
       });
+    });
+};
+/**
+ * Handles file downloads from server
+ * @param {string} id csv identifier
+ * @param {string} name file name
+ */
+export const handleDownload = (id: string, name: string) => () => {
+  const downloadService = new OpenSRPService(`upload/download`);
+  downloadService
+    .readFile(id)
+    .then(res => {
+      const url = window.URL.createObjectURL(res);
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = name;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    })
+    .catch(err => {
+      growl(err.message, { type: toast.TYPE.ERROR });
     });
 };

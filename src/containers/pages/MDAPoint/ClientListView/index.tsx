@@ -30,7 +30,7 @@ import filesReducer, {
   reducerName as filesReducerName,
 } from '../../../../store/ducks/opensrp/files/index';
 import { ClientUpload } from '../ClientUpload';
-import { fetchCsvData, loadFiles } from './helpers/serviceHooks';
+import { handleDownload, loadFiles } from './helpers/serviceHooks';
 /** register the plans reducer */
 reducerRegistry.register(filesReducerName, filesReducer);
 /** interface to describe props for ClientListView component */
@@ -51,10 +51,11 @@ export const defaultClientListViewProps: ClientListViewProps = {
  */
 export const buildListViewData: (rowData: File[]) => ReactNode[][] | undefined = rowData => {
   return rowData.map((row: File, key: number) => {
+    const { url, fileName } = row;
     return [
       <p key={key}>
-        {row.fileName} &nbsp;
-        <a href="#" onClick={fetchCsvData(row.url, row.fileName)}>
+        {fileName} &nbsp;
+        <a href="#" onClick={handleDownload(url, fileName)}>
           (Downloads)
         </a>
       </p>,
@@ -130,7 +131,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
           {listViewProps && props.files && props.files.length ? (
             <ListView {...listViewProps} />
           ) : (
-            <Loading minHeight={'12px'} />
+            <Loading />
           )}
         </Col>
       </Row>
