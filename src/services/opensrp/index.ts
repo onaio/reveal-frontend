@@ -9,14 +9,14 @@ type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 /** get default HTTP headers for OpenSRP service */
 export function getDefaultHeaders(
-  accept: string = 'application/json',
-  authorizationType: string = 'Bearer',
-  contentType: string = 'application/json;charset=UTF-8'
+  accept: string = '*/*',
+  authorizationType: string = 'Bearer'
+  // contentType: undefined = undefined
 ): IncomingHttpHeaders {
   return {
     accept,
     authorization: `${authorizationType} ${getAccessToken(store.getState())}`,
-    'content-type': contentType,
+    'content-type': undefined,
   };
 }
 
@@ -69,5 +69,32 @@ export class OpenSRPService extends OpenSRPServiceWeb {
     getPayload: typeof getPayloadOptions = getPayloadOptions
   ) {
     super(baseURL, endpoint, getPayload);
+  }
+  /** create method
+   * Send a POST request to the general endpoint containing the new object data
+   * Successful requests will result in a HTTP status 201 response with no body
+   * @param {T} data - the data to be POSTed
+   * @param {params} params - the url params object
+   * @param {HTTPMethod} method - the HTTP method
+   * @returns the object returned by API
+   */
+  public async create<T>(data: T, params: any = null, method: HTTPMethod = 'POST'): Promise<{}> {
+    console.log('create value', data);
+    const url = OpenSRPService.getURL(this.generalURL, params);
+    const payload = {
+      ...this.getOptions(this.signal, method),
+      'Cache-Control': 'no-cache',
+      Pragma: 'no-cache',
+      body: JSON.stringify(data),
+    };
+    const response = await fetch(url, payload);
+
+    if (!response.ok || response.status !== 201) {
+      throw new Error(
+        `OpenSRPService create on ${this.endpoint} failed, HTTP status ${response.status}`
+      );
+    }
+
+    return {};
   }
 }

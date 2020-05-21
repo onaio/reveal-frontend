@@ -4,6 +4,7 @@ import { Alert, Button, Col, FormGroup, Label, Row } from 'reactstrap';
 import * as Yup from 'yup';
 import { ENABLE_MDA_POINT } from '../../../configs/env';
 import { EXPORT_CLIENT_LIST, EXPORT_STUDENT_LIST, REQUIRED } from '../../../configs/lang';
+import { OpenSRPService } from '../../../services/opensrp';
 import JurisdictionSelect from '../JurisdictionSelect';
 export const JurisdictionSchema = Yup.object().shape({
   jurisdictions: Yup.object().shape({
@@ -41,18 +42,18 @@ export const ExportForm = () => {
             onSubmit={() => {
               /** Code below Awaiting api */
               // const payload = generatePlanDefinition(values);
-              //   const apiService = new OpenSRPService('plans');
-              //   apiService
-              //     .create(payload)
-              //     .then(() => {
-              //       setSubmitting(false);
-              //       setAreWeDoneHere(true);
-              //     })
-              //     .catch((e: Error) => {
-              //       setGlobalError(e.message);
-              //     });
-              // }}
+              const apiService = new OpenSRPService('upload/');
+              apiService
+                .read('template', { event_name: 'Child Registration', location_id: 12345 })
+                .then(() => {
+                  // setSubmitting(false);
+                  // setAreWeDoneHere(true);
+                })
+                .catch((e: Error) => {
+                  // setGlobalError(e.message);
+                });
             }}
+            // }}
             validationSchema={JurisdictionSchema}
           >
             {({ errors }) => (

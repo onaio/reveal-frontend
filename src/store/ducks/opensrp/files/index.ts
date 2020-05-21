@@ -11,8 +11,8 @@ export interface File {
   fileLength: number; // the length of the file (lines / rows)
   fileName: string; // the name of the file
   fileSize: string; // the of the file
-  lastUpdated: string; // the date of the latest file update
-  owner: string; // the username of the file creator
+  uploadDate: string; // the date of the latest file update
+  providerID: string; // the username of the file creator
   url: string; // download location of the file
 }
 
