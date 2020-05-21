@@ -36,7 +36,7 @@ export const DropDownRenderer = (props: DropDownRendererProps = defaultDropDownR
   );
 };
 
-export const ColumnHidder = <T extends object>({ allColumns }: ActualTableInstanceProps<T>) => {
+export const ColumnHider = <T extends object>({ allColumns }: ActualTableInstanceProps<T>) => {
   return (
     <>
       <DropDownRenderer
