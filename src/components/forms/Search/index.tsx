@@ -1,8 +1,8 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { debounce } from 'lodash';
 import queryString from 'querystring';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { Input } from 'reactstrap';
 import { SEARCH } from '../../../configs/lang';
 import { QUERY_PARAM_TITLE } from '../../../constants';
 import { getQueryParams } from '../../../helpers/utils';
@@ -64,13 +64,22 @@ const BaseSearchForm = (props: SearchInputPropsType) => {
 
   return (
     <div className="search-input-wrapper">
-      <Input
-        className="form-control search-input"
-        type="text"
-        name="search"
-        placeholder={placeholder}
-        onInput={debouncedOnChangeHandler}
-      />
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text bg-transparent border-right-0" id="basic-addon1">
+            <FontAwesomeIcon className="search-icon" icon="search" />
+          </span>
+        </div>
+        <input
+          type="text"
+          className="form-control border-left-0 border search-input"
+          aria-label="search"
+          aria-describedby="basic-addon1"
+          name="search"
+          placeholder={placeholder}
+          onInput={debouncedOnChangeHandler}
+        />
+      </div>
     </div>
   );
 };
