@@ -139,7 +139,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
       <div style={{ display: 'inline-block' }}>
         <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
       </div>
-      <UserSelectFilter serviceClass={OpenSRPService} />
+      <UserSelectFilter serviceClass={props.service} />
       <Row>
         <Col>
           <ListView {...listViewProps} />
