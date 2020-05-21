@@ -4,17 +4,17 @@ import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import DropdownMenu from 'reactstrap/lib/DropdownMenu';
-import { FILTER, USER } from '../../../configs/lang';
+import { FILTER, SELECT_USERNAME, USER } from '../../../configs/lang';
 import { QUERY_PARAM_USER } from '../../../constants';
 import { getQueryParams } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import { DropDownRenderer } from '../../DropDownRenderer';
-import UserIdSelect, { Option } from '../PractitionerForm/UserIdSelect';
+import UserIdSelect, { OptionTypes } from '../PractitionerForm/UserIdSelect';
 import './index.css';
 
 /** props for BaseUserFilter Component */
 interface BaseUserSelectFilterProps {
-  onChangeHandler?: (option: Option) => void;
+  onChangeHandler?: (option: OptionTypes) => void;
   serviceClass: typeof OpenSRPService;
 }
 
@@ -23,14 +23,19 @@ const defaultProps = {
   serviceClass: OpenSRPService,
 };
 
+/** combined props for BaseUserSelectorFilter */
 export type BaseUserSelectFilterPropTypes = BaseUserSelectFilterProps & RouteComponentProps;
 
-export const defaultHandler = (option: Option, props: BaseUserSelectFilterPropTypes) => {
-  const targetValue = option.label;
+export const defaultHandler = (option: OptionTypes, props: BaseUserSelectFilterPropTypes) => {
   const allQueryParams = getQueryParams(props.location);
-  // modify just the search and leave the rest
-  allQueryParams[QUERY_PARAM_USER] = targetValue;
-
+  if (option) {
+    const targetValue = option.label;
+    // modify just the user query param and leave the rest
+    allQueryParams[QUERY_PARAM_USER] = targetValue;
+  } else {
+    // make sure we do not have this as a search parameter
+    delete allQueryParams[QUERY_PARAM_USER];
+  }
   props.history.push(`${props.match.url}?${queryString.stringify(allQueryParams)}`);
 };
 
@@ -40,7 +45,10 @@ export const defaultHandler = (option: Option, props: BaseUserSelectFilterPropTy
  * This component is a wrapper around the UserIdSelect component
  */
 export const BaseUserSelectFilter = (props: BaseUserSelectFilterPropTypes) => {
-  const onChangeHandler = (option: Option) => {
+  let defaultUserNameValue = getQueryParams(props.location)[QUERY_PARAM_USER] as string | undefined;
+  defaultUserNameValue = defaultUserNameValue ? defaultUserNameValue : SELECT_USERNAME;
+
+  const onChangeHandler = (option: OptionTypes) => {
     // a custom onChangeHandler will override the default implementation
     if (props.onChangeHandler) {
       props.onChangeHandler(option);
@@ -50,6 +58,7 @@ export const BaseUserSelectFilter = (props: BaseUserSelectFilterPropTypes) => {
   };
 
   const userIdSelectProps = {
+    ReactSelectDefaultValue: { label: defaultUserNameValue, value: '' },
     onChangeHandler,
     serviceClass: OpenSRPService,
     showPractitioners: true,
