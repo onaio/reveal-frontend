@@ -220,7 +220,7 @@ describe('containers/pages/IRS/plan', () => {
     };
 
     const getFeatureByPropertySpy = jest.spyOn(utils, 'getFeatureByProperty');
-
+    const getGisidaMapByIdSpy = jest.spyOn(utils, 'getGisidaMapById');
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
@@ -279,9 +279,23 @@ describe('containers/pages/IRS/plan', () => {
     expect(getFeatureByPropertySpy).toHaveBeenCalledWith('jurisdictionId', '1B');
     expect(wrapper.find('AssignTeamButton Button').length).toBe(1);
     expect(wrapper.find('.assignment-label').text()).toEqual('The Luang');
+    // go back to level 1
+    wrapper
+      .find('.table-bread-crumb-link')
+      .at(0)
+      .simulate('click');
+    wrapper.update();
+    expect(wrapper.find('.table-bread-crumbs li').length).toEqual(1);
+    expect(wrapper.find('.table-bread-crumbs li').text()).toEqual('Lusaka');
+    expect(getGisidaMapByIdSpy).toHaveBeenCalledWith('map-1');
 
     expect(loadPlanMock).not.toBeCalled();
     expect(mockRead.mock.calls.length).toBe(4);
     expect(supersetServiceMock.mock.calls.length).toBe(1);
+
+    /**
+     * to do
+     * find a way to mock mapbox map
+     */
   });
 });
