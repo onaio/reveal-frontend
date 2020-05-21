@@ -5,6 +5,7 @@ import React, { ReactNode } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import Loading from '../../../../components/page/Loading'
 import {
   Button,
   Col,
@@ -25,7 +26,7 @@ import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { ENABLE_MDA_POINT } from '../../../../configs/env';
+import { ENABLE_MDA_POINT, OPENSRP_API_BASE_URL } from '../../../../configs/env';
 import {
   ADD_NEW_CSV,
   CLIENTS_TITLE,
@@ -36,7 +37,7 @@ import {
 } from '../../../../configs/lang';
 import { HOME_URL, STUDENTS_LIST_URL, UPLOAD_STUDENT_CSV_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { OpenSRPService } from '../../../../services/opensrp';
+import { OpenSRPService, getDefaultHeaders, getPayloadOptions } from '../../../../services/opensrp';
 import { fetchFiles, File } from '../../../../store/ducks/opensrp/files/index';
 import filesReducer, {
   getFilesArray,
@@ -44,7 +45,7 @@ import filesReducer, {
 } from '../../../../store/ducks/opensrp/files/index';
 import { ClientUpload } from '../ClientUpload';
 import { uploadedStudentsLists } from '../dummy-data/dummy';
-import { loadFiles } from './helpers/serviceHooks';
+import { loadFiles, handleDownload } from './helpers/serviceHooks';
 /** register the plans reducer */
 reducerRegistry.register(filesReducerName, filesReducer);
 /** interface to describe props for ClientListView component */
@@ -62,12 +63,13 @@ export const defaultClientListViewProps: ClientListViewProps = {
 
 export const buildListViewData: (rowData: File[]) => ReactNode[][] | undefined = rowData => {
   return rowData.map((row: File, key: number) => {
+    const {identifier, fileName} = row;
     return [
       <p key={key}>
-        {row.fileName} &nbsp;
+        {fileName} &nbsp;
         <a
-          href={`https://reveal-stage.smartregister.org/opensrp/rest/upload/download/${row.url}`}
-          download={true}
+          href='#'
+          onClick={e => handleDownload(e, identifier, fileName)}
         >
           (Downloads)
         </a>
@@ -154,7 +156,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
         <Col>
           {listViewProps && props.files && props.files.length ? (
             <ListView {...listViewProps} />
-          ) : null}
+          ) : <Loading />}
         </Col>
       </Row>
       <hr />
