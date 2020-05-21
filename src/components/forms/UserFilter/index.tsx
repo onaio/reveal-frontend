@@ -34,7 +34,7 @@ export const defaultHandler = (option: Option, props: BaseUserSelectFilterPropTy
   props.history.push(`${props.match.url}?${queryString.stringify(allQueryParams)}`);
 };
 
-/** presentational component that renders a filter where you can select an openMRS user
+/** presentational component that renders a filter where you can select an user
  * that then filters plans that the user has access to.
  *
  * This component is a wrapper around the UserIdSelect component

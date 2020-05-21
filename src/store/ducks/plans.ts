@@ -239,7 +239,7 @@ export const fetchPlans = (plansList: Plan[] = []): FetchPlansAction => {
 
 /** fetchPlanRecords - action creator setting planRecordsById
  * @param {PlanRecord[]} planList - an array of plan record objects
- * @param {string} userName - openMRS user who has access to this plans.
+ * @param {string} userName - user who has access to this plans.
  */
 export const fetchPlanRecords = (
   planList: PlanRecordResponse[] = [],
@@ -391,7 +391,7 @@ export interface PlanFilters {
   reason?: FIReasonType /** plan FI reason */;
   statusList?: string[] /** array of plan statuses */;
   title?: string /** plan title */;
-  userName?: string /** openMRS user, filter out plans that the user does not have access to */;
+  userName?: string /** user, filter out plans that the user does not have access to */;
 }
 
 /** gets the planByIds object.
@@ -578,7 +578,7 @@ export const getPlansArrayByUserName = (planKey?: string) =>
  *    - FI plan reason
  *    - plan jurisdiction parent_id
  *    - plan title
- *    - assigned openMRS user
+ *    - assigned user
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *

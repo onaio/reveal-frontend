@@ -5,7 +5,7 @@ import { OpenSRPService } from '../../services/opensrp';
 import store from '../../store';
 import { growl } from '../utils';
 
-/** find plans that the given OpenMRS userName has access to
+/** find plans that the given user has access to
  * @param {string} userName - openMRSUserName
  * @param {typeof fetchPractitioners} fetchPractitionersActionCreator - action creator for adding practitioners to store
  * @param {typeof OpenSRPService} service -  the OpenSRP service

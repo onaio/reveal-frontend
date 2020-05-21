@@ -56,7 +56,7 @@ export type PlanDefinitionActionTypes =
 /**
  * Fetch Plan Definitions action creator
  * @param {PlanDefinition[]} planList - list of plan definition objects
- * @param {string | null} userName - openMRS user who has access to this plans.
+ * @param {string | null} userName - user who has access to this plans.
  */
 export const fetchPlanDefinitions = (
   planList: PlanDefinition[] = [],
@@ -192,7 +192,7 @@ export function getPlanDefinitionsArray(
 /** This interface represents the structure of plan definition filter options/params */
 export interface PlanDefinitionFilters {
   title?: string /** plan object title */;
-  userName?: string /** openMRS user, filter out plans that the user does not have access to */;
+  userName?: string /** user, filter out plans that the user does not have access to */;
 }
 
 /** planDefinitionsArrayBaseSelector select an array of all plans
