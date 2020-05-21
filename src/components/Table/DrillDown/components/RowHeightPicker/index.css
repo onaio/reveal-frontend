@@ -1,0 +1,7 @@
+.row-height {
+  padding: 5px 15px !important;
+}
+
+.row-height .form-check {
+  margin-bottom: 5px;
+}
