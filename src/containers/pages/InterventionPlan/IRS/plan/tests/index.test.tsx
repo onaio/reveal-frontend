@@ -13,6 +13,7 @@ import store from '../../../../../../store';
 import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../../../store/ducks/jurisdictions';
+import { fetchAssignments } from '../../../../../../store/ducks/opensrp/assignments';
 import plansReducer, {
   fetchPlanRecords,
   PlanRecordResponse,
@@ -23,6 +24,7 @@ import { irsPlanRecordResponse1, jurisdictionsById } from '../../tests/fixtures'
 import ConnectedIrsPlan, { IrsPlan } from './..';
 import * as serviceCalls from './../serviceCalls';
 import {
+  assignments,
   divDocumentCreator,
   irsPlanRecordActive,
   irsPlanRecordActiveResponse,
@@ -142,7 +144,6 @@ describe('containers/pages/IRS/plan', () => {
     store.dispatch(fetchPlanRecords([irsPlanRecordDraftResponse as PlanRecordResponse]));
     const supersetServiceMock: any = jest.fn(() => Promise.resolve(jurisidictionResults));
     const loadPlanMock: any = jest.spyOn(serviceCalls, 'loadPlan');
-
     const mockRead = jest.fn();
     mockRead
       .mockReturnValueOnce(Promise.resolve([fixtures.assignment1])) // First organization
@@ -193,6 +194,7 @@ describe('containers/pages/IRS/plan', () => {
   it('renders correctly if props.planById.plan_status is active', async () => {
     divDocumentCreator(['0', '1B', '2942']);
     store.dispatch(fetchPlanRecords([irsPlanRecordActiveResponse as PlanRecordResponse]));
+    store.dispatch(fetchAssignments(assignments));
     const supersetServiceMock: any = jest.fn(() => Promise.resolve(jurisidictionResults));
     const loadPlanMock: any = jest.spyOn(serviceCalls, 'loadPlan');
 
@@ -275,6 +277,8 @@ describe('containers/pages/IRS/plan', () => {
         .text()
     ).toEqual('1B');
     expect(getFeatureByPropertySpy).toHaveBeenCalledWith('jurisdictionId', '1B');
+    expect(wrapper.find('AssignTeamButton Button').length).toBe(1);
+    expect(wrapper.find('.assignment-label').text()).toEqual('The Luang');
 
     expect(loadPlanMock).not.toBeCalled();
     expect(mockRead.mock.calls.length).toBe(4);

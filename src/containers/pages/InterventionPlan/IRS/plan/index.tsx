@@ -685,7 +685,9 @@ class IrsPlan extends React.Component<
       const clickedTableCrumb = this.state.tableCrumbs.find(c => c.id === e.currentTarget.id);
       const { newPlan } = this.state;
       const hideMap =
-        newPlan && HIDE_MAP_FOR_INTERVENTIONS.includes(newPlan.plan_intervention_type);
+        newPlan &&
+        HIDE_MAP_FOR_INTERVENTIONS &&
+        HIDE_MAP_FOR_INTERVENTIONS.includes(newPlan.plan_intervention_type);
       if (clickedTableCrumb && clickedTableCrumb.bounds && this.state.country && !hideMap) {
         // update map position
         setGisidaMapPosition({ bounds: clickedTableCrumb.bounds });
@@ -1750,7 +1752,7 @@ class IrsPlan extends React.Component<
     const features = point ? Map.queryRenderedFeatures(point) : [];
     const { ADMN0_EN, jurisdictionId, tilesets } = country;
     const bounds = e.bounds || country.bounds;
-    if (!features.length && tilesets && bounds) {
+    if (!features.length && tilesets && bounds && Map) {
       if (tilesets.length) {
         let t = geographicLevel || baseTilesetGeographicLevel;
         for (t; t < tilesets.length; t += 1) {
