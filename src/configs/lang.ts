@@ -264,6 +264,10 @@ export const ORGANIZATION_EDITED_SUCCESSFULLY = translate(
   'ORGANIZATION_EDITED_SUCCESSFULLY',
   `Team edited successfully.`
 );
+export const FILE_UPLOADED_SUCCESSFULLY = translate(
+  'FILE_UPLOADED_SUCCESSFULLY',
+  `File uploaded successfully.`
+);
 export const ORGANIZATION_CREATED_SUCCESSFULLY = translate(
   'ORGANIZATION_CREATED_SUCCESSFULLY',
   `Team created successfully`
