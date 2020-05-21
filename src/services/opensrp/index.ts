@@ -84,7 +84,6 @@ export class OpenSRPService extends OpenSRPServiceWeb {
         `OpenSRPService read on ${this.endpoint} failed, HTTP status ${response.status}`
       );
     }
-
     return await response.blob();
   }
 }

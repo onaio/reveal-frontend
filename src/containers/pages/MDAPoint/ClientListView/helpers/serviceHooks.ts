@@ -1,6 +1,7 @@
+import { Dictionary } from '@onaio/utils';
 import { toast } from 'react-toastify';
 import { OPENSRP_API_BASE_URL } from '../../../../../configs/env';
-import { FILE_UPLOAD_FAILED, FILE_UPLOADED_SUCCESSFULLY } from '../../../../../configs/lang';
+import { FILE_UPLOADED_SUCCESSFULLY } from '../../../../../configs/lang';
 import { OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT } from '../../../../../constants';
 import { growl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
@@ -21,7 +22,13 @@ export const loadFiles = async () => {
       growl(err.message, { type: toast.TYPE.ERROR });
     });
 };
-
+/**
+ * Posts uploaded file to opensrp
+ * Todo:
+ * Investigate why opensrp service fails to upload file
+ * @param data uploaded formdata payload
+ * @param setStateIfDone set state to trigger redirect on upload
+ */
 export const postUploadedFile = async (data: any, setStateIfDone: () => void) => {
   const bearer = `Bearer ${getAccessToken(store.getState())}`;
   await fetch(`${OPENSRP_API_BASE_URL}/upload/?event_name=Child%20Registration`, {
@@ -39,11 +46,8 @@ export const postUploadedFile = async (data: any, setStateIfDone: () => void) =>
       });
       await loadFiles();
     })
-    .catch(() => {
-      growl(FILE_UPLOAD_FAILED, {
-        onClose: () => setStateIfDone(),
-        type: toast.TYPE.ERROR,
-      });
+    .catch(err => {
+      growl(err.message, { type: toast.TYPE.ERROR });
     });
 };
 /**
@@ -51,10 +55,11 @@ export const postUploadedFile = async (data: any, setStateIfDone: () => void) =>
  * @param {string} id csv identifier
  * @param {string} name file name
  */
-export const handleDownload = (id: string, name: string) => () => {
-  const downloadService = new OpenSRPService(`upload/download`);
+export const handleDownload = (id: string, name: string, params?: Dictionary) => {
+  const apiEndpoint = params ? `upload` : `upload/download`;
+  const downloadService = new OpenSRPService(apiEndpoint);
   downloadService
-    .readFile(id)
+    .readFile(id, params)
     .then(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
@@ -62,6 +67,7 @@ export const handleDownload = (id: string, name: string) => () => {
       a.href = url;
       a.download = name;
       a.click();
+
       window.URL.revokeObjectURL(url);
     })
     .catch(err => {

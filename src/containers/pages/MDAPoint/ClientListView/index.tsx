@@ -55,7 +55,8 @@ export const buildListViewData: (rowData: File[]) => ReactNode[][] | undefined =
     return [
       <p key={key}>
         {fileName} &nbsp;
-        <a href="#" onClick={handleDownload(url, fileName)}>
+        {/* tslint:disable-next-line jsx-no-lambda */}
+        <a href="#" onClick={() => handleDownload(url, fileName)}>
           (Downloads)
         </a>
       </p>,
@@ -83,7 +84,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
   if (props.files && props.files.length) {
     listViewProps = {
       data: buildListViewData(props.files),
-      headerItems: ['File Name', 'Owner', 'File Size', 'Number of Students', 'Upload Date'],
+      headerItems: ['File Name', 'Owner', 'Upload Date'],
       tableClass: 'table table-bordered',
     };
   }
