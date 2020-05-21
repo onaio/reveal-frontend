@@ -1,41 +1,49 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Dictionary } from '@onaio/utils';
+import { ErrorMessage, Field, Formik } from 'formik';
 import React, { useState } from 'react';
-import {
-  Alert,
-  Button,
-  Col,
-  FormGroup,
-  Input,
-  Label,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  Row,
-} from 'reactstrap';
+import { Redirect } from 'react-router';
+import { Button, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import * as Yup from 'yup';
+import JurisdictionSelect from '../../../../components/forms/JurisdictionSelect';
 import LinkAsButton from '../../../../components/LinkAsButton';
-import { OpenSRPService } from '../../../../services/opensrp';
-import store from '../../../../store';
-import { getAccessToken } from '../../../../store/selectors';
-import { UploadStatus } from './uploadstatus';
+import { REQUIRED } from '../../../../configs/lang';
+import { STUDENTS_LIST_URL } from '../../../../constants';
+import { postUploadedFile } from '../ClientListView/helpers/serviceHooks';
+import UploadStatus from '../ClientUploadStatus/';
 export const uploadValidationSchema = Yup.object().shape({
   file: Yup.mixed().required(),
+  jurisdictions: Yup.object().shape({
+    id: Yup.string().required(REQUIRED),
+    name: Yup.string(),
+  }),
 });
 /** interface to describe props for ExportForm component */
 export interface UploadFormField {
   file: string | null;
   location: any;
+  jurisdictions: Dictionary;
 }
 export const ClientUpload = (props: any) => {
   const [selectedFile, setSelectedFile] = useState<any>(null);
+  const [ifDoneHere, setIfDoneHere] = useState<boolean>(false);
   const defaultInitialValues: UploadFormField = {
     file: null,
+    jurisdictions: {
+      id: '',
+      name: '',
+    },
     location: props.location,
   };
   const closeUploadModal = {
     classNameProp: 'focus-investigation btn btn-primary float-right mt-0',
     text: 'Go Back',
     to: '/clients/students',
+  };
+  if (ifDoneHere) {
+    return <Redirect to={STUDENTS_LIST_URL} />;
+  }
+  const setStateIfDone = () => {
+    setIfDoneHere(true);
   };
   return (
     <div>
@@ -46,58 +54,44 @@ export const ClientUpload = (props: any) => {
             initialValues={defaultInitialValues}
             validationSchema={uploadValidationSchema}
             // tslint:disable-next-line: jsx-no-lambda
-            onSubmit={(values, { setSubmitting }) => {
-              setSubmitting(true);
-              const { file } = values;
+            onSubmit={async (values, { setSubmitting }) => {
+              const setSubmittingStatus = () => setSubmitting(false);
               const data = new FormData();
               data.append('file', selectedFile);
-              // tslint:disable-next-line: no-floating-promises
-              // axios
-              //   .post(
-              //     'https://reveal-stage.smartregister.org/opensrp/rest/upload/validate?event_name=Child%20Registration',
-              //     data,
-              //     {
-              //       // receive two parameter endpoint url ,form data
-              //     }
-              //   )
-              //   .then(res => {
-              //     // then print response status
-              //     console.log(res.statusText);
-              //   });
-              // const apiService = new OpenSRPService('upload/validate');
-              // apiService
-              //   .create(data, { event_name: 'Child Registration' })
-              //   .then(response => {
-              //     console.log(response);
-              //     // setSubmitting(false);
-              //     // setAreWeDoneHere(true);
-              //   })
-              //   .catch((e: Error) => {
-              //     console.log(e);
-              //     // setGlobalError(e.message);
-              //   });
-              const bearer = `Bearer ${getAccessToken(store.getState())}`;
-              fetch(
-                'https://reveal-stage.smartregister.org/opensrp/rest/upload/?event_name=Child%20Registration',
-                {
-                  method: 'POST',
-                  body: data,
-                  headers: {
-                    Authorization: bearer,
-                  },
-                }
-              )
-                .then(response => response.json())
-                .then(data => {
-                  console.log(data);
-                })
-                .catch(error => {
-                  console.error(error);
-                });
+              const uploadParams = `&location_id=${values.jurisdictions.id}`;
+              await postUploadedFile(data, setStateIfDone, setSubmittingStatus, uploadParams);
             }}
           >
-            {({ values, setFieldValue, handleSubmit, isSubmitting, errors }) => (
+            {({ values, setFieldValue, handleSubmit, errors, isSubmitting }) => (
               <form onSubmit={handleSubmit} data-enctype="multipart/form-data">
+                <FormGroup className={'async-select-container'}>
+                  <Label for={`jurisdictions-${1}-id`}>{'Geographical level to include'}</Label>
+                  &nbsp;
+                  <div style={{ display: 'inline-block', width: '24rem' }}>
+                    <Field
+                      required={true}
+                      component={JurisdictionSelect}
+                      cascadingSelect={true}
+                      name={`jurisdictions.id`}
+                      id={`jurisdictions-id`}
+                      className={'async-select'}
+                      labelFieldName={`jurisdictions.name`}
+                    />
+                  </div>
+                  <Field type="hidden" name={`jurisdictions.name`} id={`jurisdictions-name`} />
+                  {errors.jurisdictions && (
+                    <small className="form-text text-danger jurisdictions-error">
+                      {'Please select location'}
+                    </small>
+                  )}
+                  {
+                    <ErrorMessage
+                      name={`jurisdictions.id`}
+                      component="small"
+                      className="form-text text-danger"
+                    />
+                  }
+                </FormGroup>
                 <FormGroup>
                   <Label for="upload-file">Upload File</Label>
                   <Input
@@ -108,7 +102,6 @@ export const ClientUpload = (props: any) => {
                     // tslint:disable-next-line: jsx-no-lambda
                     onChange={(event: any) => {
                       setSelectedFile(event.target.files[0]);
-                      //   console.log(typeof event.target.files[0]);
                       setFieldValue(
                         'file',
                         event && event.target && event.target.files && event.target.files[0]
@@ -117,7 +110,10 @@ export const ClientUpload = (props: any) => {
                   />
                 </FormGroup>
                 <UploadStatus uploadFile={values.file} />
-                {errors.file ? <p> {JSON.stringify(errors.file)} </p> : null}
+
+                {errors && errors.file ? (
+                  <small className="form-text text-danger jurisdictions-error">{errors.file}</small>
+                ) : null}
                 <hr />
                 <div style={{ display: 'inline-block', width: '12rem' }}>
                   <Button
@@ -125,6 +121,7 @@ export const ClientUpload = (props: any) => {
                     id="studentexportform-submit-button"
                     className="btn btn-md btn btn-primary"
                     color="primary"
+                    disabled={isSubmitting}
                   >
                     Submit
                   </Button>

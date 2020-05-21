@@ -1,32 +1,18 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { ReactNode } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import Loading from '../../../../components/page/Loading'
-import {
-  Button,
-  Col,
-  FormGroup,
-  FormText,
-  Input,
-  Label,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  Row,
-} from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import * as Yup from 'yup';
 import { ExportForm } from '../../../../components/forms/ExportForm';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { ENABLE_MDA_POINT, OPENSRP_API_BASE_URL } from '../../../../configs/env';
+import Loading from '../../../../components/page/Loading/index';
+import { ENABLE_MDA_POINT } from '../../../../configs/env';
 import {
   ADD_NEW_CSV,
   CLIENTS_TITLE,
@@ -37,15 +23,14 @@ import {
 } from '../../../../configs/lang';
 import { HOME_URL, STUDENTS_LIST_URL, UPLOAD_STUDENT_CSV_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { OpenSRPService, getDefaultHeaders, getPayloadOptions } from '../../../../services/opensrp';
+import { OpenSRPService } from '../../../../services/opensrp';
 import { fetchFiles, File } from '../../../../store/ducks/opensrp/files/index';
 import filesReducer, {
   getFilesArray,
   reducerName as filesReducerName,
 } from '../../../../store/ducks/opensrp/files/index';
 import { ClientUpload } from '../ClientUpload';
-import { uploadedStudentsLists } from '../dummy-data/dummy';
-import { loadFiles, handleDownload } from './helpers/serviceHooks';
+import { handleDownload, loadFiles } from './helpers/serviceHooks';
 /** register the plans reducer */
 reducerRegistry.register(filesReducerName, filesReducer);
 /** interface to describe props for ClientListView component */
@@ -60,23 +45,22 @@ export const defaultClientListViewProps: ClientListViewProps = {
   files: null,
   serviceClass: OpenSRPService,
 };
-
+/**
+ * Builds list view table data
+ * @param {File[] } rowData file data coming from opensrp/history endpoint
+ */
 export const buildListViewData: (rowData: File[]) => ReactNode[][] | undefined = rowData => {
   return rowData.map((row: File, key: number) => {
-    const {identifier, fileName} = row;
+    const { url, fileName } = row;
     return [
       <p key={key}>
         {fileName} &nbsp;
-        <a
-          href='#'
-          onClick={e => handleDownload(e, identifier, fileName)}
-        >
+        {/* tslint:disable-next-line jsx-no-lambda */}
+        <a href="#" onClick={() => handleDownload(url, fileName)}>
           (Downloads)
         </a>
       </p>,
       row.providerID,
-      row.fileSize,
-      row.fileLength,
       row.uploadDate,
     ];
   });
@@ -88,8 +72,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
       /**
        * Fetch files incase the files are not available e.g when page is refreshed
        */
-      const { fetchFilesActionCreator, serviceClass } = props;
-      loadFiles(serviceClass, fetchFilesActionCreator).catch(err => displayError(err));
+      loadFiles().catch(err => displayError(err));
       // fetchFilesActionCreator(uploadedStudentsLists);
     }
     /**
@@ -101,20 +84,12 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
   if (props.files && props.files.length) {
     listViewProps = {
       data: buildListViewData(props.files),
-      headerItems: ['File Name', 'Owner', 'File Size', 'Number of Students', 'Upload Date'],
+      headerItems: ['File Name', 'Owner', 'Upload Date'],
       tableClass: 'table table-bordered',
     };
   }
   /** Load Modal once we hit this route */
   if (props.location.pathname === '/clients/students/upload') {
-    const validationSchema = Yup.object().shape({
-      file: Yup.mixed().required(),
-    });
-    const closeUploadModal = {
-      classNameProp: 'focus-investigation btn btn-primary float-right mt-0',
-      text: 'Go Back',
-      to: '/clients/students',
-    };
     return <ClientUpload />;
   }
   /** props to pass to the headerBreadCrumb */
@@ -156,7 +131,9 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
         <Col>
           {listViewProps && props.files && props.files.length ? (
             <ListView {...listViewProps} />
-          ) : <Loading />}
+          ) : (
+            <Loading />
+          )}
         </Col>
       </Row>
       <hr />
@@ -165,7 +142,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
   );
 };
 ClientListView.defaultProps = defaultClientListViewProps;
-// connect to store
+
 /** maps props to state via selectors */
 const mapStateToProps = (state: Partial<Store>) => {
   const files = getFilesArray(state);

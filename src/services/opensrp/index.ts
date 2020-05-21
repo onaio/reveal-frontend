@@ -9,14 +9,14 @@ type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 /** get default HTTP headers for OpenSRP service */
 export function getDefaultHeaders(
-  accept: string = '*/*',
-  authorizationType: string = 'Bearer'
-  // contentType: undefined = undefined
+  accept: string = 'application/json',
+  authorizationType: string = 'Bearer',
+  contentType: string = 'application/json;charset=UTF-8'
 ): IncomingHttpHeaders {
   return {
     accept,
     authorization: `${authorizationType} ${getAccessToken(store.getState())}`,
-    'content-type': undefined,
+    'content-type': contentType,
   };
 }
 
@@ -70,16 +70,21 @@ export class OpenSRPService extends OpenSRPServiceWeb {
   ) {
     super(baseURL, endpoint, getPayload);
   }
-  
 
-  public async readFile(id: string | number, params: URLParams | null = null, method: HTTPMethod = 'GET'): Promise<any> {
+  public async readFile(
+    id: string | number,
+    params: URLParams | null = null,
+    method: HTTPMethod = 'GET'
+  ): Promise<any> {
     const url = OpenSRPService.getURL(`${this.generalURL}/${id}`, params);
     const response = await fetch(url, this.getOptions(this.signal, method));
 
     if (!response.ok) {
-        throw new Error(`OpenSRPService read on ${this.endpoint} failed, HTTP status ${response.status}`);
+      throw new Error(
+        `OpenSRPService read on ${this.endpoint} failed, HTTP status ${response.status}`
+      );
     }
 
     return await response.blob();
-}
+  }
 }

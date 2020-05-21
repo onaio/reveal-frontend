@@ -1,25 +1,16 @@
-import { cleanup } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
-import { createBrowserHistory } from 'history';
 import React from 'react';
-import { Router } from 'react-router';
-import ClientUpload from '..';
-const history = createBrowserHistory();
+import UploadStatus from '..';
 
-describe('components/ClientUpload', () => {
-  afterEach(cleanup);
+describe('components/ClientUploadStatus', () => {
   it('renders without crashing', () => {
-    shallow(<ClientUpload />);
+    shallow(<UploadStatus />);
   });
 
   it('Matches snapshot', () => {
-    const wrapper = mount(
-      <Router history={history}>
-        <ClientUpload />
-      </Router>
-    );
-    expect(toJson(wrapper.find('ClientUpload'))).toMatchSnapshot();
+    const wrapper = mount(<UploadStatus />);
+    expect(toJson(wrapper.find('UploadStatus'))).toMatchSnapshot();
     wrapper.unmount();
   });
 
