@@ -1,10 +1,12 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { ReactNode } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import {
+  Button,
   Col,
   FormGroup,
   FormText,
@@ -17,6 +19,7 @@ import {
   Row,
 } from 'reactstrap';
 import { Store } from 'redux';
+import * as Yup from 'yup';
 import { ExportForm } from '../../../../components/forms/ExportForm';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
@@ -32,23 +35,29 @@ import {
   UPLOADED_STUDENT_LISTS,
 } from '../../../../configs/lang';
 import { HOME_URL, STUDENTS_LIST_URL, UPLOAD_STUDENT_CSV_URL } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
+import { OpenSRPService } from '../../../../services/opensrp';
 import { fetchFiles, File } from '../../../../store/ducks/opensrp/files/index';
 import filesReducer, {
   getFilesArray,
   reducerName as filesReducerName,
 } from '../../../../store/ducks/opensrp/files/index';
+import { ClientUpload } from '../ClientUpload';
 import { uploadedStudentsLists } from '../dummy-data/dummy';
+import { loadFiles } from './helpers/serviceHooks';
 /** register the plans reducer */
 reducerRegistry.register(filesReducerName, filesReducer);
 /** interface to describe props for ClientListView component */
 export interface ClientListViewProps {
   fetchFilesActionCreator: typeof fetchFiles;
   files: File[] | null;
+  serviceClass: typeof OpenSRPService;
 }
 /** default props for ClientListView component */
 export const defaultClientListViewProps: ClientListViewProps = {
   fetchFilesActionCreator: fetchFiles,
   files: null,
+  serviceClass: OpenSRPService,
 };
 
 export const buildListViewData: (rowData: File[]) => ReactNode[][] | undefined = rowData => {
@@ -56,14 +65,17 @@ export const buildListViewData: (rowData: File[]) => ReactNode[][] | undefined =
     return [
       <p key={key}>
         {row.fileName} &nbsp;
-        <a href={row.url} download={true}>
+        <a
+          href={`https://reveal-stage.smartregister.org/opensrp/rest/upload/download/${row.url}`}
+          download={true}
+        >
           (Downloads)
         </a>
       </p>,
-      row.owner,
+      row.providerID,
       row.fileSize,
       row.fileLength,
-      row.lastUpdated,
+      row.uploadDate,
     ];
   });
 };
@@ -74,8 +86,9 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
       /**
        * Fetch files incase the files are not available e.g when page is refreshed
        */
-      const { fetchFilesActionCreator } = props;
-      fetchFilesActionCreator(uploadedStudentsLists);
+      const { fetchFilesActionCreator, serviceClass } = props;
+      loadFiles(serviceClass, fetchFilesActionCreator).catch(err => displayError(err));
+      // fetchFilesActionCreator(uploadedStudentsLists);
     }
     /**
      * We do not need to re-run since this effect doesn't depend on any values from api yet
@@ -91,35 +104,16 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
     };
   }
   /** Load Modal once we hit this route */
-  if (props.location.pathname === '/students/upload') {
+  if (props.location.pathname === '/clients/students/upload') {
+    const validationSchema = Yup.object().shape({
+      file: Yup.mixed().required(),
+    });
     const closeUploadModal = {
-      text: 'Cancel',
-      to: '/students',
+      classNameProp: 'focus-investigation btn btn-primary float-right mt-0',
+      text: 'Go Back',
+      to: '/clients/students',
     };
-    const uploadCsv = {
-      text: 'Submit Upload',
-      to: '/students/upload',
-    };
-    return (
-      <div>
-        <Modal isOpen={true}>
-          <ModalHeader>Modal title</ModalHeader>
-          <ModalBody>
-            <FormGroup>
-              <Label for="exampleFile">Upload File</Label>
-              <Input type="file" name="file" id="exampleFile" />
-              <FormText color="muted">
-                Instructions to follow / requirements before upload.
-              </FormText>
-            </FormGroup>
-          </ModalBody>
-          <ModalFooter>
-            <LinkAsButton {...closeUploadModal} />
-            <LinkAsButton {...uploadCsv} />
-          </ModalFooter>
-        </Modal>
-      </div>
-    );
+    return <ClientUpload />;
   }
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {

@@ -105,6 +105,7 @@ export const OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/add';
 export const OPENSRP_USERS_ENDPOINT = 'user';
 export const OPENSRP_FIND_EVENTS_ENDPOINT = 'event/findById';
 export const OPENSRP_LOCATIONS_BY_PLAN = 'plans/findLocationNames';
+export const OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT = 'upload/history';
 
 // colors
 export const GREEN = 'Green';
