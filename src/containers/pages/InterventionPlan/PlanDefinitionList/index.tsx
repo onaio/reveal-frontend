@@ -18,6 +18,7 @@ import {
   INTERVENTION_TYPE_LABEL,
   LAST_MODIFIED,
   PLANS,
+  SEARCH,
   STATUS_HEADER,
   TITLE,
 } from '../../../../configs/lang';
@@ -136,7 +137,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
       </Row>
       <hr />
       <div style={{ display: 'inline-block' }}>
-        <SearchForm history={props.history} location={props.location} />
+        <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
       </div>
       <UserSelectFilter serviceClass={OpenSRPService} />
       <Row>

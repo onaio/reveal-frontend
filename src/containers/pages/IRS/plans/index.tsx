@@ -16,6 +16,7 @@ import {
   END_DATE,
   HOME,
   IRS_PLANS,
+  SEARCH,
   START_DATE,
   STATUS_HEADER,
   TITLE,
@@ -113,8 +114,7 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <SearchForm history={props.history} location={props.location} />
-
+      <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
       <Row>
         <Col>
           <ListView {...listViewProps} />
