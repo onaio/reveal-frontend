@@ -362,6 +362,22 @@ export const MOSQUITO_COLLECTION_GOAL_MEASURE = translate(
   'MOSQUITO_COLLECTION_GOAL_MEASURE',
   'Number of mosquito collection activities completed'
 );
+export const MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION = translate(
+  'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
+  'Dispense medication to each eligible person'
+);
+export const MDA_POINT_DISPENSE_COLLECTION_GOAL = translate(
+  'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
+  'Percent of eligible people'
+);
+export const MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION = translate(
+  'MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION',
+  'Report any adverse events from medication'
+);
+export const MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL = translate(
+  'MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL',
+  'Percent of people who reported adverse events'
+);
 
 export const A1_DESCRIPTION = translate(
   'A1_DESCRIPTION',
@@ -447,3 +463,4 @@ export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
 );
 export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
 export const STUDENTS_LABEL = translate('STUDENTS_LABEL', 'Students');
+export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');

@@ -36,7 +36,7 @@ export const SearchForm = (props: SearchFormProps) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    setSearchQuery(getQueryParams(props.location)[QUERY_PARAM_TITLE] as string);
+    setSearchQuery((getQueryParams(props.location)[QUERY_PARAM_TITLE] as string) || '');
   }, []);
 
   const handleSearchChange: Change = (event: React.ChangeEvent<HTMLInputElement>) => {

@@ -42,6 +42,8 @@ export const BLOOD_SCREENING_ACTIVITY_CODE = 'bloodScreening';
 export const BEDNET_DISTRIBUTION_ACTIVITY_CODE = 'bednetDistribution';
 export const LARVAL_DIPPING_ACTIVITY_CODE = 'larvalDipping';
 export const MOSQUITO_COLLECTION_ACTIVITY_CODE = 'mosquitoCollection';
+export const MDA_POINT_DISPENSE_ACTIVITY_CODE = 'pointDispenseMDA';
+export const MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE = 'pointAdverseMDA';
 export const GA_ENV_TEST = 'test';
 export const PLAN_ID = 'plan_id';
 export const PLAN_INTERVENTION_TYPE = 'plan_intervention_type';
@@ -117,6 +119,8 @@ export const CASE_CONFIRMATION_CODE = 'Case Confirmation';
 export const RACD_REGISTER_FAMILY_CODE = 'RACD Register Family';
 export const LARVAL_DIPPING_CODE = 'Larval Dipping';
 export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
+export const MDA_POINT_DISPENSE_CODE = 'MDA Dispense';
+export const MDA_POINT_ADVERSE_EFFECTS_CODE = 'MDA Adverse Event(s)';
 
 export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',
