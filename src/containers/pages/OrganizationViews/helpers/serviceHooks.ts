@@ -6,7 +6,6 @@ import {
 import { growl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
-import { fetchFiles, File } from '../../../../store/ducks/opensrp/files';
 import { fetchOrganizations, Organization } from '../../../../store/ducks/opensrp/organizations';
 import {
   fetchPractitionerRoles,

@@ -1,30 +1,17 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { ReactNode } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import {
-  Button,
-  Col,
-  FormGroup,
-  FormText,
-  Input,
-  Label,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-  Row,
-} from 'reactstrap';
+import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import * as Yup from 'yup';
 import { ExportForm } from '../../../../components/forms/ExportForm';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import Loading from '../../../../components/page/Loading/index';
 import { ENABLE_MDA_POINT } from '../../../../configs/env';
 import {
   ADD_NEW_CSV,
@@ -43,8 +30,7 @@ import filesReducer, {
   reducerName as filesReducerName,
 } from '../../../../store/ducks/opensrp/files/index';
 import { ClientUpload } from '../ClientUpload';
-import { uploadedStudentsLists } from '../dummy-data/dummy';
-import { loadFiles } from './helpers/serviceHooks';
+import { fetchCsvData, loadFiles } from './helpers/serviceHooks';
 /** register the plans reducer */
 reducerRegistry.register(filesReducerName, filesReducer);
 /** interface to describe props for ClientListView component */
@@ -59,22 +45,20 @@ export const defaultClientListViewProps: ClientListViewProps = {
   files: null,
   serviceClass: OpenSRPService,
 };
-
+/**
+ * Builds list view table data
+ * @param {File[] } rowData file data coming from opensrp/history endpoint
+ */
 export const buildListViewData: (rowData: File[]) => ReactNode[][] | undefined = rowData => {
   return rowData.map((row: File, key: number) => {
     return [
       <p key={key}>
         {row.fileName} &nbsp;
-        <a
-          href={`https://reveal-stage.smartregister.org/opensrp/rest/upload/download/${row.url}`}
-          download={true}
-        >
+        <a href="#" onClick={fetchCsvData(row.url, row.fileName)}>
           (Downloads)
         </a>
       </p>,
       row.providerID,
-      row.fileSize,
-      row.fileLength,
       row.uploadDate,
     ];
   });
@@ -86,8 +70,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
       /**
        * Fetch files incase the files are not available e.g when page is refreshed
        */
-      const { fetchFilesActionCreator, serviceClass } = props;
-      loadFiles(serviceClass, fetchFilesActionCreator).catch(err => displayError(err));
+      loadFiles().catch(err => displayError(err));
       // fetchFilesActionCreator(uploadedStudentsLists);
     }
     /**
@@ -105,14 +88,6 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
   }
   /** Load Modal once we hit this route */
   if (props.location.pathname === '/clients/students/upload') {
-    const validationSchema = Yup.object().shape({
-      file: Yup.mixed().required(),
-    });
-    const closeUploadModal = {
-      classNameProp: 'focus-investigation btn btn-primary float-right mt-0',
-      text: 'Go Back',
-      to: '/clients/students',
-    };
     return <ClientUpload />;
   }
   /** props to pass to the headerBreadCrumb */
@@ -154,7 +129,9 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
         <Col>
           {listViewProps && props.files && props.files.length ? (
             <ListView {...listViewProps} />
-          ) : null}
+          ) : (
+            <Loading minHeight={'12px'} />
+          )}
         </Col>
       </Row>
       <hr />
@@ -163,7 +140,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
   );
 };
 ClientListView.defaultProps = defaultClientListViewProps;
-// connect to store
+
 /** maps props to state via selectors */
 const mapStateToProps = (state: Partial<Store>) => {
   const files = getFilesArray(state);

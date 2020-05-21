@@ -1,24 +1,12 @@
-import axios from 'axios';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Formik } from 'formik';
 import React, { useState } from 'react';
-import {
-  Alert,
-  Button,
-  Col,
-  FormGroup,
-  Input,
-  Label,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  Row,
-} from 'reactstrap';
+import { Redirect } from 'react-router';
+import { Button, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import * as Yup from 'yup';
 import LinkAsButton from '../../../../components/LinkAsButton';
-import { OpenSRPService } from '../../../../services/opensrp';
-import store from '../../../../store';
-import { getAccessToken } from '../../../../store/selectors';
-import { UploadStatus } from './uploadstatus';
+import { STUDENTS_LIST_URL } from '../../../../constants';
+import { postUploadedFile } from '../ClientListView/helpers/serviceHooks';
+import UploadStatus from '../ClientUploadStatus/';
 export const uploadValidationSchema = Yup.object().shape({
   file: Yup.mixed().required(),
 });
@@ -29,6 +17,7 @@ export interface UploadFormField {
 }
 export const ClientUpload = (props: any) => {
   const [selectedFile, setSelectedFile] = useState<any>(null);
+  const [ifDoneHere, setIfDoneHere] = useState<boolean>(false);
   const defaultInitialValues: UploadFormField = {
     file: null,
     location: props.location,
@@ -37,6 +26,12 @@ export const ClientUpload = (props: any) => {
     classNameProp: 'focus-investigation btn btn-primary float-right mt-0',
     text: 'Go Back',
     to: '/clients/students',
+  };
+  if (ifDoneHere) {
+    return <Redirect to={STUDENTS_LIST_URL} />;
+  }
+  const setStateIfDone = () => {
+    setIfDoneHere(true);
   };
   return (
     <div>
@@ -47,57 +42,14 @@ export const ClientUpload = (props: any) => {
             initialValues={defaultInitialValues}
             validationSchema={uploadValidationSchema}
             // tslint:disable-next-line: jsx-no-lambda
-            onSubmit={(values, { setSubmitting }) => {
+            onSubmit={async (_, { setSubmitting }) => {
               setSubmitting(true);
-              const { file } = values;
               const data = new FormData();
               data.append('file', selectedFile);
-              // tslint:disable-next-line: no-floating-promises
-              // axios
-              //   .post(
-              //     'https://reveal-stage.smartregister.org/opensrp/rest/upload/validate?event_name=Child%20Registration',
-              //     data,
-              //     {
-              //       // receive two parameter endpoint url ,form data
-              //     }
-              //   )
-              //   .then(res => {
-              //     // then print response status
-              //     console.log(res.statusText);
-              //   });
-              // const apiService = new OpenSRPService('upload/validate');
-              // apiService
-              //   .create(data, { event_name: 'Child Registration' })
-              //   .then(response => {
-              //     console.log(response);
-              //     // setSubmitting(false);
-              //     // setAreWeDoneHere(true);
-              //   })
-              //   .catch((e: Error) => {
-              //     console.log(e);
-              //     // setGlobalError(e.message);
-              //   });
-              const bearer = `Bearer ${getAccessToken(store.getState())}`;
-              fetch(
-                'https://reveal-stage.smartregister.org/opensrp/rest/upload/?event_name=Child%20Registration',
-                {
-                  method: 'POST',
-                  body: data,
-                  headers: {
-                    Authorization: bearer,
-                  },
-                }
-              )
-                .then(response => response.json())
-                .then(data => {
-                  console.log(data);
-                })
-                .catch(error => {
-                  console.error(error);
-                });
+              await postUploadedFile(data, setStateIfDone);
             }}
           >
-            {({ values, setFieldValue, handleSubmit, isSubmitting, errors }) => (
+            {({ values, setFieldValue, handleSubmit, errors }) => (
               <form onSubmit={handleSubmit} data-enctype="multipart/form-data">
                 <FormGroup>
                   <Label for="upload-file">Upload File</Label>
@@ -109,7 +61,6 @@ export const ClientUpload = (props: any) => {
                     // tslint:disable-next-line: jsx-no-lambda
                     onChange={(event: any) => {
                       setSelectedFile(event.target.files[0]);
-                      //   console.log(typeof event.target.files[0]);
                       setFieldValue(
                         'file',
                         event && event.target && event.target.files && event.target.files[0]

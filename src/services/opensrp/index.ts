@@ -9,14 +9,14 @@ type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 /** get default HTTP headers for OpenSRP service */
 export function getDefaultHeaders(
-  accept: string = '*/*',
-  authorizationType: string = 'Bearer'
-  // contentType: undefined = undefined
+  accept: string = 'application/json',
+  authorizationType: string = 'Bearer',
+  contentType: string = 'application/json;charset=UTF-8'
 ): IncomingHttpHeaders {
   return {
     accept,
     authorization: `${authorizationType} ${getAccessToken(store.getState())}`,
-    'content-type': undefined,
+    'content-type': contentType,
   };
 }
 
@@ -79,7 +79,6 @@ export class OpenSRPService extends OpenSRPServiceWeb {
    * @returns the object returned by API
    */
   public async create<T>(data: T, params: any = null, method: HTTPMethod = 'POST'): Promise<{}> {
-    console.log('create value', data);
     const url = OpenSRPService.getURL(this.generalURL, params);
     const payload = {
       ...this.getOptions(this.signal, method),
