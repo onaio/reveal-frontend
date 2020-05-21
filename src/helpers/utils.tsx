@@ -61,7 +61,6 @@ import {
   PlanPayload,
   PlanRecord,
   PlanRecordResponse,
-  PlanStatus,
 } from '../store/ducks/plans';
 import { InitialTask } from '../store/ducks/tasks';
 import { displayError } from './errors';
@@ -881,28 +880,4 @@ export const reactSelectNoOptionsText = () => NO_OPTIONS;
  */
 export const getQueryParams = (location: Location) => {
   return querystring.parse(trimStart(location.search, '?'));
-};
-
-/** transforms one PlanRecordResponse to an object of type PlanRecord
- * before storing in store
- * @param {PlanRecordResponse} plan - the planRecordResponse
- */
-export const getPlanRecordFromRecordResponse = (plan: PlanRecordResponse): PlanRecord => {
-  const thePlan: PlanRecord = {
-    id: plan.identifier,
-    plan_date: plan.date,
-    plan_effective_period_end: plan.effective_period_end,
-    plan_effective_period_start: plan.effective_period_start,
-    plan_fi_reason: plan.fi_reason,
-    plan_fi_status: plan.fi_status,
-    plan_id: plan.identifier,
-    plan_intervention_type: plan.intervention_type,
-    plan_status: plan.status as PlanStatus,
-    plan_title: plan.title,
-    plan_version: plan.version,
-  };
-  if (plan.jurisdictions) {
-    thePlan.plan_jurisdictions_ids = [...plan.jurisdictions];
-  }
-  return thePlan;
 };

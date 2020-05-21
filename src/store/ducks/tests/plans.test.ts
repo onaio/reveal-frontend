@@ -396,38 +396,3 @@ describe('reducers/plans', () => {
     expect(planRecordsArray).toEqual(fixtures.sortedPlanRecordArray);
   });
 });
-
-describe('reducers/plans.reselect.userNameFilter', () => {
-  let flushThunks;
-  const plansArraySelector = makePlansArraySelector('planRecordsById');
-
-  beforeEach(() => {
-    flushThunks = FlushThunks.createMiddleware();
-    jest.resetAllMocks();
-    store.dispatch(removePlansAction);
-  });
-
-  it('userName filter works correctly', () => {
-    const sampleUserName = 'user';
-    store.dispatch(
-      fetchPlanRecords(fixtures.planRecordResponses as PlanRecordResponse[], sampleUserName)
-    );
-    expect(plansArraySelector(store.getState(), { userName: 'nonExistent' })).toEqual([]);
-    expect(
-      plansArraySelector(store.getState(), {
-        userName: sampleUserName,
-      })
-    ).toEqual(values(fixtures.planRecordsById));
-    // dispatch call (x+1) should not overwrite the work done by dispatch call x.
-    const anotherUserName = 'user2';
-    store.dispatch(
-      fetchPlanRecords([fixtures.planRecordResponse1] as PlanRecordResponse[], anotherUserName)
-    );
-    expect(plansArraySelector(store.getState(), { userName: anotherUserName })).toEqual([
-      values(fixtures.planRecordsById)[0],
-    ]);
-    expect(plansArraySelector(store.getState(), { userName: sampleUserName })).toEqual(
-      values(fixtures.planRecordsById)
-    );
-  });
-});
