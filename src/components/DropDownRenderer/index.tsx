@@ -21,7 +21,7 @@ export const DropDownRenderer = (props: DropDownRendererProps = defaultDropDownR
   return (
     <Dropdown
       size="sm"
-      className="ml-3 mr-3 drop-down-container"
+      className="mr-3 drop-down-container"
       style={{ display: 'inline-block' }}
       isOpen={isOpen}
       toggle={toggle}
