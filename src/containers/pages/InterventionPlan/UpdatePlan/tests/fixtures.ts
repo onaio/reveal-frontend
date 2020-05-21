@@ -130,6 +130,15 @@ export const updatePlanFormProps = {
     'caseNum',
     'opensrpEventId',
     'jurisdictions',
+    'activities',
+    'date',
+    'end',
+    'fiReason',
+    'fiStatus',
+    'start',
+    'taskGenerationStatus',
+    'title',
+    'version',
   ],
   initialValues: {
     activities: [
