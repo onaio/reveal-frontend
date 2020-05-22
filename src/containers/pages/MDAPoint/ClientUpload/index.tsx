@@ -43,13 +43,13 @@ export const ClientUpload = (props: any) => {
             validationSchema={uploadValidationSchema}
             // tslint:disable-next-line: jsx-no-lambda
             onSubmit={async (_, { setSubmitting }) => {
-              setSubmitting(true);
+              const setSubmittingStatus = () => setSubmitting(false);
               const data = new FormData();
               data.append('file', selectedFile);
-              await postUploadedFile(data, setStateIfDone);
+              await postUploadedFile(data, setStateIfDone, setSubmittingStatus);
             }}
           >
-            {({ values, setFieldValue, handleSubmit, errors }) => (
+            {({ values, setFieldValue, handleSubmit, errors, isSubmitting }) => (
               <form onSubmit={handleSubmit} data-enctype="multipart/form-data">
                 <FormGroup>
                   <Label for="upload-file">Upload File</Label>
@@ -69,7 +69,10 @@ export const ClientUpload = (props: any) => {
                   />
                 </FormGroup>
                 <UploadStatus uploadFile={values.file} />
-                {errors.file ? <p> {JSON.stringify(errors.file)} </p> : null}
+
+                {errors && errors.file ? (
+                  <small className="form-text text-danger jurisdictions-error">{errors.file}</small>
+                ) : null}
                 <hr />
                 <div style={{ display: 'inline-block', width: '12rem' }}>
                   <Button
@@ -77,6 +80,7 @@ export const ClientUpload = (props: any) => {
                     id="studentexportform-submit-button"
                     className="btn btn-md btn btn-primary"
                     color="primary"
+                    disabled={isSubmitting}
                   >
                     Submit
                   </Button>
