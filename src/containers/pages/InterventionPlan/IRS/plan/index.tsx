@@ -40,6 +40,7 @@ import {
   SAVE_PLAN_NO_JURISDICTIONS_ERROR,
   SELECT_JURISDICTIONS,
   SPRAY_AREA_HEADER,
+  TEAM_ASSIGNEMENT_SUCCESSFUL,
   TEAMS_ASSIGNMENT,
   TYPE_LABEL,
 } from '../../../../../configs/lang';
@@ -67,6 +68,7 @@ import {
   extractPlanRecordResponseFromPlanPayload,
   getFeatureByProperty,
   getGisidaMapById,
+  growl,
   preventDefault,
   RouteParams,
   setGisidaMapPosition,
@@ -130,6 +132,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
+import { toast } from 'react-toastify';
 import { format } from 'util';
 import AssignTeamTableCell, {
   AssignTeamCellProps,
@@ -2209,7 +2212,7 @@ class IrsPlan extends React.Component<
                     ) {
                       assignmentsToRetire.push({
                         ...result,
-                        fromDate: moment(0).format(),
+                        fromDate: moment(moment().subtract(50, 'years')).format(),
                         toDate: moment(100000000).format(),
                       } as Assignment);
                     }
@@ -2218,11 +2221,16 @@ class IrsPlan extends React.Component<
                 }
               );
 
+              const successGrowl = () =>
+                growl(TEAM_ASSIGNEMENT_SUCCESSFUL, {
+                  type: toast.TYPE.SUCCESS,
+                });
+
               // POST to retire unassigned assignments
               if (retiredAssignments.length) {
                 await OpenSrpAssignmentService.create([...retiredAssignments])
                   .then(_ => {
-                    // todo - hook in success notification
+                    successGrowl();
                   })
                   .catch(err => {
                     displayError(err);
@@ -2232,7 +2240,7 @@ class IrsPlan extends React.Component<
               if (nextAssignments.length) {
                 await OpenSrpAssignmentService.create([...nextAssignments])
                   .then(_ => {
-                    // todo - hook in success notification
+                    successGrowl();
                   })
                   .catch(err => {
                     displayError(err);
