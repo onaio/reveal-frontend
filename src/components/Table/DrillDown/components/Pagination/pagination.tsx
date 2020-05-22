@@ -1,18 +1,25 @@
 /** The default custom pagination component for drillDown v7  */
 import { Dictionary } from '@onaio/utils';
 import React from 'react';
-import { NEXT, OF, PAGE, PREVIOUS, ROWS_TO_DISPLAY } from '../../../../../configs/lang';
-import { RenderPaginationOptions } from '../TableJSX';
+import {
+  NEXT,
+  OF,
+  PAGE,
+  PAGE_SIZE_CATEGORIES,
+  PREVIOUS,
+  ROWS_TO_DISPLAY,
+} from '../../helpers/constants';
+import { ActualTableInstanceProps } from '../TableJSX';
 import './pagination.css';
 
 /** interface describes props for Reveal Custom Pagination */
-export interface PaginationProps<T extends object> extends RenderPaginationOptions<T> {
+export interface PaginationProps<T extends object> extends ActualTableInstanceProps<T> {
   pageSizeCategories: number[] /** an array of page size options */;
 }
 
 /** default props for Reveal Pagination */
 const defaultPaginationProps = {
-  pageSizeCategories: [10, 20, 30, 50],
+  pageSizeCategories: PAGE_SIZE_CATEGORIES,
 };
 
 /** Reveal pagination component */
@@ -23,10 +30,9 @@ function RevealPagination<T extends object = Dictionary>(props: PaginationProps<
     canNextPage,
     nextPage,
     previousPage,
-    pageIndex,
     pageOptions,
-    pageSize,
     setPageSize,
+    state: { pageSize, pageIndex },
     pageSizeCategories,
   } = props;
 
@@ -79,6 +85,6 @@ RevealPagination.defaultProps = defaultPaginationProps;
 export { RevealPagination };
 
 /** function that can be used as a render prop */
-export const renderPaginationFun = <T extends object>(props: RenderPaginationOptions<T>) => {
+export const renderPaginationFun = <T extends object>(props: ActualTableInstanceProps<T>) => {
   return <RevealPagination {...props} />;
 };

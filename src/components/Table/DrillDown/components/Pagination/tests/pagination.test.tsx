@@ -1,5 +1,5 @@
-import { mount } from 'enzyme';
 import React from 'react';
+import { mount } from '../../tests/node_modules/enzyme';
 import { renderPaginationFun } from '../pagination';
 /** integration tests reside will reside in the drilldown's test folder */
 describe('src/components/Table/Drilldown/helpers/pagination', () => {
