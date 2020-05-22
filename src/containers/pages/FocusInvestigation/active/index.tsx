@@ -13,6 +13,7 @@ import 'react-table-v6/react-table.css';
 import { Col, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
+import { UserSelectFilter } from '../../../../components/forms/UserFilter';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import NewRecordBadge from '../../../../components/NewRecordBadge';
 import HeaderBreadCrumb, {
@@ -50,16 +51,23 @@ import {
   FI_SINGLE_URL,
   FI_URL,
   HOME_URL,
+  QUERY_PARAM_USER,
   REACTIVE_QUERY_PARAM,
   ROUTINE,
   ROUTINE_QUERY_PARAM,
 } from '../../../../constants';
+import { loadPlansByUserFilter } from '../../../../helpers/dataloading/plans';
 import { displayError } from '../../../../helpers/errors';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { getFilteredFIPlansURL, getQueryParams } from '../../../../helpers/utils';
 import { getLocationColumns } from '../../../../helpers/utils';
+import { OpenSRPService } from '../../../../services/opensrp';
 import supersetFetch from '../../../../services/superset';
+import plansByUserReducer, {
+  makePlansByUserNamesSelector,
+  reducerName as plansByUserReducerName,
+} from '../../../../store/ducks/opensrp/planIdsByUser';
 import plansReducer, {
   fetchPlans,
   getPlanById,
@@ -75,6 +83,7 @@ import { createTableProps } from './utils';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
+reducerRegistry.register(plansByUserReducerName, plansByUserReducer);
 
 export interface RouteParams {
   jurisdiction_parent_id: string;
@@ -88,6 +97,8 @@ export interface ActiveFIProps {
   routinePlans: Plan[] | null;
   supersetService: typeof supersetFetch;
   plan: Plan | null;
+  serviceClass: typeof OpenSRPService;
+  userName: string | null;
 }
 
 /** default props for ActiveFI component */
@@ -97,6 +108,8 @@ export const defaultActiveFIProps: ActiveFIProps = {
   plan: null,
   routinePlans: null,
   supersetService: supersetFetch,
+  serviceClass: OpenSRPService,
+  userName: null,
 };
 
 interface ActiveFIState {
@@ -125,7 +138,7 @@ class ActiveFocusInvestigation extends React.Component<
   }
 
   public componentDidMount() {
-    const { fetchPlansActionCreator, supersetService } = this.props;
+    const { userName, fetchPlansActionCreator, supersetService } = this.props;
     const supersetParams = superset.getFormData(2000, [
       { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
     ]);
@@ -142,8 +155,17 @@ class ActiveFocusInvestigation extends React.Component<
           loading: false,
         });
       });
+    if (userName) {
+      loadPlansByUserFilter(userName).catch(err => displayError(err));
+    }
   }
 
+  public componentDidUpdate(prevProps: ActiveFIProps) {
+    const { userName } = this.props;
+    if (userName && prevProps.userName !== userName) {
+      loadPlansByUserFilter(userName).catch(err => displayError(err));
+    }
+  }
   public render() {
     const breadcrumbProps: BreadCrumbProps = {
       currentPage: {
@@ -196,7 +218,7 @@ class ActiveFocusInvestigation extends React.Component<
       ? format(FI_IN_JURISDICTION, jurisdictionName)
       : CURRENT_FOCUS_INVESTIGATION;
 
-    const locationColumns: Array<Column<Dictionary>> = getLocationColumns(locationHierarchy);
+    const locationColumns: any = getLocationColumns(locationHierarchy);
     const commonColumns: Array<Column<Dictionary>> = [
       {
         Cell: (cell: Cell<Dictionary>) => {
@@ -287,6 +309,11 @@ class ActiveFocusInvestigation extends React.Component<
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
         <hr />
+        <Row>
+          <Col>
+            <UserSelectFilter serviceClass={this.props.serviceClass} />
+          </Col>
+        </Row>
         <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
         <div>
           <DrillDownTablev7
@@ -326,6 +353,7 @@ interface DispatchedStateProps {
   plan: Plan | null;
   caseTriggeredPlans: Plan[] | null;
   routinePlans: Plan[] | null;
+  userName: string | null;
 }
 
 /** map state to props */
@@ -340,12 +368,16 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 
   const reactiveSearchString = getQueryParams(ownProps.location)[REACTIVE_QUERY_PARAM] as string;
   const routineSearchString = getQueryParams(ownProps.location)[ROUTINE_QUERY_PARAM] as string;
+  const userName = getQueryParams(ownProps.location)[QUERY_PARAM_USER] as string;
+
+  const planIds = makePlansByUserNamesSelector()(state, { userName });
   const caseTriggeredPlans = makePlansArraySelector()(state, {
     interventionType: InterventionType.FI,
     parentJurisdictionId: jurisdictionParentId,
     reason: CASE_TRIGGERED,
     statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
     title: reactiveSearchString,
+    planIds,
   });
   const routinePlans = makePlansArraySelector()(state, {
     interventionType: InterventionType.FI,
@@ -353,12 +385,14 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     reason: ROUTINE,
     statusList: [PlanStatus.ACTIVE, PlanStatus.COMPLETE],
     title: routineSearchString,
+    planIds,
   });
 
   return {
     caseTriggeredPlans,
     plan,
     routinePlans,
+    userName,
   };
 };
 

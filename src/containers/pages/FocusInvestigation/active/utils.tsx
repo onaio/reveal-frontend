@@ -2,7 +2,7 @@ import React from 'react';
 import { Column } from 'react-table';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
 import { RowHeightFilter } from '../../../../components/forms/FilterForm/RowHeightFilter';
-import SearchForm from '../../../../components/forms/Search';
+import { SearchForm } from '../../../../components/forms/Search';
 import { RenderFiltersInBarOptions } from '../../../../components/Table/DrillDown';
 import { SEARCH } from '../../../../configs/lang';
 import { extractPlan, removeNullJurisdictionPlans } from '../../../../helpers/utils';

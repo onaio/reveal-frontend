@@ -15,14 +15,16 @@ import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
 // props interface to UserIdSelect component
 export interface Props {
-  onChangeHandler?: (value: Option) => void;
+  onChangeHandler?: (value: OptionTypes) => void;
   serviceClass: typeof OpenSRPService;
   showPractitioners: boolean /** show users that are already mapped to a practitioner */;
   className: string;
+  ReactSelectDefaultValue: Option;
 }
 
 /** default props for UserIdSelect component */
 export const defaultProps = {
+  ReactSelectDefaultValue: { label: '', value: '' },
   className: '',
   serviceClass: OpenSRPService,
   showPractitioners: false,
@@ -55,6 +57,12 @@ export const thereIsNextPage = (response: OpenMRSResponse): boolean => {
   return false;
 };
 
+/** our custom for the option object passed to onChangeHandler by react-select
+ * we have intentionally excluded ValueTypeOptions<Option> since this would only be used
+ * when react-select has to pass an array of options, i.e. in case of multi react select.
+ */
+export type OptionTypes = Option | null | undefined;
+
 /** The UserIdSelect component */
 export const UserIdSelect = (props: Props) => {
   const { onChangeHandler } = props;
@@ -66,8 +74,9 @@ export const UserIdSelect = (props: Props) => {
    * @param {ValueType<Option>} option - the value in the react-select
    */
   const changeHandler = (option: ValueType<Option>) => {
-    if (option !== null && option !== undefined && onChangeHandler) {
-      onChangeHandler(option as Option);
+    const localOption = option as Option | null | undefined;
+    if (onChangeHandler) {
+      onChangeHandler(localOption);
     }
   };
 
@@ -156,6 +165,8 @@ export const UserIdSelect = (props: Props) => {
       options={options}
       onChange={changeHandler}
       isSearchable={true}
+      isClearable={true}
+      defaultValue={props.ReactSelectDefaultValue}
       placeholder={SELECT}
       noOptionsMessage={reactSelectNoOptionsText}
     />

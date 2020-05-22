@@ -3,11 +3,10 @@ import { debounce } from 'lodash';
 import queryString from 'querystring';
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { Input } from 'reactstrap';
 import { SEARCH } from '../../../configs/lang';
 import { QUERY_PARAM_TITLE } from '../../../constants';
 import { getQueryParams } from '../../../helpers/utils';
-import './index.css';
+import './search.css';
 
 /** call handler function after this many milliseconds since when it was last invoked */
 export const DEBOUNCE_HANDLER_MS = 1000;
@@ -25,17 +24,17 @@ export interface BaseSearchFormProps {
 }
 
 /**
- * default props for SerchForm component
+ * default props for SearchForm component
  */
 export const defaultSearchProps = {
   placeholder: SEARCH,
   queryParam: QUERY_PARAM_TITLE,
 };
 
-type SeachInputPropsType = BaseSearchFormProps & RouteComponentProps<{}>;
+type SearchInputPropsType = BaseSearchFormProps & RouteComponentProps<{}>;
 
 /** Base SearchForm component */
-const BaseSearchForm = (props: SeachInputPropsType) => {
+const BaseSearchForm = (props: SearchInputPropsType) => {
   const { placeholder, queryParam, onChangeHandler } = props;
 
   const onchangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,14 +64,22 @@ const BaseSearchForm = (props: SeachInputPropsType) => {
 
   return (
     <div className="search-input-wrapper">
-      <FontAwesomeIcon className="search-icon" icon="search" />
-      <Input
-        className="form-control search-input"
-        type="text"
-        name="search"
-        placeholder={placeholder}
-        onInput={debouncedOnChangeHandler}
-      />
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <span className="input-group-text bg-transparent border-right-0" id="basic-addon1">
+            <FontAwesomeIcon className="search-icon" icon="search" />
+          </span>
+        </div>
+        <input
+          type="text"
+          className="form-control border-left-0 border search-input"
+          aria-label="search"
+          aria-describedby="basic-addon1"
+          name="search"
+          placeholder={placeholder}
+          onInput={debouncedOnChangeHandler}
+        />
+      </div>
     </div>
   );
 };
@@ -81,4 +88,4 @@ BaseSearchForm.defaultProps = defaultSearchProps;
 
 const SearchForm = withRouter(BaseSearchForm);
 
-export default SearchForm;
+export { SearchForm };

@@ -90,17 +90,11 @@ export interface GeoJSON {
   type: string;
 }
 
-/** Gets react table columns from the location hierarchy in configs
- * @param {LocationItem} - the location hierarchy to be used to create table columns
- * @param {boolean} - whether to nest the column definition under a parent column
- *
- * @return {Column} - column instance compatible with both react-table and react-table-v6
- *   however for some reason, setting Column from one version breaks the other version.
- */
+/** Gets react table columns from the location hierarchy in configs */
 export function getLocationColumns(
   locations: LocationItem[] = locationHierarchy,
   padHeader: boolean = false
-) {
+): Column[] {
   // sort locations using the level field and then remove duplicates
   const locationSet = uniq(locations.sort((a, b) => (a.level > b.level ? 1 : -1)));
 
@@ -711,10 +705,11 @@ export const setDefaultValues = (target: Dictionary, prop: string) => {
  * @param arr
  * @param sortField
  */
-export function descendingOrderSort(arr: Plan[], sortField: string) {
+export function descendingOrderSort<T extends object>(arr: T[], sortField: string) {
+  const mutableArray = ([] as T[]).concat(arr);
   // check if the provided field exists in the plans else return plansArray
-  if (arr.every(plan => Object.keys(plan).includes(sortField))) {
-    return arr.sort((firstEl: Dictionary, secondEl: Dictionary) => {
+  if (arr.every((plan: any) => Object.keys(plan).includes(sortField))) {
+    return mutableArray.sort((firstEl: Dictionary, secondEl: Dictionary) => {
       return Date.parse(secondEl[sortField]) - Date.parse(firstEl[sortField]);
     });
   }

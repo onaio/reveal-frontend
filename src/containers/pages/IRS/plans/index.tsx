@@ -8,7 +8,7 @@ import { Cell, Column } from 'react-table';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { RowHeightFilter } from '../../../../components/forms/FilterForm/RowHeightFilter';
-import SearchForm from '../../../../components/forms/Search';
+import {SearchForm} from '../../../../components/forms/Search';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { DrillDownTablev7 } from '../../../../components/Table/DrillDown';

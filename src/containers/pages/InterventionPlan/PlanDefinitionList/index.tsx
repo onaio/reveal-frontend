@@ -9,7 +9,8 @@ import { Cell, Row as RowType, UseTableOptions } from 'react-table';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { RowHeightFilter } from '../../../../components/forms/FilterForm/RowHeightFilter';
-import SearchForm from '../../../../components/forms/Search';
+import { SearchForm } from '../../../../components/forms/Search';
+import { UserSelectFilter } from '../../../../components/forms/UserFilter';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
@@ -32,7 +33,9 @@ import {
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
   QUERY_PARAM_TITLE,
+  QUERY_PARAM_USER,
 } from '../../../../constants';
+import { loadPlansByUserFilter } from '../../../../helpers/dataloading/plans';
 import { displayError } from '../../../../helpers/errors';
 import { getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -41,14 +44,20 @@ import planDefinitionReducer, {
   makePlanDefinitionsArraySelector,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
+import plansByUserReducer, {
+  makePlansByUserNamesSelector,
+  reducerName as plansByUserReducerName,
+} from '../../../../store/ducks/opensrp/planIdsByUser';
+
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
-
+reducerRegistry.register(plansByUserReducerName, plansByUserReducer);
 /** interface for PlanList props */
 interface PlanListProps {
   fetchPlans: typeof fetchPlanDefinitions;
   plans: PlanDefinition[];
   service: typeof OpenSRPService;
+  userName: string | null;
 }
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
@@ -82,6 +91,11 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
       setLoading(false);
     }
   }
+  useEffect(() => {
+    if (props.userName) {
+      loadPlansByUserFilter(props.userName).catch(err => displayError(err));
+    }
+  }, [props.userName]);
 
   useEffect(() => {
     loadData().catch(err => displayError(err));
@@ -145,6 +159,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
       return (
         <>
           <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
+          <UserSelectFilter serviceClass={props.service} />
           <RowHeightFilter changeHandler={changeHandler} />
         </>
       );
@@ -188,6 +203,7 @@ const defaultProps: PlanListProps = {
   fetchPlans: fetchPlanDefinitions,
   plans: [],
   service: OpenSRPService,
+  userName: null,
 };
 
 PlanDefinitionList.defaultProps = defaultProps;
@@ -199,17 +215,25 @@ export { PlanDefinitionList };
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
   plans: PlanDefinition[];
+  userName: string | null;
 }
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const planDefinitionsArray = makePlanDefinitionsArraySelector()(state, {
-    title: searchedTitle,
-  });
+  const userName = getQueryParams(ownProps.location)[QUERY_PARAM_USER] as string;
+  const planIds = makePlansByUserNamesSelector()(state, { userName });
+  const planDefinitionsArray = makePlanDefinitionsArraySelector('planDefinitionsById', 'date')(
+    state,
+    {
+      planIds,
+      title: searchedTitle,
+    }
+  );
 
   return {
     plans: planDefinitionsArray,
+    userName,
   };
 };
 

@@ -10,7 +10,7 @@ import { ActionCreator, Store } from 'redux';
 
 import { Helmet } from 'react-helmet';
 import { RowHeightFilter } from '../../../../components/forms/FilterForm/RowHeightFilter';
-import SearchForm from '../../../../components/forms/Search';
+import { SearchForm } from '../../../../components/forms/Search';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
