@@ -1,4 +1,3 @@
-import { Dictionary } from '@onaio/utils/dist/types/types';
 import intersect from 'fast_array_intersect';
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
@@ -27,14 +26,12 @@ export const ADD_PLAN_DEFINITION = 'reveal/reducer/opensrp/PlanDefinition/ADD_PL
 /** interface for fetch PlanDefinitions action */
 interface FetchPlanDefinitionsAction extends AnyAction {
   planDefinitionsById: { [key: string]: PlanDefinition };
-  planIdsByUserName: { [key: string]: string[] };
   type: typeof PLAN_DEFINITIONS_FETCHED;
 }
 
 /** interface for removing PlanDefinitions action */
 interface RemovePlanDefinitionsAction extends AnyAction {
   planDefinitionsById: { [key: string]: PlanDefinition };
-  planIdsByUserName: Dictionary<string[]>;
   type: typeof REMOVE_PLAN_DEFINITIONS;
 }
 
@@ -56,28 +53,17 @@ export type PlanDefinitionActionTypes =
 /**
  * Fetch Plan Definitions action creator
  * @param {PlanDefinition[]} planList - list of plan definition objects
- * @param {string | null} userName - user who has access to this plans.
  */
 export const fetchPlanDefinitions = (
-  planList: PlanDefinition[] = [],
-  userName: string | null = null
-): FetchPlanDefinitionsAction => {
-  const planIdsByUserName: Dictionary<string[]> = {};
-  if (userName) {
-    const plansIds = planList.map(plan => plan.identifier);
-    planIdsByUserName[userName] = plansIds;
-  }
-  return {
-    planDefinitionsById: keyBy(planList, 'identifier'),
-    planIdsByUserName,
-    type: PLAN_DEFINITIONS_FETCHED,
-  };
-};
+  planList: PlanDefinition[] = []
+): FetchPlanDefinitionsAction => ({
+  planDefinitionsById: keyBy(planList, 'identifier'),
+  type: PLAN_DEFINITIONS_FETCHED,
+});
 
 /** Reset plan definitions state action creator */
 export const removePlanDefinitions = () => ({
   planDefinitionsById: {},
-  planIdsByUserName: {},
   type: REMOVE_PLAN_DEFINITIONS,
 });
 
@@ -95,7 +81,6 @@ export const addPlanDefinition = (planObj: PlanDefinition): AddPlanDefinitionAct
 /** interface for PlanDefinition state */
 interface PlanDefinitionState {
   planDefinitionsById: { [key: string]: PlanDefinition } | {};
-  planIdsByUserName: Dictionary<string[]> | {};
 }
 
 /** immutable PlanDefinition state */
@@ -105,7 +90,6 @@ export type ImmutablePlanDefinitionState = PlanDefinitionState &
 /** initial PlanDefinition state */
 const initialState: ImmutablePlanDefinitionState = SeamlessImmutable({
   planDefinitionsById: {},
-  planIdsByUserName: {},
 });
 
 /** the PlanDefinition reducer function */
@@ -119,7 +103,6 @@ export default function reducer(
         return SeamlessImmutable({
           ...state,
           planDefinitionsById: { ...state.planDefinitionsById, ...action.planDefinitionsById },
-          planIdsByUserName: { ...state.planIdsByUserName, ...action.planIdsByUserName },
         });
       }
       return state;
@@ -138,7 +121,6 @@ export default function reducer(
       return SeamlessImmutable({
         ...state,
         planDefinitionsById: action.planDefinitionsById,
-        planIdsByUserName: action.planIdsByUserName,
       });
     default:
       return state;
@@ -192,81 +174,27 @@ export function getPlanDefinitionsArray(
 /** This interface represents the structure of plan definition filter options/params */
 export interface PlanDefinitionFilters {
   title?: string /** plan object title */;
-  userName?: string /** user, filter out plans that the user does not have access to */;
 }
 
 /** planDefinitionsArrayBaseSelector select an array of all plans
  * @param state - the redux store
  */
-export const planDefinitionsArrayBaseSelector = (planKey = 'planDefinitionsById') => (
+export const planDefinitionsArrayBaseSelector = (planKey?: string) => (
   state: Partial<Store>
-) => values((state as any)[reducerName][planKey]);
+): PlanDefinition[] =>
+  values((state as any)[reducerName][planKey ? planKey : 'planDefinitionsById']);
 
-/** getTitle
+/** getPlanDefinitionsArrayByTitle
  * Gets title from PlanFilters
  * @param state - the redux store
  * @param props - the plan filters object
  */
 export const getTitle = (_: Partial<Store>, props: PlanDefinitionFilters) => props.title;
 
-/** non_memoized function that gets value of reducerSlice.planDefinitionsById
- * @param {Partial<Store>} state -  the redux store
- */
-export const basePlanDefinitionsByIds = (state: Partial<Store>): Dictionary<PlanDefinition> =>
-  (state as any)[reducerName].planDefinitionsById;
-
-/** non_memoized function that gets value of reducerSlice.planIdsByUserName
- * * @param {Partial<Store>} state -  the redux store
- */
-export const basePlanIdsByUserNamesSelector = (state: Partial<Store>): Dictionary<string[]> => {
-  return (state as any)[reducerName].planIdsByUserName;
-};
-
-/** getUserName
- * Gets userName from PlanFilters
- * @param state - the redux store
- * @param props - the plan filters object
- */
-export const getUserName = (_: Partial<Store>, props: PlanDefinitionFilters) => props.userName;
-
-/** gets all planIds associated with a userName
- * @param {Registry} state - the redux store
- * @param {PlanDefinitionFilters} props - the plan definition filters object
- */
-export const getPlanIdsByUserName = () => {
-  return createSelector(
-    basePlanIdsByUserNamesSelector,
-    getUserName,
-    (planIdsByUserName, userName) => {
-      let planIdsArray = userName ? planIdsByUserName[userName] : [];
-      planIdsArray = planIdsArray ? planIdsArray : [];
-      return planIdsArray;
-    }
-  );
-};
-
-/** filters out plans that the given user does not have access to.
- * @param {Registry} state - the redux store
- * @param {PlanDefinitionFilters} props - the plan definition filters object
- */
-export const getPlansByUserName = () => {
-  return createSelector(
-    getPlanIdsByUserName(),
-    getUserName,
-    basePlanDefinitionsByIds,
-    (planIds, userName, allPlansDictionary) => {
-      const plansOfInterest = userName
-        ? planIds.map((planId: string) => allPlansDictionary[planId])
-        : values(allPlansDictionary);
-      return plansOfInterest;
-    }
-  );
-};
-
 /** getPlansArrayByTitle
  * Gets an array of Plan objects filtered by plan title
  * @param {Registry} state - the redux store
- * @param {PlanDefinitionFilters} props - the plan definition filters object
+ * @param {PlanDefinitionFilters} props - the plan defintion filters object
  */
 export const getPlanDefinitionsArrayByTitle = (planKey?: string) =>
   createSelector([planDefinitionsArrayBaseSelector(planKey), getTitle], (plans, title) =>
@@ -290,10 +218,7 @@ export const getPlanDefinitionsArrayByTitle = (planKey?: string) =>
  * @param {string} sortField - sort by field
  */
 export const makePlanDefinitionsArraySelector = (planKey?: string) => {
-  return createSelector(
-    [getPlanDefinitionsArrayByTitle(planKey), getPlansByUserName()],
-    (plans1, plans2) => {
-      return intersect([plans1, plans2], JSON.stringify);
-    }
+  return createSelector([getPlanDefinitionsArrayByTitle(planKey)], plans =>
+    intersect([plans], JSON.stringify)
   );
 };
