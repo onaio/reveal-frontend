@@ -6,7 +6,6 @@ import { ENABLE_MDA_POINT } from '../../../configs/env';
 import { EXPORT_CLIENT_LIST, EXPORT_STUDENT_LIST, REQUIRED } from '../../../configs/lang';
 import { handleDownload } from '../../../containers/pages/MDAPoint/ClientListView/helpers/serviceHooks';
 import JurisdictionSelect from '../JurisdictionSelect';
-import { values } from '../PlanForm/tests/fixtures';
 export const JurisdictionSchema = Yup.object().shape({
   jurisdictions: Yup.object().shape({
     id: Yup.string().required(REQUIRED),
@@ -40,10 +39,11 @@ export const ExportForm = () => {
           <Formik
             initialValues={defaultInitialValues}
             /* tslint:disable-next-line jsx-no-lambda */
-            onSubmit={() => {
-              handleDownload('template', values.name, {
+            onSubmit={values => {
+              // tslint:disable-next-line: no-floating-promises
+              handleDownload('template', values.jurisdictions.name, {
                 event_name: 'Child Registration',
-                location_id: 12345,
+                location_id: values.jurisdictions.id,
               });
             }}
             validationSchema={JurisdictionSchema}
