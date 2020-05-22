@@ -254,3 +254,9 @@ export type EXPRESS_OAUTH_LOGOUT_URL = typeof EXPRESS_OAUTH_LOGOUT_URL;
 
 export const BACKEND_ACTIVE = process.env.REACT_APP_BACKEND_ACTIVE === 'true';
 export type BACKEND_ACTIVE = typeof BACKEND_ACTIVE;
+
+export const REACT_APP_VERSION = process.env.REACT_APP_VERSION;
+export type REACT_APP_VERSION = typeof REACT_APP_VERSION;
+
+export const REACT_APP_NAME = process.env.REACT_APP_NAME;
+export type REACT_APP_NAME = typeof REACT_APP_NAME;
