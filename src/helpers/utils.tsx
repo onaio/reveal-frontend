@@ -705,7 +705,7 @@ export const setDefaultValues = (target: Dictionary, prop: string) => {
  * @param arr
  * @param sortField
  */
-export function descendingOrderSort(arr: Plan[], sortField: string) {
+export function descendingOrderSort<T extends object>(arr: T[], sortField: string) {
   // check if the provided field exists in the plans else return plansArray
   if (arr.every(plan => Object.keys(plan).includes(sortField))) {
     return arr.sort((firstEl: Dictionary, secondEl: Dictionary) => {
