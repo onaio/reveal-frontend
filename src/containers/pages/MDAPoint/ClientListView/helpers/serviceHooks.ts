@@ -9,14 +9,17 @@ import store from '../../../../../store';
 import { fetchFiles, File } from '../../../../../store/ducks/opensrp/files';
 import { getAccessToken } from '../../../../../store/selectors';
 
-/** loads files data
+/** loads and persist's to store files data from upload/history endpoint
  */
-export const loadFiles = async () => {
-  const serve = new OpenSRPService(OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT);
+export const loadFiles = async (
+  fetchFileAction = fetchFiles,
+  serviceClass: any = OpenSRPService
+) => {
+  const serve = new serviceClass(OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT);
   serve
     .list()
     .then((response: File[]) => {
-      store.dispatch(fetchFiles(response, true));
+      store.dispatch(fetchFileAction(response, true));
     })
     .catch((err: Error) => {
       growl(err.message, { type: toast.TYPE.ERROR });
@@ -29,7 +32,11 @@ export const loadFiles = async () => {
  * @param data uploaded formdata payload
  * @param setStateIfDone set state to trigger redirect on upload
  */
-export const postUploadedFile = async (data: any, setStateIfDone: () => void) => {
+export const postUploadedFile = async (
+  data: any,
+  setStateIfDone: () => void,
+  setFormSubmitstate: () => void
+) => {
   const bearer = `Bearer ${getAccessToken(store.getState())}`;
   await fetch(`${OPENSRP_API_BASE_URL}/upload/?event_name=Child%20Registration`, {
     body: data,
@@ -45,6 +52,7 @@ export const postUploadedFile = async (data: any, setStateIfDone: () => void) =>
         type: toast.TYPE.SUCCESS,
       });
       await loadFiles();
+      setFormSubmitstate();
     })
     .catch(err => {
       growl(err.message, { type: toast.TYPE.ERROR });
@@ -55,12 +63,17 @@ export const postUploadedFile = async (data: any, setStateIfDone: () => void) =>
  * @param {string} id csv identifier
  * @param {string} name file name
  */
-export const handleDownload = (id: string, name: string, params?: Dictionary) => {
+export const handleDownload = async (
+  id: string,
+  name: string,
+  params?: Dictionary,
+  serviceClass: any = OpenSRPService
+) => {
   const apiEndpoint = params ? `upload` : `upload/download`;
-  const downloadService = new OpenSRPService(apiEndpoint);
+  const downloadService = new serviceClass(apiEndpoint);
   downloadService
     .readFile(id, params)
-    .then(res => {
+    .then((res: typeof Blob) => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
       document.body.appendChild(a);
@@ -70,7 +83,7 @@ export const handleDownload = (id: string, name: string, params?: Dictionary) =>
 
       window.URL.revokeObjectURL(url);
     })
-    .catch(err => {
+    .catch((err: any) => {
       growl(err.message, { type: toast.TYPE.ERROR });
     });
 };
