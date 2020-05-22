@@ -81,6 +81,11 @@ describe('reducers/opensrp/PlanDefinition', () => {
     expect(PlanDefinitionsArraySelector(store.getState(), { title: 'Mosh' })).toEqual([
       fixtures.plans[3],
     ]);
+    expect(
+      PlanDefinitionsArraySelector(store.getState(), { planIds: [fixtures.plans[3].identifier] })
+    ).toEqual([fixtures.plans[3]]);
+    expect(PlanDefinitionsArraySelector(store.getState(), { planIds: [] })).toEqual([]);
+    expect(PlanDefinitionsArraySelector(store.getState(), { planIds: null }).length).toEqual(5);
 
     // reset
     store.dispatch(removePlanDefinitions());
