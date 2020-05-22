@@ -40,9 +40,14 @@ import planDefinitionReducer, {
   makePlanDefinitionsArraySelector,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
+import plansByUserReducer, {
+  makePlansByUserNamesSelector,
+  reducerName as plansByUserReducerName,
+} from '../../../../store/ducks/opensrp/planIdsByUser';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
+reducerRegistry.register(plansByUserReducerName, plansByUserReducer);
 
 /** interface for PlanList props */
 interface PlanListProps {
@@ -86,7 +91,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
 
   useEffect(() => {
     if (props.userName) {
-      loadPlansByUserFilter(props.userName, props.fetchPlans).catch(err => displayError(err));
+      loadPlansByUserFilter(props.userName).catch(err => displayError(err));
     }
   }, [props.userName]);
 
@@ -173,10 +178,14 @@ interface DispatchedStateProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const userName = getQueryParams(ownProps.location)[QUERY_PARAM_USER] as string;
-  const planDefinitionsArray = makePlanDefinitionsArraySelector()(state, {
-    title: searchedTitle,
-    userName,
-  });
+  const planIds = makePlansByUserNamesSelector()(state, { userName });
+  const planDefinitionsArray = makePlanDefinitionsArraySelector('planDefinitionsById', 'date')(
+    state,
+    {
+      planIds,
+      title: searchedTitle,
+    }
+  );
 
   return {
     plans: planDefinitionsArray,
