@@ -41,7 +41,7 @@ export const ExportForm = () => {
             /* tslint:disable-next-line jsx-no-lambda */
             onSubmit={values => {
               // tslint:disable-next-line: no-floating-promises
-              handleDownload('template', values.jurisdictions.name, {
+              handleDownload('template', `${values.jurisdictions.name}.csv`, {
                 event_name: 'Child Registration',
                 location_id: values.jurisdictions.id,
               });
