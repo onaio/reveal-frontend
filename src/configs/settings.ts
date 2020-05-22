@@ -1243,10 +1243,19 @@ export const TakAdmin0: JurisdictionsByCountry = {
   jurisdictionIds: [],
 };
 
+export const Eswatini: JurisdictionsByCountry = {
+  ADMN0_EN: 'Eswatini',
+  ADMN0_PCODE: 'SZ',
+  bounds: [30.7941093444825, -27.3171005249023, 32.1372489929202, -25.7196502685546],
+  jurisdictionId: 'bac41d87-b09d-4e76-be3b-3b6d07399891',
+  jurisdictionIds: [],
+};
+
 /** dictionary of JurisdictionsByCountry by country code */
 export const CountriesAdmin0 = {
   BW: BotswanaAdmin0,
   Chadiza: ChadizaAdmin0,
+  Eswatini,
   Katete: KateteAdmin0,
   ['Lop Buri']: LopBuriAdmin0,
   Lusaka: LusakaAdmin0,
