@@ -8,9 +8,9 @@ export const reducerName = 'files';
 /** Interface for file json object */
 export interface File {
   identifier: string; // the unique identifier of the file
-  fileLength: number; // the length of the file (lines / rows)
+  fileLength?: number; // the length of the file (lines / rows)
   fileName: string; // the name of the file
-  fileSize: string; // the of the file
+  fileSize?: string; // the of the file
   uploadDate: string; // the date of the latest file update
   providerID: string; // the username of the file creator
   url: string; // download location of the file
