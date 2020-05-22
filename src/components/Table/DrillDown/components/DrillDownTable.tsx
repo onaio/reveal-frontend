@@ -1,7 +1,7 @@
 import { Dictionary } from '@onaio/utils';
 import React, { useState } from 'react';
 import { Cell, Column } from 'react-table';
-import Ripple from '../../../page/Loading';
+import { LOADING } from '../helpers/constants';
 import { DropDownCell, DropDownCellProps } from './HelperComponents';
 import { defaultTableProps, Table, TableJSXProps } from './TableJSX';
 
@@ -18,7 +18,7 @@ export interface DrillDownTableProps<D extends object>
 export const defautlDrillDownTableProps = {
   ...defaultTableProps,
   CellComponent: DropDownCell,
-  LoadingComponent: Ripple,
+  LoadingComponent: <h2>{LOADING}</h2>,
   loading: false,
 };
 
@@ -29,7 +29,7 @@ function DrillDownTable<D extends object>(props: DrillDownTableProps<D>) {
   const { columns, data, parentIdentifierField, hasChildren, LoadingComponent } = props;
   const parentNodes =
     data && parentIdentifierField ? data.map((el: Dictionary) => el[parentIdentifierField]) : [];
-  const [pageData, setpageData] = useState<D[]>([]);
+  const [pageData, setPageData] = useState<D[]>([]);
 
   const mutatedColumns = React.useMemo(() => columns.map(mutateColumns), []) as Array<Column<D>>;
 
@@ -49,7 +49,7 @@ function DrillDownTable<D extends object>(props: DrillDownTableProps<D>) {
           return row[parentIdentifierField] === parentId;
         });
       }
-      setpageData(filterByLevel);
+      setPageData(filterByLevel);
     },
     [data]
   );
