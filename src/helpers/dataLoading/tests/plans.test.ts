@@ -7,14 +7,16 @@ describe('helpers/dataLoading', () => {
     const someMockPlans = [{}];
     const userName = 'user1';
     const mockList = jest.fn(async () => someMockPlans);
-    const mockActionCreator = jest.fn();
+    const sampleMockCreator = (args: any) => ({ type: 'someType', payload: args });
+    const mockActionCreator = jest.fn(sampleMockCreator);
     const mockClass = jest.fn().mockImplementation(() => {
       return {
         list: mockList,
       };
     });
+    const responseMockCreator = jest.fn(sampleMockCreator);
 
-    loadPlansByUserFilter(userName, mockActionCreator, mockClass).catch(e => {
+    loadPlansByUserFilter(userName, mockActionCreator, mockClass, responseMockCreator).catch(e => {
       throw e;
     });
     await flushPromises();
@@ -27,5 +29,7 @@ describe('helpers/dataLoading', () => {
 
     // calls action creator correctly.
     expect(mockActionCreator).toHaveBeenCalledWith(someMockPlans, userName);
+
+    expect(responseMockCreator).toHaveBeenCalledWith(someMockPlans);
   });
 });
