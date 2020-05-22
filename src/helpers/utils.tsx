@@ -706,9 +706,10 @@ export const setDefaultValues = (target: Dictionary, prop: string) => {
  * @param sortField
  */
 export function descendingOrderSort<T extends object>(arr: T[], sortField: string) {
+  const mutableArray = ([] as T[]).concat(arr);
   // check if the provided field exists in the plans else return plansArray
-  if (arr.every(plan => Object.keys(plan).includes(sortField))) {
-    return arr.sort((firstEl: Dictionary, secondEl: Dictionary) => {
+  if (arr.every((plan: any) => Object.keys(plan).includes(sortField))) {
+    return mutableArray.sort((firstEl: Dictionary, secondEl: Dictionary) => {
       return Date.parse(secondEl[sortField]) - Date.parse(firstEl[sortField]);
     });
   }
