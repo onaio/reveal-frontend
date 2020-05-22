@@ -88,4 +88,3 @@ export const handleDownload = async (
       growl(err.message, { type: toast.TYPE.ERROR });
     });
 };
-
