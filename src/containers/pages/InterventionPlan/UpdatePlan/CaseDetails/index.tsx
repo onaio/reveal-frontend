@@ -93,14 +93,18 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
   const translatedEvent = translateEvent(event);
   const { caseInformation, fociInformation, caseNumber, fociInformationTitle } = translatedEvent;
 
-  const mapObjectToTableRow = (obj: Dictionary) =>
-    Object.entries(obj).map(([property, value], index) => {
-      return (
-        <tr key={index}>
-          <td>{property}</td> <td>{value}</td>
-        </tr>
-      );
-    });
+  const mapObjectToTableRow = (obj: Dictionary) => (
+    <tbody>
+      {Object.entries(obj).map(([property, value], index) => {
+        return (
+          <tr key={index}>
+            <td>{property}</td>
+            <td>{value}</td>
+          </tr>
+        );
+      })}
+    </tbody>
+  );
 
   return (
     <>
