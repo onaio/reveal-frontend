@@ -35,10 +35,11 @@ export const loadFiles = async (
 export const postUploadedFile = async (
   data: any,
   setStateIfDone: () => void,
-  setFormSubmitstate: () => void
+  setFormSubmitstate: () => void,
+  params?: string
 ) => {
   const bearer = `Bearer ${getAccessToken(store.getState())}`;
-  await fetch(`${OPENSRP_API_BASE_URL}/upload/?event_name=Child%20Registration`, {
+  await fetch(`${OPENSRP_API_BASE_URL}/upload/?event_name=Child%20Registration${params}`, {
     body: data,
     headers: {
       Authorization: bearer,
