@@ -1,5 +1,5 @@
-import { mount } from 'enzyme';
 import React from 'react';
+import { mount } from '../../tests/node_modules/enzyme';
 import { DropDownCell, NullDataComponent } from '../index';
 
 describe('src/components/Table/DrillDownTable/components/HelperComponents', () => {

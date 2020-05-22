@@ -24,3 +24,17 @@ export type CARET_SPAN = typeof CARET_SPAN;
 
 export const DEFAULT_ROW_HEIGHT = '2em';
 export type DEFAULT_ROW_HEIGHT = typeof DEFAULT_ROW_HEIGHT;
+
+export const NO_DATA_FOUND = 'No Data Found';
+export type NO_DATA_FOUND = typeof NO_DATA_FOUND;
+
+export const NEXT = 'Next';
+export const OF = 'Of';
+export const PAGE = 'Page';
+export const PREVIOUS = 'Previous';
+export const ROWS_TO_DISPLAY = 'Rows to display';
+export const CUSTOMIZE_COLUMNS = 'Customize Columns';
+export const CUSTOMIZE_COLUMNS_FILTER_MESSAGE = 'Select the columns you want to display';
+export const LOADING = 'Loading';
+
+export const PAGE_SIZE_CATEGORIES = [10, 20, 30, 50];
