@@ -4,6 +4,32 @@ import { PlanDefinition } from '../../../../../configs/settings';
 export const updatePlanFormProps = {
   allFormActivities: [
     {
+      actionCode: 'MDA Adverse Event(s)',
+      actionDescription: 'Report any adverse events from medication',
+      actionIdentifier: '',
+      actionReason: 'Routine',
+      actionTitle: 'MDA Adverse Event(s)',
+      goalDescription: 'Report any adverse events from medication',
+      goalDue: parseISO('2017-07-20T19:31:00.000Z'),
+      goalPriority: 'medium-priority',
+      goalValue: 2,
+      timingPeriodEnd: parseISO('2017-07-20T19:31:00.000Z'),
+      timingPeriodStart: parseISO('2017-07-13T19:31:00.000Z'),
+    },
+    {
+      actionCode: 'MDA Dispense',
+      actionDescription: 'Dispense medication to each eligible person',
+      actionIdentifier: '',
+      actionReason: 'Routine',
+      actionTitle: 'MDA Dispense',
+      goalDescription: 'Dispense medication to each eligible person',
+      goalDue: parseISO('2017-07-20T19:31:00.000Z'),
+      goalPriority: 'medium-priority',
+      goalValue: 100,
+      timingPeriodEnd: parseISO('2017-07-20T19:31:00.000Z'),
+      timingPeriodStart: parseISO('2017-07-13T19:31:00.000Z'),
+    },
+    {
       actionCode: 'Case Confirmation',
       actionDescription: 'Confirm the index case',
       actionIdentifier: '',

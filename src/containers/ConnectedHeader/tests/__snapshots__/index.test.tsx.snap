@@ -223,6 +223,21 @@ Object {
                 Users
               </NavLink>
             </DropdownItem>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/clients/students"
+                >
+                  Students
+                </NavLink>
+              </DropdownItem>
+            </div>
           </DropdownMenu>
         </UncontrolledDropdown>
         <NavItem
@@ -484,6 +499,21 @@ Object {
                 Users
               </NavLink>
             </DropdownItem>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/clients/students"
+                >
+                  Students
+                </NavLink>
+              </DropdownItem>
+            </div>
           </DropdownMenu>
         </UncontrolledDropdown>
         <NavItem

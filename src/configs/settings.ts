@@ -74,6 +74,10 @@ import {
   LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
   LARVAL_DIPPING_GOAL_MEASURE,
   LOW_PRIORITY_LABEL,
+  MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION,
+  MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL,
+  MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION,
+  MDA_POINT_DISPENSE_COLLECTION_GOAL,
   MEDIUM_PRIORITY_LABEL,
   MOSQUITO_COLLECTION_ACTIVITY,
   MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
@@ -119,6 +123,10 @@ import {
   LARVAL_DIPPING_ACTIVITY_CODE,
   LARVAL_DIPPING_CODE,
   LOW_PRIORITY,
+  MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
+  MDA_POINT_ADVERSE_EFFECTS_CODE,
+  MDA_POINT_DISPENSE_ACTIVITY_CODE,
+  MDA_POINT_DISPENSE_CODE,
   MEDIUM_PRIORITY,
   MOSQUITO_COLLECTION_ACTIVITY_CODE,
   MOSQUITO_COLLECTION_CODE,
@@ -278,6 +286,8 @@ export const PlanActionCodes = [
   RACD_REGISTER_FAMILY_CODE,
   LARVAL_DIPPING_CODE,
   MOSQUITO_COLLECTION_CODE,
+  MDA_POINT_DISPENSE_CODE,
+  MDA_POINT_ADVERSE_EFFECTS_CODE,
 ] as const;
 
 /** Allowed taskGenerationStatus values */
@@ -310,7 +320,7 @@ export interface PlanAction {
 
 /** Plan Goal detailQuantity */
 export interface PlanGoaldetailQuantity {
-  comparator: '>=';
+  comparator: '>=' | '<=';
   unit: GoalUnit;
   value: number;
 }
@@ -351,6 +361,8 @@ export const PlanActivityTitles = [
   MOSQUITO_COLLECTION_ACTIVITY_CODE,
   BCC_CODE,
   IRS_CODE,
+  MDA_POINT_DISPENSE_ACTIVITY_CODE,
+  MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
 ] as const;
 
 /** default plan activities */
@@ -647,6 +659,80 @@ export const planActivities: PlanActivities = {
           },
           due: '',
           measure: MOSQUITO_COLLECTION_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  pointAdverseMDA: {
+    action: {
+      code: 'MDA Adverse Event(s)',
+      description: MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION,
+      goalId: 'Point_adverse_effect_MDA',
+      identifier: '',
+      prefix: 0,
+      reason: ROUTINE,
+      subjectCodableConcept: {
+        text: 'MDA_Point_Adverse_Event',
+      },
+      taskTemplate: 'MDA_Point_Adverse_Event',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: MDA_POINT_ADVERSE_EFFECTS_CODE,
+    },
+    goal: {
+      description: MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION,
+      id: 'Point_adverse_effect_MDA',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '<=',
+              unit: GoalUnit.PERCENT,
+              value: 2,
+            },
+          },
+          due: '',
+          measure: MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL,
+        },
+      ],
+    },
+  },
+  pointDispenseMDA: {
+    action: {
+      code: 'MDA Dispense',
+      description: MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION,
+      goalId: 'Point_dispense_MDA',
+      identifier: '',
+      prefix: 0,
+      reason: ROUTINE,
+      subjectCodableConcept: {
+        text: 'MDA_Point_Dispense',
+      },
+      taskTemplate: 'MDA_Point_Dispense',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: MDA_POINT_DISPENSE_CODE,
+    },
+    goal: {
+      description: MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION,
+      id: 'Point_dispense_MDA',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: MDA_POINT_DISPENSE_COLLECTION_GOAL,
         },
       ],
     },
@@ -1160,10 +1246,19 @@ export const TakAdmin0: JurisdictionsByCountry = {
   jurisdictionIds: [],
 };
 
+export const Eswatini: JurisdictionsByCountry = {
+  ADMN0_EN: 'Eswatini',
+  ADMN0_PCODE: 'SZ',
+  bounds: [30.7941093444825, -27.3171005249023, 32.1372489929202, -25.7196502685546],
+  jurisdictionId: 'bac41d87-b09d-4e76-be3b-3b6d07399891',
+  jurisdictionIds: [],
+};
+
 /** dictionary of JurisdictionsByCountry by country code */
 export const CountriesAdmin0 = {
   BW: BotswanaAdmin0,
   Chadiza: ChadizaAdmin0,
+  Eswatini,
   Katete: KateteAdmin0,
   ['Lop Buri']: LopBuriAdmin0,
   Lusaka: LusakaAdmin0,

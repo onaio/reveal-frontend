@@ -175,7 +175,11 @@ const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
     interventionType: InterventionType.MDA,
     statusList: planStatus,
   });
-  const plans = [...fiPlans, ...irsPlans, ...mdaPlans].sort(
+  const mdaPointPlans = plansArraySelector(state as Registry, {
+    interventionType: InterventionType.MDAPoint,
+    statusList: planStatus,
+  });
+  const plans = [...fiPlans, ...irsPlans, ...mdaPlans, ...mdaPointPlans].sort(
     (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
   );
   return {

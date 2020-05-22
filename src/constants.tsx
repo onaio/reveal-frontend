@@ -42,6 +42,8 @@ export const BLOOD_SCREENING_ACTIVITY_CODE = 'bloodScreening';
 export const BEDNET_DISTRIBUTION_ACTIVITY_CODE = 'bednetDistribution';
 export const LARVAL_DIPPING_ACTIVITY_CODE = 'larvalDipping';
 export const MOSQUITO_COLLECTION_ACTIVITY_CODE = 'mosquitoCollection';
+export const MDA_POINT_DISPENSE_ACTIVITY_CODE = 'pointDispenseMDA';
+export const MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE = 'pointAdverseMDA';
 export const GA_ENV_TEST = 'test';
 export const PLAN_ID = 'plan_id';
 export const PLAN_INTERVENTION_TYPE = 'plan_intervention_type';
@@ -84,6 +86,8 @@ export const REPORT = 'report';
 export const BACKEND_CALLBACK_URL = '/fe/oauth/callback/opensrp';
 export const BACKEND_CALLBACK_PATH = '/fe/oauth/callback/:id';
 export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
+export const STUDENTS_LIST_URL = '/clients/students';
+export const UPLOAD_STUDENT_CSV_URL = '/clients/students/upload';
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';
@@ -101,6 +105,7 @@ export const OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/add';
 export const OPENSRP_USERS_ENDPOINT = 'user';
 export const OPENSRP_FIND_EVENTS_ENDPOINT = 'event/findById';
 export const OPENSRP_LOCATIONS_BY_PLAN = 'plans/findLocationNames';
+export const OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT = 'upload/history';
 
 // colors
 export const GREEN = 'Green';
@@ -117,6 +122,8 @@ export const CASE_CONFIRMATION_CODE = 'Case Confirmation';
 export const RACD_REGISTER_FAMILY_CODE = 'RACD Register Family';
 export const LARVAL_DIPPING_CODE = 'Larval Dipping';
 export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
+export const MDA_POINT_DISPENSE_CODE = 'MDA Dispense';
+export const MDA_POINT_ADVERSE_EFFECTS_CODE = 'MDA Adverse Event(s)';
 
 export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',

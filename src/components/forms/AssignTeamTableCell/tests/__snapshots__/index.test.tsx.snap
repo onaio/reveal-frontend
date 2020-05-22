@@ -1,5 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`/containers/forms/AssignTeamTableCell renders correctly with parent assignments: AssignTeamButton for outpost-number-one assignment 1`] = `
+<button
+  aria-label={null}
+  className="assign-team-button btn btn-primary btn-sm"
+  id="plan-assignment-outpost-number-one"
+  onClick={[Function]}
+  style={
+    Object {
+      "float": "right",
+    }
+  }
+  type="button"
+>
+  Assign Teams
+</button>
+`;
+
+exports[`/containers/forms/AssignTeamTableCell renders correctly with parent assignments: Team Count Text with parent assignments 1`] = `
+<span
+  className="assignment-label"
+  title="4 Teams Assigned"
+/>
+`;
+
+exports[`/containers/forms/AssignTeamTableCell renders correctly with parent assignments: Updated teams with parent assignments 1`] = `
+<span
+  className="assignment-label"
+  title="4 Teams Assigned"
+/>
+`;
+
 exports[`/containers/forms/AssignTeamTableCell renders correctly: AssignTeamButton 1`] = `
 <button
   aria-label={null}

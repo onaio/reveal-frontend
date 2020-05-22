@@ -234,6 +234,8 @@ describe('containers/forms/PlanForm/helpers', () => {
       GoalUnit.PERCENT,
       GoalUnit.ACTIVITY,
       GoalUnit.ACTIVITY,
+      GoalUnit.PERCENT,
+      GoalUnit.PERCENT,
     ];
     for (let index = 0; index < PlanActionCodes.length; index++) {
       expect(getGoalUnitFromActionCode(PlanActionCodes[index])).toEqual(expectedUnits[index]);

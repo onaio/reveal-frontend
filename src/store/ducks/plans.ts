@@ -15,6 +15,7 @@ export enum InterventionType {
   FI = 'FI',
   IRS = 'IRS',
   MDA = 'MDA',
+  MDAPoint = 'MDA-Point',
 }
 /** interface for plan Objects */
 /** Enum representing the possible intervention types */

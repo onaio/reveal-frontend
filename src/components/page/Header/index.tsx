@@ -21,6 +21,7 @@ import {
   ENABLE_ASSIGN,
   ENABLE_FI,
   ENABLE_IRS,
+  ENABLE_MDA_POINT,
   ENABLE_PRACTITIONERS,
   ENABLE_TEAMS,
   ENABLE_USERS,
@@ -41,6 +42,7 @@ import {
   PLANS,
   PRACTITIONERS,
   SIGN_OUT,
+  STUDENTS_TITLE,
   USERS,
 } from '../../../configs/lang';
 import {
@@ -55,6 +57,7 @@ import {
   PRACTITIONERS_LIST_URL,
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
+  STUDENTS_LIST_URL,
 } from '../../../constants';
 import './Header.css';
 
@@ -191,7 +194,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                 </UncontrolledDropdown>
               )}
 
-              {(ENABLE_TEAMS || ENABLE_PRACTITIONERS || ENABLE_USERS) && (
+              {(ENABLE_TEAMS || ENABLE_PRACTITIONERS || ENABLE_USERS || ENABLE_MDA_POINT) && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle nav={true} caret={true} className={'nav-link'}>
                     {ADMIN}
@@ -225,6 +228,19 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           {USERS}
                         </NavLink>
                       </DropdownItem>
+                    )}
+                    {ENABLE_MDA_POINT && (
+                      <div>
+                        <DropdownItem>
+                          <NavLink
+                            to={STUDENTS_LIST_URL}
+                            className="nav-link"
+                            activeClassName="active"
+                          >
+                            {STUDENTS_TITLE}
+                          </NavLink>
+                        </DropdownItem>
+                      </div>
                     )}
                   </DropdownMenu>
                 </UncontrolledDropdown>

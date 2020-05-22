@@ -264,6 +264,14 @@ export const ORGANIZATION_EDITED_SUCCESSFULLY = translate(
   'ORGANIZATION_EDITED_SUCCESSFULLY',
   `Team edited successfully.`
 );
+export const FILE_UPLOADED_SUCCESSFULLY = translate(
+  'FILE_UPLOADED_SUCCESSFULLY',
+  `File uploaded successfully.`
+);
+export const FILE_UPLOAD_FAILED = translate(
+  'FILE_UPLOAD_FAILED',
+  `File upload failed please try again.`
+);
 export const ORGANIZATION_CREATED_SUCCESSFULLY = translate(
   'ORGANIZATION_CREATED_SUCCESSFULLY',
   `Team created successfully`
@@ -361,6 +369,22 @@ export const MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION = translate(
 export const MOSQUITO_COLLECTION_GOAL_MEASURE = translate(
   'MOSQUITO_COLLECTION_GOAL_MEASURE',
   'Number of mosquito collection activities completed'
+);
+export const MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION = translate(
+  'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
+  'Dispense medication to each eligible person'
+);
+export const MDA_POINT_DISPENSE_COLLECTION_GOAL = translate(
+  'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
+  'Percent of eligible people'
+);
+export const MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION = translate(
+  'MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION',
+  'Report any adverse events from medication'
+);
+export const MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL = translate(
+  'MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL',
+  'Percent of people who reported adverse events'
 );
 
 export const A1_DESCRIPTION = translate(
@@ -466,3 +490,16 @@ export const SHORT = translate('SHORT', 'short');
 export const TALL = translate('TALL', 'tall');
 
 export const NO_DATA_FOUND = translate('NO_DATA_FOUND', 'No Data Found');
+export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');
+
+export const STUDENTS_TITLE = translate('STUDENTS_TITLE', 'Students');
+export const UPLOADED_STUDENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Student Lists');
+export const EXPORT_STUDENT_LIST = translate('EXPORT_STUDENT_LIST', 'Export Student List');
+export const ADD_NEW_CSV = translate('ADD_NEW_CSV', 'Add New CSV');
+export const CLIENTS_TITLE = translate('STUDENTS_TITLE', 'Students');
+export const UPLOADED_CLIENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Student Lists');
+export const EXPORT_CLIENT_LIST = translate('EXPORT_STUDENT_LIST', 'Export Student List');
+export const TEAM_ASSIGNEMENT_SUCCESSFUL = translate(
+  'TEAM_ASSIGNEMENT_SUCCESSFUL',
+  'Team(s) assignment updated successfully'
+);

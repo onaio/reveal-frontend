@@ -70,4 +70,20 @@ export class OpenSRPService extends OpenSRPServiceWeb {
   ) {
     super(baseURL, endpoint, getPayload);
   }
+
+  public async readFile(
+    id: string | number,
+    params: URLParams | null = null,
+    method: HTTPMethod = 'GET'
+  ): Promise<any> {
+    const url = OpenSRPService.getURL(`${this.generalURL}/${id}`, params);
+    const response = await fetch(url, this.getOptions(this.signal, method));
+
+    if (!response.ok) {
+      throw new Error(
+        `OpenSRPService read on ${this.endpoint} failed, HTTP status ${response.status}`
+      );
+    }
+    return await response.blob();
+  }
 }

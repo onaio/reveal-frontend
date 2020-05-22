@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/ClientUploadStatus Matches snapshot 1`] = `
+<UploadStatus
+  uploadFile={File {}}
+>
+  <p>
+    loading...
+  </p>
+</UploadStatus>
+`;

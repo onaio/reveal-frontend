@@ -682,6 +682,47 @@ exports[`components/page/Header renders header correctly 1`] = `
                                         </NavLink>
                                       </button>
                                     </DropdownItem>
+                                    <div>
+                                      <DropdownItem
+                                        tag="button"
+                                        toggle={true}
+                                      >
+                                        <button
+                                          className="dropdown-item"
+                                          onClick={[Function]}
+                                          role="menuitem"
+                                          tabIndex="0"
+                                          type="button"
+                                        >
+                                          <NavLink
+                                            activeClassName="active"
+                                            aria-current="page"
+                                            className="nav-link"
+                                            to="/clients/students"
+                                          >
+                                            <Route
+                                              path="\\\\/clients\\\\/students"
+                                            >
+                                              <Link
+                                                aria-current={null}
+                                                className="nav-link"
+                                                replace={false}
+                                                to="/clients/students"
+                                              >
+                                                <a
+                                                  aria-current={null}
+                                                  className="nav-link"
+                                                  href="/clients/students"
+                                                  onClick={[Function]}
+                                                >
+                                                  Students
+                                                </a>
+                                              </Link>
+                                            </Route>
+                                          </NavLink>
+                                        </button>
+                                      </DropdownItem>
+                                    </div>
                                   </div>
                                 </DropdownMenu>
                               </li>
@@ -1455,6 +1496,47 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                         </NavLink>
                                       </button>
                                     </DropdownItem>
+                                    <div>
+                                      <DropdownItem
+                                        tag="button"
+                                        toggle={true}
+                                      >
+                                        <button
+                                          className="dropdown-item"
+                                          onClick={[Function]}
+                                          role="menuitem"
+                                          tabIndex="0"
+                                          type="button"
+                                        >
+                                          <NavLink
+                                            activeClassName="active"
+                                            aria-current="page"
+                                            className="nav-link"
+                                            to="/clients/students"
+                                          >
+                                            <Route
+                                              path="\\\\/clients\\\\/students"
+                                            >
+                                              <Link
+                                                aria-current={null}
+                                                className="nav-link"
+                                                replace={false}
+                                                to="/clients/students"
+                                              >
+                                                <a
+                                                  aria-current={null}
+                                                  className="nav-link"
+                                                  href="/clients/students"
+                                                  onClick={[Function]}
+                                                >
+                                                  Students
+                                                </a>
+                                              </Link>
+                                            </Route>
+                                          </NavLink>
+                                        </button>
+                                      </DropdownItem>
+                                    </div>
                                   </div>
                                 </DropdownMenu>
                               </li>

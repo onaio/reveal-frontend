@@ -44,6 +44,10 @@ export type ENABLE_ABOUT = typeof ENABLE_ABOUT;
 export const ENABLE_TEAMS = process.env.REACT_APP_ENABLE_TEAMS === 'true';
 export type ENABLE_TEAMS = typeof ENABLE_TEAMS;
 
+/** Do you want to enable the MDA Point plan features? */
+export const ENABLE_MDA_POINT = process.env.REACT_APP_ENABLE_MDA_POINT === 'true';
+export type ENABLE_MDA_POINT = typeof ENABLE_MDA_POINT;
+
 /** Do you want to disable login protection? */
 export const DISABLE_LOGIN_PROTECTION = process.env.REACT_APP_DISABLE_LOGIN_PROTECTION === 'true';
 export type DISABLE_LOGIN_PROTECTION = typeof DISABLE_LOGIN_PROTECTION;
@@ -256,3 +260,8 @@ export type REACT_APP_VERSION = typeof REACT_APP_VERSION;
 
 export const REACT_APP_NAME = process.env.REACT_APP_NAME;
 export type REACT_APP_NAME = typeof REACT_APP_NAME;
+
+export const HIDE_MAP_FOR_INTERVENTIONS = String(
+  process.env.REACT_APP_HIDE_MAP_FOR_INTERVENTIONS || ' '
+).split(',');
+export type HIDE_MAP_FOR_INTERVENTIONS = typeof HIDE_MAP_FOR_INTERVENTIONS;

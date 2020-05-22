@@ -98,3 +98,183 @@ exports[`containers/pages/IRS/plan renders IRS Plan page correctly 1`] = `
   </Ripple>
 </IrsPlan>
 `;
+
+exports[`containers/pages/IRS/plan renders correctly if props.planById.plan_status is draft: DrillDownTable props 1`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Array [
+    Object {
+      "Header": [Function],
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": [Function],
+          "id": "jurisdiction_selection",
+          "maxWidth": 24,
+        },
+      ],
+    },
+    Object {
+      "Header": "Name",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": [Function],
+          "id": "name",
+        },
+      ],
+    },
+    Object {
+      "Header": "Type",
+      "columns": Array [
+        Object {
+          "Header": "",
+          "accessor": [Function],
+          "id": "jurisdiction-type",
+        },
+      ],
+    },
+  ],
+  "data": Array [
+    Object {
+      "assignedTeams": Array [],
+      "geographic_level": 2,
+      "id": "2942",
+      "isChildless": true,
+      "isPartiallySelected": false,
+      "jurisdiction_id": "2942",
+      "name": "1B - 2942",
+      "parent_id": "1B",
+      "planId": "0230f9e8-1f30-5e91-8693-4c993661785e",
+    },
+  ],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "name",
+  "minRows": 0,
+  "nextText": "Next",
+  "parentIdentifierField": "parent_id",
+  "previousText": "Previous",
+  "rootParentId": "2942",
+  "shouldUseEffect": false,
+  "showPageSizeOptions": false,
+  "showPagination": false,
+  "useDrillDownTrProps": true,
+}
+`;
+
+exports[`containers/pages/IRS/plan renders correctly if props.planById.plan_status is draft: GisidaWrapper props 1`] = `
+Object {
+  "bounds": Array [
+    28.20209213900005,
+    -15.549759923999941,
+    28.488907821000048,
+    -15.31976316599997,
+  ],
+  "currentGoal": null,
+  "geoData": null,
+  "goal": null,
+  "handlers": Array [
+    Object {
+      "method": [Function],
+      "name": "Lusaka-fill-drilldown",
+      "type": "click",
+    },
+    Object {
+      "method": [Function],
+      "name": "drill-up-handler",
+      "type": "click",
+    },
+  ],
+  "layers": Array [],
+  "pointFeatureCollection": null,
+  "polygonFeatureCollection": null,
+  "structures": null,
+}
+`;
+
+exports[`containers/pages/IRS/plan renders correctly if props.planById.plan_status is draft: component props 1`] = `
+Object {
+  "children": <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <Connect(IrsPlan)
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+      location={[MockFunction]}
+      match={
+        Object {
+          "isExact": true,
+          "params": Object {
+            "id": "0230f9e8-1f30-5e91-8693-4c993661785e",
+          },
+          "path": "/intervention/irs/plan/:id",
+          "url": "/intervention/irs/plan/0230f9e8-1f30-5e91-8693-4c993661785e",
+        }
+      }
+      supersetService={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              471,
+              Object {
+                "row_limit": 3000,
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": Promise {},
+            },
+          ],
+        }
+      }
+    />
+  </Router>,
+  "store": Object {
+    "dispatch": [Function],
+    "getState": [Function],
+    "replaceReducer": [Function],
+    "subscribe": [Function],
+    Symbol(observable): [Function],
+  },
+}
+`;
