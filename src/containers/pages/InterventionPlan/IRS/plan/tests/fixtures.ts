@@ -161,3 +161,28 @@ export const jurisdictionGeo = {
   },
   id: '2942',
 };
+
+export const divDocumentCreator = (ids: string[]) => {
+  ids.forEach((id: string) => {
+    const div = document.createElement('div');
+    div.setAttribute('id', `plan-assignment-${id}`);
+    document.body.appendChild(div);
+  });
+};
+
+export const assignments = [
+  {
+    jurisdiction: '1B',
+    organization: 'fcc19470-d599-11e9-bb65-2a2ae2dbcce4',
+    plan: '0230f9e8-1f30-5e91-8693-4c993661785e',
+    fromDate: '2020-04-23T01:00:00+03:00',
+    toDate: '2020-12-30T01:00:00+03:00',
+  },
+  {
+    jurisdiction: '1Ba',
+    organization: '4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4',
+    plan: '0230f9e8-1f30-5e91-8693-4c993661785e',
+    fromDate: '2020-04-23T01:00:00+03:00',
+    toDate: '2020-12-30T01:00:00+03:00',
+  },
+];

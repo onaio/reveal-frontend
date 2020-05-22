@@ -44,6 +44,8 @@ export interface OrganizationSelectProps {
   resetPlanAssignmentsAction: typeof resetPlanAssignments;
   serviceClass: typeof OpenSRPService /** the OpenSRP service */;
   value: SelectOption[];
+  parentIds?: string[];
+  parentAssignments?: string[];
 }
 
 /** default props for OrganizationSelect */
@@ -73,6 +75,7 @@ export const OrganizationSelect = (props: OrganizationSelectProps) => {
     jurisdictionId,
     name,
     organizations,
+    parentAssignments,
     planId,
     resetPlanAssignmentsAction,
     serviceClass,
@@ -94,18 +97,23 @@ export const OrganizationSelect = (props: OrganizationSelectProps) => {
     const filteredAssignments: Assignment[] = assignments.filter(
       (a: Assignment) => a.jurisdiction !== jurisdictionId
     );
-    /** nextValues is an empty array -> means change-event was a remove-options-event */
-    if (!nextValues) {
+    const assignmentsToRemove = parentAssignments || [];
+    /** nextValues is an empty array or has same size as parrents assignment array
+     *  -> means change-event was a remove-options-event
+     */
+    if (!nextValues || (nextValues && nextValues.length === assignmentsToRemove.length)) {
       resetPlanAssignmentsAction({ [planId]: filteredAssignments });
     } else {
-      const newAssignments: Assignment[] = nextValues.map(
-        (v: SelectOption) =>
-          ({
-            jurisdiction: jurisdictionId,
-            organization: v.value,
-            plan: planId,
-          } as Assignment)
-      );
+      const newAssignments: Assignment[] = nextValues
+        .filter((assignment: SelectOption) => !assignmentsToRemove.includes(assignment.value))
+        .map(
+          (assignment: SelectOption) =>
+            ({
+              jurisdiction: jurisdictionId,
+              organization: assignment.value,
+              plan: planId,
+            } as Assignment)
+        );
       const nextAssignments: Assignment[] = [...filteredAssignments, ...newAssignments];
       fetchAssignmentsAction(nextAssignments);
     }
@@ -144,17 +152,27 @@ const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProp
   const organizationsById = getOrganizationsById(state);
   const assignments = getAssignmentsArrayByPlanId(state, ownProps.planId);
   const organizations = getOrganizationsArray(state);
-  const selectOptions = assignments
-    .filter((a: Assignment) => a.jurisdiction === ownProps.jurisdictionId)
-    .map(
-      (a: Assignment) =>
-        ({
-          label:
-            (organizationsById[a.organization] && organizationsById[a.organization].name) ||
-            a.organization,
-          value: a.organization,
-        } as SelectOption)
-    );
+  const idsToCheckAssignments =
+    ownProps.parentIds && ownProps.parentIds.length
+      ? [ownProps.jurisdictionId, ...ownProps.parentIds]
+      : [ownProps.jurisdictionId];
+  const uniqueOptionsIds: string[] = [];
+  const selectOptions: SelectOption[] = [];
+  assignments.forEach((a: Assignment) => {
+    if (
+      idsToCheckAssignments.includes(a.jurisdiction) &&
+      !uniqueOptionsIds.includes(a.organization)
+    ) {
+      uniqueOptionsIds.push(a.organization);
+      selectOptions.push({
+        label:
+          (organizationsById[a.organization] && organizationsById[a.organization].name) ||
+          a.organization,
+        value: a.organization,
+      } as SelectOption);
+    }
+  });
+
   return {
     ...ownProps,
     assignments,

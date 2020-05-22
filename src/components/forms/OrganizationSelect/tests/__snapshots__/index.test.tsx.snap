@@ -1,5 +1,110 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`/containers/forms/OrganizationSelect renders select options correctly when parent assignments present: Organization Select Props with parent assignments 1`] = `
+Object {
+  "assignments": Array [
+    Object {
+      "fromDate": "2019-08-31T16:00:00-08:00",
+      "jurisdiction": "outpost-number-one",
+      "organization": "griff",
+      "plan": "alpha",
+      "toDate": "2019-12-31T16:00:01-08:00",
+    },
+    Object {
+      "fromDate": "2019-08-31T16:00:00-08:00",
+      "jurisdiction": "outpost-number-one",
+      "organization": "simons",
+      "plan": "alpha",
+      "toDate": "2019-12-31T16:00:01-08:00",
+    },
+    Object {
+      "fromDate": "2019-08-31T16:00:00-08:00",
+      "jurisdiction": "blue-base",
+      "organization": "tucker",
+      "plan": "alpha",
+      "toDate": "2019-12-31T16:00:01-08:00",
+    },
+    Object {
+      "fromDate": "2019-08-31T16:00:00-08:00",
+      "jurisdiction": "blue-base",
+      "organization": "caboose",
+      "plan": "alpha",
+      "toDate": "2019-12-31T16:00:01-08:00",
+    },
+  ],
+  "fetchAssignmentsAction": [Function],
+  "fetchOrganizationsAction": [Function],
+  "jurisdictionId": "outpost-number-one",
+  "name": "plan-assignment-form-outpost-number-one",
+  "organizations": Array [
+    Object {
+      "active": true,
+      "id": 1,
+      "identifier": "fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
+      "name": "The Luang",
+      "type": Object {
+        "coding": Array [
+          Object {
+            "code": "team",
+            "display": "Team",
+            "system": "http://terminology.hl7.org/CodeSystem/organization-type",
+          },
+        ],
+      },
+    },
+    Object {
+      "active": true,
+      "id": 3,
+      "identifier": "4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4",
+      "name": "Demo Team",
+    },
+  ],
+  "parentAssignments": Array [
+    "tucker",
+    "caboose",
+  ],
+  "parentIds": Array [
+    "blue-base",
+  ],
+  "planId": "alpha",
+  "resetPlanAssignmentsAction": [Function],
+  "serviceClass": [Function],
+  "value": Array [
+    Object {
+      "label": "griff",
+      "value": "griff",
+    },
+    Object {
+      "label": "simons",
+      "value": "simons",
+    },
+    Object {
+      "label": "tucker",
+      "value": "tucker",
+    },
+    Object {
+      "label": "caboose",
+      "value": "caboose",
+    },
+  ],
+}
+`;
+
+exports[`/containers/forms/OrganizationSelect renders select options correctly when parent assignments present: Organization Select ownProps with parent assignments 1`] = `
+Object {
+  "jurisdictionId": "outpost-number-one",
+  "name": "plan-assignment-form-outpost-number-one",
+  "parentAssignments": Array [
+    "tucker",
+    "caboose",
+  ],
+  "parentIds": Array [
+    "blue-base",
+  ],
+  "planId": "alpha",
+}
+`;
+
 exports[`/containers/forms/OrganizationSelect renders select options correctly: Organization Select Props 1`] = `
 Object {
   "assignments": Array [],

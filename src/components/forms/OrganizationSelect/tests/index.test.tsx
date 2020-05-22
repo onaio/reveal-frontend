@@ -169,4 +169,36 @@ describe('/containers/forms/OrganizationSelect', () => {
       alpha: ducksFixtures.assignments,
     });
   });
+
+  it('renders select options correctly when parent assignments present', () => {
+    const { assignments, organizations } = ducksFixtures;
+    // fetch organizations dispatch assignments.
+    store.dispatch(fetchAssignments(assignments));
+    store.dispatch(fetchOrganizations(organizations));
+
+    const props = {
+      jurisdictionId: 'outpost-number-one',
+      name: 'plan-assignment-form-outpost-number-one',
+      parentAssignments: ['tucker', 'caboose'],
+      parentIds: ['blue-base'],
+      planId: 'alpha',
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <ConnectedOrganizationSelect {...props} />
+      </Provider>
+    );
+
+    expect(wrapper.children().props()).toMatchSnapshot(
+      'Organization Select ownProps with parent assignments'
+    );
+    expect(
+      wrapper
+        .children()
+        .children()
+        .props()
+    ).toMatchSnapshot('Organization Select Props with parent assignments');
+    expect(wrapper.find('.reveal__indicator').length).toBe(4);
+  });
 });

@@ -101,3 +101,5 @@ export const BACKEND_ACTIVE = true;
 export const REACT_APP_VERSION = 'v0.4.2';
 
 export const REACT_APP_NAME = 'Reveal-frontend';
+export const SUPERSET_JURISDICTIONS_DATA_SLICE = 471;
+export type SUPERSET_JURISDICTIONS_DATA_SLICE = typeof SUPERSET_JURISDICTIONS_DATA_SLICE;

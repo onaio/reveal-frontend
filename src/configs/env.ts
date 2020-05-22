@@ -260,3 +260,8 @@ export type REACT_APP_VERSION = typeof REACT_APP_VERSION;
 
 export const REACT_APP_NAME = process.env.REACT_APP_NAME;
 export type REACT_APP_NAME = typeof REACT_APP_NAME;
+
+export const HIDE_MAP_FOR_INTERVENTIONS = String(
+  process.env.REACT_APP_HIDE_MAP_FOR_INTERVENTIONS || ' '
+).split(',');
+export type HIDE_MAP_FOR_INTERVENTIONS = typeof HIDE_MAP_FOR_INTERVENTIONS;
