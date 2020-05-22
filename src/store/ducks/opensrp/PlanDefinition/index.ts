@@ -1,3 +1,4 @@
+import { Dictionary } from '@onaio/utils/dist/types/types';
 import intersect from 'fast_array_intersect';
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
@@ -177,6 +178,14 @@ export interface PlanDefinitionFilters {
   planIds?: string[] | null /** return only plans whose id appear here */;
 }
 
+/** planDefinitionsByIdBaseSelector selects store slice object with of all plans
+ * @param state - the redux store
+ */
+export const planDefinitionsByIdBaseSelector = (planKey?: string) => (
+  state: Partial<Store>
+): Dictionary<PlanDefinition> =>
+  (state as any)[reducerName][planKey ? planKey : 'planDefinitionsById'];
+
 /** planDefinitionsArrayBaseSelector select an array of all plans
  * @param state - the redux store
  */
@@ -215,11 +224,10 @@ export const getPlanDefinitionsArrayByTitle = (planKey?: string) =>
  */
 export const getPlanDefinitionsArrayByPlanIds = (planKey?: string) => {
   return createSelector(
+    planDefinitionsByIdBaseSelector(planKey),
     planDefinitionsArrayBaseSelector(planKey),
     getPlanIds,
-    (allPlans, planIds) => {
-      const plansByIds = keyBy(allPlans, plan => plan.identifier);
-
+    (plansByIds, allPlans, planIds) => {
       const plansOfInterest = planIds ? planIds.map(planId => plansByIds[planId]) : allPlans;
       return plansOfInterest;
     }
