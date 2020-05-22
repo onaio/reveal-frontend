@@ -1,14 +1,13 @@
-import { Dictionary } from '@onaio/utils';
 import React, { useState } from 'react';
 /**
  * UploadStatus Shows status of selected file on upload
  * Will come in very handy when uploading huge csv files
  * Todo include more specific type for props
  */
-const UploadStatus = (props: Dictionary) => {
+const UploadStatus = (props: any) => {
   const [loading, setLoading] = useState<boolean>(false);
   React.useEffect(() => {
-    if (!props.file) {
+    if (!props.uploadFile) {
       return;
     }
     setLoading(true);
@@ -19,12 +18,11 @@ const UploadStatus = (props: Dictionary) => {
     reader.onloadend = () => {
       setLoading(false);
     };
-    reader.readAsDataURL(props.file);
-  }, [props.file]);
+    reader.readAsDataURL(props.uploadFile);
+  }, [props.uploadFile]);
 
-  const { file } = props;
-
-  if (!file) {
+  const { uploadFile } = props;
+  if (!uploadFile) {
     return null;
   }
 
