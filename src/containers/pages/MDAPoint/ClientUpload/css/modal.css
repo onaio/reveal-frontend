@@ -1,0 +1,7 @@
+.modal {
+  z-index: 1050;
+}
+
+.modal-dialog {
+  max-width: 100%;
+}
