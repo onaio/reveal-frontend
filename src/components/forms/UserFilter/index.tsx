@@ -1,3 +1,6 @@
+/** dropdown component that shows a list of users and propagates that information
+ * to other components through the url
+ */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import queryString from 'query-string';
 import React from 'react';
