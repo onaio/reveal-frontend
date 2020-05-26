@@ -7,7 +7,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import { SearchForm } from '../../../../components/forms/Search';
+import { createChangeHandler, SearchForm } from '../../../../components/forms/Search';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
@@ -102,6 +102,7 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
     tableClass: 'table table-bordered plans-list',
   };
 
+  const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
   return (
     <div>
       <Helmet>
@@ -114,7 +115,7 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
+      <SearchForm placeholder={SEARCH} onChangeHandler={searchFormChangeHandler} />
       <Row>
         <Col>
           <ListView {...listViewProps} />

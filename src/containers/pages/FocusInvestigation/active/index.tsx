@@ -15,7 +15,7 @@ import { Col, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
-import { SearchForm } from '../../../../components/forms/Search';
+import { createChangeHandler, SearchForm } from '../../../../components/forms/Search';
 import { UserSelectFilter } from '../../../../components/forms/UserFilter';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import NewRecordBadge from '../../../../components/NewRecordBadge';
@@ -173,6 +173,8 @@ class ActiveFocusInvestigation extends React.Component<
       url: HOME_URL,
     };
 
+    const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, this.props);
+
     const { caseTriggeredPlans, routinePlans, plan, searchedTitle } = this.props;
     // We need to initialize jurisdictionName to a falsy value
     let jurisdictionName = null;
@@ -220,7 +222,7 @@ class ActiveFocusInvestigation extends React.Component<
         <HeaderBreadCrumb {...breadcrumbProps} />
         <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
         <hr />
-        <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
+        <SearchForm placeholder={SEARCH} onChangeHandler={searchFormChangeHandler} />
         <UserSelectFilter serviceClass={this.props.serviceClass} />
         {[caseTriggeredPlans, routinePlans].forEach((plansArray: Plan[] | null, i) => {
           const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);

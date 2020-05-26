@@ -7,7 +7,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import { SearchForm } from '../../../../components/forms/Search';
+import { createChangeHandler, SearchForm } from '../../../../components/forms/Search';
 import { UserSelectFilter } from '../../../../components/forms/UserFilter';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -123,6 +123,8 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
     tableClass: 'table table-bordered plans-list',
   };
 
+  const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
+
   return (
     <div>
       <Helmet>
@@ -142,7 +144,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
       </Row>
       <hr />
       <div style={{ display: 'inline-block' }}>
-        <SearchForm placeholder={SEARCH} queryParam={QUERY_PARAM_TITLE} />
+        <SearchForm placeholder={SEARCH} onChangeHandler={searchFormChangeHandler} />
       </div>
       <UserSelectFilter serviceClass={props.service} />
       <Row>
