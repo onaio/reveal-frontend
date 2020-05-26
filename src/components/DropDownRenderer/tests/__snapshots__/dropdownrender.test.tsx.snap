@@ -8,7 +8,7 @@ exports[`src/forms/filterForms/helpers Opens 1`] = `
   <Dropdown
     active={false}
     addonType={false}
-    className="ml-3 mr-3 drop-down-container"
+    className="mr-3 drop-down-container"
     direction="down"
     inNavbar={false}
     isOpen={true}
@@ -23,7 +23,7 @@ exports[`src/forms/filterForms/helpers Opens 1`] = `
     toggle={[Function]}
   >
     <Manager
-      className="ml-3 mr-3 drop-down-container btn-group-sm dropdown show"
+      className="mr-3 drop-down-container btn-group-sm dropdown show"
       onKeyDown={[Function]}
       style={
         Object {
@@ -33,7 +33,7 @@ exports[`src/forms/filterForms/helpers Opens 1`] = `
       tag="div"
     >
       <div
-        className="ml-3 mr-3 drop-down-container btn-group-sm dropdown show"
+        className="mr-3 drop-down-container btn-group-sm dropdown show"
         onKeyDown={[Function]}
         style={
           Object {
