@@ -7,11 +7,13 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { INTERVENTION_IRS_URL } from '../../../../../../constants';
+import * as utils from '../../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../../services/opensrp';
 import store from '../../../../../../store';
 import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../../../store/ducks/jurisdictions';
+import { fetchAssignments } from '../../../../../../store/ducks/opensrp/assignments';
 import plansReducer, {
   fetchPlanRecords,
   PlanRecordResponse,
@@ -22,6 +24,8 @@ import { irsPlanRecordResponse1, jurisdictionsById } from '../../tests/fixtures'
 import ConnectedIrsPlan, { IrsPlan } from './..';
 import * as serviceCalls from './../serviceCalls';
 import {
+  assignments,
+  divDocumentCreator,
   irsPlanRecordActive,
   irsPlanRecordActiveResponse,
   irsPlanRecordDraft,
@@ -94,7 +98,6 @@ describe('containers/pages/IRS/plan', () => {
     );
     // check that the page title is rendered correctly
     expect(toJson(wrapper.find('IrsPlan'))).toMatchSnapshot();
-    wrapper.unmount();
   });
 
   it('renders without crashing when loading plans with invlaid jurisdiction ids', () => {
@@ -137,61 +140,17 @@ describe('containers/pages/IRS/plan', () => {
     wrapper.unmount();
   });
 
-  it('renders correctly if props.planById.plan_status is active', async () => {
-    store.dispatch(fetchPlanRecords([irsPlanRecordActiveResponse as PlanRecordResponse]));
-    const supersetServiceMock: any = jest.fn(() => Promise.resolve(jurisidictionResults));
-    const loadPlanMock: any = jest.spyOn(serviceCalls, 'loadPlan');
-
-    const mockRead = jest.fn();
-    OpenSRPService.prototype.read = mockRead;
-    mockRead
-      .mockReturnValueOnce(Promise.resolve([fixtures.assignment1])) // First organization
-      .mockReturnValueOnce(Promise.resolve([fixtures.assignment2])) // Second organization
-      .mockReturnValueOnce(Promise.resolve(locationResults))
-      .mockReturnValueOnce(Promise.resolve(jurisdictionGeo));
-
-    const { id } = irsPlanRecordActive;
-    const props = {
-      history,
-      location: jest.fn(),
-      match: {
-        isExact: true,
-        params: { id },
-        path: `${INTERVENTION_IRS_URL}/plan/:id`,
-        url: `${INTERVENTION_IRS_URL}/plan/${id}`,
-      },
-      supersetService: supersetServiceMock,
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedIrsPlan {...props} />
-        </Router>
-      </Provider>
-    );
-    await flushPromises();
-    /**@todo Investigate why match snapshot is not awaiting for async
-     * The snapshot returned is that of Loading component despite execution
-     * proceeding past this
-     */
-    expect(loadPlanMock).not.toBeCalled();
-    expect(mockRead.mock.calls.length).toBe(4);
-    expect(supersetServiceMock.mock.calls.length).toBe(1);
-    wrapper.unmount();
-  });
-
   it('renders correctly if props.planById.plan_status is draft', async () => {
     store.dispatch(fetchPlanRecords([irsPlanRecordDraftResponse as PlanRecordResponse]));
     const supersetServiceMock: any = jest.fn(() => Promise.resolve(jurisidictionResults));
     const loadPlanMock: any = jest.spyOn(serviceCalls, 'loadPlan');
-
     const mockRead = jest.fn();
-    OpenSRPService.prototype.read = mockRead;
     mockRead
       .mockReturnValueOnce(Promise.resolve([fixtures.assignment1])) // First organization
       .mockReturnValueOnce(Promise.resolve([fixtures.assignment2])) // Second organization
       .mockReturnValueOnce(Promise.resolve(locationResults))
       .mockReturnValueOnce(Promise.resolve(jurisdictionGeo));
+    OpenSRPService.prototype.read = mockRead;
 
     const { id } = irsPlanRecordDraft;
     const props = {
@@ -213,13 +172,130 @@ describe('containers/pages/IRS/plan', () => {
       </Provider>
     );
     await flushPromises();
-    /**@todo Investigate why match snapshot is not awaiting for async
-     * The snapshot returned is that of Loading component despite execution
-     * proceeding past this
-     */
+    wrapper.update();
+
+    expect(wrapper.find('.page-title').text()).toEqual('IRS: IRS 2019-08-09 (draft)');
+    expect(wrapper.props()).toMatchSnapshot('component props');
+    expect(wrapper.find('GisidaWrapper').props()).toMatchSnapshot('GisidaWrapper props');
+    expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot('DrillDownTable props');
+    expect(wrapper.find('GisidaWrapper').length).toEqual(1);
+    expect(wrapper.find('DrillDownTable').length).toEqual(1);
+    expect(wrapper.find('.table-title').text()).toEqual('Select Jurisdictions');
+    // location selectors
+    expect(wrapper.find('.table-bread-crumbs').length).toEqual(1);
+    expect(wrapper.find('.table-bread-crumbs li').text()).toEqual('Lusaka');
+
     expect(loadPlanMock).not.toBeCalled();
     expect(mockRead.mock.calls.length).toBe(4);
     expect(supersetServiceMock.mock.calls.length).toBe(1);
     wrapper.unmount();
+  });
+
+  it('renders correctly if props.planById.plan_status is active', async () => {
+    divDocumentCreator(['0', '1B', '2942']);
+    store.dispatch(fetchPlanRecords([irsPlanRecordActiveResponse as PlanRecordResponse]));
+    store.dispatch(fetchAssignments(assignments));
+    const supersetServiceMock: any = jest.fn(() => Promise.resolve(jurisidictionResults));
+    const loadPlanMock: any = jest.spyOn(serviceCalls, 'loadPlan');
+
+    const mockRead = jest.fn();
+    mockRead
+      .mockReturnValueOnce(Promise.resolve([fixtures.assignment1])) // First organization
+      .mockReturnValueOnce(Promise.resolve([fixtures.assignment2])) // Second organization
+      .mockReturnValueOnce(Promise.resolve(locationResults))
+      .mockReturnValueOnce(Promise.resolve(jurisdictionGeo));
+    OpenSRPService.prototype.read = mockRead;
+
+    const { id } = irsPlanRecordActive;
+    const props = {
+      history,
+      location: jest.fn(),
+      match: {
+        isExact: true,
+        params: { id },
+        path: `${INTERVENTION_IRS_URL}/plan/:id`,
+        url: `${INTERVENTION_IRS_URL}/plan/${id}`,
+      },
+      supersetService: supersetServiceMock,
+    };
+
+    const getFeatureByPropertySpy = jest.spyOn(utils, 'getFeatureByProperty');
+    const getGisidaMapByIdSpy = jest.spyOn(utils, 'getGisidaMapById');
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIrsPlan {...props} />
+        </Router>
+      </Provider>
+    );
+    await flushPromises();
+    wrapper.update();
+
+    expect(wrapper.find('GisidaWrapper').length).toEqual(1);
+    expect(wrapper.find('DrillDownTable').length).toEqual(1);
+    expect(wrapper.find('.page-title').text()).toEqual('IRS: IRS 2019-08-09');
+    expect(wrapper.find('.save-as-finalized-plan-btn').length).toEqual(2);
+    // location selectors
+    expect(wrapper.find('.table-bread-crumbs li').text()).toEqual('Lusaka');
+    // level 1 locations
+    expect(wrapper.find('.plan-jurisdiction-name').length).toEqual(3);
+    expect(
+      wrapper
+        .find('.plan-jurisdiction-name')
+        .at(0)
+        .text()
+    ).toEqual('1B - 2942');
+    expect(
+      wrapper
+        .find('.plan-jurisdiction-name')
+        .at(1)
+        .text()
+    ).toEqual('1B');
+    expect(
+      wrapper
+        .find('.plan-jurisdiction-name')
+        .at(2)
+        .text()
+    ).toEqual('0');
+    // drill to locations level 2
+    wrapper
+      .find('.plan-jurisdiction-name')
+      .at(1)
+      .simulate('click');
+    wrapper.update();
+    expect(wrapper.find('.table-bread-crumbs li').length).toEqual(2);
+    expect(
+      wrapper
+        .find('.table-bread-crumbs li')
+        .at(0)
+        .text()
+    ).toEqual('Lusaka');
+    expect(
+      wrapper
+        .find('.table-bread-crumbs li')
+        .at(1)
+        .text()
+    ).toEqual('1B');
+    expect(getFeatureByPropertySpy).toHaveBeenCalledWith('jurisdictionId', '1B');
+    expect(wrapper.find('AssignTeamButton Button').length).toBe(1);
+    expect(wrapper.find('.assignment-label').text()).toEqual('The Luang');
+    // go back to level 1
+    wrapper
+      .find('.table-bread-crumb-link')
+      .at(0)
+      .simulate('click');
+    wrapper.update();
+    expect(wrapper.find('.table-bread-crumbs li').length).toEqual(1);
+    expect(wrapper.find('.table-bread-crumbs li').text()).toEqual('Lusaka');
+    /**
+     * to do
+     * find a way to mock mapbox Map and
+     * mock getGisidaMapById function from utils to return the mocked Map
+     */
+    expect(getGisidaMapByIdSpy).toHaveBeenCalledWith('map-1');
+
+    expect(loadPlanMock).not.toBeCalled();
+    expect(mockRead.mock.calls.length).toBe(4);
+    expect(supersetServiceMock.mock.calls.length).toBe(1);
   });
 });

@@ -97,3 +97,6 @@ export const EXPRESS_OAUTH_GET_STATE_URL = 'http://localhost:3000/oauth/state';
 export const EXPRESS_OAUTH_LOGOUT_URL = 'http://localhost:3000/logout';
 
 export const BACKEND_ACTIVE = true;
+
+export const SUPERSET_JURISDICTIONS_DATA_SLICE = 471;
+export type SUPERSET_JURISDICTIONS_DATA_SLICE = typeof SUPERSET_JURISDICTIONS_DATA_SLICE;

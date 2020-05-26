@@ -250,3 +250,8 @@ export type EXPRESS_OAUTH_LOGOUT_URL = typeof EXPRESS_OAUTH_LOGOUT_URL;
 
 export const BACKEND_ACTIVE = process.env.REACT_APP_BACKEND_ACTIVE === 'true';
 export type BACKEND_ACTIVE = typeof BACKEND_ACTIVE;
+
+export const HIDE_MAP_FOR_INTERVENTIONS = String(
+  process.env.REACT_APP_HIDE_MAP_FOR_INTERVENTIONS || ' '
+).split(',');
+export type HIDE_MAP_FOR_INTERVENTIONS = typeof HIDE_MAP_FOR_INTERVENTIONS;

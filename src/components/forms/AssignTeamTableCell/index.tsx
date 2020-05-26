@@ -36,6 +36,8 @@ export interface AssignTeamCellProps {
   jurisdictionId: string;
   organizationsById: { [key: string]: Organization } | null;
   planId: string;
+  parentIds?: string[];
+  parentAssignments?: string[];
 }
 
 /** Component that will be rendered in IRS planning table cells
@@ -51,6 +53,8 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     jurisdictionId,
     organizationsById,
     planId,
+    parentIds,
+    parentAssignments,
   } = props;
   const [isActive, setIsActive] = useState<boolean>(false);
 
@@ -92,6 +96,8 @@ const AssignTeamTableCell = (props: AssignTeamCellProps) => {
     onSaveAssignmentsButtonClick,
     onToggle: () => setIsActive(!isActive),
     organizationsById,
+    parentAssignments,
+    parentIds,
     planId,
     target: getButtonId(jurisdictionId),
   };
@@ -128,14 +134,31 @@ export { AssignTeamTableCell };
 const mapStateToProps = (state: Partial<Store>, ownProps: any): AssignTeamCellProps => {
   const organizationsById = getOrganizationsById(state);
   const assignmentsArray = getAssignmentsArrayByPlanId(state, ownProps.planId);
-  const assignments = assignmentsArray.filter(
-    (a: Assignment) => a.jurisdiction === ownProps.jurisdictionId
-  );
+  const idsToCheckAssignments =
+    ownProps.parentIds && ownProps.parentIds.length
+      ? [ownProps.jurisdictionId, ...ownProps.parentIds]
+      : [ownProps.jurisdictionId];
+  const parentAssignments: string[] = [];
+  const uniqueOptionsIds: string[] = [];
+  const assignments: Assignment[] = [];
+  assignmentsArray.forEach((a: Assignment) => {
+    if (idsToCheckAssignments.includes(a.jurisdiction)) {
+      if (a.jurisdiction !== ownProps.jurisdictionId) {
+        parentAssignments.push(a.organization);
+      }
+      if (!uniqueOptionsIds.includes(a.organization)) {
+        uniqueOptionsIds.push(a.organization);
+        assignments.push(a);
+      }
+    }
+  });
+
   return {
     ...ownProps,
     assignments,
     assignmentsArray,
     organizationsById,
+    parentAssignments,
   } as AssignTeamCellProps;
 };
 
