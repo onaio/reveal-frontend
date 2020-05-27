@@ -2,7 +2,7 @@ import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
-import { CellInfo } from 'react-table';
+import { CellInfo } from 'react-table-v6';
 import DrillDownTableLinkedCell from '..';
 
 const urlPath: string = '/path';

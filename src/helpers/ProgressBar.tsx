@@ -1,5 +1,5 @@
 import React from 'react';
-import { CellInfo } from 'react-table';
+import { CellInfo } from 'react-table-v6';
 import * as colors from '../colors';
 import {
   GREEN_THRESHOLD,
