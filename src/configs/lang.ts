@@ -595,3 +595,10 @@ export const SHORT = translate('SHORT', 'short');
 export const TALL = translate('TALL', 'tall');
 
 export const NO_DATA_FOUND = translate('NO_DATA_FOUND', 'No Data Found');
+
+export const CUSTOMIZE_COLUMNS = translate('CUSTOMIZE_COLUMNS', 'Customize Columns');
+
+export const CUSTOMIZE_COLUMNS_FILTER_MESSAGE = translate(
+  'CUSTOMIZE_COLUMNS_FILTER_MESSAGE',
+  'Select columns to be displayed'
+);
