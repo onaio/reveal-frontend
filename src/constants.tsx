@@ -86,7 +86,7 @@ export const REPORT = 'report';
 export const BACKEND_CALLBACK_URL = '/fe/oauth/callback/opensrp';
 export const BACKEND_CALLBACK_PATH = '/fe/oauth/callback/:id';
 export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
-export const STUDENTS_LIST_URL = '/clients/students';
+export const CLIENTS_LIST_URL = '/clients/students';
 export const UPLOAD_STUDENT_CSV_URL = '/clients/students/upload';
 
 // OpenSRP API strings
