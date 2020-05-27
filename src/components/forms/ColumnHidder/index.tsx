@@ -1,11 +1,8 @@
 import React from 'react';
 import { DropdownMenu } from 'reactstrap';
+import { CUSTOMIZE_COLUMNS, CUSTOMIZE_COLUMNS_FILTER_MESSAGE } from '../../../configs/lang';
 import { DropDownRenderer } from '../../DropDownRenderer';
-import { ActualTableInstanceProps } from '../../Table/DrillDown/components/TableJSX';
-import {
-  CUSTOMIZE_COLUMNS,
-  CUSTOMIZE_COLUMNS_FILTER_MESSAGE,
-} from '../../Table/DrillDown/helpers/constants';
+import { ActualTableInstanceProps } from '../../Table/DrillDownFilters/components/TableJSX';
 import './index.css';
 
 export const ColumnHider = <T extends object>({ allColumns }: ActualTableInstanceProps<T>) => {
