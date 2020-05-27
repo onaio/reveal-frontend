@@ -467,3 +467,8 @@ export const TEAM_ASSIGNEMENT_SUCCESSFUL = translate(
   'TEAM_ASSIGNEMENT_SUCCESSFUL',
   'Team(s) assignment updated successfully'
 );
+
+export const MDA_POINT_REPORTING_TITLE = translate(
+  'MDA_POINT_REPORTING_TITLE',
+  'MDA Point Reporting'
+);
