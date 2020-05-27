@@ -2,8 +2,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dictionary } from '@onaio/utils';
 import React from 'react';
 import DropdownMenu from 'reactstrap/lib/DropdownMenu';
-import { ROW_HEIGHT } from '../../../../configs/lang';
-import { rowHeights } from '../../../../configs/settings';
+import { ROW_HEIGHT } from '../../../configs/lang';
+import { rowHeights } from '../../../configs/settings';
 import { DropDownRenderer } from '../../DropDownRenderer';
 import './index.css';
 
