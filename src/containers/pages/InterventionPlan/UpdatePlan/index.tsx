@@ -94,8 +94,9 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     ],
   };
 
+  const planStatus = (plan && plan.status) || '';
   const planFormProps = {
-    ...propsForUpdatingPlans,
+    ...propsForUpdatingPlans(planStatus),
     ...(plan && { initialValues: getPlanFormValues(plan) }),
     /** a renderProp prop. this tells the planForm; I will give you a component that knows of the plan you are displaying,
      * the component will get jurisdictions associated with that plan and render them as links, what you(planForm)

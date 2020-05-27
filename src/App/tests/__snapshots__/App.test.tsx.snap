@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App attempts to logout user: should be login page 1`] = `"HomeLogin"`;
+exports[`App attempts to logout user: should be login page 1`] = `"HomeLoginReveal-frontend: v0.4.2"`;
 
-exports[`App integration: renders App correctly: The displayed text 1`] = `"Home superset-userSign OutWelcome to RevealGet started by selecting an intervention below"`;
+exports[`App integration: renders App correctly: The displayed text 1`] = `"Home superset-userSign OutWelcome to RevealGet started by selecting an intervention belowReveal-frontend: v0.4.2"`;
+
+exports[`App integration: renders App correctly: footer 1`] = `
+<footer
+  className="footer"
+>
+  <span
+    className="text-muted"
+  >
+    Reveal-frontend
+    : 
+    v0.4.2
+  </span>
+</footer>
+`;

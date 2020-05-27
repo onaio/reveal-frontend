@@ -963,9 +963,10 @@ const defaultProps: PlanFormProps = {
 /** props for updating plan definition objects
  * We are defining these here to keep things DRY
  */
-export const propsForUpdatingPlans: Partial<PlanFormProps> = {
-  disabledActivityFields: ['actionReason', 'goalPriority'],
-  disabledFields: [
+export const propsForUpdatingPlans = (
+  planStatus: string = PlanStatus.DRAFT
+): Partial<PlanFormProps> => {
+  let disabledFields = [
     'interventionType',
     'fiReason',
     'fiStatus',
@@ -974,7 +975,29 @@ export const propsForUpdatingPlans: Partial<PlanFormProps> = {
     'caseNum',
     'opensrpEventId',
     'jurisdictions',
-  ],
+  ];
+  const fieldsForActivePlan = [
+    'activities',
+    'date',
+    'end',
+    'fiReason',
+    'fiStatus',
+    'start',
+    'taskGenerationStatus',
+    'title',
+    'version',
+  ];
+  const fieldsForCompletePlans = ['status'];
+  disabledFields =
+    planStatus === PlanStatus.ACTIVE ? [...disabledFields, ...fieldsForActivePlan] : disabledFields;
+  disabledFields =
+    planStatus === PlanStatus.COMPLETE || planStatus === PlanStatus.RETIRED
+      ? [...disabledFields, ...fieldsForCompletePlans, ...fieldsForActivePlan]
+      : disabledFields;
+  return {
+    disabledActivityFields: ['actionReason', 'goalPriority'],
+    disabledFields,
+  };
 };
 
 PlanForm.defaultProps = defaultProps;
