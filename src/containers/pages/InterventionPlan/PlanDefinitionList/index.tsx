@@ -1,10 +1,9 @@
-import ListView from '@onaio/list-view';
+import { DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table-v7';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { createChangeHandler, SearchForm } from '../../../../components/forms/Search';
@@ -44,6 +43,8 @@ import plansByUserReducer, {
   makePlansByUserNamesSelector,
   reducerName as plansByUserReducerName,
 } from '../../../../store/ducks/opensrp/planIdsByUser';
+import { TableColumns } from './utils';
+import { renderInFilterFactory, defaultOptions } from '../../../../components/Table/DrillDownFilters/utils';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
@@ -105,28 +106,34 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
     loadData().catch(err => displayError(err));
   }, []);
 
-  const listViewData = (data: PlanDefinition[]) =>
-    data.map(planObj => {
-      const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
-
-      return [
-        <Link to={`${PLAN_UPDATE_URL}/${planObj.identifier}`} key={planObj.identifier}>
-          {planObj.title}
-        </Link>,
-        typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : '',
-        planStatusDisplay[planObj.status] || planObj.status,
-        planObj.date,
-      ];
-    });
-
-  if (loading === true) {
-    return <Loading />;
-  }
-
-  const listViewProps = {
-    data: listViewData(plans),
-    headerItems: [TITLE, INTERVENTION_TYPE_LABEL, STATUS_HEADER, LAST_MODIFIED],
-    tableClass: 'table table-bordered plans-list',
+  const tableProps: Pick<
+    DrillDownTableProps<PlanDefinition>,
+    | 'columns'
+    | 'data'
+    | 'loading'
+    | 'loadingComponent'
+    | 'renderInBottomFilterBar'
+    | 'renderInTopFilterBar'
+    | 'useDrillDown'
+  > = {
+    columns: TableColumns,
+    data: plans,
+    loading,
+    loadingComponent: Loading,
+    renderInBottomFilterBar: renderInFilterFactory({
+      history: props.history,
+      location: props.location,
+      showColumnHider: false,
+      showPagination: true,
+      showRowHeightPicker: false,
+      showSearch: false,
+    }),
+    renderInTopFilterBar: renderInFilterFactory({
+      history: props.history,
+      location: props.location,
+      ...defaultOptions,
+    }),
+    useDrillDown: false,
   };
 
   const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
@@ -155,7 +162,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
       <UserSelectFilter serviceClass={props.service} />
       <Row>
         <Col>
-          <ListView {...listViewProps} />
+          <DrillDownTable {...tableProps} />
         </Col>
       </Row>
     </div>
