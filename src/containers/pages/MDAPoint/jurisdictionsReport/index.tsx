@@ -59,7 +59,7 @@ const MdaPointJurisdictionReport = (
     ownProps,
   } = props;
 
-  const test = {
+  const jurisdictionReportprops = {
     ...ownProps,
     currentBaseURL,
     currentPageTitle,
@@ -74,7 +74,7 @@ const MdaPointJurisdictionReport = (
 
   return (
     <div>
-      <ConnectedJurisdictionReport {...test} />
+      <ConnectedJurisdictionReport {...jurisdictionReportprops} />
     </div>
   );
 };
