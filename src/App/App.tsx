@@ -83,6 +83,7 @@ import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import ConnectedMdaPointJurisdictionReport from '../containers/pages/MDAPoint/jurisdictionsReport';
 import ConnectedMDAPointPlansList from '../containers/pages/MDAPoint/plans';
 import ConnectedAssignPractitioner from '../containers/pages/OrganizationViews/AssignPractitioners';
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
@@ -193,6 +194,20 @@ const App = (props: AppProps) => {
                 exact={true}
                 path={REPORT_MDA_POINT_PLAN_URL}
                 component={ConnectedMDAPointPlansList}
+              />
+              <ConnectedPrivateRoute
+                redirectPath={APP_CALLBACK_URL}
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${REPORT_MDA_POINT_PLAN_URL}/:planId`}
+                component={ConnectedMdaPointJurisdictionReport}
+              />
+              <ConnectedPrivateRoute
+                redirectPath={APP_CALLBACK_URL}
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${REPORT_MDA_POINT_PLAN_URL}/:planId/:jurisdictionId`}
+                component={ConnectedMdaPointJurisdictionReport}
               />
               {/* IRS Reporting plan table view */}
               <ConnectedPrivateRoute
