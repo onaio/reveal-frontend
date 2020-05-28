@@ -45,6 +45,8 @@ export const ClientUpload = (props: any) => {
   const setStateIfDone = () => {
     setIfDoneHere(true);
   };
+  /** Not sure why it won't work without passing props */
+  const JurisdictionSelectHOF = () => <JurisdictionSelect loadLocations={true} {...props} />;
   return (
     <div>
       <Modal isOpen={true}>
@@ -70,7 +72,7 @@ export const ClientUpload = (props: any) => {
                   <div style={{ display: 'inline-block', width: '24rem' }}>
                     <Field
                       required={true}
-                      component={JurisdictionSelect}
+                      component={JurisdictionSelectHOF}
                       cascadingSelect={true}
                       name={`jurisdictions.id`}
                       id={`jurisdictions-id`}

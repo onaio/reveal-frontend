@@ -24,7 +24,7 @@ interface JurisdictionOption {
 }
 
 /** react-select Option */
-interface SelectOption {
+export interface SelectOption {
   label: string;
   value: string;
 }
@@ -46,14 +46,39 @@ export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectPr
 export const promiseOptions = (
   service: OpenSRPService,
   paramsToUse: Dictionary,
-  hierarchy: SelectOption[]
+  hierarchy: SelectOption[],
+  jurisdictionStatus: boolean,
+  setFinalLocation: (value: boolean) => void,
+  setJurisdictionParam: (value: boolean) => void
 ) =>
   // tslint:disable-next-line:no-inferred-empty-object-type
-  new Promise((resolve, reject) =>
+  new Promise((resolve, reject) => {
     service
-      .list(paramsToUse)
-      .then((e: JurisdictionOption[]) => {
-        const options = e.map(item => {
+      .list({ ...paramsToUse, is_jurisdiction: jurisdictionStatus })
+      .then((jurisdictionLocationOptions: JurisdictionOption[]) => {
+        /** Check if payload has no name property or is empty
+         *  then setresolve with the last values in the hieracrhcy
+         */
+        if (!jurisdictionStatus) {
+          setFinalLocation(true);
+          if (
+            jurisdictionLocationOptions.length >= 1 &&
+            !jurisdictionStatus &&
+            !jurisdictionLocationOptions[0].properties.name
+          ) {
+            const optionsWithoutName = jurisdictionLocationOptions.map(item => {
+              return { label: item.id, value: item.id };
+            });
+            if (hierarchy.length > 0) {
+              setJurisdictionParam(true);
+              resolve(optionsWithoutName);
+            }
+          } else if (!jurisdictionLocationOptions.length) {
+            setJurisdictionParam(true);
+            resolve([]);
+          }
+        }
+        const options = jurisdictionLocationOptions.map(item => {
           return { label: item.properties.name, value: item.id };
         });
         if (hierarchy.length > 0) {
@@ -69,8 +94,8 @@ export const promiseOptions = (
       })
       .catch(error => {
         reject(`Opensrp service Error ${error}`);
-      })
-  );
+      });
+  });
 
 /** default props for JurisdictionSelect */
 export const defaultProps: Partial<JurisdictionSelectProps> = {
@@ -90,12 +115,23 @@ export const defaultProps: Partial<JurisdictionSelectProps> = {
  * This is simply a Higher Order Component that wraps around AsyncSelect
  */
 const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
-  const { apiEndpoint, cascadingSelect, field, form, labelFieldName, params, serviceClass } = props;
-
+  const {
+    loadLocations,
+    apiEndpoint,
+    cascadingSelect,
+    field,
+    form,
+    labelFieldName,
+    params,
+    serviceClass,
+  } = props;
   const [parentId, setParentId] = useState<string>('');
   const [hierarchy, setHierarchy] = useState<SelectOption[]>([]);
   const [shouldMenuOpen, setShouldMenuOpen] = useState<boolean>(false);
   const [closeMenuOnSelect, setCloseMenuOnSelect] = useState<boolean>(false);
+  const [isJurisdiction, setIsJurisdiction] = useState<boolean>(true);
+  const [lowestLocation, setLowestLocation] = useState<boolean>(false);
+  // const [locationOptions, setLocationOptions] = useState<>();
 
   const service = new serviceClass(apiEndpoint);
   const propertiesToFilter = {
@@ -104,12 +140,20 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
   };
   const paramsToUse = {
     ...params,
+    is_jurisdiction: isJurisdiction,
     ...(Object.keys(propertiesToFilter).length > 0 && {
       properties_filter: getFilterParams(propertiesToFilter),
     }),
   };
   const wrapperPromiseOptions: () => Promise<() => {}> = async () => {
-    return await props.promiseOptions(service, paramsToUse, hierarchy);
+    return await props.promiseOptions(
+      service,
+      paramsToUse,
+      hierarchy,
+      isJurisdiction,
+      setLowestLocation,
+      setIsJurisdiction
+    );
   };
   /**
    * onChange callback
@@ -123,8 +167,10 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
 
       const newParamsToUse = {
         ...params,
+        is_jurisdiction: isJurisdiction,
         properties_filter: getFilterParams({ parentId: optionVal.value }),
       };
+
       service
         .list(newParamsToUse)
         .then(e => {
@@ -132,6 +178,13 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
           if (e.length > 0 && cascadingSelect === true) {
             setParentId(optionVal.value);
 
+            hierarchy.push(optionVal);
+            setHierarchy(hierarchy);
+
+            setCloseMenuOnSelect(false);
+          } else if (!e.length && loadLocations && !lowestLocation) {
+            setIsJurisdiction(false);
+            setParentId(optionVal.value);
             hierarchy.push(optionVal);
             setHierarchy(hierarchy);
 
@@ -158,6 +211,8 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       setHierarchy([]);
       setShouldMenuOpen(false);
       setCloseMenuOnSelect(false);
+      setLowestLocation(false);
+      setIsJurisdiction(true);
       // set the Formik field value
       if (form && field) {
         form.setFieldValue(field.name, '');
