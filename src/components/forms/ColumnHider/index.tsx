@@ -1,11 +1,17 @@
+import { DrillDownInstanceProps } from '@onaio/drill-down-table-v7';
 import React from 'react';
 import { DropdownMenu } from 'reactstrap';
+import uuid from 'uuid/v1';
 import { CUSTOMIZE_COLUMNS, CUSTOMIZE_COLUMNS_FILTER_MESSAGE } from '../../../configs/lang';
 import { DropDownRenderer } from '../../DropDownRenderer';
-import { ActualTableInstanceProps } from '../../Table/DrillDownFilters/components/TableJSX';
 import './index.css';
 
-export const ColumnHider = <T extends object>({ allColumns }: ActualTableInstanceProps<T>) => {
+export const ColumnHider = <T extends object>({ allColumns }: DrillDownInstanceProps<T>) => {
+  /** This is where this component might occur more than once in the page, like in FI pages
+   * Primarily its to add some noise to the id  for the checkboxes so that they remain unique
+   * per page.
+   */
+  const salt = uuid();
   return (
     <>
       <DropDownRenderer
@@ -24,9 +30,9 @@ export const ColumnHider = <T extends object>({ allColumns }: ActualTableInstanc
                   className="form-check-input"
                   type="checkbox"
                   {...column.getToggleHiddenProps()}
-                  id={column.id}
+                  id={`${salt}-${column.id}`}
                 />
-                <label className="form-check-label" htmlFor={column.id}>
+                <label className="form-check-label" htmlFor={`${salt}-${column.id}`}>
                   {column.id}
                 </label>
               </div>
