@@ -56,8 +56,8 @@ export const promiseOptions = (
     service
       .list({ ...paramsToUse, is_jurisdiction: jurisdictionStatus })
       .then((jurisdictionLocationOptions: JurisdictionOption[]) => {
-        /** Check if payload has no name property or is empty
-         *  then setresolve with the last values in the hieracrhcy
+        /** Check if payload has no name property then use id instead
+         *  If there is no location return no options
          */
         if (!jurisdictionStatus) {
           setFinalLocation(true);
@@ -131,7 +131,6 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
   const [closeMenuOnSelect, setCloseMenuOnSelect] = useState<boolean>(false);
   const [isJurisdiction, setIsJurisdiction] = useState<boolean>(true);
   const [lowestLocation, setLowestLocation] = useState<boolean>(false);
-  // const [locationOptions, setLocationOptions] = useState<>();
 
   const service = new serviceClass(apiEndpoint);
   const propertiesToFilter = {
