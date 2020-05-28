@@ -95,7 +95,7 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
   const listViewData = (planList: IRSPlan[]) =>
     planList.map(planObj => {
       return [
-        <Link to={`${REPORT_IRS_PLAN_URL}/${planObj.plan_id}`} key={planObj.plan_id}>
+        <Link to={`${pageUrl}/${planObj.plan_id}`} key={planObj.plan_id}>
           {planObj.plan_title}
         </Link>,
         planObj.plan_date,
