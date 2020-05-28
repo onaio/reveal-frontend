@@ -25,6 +25,7 @@ import { HOME_URL, QUERY_PARAM_TITLE, REPORT_IRS_PLAN_URL } from '../../../../co
 import { displayError } from '../../../../helpers/errors';
 import { getQueryParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
+import { fetchMDAPointPlans } from '../../../../store/ducks/generic/mdaPointPlan';
 import IRSPlansReducer, {
   fetchIRSPlans,
   IRSPlan,
@@ -35,22 +36,35 @@ import IRSPlansReducer, {
 /** register the plan definitions reducer */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 
+type NewFetchPlans = typeof fetchMDAPointPlans | null;
 /** interface for PlanList props */
 interface PlanListProps {
   fetchPlans: typeof fetchIRSPlans;
+  newFetchPlans: NewFetchPlans;
+  pageTitle: string;
+  pageUrl: string;
   plans: IRSPlan[];
   service: typeof supersetFetch;
+  supersetReportingSlice: string;
 }
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
-  const { fetchPlans, plans, service } = props;
+  const {
+    fetchPlans,
+    plans,
+    service,
+    pageUrl,
+    pageTitle,
+    supersetReportingSlice,
+    newFetchPlans,
+  } = props;
   const [loading, setLoading] = useState<boolean>(false);
-  const pageTitle: string = IRS_PLANS;
+
   const breadcrumbProps = {
     currentPage: {
       label: pageTitle,
-      url: REPORT_IRS_PLAN_URL,
+      url: pageUrl,
     },
     pages: [
       {
@@ -64,9 +78,9 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
   async function loadData() {
     try {
       setLoading(plans.length < 1); // only set loading when there are no plans
-      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE).then((result: IRSPlan[]) =>
-        fetchPlans(result)
-      );
+      await service(supersetReportingSlice).then((result: IRSPlan[]) => {
+        newFetchPlans ? newFetchPlans(result) : fetchPlans(result);
+      });
     } catch (e) {
       // do something with the error?
     } finally {
@@ -127,8 +141,12 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
 /** Declare default props for IRSPlansList */
 const defaultProps: PlanListProps = {
   fetchPlans: fetchIRSPlans,
+  newFetchPlans: null,
+  pageTitle: IRS_PLANS,
+  pageUrl: REPORT_IRS_PLAN_URL,
   plans: [],
   service: supersetFetch,
+  supersetReportingSlice: SUPERSET_IRS_REPORTING_PLANS_SLICE,
 };
 
 IRSPlansList.defaultProps = defaultProps;
@@ -139,16 +157,30 @@ export { IRSPlansList };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
+  newFetchPlans: NewFetchPlans;
+  pageTitle: string;
+  pageUrl: string;
   plans: IRSPlan[];
+  supersetReportingSlice: string;
 }
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const IRSPlansArray = makeIRSPlansArraySelector()(state, { plan_title: searchedTitle });
+  const IRSPlansArray =
+    ownProps.plans || makeIRSPlansArraySelector()(state, { plan_title: searchedTitle });
+  const newFetchPlans: NewFetchPlans = ownProps.fetchPlans || null;
+  const pageTitle = ownProps.pageTitle || defaultProps.pageTitle;
+  const pageUrl = ownProps.pageUrl || defaultProps.pageUrl;
+  const supersetReportingSlice =
+    ownProps.supersetReportingSlice || defaultProps.supersetReportingSlice;
 
   return {
+    newFetchPlans,
+    pageTitle,
+    pageUrl,
     plans: IRSPlansArray,
+    supersetReportingSlice,
   };
 };
 
