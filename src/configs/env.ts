@@ -231,9 +231,9 @@ export const PRACTITIONER_FORM_NAMESPACE =
   process.env.REACT_APP_PRACTITIONER_FORM_NAMESPACE || '78295ac0-df73-11e9-a54b-dbf5e5b2d668';
 export type PRACTITIONER_FORM_NAMESPACE = typeof PRACTITIONER_FORM_NAMESPACE;
 
-const openMRSUsersRequestPageSize = process.env.REACT_APP_OPENMRS_USERS_REQUEST_PAGE_SIZE || '100';
-export const OPENMRS_USERS_REQUEST_PAGE_SIZE = parseInt(openMRSUsersRequestPageSize, 10);
-export type OPENMRS_USERS_REQUEST_PAGE_SIZE = typeof OPENMRS_USERS_REQUEST_PAGE_SIZE;
+const usersRequestPageSize = process.env.REACT_APP_USERS_REQUEST_PAGE_SIZE || '100';
+export const USERS_REQUEST_PAGE_SIZE = parseInt(usersRequestPageSize, 10);
+export type USERS_REQUEST_PAGE_SIZE = typeof USERS_REQUEST_PAGE_SIZE;
 
 const toastAutoCloseDelay = process.env.REACT_APP_TOAST_AUTO_CLOSE_DELAY || '2000';
 

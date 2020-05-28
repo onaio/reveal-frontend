@@ -7,7 +7,7 @@ import { fetchPlansByUser, FetchPlansByUserAction } from '../../store/ducks/open
 import { growl } from '../utils';
 
 /** find plans that the given user has access to
- * @param {string} userName - openMRSUserName
+ * @param {string} userName - username
  * @param {ActionCreator<FetchPlansByUserAction>} actionCreator - action creator for adding practitioners to store
  * @param {typeof OpenSRPService} service -  the OpenSRP service
  * @param {ActionCreator<AnyAction>} responseActionCreator - optionalActionCreator to dispatch the planData in response

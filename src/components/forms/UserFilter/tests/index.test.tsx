@@ -6,7 +6,7 @@ import React from 'react';
 import { Router } from 'react-router';
 import { UserSelectFilter } from '..';
 import { OpenSRPService } from '../../../../services/opensrp';
-import { openMRSUsers } from '../../PractitionerForm/UserIdSelect/tests/fixtures';
+import { users } from '../../PractitionerForm/UserIdSelect/tests/fixtures';
 
 // tslint:disable-next-line:no-var-requires
 const fetch = require('jest-fetch-mock');
@@ -15,7 +15,7 @@ const history = createBrowserHistory();
 
 describe('src/components/forms/FilterForm', () => {
   it('renders without crashing', async () => {
-    fetch.once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(users));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -30,7 +30,7 @@ describe('src/components/forms/FilterForm', () => {
   });
 
   it('renders correctly', async () => {
-    fetch.once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(users));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -47,7 +47,7 @@ describe('src/components/forms/FilterForm', () => {
   });
 
   it('calls to fetch', async () => {
-    fetch.once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(users));
 
     const props = {
       serviceClass: OpenSRPService,
@@ -87,7 +87,7 @@ describe('src/components/forms/FilterForm', () => {
     expect(fetch.mock.calls).toEqual(calls);
   });
   it('calls onchangeHandler callback correctly with correct arguments', async () => {
-    fetch.once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(users));
     const mock: any = jest.fn();
     const props = {
       onChangeHandler: mock,
