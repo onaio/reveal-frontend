@@ -8,13 +8,18 @@ import * as Yup from 'yup';
 import JurisdictionSelect from '../../../../components/forms/JurisdictionSelect';
 =======
 import LocationSelect from '../../../../components/forms/LocationSelect';
+<<<<<<< HEAD
 import ConnectedOrganizationSelect from '../../../../components/forms/OrganizationSelect';
 >>>>>>> fa7dc32... Add LocationSelect component
+=======
+>>>>>>> 78c7057... Add simple org select
 import LinkAsButton from '../../../../components/LinkAsButton';
 import { REQUIRED } from '../../../../configs/lang';
 import { STUDENTS_LIST_URL } from '../../../../constants';
 import { postUploadedFile } from '../ClientListView/helpers/serviceHooks';
 import UploadStatus from '../ClientUploadStatus/';
+import SimpleOrgSelect from './simpleOrgSelect';
+
 export const uploadValidationSchema = Yup.object().shape({
   file: Yup.mixed().required(),
   jurisdictions: Yup.object().shape({
@@ -106,10 +111,13 @@ export const ClientUpload = () => {
                   <FormGroup>
                     <Label for="team">Assign team for this school</Label>
                     <div style={{ display: 'inline-block', width: '24rem' }}>
-                      <ConnectedOrganizationSelect
-                        uploadView={true}
-                        location={values.jurisdictions.id}
-                        name="team"
+                      <Field
+                        required={true}
+                        component={SimpleOrgSelect}
+                        cascadingSelect={true}
+                        name={`team`}
+                        id={`team-id`}
+                        className={'async-select'}
                       />
                     </div>
                   </FormGroup>
