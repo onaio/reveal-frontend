@@ -319,14 +319,13 @@ const mapStateToProps = (
     plan = getPlanById ? getPlanById(state, planId) : getIRSPlanById(state, planId);
   }
   let jurisdictions: GenericJurisdiction[] = [];
-
-  defaultProps.slices.forEach(
+  const slices = ownProps.slices || defaultProps.slices;
+  slices.forEach(
     slice =>
       (jurisdictions = jurisdictions.concat(getGenericJurisdictionsArray(state, slice, planId)))
   );
 
-  const slices = ownProps.slices || defaultProps.slices;
-  const currentBaseURL = ownProps.currentPageTitle || defaultProps.currentBaseURL;
+  const currentBaseURL = ownProps.currentBaseURL || defaultProps.currentBaseURL;
   const currentPageTitle = ownProps.currentPageTitle || defaultProps.currentPageTitle;
   const focusAreaColumn = ownProps.focusAreaColumn || defaultProps.focusAreaColumn;
   const focusAreaLevel = ownProps.focusAreaLevel || defaultProps.focusAreaLevel;
@@ -350,6 +349,7 @@ const mapStateToProps = (
 
 /** map dispatch to props */
 const mapDispatchToProps = {
+  fetchJurisdictions: fetchGenericJurisdictions,
   fetchPlans: fetchIRSPlans,
 };
 

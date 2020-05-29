@@ -196,6 +196,92 @@ export const ZambiaJurisdictionsColumns = [
   },
 ];
 
+/** columns for  mda jurisdictions */
+export const mdaJurisdictionsColumns = [
+  {
+    Header: 'Name',
+    columns: [
+      {
+        Header: '',
+        accessor: 'jurisdiction_name',
+        minWidth: 180,
+      },
+    ],
+  },
+  {
+    Header: 'Total SACs Registered',
+    columns: [
+      {
+        Header: '',
+        accessor: 'sacregistered',
+      },
+    ],
+  },
+  {
+    Header: 'MMA coverage',
+    columns: [
+      {
+        Header: '',
+        accessor: 'mmacov',
+      },
+    ],
+  },
+  {
+    Header: 'MMA Coverage (%)',
+    columns: [
+      {
+        Header: '',
+        accessor: 'mmacovper',
+      },
+    ],
+  },
+  {
+    Header: 'SACs refused',
+    columns: [
+      {
+        Header: '',
+        accessor: 'sacrefused',
+      },
+    ],
+  },
+  {
+    Header: 'SACs sick/pregnant/contraindicated',
+    columns: [
+      {
+        Header: '',
+        accessor: 'sacrefmedreason',
+      },
+    ],
+  },
+  {
+    Header: 'ADR reported (%)',
+    columns: [
+      {
+        Header: '',
+        accessor: 'mmaadr',
+      },
+    ],
+  },
+  {
+    Header: 'ADR severe (%)',
+    columns: [
+      {
+        Header: '',
+        accessor: 'mmaadrsev',
+      },
+    ],
+  },
+  {
+    Header: 'Alb tablets distributed',
+    columns: [
+      {
+        Header: '',
+        accessor: 'albdist',
+      },
+    ],
+  },
+];
+
 /** columns for Namibia IRS focus (spray) areas */
 export const ZambiaFocusAreasColumns = [
   {
@@ -285,6 +371,7 @@ export const ZambiaFocusAreasColumns = [
  * These are all the table columns for IRS that we know about.
  */
 export const IRSTableColumns: { [key: string]: Column[] } = {
+  mdaJurisdictionsColumns,
   namibia2019: NamibiaColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
   zambiaJurisdictions2019: ZambiaJurisdictionsColumns,

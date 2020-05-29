@@ -20,6 +20,7 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
 
   it('should return the correct keys for IRSTableColumns', () => {
     expect(Object.keys(helpers.IRSTableColumns)).toEqual([
+      'mdaJurisdictionsColumns',
       'namibia2019',
       'zambiaFocusArea2019',
       'zambiaJurisdictions2019',
