@@ -202,6 +202,7 @@ class ActiveFocusInvestigation extends React.Component<
     }
 
     if (
+      !this.props.userName &&
       caseTriggeredPlans &&
       caseTriggeredPlans.length === 0 &&
       routinePlans &&

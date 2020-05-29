@@ -54,9 +54,6 @@ describe('src/containers/TeamAssignment/PractitionersListView/', () => {
     // should have link to add practitioner
     expect(wrapper.find(`LinkAsButton`).length).toEqual(1);
 
-    // should have form to search practitioners
-    expect(wrapper.find('input#search').length).toEqual(1);
-
     // should have a table
     expect(toJson(wrapper.find('tbody tr').first())).toMatchSnapshot(
       'First table record in listview'
