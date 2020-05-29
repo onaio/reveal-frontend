@@ -35,6 +35,10 @@ import GenericJurisdictionsReducer, {
   getGenericJurisdictionsArray,
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../store/ducks/generic/jurisdictions';
+import {
+  fetchMDAPointPlans,
+  getMDAPointPlanById,
+} from '../../../../store/ducks/generic/mdaPointPlan';
 import IRSPlansReducer, {
   fetchIRSPlans,
   getIRSPlanById,
@@ -49,16 +53,24 @@ import './style.css';
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
 
-const slices = SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
-
 /** IRS Jurisdictions props */
 export interface GenericJurisdictionProps {
+  currentBaseURL: string;
+  currentPageTitle: string;
   fetchJurisdictions: typeof fetchGenericJurisdictions;
   fetchPlans: typeof fetchIRSPlans;
+  focusAreaColumn: string;
+  focusAreaLevel: string;
+  getPlanById: typeof getMDAPointPlanById | null;
   hasChildren: typeof hasChildrenFunc;
+  hideMapLink: boolean;
+  jurisdictionColumn: string;
   jurisdictions: GenericJurisdiction[] | null;
+  newFetchPlan: typeof fetchMDAPointPlans | null;
   plan: IRSPlan | null;
+  reportingPlanSlice: string;
   service: typeof supersetFetch;
+  slices: string[];
 }
 
 /** Renders IRS Jurisdictions reports */
@@ -72,7 +84,23 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
   if (props.match && props.match.params && props.match.params.planId) {
     planId = props.match.params.planId;
   }
-  const { fetchJurisdictions, fetchPlans, hasChildren, jurisdictions, plan, service } = props;
+  const {
+    fetchJurisdictions,
+    fetchPlans,
+    hasChildren,
+    jurisdictions,
+    plan,
+    service,
+    slices,
+    currentBaseURL,
+    currentPageTitle,
+    jurisdictionColumn,
+    focusAreaColumn,
+    focusAreaLevel,
+    newFetchPlan,
+    reportingPlanSlice,
+    hideMapLink,
+  } = props;
 
   /** async function to load the data */
   async function loadData() {
@@ -85,10 +113,9 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
         ]);
       }
 
-      await service(
-        SUPERSET_IRS_REPORTING_PLANS_SLICE,
-        fetchPlansParams
-      ).then((result: IRSPlan[]) => fetchPlans(result));
+      await service(reportingPlanSlice, fetchPlansParams).then((result: IRSPlan[]) => {
+        newFetchPlan ? newFetchPlan(result) : fetchPlans(result);
+      });
 
       slices.forEach(async slice => {
         let fetchJurisdictionsParams: SupersetFormData | null = null;
@@ -130,11 +157,11 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
 
   const parentNodes = data.map((el: Dictionary) => el.jurisdiction_parent_id);
 
-  let pageTitle = IRS_REPORTING_TITLE;
-  let baseURL = REPORT_IRS_PLAN_URL;
+  let pageTitle = currentPageTitle;
+  let baseURL = currentBaseURL;
   const basePage = {
     label: pageTitle,
-    url: REPORT_IRS_PLAN_URL,
+    url: currentBaseURL,
   };
   const breadcrumbProps = {
     currentPage: basePage,
@@ -148,8 +175,8 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
 
   let planPage = basePage;
   if (plan) {
-    pageTitle = `${IRS_REPORTING_TITLE}: ${plan.plan_title}`;
-    baseURL = `${REPORT_IRS_PLAN_URL}/${plan.plan_id}`;
+    pageTitle = `${currentPageTitle}: ${plan.plan_title}`;
+    baseURL = `${currentBaseURL}/${plan.plan_id}`;
     planPage = {
       label: plan.plan_title,
       url: baseURL,
@@ -180,12 +207,10 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
 
   const currLevelData = data.filter(el => el.jurisdiction_parent_id === jurisdictionId);
 
-  let columnsToUse = get(IRSTableColumns, SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS, null);
+  let columnsToUse = get(IRSTableColumns, jurisdictionColumn, null);
   if (currLevelData && currLevelData.length > 0) {
-    if (
-      currLevelData[0].jurisdiction_depth === +SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL
-    ) {
-      columnsToUse = get(IRSTableColumns, SUPERSET_IRS_REPORTING_FOCUS_AREAS_COLUMNS, null);
+    if (currLevelData[0].jurisdiction_depth === +focusAreaLevel) {
+      columnsToUse = get(IRSTableColumns, focusAreaColumn, null);
     }
   }
 
@@ -194,7 +219,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
     CellComponent: IRSTableCell,
     data,
     defaultPageSize: data.length,
-    extraCellProps: { urlPath: baseURL },
+    extraCellProps: { urlPath: baseURL, hideMapLink },
     getTdProps: (_: Partial<Store>, rowInfo: RowInfo | undefined, column: Column | undefined) => {
       return {
         onClick: (__: SyntheticEvent, handleOriginal: () => void) => {
@@ -247,12 +272,22 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
 };
 
 const defaultProps: GenericJurisdictionProps = {
+  currentBaseURL: REPORT_IRS_PLAN_URL,
+  currentPageTitle: IRS_REPORTING_TITLE,
   fetchJurisdictions: fetchGenericJurisdictions,
   fetchPlans: fetchIRSPlans,
+  focusAreaColumn: SUPERSET_IRS_REPORTING_FOCUS_AREAS_COLUMNS,
+  focusAreaLevel: SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
+  getPlanById: null,
   hasChildren: hasChildrenFunc,
+  hideMapLink: false,
+  jurisdictionColumn: SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS,
   jurisdictions: null,
+  newFetchPlan: null,
   plan: null,
+  reportingPlanSlice: SUPERSET_IRS_REPORTING_PLANS_SLICE,
   service: supersetFetch,
+  slices: SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES.split(','),
 };
 
 JurisdictionReport.defaultProps = defaultProps;
@@ -263,8 +298,17 @@ export { JurisdictionReport };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
+  currentBaseURL: string;
+  currentPageTitle: string;
+  focusAreaColumn: string;
+  focusAreaLevel: string;
+  hideMapLink: boolean;
+  newFetchPlan: typeof fetchMDAPointPlans | null;
   plan: IRSPlan | null;
+  jurisdictionColumn: string;
   jurisdictions: GenericJurisdiction[] | null;
+  reportingPlanSlice: string;
+  slices: string[];
 }
 
 /** map state to props */
@@ -273,17 +317,39 @@ const mapStateToProps = (
   ownProps: GenericJurisdictionProps & RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
   const planId = ownProps.match.params.planId || null;
-  const plan = planId ? getIRSPlanById(state, planId) : null;
+  const { getPlanById } = ownProps;
+  let plan = null;
+  if (planId) {
+    plan = getPlanById ? getPlanById(state, planId) : getIRSPlanById(state, planId);
+  }
   let jurisdictions: GenericJurisdiction[] = [];
-
+  const slices = ownProps.slices || defaultProps.slices;
   slices.forEach(
     slice =>
       (jurisdictions = jurisdictions.concat(getGenericJurisdictionsArray(state, slice, planId)))
   );
 
+  const currentBaseURL = ownProps.currentBaseURL || defaultProps.currentBaseURL;
+  const currentPageTitle = ownProps.currentPageTitle || defaultProps.currentPageTitle;
+  const focusAreaColumn = ownProps.focusAreaColumn || defaultProps.focusAreaColumn;
+  const focusAreaLevel = ownProps.focusAreaLevel || defaultProps.focusAreaLevel;
+  const jurisdictionColumn = ownProps.jurisdictionColumn || defaultProps.jurisdictionColumn;
+  const reportingPlanSlice = ownProps.reportingPlanSlice || defaultProps.reportingPlanSlice;
+  const newFetchPlan = ownProps.newFetchPlan || defaultProps.newFetchPlan;
+  const hideMapLink = ownProps.hideMapLink || defaultProps.hideMapLink;
+
   return {
+    currentBaseURL,
+    currentPageTitle,
+    focusAreaColumn,
+    focusAreaLevel,
+    hideMapLink,
+    jurisdictionColumn,
     jurisdictions,
+    newFetchPlan,
     plan,
+    reportingPlanSlice,
+    slices,
   };
 };
 

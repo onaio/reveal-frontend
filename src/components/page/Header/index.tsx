@@ -36,6 +36,7 @@ import {
   IRS_REPORTING_TITLE,
   IRS_TITLE,
   LOGIN,
+  MDA_POINT_REPORTING_TITLE,
   MONITOR,
   ORGANIZATIONS_LABEL,
   PLAN_TITLE,
@@ -57,6 +58,7 @@ import {
   PRACTITIONERS_LIST_URL,
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
+  REPORT_MDA_POINT_PLAN_URL,
   STUDENTS_LIST_URL,
 } from '../../../constants';
 import './Header.css';
@@ -186,6 +188,19 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                             activeClassName="active"
                           >
                             {IRS_REPORTING_TITLE}
+                          </NavLink>
+                        </DropdownItem>
+                      </div>
+                    )}
+                    {ENABLE_MDA_POINT && (
+                      <div>
+                        <DropdownItem>
+                          <NavLink
+                            to={REPORT_MDA_POINT_PLAN_URL}
+                            className="nav-link"
+                            activeClassName="active"
+                          >
+                            {MDA_POINT_REPORTING_TITLE}
                           </NavLink>
                         </DropdownItem>
                       </div>
