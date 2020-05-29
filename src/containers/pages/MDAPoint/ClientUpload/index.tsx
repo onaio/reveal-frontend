@@ -4,7 +4,12 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { Button, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import * as Yup from 'yup';
+<<<<<<< HEAD
 import JurisdictionSelect from '../../../../components/forms/JurisdictionSelect';
+=======
+import LocationSelect from '../../../../components/forms/LocationSelect';
+import ConnectedOrganizationSelect from '../../../../components/forms/OrganizationSelect';
+>>>>>>> fa7dc32... Add LocationSelect component
 import LinkAsButton from '../../../../components/LinkAsButton';
 import { REQUIRED } from '../../../../configs/lang';
 import { STUDENTS_LIST_URL } from '../../../../constants';
@@ -20,10 +25,10 @@ export const uploadValidationSchema = Yup.object().shape({
 /** interface to describe props for ExportForm component */
 export interface UploadFormField {
   file: string | null;
-  location: any;
   jurisdictions: Dictionary;
+  team: Dictionary;
 }
-export const ClientUpload = (props: any) => {
+export const ClientUpload = () => {
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [ifDoneHere, setIfDoneHere] = useState<boolean>(false);
   const defaultInitialValues: UploadFormField = {
@@ -32,7 +37,10 @@ export const ClientUpload = (props: any) => {
       id: '',
       name: '',
     },
-    location: props.location,
+    team: {
+      label: '',
+      value: '',
+    },
   };
   const closeUploadModal = {
     classNameProp: 'focus-investigation btn btn-primary float-right mt-0',
@@ -45,8 +53,6 @@ export const ClientUpload = (props: any) => {
   const setStateIfDone = () => {
     setIfDoneHere(true);
   };
-  /** Not sure why it won't work without passing props */
-  const JurisdictionSelectHOF = () => <JurisdictionSelect loadLocations={true} {...props} />;
   return (
     <div>
       <Modal isOpen={true}>
@@ -72,7 +78,7 @@ export const ClientUpload = (props: any) => {
                   <div style={{ display: 'inline-block', width: '24rem' }}>
                     <Field
                       required={true}
-                      component={JurisdictionSelectHOF}
+                      component={LocationSelect}
                       cascadingSelect={true}
                       name={`jurisdictions.id`}
                       id={`jurisdictions-id`}
@@ -94,6 +100,21 @@ export const ClientUpload = (props: any) => {
                     />
                   }
                 </FormGroup>
+<<<<<<< HEAD
+=======
+                {values && values.jurisdictions && values.jurisdictions.id && (
+                  <FormGroup>
+                    <Label for="team">Assign team for this school</Label>
+                    <div style={{ display: 'inline-block', width: '24rem' }}>
+                      <ConnectedOrganizationSelect
+                        uploadView={true}
+                        location={values.jurisdictions.id}
+                        name="team"
+                      />
+                    </div>
+                  </FormGroup>
+                )}
+>>>>>>> fa7dc32... Add LocationSelect component
                 <FormGroup>
                   <Label for="upload-file">Upload File</Label>
                   <Input
