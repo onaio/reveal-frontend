@@ -2,7 +2,7 @@ import { Dictionary } from '@onaio/utils';
 import { ErrorMessage, Field, Formik } from 'formik';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import { Button, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import * as Yup from 'yup';
 import LocationSelect from '../../../../components/forms/LocationSelect';
 import ConnectedOrganizationSelect from '../../../../components/forms/OrganizationSelect';
@@ -67,7 +67,7 @@ export const ClientUpload = () => {
             }}
           >
             {({ values, setFieldValue, handleSubmit, errors, isSubmitting }) => (
-              <form onSubmit={handleSubmit} data-enctype="multipart/form-data">
+              <Form onSubmit={handleSubmit} data-enctype="multipart/form-data">
                 <FormGroup className={'async-select-container'}>
                   <Label for={`jurisdictions-${1}-id`}>{'Geographical level to include'}</Label>
                   &nbsp;
@@ -143,7 +143,7 @@ export const ClientUpload = () => {
                   </Button>
                   <LinkAsButton {...closeUploadModal} />
                 </div>
-              </form>
+              </Form>
             )}
           </Formik>
         </ModalBody>
