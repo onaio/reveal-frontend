@@ -63,6 +63,7 @@ export interface GenericJurisdictionProps {
   focusAreaLevel: string;
   getPlanById: typeof getMDAPointPlanById | null;
   hasChildren: typeof hasChildrenFunc;
+  hideMapLink: boolean;
   jurisdictionColumn: string;
   jurisdictions: GenericJurisdiction[] | null;
   newFetchPlan: typeof fetchMDAPointPlans | null;
@@ -98,6 +99,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
     focusAreaLevel,
     newFetchPlan,
     reportingPlanSlice,
+    hideMapLink,
   } = props;
 
   /** async function to load the data */
@@ -217,7 +219,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
     CellComponent: IRSTableCell,
     data,
     defaultPageSize: data.length,
-    extraCellProps: { urlPath: baseURL },
+    extraCellProps: { urlPath: baseURL, hideMapLink },
     getTdProps: (_: Partial<Store>, rowInfo: RowInfo | undefined, column: Column | undefined) => {
       return {
         onClick: (__: SyntheticEvent, handleOriginal: () => void) => {
@@ -278,6 +280,7 @@ const defaultProps: GenericJurisdictionProps = {
   focusAreaLevel: SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
   getPlanById: null,
   hasChildren: hasChildrenFunc,
+  hideMapLink: false,
   jurisdictionColumn: SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS,
   jurisdictions: null,
   newFetchPlan: null,
@@ -299,6 +302,7 @@ interface DispatchedStateProps {
   currentPageTitle: string;
   focusAreaColumn: string;
   focusAreaLevel: string;
+  hideMapLink: boolean;
   newFetchPlan: typeof fetchMDAPointPlans | null;
   plan: IRSPlan | null;
   jurisdictionColumn: string;
@@ -332,12 +336,14 @@ const mapStateToProps = (
   const jurisdictionColumn = ownProps.jurisdictionColumn || defaultProps.jurisdictionColumn;
   const reportingPlanSlice = ownProps.reportingPlanSlice || defaultProps.reportingPlanSlice;
   const newFetchPlan = ownProps.newFetchPlan || defaultProps.newFetchPlan;
+  const hideMapLink = ownProps.hideMapLink || defaultProps.hideMapLink;
 
   return {
     currentBaseURL,
     currentPageTitle,
     focusAreaColumn,
     focusAreaLevel,
+    hideMapLink,
     jurisdictionColumn,
     jurisdictions,
     newFetchPlan,

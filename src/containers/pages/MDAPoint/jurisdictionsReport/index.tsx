@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router';
 import 'react-table/react-table.css';
 import { Store } from 'redux';
 import {
+  HIDE_MAP_FOR_INTERVENTIONS,
   SUPERSET_MDA_POINT_REPORTING_FOCUS_AREAS_COLUMNS,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_COLUMNS,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES,
@@ -22,6 +23,7 @@ import {
   fetchMDAPointPlans,
   getMDAPointPlanById,
 } from '../../../../store/ducks/generic/mdaPointPlan';
+import { InterventionType } from '../../../../store/ducks/plans';
 import ConnectedJurisdictionReport from '../../IRS/JurisdictionsReport';
 import '../../IRS/JurisdictionsReport/style.css';
 
@@ -59,6 +61,10 @@ const MdaPointJurisdictionReport = (
     ownProps,
   } = props;
 
+  const hideMapLink = HIDE_MAP_FOR_INTERVENTIONS
+    ? HIDE_MAP_FOR_INTERVENTIONS.includes(InterventionType.MDAPoint)
+    : false;
+
   const jurisdictionReportprops = {
     ...ownProps,
     currentBaseURL,
@@ -66,6 +72,7 @@ const MdaPointJurisdictionReport = (
     focusAreaColumn,
     focusAreaLevel,
     getPlanById,
+    hideMapLink,
     jurisdictionColumn,
     newFetchPlan: fetchPlans,
     reportingPlanSlice,
