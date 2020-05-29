@@ -69,8 +69,14 @@ export const promiseOptions = (
               };
             });
             if (hierarchy.length > 0) {
+              const labels = hierarchy.map(j => j.label).join(' > ');
               setJurisdictionParam(true);
-              resolve(locationOptions);
+              return resolve([
+                {
+                  label: labels,
+                  options: locationOptions,
+                },
+              ]);
             }
           } else if (!jurisdictionLocationOptions.length) {
             setJurisdictionParam(true);
@@ -185,11 +191,6 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
             setParentId(optionVal.value);
             hierarchy.push(optionVal);
             setHierarchy(hierarchy);
-            if (labelFieldName) {
-              form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
-              form.setFieldTouched(labelFieldName, true); /** dirty hack */
-            }
-
             setCloseMenuOnSelect(false);
           } else {
             // set the Formik field value
