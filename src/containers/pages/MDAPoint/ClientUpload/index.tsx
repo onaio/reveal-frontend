@@ -5,12 +5,12 @@ import { Redirect } from 'react-router';
 import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import * as Yup from 'yup';
 import LocationSelect from '../../../../components/forms/LocationSelect';
+import SimpleOrgSelect from '../../../../components/forms/SimpleOrgSelect';
 import LinkAsButton from '../../../../components/LinkAsButton';
-import { REQUIRED } from '../../../../configs/lang';
+import { CLIENT_UPLOAD_FORM, REQUIRED } from '../../../../configs/lang';
 import { STUDENTS_LIST_URL } from '../../../../constants';
 import { postUploadedFile } from '../ClientListView/helpers/serviceHooks';
 import UploadStatus from '../ClientUploadStatus/';
-import SimpleOrgSelect from './simpleOrgSelect';
 
 export const uploadValidationSchema = Yup.object().shape({
   file: Yup.mixed().required(),
@@ -53,7 +53,7 @@ export const ClientUpload = () => {
   return (
     <div>
       <Modal isOpen={true}>
-        <ModalHeader>Modal title</ModalHeader>
+        <ModalHeader>{CLIENT_UPLOAD_FORM}</ModalHeader>
         <ModalBody>
           <Formik
             initialValues={defaultInitialValues}
@@ -63,7 +63,7 @@ export const ClientUpload = () => {
               const setSubmittingStatus = () => setSubmitting(false);
               const data = new FormData();
               data.append('file', selectedFile);
-              const uploadParams = `&location_id=${values.jurisdictions.id}`;
+              const uploadParams = `&location_id=${values.jurisdictions.id}&team_id=${values.team}`;
               await postUploadedFile(data, setStateIfDone, setSubmittingStatus, uploadParams);
             }}
           >

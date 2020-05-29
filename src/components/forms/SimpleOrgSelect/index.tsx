@@ -1,12 +1,12 @@
 import { FieldProps } from 'formik';
 import React from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
-import { SelectOption } from '../../../../components/forms/JurisdictionSelect';
-import { SELECT } from '../../../../configs/lang';
-import { OPENSRP_ORGANIZATION_ENDPOINT } from '../../../../constants';
-import { reactSelectNoOptionsText } from '../../../../helpers/utils';
-import { OpenSRPService, URLParams } from '../../../../services/opensrp';
-import { Organization } from '../../../../store/ducks/opensrp/organizations';
+import { SELECT } from '../../../configs/lang';
+import { OPENSRP_ORGANIZATION_ENDPOINT } from '../../../constants';
+import { reactSelectNoOptionsText } from '../../../helpers/utils';
+import { OpenSRPService, URLParams } from '../../../services/opensrp';
+import { Organization } from '../../../store/ducks/opensrp/organizations';
+import { SelectOption } from '../JurisdictionSelect';
 
 /** SimpleOrgSelect props */
 export interface SimpleOrgSelectProps<T = SelectOption> extends AsyncSelectProps<T> {
@@ -16,11 +16,11 @@ export interface SimpleOrgSelectProps<T = SelectOption> extends AsyncSelectProps
   promiseOptions: any;
 }
 
-export const promiseOptions = (service: OpenSRPService) =>
+export const promiseOptions = (service: OpenSRPService, parameters: any) =>
   // tslint:disable-next-line:no-inferred-empty-object-type
   new Promise((resolve, reject) => {
     service
-      .list()
+      .list(parameters)
       .then((response: Organization[]) => {
         const options = response.map(item => {
           return { label: item.name, value: item.identifier };
@@ -41,11 +41,12 @@ export const defaultProps: Partial<SimpleOrgSelectProps> = {
 
 const SimpleOrgSelect = (props: SimpleOrgSelectProps & FieldProps) => {
   const { apiEndpoint, field, form, serviceClass } = props;
-
   const service = new serviceClass(apiEndpoint);
-
+  const params = {
+    location_id: form.values.jurisdictions.id,
+  };
   const wrapperPromiseOptions: () => Promise<() => {}> = async () => {
-    return await props.promiseOptions(service);
+    return await props.promiseOptions(service, params);
   };
 
   /**

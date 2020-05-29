@@ -483,3 +483,4 @@ export const CLIENTS_TITLE = translate('STUDENTS_TITLE', 'Students');
 export const UPLOADED_CLIENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Student Lists');
 export const EXPORT_CLIENT_LIST = translate('EXPORT_STUDENT_LIST', 'Export Student List');
 export const RESET = translate('RESET', 'Reset');
+export const CLIENT_UPLOAD_FORM = translate('CLIENT_UPLOAD_FORM', 'Client Upload Form');
