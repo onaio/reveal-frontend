@@ -508,47 +508,6 @@ exports[`components/page/Header renders header correctly 1`] = `
                                         </button>
                                       </DropdownItem>
                                     </div>
-                                    <div>
-                                      <DropdownItem
-                                        tag="button"
-                                        toggle={true}
-                                      >
-                                        <button
-                                          className="dropdown-item"
-                                          onClick={[Function]}
-                                          role="menuitem"
-                                          tabIndex="0"
-                                          type="button"
-                                        >
-                                          <NavLink
-                                            activeClassName="active"
-                                            aria-current="page"
-                                            className="nav-link"
-                                            to="/intervention/mda-point/report"
-                                          >
-                                            <Route
-                                              path="\\\\/intervention\\\\/mda-point\\\\/report"
-                                            >
-                                              <Link
-                                                aria-current={null}
-                                                className="nav-link"
-                                                replace={false}
-                                                to="/intervention/mda-point/report"
-                                              >
-                                                <a
-                                                  aria-current={null}
-                                                  className="nav-link"
-                                                  href="/intervention/mda-point/report"
-                                                  onClick={[Function]}
-                                                >
-                                                  MDA Point Reporting
-                                                </a>
-                                              </Link>
-                                            </Route>
-                                          </NavLink>
-                                        </button>
-                                      </DropdownItem>
-                                    </div>
                                   </div>
                                 </DropdownMenu>
                               </li>
@@ -1315,47 +1274,6 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
                                                   onClick={[Function]}
                                                 >
                                                   IRS Reporting
-                                                </a>
-                                              </Link>
-                                            </Route>
-                                          </NavLink>
-                                        </button>
-                                      </DropdownItem>
-                                    </div>
-                                    <div>
-                                      <DropdownItem
-                                        tag="button"
-                                        toggle={true}
-                                      >
-                                        <button
-                                          className="dropdown-item"
-                                          onClick={[Function]}
-                                          role="menuitem"
-                                          tabIndex="0"
-                                          type="button"
-                                        >
-                                          <NavLink
-                                            activeClassName="active"
-                                            aria-current="page"
-                                            className="nav-link"
-                                            to="/intervention/mda-point/report"
-                                          >
-                                            <Route
-                                              path="\\\\/intervention\\\\/mda-point\\\\/report"
-                                            >
-                                              <Link
-                                                aria-current={null}
-                                                className="nav-link"
-                                                replace={false}
-                                                to="/intervention/mda-point/report"
-                                              >
-                                                <a
-                                                  aria-current={null}
-                                                  className="nav-link"
-                                                  href="/intervention/mda-point/report"
-                                                  onClick={[Function]}
-                                                >
-                                                  MDA Point Reporting
                                                 </a>
                                               </Link>
                                             </Route>
