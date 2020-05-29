@@ -9,16 +9,19 @@ import JurisdictionSelect from '../../../../components/forms/JurisdictionSelect'
 =======
 import LocationSelect from '../../../../components/forms/LocationSelect';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import ConnectedOrganizationSelect from '../../../../components/forms/OrganizationSelect';
 >>>>>>> fa7dc32... Add LocationSelect component
 =======
 >>>>>>> 78c7057... Add simple org select
+=======
+import SimpleOrgSelect from '../../../../components/forms/SimpleOrgSelect';
+>>>>>>> 1105f1c... Partial cleanup
 import LinkAsButton from '../../../../components/LinkAsButton';
-import { REQUIRED } from '../../../../configs/lang';
+import { CLIENT_UPLOAD_FORM, REQUIRED } from '../../../../configs/lang';
 import { STUDENTS_LIST_URL } from '../../../../constants';
 import { postUploadedFile } from '../ClientListView/helpers/serviceHooks';
 import UploadStatus from '../ClientUploadStatus/';
-import SimpleOrgSelect from './simpleOrgSelect';
 
 export const uploadValidationSchema = Yup.object().shape({
   file: Yup.mixed().required(),
@@ -61,7 +64,7 @@ export const ClientUpload = () => {
   return (
     <div>
       <Modal isOpen={true}>
-        <ModalHeader>Modal title</ModalHeader>
+        <ModalHeader>{CLIENT_UPLOAD_FORM}</ModalHeader>
         <ModalBody>
           <Formik
             initialValues={defaultInitialValues}
@@ -71,7 +74,7 @@ export const ClientUpload = () => {
               const setSubmittingStatus = () => setSubmitting(false);
               const data = new FormData();
               data.append('file', selectedFile);
-              const uploadParams = `&location_id=${values.jurisdictions.id}`;
+              const uploadParams = `&location_id=${values.jurisdictions.id}&team_id=${values.team}`;
               await postUploadedFile(data, setStateIfDone, setSubmittingStatus, uploadParams);
             }}
           >
