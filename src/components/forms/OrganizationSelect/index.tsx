@@ -1,5 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Select from 'react-select';
 import { Store } from 'redux';
@@ -46,6 +46,8 @@ export interface OrganizationSelectProps {
   value: SelectOption[];
   parentIds?: string[];
   parentAssignments?: string[];
+  uploadView?: boolean;
+  location?: string;
 }
 
 /** default props for OrganizationSelect */
@@ -80,12 +82,22 @@ export const OrganizationSelect = (props: OrganizationSelectProps) => {
     resetPlanAssignmentsAction,
     serviceClass,
     value: selectOptions,
+    location,
   } = props;
 
   useEffect(() => {
-    loadOrganizations(serviceClass, fetchOrganizationsAction).catch(err => displayError(err));
+    const params = location
+      ? {
+          event_name: 'Child Registration',
+          location_id: location,
+        }
+      : null;
+    loadOrganizations(serviceClass, fetchOrganizationsAction, params).catch(err =>
+      displayError(err)
+    );
   }, []);
 
+  const [uploadSelectOption, setUploadSelectOption] = useState<SelectOption>();
   /** Get select options from OpenSRP as a promise */
 
   /**handleChange
@@ -101,21 +113,25 @@ export const OrganizationSelect = (props: OrganizationSelectProps) => {
     /** nextValues is an empty array or has same size as parrents assignment array
      *  -> means change-event was a remove-options-event
      */
-    if (!nextValues || (nextValues && nextValues.length === assignmentsToRemove.length)) {
-      resetPlanAssignmentsAction({ [planId]: filteredAssignments });
+    if (props.uploadView) {
+      setUploadSelectOption(nextValues);
     } else {
-      const newAssignments: Assignment[] = nextValues
-        .filter((assignment: SelectOption) => !assignmentsToRemove.includes(assignment.value))
-        .map(
-          (assignment: SelectOption) =>
-            ({
-              jurisdiction: jurisdictionId,
-              organization: assignment.value,
-              plan: planId,
-            } as Assignment)
-        );
-      const nextAssignments: Assignment[] = [...filteredAssignments, ...newAssignments];
-      fetchAssignmentsAction(nextAssignments);
+      if (!nextValues || (nextValues && nextValues.length === assignmentsToRemove.length)) {
+        resetPlanAssignmentsAction({ [planId]: filteredAssignments });
+      } else {
+        const newAssignments: Assignment[] = nextValues
+          .filter((assignment: SelectOption) => !assignmentsToRemove.includes(assignment.value))
+          .map(
+            (assignment: SelectOption) =>
+              ({
+                jurisdiction: jurisdictionId,
+                organization: assignment.value,
+                plan: planId,
+              } as Assignment)
+          );
+        const nextAssignments: Assignment[] = [...filteredAssignments, ...newAssignments];
+        fetchAssignmentsAction(nextAssignments);
+      }
     }
   };
   const options = organizations.map(
@@ -138,8 +154,8 @@ export const OrganizationSelect = (props: OrganizationSelectProps) => {
       defaultOptions={true}
       options={options}
       isClearable={true}
-      isMulti={true}
-      value={selectOptions}
+      isMulti={props.uploadView ? false : true}
+      value={uploadSelectOption ? uploadSelectOption : selectOptions}
       noOptionsMessage={reactSelectNoOptionsText}
     />
   );
@@ -172,7 +188,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: OrganizationSelectProp
       } as SelectOption);
     }
   });
-
   return {
     ...ownProps,
     assignments,

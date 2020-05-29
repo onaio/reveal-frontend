@@ -5,6 +5,7 @@ import { Redirect } from 'react-router';
 import { Button, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import * as Yup from 'yup';
 import JurisdictionSelect from '../../../../components/forms/JurisdictionSelect';
+import ConnectedOrganizationSelect from '../../../../components/forms/OrganizationSelect';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import { REQUIRED } from '../../../../configs/lang';
 import { STUDENTS_LIST_URL } from '../../../../constants';
@@ -93,6 +94,17 @@ export const ClientUpload = (props: any) => {
                       className="form-text text-danger"
                     />
                   }
+                </FormGroup>
+                <FormGroup>
+                  <Label for="team">Assign team for this school</Label>
+                  <div style={{ display: 'inline-block', width: '24rem' }}>
+                    {values && values.jurisdictions && values.jurisdictions.id && (
+                      <ConnectedOrganizationSelect
+                        uploadView={true}
+                        location={values.jurisdictions.id}
+                      />
+                    )}
+                  </div>
                 </FormGroup>
                 <FormGroup>
                   <Label for="upload-file">Upload File</Label>

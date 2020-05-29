@@ -1,3 +1,4 @@
+import { Dictionary } from '@onaio/utils';
 import { toast } from 'react-toastify';
 import {
   OPENSRP_ORG_PRACTITIONER_ENDPOINT,
@@ -66,12 +67,15 @@ export const loadOrgPractitioners = async (
  */
 export const loadOrganizations = async (
   service: typeof OpenSRPService,
-  fetchOrganizationsCreator: typeof fetchOrganizations
+  fetchOrganizationsCreator: typeof fetchOrganizations,
+  params?: Dictionary | null
 ) => {
   const serve = new service(OPENSRP_ORGANIZATION_ENDPOINT);
   serve
-    .list()
-    .then((response: Organization[]) => store.dispatch(fetchOrganizationsCreator(response, true)))
+    .list(params)
+    .then((response: Organization[]) => {
+      store.dispatch(fetchOrganizationsCreator(response, true));
+    })
     .catch((err: Error) => {
       growl(err.message, { type: toast.TYPE.ERROR });
     });
