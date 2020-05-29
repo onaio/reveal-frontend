@@ -5,3 +5,6 @@
 .modal-dialog {
   max-width: 100% !important;
 }
+.jurisdiction__menu {
+  z-index: 1080 !important;
+}

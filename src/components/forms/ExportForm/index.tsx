@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { ENABLE_MDA_POINT } from '../../../configs/env';
 import { EXPORT_CLIENT_LIST, EXPORT_STUDENT_LIST, REQUIRED } from '../../../configs/lang';
 import { handleDownload } from '../../../containers/pages/MDAPoint/ClientListView/helpers/serviceHooks';
-import JurisdictionSelect from '../JurisdictionSelect';
+import LocationSelect from '../LocationSelect';
 export const JurisdictionSchema = Yup.object().shape({
   jurisdictions: Yup.object().shape({
     id: Yup.string().required(REQUIRED),
@@ -56,7 +56,7 @@ export const ExportForm = () => {
                   <div style={{ display: 'inline-block', width: '24rem' }}>
                     <Field
                       required={true}
-                      component={JurisdictionSelect}
+                      component={LocationSelect}
                       cascadingSelect={true}
                       name={`jurisdictions.id`}
                       id={`jurisdictions-id`}

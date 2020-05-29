@@ -164,6 +164,21 @@ Object {
                 </NavLink>
               </DropdownItem>
             </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/intervention/mda-point/report"
+                >
+                  MDA Point Reporting
+                </NavLink>
+              </DropdownItem>
+            </div>
           </DropdownMenu>
         </UncontrolledDropdown>
         <UncontrolledDropdown
@@ -263,7 +278,7 @@ Object {
           activeClassName="active"
           aria-current="page"
           className="nav-link"
-          to="/fe/login"
+          to="/login"
         >
           Login
         </NavLink>
@@ -437,6 +452,21 @@ Object {
                   to="/intervention/irs/report"
                 >
                   IRS Reporting
+                </NavLink>
+              </DropdownItem>
+            </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/intervention/mda-point/report"
+                >
+                  MDA Point Reporting
                 </NavLink>
               </DropdownItem>
             </div>

@@ -2,14 +2,17 @@ import { Dictionary } from '@onaio/utils';
 import { ErrorMessage, Field, Formik } from 'formik';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
-import { Button, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
+import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import * as Yup from 'yup';
-import JurisdictionSelect from '../../../../components/forms/JurisdictionSelect';
+import LocationSelect from '../../../../components/forms/LocationSelect';
+import SimpleOrgSelect from '../../../../components/forms/SimpleOrgSelect';
 import LinkAsButton from '../../../../components/LinkAsButton';
-import { REQUIRED } from '../../../../configs/lang';
+import { CLIENT_UPLOAD_FORM, REQUIRED } from '../../../../configs/lang';
 import { STUDENTS_LIST_URL } from '../../../../constants';
 import { postUploadedFile } from '../ClientListView/helpers/serviceHooks';
 import UploadStatus from '../ClientUploadStatus/';
+import './css/client.css';
+
 export const uploadValidationSchema = Yup.object().shape({
   file: Yup.mixed().required(),
   jurisdictions: Yup.object().shape({
@@ -20,10 +23,10 @@ export const uploadValidationSchema = Yup.object().shape({
 /** interface to describe props for ExportForm component */
 export interface UploadFormField {
   file: string | null;
-  location: any;
   jurisdictions: Dictionary;
+  team: Dictionary;
 }
-export const ClientUpload = (props: any) => {
+export const ClientUpload = () => {
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [ifDoneHere, setIfDoneHere] = useState<boolean>(false);
   const defaultInitialValues: UploadFormField = {
@@ -32,7 +35,10 @@ export const ClientUpload = (props: any) => {
       id: '',
       name: '',
     },
-    location: props.location,
+    team: {
+      label: '',
+      value: '',
+    },
   };
   const closeUploadModal = {
     classNameProp: 'focus-investigation btn btn-primary float-right mt-0',
@@ -48,7 +54,7 @@ export const ClientUpload = (props: any) => {
   return (
     <div>
       <Modal isOpen={true}>
-        <ModalHeader>Modal title</ModalHeader>
+        <ModalHeader>{CLIENT_UPLOAD_FORM}</ModalHeader>
         <ModalBody>
           <Formik
             initialValues={defaultInitialValues}
@@ -58,19 +64,19 @@ export const ClientUpload = (props: any) => {
               const setSubmittingStatus = () => setSubmitting(false);
               const data = new FormData();
               data.append('file', selectedFile);
-              const uploadParams = `&location_id=${values.jurisdictions.id}`;
+              const uploadParams = `&location_id=${values.jurisdictions.id}&team_id=${values.team}`;
               await postUploadedFile(data, setStateIfDone, setSubmittingStatus, uploadParams);
             }}
           >
             {({ values, setFieldValue, handleSubmit, errors, isSubmitting }) => (
-              <form onSubmit={handleSubmit} data-enctype="multipart/form-data">
+              <Form onSubmit={handleSubmit} data-enctype="multipart/form-data">
                 <FormGroup className={'async-select-container'}>
                   <Label for={`jurisdictions-${1}-id`}>{'Geographical level to include'}</Label>
                   &nbsp;
                   <div style={{ display: 'inline-block', width: '24rem' }}>
                     <Field
                       required={true}
-                      component={JurisdictionSelect}
+                      component={LocationSelect}
                       cascadingSelect={true}
                       name={`jurisdictions.id`}
                       id={`jurisdictions-id`}
@@ -92,6 +98,21 @@ export const ClientUpload = (props: any) => {
                     />
                   }
                 </FormGroup>
+                {values && values.jurisdictions && values.jurisdictions.id && (
+                  <FormGroup>
+                    <Label for="team">Assign team for this school</Label>
+                    <div style={{ display: 'inline-block', width: '24rem' }}>
+                      <Field
+                        required={true}
+                        component={SimpleOrgSelect}
+                        cascadingSelect={true}
+                        name={`team`}
+                        id={`team-id`}
+                        className={'async-select'}
+                      />
+                    </div>
+                  </FormGroup>
+                )}
                 <FormGroup>
                   <Label for="upload-file">Upload File</Label>
                   <Input
@@ -127,7 +148,7 @@ export const ClientUpload = (props: any) => {
                   </Button>
                   <LinkAsButton {...closeUploadModal} />
                 </div>
-              </form>
+              </Form>
             )}
           </Formik>
         </ModalBody>
