@@ -1,5 +1,5 @@
 // tslint:disable: object-literal-sort-keys
-export const openMRSUsers = {
+export const users = {
   links: [
     {
       rel: 'prev',
