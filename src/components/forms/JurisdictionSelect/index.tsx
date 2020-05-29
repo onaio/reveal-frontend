@@ -2,7 +2,8 @@ import { Dictionary } from '@onaio/utils/dist/types/types';
 import { FieldProps } from 'formik';
 import React, { useState } from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
-import { SELECT } from '../../../configs/lang';
+import Button from 'reactstrap/lib/Button';
+import { RESET, SELECT } from '../../../configs/lang';
 import { displayError } from '../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../helpers/utils';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
@@ -222,26 +223,35 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       }
     }
   };
-
+  // const clearSelect = () => {
+  //   refs.async.select.state.value = '';
+  // };
   return (
-    <AsyncSelect
-      /** we are using the key as hack to reload the component when the parentId changes */
-      key={parentId}
-      name={field ? field.name : 'jurisdiction'}
-      bsSize="lg"
-      defaultMenuIsOpen={shouldMenuOpen}
-      closeMenuOnSelect={closeMenuOnSelect}
-      placeholder={props.placeholder ? props.placeholder : SELECT}
-      noOptionsMessage={reactSelectNoOptionsText}
-      aria-label={props['aria-label'] ? props['aria-label'] : SELECT}
-      onChange={handleChange()}
-      defaultOptions={true}
-      loadOptions={wrapperPromiseOptions}
-      isClearable={true}
-      cacheOptions={true}
-      classNamePrefix="jurisdiction"
-      {...props}
-    />
+    <div>
+      <AsyncSelect
+        /** we are using the key as hack to reload the component when the parentId changes */
+        ref={() => 'async'}
+        key={parentId}
+        name={field ? field.name : 'jurisdiction'}
+        bsSize="lg"
+        defaultMenuIsOpen={shouldMenuOpen}
+        closeMenuOnSelect={closeMenuOnSelect}
+        placeholder={props.placeholder ? props.placeholder : SELECT}
+        noOptionsMessage={reactSelectNoOptionsText}
+        aria-label={props['aria-label'] ? props['aria-label'] : SELECT}
+        onChange={handleChange()}
+        defaultOptions={true}
+        loadOptions={wrapperPromiseOptions}
+        isClearable={true}
+        cacheOptions={true}
+        classNamePrefix="jurisdiction"
+        {...props}
+      />
+      <br />
+      <Button id="jurisdiction-reset-button" className="btn btn-md btn btn-primary" color="primary">
+        {RESET}
+      </Button>
+    </div>
   );
 };
 
