@@ -61,21 +61,20 @@ export const promiseOptions = (
          */
         if (!jurisdictionStatus) {
           setFinalLocation(true);
-          if (
-            jurisdictionLocationOptions.length >= 1 &&
-            !jurisdictionStatus &&
-            !jurisdictionLocationOptions[0].properties.name
-          ) {
-            const optionsWithoutName = jurisdictionLocationOptions.map(item => {
-              return { label: item.id, value: item.id };
+          if (jurisdictionLocationOptions.length >= 1 && !jurisdictionStatus) {
+            const locationOptions = jurisdictionLocationOptions.map(item => {
+              return {
+                label: item.properties.name ? item.properties.name : item.id,
+                value: item.id,
+              };
             });
             if (hierarchy.length > 0) {
               setJurisdictionParam(true);
-              resolve(optionsWithoutName);
+              resolve(locationOptions);
             }
           } else if (!jurisdictionLocationOptions.length) {
             setJurisdictionParam(true);
-            resolve([]);
+            return resolve([]);
           }
         }
         const options = jurisdictionLocationOptions.map(item => {
@@ -83,7 +82,7 @@ export const promiseOptions = (
         });
         if (hierarchy.length > 0) {
           const labels = hierarchy.map(j => j.label).join(' > ');
-          resolve([
+          return resolve([
             {
               label: labels,
               options,
@@ -186,6 +185,10 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
             setParentId(optionVal.value);
             hierarchy.push(optionVal);
             setHierarchy(hierarchy);
+            if (labelFieldName) {
+              form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
+              form.setFieldTouched(labelFieldName, true); /** dirty hack */
+            }
 
             setCloseMenuOnSelect(false);
           } else {
