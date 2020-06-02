@@ -218,7 +218,7 @@ export const mdaJurisdictionsColumns = [
     ],
   },
   {
-    Header: 'MMA coverage',
+    Header: 'MMA Coverage',
     columns: [
       {
         Header: '',
@@ -230,13 +230,14 @@ export const mdaJurisdictionsColumns = [
     Header: 'MMA Coverage (%)',
     columns: [
       {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'mmacovper',
       },
     ],
   },
   {
-    Header: 'SACs refused',
+    Header: 'SACs Refused',
     columns: [
       {
         Header: '',
@@ -245,7 +246,7 @@ export const mdaJurisdictionsColumns = [
     ],
   },
   {
-    Header: 'SACs sick/pregnant/contraindicated',
+    Header: 'SACs Sick/Pregnant/Contraindicated',
     columns: [
       {
         Header: '',
@@ -254,25 +255,27 @@ export const mdaJurisdictionsColumns = [
     ],
   },
   {
-    Header: 'ADR reported (%)',
+    Header: 'ADR Reported (%)',
     columns: [
       {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'mmaadr',
       },
     ],
   },
   {
-    Header: 'ADR severe (%)',
+    Header: 'ADR Severe (%)',
     columns: [
       {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'mmaadrsev',
       },
     ],
   },
   {
-    Header: 'Alb tablets distributed',
+    Header: 'Alb Tablets Distributed',
     columns: [
       {
         Header: '',

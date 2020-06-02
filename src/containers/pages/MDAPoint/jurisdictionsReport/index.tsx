@@ -5,7 +5,6 @@ import { RouteComponentProps } from 'react-router';
 import 'react-table/react-table.css';
 import { Store } from 'redux';
 import {
-  HIDE_MAP_FOR_INTERVENTIONS,
   SUPERSET_MDA_POINT_REPORTING_FOCUS_AREAS_COLUMNS,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_COLUMNS,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES,
@@ -61,9 +60,7 @@ const MdaPointJurisdictionReport = (
     ownProps,
   } = props;
 
-  const hideMapLink = HIDE_MAP_FOR_INTERVENTIONS
-    ? HIDE_MAP_FOR_INTERVENTIONS.includes(InterventionType.MDAPoint)
-    : false;
+  const interventionType = InterventionType.MDAPoint;
 
   const jurisdictionReportprops = {
     ...ownProps,
@@ -73,7 +70,7 @@ const MdaPointJurisdictionReport = (
     focusAreaColumn,
     focusAreaLevel,
     getPlanById,
-    hideMapLink,
+    interventionType,
     jurisdictionColumn,
     reportingPlanSlice,
     slices,

@@ -7,18 +7,17 @@ import { MAP } from '../../constants';
 /** Interface for linked cell props */
 export interface LinkedCellProps extends DropDownCellProps {
   urlPath?: string;
-  hideMapLink?: boolean;
 }
 
 /** Component that will be rendered in drop-down table cells showing a link
  * that moves you to the next hierarchical level.
  */
 const IRSTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps) => {
-  const { cell, cellValue, hasChildren, urlPath, hideMapLink } = props;
+  const { cell, cellValue, hasChildren, urlPath } = props;
 
   const url = urlPath ? `${urlPath}/${cell.original.jurisdiction_id}` : '';
   const val =
-    hasChildren || cell.original.is_virtual_jurisdiction || hideMapLink ? (
+    hasChildren || cell.original.is_virtual_jurisdiction ? (
       <span className="plan-jurisdiction-name name-label">{cellValue}</span>
     ) : (
       <span className="plan-jurisdiction-name main-span">

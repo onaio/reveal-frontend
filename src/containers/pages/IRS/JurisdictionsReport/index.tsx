@@ -26,6 +26,7 @@ import {
 import { HOME, IRS_REPORTING_TITLE } from '../../../../configs/lang';
 import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { DefaultTableCell } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -45,6 +46,7 @@ import IRSPlansReducer, {
   getIRSPlanById,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
+import { InterventionType } from '../../../../store/ducks/plans';
 import { getJurisdictionBreadcrumbs } from '../Map/helpers';
 import { IRSTableColumns } from './helpers';
 import './style.css';
@@ -73,7 +75,7 @@ export interface GenericJurisdictionProps {
   getPlanById: typeof getMDAPointPlanById | null;
   /** Indicates whether jurisdiction has children or not */
   hasChildren: typeof hasChildrenFunc;
-  hideMapLink: boolean;
+  interventionType: InterventionType;
   /** The reporting jurisdiction columns */
   jurisdictionColumn: string;
   jurisdictions: GenericJurisdiction[] | null;
@@ -112,7 +114,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
     focusAreaLevel,
     fetchPlans,
     reportingPlanSlice,
-    hideMapLink,
+    interventionType,
   } = props;
 
   /** async function to load the data */
@@ -227,12 +229,14 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
     }
   }
 
+  const isIRSPlan = interventionType === InterventionType.IRS;
+
   const tableProps = {
     ...(columnsToUse && { columns: columnsToUse }),
-    CellComponent: IRSTableCell,
+    CellComponent: isIRSPlan ? IRSTableCell : DefaultTableCell,
     data,
     defaultPageSize: data.length,
-    extraCellProps: { urlPath: baseURL, hideMapLink },
+    extraCellProps: { urlPath: baseURL },
     getTdProps: (_: Partial<Store>, rowInfo: RowInfo | undefined, column: Column | undefined) => {
       return {
         onClick: (__: SyntheticEvent, handleOriginal: () => void) => {
@@ -294,7 +298,7 @@ const defaultProps: GenericJurisdictionProps = {
   focusAreaLevel: SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
   getPlanById: null,
   hasChildren: hasChildrenFunc,
-  hideMapLink: false,
+  interventionType: InterventionType.IRS,
   jurisdictionColumn: SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS,
   jurisdictions: null,
   plan: null,
@@ -316,7 +320,7 @@ interface DispatchedStateProps {
   fetchPlans: typeof fetchMDAPointPlans | null;
   focusAreaColumn: string;
   focusAreaLevel: string;
-  hideMapLink: boolean;
+  interventionType: InterventionType;
   plan: GenericPlan | null;
   jurisdictionColumn: string;
   jurisdictions: GenericJurisdiction[] | null;
@@ -349,7 +353,7 @@ const mapStateToProps = (
   const jurisdictionColumn = ownProps.jurisdictionColumn || defaultProps.jurisdictionColumn;
   const reportingPlanSlice = ownProps.reportingPlanSlice || defaultProps.reportingPlanSlice;
   const fetchPlans = ownProps.fetchPlans || defaultProps.fetchPlans;
-  const hideMapLink = ownProps.hideMapLink || defaultProps.hideMapLink;
+  const interventionType = ownProps.interventionType || defaultProps.interventionType;
 
   return {
     currentBaseURL,
@@ -357,7 +361,7 @@ const mapStateToProps = (
     fetchPlans,
     focusAreaColumn,
     focusAreaLevel,
-    hideMapLink,
+    interventionType,
     jurisdictionColumn,
     jurisdictions,
     plan,
