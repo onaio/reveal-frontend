@@ -2,14 +2,17 @@ import { Dictionary } from '@onaio/utils';
 import { toast } from 'react-toastify';
 import { OPENSRP_API_BASE_URL } from '../../../../../configs/env';
 import { FILE_UPLOADED_SUCCESSFULLY } from '../../../../../configs/lang';
-import { OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT } from '../../../../../constants';
+import {
+  OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT,
+  OPENSRP_UPLOAD_ENDPOINT,
+} from '../../../../../constants';
 import { growl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import store from '../../../../../store';
-import { fetchFiles, File } from '../../../../../store/ducks/opensrp/files';
+import { fetchFiles, File } from '../../../../../store/ducks/opensrp/clientfiles';
 import { getAccessToken } from '../../../../../store/selectors';
 
-/** loads and persist's to store files data from upload/history endpoint
+/** loads and persists to store files data from upload/history endpoint
  */
 export const loadFiles = async (
   fetchFileAction = fetchFiles,
@@ -39,7 +42,7 @@ export const postUploadedFile = async (
   params?: string
 ) => {
   const bearer = `Bearer ${getAccessToken(store.getState())}`;
-  await fetch(`${OPENSRP_API_BASE_URL}/upload/?event_name=Child%20Registration${params}`, {
+  await fetch(`${OPENSRP_API_BASE_URL}${OPENSRP_UPLOAD_ENDPOINT}/${params}`, {
     body: data,
     headers: {
       Authorization: bearer,
@@ -67,11 +70,11 @@ export const postUploadedFile = async (
 export const handleDownload = async (
   id: string,
   name: string,
+  endpoint: string,
   params?: Dictionary,
   serviceClass: any = OpenSRPService
 ) => {
-  const apiEndpoint = params ? `upload` : `upload/download`;
-  const downloadService = new serviceClass(apiEndpoint);
+  const downloadService = new serviceClass(endpoint);
   downloadService
     .readFile(id, params)
     .then((res: typeof Blob) => {

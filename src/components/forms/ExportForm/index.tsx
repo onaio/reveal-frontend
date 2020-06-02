@@ -11,7 +11,11 @@ import {
   LOCATION_ERROR_MESSAGE,
   REQUIRED,
 } from '../../../configs/lang';
-import { OPENSRP_EVENT_PARAM_VALUE } from '../../../constants';
+import {
+  OPENSRP_EVENT_PARAM_VALUE,
+  OPENSRP_TEMPLATE_ENDPOINT,
+  OPENSRP_UPLOAD_ENDPOINT,
+} from '../../../constants';
 import { handleDownload } from '../../../containers/pages/MDAPoint/ClientListView/helpers/serviceHooks';
 import JurisdictionSelect from '../JurisdictionSelect';
 /** Yup validation schema for ExportForm */
@@ -59,10 +63,15 @@ export const ExportForm = (props: ExportFormProps) => {
             /* tslint:disable-next-line jsx-no-lambda */
             onSubmit={values => {
               // tslint:disable-next-line: no-floating-promises
-              downloadFile('template', values.jurisdictions.name, {
-                event_name: eventValue,
-                location_id: values.jurisdictions.id,
-              });
+              downloadFile(
+                OPENSRP_TEMPLATE_ENDPOINT,
+                `${values.jurisdictions.name}.csv`,
+                OPENSRP_UPLOAD_ENDPOINT,
+                {
+                  event_name: eventValue,
+                  location_id: values.jurisdictions.id,
+                }
+              );
             }}
             validationSchema={JurisdictionSchema}
           >

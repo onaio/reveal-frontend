@@ -50,6 +50,7 @@ export const PLAN_INTERVENTION_TYPE = 'plan_intervention_type';
 export const TWO_HUNDRED_PX = '200px';
 export const PLAN_RECORD_BY_ID = 'planRecordsById';
 export const MAPBOXGL_POPUP = '.mapboxgl-popup';
+export const TABLE_BORDERED_CLASS = 'table table-bordered';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
@@ -88,6 +89,7 @@ export const BACKEND_CALLBACK_PATH = '/fe/oauth/callback/:id';
 export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
 export const CLIENTS_LIST_URL = '/clients';
 export const UPLOAD_CLIENT_CSV_URL = '/clients/upload';
+export const GO_BACK_TEXT = 'Go Back';
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';
@@ -107,6 +109,11 @@ export const OPENSRP_FIND_EVENTS_ENDPOINT = 'event/findById';
 export const OPENSRP_LOCATIONS_BY_PLAN = 'plans/findLocationNames';
 export const OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT = 'upload/history';
 export const OPENSRP_EVENT_PARAM_VALUE = 'Child Registration';
+export const OPENSRP_UPLOAD_ENDPOINT = 'upload';
+export const OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT = 'upload/download';
+export const EVENT_NAME_PARAM = 'event_name';
+export const LOCATION_ID_PARAM = 'location_id';
+export const OPENSRP_TEMPLATE_ENDPOINT = 'template';
 
 // colors
 export const GREEN = 'Green';

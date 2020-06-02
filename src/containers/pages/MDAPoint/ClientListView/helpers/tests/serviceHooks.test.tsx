@@ -1,6 +1,9 @@
 /** tests for Organization page views api calling functions */
 import flushPromises from 'flush-promises';
-import { OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT } from '../../../../../../constants';
+import {
+  OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT,
+  OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT,
+} from '../../../../../../constants';
 import * as fixtures from '../../tests/fixtures';
 import { handleDownload, loadFiles, postUploadedFile } from '../serviceHooks';
 
@@ -46,6 +49,14 @@ describe('src/containers/pages/ClientListView/helpers/servicehooks', () => {
     await flushPromises();
     // makes a fetch for upload and another when loadingfiles
     expect(global.fetch).toHaveBeenCalledTimes(2);
+    /** The postUploadFile make two fetch responses
+     * 1. post to upload file (has no param hence upload/undefined)
+     * 2. get from history api
+     * Haven't been able to run the param assertions for the two cases successfully
+     * Here are the two calls
+     * 1. "https://reveal-stage.smartregister.org/opensrp/rest/upload/undefined", {"body": {}, "headers": {"Authorization": "Bearer null"}, "method": "POST"}
+     * 2. "https://reveal-stage.smartregister.org/opensrp/rest/upload/history", {"headers": {"accept": "application/json", "authorization": "Bearer null", "content-type": "application/json;charset=UTF-8"}, "method": "GET"}
+     */
     global.fetch.mockClear();
   });
 
@@ -59,9 +70,11 @@ describe('src/containers/pages/ClientListView/helpers/servicehooks', () => {
       };
     });
 
-    handleDownload('123', 'student', undefined, mockClass).catch(e => {
-      throw e;
-    });
+    handleDownload('123', 'student', OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT, undefined, mockClass).catch(
+      e => {
+        throw e;
+      }
+    );
     await flushPromises();
 
     // calls the correct endpoint
