@@ -38,7 +38,7 @@ import GenericJurisdictionsReducer, {
 import {
   fetchMDAPointPlans,
   getMDAPointPlanById,
-} from '../../../../store/ducks/generic/mdaPointPlan';
+} from '../../../../store/ducks/generic/MDAPointPlan';
 import IRSPlansReducer, {
   fetchIRSPlans,
   getIRSPlanById,

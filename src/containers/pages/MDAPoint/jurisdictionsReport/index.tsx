@@ -18,11 +18,11 @@ import '../../../../helpers/tables.css';
 import { RouteParams } from '../../../../helpers/utils';
 import MDAPointPlansReducer, {
   reducerName as MDAPointPlansReducerName,
-} from '../../../../store/ducks/generic/mdaPointPlan';
+} from '../../../../store/ducks/generic/MDAPointPlan';
 import {
   fetchMDAPointPlans,
   getMDAPointPlanById,
-} from '../../../../store/ducks/generic/mdaPointPlan';
+} from '../../../../store/ducks/generic/MDAPointPlan';
 import { InterventionType } from '../../../../store/ducks/plans';
 import ConnectedJurisdictionReport from '../../IRS/JurisdictionsReport';
 import '../../IRS/JurisdictionsReport/style.css';
