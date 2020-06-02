@@ -32,7 +32,7 @@ import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
-  getOrganizationsArray,
+  makeOrgsArraySelector,
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/opensrp/organizations';
@@ -144,8 +144,9 @@ export { OrganizationListView };
 // connect to store
 
 const mapStateToProps = (state: Partial<Store>) => {
+  const organizationSelector = makeOrgsArraySelector();
   return {
-    organizations: getOrganizationsArray(state),
+    organizations: organizationSelector(state, {}),
   };
 };
 

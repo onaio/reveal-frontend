@@ -46,7 +46,7 @@ import { growl, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
-  getOrganizationById,
+  makeOrgsArraySelector,
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/opensrp/organizations';
@@ -267,7 +267,10 @@ const mapStateToProps = (
   let organizationId = ownProps.match.params.id;
   organizationId = organizationId ? organizationId : '';
 
-  const organization = getOrganizationById(state, organizationId);
+  const orgSelector = makeOrgsArraySelector();
+
+  const organizations = orgSelector(state, { identifiers: [organizationId] });
+  const organization = organizations.length === 1 ? organizations[0] : null;
   const practitioners = getPractitionersByOrgId(state, organizationId);
 
   return {

@@ -49,7 +49,7 @@ import { generateNameSpacedUUID, growl, reactSelectNoOptionsText } from '../../.
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
-  getOrganizationById,
+  makeOrgsArraySelector,
   Organization,
   reducerName as organizationReducerName,
 } from '../../../../store/ducks/opensrp/organizations';
@@ -324,8 +324,10 @@ interface DispatchedProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: PropsTypes): DispatchedProps => {
   let organizationId = ownProps.match.params.id;
   organizationId = organizationId ? organizationId : '';
+  const orgSelector = makeOrgsArraySelector();
 
-  const organization = getOrganizationById(state, organizationId);
+  const organizations = orgSelector(state, { identifiers: [organizationId] });
+  const organization = organizations.length === 1 ? organizations[0] : null;
   const assignedPractitioners = getPractitionersByOrgId(state, organizationId);
   return { organization, assignedPractitioners };
 };
