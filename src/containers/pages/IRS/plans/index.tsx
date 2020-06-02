@@ -28,7 +28,7 @@ import supersetFetch from '../../../../services/superset';
 import { fetchMDAPointPlans } from '../../../../store/ducks/generic/MDAPointPlan';
 import IRSPlansReducer, {
   fetchIRSPlans,
-  IRSPlan,
+  GenericPlan,
   makeIRSPlansArraySelector,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
@@ -43,7 +43,7 @@ interface PlanListProps {
   newFetchPlans: NewFetchPlans;
   pageTitle: string;
   pageUrl: string;
-  plans: IRSPlan[];
+  plans: GenericPlan[];
   service: typeof supersetFetch;
   supersetReportingSlice: string;
 }
@@ -78,7 +78,7 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
   async function loadData() {
     try {
       setLoading(plans.length < 1); // only set loading when there are no plans
-      await service(supersetReportingSlice).then((result: IRSPlan[]) => {
+      await service(supersetReportingSlice).then((result: GenericPlan[]) => {
         newFetchPlans ? newFetchPlans(result) : fetchPlans(result);
       });
     } catch (e) {
@@ -92,7 +92,7 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
     loadData().catch(error => displayError(error));
   }, []);
 
-  const listViewData = (planList: IRSPlan[]) =>
+  const listViewData = (planList: GenericPlan[]) =>
     planList.map(planObj => {
       return [
         <Link to={`${pageUrl}/${planObj.plan_id}`} key={planObj.plan_id}>
@@ -160,7 +160,7 @@ interface DispatchedStateProps {
   newFetchPlans: NewFetchPlans;
   pageTitle: string;
   pageUrl: string;
-  plans: IRSPlan[];
+  plans: GenericPlan[];
   supersetReportingSlice: string;
 }
 

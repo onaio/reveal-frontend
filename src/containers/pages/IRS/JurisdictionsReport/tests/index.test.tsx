@@ -20,7 +20,7 @@ import GenericJurisdictionsReducer, {
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
-  IRSPlan,
+  GenericPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../../store/ducks/generic/plans';
 import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
@@ -72,12 +72,12 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       match: {
         isExact: true,
         params: {
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${REPORT_IRS_PLAN_URL}/:planId`,
-        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as IRSPlan).plan_id}`,
+        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as GenericPlan).plan_id}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
     };
     shallow(
       <Router history={history}>
@@ -114,12 +114,12 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       match: {
         isExact: true,
         params: {
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${REPORT_IRS_PLAN_URL}/:planId`,
-        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as IRSPlan).plan_id}`,
+        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as GenericPlan).plan_id}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
       service: supersetServiceMock,
     };
 
@@ -228,12 +228,12 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       match: {
         isExact: true,
         params: {
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${REPORT_IRS_PLAN_URL}/:planId`,
-        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as IRSPlan).plan_id}`,
+        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as GenericPlan).plan_id}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
       service: supersetServiceMock,
     };
 

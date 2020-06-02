@@ -41,8 +41,8 @@ import {
 } from '../../../../store/ducks/generic/MDAPointPlan';
 import IRSPlansReducer, {
   fetchIRSPlans,
+  GenericPlan,
   getIRSPlanById,
-  IRSPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
 import { getJurisdictionBreadcrumbs } from '../Map/helpers';
@@ -77,7 +77,7 @@ export interface GenericJurisdictionProps {
   /** The reporting jurisdiction columns */
   jurisdictionColumn: string;
   jurisdictions: GenericJurisdiction[] | null;
-  plan: IRSPlan | null;
+  plan: GenericPlan | null;
   /** The superset reporting plan slice */
   reportingPlanSlice: string;
   /** Get superset plans for the provided superset slice  */
@@ -126,7 +126,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
         ]);
       }
 
-      await service(reportingPlanSlice, fetchPlansParams).then((result: IRSPlan[]) => {
+      await service(reportingPlanSlice, fetchPlansParams).then((result: GenericPlan[]) => {
         fetchPlans ? fetchPlans(result) : fetchPlansIRS(result);
       });
 
@@ -317,7 +317,7 @@ interface DispatchedStateProps {
   focusAreaColumn: string;
   focusAreaLevel: string;
   hideMapLink: boolean;
-  plan: IRSPlan | null;
+  plan: GenericPlan | null;
   jurisdictionColumn: string;
   jurisdictions: GenericJurisdiction[] | null;
   reportingPlanSlice: string;

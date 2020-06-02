@@ -7,7 +7,7 @@ import { Router } from 'react-router';
 import ConnectedIRSPlansList, { IRSPlansList } from '../';
 import { REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
-import { IRSPlan } from '../../../../../store/ducks/generic/plans';
+import { GenericPlan } from '../../../../../store/ducks/generic/plans';
 import { fetchIRSPlans } from '../../../../../store/ducks/generic/plans';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 
@@ -36,7 +36,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
         path: `${REPORT_IRS_PLAN_URL}/`,
         url: `${REPORT_IRS_PLAN_URL}/`,
       },
-      plans: fixtures.plans as IRSPlan[],
+      plans: fixtures.plans as GenericPlan[],
     };
     shallow(
       <Router history={history}>
@@ -61,7 +61,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
         path: `${REPORT_IRS_PLAN_URL}/`,
         url: `${REPORT_IRS_PLAN_URL}/`,
       },
-      plans: fixtures.plans as IRSPlan[],
+      plans: fixtures.plans as GenericPlan[],
     };
     const wrapper = mount(
       <Router history={history}>
@@ -76,7 +76,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
   });
 
   it('handles search correctly', async () => {
-    store.dispatch(fetchIRSPlans(fixtures.plans as IRSPlan[]));
+    store.dispatch(fetchIRSPlans(fixtures.plans as GenericPlan[]));
 
     const props = {
       fetchPlans: jest.fn(),
@@ -110,7 +110,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
   });
 
   it('handles a case insensitive search', async () => {
-    store.dispatch(fetchIRSPlans(fixtures.plans as IRSPlan[]));
+    store.dispatch(fetchIRSPlans(fixtures.plans as GenericPlan[]));
 
     const props = {
       fetchPlans: jest.fn(),
@@ -144,7 +144,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
   });
 
   it('renders empty table if no search matches', async () => {
-    store.dispatch(fetchIRSPlans(fixtures.plans as IRSPlan[]));
+    store.dispatch(fetchIRSPlans(fixtures.plans as GenericPlan[]));
 
     const props = {
       fetchPlans: jest.fn(),
