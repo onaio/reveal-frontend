@@ -58,9 +58,6 @@ describe('src/containers/TeamAssignment/OrganizationListView/', () => {
     // should have link to add team
     expect(wrapper.find(`LinkAsButton`).length).toEqual(1);
 
-    // should have form to search teams
-    expect(wrapper.find('input#search').length).toEqual(1);
-
     // should have a table
     expect(toJson(wrapper.find('tbody tr').first())).toMatchSnapshot(
       'First table record in listview'

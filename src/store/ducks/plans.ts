@@ -389,6 +389,7 @@ export interface PlanFilters {
   reason?: FIReasonType /** plan FI reason */;
   statusList?: string[] /** array of plan statuses */;
   title?: string /** plan title */;
+  planIds?: string[] | null /** an array of plan ids to get */;
 }
 
 /** plansArrayBaseSelector select an array of all plans
@@ -440,6 +441,13 @@ export const getReason = (_: Partial<Store>, props: PlanFilters) => props.reason
  * @param props - the plan filters object
  */
 export const getTitle = (_: Partial<Store>, props: PlanFilters) => props.title;
+
+/** getTitle
+ * Gets title from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getPlanIds = (_: Partial<Store>, props: PlanFilters) => props.planIds;
 
 /** getPlansArrayByInterventionType
  * Gets an array of Plan objects filtered by interventionType
@@ -509,6 +517,27 @@ export const getPlansArrayByParentJurisdictionId = (planKey?: string) =>
       )
   );
 
+/** filter plans to only include those of the given identifiers
+ * @param {Partial<Store>} state -the redux store
+ * @param {PlanFilters} props - the plan filters object
+ */
+export const getPlansArrayByPlanIds = (planKey?: string) => {
+  return createSelector(plansArrayBaseSelector(planKey), getPlanIds, (allPlans, planIds) => {
+    const plansOfInterest: Plan[] = [];
+    if (!planIds) {
+      return allPlans;
+    }
+    planIds.forEach(planId => {
+      allPlans.forEach(plan => {
+        if (plan.plan_id === planId) {
+          plansOfInterest.push(plan);
+        }
+      });
+    });
+    return plansOfInterest;
+  });
+};
+
 /** getPlansArrayByTitle
  * Gets an array of Plan objects filtered by plan title
  * @param {Partial<Store>} state - the redux store
@@ -530,6 +559,7 @@ export const getPlansArrayByTitle = (planKey?: string) =>
  *    - FI plan reason
  *    - plan jurisdiction parent_id
  *    - plan title
+ *    - a list of plan ids
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *
@@ -551,13 +581,15 @@ export const makePlansArraySelector = (planKey?: string, sortField?: string) => 
       getPlansArrayByReason(planKey),
       getPlansArrayByParentJurisdictionId(planKey),
       getPlansArrayByTitle(planKey),
+      getPlansArrayByPlanIds(planKey),
     ],
-    (plans, plans2, plans3, plans4, plans5, plans6) =>
-      sortField
+    (plans, plans2, plans3, plans4, plans5, plans6, plans7) => {
+      return sortField
         ? descendingOrderSort(
-            intersect([plans, plans2, plans3, plans4, plans5, plans6], JSON.stringify),
+            intersect([plans, plans2, plans3, plans4, plans5, plans6, plans7], JSON.stringify),
             sortField
           )
-        : intersect([plans, plans2, plans3, plans4, plans5, plans6], JSON.stringify)
+        : intersect([plans, plans2, plans3, plans4, plans5, plans6, plans7], JSON.stringify);
+    }
   );
 };

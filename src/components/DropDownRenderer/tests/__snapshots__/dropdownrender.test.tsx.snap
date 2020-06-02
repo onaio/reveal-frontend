@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/forms/filterForms/helpers Opens 1`] = `
+<DropDownRenderer
+  renderMenu={[Function]}
+  renderToggle={[Function]}
+>
+  <Dropdown
+    active={false}
+    addonType={false}
+    className="mr-3 drop-down-container"
+    direction="down"
+    inNavbar={false}
+    isOpen={true}
+    nav={false}
+    setActiveFromChild={false}
+    size="sm"
+    style={
+      Object {
+        "display": "inline-block",
+      }
+    }
+    toggle={[Function]}
+  >
+    <Manager
+      className="mr-3 drop-down-container btn-group-sm dropdown show"
+      onKeyDown={[Function]}
+      style={
+        Object {
+          "display": "inline-block",
+        }
+      }
+      tag="div"
+    >
+      <div
+        className="mr-3 drop-down-container btn-group-sm dropdown show"
+        onKeyDown={[Function]}
+        style={
+          Object {
+            "display": "inline-block",
+          }
+        }
+      >
+        <DropdownToggle
+          aria-haspopup={true}
+          className="filter-bar-btns"
+          color="secondary"
+          outline={true}
+        >
+          <Target
+            aria-expanded={true}
+            aria-haspopup={true}
+            className="filter-bar-btns"
+            color="secondary"
+            component={[Function]}
+            onClick={[Function]}
+            outline={true}
+          >
+            <Button
+              aria-expanded={true}
+              aria-haspopup={true}
+              className="filter-bar-btns"
+              color="secondary"
+              innerRef={[Function]}
+              onClick={[Function]}
+              outline={true}
+              tag="button"
+            >
+              <button
+                aria-expanded={true}
+                aria-haspopup={true}
+                aria-label={null}
+                className="filter-bar-btns btn btn-outline-secondary"
+                onClick={[Function]}
+                type="button"
+              >
+                <div>
+                  The body
+                </div>
+              </button>
+            </Button>
+          </Target>
+        </DropdownToggle>
+        sample
+      </div>
+    </Manager>
+  </Dropdown>
+</DropDownRenderer>
+`;

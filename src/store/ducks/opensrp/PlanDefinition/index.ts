@@ -1,10 +1,11 @@
+import { Dictionary } from '@onaio/utils/dist/types/types';
 import intersect from 'fast_array_intersect';
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { PlanDefinition } from '../../../../configs/settings';
-import { isPlanDefinitionOfType } from '../../../../helpers/utils';
+import { descendingOrderSort, isPlanDefinitionOfType } from '../../../../helpers/utils';
 import { InterventionType } from '../../plans';
 
 /** the reducer name */
@@ -174,7 +175,16 @@ export function getPlanDefinitionsArray(
 /** This interface represents the structure of plan definition filter options/params */
 export interface PlanDefinitionFilters {
   title?: string /** plan object title */;
+  planIds?: string[] | null /** return only plans whose id appear here */;
 }
+
+/** planDefinitionsByIdBaseSelector selects store slice object with of all plans
+ * @param state - the redux store
+ */
+export const planDefinitionsByIdBaseSelector = (planKey?: string) => (
+  state: Partial<Store>
+): Dictionary<PlanDefinition> =>
+  (state as any)[reducerName][planKey ? planKey : 'planDefinitionsById'];
 
 /** planDefinitionsArrayBaseSelector select an array of all plans
  * @param state - the redux store
@@ -191,20 +201,44 @@ export const planDefinitionsArrayBaseSelector = (planKey?: string) => (
  */
 export const getTitle = (_: Partial<Store>, props: PlanDefinitionFilters) => props.title;
 
+/** getPlanDefinitionsArrayByTitle
+ * Gets title from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getPlanIds = (_: Partial<Store>, props: PlanDefinitionFilters) => props.planIds;
+
 /** getPlansArrayByTitle
  * Gets an array of Plan objects filtered by plan title
  * @param {Registry} state - the redux store
- * @param {PlanDefinitionFilters} props - the plan defintion filters object
+ * @param {PlanDefinitionFilters} props - the plan definition filters object
  */
 export const getPlanDefinitionsArrayByTitle = (planKey?: string) =>
   createSelector([planDefinitionsArrayBaseSelector(planKey), getTitle], (plans, title) =>
     title ? plans.filter(plan => plan.title.toLowerCase().includes(title.toLowerCase())) : plans
   );
 
+/** get plans for the given planIds
+ * @param {Registry} state - the redux store
+ * @param {PlanDefinitionFilters} props - the plan definition filters object
+ */
+export const getPlanDefinitionsArrayByPlanIds = (planKey?: string) => {
+  return createSelector(
+    planDefinitionsByIdBaseSelector(planKey),
+    planDefinitionsArrayBaseSelector(planKey),
+    getPlanIds,
+    (plansByIds, allPlans, planIds) => {
+      const plansOfInterest = planIds ? planIds.map(planId => plansByIds[planId]) : allPlans;
+      return plansOfInterest;
+    }
+  );
+};
+
 /** makePlanDefinitionsArraySelector
  * Returns a selector that gets an array of IRSPlan objects filtered by one or all
  * of the following:
  *    - title
+ *    - planIds
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *
@@ -217,8 +251,18 @@ export const getPlanDefinitionsArrayByTitle = (planKey?: string) =>
  * @param {PlanFilters} props - the plan filters object
  * @param {string} sortField - sort by field
  */
-export const makePlanDefinitionsArraySelector = (planKey?: string) => {
-  return createSelector([getPlanDefinitionsArrayByTitle(planKey)], plans =>
-    intersect([plans], JSON.stringify)
+export const makePlanDefinitionsArraySelector = (
+  planKey?: keyof PlanDefinitionState,
+  sortField?: keyof PlanDefinition
+) => {
+  return createSelector(
+    [getPlanDefinitionsArrayByTitle(planKey), getPlanDefinitionsArrayByPlanIds(planKey)],
+    (plans1, plans2) => {
+      let finalPlans = intersect([plans1, plans2], JSON.stringify);
+      if (sortField) {
+        finalPlans = descendingOrderSort(finalPlans, sortField);
+      }
+      return finalPlans;
+    }
   );
 };

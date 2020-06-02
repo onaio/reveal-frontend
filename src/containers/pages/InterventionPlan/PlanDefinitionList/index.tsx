@@ -7,7 +7,8 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import { SearchForm } from '../../../../components/forms/Search';
+import { createChangeHandler, SearchForm } from '../../../../components/forms/Search';
+import { UserSelectFilter } from '../../../../components/forms/UserFilter';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
@@ -17,6 +18,7 @@ import {
   INTERVENTION_TYPE_LABEL,
   LAST_MODIFIED,
   PLANS,
+  SEARCH,
   STATUS_HEADER,
   TITLE,
 } from '../../../../configs/lang';
@@ -27,7 +29,9 @@ import {
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
   QUERY_PARAM_TITLE,
+  QUERY_PARAM_USER,
 } from '../../../../constants';
+import { loadPlansByUserFilter } from '../../../../helpers/dataLoading/plans';
 import { displayError } from '../../../../helpers/errors';
 import { getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -36,14 +40,21 @@ import planDefinitionReducer, {
   makePlanDefinitionsArraySelector,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
+import plansByUserReducer, {
+  makePlansByUserNamesSelector,
+  reducerName as plansByUserReducerName,
+} from '../../../../store/ducks/opensrp/planIdsByUser';
+
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
+reducerRegistry.register(plansByUserReducerName, plansByUserReducer);
 
 /** interface for PlanList props */
 interface PlanListProps {
   fetchPlans: typeof fetchPlanDefinitions;
   plans: PlanDefinition[];
   service: typeof OpenSRPService;
+  userName: string | null;
 }
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
@@ -79,6 +90,12 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
   }
 
   useEffect(() => {
+    if (props.userName) {
+      loadPlansByUserFilter(props.userName).catch(err => displayError(err));
+    }
+  }, [props.userName]);
+
+  useEffect(() => {
     loadData().catch(err => displayError(err));
   }, []);
 
@@ -106,6 +123,8 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
     tableClass: 'table table-bordered plans-list',
   };
 
+  const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
+
   return (
     <div>
       <Helmet>
@@ -124,7 +143,10 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <SearchForm history={props.history} location={props.location} />
+      <div style={{ display: 'inline-block' }}>
+        <SearchForm placeholder={SEARCH} onChangeHandler={searchFormChangeHandler} />
+      </div>
+      <UserSelectFilter serviceClass={props.service} />
       <Row>
         <Col>
           <ListView {...listViewProps} />
@@ -139,6 +161,7 @@ const defaultProps: PlanListProps = {
   fetchPlans: fetchPlanDefinitions,
   plans: [],
   service: OpenSRPService,
+  userName: null,
 };
 
 PlanDefinitionList.defaultProps = defaultProps;
@@ -150,17 +173,25 @@ export { PlanDefinitionList };
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
   plans: PlanDefinition[];
+  userName: string | null;
 }
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const planDefinitionsArray = makePlanDefinitionsArraySelector()(state, {
-    title: searchedTitle,
-  });
+  const userName = getQueryParams(ownProps.location)[QUERY_PARAM_USER] as string;
+  const planIds = makePlansByUserNamesSelector()(state, { userName });
+  const planDefinitionsArray = makePlanDefinitionsArraySelector('planDefinitionsById', 'date')(
+    state,
+    {
+      planIds,
+      title: searchedTitle,
+    }
+  );
 
   return {
     plans: planDefinitionsArray,
+    userName,
   };
 };
 
