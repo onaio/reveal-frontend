@@ -89,7 +89,7 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                             class=""
                             for="jurisdictions-1-id"
                           >
-                            Export Country based on Geographical level!
+                            Geographical level to include
                           </label>
                            
                           <div
@@ -280,7 +280,7 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                               class=""
                               for="jurisdictions-1-id"
                             >
-                              Export Country based on Geographical level!
+                              Geographical level to include
                             </label>
                              
                             <div
@@ -706,7 +706,7 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                       className=""
                                       htmlFor="jurisdictions-1-id"
                                     >
-                                      Export Country based on Geographical level!
+                                      Geographical level to include
                                     </label>
                                   </Label>
                                    
