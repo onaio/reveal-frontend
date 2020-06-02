@@ -13,10 +13,8 @@ import {
   fetchOrganizations,
   removeOrganizationsAction,
 } from '../../../../../store/ducks/opensrp/organizations';
-import * as orgDucks from '../../../../../store/ducks/opensrp/organizations';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedOrgsListView, { OrganizationListView } from '../../OrganizationListView';
-import { state } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
@@ -125,34 +123,5 @@ describe('src/containers/TeamAssignment/OrganizationListView/', () => {
     const foundProps = wrapper.find('OrganizationListView').props() as any;
     expect(foundProps.organizations).toEqual(fixtures.organizations);
     wrapper.unmount();
-  });
-
-  it('calls selectors with the right arguments', () => {
-    // spy on selectors
-    const organizationsArrayMock = jest.spyOn(orgDucks, 'getOrganizationsArray');
-
-    fetch.once(JSON.stringify(fixtures.organizations));
-    const mock: any = jest.fn();
-    store.dispatch(fetchOrganizations(fixtures.organizations));
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: {},
-        path: ORGANIZATIONS_LIST_URL,
-        url: ORGANIZATIONS_LIST_URL,
-      },
-    };
-    mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedOrgsListView {...props} />
-        </Router>
-      </Provider>
-    );
-
-    expect(organizationsArrayMock).toHaveBeenCalled();
-    expect(organizationsArrayMock.mock.calls[0]).toEqual([state]);
   });
 });
