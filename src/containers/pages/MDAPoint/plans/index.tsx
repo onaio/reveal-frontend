@@ -12,7 +12,7 @@ import MDAPointPlansReducer, {
   makeMDAPointPlansArraySelector,
   MDAPointPlan,
   reducerName as MDAPointPlansReducerName,
-} from '../../../../store/ducks/generic/MDAPointPlan';
+} from '../../../../store/ducks/generic/MDAPointPlans';
 import ConnectedIRSPlansList from '../../IRS/plans';
 
 /** register the plan definitions reducer */

@@ -185,5 +185,44 @@ export const namibiaIRSJurisdictions = [
     target_2019: 0,
   },
 ];
+
+export const MDAplans = [
+  {
+    jurisdiction_root_parent_ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128'],
+    plan_date: '2019-09-05',
+    plan_effective_period_end: '2019-09-25',
+    plan_effective_period_start: '2019-09-05',
+    plan_id: '727c3d40-e118-564a-b231-aac633e6abce',
+    plan_intervention_type: 'MDA-Point',
+    plan_name: 'MDA-Point-2019-09-05-TEST',
+    plan_status: 'retired',
+    plan_title: 'MDA-Point-2019-09-05 TEST',
+    plan_version: '2',
+  },
+  {
+    jurisdiction_root_parent_ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128'],
+    plan_date: '2019-08-30',
+    plan_effective_period_end: '2019-09-14',
+    plan_effective_period_start: '2019-08-30',
+    plan_id: '02e358ed-87fe-5720-8782-0afe28cb7e8c',
+    plan_intervention_type: 'MDA-Point',
+    plan_name: 'MDA-Point-2019-08-30m',
+    plan_status: 'active',
+    plan_title: 'MDA-Point-2019-08-30m',
+    plan_version: '2',
+  },
+  {
+    jurisdiction_root_parent_ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128'],
+    plan_date: '2019-08-29',
+    plan_effective_period_end: '2019-09-18',
+    plan_effective_period_start: '2019-08-29',
+    plan_id: 'c6e59ec1-8c54-5fdf-acf3-ee3692983f38',
+    plan_intervention_type: 'MDA-Point',
+    plan_name: 'Berg-Eswatini-2019',
+    plan_status: 'active',
+    plan_title: 'Berg Eswatini 2019',
+    plan_version: '2',
+  },
+];
 /* tslint:disable-next-line no-var-requires */
 export const ZambiaStructures = require('../../../../containers/pages/IRS/JurisdictionsReport/tests/zambia_structures.json');

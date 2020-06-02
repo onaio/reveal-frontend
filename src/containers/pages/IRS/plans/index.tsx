@@ -25,7 +25,7 @@ import { HOME_URL, QUERY_PARAM_TITLE, REPORT_IRS_PLAN_URL } from '../../../../co
 import { displayError } from '../../../../helpers/errors';
 import { getQueryParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import { fetchMDAPointPlans } from '../../../../store/ducks/generic/MDAPointPlan';
+import { fetchMDAPointPlans } from '../../../../store/ducks/generic/MDAPointPlans';
 import IRSPlansReducer, {
   fetchIRSPlans,
   GenericPlan,
