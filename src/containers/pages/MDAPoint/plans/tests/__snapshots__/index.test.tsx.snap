@@ -1,0 +1,284 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: ConnectedIRSPlansList props 1`] = `
+Object {
+  "fetchPlans": [Function],
+  "history": Object {
+    "action": "POP",
+    "block": [Function],
+    "createHref": [Function],
+    "go": [Function],
+    "goBack": [Function],
+    "goForward": [Function],
+    "length": 1,
+    "listen": [Function],
+    "location": Object {
+      "hash": "",
+      "pathname": "/",
+      "search": "",
+      "state": undefined,
+    },
+    "push": [Function],
+    "replace": [Function],
+  },
+  "location": Object {
+    "hash": "",
+    "pathname": "/intervention/mda-point/report",
+    "search": "",
+    "state": undefined,
+  },
+  "match": Object {
+    "isExact": true,
+    "params": Object {},
+    "path": "/intervention/mda-point/report/",
+    "url": "/intervention/mda-point/report/",
+  },
+  "newFetchPlans": [Function],
+  "pageTitle": "MDA Point Plans",
+  "pageUrl": "/intervention/mda-point/report",
+  "plans": Array [
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "f45b9380-c970-4dd1-8533-9e95ab12f128",
+      ],
+      "plan_date": "2019-09-05",
+      "plan_effective_period_end": "2019-09-25",
+      "plan_effective_period_start": "2019-09-05",
+      "plan_id": "727c3d40-e118-564a-b231-aac633e6abce",
+      "plan_intervention_type": "MDA-Point",
+      "plan_name": "MDA-Point-2019-09-05-TEST",
+      "plan_status": "retired",
+      "plan_title": "MDA-Point-2019-09-05 TEST",
+      "plan_version": "2",
+    },
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "f45b9380-c970-4dd1-8533-9e95ab12f128",
+      ],
+      "plan_date": "2019-08-30",
+      "plan_effective_period_end": "2019-09-14",
+      "plan_effective_period_start": "2019-08-30",
+      "plan_id": "02e358ed-87fe-5720-8782-0afe28cb7e8c",
+      "plan_intervention_type": "MDA-Point",
+      "plan_name": "MDA-Point-2019-08-30m",
+      "plan_status": "active",
+      "plan_title": "MDA-Point-2019-08-30m",
+      "plan_version": "2",
+    },
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "f45b9380-c970-4dd1-8533-9e95ab12f128",
+      ],
+      "plan_date": "2019-08-29",
+      "plan_effective_period_end": "2019-09-18",
+      "plan_effective_period_start": "2019-08-29",
+      "plan_id": "c6e59ec1-8c54-5fdf-acf3-ee3692983f38",
+      "plan_intervention_type": "MDA-Point",
+      "plan_name": "Berg-Eswatini-2019",
+      "plan_status": "active",
+      "plan_title": "Berg Eswatini 2019",
+      "plan_version": "2",
+    },
+  ],
+  "service": [Function],
+  "supersetReportingSlice": "01",
+}
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      replace={false}
+      to="/"
+    >
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    MDA Point Plans
+  </li>,
+]
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: page title 1`] = `
+<h3
+  className="mt-3 mb-3 page-title"
+>
+  MDA Point Plans
+</h3>
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table headers 1`] = `
+Array [
+  <th
+    className="listview-td"
+    key="0"
+  >
+    Title
+  </th>,
+  <th
+    className="listview-td"
+    key="1"
+  >
+    Date Created
+  </th>,
+  <th
+    className="listview-td"
+    key="2"
+  >
+    Start Date
+  </th>,
+  <th
+    className="listview-td"
+    key="3"
+  >
+    End Date
+  </th>,
+  <th
+    className="listview-td"
+    key="4"
+  >
+    Status
+  </th>,
+]
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table rows 1`] = `
+Array [
+  <td
+    className="listview-th"
+    key="0"
+  >
+    <Link
+      key="727c3d40-e118-564a-b231-aac633e6abce"
+      replace={false}
+      to="/intervention/mda-point/report/727c3d40-e118-564a-b231-aac633e6abce"
+    >
+      <a
+        href="/intervention/mda-point/report/727c3d40-e118-564a-b231-aac633e6abce"
+        onClick={[Function]}
+      >
+        MDA-Point-2019-09-05 TEST
+      </a>
+    </Link>
+  </td>,
+  <td
+    className="listview-th"
+    key="1"
+  >
+    2019-09-05
+  </td>,
+  <td
+    className="listview-th"
+    key="2"
+  >
+    2019-09-05
+  </td>,
+  <td
+    className="listview-th"
+    key="3"
+  >
+    2019-09-25
+  </td>,
+  <td
+    className="listview-th"
+    key="4"
+  >
+    retired
+  </td>,
+  <td
+    className="listview-th"
+    key="0"
+  >
+    <Link
+      key="02e358ed-87fe-5720-8782-0afe28cb7e8c"
+      replace={false}
+      to="/intervention/mda-point/report/02e358ed-87fe-5720-8782-0afe28cb7e8c"
+    >
+      <a
+        href="/intervention/mda-point/report/02e358ed-87fe-5720-8782-0afe28cb7e8c"
+        onClick={[Function]}
+      >
+        MDA-Point-2019-08-30m
+      </a>
+    </Link>
+  </td>,
+  <td
+    className="listview-th"
+    key="1"
+  >
+    2019-08-30
+  </td>,
+  <td
+    className="listview-th"
+    key="2"
+  >
+    2019-08-30
+  </td>,
+  <td
+    className="listview-th"
+    key="3"
+  >
+    2019-09-14
+  </td>,
+  <td
+    className="listview-th"
+    key="4"
+  >
+    active
+  </td>,
+  <td
+    className="listview-th"
+    key="0"
+  >
+    <Link
+      key="c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+      replace={false}
+      to="/intervention/mda-point/report/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+    >
+      <a
+        href="/intervention/mda-point/report/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
+        onClick={[Function]}
+      >
+        Berg Eswatini 2019
+      </a>
+    </Link>
+  </td>,
+  <td
+    className="listview-th"
+    key="1"
+  >
+    2019-08-29
+  </td>,
+  <td
+    className="listview-th"
+    key="2"
+  >
+    2019-08-29
+  </td>,
+  <td
+    className="listview-th"
+    key="3"
+  >
+    2019-09-18
+  </td>,
+  <td
+    className="listview-th"
+    key="4"
+  >
+    active
+  </td>,
+]
+`;
