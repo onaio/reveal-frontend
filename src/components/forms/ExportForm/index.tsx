@@ -3,30 +3,52 @@ import React from 'react';
 import { Alert, Button, Col, FormGroup, Label, Row } from 'reactstrap';
 import * as Yup from 'yup';
 import { ENABLE_MDA_POINT } from '../../../configs/env';
-import { EXPORT_CLIENT_LIST, EXPORT_STUDENT_LIST, REQUIRED } from '../../../configs/lang';
+import {
+  DOWNLOAD,
+  EXPORT_BASED_ON_GEOGRAPHICAL_REGION,
+  EXPORT_CLIENT_LIST,
+  EXPORT_STUDENT_LIST,
+  LOCATION_ERROR_MESSAGE,
+  REQUIRED,
+} from '../../../configs/lang';
+import {
+  OPENSRP_EVENT_PARAM_VALUE,
+  OPENSRP_TEMPLATE_ENDPOINT,
+  OPENSRP_UPLOAD_ENDPOINT,
+} from '../../../constants';
 import { handleDownload } from '../../../containers/pages/MDAPoint/ClientListView/helpers/serviceHooks';
 import JurisdictionSelect from '../JurisdictionSelect';
+/** Yup validation schema for ExportForm */
 export const JurisdictionSchema = Yup.object().shape({
   jurisdictions: Yup.object().shape({
     id: Yup.string().required(REQUIRED),
     name: Yup.string(),
   }),
 });
-/** interface to describe props for ExportForm component */
-export interface PlanJurisdictionFormField {
+/** Jurisdiction form field Option interface */
+export interface JurisdictionFieldOptions {
   id: string;
   name: string;
 }
+/** Jurisdiction form field interface */
 export interface JurisdictionFormField {
-  jurisdictions: PlanJurisdictionFormField;
+  jurisdictions: JurisdictionFieldOptions;
 }
-export const ExportForm = () => {
-  const defaultInitialValues: JurisdictionFormField = {
-    jurisdictions: {
-      id: '',
-      name: '',
-    },
-  };
+/** initial values for exportform */
+const defaultInitialValues: JurisdictionFormField = {
+  jurisdictions: {
+    id: '',
+    name: '',
+  },
+};
+/** Interface for ExportForm Props */
+export interface ExportFormProps {
+  initialValues: JurisdictionFormField;
+  downloadFile: typeof handleDownload;
+  eventValue: string;
+}
+export const ExportForm = (props: ExportFormProps) => {
+  const { initialValues, downloadFile, eventValue } = props;
   return (
     <div>
       <Row id="export-row">
@@ -35,16 +57,21 @@ export const ExportForm = () => {
             {ENABLE_MDA_POINT ? EXPORT_STUDENT_LIST : EXPORT_CLIENT_LIST}
           </h3>
           {/* Download Form goes here */}
-          <Alert color="light">Export Country based on Geographical level!</Alert>
+          <Alert color="light">{EXPORT_BASED_ON_GEOGRAPHICAL_REGION}</Alert>
           <Formik
-            initialValues={defaultInitialValues}
+            initialValues={initialValues}
             /* tslint:disable-next-line jsx-no-lambda */
             onSubmit={values => {
               // tslint:disable-next-line: no-floating-promises
-              handleDownload('template', values.jurisdictions.name, {
-                event_name: 'Child Registration',
-                location_id: values.jurisdictions.id,
-              });
+              downloadFile(
+                OPENSRP_TEMPLATE_ENDPOINT,
+                `${values.jurisdictions.name}.csv`,
+                OPENSRP_UPLOAD_ENDPOINT,
+                {
+                  event_name: eventValue,
+                  location_id: values.jurisdictions.id,
+                }
+              );
             }}
             validationSchema={JurisdictionSchema}
           >
@@ -67,7 +94,7 @@ export const ExportForm = () => {
                   <Field type="hidden" name={`jurisdictions.name`} id={`jurisdictions-name`} />
                   {errors.jurisdictions && (
                     <small className="form-text text-danger jurisdictions-error">
-                      {'Please select location'}
+                      {LOCATION_ERROR_MESSAGE}
                     </small>
                   )}
                   {
@@ -84,7 +111,7 @@ export const ExportForm = () => {
                   className="btn btn-md btn btn-primary"
                   color="primary"
                 >
-                  Download
+                  {DOWNLOAD}
                 </Button>
               </Form>
             )}
@@ -94,4 +121,10 @@ export const ExportForm = () => {
     </div>
   );
 };
+const defaultProps: ExportFormProps = {
+  downloadFile: handleDownload,
+  eventValue: OPENSRP_EVENT_PARAM_VALUE,
+  initialValues: defaultInitialValues,
+};
+ExportForm.defaultProps = defaultProps;
 export default ExportForm;

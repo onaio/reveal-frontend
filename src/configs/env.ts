@@ -48,6 +48,10 @@ export type ENABLE_TEAMS = typeof ENABLE_TEAMS;
 export const ENABLE_MDA_POINT = process.env.REACT_APP_ENABLE_MDA_POINT === 'true';
 export type ENABLE_MDA_POINT = typeof ENABLE_MDA_POINT;
 
+/** Do you want to enable the MDA Point plan features? */
+export const CLIENT_LABEL = process.env.REACT_APP_CLIENT_LABEL || 'client';
+export type CLIENT_LABEL = typeof CLIENT_LABEL;
+
 /** Do you want to disable login protection? */
 export const DISABLE_LOGIN_PROTECTION = process.env.REACT_APP_DISABLE_LOGIN_PROTECTION === 'true';
 export type DISABLE_LOGIN_PROTECTION = typeof DISABLE_LOGIN_PROTECTION;

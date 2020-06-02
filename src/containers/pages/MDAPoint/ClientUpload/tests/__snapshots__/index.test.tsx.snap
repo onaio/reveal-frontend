@@ -1,7 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`components/ClientUpload Matches snapshot 1`] = `
-<ClientUpload>
+<ClientUpload
+  eventValue="Child Registration"
+  fileType=".csv"
+  fileUploadService={[Function]}
+  formFieldStyles={
+    Object {
+      "display": "inline-block",
+      "width": "24rem",
+    }
+  }
+  initialValues={
+    Object {
+      "file": null,
+      "jurisdictions": Object {
+        "id": "",
+        "name": "",
+      },
+    }
+  }
+>
   <div>
     <Modal
       autoFocus={true}
@@ -54,7 +73,7 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                       <h5
                         class="modal-title"
                       >
-                        Modal title
+                        Client Upload Form
                       </h5>
                     </div>
                     <div
@@ -181,25 +200,25 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                           <input
                             accept=".csv"
                             class="form-control-file"
-                            id="exampleFile"
+                            id="file"
                             name="file"
                             type="file"
                           />
                         </div>
                         <hr />
                         <div
-                          style="display: inline-block; width: 12rem;"
+                          style="display: inline-block; width: 24rem;"
                         >
                           <button
                             class="btn btn-md btn btn-primary btn btn-primary"
-                            id="studentexportform-submit-button"
+                            id="exportform-submit-button"
                             type="submit"
                           >
                             Submit
                           </button>
                           <a
                             class="focus-investigation btn btn-primary float-right mt-0"
-                            href="/clients/students"
+                            href="/clients"
                           >
                             Go Back
                           </a>
@@ -244,7 +263,7 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                         <h5
                           class="modal-title"
                         >
-                          Modal title
+                          Client Upload Form
                         </h5>
                       </div>
                       <div
@@ -371,25 +390,25 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                             <input
                               accept=".csv"
                               class="form-control-file"
-                              id="exampleFile"
+                              id="file"
                               name="file"
                               type="file"
                             />
                           </div>
                           <hr />
                           <div
-                            style="display: inline-block; width: 12rem;"
+                            style="display: inline-block; width: 24rem;"
                           >
                             <button
                               class="btn btn-md btn btn-primary btn btn-primary"
-                              id="studentexportform-submit-button"
+                              id="exportform-submit-button"
                               type="submit"
                             >
                               Submit
                             </button>
                             <a
                               class="focus-investigation btn btn-primary float-right mt-0"
-                              href="/clients/students"
+                              href="/clients"
                             >
                               Go Back
                             </a>
@@ -487,7 +506,7 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                           <h5
                             className="modal-title"
                           >
-                            Modal title
+                            Client Upload Form
                           </h5>
                         </div>
                       </ModalHeader>
@@ -506,7 +525,6 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                   "id": "",
                                   "name": "",
                                 },
-                                "location": undefined,
                               }
                             }
                             isInitialValid={false}
@@ -725,7 +743,6 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                 "id": "",
                                                 "name": "",
                                               },
-                                              "location": undefined,
                                             },
                                             "isSubmitting": false,
                                             "isValid": false,
@@ -900,7 +917,6 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                 "id": "",
                                                 "name": "",
                                               },
-                                              "location": undefined,
                                             },
                                           }
                                         }
@@ -934,7 +950,6 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                   "id": "",
                                                   "name": "",
                                                 },
-                                                "location": undefined,
                                               },
                                               "isSubmitting": false,
                                               "isValid": false,
@@ -966,7 +981,6 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                   "id": "",
                                                   "name": "",
                                                 },
-                                                "location": undefined,
                                               },
                                             }
                                           }
@@ -977,7 +991,77 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                           <JurisdictionSelect
                                             apiEndpoint="location/findByProperties"
                                             cascadingSelect={true}
-                                            loadLocations={true}
+                                            className="async-select"
+                                            classNamePrefix="jurisdiction"
+                                            closeMenuOnSelect={false}
+                                            defaultMenuIsOpen={false}
+                                            defaultOptions={true}
+                                            field={
+                                              Object {
+                                                "name": "jurisdictions.id",
+                                                "onBlur": [Function],
+                                                "onChange": [Function],
+                                                "value": "",
+                                              }
+                                            }
+                                            filterOption={null}
+                                            form={
+                                              Object {
+                                                "dirty": false,
+                                                "errors": Object {},
+                                                "handleBlur": [Function],
+                                                "handleChange": [Function],
+                                                "handleReset": [Function],
+                                                "handleSubmit": [Function],
+                                                "initialValues": Object {
+                                                  "file": null,
+                                                  "jurisdictions": Object {
+                                                    "id": "",
+                                                    "name": "",
+                                                  },
+                                                },
+                                                "isSubmitting": false,
+                                                "isValid": false,
+                                                "isValidating": false,
+                                                "registerField": [Function],
+                                                "resetForm": [Function],
+                                                "setError": [Function],
+                                                "setErrors": [Function],
+                                                "setFieldError": [Function],
+                                                "setFieldTouched": [Function],
+                                                "setFieldValue": [Function],
+                                                "setFormikState": [Function],
+                                                "setStatus": [Function],
+                                                "setSubmitting": [Function],
+                                                "setTouched": [Function],
+                                                "setValues": [Function],
+                                                "status": undefined,
+                                                "submitCount": 0,
+                                                "submitForm": [Function],
+                                                "touched": Object {},
+                                                "unregisterField": [Function],
+                                                "validateField": [Function],
+                                                "validateForm": [Function],
+                                                "validateOnBlur": true,
+                                                "validateOnChange": true,
+                                                "values": Object {
+                                                  "file": null,
+                                                  "jurisdictions": Object {
+                                                    "id": "",
+                                                    "name": "",
+                                                  },
+                                                },
+                                              }
+                                            }
+                                            id="jurisdictions-id"
+                                            isClearable={true}
+                                            isLoading={false}
+                                            key=""
+                                            labelFieldName="jurisdictions.name"
+                                            loadOptions={[Function]}
+                                            name="jurisdictions.id"
+                                            noOptionsMessage={[Function]}
+                                            onChange={[Function]}
                                             params={
                                               Object {
                                                 "is_jurisdiction": true,
@@ -998,6 +1082,55 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                               defaultMenuIsOpen={false}
                                               defaultOptions={true}
                                               filterOption={null}
+                                              form={
+                                                Object {
+                                                  "dirty": false,
+                                                  "errors": Object {},
+                                                  "handleBlur": [Function],
+                                                  "handleChange": [Function],
+                                                  "handleReset": [Function],
+                                                  "handleSubmit": [Function],
+                                                  "initialValues": Object {
+                                                    "file": null,
+                                                    "jurisdictions": Object {
+                                                      "id": "",
+                                                      "name": "",
+                                                    },
+                                                  },
+                                                  "isSubmitting": false,
+                                                  "isValid": false,
+                                                  "isValidating": false,
+                                                  "registerField": [Function],
+                                                  "resetForm": [Function],
+                                                  "setError": [Function],
+                                                  "setErrors": [Function],
+                                                  "setFieldError": [Function],
+                                                  "setFieldTouched": [Function],
+                                                  "setFieldValue": [Function],
+                                                  "setFormikState": [Function],
+                                                  "setStatus": [Function],
+                                                  "setSubmitting": [Function],
+                                                  "setTouched": [Function],
+                                                  "setValues": [Function],
+                                                  "status": undefined,
+                                                  "submitCount": 0,
+                                                  "submitForm": [Function],
+                                                  "touched": Object {},
+                                                  "unregisterField": [Function],
+                                                  "validateField": [Function],
+                                                  "validateForm": [Function],
+                                                  "validateOnBlur": true,
+                                                  "validateOnChange": true,
+                                                  "values": Object {
+                                                    "file": null,
+                                                    "jurisdictions": Object {
+                                                      "id": "",
+                                                      "name": "",
+                                                    },
+                                                  },
+                                                }
+                                              }
+                                              id="jurisdictions-id"
                                               isClearable={true}
                                               isLoading={false}
                                               key=""
@@ -1029,6 +1162,59 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                 defaultOptions={true}
                                                 defaultValue={null}
                                                 filterOption={null}
+                                                form={
+                                                  Object {
+                                                    "dirty": false,
+                                                    "errors": Object {},
+                                                    "handleBlur": [Function],
+                                                    "handleChange": [Function],
+                                                    "handleReset": [Function],
+                                                    "handleSubmit": [Function],
+                                                    "initialValues": Object {
+                                                      "file": null,
+                                                      "jurisdictions": Object {
+                                                        "id": "",
+                                                        "name": "",
+                                                      },
+                                                    },
+                                                    "isSubmitting": false,
+                                                    "isValid": false,
+                                                    "isValidating": false,
+                                                    "registerField": [Function],
+                                                    "resetForm": [Function],
+                                                    "setError": [Function],
+                                                    "setErrors": [Function],
+                                                    "setFieldError": [Function],
+                                                    "setFieldTouched": [Function],
+                                                    "setFieldValue": [Function],
+                                                    "setFormikState": [Function],
+                                                    "setStatus": [Function],
+                                                    "setSubmitting": [Function],
+                                                    "setTouched": [Function],
+                                                    "setValues": [Function],
+                                                    "status": undefined,
+                                                    "submitCount": 0,
+                                                    "submitForm": [Function],
+                                                    "touched": Object {},
+                                                    "unregisterField": [Function],
+                                                    "validateField": [Function],
+                                                    "validateForm": [Function],
+                                                    "validateOnBlur": true,
+                                                    "validateOnChange": true,
+                                                    "values": Object {
+                                                      "file": null,
+                                                      "jurisdictions": Object {
+                                                        "id": "",
+                                                        "name": "",
+                                                      },
+                                                    },
+                                                  }
+                                                }
+                                                formatGroupLabel={[Function]}
+                                                getOptionLabel={[Function]}
+                                                getOptionValue={[Function]}
+                                                id="jurisdictions-id"
+                                                inputValue=""
                                                 isClearable={true}
                                                 isLoading={true}
                                                 loadLocations={true}
@@ -1093,8 +1279,127 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                   openMenuOnClick={true}
                                                   openMenuOnFocus={false}
                                                   options={Array []}
-                                                  pageSize={5}
-                                                  params={
+                                                  selectOption={[Function]}
+                                                  selectProps={
+                                                    Object {
+                                                      "apiEndpoint": "location/findByProperties",
+                                                      "aria-label": "Select",
+                                                      "backspaceRemovesValue": true,
+                                                      "blurInputOnSelect": true,
+                                                      "bsSize": "lg",
+                                                      "cacheOptions": true,
+                                                      "captureMenuScroll": false,
+                                                      "cascadingSelect": true,
+                                                      "children": undefined,
+                                                      "className": "async-select",
+                                                      "classNamePrefix": "jurisdiction",
+                                                      "closeMenuOnScroll": false,
+                                                      "closeMenuOnSelect": false,
+                                                      "components": Object {},
+                                                      "controlShouldRenderValue": true,
+                                                      "defaultOptions": true,
+                                                      "escapeClearsValue": false,
+                                                      "field": Object {
+                                                        "name": "jurisdictions.id",
+                                                        "onBlur": [Function],
+                                                        "onChange": [Function],
+                                                        "value": "",
+                                                      },
+                                                      "filterOption": null,
+                                                      "form": Object {
+                                                        "dirty": false,
+                                                        "errors": Object {},
+                                                        "handleBlur": [Function],
+                                                        "handleChange": [Function],
+                                                        "handleReset": [Function],
+                                                        "handleSubmit": [Function],
+                                                        "initialValues": Object {
+                                                          "file": null,
+                                                          "jurisdictions": Object {
+                                                            "id": "",
+                                                            "name": "",
+                                                          },
+                                                        },
+                                                        "isSubmitting": false,
+                                                        "isValid": false,
+                                                        "isValidating": false,
+                                                        "registerField": [Function],
+                                                        "resetForm": [Function],
+                                                        "setError": [Function],
+                                                        "setErrors": [Function],
+                                                        "setFieldError": [Function],
+                                                        "setFieldTouched": [Function],
+                                                        "setFieldValue": [Function],
+                                                        "setFormikState": [Function],
+                                                        "setStatus": [Function],
+                                                        "setSubmitting": [Function],
+                                                        "setTouched": [Function],
+                                                        "setValues": [Function],
+                                                        "status": undefined,
+                                                        "submitCount": 0,
+                                                        "submitForm": [Function],
+                                                        "touched": Object {},
+                                                        "unregisterField": [Function],
+                                                        "validateField": [Function],
+                                                        "validateForm": [Function],
+                                                        "validateOnBlur": true,
+                                                        "validateOnChange": true,
+                                                        "values": Object {
+                                                          "file": null,
+                                                          "jurisdictions": Object {
+                                                            "id": "",
+                                                            "name": "",
+                                                          },
+                                                        },
+                                                      },
+                                                      "formatGroupLabel": [Function],
+                                                      "getOptionLabel": [Function],
+                                                      "getOptionValue": [Function],
+                                                      "id": "jurisdictions-id",
+                                                      "inputValue": "",
+                                                      "isClearable": true,
+                                                      "isDisabled": false,
+                                                      "isLoading": true,
+                                                      "isMulti": false,
+                                                      "isOptionDisabled": [Function],
+                                                      "isRtl": false,
+                                                      "isSearchable": true,
+                                                      "labelFieldName": "jurisdictions.name",
+                                                      "loadingMessage": [Function],
+                                                      "maxMenuHeight": 300,
+                                                      "menuIsOpen": false,
+                                                      "menuPlacement": "bottom",
+                                                      "menuPosition": "absolute",
+                                                      "menuShouldBlockScroll": false,
+                                                      "menuShouldScrollIntoView": true,
+                                                      "minMenuHeight": 140,
+                                                      "name": "jurisdictions.id",
+                                                      "noOptionsMessage": [Function],
+                                                      "onChange": [Function],
+                                                      "onInputChange": [Function],
+                                                      "onMenuClose": [Function],
+                                                      "onMenuOpen": [Function],
+                                                      "openMenuOnClick": true,
+                                                      "openMenuOnFocus": false,
+                                                      "options": Array [],
+                                                      "pageSize": 5,
+                                                      "params": Object {
+                                                        "is_jurisdiction": true,
+                                                        "return_geometry": false,
+                                                      },
+                                                      "placeholder": "Select",
+                                                      "promiseOptions": [Function],
+                                                      "required": true,
+                                                      "screenReaderStatus": [Function],
+                                                      "serviceClass": [Function],
+                                                      "styles": Object {},
+                                                      "tabIndex": "0",
+                                                      "tabSelectsValue": true,
+                                                      "value": null,
+                                                    }
+                                                  }
+                                                  setValue={[Function]}
+                                                  theme={
                                                     Object {
                                                       "is_jurisdiction": true,
                                                       "return_geometry": false,
@@ -1300,26 +1605,129 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                               "name": "jurisdiction",
                                                               "noOptionsMessage": [Function],
                                                               "onChange": [Function],
-                                                              "onInputChange": [Function],
-                                                              "onMenuClose": [Function],
-                                                              "onMenuOpen": [Function],
-                                                              "openMenuOnClick": true,
-                                                              "openMenuOnFocus": false,
-                                                              "options": Array [],
-                                                              "pageSize": 5,
-                                                              "params": Object {
-                                                                "is_jurisdiction": true,
-                                                                "return_geometry": false,
+                                                              "value": "",
+                                                            },
+                                                            "filterOption": null,
+                                                            "form": Object {
+                                                              "dirty": false,
+                                                              "errors": Object {},
+                                                              "handleBlur": [Function],
+                                                              "handleChange": [Function],
+                                                              "handleReset": [Function],
+                                                              "handleSubmit": [Function],
+                                                              "initialValues": Object {
+                                                                "file": null,
+                                                                "jurisdictions": Object {
+                                                                  "id": "",
+                                                                  "name": "",
+                                                                },
                                                               },
-                                                              "placeholder": "Select",
-                                                              "promiseOptions": [Function],
-                                                              "screenReaderStatus": [Function],
-                                                              "serviceClass": [Function],
-                                                              "styles": Object {},
-                                                              "tabIndex": "0",
-                                                              "tabSelectsValue": true,
-                                                              "value": null,
-                                                            }
+                                                              "isSubmitting": false,
+                                                              "isValid": false,
+                                                              "isValidating": false,
+                                                              "registerField": [Function],
+                                                              "resetForm": [Function],
+                                                              "setError": [Function],
+                                                              "setErrors": [Function],
+                                                              "setFieldError": [Function],
+                                                              "setFieldTouched": [Function],
+                                                              "setFieldValue": [Function],
+                                                              "setFormikState": [Function],
+                                                              "setStatus": [Function],
+                                                              "setSubmitting": [Function],
+                                                              "setTouched": [Function],
+                                                              "setValues": [Function],
+                                                              "status": undefined,
+                                                              "submitCount": 0,
+                                                              "submitForm": [Function],
+                                                              "touched": Object {},
+                                                              "unregisterField": [Function],
+                                                              "validateField": [Function],
+                                                              "validateForm": [Function],
+                                                              "validateOnBlur": true,
+                                                              "validateOnChange": true,
+                                                              "values": Object {
+                                                                "file": null,
+                                                                "jurisdictions": Object {
+                                                                  "id": "",
+                                                                  "name": "",
+                                                                },
+                                                              },
+                                                            },
+                                                            "formatGroupLabel": [Function],
+                                                            "getOptionLabel": [Function],
+                                                            "getOptionValue": [Function],
+                                                            "id": "jurisdictions-id",
+                                                            "inputValue": "",
+                                                            "isClearable": true,
+                                                            "isDisabled": false,
+                                                            "isLoading": true,
+                                                            "isMulti": false,
+                                                            "isOptionDisabled": [Function],
+                                                            "isRtl": false,
+                                                            "isSearchable": true,
+                                                            "labelFieldName": "jurisdictions.name",
+                                                            "loadingMessage": [Function],
+                                                            "maxMenuHeight": 300,
+                                                            "menuIsOpen": false,
+                                                            "menuPlacement": "bottom",
+                                                            "menuPosition": "absolute",
+                                                            "menuShouldBlockScroll": false,
+                                                            "menuShouldScrollIntoView": true,
+                                                            "minMenuHeight": 140,
+                                                            "name": "jurisdictions.id",
+                                                            "noOptionsMessage": [Function],
+                                                            "onChange": [Function],
+                                                            "onInputChange": [Function],
+                                                            "onMenuClose": [Function],
+                                                            "onMenuOpen": [Function],
+                                                            "openMenuOnClick": true,
+                                                            "openMenuOnFocus": false,
+                                                            "options": Array [],
+                                                            "pageSize": 5,
+                                                            "params": Object {
+                                                              "is_jurisdiction": true,
+                                                              "return_geometry": false,
+                                                            },
+                                                            "placeholder": "Select",
+                                                            "promiseOptions": [Function],
+                                                            "required": true,
+                                                            "screenReaderStatus": [Function],
+                                                            "serviceClass": [Function],
+                                                            "styles": Object {},
+                                                            "tabIndex": "0",
+                                                            "tabSelectsValue": true,
+                                                            "value": null,
+                                                          }
+                                                        }
+                                                        setValue={[Function]}
+                                                        theme={
+                                                          Object {
+                                                            "borderRadius": 4,
+                                                            "colors": Object {
+                                                              "danger": "#DE350B",
+                                                              "dangerLight": "#FFBDAD",
+                                                              "neutral0": "hsl(0, 0%, 100%)",
+                                                              "neutral10": "hsl(0, 0%, 90%)",
+                                                              "neutral20": "hsl(0, 0%, 80%)",
+                                                              "neutral30": "hsl(0, 0%, 70%)",
+                                                              "neutral40": "hsl(0, 0%, 60%)",
+                                                              "neutral5": "hsl(0, 0%, 95%)",
+                                                              "neutral50": "hsl(0, 0%, 50%)",
+                                                              "neutral60": "hsl(0, 0%, 40%)",
+                                                              "neutral70": "hsl(0, 0%, 30%)",
+                                                              "neutral80": "hsl(0, 0%, 20%)",
+                                                              "neutral90": "hsl(0, 0%, 10%)",
+                                                              "primary": "#2684FF",
+                                                              "primary25": "#DEEBFF",
+                                                              "primary50": "#B2D4FF",
+                                                              "primary75": "#4C9AFF",
+                                                            },
+                                                            "spacing": Object {
+                                                              "baseUnit": 4,
+                                                              "controlHeight": 38,
+                                                              "menuGutter": 8,
+                                                            },
                                                           }
                                                           setValue={[Function]}
                                                           theme={
@@ -1440,26 +1848,129 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                                     "name": "jurisdiction",
                                                                     "noOptionsMessage": [Function],
                                                                     "onChange": [Function],
-                                                                    "onInputChange": [Function],
-                                                                    "onMenuClose": [Function],
-                                                                    "onMenuOpen": [Function],
-                                                                    "openMenuOnClick": true,
-                                                                    "openMenuOnFocus": false,
-                                                                    "options": Array [],
-                                                                    "pageSize": 5,
-                                                                    "params": Object {
-                                                                      "is_jurisdiction": true,
-                                                                      "return_geometry": false,
+                                                                    "value": "",
+                                                                  },
+                                                                  "filterOption": null,
+                                                                  "form": Object {
+                                                                    "dirty": false,
+                                                                    "errors": Object {},
+                                                                    "handleBlur": [Function],
+                                                                    "handleChange": [Function],
+                                                                    "handleReset": [Function],
+                                                                    "handleSubmit": [Function],
+                                                                    "initialValues": Object {
+                                                                      "file": null,
+                                                                      "jurisdictions": Object {
+                                                                        "id": "",
+                                                                        "name": "",
+                                                                      },
                                                                     },
-                                                                    "placeholder": "Select",
-                                                                    "promiseOptions": [Function],
-                                                                    "screenReaderStatus": [Function],
-                                                                    "serviceClass": [Function],
-                                                                    "styles": Object {},
-                                                                    "tabIndex": "0",
-                                                                    "tabSelectsValue": true,
-                                                                    "value": null,
-                                                                  }
+                                                                    "isSubmitting": false,
+                                                                    "isValid": false,
+                                                                    "isValidating": false,
+                                                                    "registerField": [Function],
+                                                                    "resetForm": [Function],
+                                                                    "setError": [Function],
+                                                                    "setErrors": [Function],
+                                                                    "setFieldError": [Function],
+                                                                    "setFieldTouched": [Function],
+                                                                    "setFieldValue": [Function],
+                                                                    "setFormikState": [Function],
+                                                                    "setStatus": [Function],
+                                                                    "setSubmitting": [Function],
+                                                                    "setTouched": [Function],
+                                                                    "setValues": [Function],
+                                                                    "status": undefined,
+                                                                    "submitCount": 0,
+                                                                    "submitForm": [Function],
+                                                                    "touched": Object {},
+                                                                    "unregisterField": [Function],
+                                                                    "validateField": [Function],
+                                                                    "validateForm": [Function],
+                                                                    "validateOnBlur": true,
+                                                                    "validateOnChange": true,
+                                                                    "values": Object {
+                                                                      "file": null,
+                                                                      "jurisdictions": Object {
+                                                                        "id": "",
+                                                                        "name": "",
+                                                                      },
+                                                                    },
+                                                                  },
+                                                                  "formatGroupLabel": [Function],
+                                                                  "getOptionLabel": [Function],
+                                                                  "getOptionValue": [Function],
+                                                                  "id": "jurisdictions-id",
+                                                                  "inputValue": "",
+                                                                  "isClearable": true,
+                                                                  "isDisabled": false,
+                                                                  "isLoading": true,
+                                                                  "isMulti": false,
+                                                                  "isOptionDisabled": [Function],
+                                                                  "isRtl": false,
+                                                                  "isSearchable": true,
+                                                                  "labelFieldName": "jurisdictions.name",
+                                                                  "loadingMessage": [Function],
+                                                                  "maxMenuHeight": 300,
+                                                                  "menuIsOpen": false,
+                                                                  "menuPlacement": "bottom",
+                                                                  "menuPosition": "absolute",
+                                                                  "menuShouldBlockScroll": false,
+                                                                  "menuShouldScrollIntoView": true,
+                                                                  "minMenuHeight": 140,
+                                                                  "name": "jurisdictions.id",
+                                                                  "noOptionsMessage": [Function],
+                                                                  "onChange": [Function],
+                                                                  "onInputChange": [Function],
+                                                                  "onMenuClose": [Function],
+                                                                  "onMenuOpen": [Function],
+                                                                  "openMenuOnClick": true,
+                                                                  "openMenuOnFocus": false,
+                                                                  "options": Array [],
+                                                                  "pageSize": 5,
+                                                                  "params": Object {
+                                                                    "is_jurisdiction": true,
+                                                                    "return_geometry": false,
+                                                                  },
+                                                                  "placeholder": "Select",
+                                                                  "promiseOptions": [Function],
+                                                                  "required": true,
+                                                                  "screenReaderStatus": [Function],
+                                                                  "serviceClass": [Function],
+                                                                  "styles": Object {},
+                                                                  "tabIndex": "0",
+                                                                  "tabSelectsValue": true,
+                                                                  "value": null,
+                                                                }
+                                                              }
+                                                              setValue={[Function]}
+                                                              theme={
+                                                                Object {
+                                                                  "borderRadius": 4,
+                                                                  "colors": Object {
+                                                                    "danger": "#DE350B",
+                                                                    "dangerLight": "#FFBDAD",
+                                                                    "neutral0": "hsl(0, 0%, 100%)",
+                                                                    "neutral10": "hsl(0, 0%, 90%)",
+                                                                    "neutral20": "hsl(0, 0%, 80%)",
+                                                                    "neutral30": "hsl(0, 0%, 70%)",
+                                                                    "neutral40": "hsl(0, 0%, 60%)",
+                                                                    "neutral5": "hsl(0, 0%, 95%)",
+                                                                    "neutral50": "hsl(0, 0%, 50%)",
+                                                                    "neutral60": "hsl(0, 0%, 40%)",
+                                                                    "neutral70": "hsl(0, 0%, 30%)",
+                                                                    "neutral80": "hsl(0, 0%, 20%)",
+                                                                    "neutral90": "hsl(0, 0%, 10%)",
+                                                                    "primary": "#2684FF",
+                                                                    "primary25": "#DEEBFF",
+                                                                    "primary50": "#B2D4FF",
+                                                                    "primary75": "#4C9AFF",
+                                                                  },
+                                                                  "spacing": Object {
+                                                                    "baseUnit": 4,
+                                                                    "controlHeight": 38,
+                                                                    "menuGutter": 8,
+                                                                  },
                                                                 }
                                                                 setValue={[Function]}
                                                                 theme={
@@ -1567,26 +2078,129 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                                           "name": "jurisdiction",
                                                                           "noOptionsMessage": [Function],
                                                                           "onChange": [Function],
-                                                                          "onInputChange": [Function],
-                                                                          "onMenuClose": [Function],
-                                                                          "onMenuOpen": [Function],
-                                                                          "openMenuOnClick": true,
-                                                                          "openMenuOnFocus": false,
-                                                                          "options": Array [],
-                                                                          "pageSize": 5,
-                                                                          "params": Object {
-                                                                            "is_jurisdiction": true,
-                                                                            "return_geometry": false,
+                                                                          "value": "",
+                                                                        },
+                                                                        "filterOption": null,
+                                                                        "form": Object {
+                                                                          "dirty": false,
+                                                                          "errors": Object {},
+                                                                          "handleBlur": [Function],
+                                                                          "handleChange": [Function],
+                                                                          "handleReset": [Function],
+                                                                          "handleSubmit": [Function],
+                                                                          "initialValues": Object {
+                                                                            "file": null,
+                                                                            "jurisdictions": Object {
+                                                                              "id": "",
+                                                                              "name": "",
+                                                                            },
                                                                           },
-                                                                          "placeholder": "Select",
-                                                                          "promiseOptions": [Function],
-                                                                          "screenReaderStatus": [Function],
-                                                                          "serviceClass": [Function],
-                                                                          "styles": Object {},
-                                                                          "tabIndex": "0",
-                                                                          "tabSelectsValue": true,
-                                                                          "value": null,
-                                                                        }
+                                                                          "isSubmitting": false,
+                                                                          "isValid": false,
+                                                                          "isValidating": false,
+                                                                          "registerField": [Function],
+                                                                          "resetForm": [Function],
+                                                                          "setError": [Function],
+                                                                          "setErrors": [Function],
+                                                                          "setFieldError": [Function],
+                                                                          "setFieldTouched": [Function],
+                                                                          "setFieldValue": [Function],
+                                                                          "setFormikState": [Function],
+                                                                          "setStatus": [Function],
+                                                                          "setSubmitting": [Function],
+                                                                          "setTouched": [Function],
+                                                                          "setValues": [Function],
+                                                                          "status": undefined,
+                                                                          "submitCount": 0,
+                                                                          "submitForm": [Function],
+                                                                          "touched": Object {},
+                                                                          "unregisterField": [Function],
+                                                                          "validateField": [Function],
+                                                                          "validateForm": [Function],
+                                                                          "validateOnBlur": true,
+                                                                          "validateOnChange": true,
+                                                                          "values": Object {
+                                                                            "file": null,
+                                                                            "jurisdictions": Object {
+                                                                              "id": "",
+                                                                              "name": "",
+                                                                            },
+                                                                          },
+                                                                        },
+                                                                        "formatGroupLabel": [Function],
+                                                                        "getOptionLabel": [Function],
+                                                                        "getOptionValue": [Function],
+                                                                        "id": "jurisdictions-id",
+                                                                        "inputValue": "",
+                                                                        "isClearable": true,
+                                                                        "isDisabled": false,
+                                                                        "isLoading": true,
+                                                                        "isMulti": false,
+                                                                        "isOptionDisabled": [Function],
+                                                                        "isRtl": false,
+                                                                        "isSearchable": true,
+                                                                        "labelFieldName": "jurisdictions.name",
+                                                                        "loadingMessage": [Function],
+                                                                        "maxMenuHeight": 300,
+                                                                        "menuIsOpen": false,
+                                                                        "menuPlacement": "bottom",
+                                                                        "menuPosition": "absolute",
+                                                                        "menuShouldBlockScroll": false,
+                                                                        "menuShouldScrollIntoView": true,
+                                                                        "minMenuHeight": 140,
+                                                                        "name": "jurisdictions.id",
+                                                                        "noOptionsMessage": [Function],
+                                                                        "onChange": [Function],
+                                                                        "onInputChange": [Function],
+                                                                        "onMenuClose": [Function],
+                                                                        "onMenuOpen": [Function],
+                                                                        "openMenuOnClick": true,
+                                                                        "openMenuOnFocus": false,
+                                                                        "options": Array [],
+                                                                        "pageSize": 5,
+                                                                        "params": Object {
+                                                                          "is_jurisdiction": true,
+                                                                          "return_geometry": false,
+                                                                        },
+                                                                        "placeholder": "Select",
+                                                                        "promiseOptions": [Function],
+                                                                        "required": true,
+                                                                        "screenReaderStatus": [Function],
+                                                                        "serviceClass": [Function],
+                                                                        "styles": Object {},
+                                                                        "tabIndex": "0",
+                                                                        "tabSelectsValue": true,
+                                                                        "value": null,
+                                                                      }
+                                                                    }
+                                                                    setValue={[Function]}
+                                                                    theme={
+                                                                      Object {
+                                                                        "borderRadius": 4,
+                                                                        "colors": Object {
+                                                                          "danger": "#DE350B",
+                                                                          "dangerLight": "#FFBDAD",
+                                                                          "neutral0": "hsl(0, 0%, 100%)",
+                                                                          "neutral10": "hsl(0, 0%, 90%)",
+                                                                          "neutral20": "hsl(0, 0%, 80%)",
+                                                                          "neutral30": "hsl(0, 0%, 70%)",
+                                                                          "neutral40": "hsl(0, 0%, 60%)",
+                                                                          "neutral5": "hsl(0, 0%, 95%)",
+                                                                          "neutral50": "hsl(0, 0%, 50%)",
+                                                                          "neutral60": "hsl(0, 0%, 40%)",
+                                                                          "neutral70": "hsl(0, 0%, 30%)",
+                                                                          "neutral80": "hsl(0, 0%, 20%)",
+                                                                          "neutral90": "hsl(0, 0%, 10%)",
+                                                                          "primary": "#2684FF",
+                                                                          "primary25": "#DEEBFF",
+                                                                          "primary50": "#B2D4FF",
+                                                                          "primary75": "#4C9AFF",
+                                                                        },
+                                                                        "spacing": Object {
+                                                                          "baseUnit": 4,
+                                                                          "controlHeight": 38,
+                                                                          "menuGutter": 8,
+                                                                        },
                                                                       }
                                                                       setValue={[Function]}
                                                                       theme={
@@ -1699,26 +2313,130 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                                           "name": "jurisdiction",
                                                                           "noOptionsMessage": [Function],
                                                                           "onChange": [Function],
-                                                                          "onInputChange": [Function],
-                                                                          "onMenuClose": [Function],
-                                                                          "onMenuOpen": [Function],
-                                                                          "openMenuOnClick": true,
-                                                                          "openMenuOnFocus": false,
-                                                                          "options": Array [],
-                                                                          "pageSize": 5,
-                                                                          "params": Object {
-                                                                            "is_jurisdiction": true,
-                                                                            "return_geometry": false,
+                                                                          "value": "",
+                                                                        },
+                                                                        "filterOption": null,
+                                                                        "form": Object {
+                                                                          "dirty": false,
+                                                                          "errors": Object {},
+                                                                          "handleBlur": [Function],
+                                                                          "handleChange": [Function],
+                                                                          "handleReset": [Function],
+                                                                          "handleSubmit": [Function],
+                                                                          "initialValues": Object {
+                                                                            "file": null,
+                                                                            "jurisdictions": Object {
+                                                                              "id": "",
+                                                                              "name": "",
+                                                                            },
                                                                           },
-                                                                          "placeholder": "Select",
-                                                                          "promiseOptions": [Function],
-                                                                          "screenReaderStatus": [Function],
-                                                                          "serviceClass": [Function],
-                                                                          "styles": Object {},
-                                                                          "tabIndex": "0",
-                                                                          "tabSelectsValue": true,
-                                                                          "value": null,
-                                                                        }
+                                                                          "isSubmitting": false,
+                                                                          "isValid": false,
+                                                                          "isValidating": false,
+                                                                          "registerField": [Function],
+                                                                          "resetForm": [Function],
+                                                                          "setError": [Function],
+                                                                          "setErrors": [Function],
+                                                                          "setFieldError": [Function],
+                                                                          "setFieldTouched": [Function],
+                                                                          "setFieldValue": [Function],
+                                                                          "setFormikState": [Function],
+                                                                          "setStatus": [Function],
+                                                                          "setSubmitting": [Function],
+                                                                          "setTouched": [Function],
+                                                                          "setValues": [Function],
+                                                                          "status": undefined,
+                                                                          "submitCount": 0,
+                                                                          "submitForm": [Function],
+                                                                          "touched": Object {},
+                                                                          "unregisterField": [Function],
+                                                                          "validateField": [Function],
+                                                                          "validateForm": [Function],
+                                                                          "validateOnBlur": true,
+                                                                          "validateOnChange": true,
+                                                                          "values": Object {
+                                                                            "file": null,
+                                                                            "jurisdictions": Object {
+                                                                              "id": "",
+                                                                              "name": "",
+                                                                            },
+                                                                          },
+                                                                        },
+                                                                        "formatGroupLabel": [Function],
+                                                                        "getOptionLabel": [Function],
+                                                                        "getOptionValue": [Function],
+                                                                        "id": "jurisdictions-id",
+                                                                        "inputValue": "",
+                                                                        "isClearable": true,
+                                                                        "isDisabled": false,
+                                                                        "isLoading": true,
+                                                                        "isMulti": false,
+                                                                        "isOptionDisabled": [Function],
+                                                                        "isRtl": false,
+                                                                        "isSearchable": true,
+                                                                        "labelFieldName": "jurisdictions.name",
+                                                                        "loadingMessage": [Function],
+                                                                        "maxMenuHeight": 300,
+                                                                        "menuIsOpen": false,
+                                                                        "menuPlacement": "bottom",
+                                                                        "menuPosition": "absolute",
+                                                                        "menuShouldBlockScroll": false,
+                                                                        "menuShouldScrollIntoView": true,
+                                                                        "minMenuHeight": 140,
+                                                                        "name": "jurisdictions.id",
+                                                                        "noOptionsMessage": [Function],
+                                                                        "onChange": [Function],
+                                                                        "onInputChange": [Function],
+                                                                        "onMenuClose": [Function],
+                                                                        "onMenuOpen": [Function],
+                                                                        "openMenuOnClick": true,
+                                                                        "openMenuOnFocus": false,
+                                                                        "options": Array [],
+                                                                        "pageSize": 5,
+                                                                        "params": Object {
+                                                                          "is_jurisdiction": true,
+                                                                          "return_geometry": false,
+                                                                        },
+                                                                        "placeholder": "Select",
+                                                                        "promiseOptions": [Function],
+                                                                        "required": true,
+                                                                        "screenReaderStatus": [Function],
+                                                                        "serviceClass": [Function],
+                                                                        "styles": Object {},
+                                                                        "tabIndex": "0",
+                                                                        "tabSelectsValue": true,
+                                                                        "value": null,
+                                                                      }
+                                                                    }
+                                                                    spellCheck="false"
+                                                                    tabIndex="0"
+                                                                    theme={
+                                                                      Object {
+                                                                        "borderRadius": 4,
+                                                                        "colors": Object {
+                                                                          "danger": "#DE350B",
+                                                                          "dangerLight": "#FFBDAD",
+                                                                          "neutral0": "hsl(0, 0%, 100%)",
+                                                                          "neutral10": "hsl(0, 0%, 90%)",
+                                                                          "neutral20": "hsl(0, 0%, 80%)",
+                                                                          "neutral30": "hsl(0, 0%, 70%)",
+                                                                          "neutral40": "hsl(0, 0%, 60%)",
+                                                                          "neutral5": "hsl(0, 0%, 95%)",
+                                                                          "neutral50": "hsl(0, 0%, 50%)",
+                                                                          "neutral60": "hsl(0, 0%, 40%)",
+                                                                          "neutral70": "hsl(0, 0%, 30%)",
+                                                                          "neutral80": "hsl(0, 0%, 20%)",
+                                                                          "neutral90": "hsl(0, 0%, 10%)",
+                                                                          "primary": "#2684FF",
+                                                                          "primary25": "#DEEBFF",
+                                                                          "primary50": "#B2D4FF",
+                                                                          "primary75": "#4C9AFF",
+                                                                        },
+                                                                        "spacing": Object {
+                                                                          "baseUnit": 4,
+                                                                          "controlHeight": 38,
+                                                                          "menuGutter": 8,
+                                                                        },
                                                                       }
                                                                       spellCheck="false"
                                                                       tabIndex="0"
@@ -1914,16 +2632,53 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                                     "name": "jurisdiction",
                                                                     "noOptionsMessage": [Function],
                                                                     "onChange": [Function],
-                                                                    "onInputChange": [Function],
-                                                                    "onMenuClose": [Function],
-                                                                    "onMenuOpen": [Function],
-                                                                    "openMenuOnClick": true,
-                                                                    "openMenuOnFocus": false,
-                                                                    "options": Array [],
-                                                                    "pageSize": 5,
-                                                                    "params": Object {
-                                                                      "is_jurisdiction": true,
-                                                                      "return_geometry": false,
+                                                                    "value": "",
+                                                                  },
+                                                                  "filterOption": null,
+                                                                  "form": Object {
+                                                                    "dirty": false,
+                                                                    "errors": Object {},
+                                                                    "handleBlur": [Function],
+                                                                    "handleChange": [Function],
+                                                                    "handleReset": [Function],
+                                                                    "handleSubmit": [Function],
+                                                                    "initialValues": Object {
+                                                                      "file": null,
+                                                                      "jurisdictions": Object {
+                                                                        "id": "",
+                                                                        "name": "",
+                                                                      },
+                                                                    },
+                                                                    "isSubmitting": false,
+                                                                    "isValid": false,
+                                                                    "isValidating": false,
+                                                                    "registerField": [Function],
+                                                                    "resetForm": [Function],
+                                                                    "setError": [Function],
+                                                                    "setErrors": [Function],
+                                                                    "setFieldError": [Function],
+                                                                    "setFieldTouched": [Function],
+                                                                    "setFieldValue": [Function],
+                                                                    "setFormikState": [Function],
+                                                                    "setStatus": [Function],
+                                                                    "setSubmitting": [Function],
+                                                                    "setTouched": [Function],
+                                                                    "setValues": [Function],
+                                                                    "status": undefined,
+                                                                    "submitCount": 0,
+                                                                    "submitForm": [Function],
+                                                                    "touched": Object {},
+                                                                    "unregisterField": [Function],
+                                                                    "validateField": [Function],
+                                                                    "validateForm": [Function],
+                                                                    "validateOnBlur": true,
+                                                                    "validateOnChange": true,
+                                                                    "values": Object {
+                                                                      "file": null,
+                                                                      "jurisdictions": Object {
+                                                                        "id": "",
+                                                                        "name": "",
+                                                                      },
                                                                     },
                                                                     "placeholder": "Select",
                                                                     "promiseOptions": [Function],
@@ -2041,16 +2796,53 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                                           "name": "jurisdiction",
                                                                           "noOptionsMessage": [Function],
                                                                           "onChange": [Function],
-                                                                          "onInputChange": [Function],
-                                                                          "onMenuClose": [Function],
-                                                                          "onMenuOpen": [Function],
-                                                                          "openMenuOnClick": true,
-                                                                          "openMenuOnFocus": false,
-                                                                          "options": Array [],
-                                                                          "pageSize": 5,
-                                                                          "params": Object {
-                                                                            "is_jurisdiction": true,
-                                                                            "return_geometry": false,
+                                                                          "value": "",
+                                                                        },
+                                                                        "filterOption": null,
+                                                                        "form": Object {
+                                                                          "dirty": false,
+                                                                          "errors": Object {},
+                                                                          "handleBlur": [Function],
+                                                                          "handleChange": [Function],
+                                                                          "handleReset": [Function],
+                                                                          "handleSubmit": [Function],
+                                                                          "initialValues": Object {
+                                                                            "file": null,
+                                                                            "jurisdictions": Object {
+                                                                              "id": "",
+                                                                              "name": "",
+                                                                            },
+                                                                          },
+                                                                          "isSubmitting": false,
+                                                                          "isValid": false,
+                                                                          "isValidating": false,
+                                                                          "registerField": [Function],
+                                                                          "resetForm": [Function],
+                                                                          "setError": [Function],
+                                                                          "setErrors": [Function],
+                                                                          "setFieldError": [Function],
+                                                                          "setFieldTouched": [Function],
+                                                                          "setFieldValue": [Function],
+                                                                          "setFormikState": [Function],
+                                                                          "setStatus": [Function],
+                                                                          "setSubmitting": [Function],
+                                                                          "setTouched": [Function],
+                                                                          "setValues": [Function],
+                                                                          "status": undefined,
+                                                                          "submitCount": 0,
+                                                                          "submitForm": [Function],
+                                                                          "touched": Object {},
+                                                                          "unregisterField": [Function],
+                                                                          "validateField": [Function],
+                                                                          "validateForm": [Function],
+                                                                          "validateOnBlur": true,
+                                                                          "validateOnChange": true,
+                                                                          "values": Object {
+                                                                            "file": null,
+                                                                            "jurisdictions": Object {
+                                                                              "id": "",
+                                                                              "name": "",
+                                                                            },
                                                                           },
                                                                           "placeholder": "Select",
                                                                           "promiseOptions": [Function],
@@ -2263,26 +3055,129 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                                           "name": "jurisdiction",
                                                                           "noOptionsMessage": [Function],
                                                                           "onChange": [Function],
-                                                                          "onInputChange": [Function],
-                                                                          "onMenuClose": [Function],
-                                                                          "onMenuOpen": [Function],
-                                                                          "openMenuOnClick": true,
-                                                                          "openMenuOnFocus": false,
-                                                                          "options": Array [],
-                                                                          "pageSize": 5,
-                                                                          "params": Object {
-                                                                            "is_jurisdiction": true,
-                                                                            "return_geometry": false,
+                                                                          "value": "",
+                                                                        },
+                                                                        "filterOption": null,
+                                                                        "form": Object {
+                                                                          "dirty": false,
+                                                                          "errors": Object {},
+                                                                          "handleBlur": [Function],
+                                                                          "handleChange": [Function],
+                                                                          "handleReset": [Function],
+                                                                          "handleSubmit": [Function],
+                                                                          "initialValues": Object {
+                                                                            "file": null,
+                                                                            "jurisdictions": Object {
+                                                                              "id": "",
+                                                                              "name": "",
+                                                                            },
                                                                           },
-                                                                          "placeholder": "Select",
-                                                                          "promiseOptions": [Function],
-                                                                          "screenReaderStatus": [Function],
-                                                                          "serviceClass": [Function],
-                                                                          "styles": Object {},
-                                                                          "tabIndex": "0",
-                                                                          "tabSelectsValue": true,
-                                                                          "value": null,
-                                                                        }
+                                                                          "isSubmitting": false,
+                                                                          "isValid": false,
+                                                                          "isValidating": false,
+                                                                          "registerField": [Function],
+                                                                          "resetForm": [Function],
+                                                                          "setError": [Function],
+                                                                          "setErrors": [Function],
+                                                                          "setFieldError": [Function],
+                                                                          "setFieldTouched": [Function],
+                                                                          "setFieldValue": [Function],
+                                                                          "setFormikState": [Function],
+                                                                          "setStatus": [Function],
+                                                                          "setSubmitting": [Function],
+                                                                          "setTouched": [Function],
+                                                                          "setValues": [Function],
+                                                                          "status": undefined,
+                                                                          "submitCount": 0,
+                                                                          "submitForm": [Function],
+                                                                          "touched": Object {},
+                                                                          "unregisterField": [Function],
+                                                                          "validateField": [Function],
+                                                                          "validateForm": [Function],
+                                                                          "validateOnBlur": true,
+                                                                          "validateOnChange": true,
+                                                                          "values": Object {
+                                                                            "file": null,
+                                                                            "jurisdictions": Object {
+                                                                              "id": "",
+                                                                              "name": "",
+                                                                            },
+                                                                          },
+                                                                        },
+                                                                        "formatGroupLabel": [Function],
+                                                                        "getOptionLabel": [Function],
+                                                                        "getOptionValue": [Function],
+                                                                        "id": "jurisdictions-id",
+                                                                        "inputValue": "",
+                                                                        "isClearable": true,
+                                                                        "isDisabled": false,
+                                                                        "isLoading": true,
+                                                                        "isMulti": false,
+                                                                        "isOptionDisabled": [Function],
+                                                                        "isRtl": false,
+                                                                        "isSearchable": true,
+                                                                        "labelFieldName": "jurisdictions.name",
+                                                                        "loadingMessage": [Function],
+                                                                        "maxMenuHeight": 300,
+                                                                        "menuIsOpen": false,
+                                                                        "menuPlacement": "bottom",
+                                                                        "menuPosition": "absolute",
+                                                                        "menuShouldBlockScroll": false,
+                                                                        "menuShouldScrollIntoView": true,
+                                                                        "minMenuHeight": 140,
+                                                                        "name": "jurisdictions.id",
+                                                                        "noOptionsMessage": [Function],
+                                                                        "onChange": [Function],
+                                                                        "onInputChange": [Function],
+                                                                        "onMenuClose": [Function],
+                                                                        "onMenuOpen": [Function],
+                                                                        "openMenuOnClick": true,
+                                                                        "openMenuOnFocus": false,
+                                                                        "options": Array [],
+                                                                        "pageSize": 5,
+                                                                        "params": Object {
+                                                                          "is_jurisdiction": true,
+                                                                          "return_geometry": false,
+                                                                        },
+                                                                        "placeholder": "Select",
+                                                                        "promiseOptions": [Function],
+                                                                        "required": true,
+                                                                        "screenReaderStatus": [Function],
+                                                                        "serviceClass": [Function],
+                                                                        "styles": Object {},
+                                                                        "tabIndex": "0",
+                                                                        "tabSelectsValue": true,
+                                                                        "value": null,
+                                                                      }
+                                                                    }
+                                                                    setValue={[Function]}
+                                                                    theme={
+                                                                      Object {
+                                                                        "borderRadius": 4,
+                                                                        "colors": Object {
+                                                                          "danger": "#DE350B",
+                                                                          "dangerLight": "#FFBDAD",
+                                                                          "neutral0": "hsl(0, 0%, 100%)",
+                                                                          "neutral10": "hsl(0, 0%, 90%)",
+                                                                          "neutral20": "hsl(0, 0%, 80%)",
+                                                                          "neutral30": "hsl(0, 0%, 70%)",
+                                                                          "neutral40": "hsl(0, 0%, 60%)",
+                                                                          "neutral5": "hsl(0, 0%, 95%)",
+                                                                          "neutral50": "hsl(0, 0%, 50%)",
+                                                                          "neutral60": "hsl(0, 0%, 40%)",
+                                                                          "neutral70": "hsl(0, 0%, 30%)",
+                                                                          "neutral80": "hsl(0, 0%, 20%)",
+                                                                          "neutral90": "hsl(0, 0%, 10%)",
+                                                                          "primary": "#2684FF",
+                                                                          "primary25": "#DEEBFF",
+                                                                          "primary50": "#B2D4FF",
+                                                                          "primary75": "#4C9AFF",
+                                                                        },
+                                                                        "spacing": Object {
+                                                                          "baseUnit": 4,
+                                                                          "controlHeight": 38,
+                                                                          "menuGutter": 8,
+                                                                        },
                                                                       }
                                                                       setValue={[Function]}
                                                                       theme={
@@ -2396,26 +3291,129 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                                                           "name": "jurisdiction",
                                                                           "noOptionsMessage": [Function],
                                                                           "onChange": [Function],
-                                                                          "onInputChange": [Function],
-                                                                          "onMenuClose": [Function],
-                                                                          "onMenuOpen": [Function],
-                                                                          "openMenuOnClick": true,
-                                                                          "openMenuOnFocus": false,
-                                                                          "options": Array [],
-                                                                          "pageSize": 5,
-                                                                          "params": Object {
-                                                                            "is_jurisdiction": true,
-                                                                            "return_geometry": false,
+                                                                          "value": "",
+                                                                        },
+                                                                        "filterOption": null,
+                                                                        "form": Object {
+                                                                          "dirty": false,
+                                                                          "errors": Object {},
+                                                                          "handleBlur": [Function],
+                                                                          "handleChange": [Function],
+                                                                          "handleReset": [Function],
+                                                                          "handleSubmit": [Function],
+                                                                          "initialValues": Object {
+                                                                            "file": null,
+                                                                            "jurisdictions": Object {
+                                                                              "id": "",
+                                                                              "name": "",
+                                                                            },
                                                                           },
-                                                                          "placeholder": "Select",
-                                                                          "promiseOptions": [Function],
-                                                                          "screenReaderStatus": [Function],
-                                                                          "serviceClass": [Function],
-                                                                          "styles": Object {},
-                                                                          "tabIndex": "0",
-                                                                          "tabSelectsValue": true,
-                                                                          "value": null,
-                                                                        }
+                                                                          "isSubmitting": false,
+                                                                          "isValid": false,
+                                                                          "isValidating": false,
+                                                                          "registerField": [Function],
+                                                                          "resetForm": [Function],
+                                                                          "setError": [Function],
+                                                                          "setErrors": [Function],
+                                                                          "setFieldError": [Function],
+                                                                          "setFieldTouched": [Function],
+                                                                          "setFieldValue": [Function],
+                                                                          "setFormikState": [Function],
+                                                                          "setStatus": [Function],
+                                                                          "setSubmitting": [Function],
+                                                                          "setTouched": [Function],
+                                                                          "setValues": [Function],
+                                                                          "status": undefined,
+                                                                          "submitCount": 0,
+                                                                          "submitForm": [Function],
+                                                                          "touched": Object {},
+                                                                          "unregisterField": [Function],
+                                                                          "validateField": [Function],
+                                                                          "validateForm": [Function],
+                                                                          "validateOnBlur": true,
+                                                                          "validateOnChange": true,
+                                                                          "values": Object {
+                                                                            "file": null,
+                                                                            "jurisdictions": Object {
+                                                                              "id": "",
+                                                                              "name": "",
+                                                                            },
+                                                                          },
+                                                                        },
+                                                                        "formatGroupLabel": [Function],
+                                                                        "getOptionLabel": [Function],
+                                                                        "getOptionValue": [Function],
+                                                                        "id": "jurisdictions-id",
+                                                                        "inputValue": "",
+                                                                        "isClearable": true,
+                                                                        "isDisabled": false,
+                                                                        "isLoading": true,
+                                                                        "isMulti": false,
+                                                                        "isOptionDisabled": [Function],
+                                                                        "isRtl": false,
+                                                                        "isSearchable": true,
+                                                                        "labelFieldName": "jurisdictions.name",
+                                                                        "loadingMessage": [Function],
+                                                                        "maxMenuHeight": 300,
+                                                                        "menuIsOpen": false,
+                                                                        "menuPlacement": "bottom",
+                                                                        "menuPosition": "absolute",
+                                                                        "menuShouldBlockScroll": false,
+                                                                        "menuShouldScrollIntoView": true,
+                                                                        "minMenuHeight": 140,
+                                                                        "name": "jurisdictions.id",
+                                                                        "noOptionsMessage": [Function],
+                                                                        "onChange": [Function],
+                                                                        "onInputChange": [Function],
+                                                                        "onMenuClose": [Function],
+                                                                        "onMenuOpen": [Function],
+                                                                        "openMenuOnClick": true,
+                                                                        "openMenuOnFocus": false,
+                                                                        "options": Array [],
+                                                                        "pageSize": 5,
+                                                                        "params": Object {
+                                                                          "is_jurisdiction": true,
+                                                                          "return_geometry": false,
+                                                                        },
+                                                                        "placeholder": "Select",
+                                                                        "promiseOptions": [Function],
+                                                                        "required": true,
+                                                                        "screenReaderStatus": [Function],
+                                                                        "serviceClass": [Function],
+                                                                        "styles": Object {},
+                                                                        "tabIndex": "0",
+                                                                        "tabSelectsValue": true,
+                                                                        "value": null,
+                                                                      }
+                                                                    }
+                                                                    setValue={[Function]}
+                                                                    theme={
+                                                                      Object {
+                                                                        "borderRadius": 4,
+                                                                        "colors": Object {
+                                                                          "danger": "#DE350B",
+                                                                          "dangerLight": "#FFBDAD",
+                                                                          "neutral0": "hsl(0, 0%, 100%)",
+                                                                          "neutral10": "hsl(0, 0%, 90%)",
+                                                                          "neutral20": "hsl(0, 0%, 80%)",
+                                                                          "neutral30": "hsl(0, 0%, 70%)",
+                                                                          "neutral40": "hsl(0, 0%, 60%)",
+                                                                          "neutral5": "hsl(0, 0%, 95%)",
+                                                                          "neutral50": "hsl(0, 0%, 50%)",
+                                                                          "neutral60": "hsl(0, 0%, 40%)",
+                                                                          "neutral70": "hsl(0, 0%, 30%)",
+                                                                          "neutral80": "hsl(0, 0%, 20%)",
+                                                                          "neutral90": "hsl(0, 0%, 10%)",
+                                                                          "primary": "#2684FF",
+                                                                          "primary25": "#DEEBFF",
+                                                                          "primary50": "#B2D4FF",
+                                                                          "primary75": "#4C9AFF",
+                                                                        },
+                                                                        "spacing": Object {
+                                                                          "baseUnit": 4,
+                                                                          "controlHeight": 38,
+                                                                          "menuGutter": 8,
+                                                                        },
                                                                       }
                                                                       setValue={[Function]}
                                                                       theme={
@@ -2555,7 +3553,6 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                               "id": "",
                                               "name": "",
                                             },
-                                            "location": undefined,
                                           },
                                           "isSubmitting": false,
                                           "isValid": false,
@@ -2730,7 +3727,6 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                               "id": "",
                                               "name": "",
                                             },
-                                            "location": undefined,
                                           },
                                         }
                                       }
@@ -2770,7 +3766,6 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                               "id": "",
                                               "name": "",
                                             },
-                                            "location": undefined,
                                           },
                                           "isSubmitting": false,
                                           "isValid": false,
@@ -2945,7 +3940,6 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                               "id": "",
                                               "name": "",
                                             },
-                                            "location": undefined,
                                           },
                                         }
                                       }
@@ -2982,7 +3976,7 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                   </Label>
                                   <Input
                                     accept=".csv"
-                                    id="exampleFile"
+                                    id="file"
                                     name="file"
                                     onChange={[Function]}
                                     type="file"
@@ -2990,7 +3984,7 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                     <input
                                       accept=".csv"
                                       className="form-control-file"
-                                      id="exampleFile"
+                                      id="file"
                                       name="file"
                                       onChange={[Function]}
                                       type="file"
@@ -2998,15 +3992,12 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                   </Input>
                                 </div>
                               </FormGroup>
-                              <UploadStatus
-                                uploadFile={null}
-                              />
                               <hr />
                               <div
                                 style={
                                   Object {
                                     "display": "inline-block",
-                                    "width": "12rem",
+                                    "width": "24rem",
                                   }
                                 }
                               >
@@ -3014,7 +4005,7 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                   className="btn btn-md btn btn-primary"
                                   color="primary"
                                   disabled={false}
-                                  id="studentexportform-submit-button"
+                                  id="exportform-submit-button"
                                   tag="button"
                                   type="submit"
                                 >
@@ -3022,7 +4013,7 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                     aria-label={null}
                                     className="btn btn-md btn btn-primary btn btn-primary"
                                     disabled={false}
-                                    id="studentexportform-submit-button"
+                                    id="exportform-submit-button"
                                     onClick={[Function]}
                                     type="submit"
                                   >
@@ -3032,16 +4023,16 @@ exports[`components/ClientUpload Matches snapshot 1`] = `
                                 <LinkAsButton
                                   classNameProp="focus-investigation btn btn-primary float-right mt-0"
                                   text="Go Back"
-                                  to="/clients/students"
+                                  to="/clients"
                                 >
                                   <Link
                                     className="focus-investigation btn btn-primary float-right mt-0"
                                     replace={false}
-                                    to="/clients/students"
+                                    to="/clients"
                                   >
                                     <a
                                       className="focus-investigation btn btn-primary float-right mt-0"
-                                      href="/clients/students"
+                                      href="/clients"
                                       onClick={[Function]}
                                     >
                                       Go Back

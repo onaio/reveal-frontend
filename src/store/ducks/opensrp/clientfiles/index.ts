@@ -3,7 +3,7 @@ import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 
 /** The reducer name */
-export const reducerName = 'files';
+export const reducerName = 'clientfiles';
 
 /** Interface for file json object */
 export interface File {
@@ -18,10 +18,10 @@ export interface File {
 
 // actions
 
-/** action type for fetching students */
-export const FILES_FETCHED = 'opensrp/reducer/students/FILES_FETCHED';
-/** action type for removing students */
-export const REMOVE_FILES = 'opensrp/reducer/students/REMOVE_FILES';
+/** action type for fetching clients */
+export const FILES_FETCHED = 'opensrp/reducer/clients/FILES_FETCHED';
+/** action type for removing clients */
+export const REMOVE_FILES = 'opensrp/reducer/clients/REMOVE_FILES';
 
 /** interface action to add Files to store */
 export interface FetchFilesAction extends AnyAction {
@@ -42,9 +42,9 @@ export type FileActionTypes = FetchFilesAction | RemoveFilesAction | AnyAction;
 // action Creators
 
 /** Fetch files action creator
- * @param {File[]} studentsList - students array to add to store
- * @param {boolean} overwrite - whether to replace the records in store for students
- * @return {FetchFileAction} - an action to add students to redux store
+ * @param {File[]} clientsList - clients array to add to store
+ * @param {boolean} overwrite - whether to replace the records in store for clients
+ * @return {FetchFileAction} - an action to add clients to redux store
  */
 export const fetchFiles = (
   filesList: File[] = [],

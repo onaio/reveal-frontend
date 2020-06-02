@@ -40,6 +40,7 @@ import {
   BACKEND_CALLBACK_PATH,
   BACKEND_CALLBACK_URL,
   BACKEND_LOGIN_URL,
+  CLIENTS_LIST_URL,
   CREATE_ORGANIZATION_URL,
   CREATE_PRACTITIONER_URL,
   DRAFT_IRS_PLAN_URL,
@@ -65,7 +66,6 @@ import {
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
   SINGLE_ORGANIZATION_URL,
-  STUDENTS_LIST_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -347,7 +347,7 @@ const App = (props: AppProps) => {
                 redirectPath={APP_CALLBACK_URL}
                 disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                 exact={false}
-                path={STUDENTS_LIST_URL}
+                path={CLIENTS_LIST_URL}
                 component={ConnectedClientListView}
               />
               {/* Practitioner listing page */}
