@@ -8,7 +8,7 @@ import JurisdictionSelect from '../../../../components/forms/JurisdictionSelect'
 import LinkAsButton from '../../../../components/LinkAsButton';
 import {
   CLIENT_UPLOAD_FORM,
-  EXPORT_BASED_ON_GEOGRAPHICAL_REGION,
+  GEOGRAPHICAL_REGION_TO_INCLUDE,
   LOCATION_ERROR_MESSAGE,
   MODAL_BUTTON_CLASS,
   REQUIRED,
@@ -87,7 +87,7 @@ export const ClientUpload = (props: ClientUploadProps) => {
             {({ values, setFieldValue, handleSubmit, errors, isSubmitting }) => (
               <form onSubmit={handleSubmit} data-enctype="multipart/form-data">
                 <FormGroup className={'async-select-container'}>
-                  <Label for={`jurisdictions-1-id`}>{EXPORT_BASED_ON_GEOGRAPHICAL_REGION}</Label>
+                  <Label for={`jurisdictions-1-id`}>{GEOGRAPHICAL_REGION_TO_INCLUDE}</Label>
                   &nbsp;
                   <div style={formFieldStyles}>
                     <Field

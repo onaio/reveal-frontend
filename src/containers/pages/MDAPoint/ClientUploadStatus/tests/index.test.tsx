@@ -12,11 +12,13 @@ describe('components/ClientUploadStatus', () => {
     shallow(<UploadStatus />);
   });
 
-  it('Matches snapshot', () => {
+  it('Matches snapshot', async () => {
     const props = {
       uploadFile: file,
     };
     const wrapper = mount(<UploadStatus {...props} />);
+    await flushPromises();
+    wrapper.update();
     expect(toJson(wrapper.find('UploadStatus'))).toMatchSnapshot();
     wrapper.unmount();
   });

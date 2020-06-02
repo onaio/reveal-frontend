@@ -12,7 +12,7 @@ import reducer, {
   fetchFiles,
   reducerName,
   removeFilesAction,
-} from '../../../../../store/ducks/opensrp/files';
+} from '../../../../../store/ducks/opensrp/clientfiles';
 import * as fixtures from './fixtures';
 reducerRegistry.register(reducerName, reducer);
 const history = createBrowserHistory();
@@ -60,6 +60,7 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
     const mock: any = jest.fn();
     // mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
+      clientLabel: 'Students',
       fetchFilesActionCreator: jest.fn(),
       files: fixtures.files,
       history,
@@ -78,7 +79,7 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
     expect(wrapper.find('HeaderBreadcrumb').props()).toEqual({
       currentPage: {
         label: 'Students',
-        url: '/clients/students',
+        url: '/clients',
       },
       pages: [
         {
@@ -94,6 +95,7 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
     const mock: any = jest.fn();
     // mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
+      clientLabel: 'Students',
       fetchFilesActionCreator: jest.fn(),
       files: null,
       history,
@@ -111,7 +113,7 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
     expect(wrapper.find('HeaderBreadcrumb').props()).toEqual({
       currentPage: {
         label: 'Students',
-        url: '/clients/students',
+        url: '/clients',
       },
       pages: [
         {
