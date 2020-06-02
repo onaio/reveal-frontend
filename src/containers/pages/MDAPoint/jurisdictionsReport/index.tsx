@@ -69,12 +69,12 @@ const MdaPointJurisdictionReport = (
     ...ownProps,
     currentBaseURL,
     currentPageTitle,
+    fetchPlans,
     focusAreaColumn,
     focusAreaLevel,
     getPlanById,
     hideMapLink,
     jurisdictionColumn,
-    newFetchPlan: fetchPlans,
     reportingPlanSlice,
     slices,
   };

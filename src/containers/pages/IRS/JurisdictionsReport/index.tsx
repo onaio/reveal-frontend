@@ -55,21 +55,34 @@ reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsRe
 
 /** IRS Jurisdictions props */
 export interface GenericJurisdictionProps {
+  /** The url for navigating to this page */
   currentBaseURL: string;
+  /** Title of this page */
   currentPageTitle: string;
+  /** Action for dispatching jurisdictions to store */
   fetchJurisdictions: typeof fetchGenericJurisdictions;
-  fetchPlans: typeof fetchIRSPlans;
+  /** Action that dispatches IRS plans to store */
+  fetchPlansIRS: typeof fetchIRSPlans;
+  /** An action for dispatching non IRS plans */
+  fetchPlans: typeof fetchMDAPointPlans | null;
+  /** Reporting focus area column */
   focusAreaColumn: string;
+  /** Jurisdiction depth of the lowest level jurisdictions */
   focusAreaLevel: string;
+  /** Function that returns array of plans for provided Id */
   getPlanById: typeof getMDAPointPlanById | null;
+  /** Indicates whether jurisdiction has children or not */
   hasChildren: typeof hasChildrenFunc;
   hideMapLink: boolean;
+  /** The reporting jurisdiction columns */
   jurisdictionColumn: string;
   jurisdictions: GenericJurisdiction[] | null;
-  newFetchPlan: typeof fetchMDAPointPlans | null;
   plan: IRSPlan | null;
+  /** The superset reporting plan slice */
   reportingPlanSlice: string;
+  /** Get superset plans for the provided superset slice  */
   service: typeof supersetFetch;
+  /** Array of superset slices containing the reporting jurisdiction data */
   slices: string[];
 }
 
@@ -86,7 +99,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
   }
   const {
     fetchJurisdictions,
-    fetchPlans,
+    fetchPlansIRS,
     hasChildren,
     jurisdictions,
     plan,
@@ -97,7 +110,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
     jurisdictionColumn,
     focusAreaColumn,
     focusAreaLevel,
-    newFetchPlan,
+    fetchPlans,
     reportingPlanSlice,
     hideMapLink,
   } = props;
@@ -114,7 +127,7 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
       }
 
       await service(reportingPlanSlice, fetchPlansParams).then((result: IRSPlan[]) => {
-        newFetchPlan ? newFetchPlan(result) : fetchPlans(result);
+        fetchPlans ? fetchPlans(result) : fetchPlansIRS(result);
       });
 
       slices.forEach(async slice => {
@@ -275,7 +288,8 @@ const defaultProps: GenericJurisdictionProps = {
   currentBaseURL: REPORT_IRS_PLAN_URL,
   currentPageTitle: IRS_REPORTING_TITLE,
   fetchJurisdictions: fetchGenericJurisdictions,
-  fetchPlans: fetchIRSPlans,
+  fetchPlans: null,
+  fetchPlansIRS: fetchIRSPlans,
   focusAreaColumn: SUPERSET_IRS_REPORTING_FOCUS_AREAS_COLUMNS,
   focusAreaLevel: SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
   getPlanById: null,
@@ -283,7 +297,6 @@ const defaultProps: GenericJurisdictionProps = {
   hideMapLink: false,
   jurisdictionColumn: SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS,
   jurisdictions: null,
-  newFetchPlan: null,
   plan: null,
   reportingPlanSlice: SUPERSET_IRS_REPORTING_PLANS_SLICE,
   service: supersetFetch,
@@ -300,10 +313,10 @@ export { JurisdictionReport };
 interface DispatchedStateProps {
   currentBaseURL: string;
   currentPageTitle: string;
+  fetchPlans: typeof fetchMDAPointPlans | null;
   focusAreaColumn: string;
   focusAreaLevel: string;
   hideMapLink: boolean;
-  newFetchPlan: typeof fetchMDAPointPlans | null;
   plan: IRSPlan | null;
   jurisdictionColumn: string;
   jurisdictions: GenericJurisdiction[] | null;
@@ -335,18 +348,18 @@ const mapStateToProps = (
   const focusAreaLevel = ownProps.focusAreaLevel || defaultProps.focusAreaLevel;
   const jurisdictionColumn = ownProps.jurisdictionColumn || defaultProps.jurisdictionColumn;
   const reportingPlanSlice = ownProps.reportingPlanSlice || defaultProps.reportingPlanSlice;
-  const newFetchPlan = ownProps.newFetchPlan || defaultProps.newFetchPlan;
+  const fetchPlans = ownProps.fetchPlans || defaultProps.fetchPlans;
   const hideMapLink = ownProps.hideMapLink || defaultProps.hideMapLink;
 
   return {
     currentBaseURL,
     currentPageTitle,
+    fetchPlans,
     focusAreaColumn,
     focusAreaLevel,
     hideMapLink,
     jurisdictionColumn,
     jurisdictions,
-    newFetchPlan,
     plan,
     reportingPlanSlice,
     slices,
@@ -356,7 +369,7 @@ const mapStateToProps = (
 /** map dispatch to props */
 const mapDispatchToProps = {
   fetchJurisdictions: fetchGenericJurisdictions,
-  fetchPlans: fetchIRSPlans,
+  fetchPlansIRS: fetchIRSPlans,
 };
 
 /** Connected ActiveFI component */
