@@ -1,7 +1,10 @@
 /** Organizations redux module */
-import { get, keyBy, values } from 'lodash';
+import { Dictionary } from '@onaio/utils';
+import intersect from 'fast_array_intersect';
+import { keyBy, values } from 'lodash';
 import { Store } from 'redux';
 import { AnyAction } from 'redux';
+import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 
 /** The reducer name */
@@ -39,24 +42,24 @@ export const REMOVE_ORGANIZATIONS = 'src/store/ducks/organizations/reducer/REMOV
 /** interface for organizations fetched action */
 interface FetchOrganizationsAction extends AnyAction {
   overwrite: boolean;
-  organizationsById: { [key: string]: Organization };
+  organizationsByIdentifier: { [key: string]: Organization };
   type: typeof ORGANIZATIONS_FETCHED;
 }
 
 /** interface for action that removes organizations from store */
 interface RemoveOrganizationsAction extends AnyAction {
-  organizationsById: { [key: string]: Organization };
+  organizationsByIdentifier: { [key: string]: Organization };
   type: typeof REMOVE_ORGANIZATIONS;
 }
 
 /** interface for Organizations state in store */
 interface OrgsStoreState {
-  organizationsById: { [key: string]: Organization } | {};
+  organizationsByIdentifier: { [key: string]: Organization } | {};
 }
 
 /** initial state for Organizations records in store */
 const initialOrgsStoreState: ImmutableOrgsStoreState = SeamlessImmutable({
-  organizationsById: {},
+  organizationsByIdentifier: {},
 });
 
 /** single type for all action types */
@@ -71,17 +74,17 @@ export default function reducer(state = initialOrgsStoreState, action: Organizat
   switch (action.type) {
     case ORGANIZATIONS_FETCHED:
       const organizationsToPut = action.overwrite
-        ? { ...action.organizationsById } // this repopulates the store with newly fetched data
-        : { ...state.organizationsById, ...action.organizationsById }; // this adds fetched data to existing store data
+        ? { ...action.organizationsByIdentifier } // this repopulates the store with newly fetched data
+        : { ...state.organizationsByIdentifier, ...action.organizationsByIdentifier }; // this adds fetched data to existing store data
 
       return SeamlessImmutable({
         ...state,
-        organizationsById: organizationsToPut,
+        organizationsByIdentifier: organizationsToPut,
       });
     case REMOVE_ORGANIZATIONS:
       return SeamlessImmutable({
         ...state,
-        organizationsById: action.organizationsById,
+        organizationsByIdentifier: action.organizationsByIdentifier,
       });
     default:
       return state;
@@ -92,7 +95,7 @@ export default function reducer(state = initialOrgsStoreState, action: Organizat
 
 /** action to remove organizations form store */
 export const removeOrganizationsAction: RemoveOrganizationsAction = {
-  organizationsById: {},
+  organizationsByIdentifier: {},
   type: REMOVE_ORGANIZATIONS,
 };
 
@@ -109,7 +112,7 @@ export const fetchOrganizations = (
   overwrite: boolean = false
 ): FetchOrganizationsAction => {
   return {
-    organizationsById: keyBy(organizationsList, organization => organization.identifier),
+    organizationsByIdentifier: keyBy(organizationsList, organization => organization.identifier),
     overwrite,
     type: ORGANIZATIONS_FETCHED,
   };
@@ -117,27 +120,34 @@ export const fetchOrganizations = (
 
 // selectors
 
+/** filter params for organization selectors */
+interface OrganizationFilters {
+  identifiers?: string[] /** array of UUID to get their corresponding organizations */;
+  name?: string /** filter out organization that do not include name in their names */;
+}
+
+/**
+ * Gets identifiers from OrganizationFilters
+ * @param state - the redux store
+ * @param props - the organization filters object
+ */
+export const getIdentifiers = (_: Partial<Store>, props: OrganizationFilters) => props.identifiers;
+
+/**
+ * Gets name from OrganizationFilters
+ * @param state - the redux store
+ * @param props - the organization filters object
+ */
+export const getName = (_: Partial<Store>, props: OrganizationFilters) => props.name;
+
 /** get organizations as an object where their ids are the keys and the objects
  * the values
  * @param {Partial<Store>} state - Portion of the store
  *
- * @return {[key: string]: Organization}
+ * @return Dictionary<Organization>
  */
-export function getOrganizationsById(state: Partial<Store>): { [key: string]: Organization } {
-  return (state as any)[reducerName].organizationsById;
-}
-
-/** Get single Organization by the given id
- * @param {Partial<Store>} state - Part of the redux store
- * @param {string} organizationId - filters organization data to be returned based on this id
- *
- * @return {Organization | null} - A organization object if found else null
- */
-export function getOrganizationById(
-  state: Partial<Store>,
-  organizationId: string
-): Organization | null {
-  return get(getOrganizationsById(state), organizationId) || null;
+export function getOrganizationsById(state: Partial<Store>): Dictionary<Organization> {
+  return (state as any)[reducerName].organizationsByIdentifier;
 }
 
 /** Get all organizations as an array
@@ -148,3 +158,41 @@ export function getOrganizationById(
 export function getOrganizationsArray(state: Partial<Store>): Organization[] {
   return values(getOrganizationsById(state));
 }
+
+// MEMOIZED SELECTORS
+
+/**
+ * Gets all organizations whose identifiers appear in identifiers filter prop value
+ * @param state - the redux store
+ * @param props - the organization filters object
+ */
+const getOrganizationsByIds = () =>
+  createSelector(
+    getOrganizationsById,
+    getIdentifiers,
+    getOrganizationsArray,
+    (orgsById, identifiers, orgsArray) => {
+      if (identifiers === undefined) {
+        return orgsArray;
+      }
+      if (identifiers.length > 0) {
+        return identifiers.map(id => orgsById[id]);
+      }
+      return [];
+    }
+  );
+
+/**
+ * Gets all organizations whose name includes phrase given in name filter prop
+ * @param state - the redux store
+ * @param props - the organization filters object
+ */
+const getOrganizationsByName = () =>
+  createSelector(getOrganizationsArray, getName, (orgsArray, name) =>
+    name ? orgsArray.filter(org => org.name.toLowerCase().includes(name.toLowerCase())) : orgsArray
+  );
+
+export const makeOrgsArraySelector = () =>
+  createSelector(getOrganizationsByIds(), getOrganizationsByName(), (orgs1, orgs2) => {
+    return intersect([orgs1, orgs2], JSON.stringify);
+  });
