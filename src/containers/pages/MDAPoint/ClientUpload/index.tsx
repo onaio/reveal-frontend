@@ -6,10 +6,25 @@ import { Button, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from '
 import * as Yup from 'yup';
 import JurisdictionSelect from '../../../../components/forms/JurisdictionSelect';
 import LinkAsButton from '../../../../components/LinkAsButton';
-import { REQUIRED } from '../../../../configs/lang';
-import { STUDENTS_LIST_URL } from '../../../../constants';
+import {
+  CLIENT_UPLOAD_FORM,
+  EXPORT_BASED_ON_GEOGRAPHICAL_REGION,
+  LOCATION_ERROR_MESSAGE,
+  MODAL_BUTTON_CLASS,
+  REQUIRED,
+  SUBMIT,
+  UPLOAD_FILE,
+} from '../../../../configs/lang';
+import {
+  CLIENTS_LIST_URL,
+  EVENT_NAME_PARAM,
+  GO_BACK_TEXT,
+  LOCATION_ID_PARAM,
+  OPENSRP_EVENT_PARAM_VALUE,
+} from '../../../../constants';
 import { postUploadedFile } from '../ClientListView/helpers/serviceHooks';
 import UploadStatus from '../ClientUploadStatus/';
+/** Yup client upload validation schema */
 export const uploadValidationSchema = Yup.object().shape({
   file: Yup.mixed().required(),
   jurisdictions: Yup.object().shape({
@@ -17,30 +32,37 @@ export const uploadValidationSchema = Yup.object().shape({
     name: Yup.string(),
   }),
 });
-/** interface to describe props for ExportForm component */
+/** Default formik values */
+const defaultInitialValues: UploadFormField = {
+  file: null,
+  jurisdictions: {
+    id: '',
+    name: '',
+  },
+};
+/** interface to describe upload form fields */
 export interface UploadFormField {
-  file: string | null;
-  location: any;
+  file: Blob | null;
   jurisdictions: Dictionary;
 }
-export const ClientUpload = (props: any) => {
+export interface ClientUploadProps {
+  eventValue: string;
+  initialValues: UploadFormField;
+  fileUploadService: typeof postUploadedFile;
+  fileType: string;
+  formFieldStyles: Dictionary;
+}
+export const ClientUpload = (props: ClientUploadProps) => {
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [ifDoneHere, setIfDoneHere] = useState<boolean>(false);
-  const defaultInitialValues: UploadFormField = {
-    file: null,
-    jurisdictions: {
-      id: '',
-      name: '',
-    },
-    location: props.location,
-  };
+  const { eventValue, initialValues, fileUploadService, formFieldStyles, fileType } = props;
   const closeUploadModal = {
-    classNameProp: 'focus-investigation btn btn-primary float-right mt-0',
-    text: 'Go Back',
-    to: '/clients/students',
+    classNameProp: MODAL_BUTTON_CLASS,
+    text: GO_BACK_TEXT,
+    to: CLIENTS_LIST_URL,
   };
   if (ifDoneHere) {
-    return <Redirect to={STUDENTS_LIST_URL} />;
+    return <Redirect to={CLIENTS_LIST_URL} />;
   }
   const setStateIfDone = () => {
     setIfDoneHere(true);
@@ -48,26 +70,26 @@ export const ClientUpload = (props: any) => {
   return (
     <div>
       <Modal isOpen={true}>
-        <ModalHeader>Modal title</ModalHeader>
+        <ModalHeader>{CLIENT_UPLOAD_FORM}</ModalHeader>
         <ModalBody>
           <Formik
-            initialValues={defaultInitialValues}
+            initialValues={initialValues}
             validationSchema={uploadValidationSchema}
             // tslint:disable-next-line: jsx-no-lambda
             onSubmit={async (values, { setSubmitting }) => {
               const setSubmittingStatus = () => setSubmitting(false);
               const data = new FormData();
               data.append('file', selectedFile);
-              const uploadParams = `&location_id=${values.jurisdictions.id}`;
-              await postUploadedFile(data, setStateIfDone, setSubmittingStatus, uploadParams);
+              const uploadParams = `?${EVENT_NAME_PARAM}=${eventValue}&${LOCATION_ID_PARAM}=${values.jurisdictions.id}`;
+              await fileUploadService(data, setStateIfDone, setSubmittingStatus, uploadParams);
             }}
           >
             {({ values, setFieldValue, handleSubmit, errors, isSubmitting }) => (
               <form onSubmit={handleSubmit} data-enctype="multipart/form-data">
                 <FormGroup className={'async-select-container'}>
-                  <Label for={`jurisdictions-${1}-id`}>{'Geographical level to include'}</Label>
+                  <Label for={`jurisdictions-1-id`}>{EXPORT_BASED_ON_GEOGRAPHICAL_REGION}</Label>
                   &nbsp;
-                  <div style={{ display: 'inline-block', width: '24rem' }}>
+                  <div style={formFieldStyles}>
                     <Field
                       required={true}
                       component={JurisdictionSelect}
@@ -81,7 +103,7 @@ export const ClientUpload = (props: any) => {
                   <Field type="hidden" name={`jurisdictions.name`} id={`jurisdictions-name`} />
                   {errors.jurisdictions && (
                     <small className="form-text text-danger jurisdictions-error">
-                      {'Please select location'}
+                      {LOCATION_ERROR_MESSAGE}
                     </small>
                   )}
                   {
@@ -93,15 +115,15 @@ export const ClientUpload = (props: any) => {
                   }
                 </FormGroup>
                 <FormGroup>
-                  <Label for="upload-file">Upload File</Label>
+                  <Label for="upload-file">{UPLOAD_FILE}</Label>
                   <Input
                     type="file"
                     name="file"
-                    id="exampleFile"
-                    accept=".csv"
+                    id="file"
+                    accept={fileType}
                     // tslint:disable-next-line: jsx-no-lambda
-                    onChange={(event: any) => {
-                      setSelectedFile(event.target.files[0]);
+                    onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                      setSelectedFile(event.target && event.target.files && event.target.files[0]);
                       setFieldValue(
                         'file',
                         event && event.target && event.target.files && event.target.files[0]
@@ -109,21 +131,21 @@ export const ClientUpload = (props: any) => {
                     }}
                   />
                 </FormGroup>
-                <UploadStatus uploadFile={values.file} />
+                {values.file && <UploadStatus uploadFile={values.file} />}
 
                 {errors && errors.file ? (
                   <small className="form-text text-danger jurisdictions-error">{errors.file}</small>
                 ) : null}
                 <hr />
-                <div style={{ display: 'inline-block', width: '12rem' }}>
+                <div style={formFieldStyles}>
                   <Button
                     type="submit"
-                    id="studentexportform-submit-button"
+                    id="exportform-submit-button"
                     className="btn btn-md btn btn-primary"
                     color="primary"
                     disabled={isSubmitting}
                   >
-                    Submit
+                    {SUBMIT}
                   </Button>
                   <LinkAsButton {...closeUploadModal} />
                 </div>
@@ -135,4 +157,12 @@ export const ClientUpload = (props: any) => {
     </div>
   );
 };
+const defaultProps: ClientUploadProps = {
+  eventValue: OPENSRP_EVENT_PARAM_VALUE,
+  fileType: '.csv',
+  fileUploadService: postUploadedFile,
+  formFieldStyles: { display: 'inline-block', width: '24rem' },
+  initialValues: defaultInitialValues,
+};
+ClientUpload.defaultProps = defaultProps;
 export default ClientUpload;

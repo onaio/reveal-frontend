@@ -12,23 +12,33 @@ import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading/index';
-import { ENABLE_MDA_POINT } from '../../../../configs/env';
+import { CLIENT_LABEL } from '../../../../configs/env';
 import {
   ADD_NEW_CSV,
   CLIENTS_TITLE,
+  DOWNLOAD,
+  FILE_NAME,
   HOME,
+  OWNER,
   STUDENTS_TITLE,
+  UPLOAD_DATE,
   UPLOADED_CLIENT_LISTS,
   UPLOADED_STUDENT_LISTS,
 } from '../../../../configs/lang';
-import { HOME_URL, STUDENTS_LIST_URL, UPLOAD_STUDENT_CSV_URL } from '../../../../constants';
+import {
+  CLIENTS_LIST_URL,
+  HOME_URL,
+  OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT,
+  TABLE_BORDERED_CLASS,
+  UPLOAD_CLIENT_CSV_URL,
+} from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
-import { fetchFiles, File } from '../../../../store/ducks/opensrp/files/index';
+import { fetchFiles, File } from '../../../../store/ducks/opensrp/clientfiles/index';
 import filesReducer, {
   getFilesArray,
   reducerName as filesReducerName,
-} from '../../../../store/ducks/opensrp/files/index';
+} from '../../../../store/ducks/opensrp/clientfiles/index';
 import { ClientUpload } from '../ClientUpload';
 import { handleDownload, loadFiles } from './helpers/serviceHooks';
 /** register the plans reducer */
@@ -38,9 +48,11 @@ export interface ClientListViewProps {
   fetchFilesActionCreator: typeof fetchFiles;
   files: File[] | null;
   serviceClass: typeof OpenSRPService;
+  clientLabel: string;
 }
 /** default props for ClientListView component */
 export const defaultClientListViewProps: ClientListViewProps = {
+  clientLabel: CLIENT_LABEL,
   fetchFilesActionCreator: fetchFiles,
   files: null,
   serviceClass: OpenSRPService,
@@ -56,8 +68,8 @@ export const buildListViewData: (rowData: File[]) => ReactNode[][] | undefined =
       <p key={key}>
         {fileName} &nbsp;
         {/* tslint:disable-next-line jsx-no-lambda */}
-        <a href="#" onClick={() => handleDownload(url, fileName)}>
-          (Downloads)
+        <a href="#" onClick={() => handleDownload(url, fileName, OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT)}>
+          {`(${DOWNLOAD})`}
         </a>
       </p>,
       row.providerID,
@@ -67,13 +79,13 @@ export const buildListViewData: (rowData: File[]) => ReactNode[][] | undefined =
 };
 
 export const ClientListView = (props: ClientListViewProps & RouteComponentProps) => {
+  const { location, files, clientLabel } = props;
   React.useEffect(() => {
-    if (!(props.files && props.files.length)) {
+    if (!(files && files.length)) {
       /**
        * Fetch files incase the files are not available e.g when page is refreshed
        */
       loadFiles().catch(err => displayError(err));
-      // fetchFilesActionCreator(uploadedStudentsLists);
     }
     /**
      * We do not need to re-run since this effect doesn't depend on any values from api yet
@@ -81,22 +93,22 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
   }, []);
   /** Overide renderRows to render html inside td */
   let listViewProps;
-  if (props.files && props.files.length) {
+  if (files && files.length) {
     listViewProps = {
-      data: buildListViewData(props.files),
-      headerItems: ['File Name', 'Owner', 'Upload Date'],
-      tableClass: 'table table-bordered',
+      data: buildListViewData(files),
+      headerItems: [FILE_NAME, OWNER, UPLOAD_DATE],
+      tableClass: TABLE_BORDERED_CLASS,
     };
   }
   /** Load Modal once we hit this route */
-  if (props.location.pathname === '/clients/students/upload') {
+  if (location.pathname === UPLOAD_CLIENT_CSV_URL) {
     return <ClientUpload />;
   }
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: ENABLE_MDA_POINT ? STUDENTS_TITLE : CLIENTS_TITLE,
-      url: STUDENTS_LIST_URL,
+      label: clientLabel === STUDENTS_TITLE ? STUDENTS_TITLE : CLIENTS_TITLE,
+      url: CLIENTS_LIST_URL,
     },
     pages: [],
   };
@@ -109,18 +121,18 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
   // props for the link displayed as button: used to add new practitioner
   const csvUploadButtonProps = {
     text: ADD_NEW_CSV,
-    to: UPLOAD_STUDENT_CSV_URL,
+    to: UPLOAD_CLIENT_CSV_URL,
   };
   return (
     <div>
       <Helmet>
-        <title>{STUDENTS_TITLE}</title>
+        <title>{clientLabel === STUDENTS_TITLE ? STUDENTS_TITLE : CLIENTS_TITLE}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row id="header-row">
         <Col className="xs">
           <h3 className="mb-3 mt-5 page-title">
-            {ENABLE_MDA_POINT ? UPLOADED_STUDENT_LISTS : UPLOADED_CLIENT_LISTS}
+            {clientLabel ? UPLOADED_STUDENT_LISTS : UPLOADED_CLIENT_LISTS}
           </h3>
         </Col>
         <Col className="xs">
@@ -129,11 +141,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
       </Row>
       <Row id="table-row">
         <Col>
-          {listViewProps && props.files && props.files.length ? (
-            <ListView {...listViewProps} />
-          ) : (
-            <Loading />
-          )}
+          {listViewProps && files && files.length ? <ListView {...listViewProps} /> : <Loading />}
         </Col>
       </Row>
       <hr />

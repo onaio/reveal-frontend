@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
+import { FILE_SUBMISSION_READY, LOADING } from '../../../../configs/lang';
 /**
  * UploadStatus Shows status of selected file on upload
  * Will come in very handy when uploading huge csv files
  * Todo include more specific type for props
  */
-const UploadStatus = (props: any) => {
+export interface UploadStatusProps {
+  uploadFile: Blob;
+}
+const UploadStatus = (props: UploadStatusProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   React.useEffect(() => {
     if (!props.uploadFile) {
@@ -27,9 +31,9 @@ const UploadStatus = (props: any) => {
   }
 
   if (loading) {
-    return <p>loading...</p>;
+    return <p>{LOADING}</p>;
   }
 
-  return <p>File is ready to submit</p>;
+  return <p>{FILE_SUBMISSION_READY}</p>;
 };
 export default UploadStatus;

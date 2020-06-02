@@ -75,7 +75,7 @@ export class OpenSRPService extends OpenSRPServiceWeb {
     id: string | number,
     params: URLParams | null = null,
     method: HTTPMethod = 'GET'
-  ): Promise<any> {
+  ): Promise<{}> {
     const url = OpenSRPService.getURL(`${this.generalURL}/${id}`, params);
     const response = await fetch(url, this.getOptions(this.signal, method));
 
