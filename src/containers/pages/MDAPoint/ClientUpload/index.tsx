@@ -4,22 +4,11 @@ import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import * as Yup from 'yup';
-<<<<<<< HEAD
-import JurisdictionSelect from '../../../../components/forms/JurisdictionSelect';
-=======
 import LocationSelect from '../../../../components/forms/LocationSelect';
-<<<<<<< HEAD
-<<<<<<< HEAD
-import ConnectedOrganizationSelect from '../../../../components/forms/OrganizationSelect';
->>>>>>> fa7dc32... Add LocationSelect component
-=======
->>>>>>> 78c7057... Add simple org select
-=======
 import SimpleOrgSelect from '../../../../components/forms/SimpleOrgSelect';
->>>>>>> 1105f1c... Partial cleanup
 import LinkAsButton from '../../../../components/LinkAsButton';
 import { CLIENT_UPLOAD_FORM, REQUIRED } from '../../../../configs/lang';
-import { STUDENTS_LIST_URL } from '../../../../constants';
+import { CLIENTS_LIST_URL } from '../../../../constants';
 import { postUploadedFile } from '../ClientListView/helpers/serviceHooks';
 import UploadStatus from '../ClientUploadStatus/';
 
@@ -56,7 +45,7 @@ export const ClientUpload = () => {
     to: '/clients/students',
   };
   if (ifDoneHere) {
-    return <Redirect to={STUDENTS_LIST_URL} />;
+    return <Redirect to={CLIENTS_LIST_URL} />;
   }
   const setStateIfDone = () => {
     setIfDoneHere(true);
@@ -92,6 +81,7 @@ export const ClientUpload = () => {
                       id={`jurisdictions-id`}
                       className={'async-select'}
                       labelFieldName={`jurisdictions.name`}
+                      locationId={values.jurisdictions.id}
                     />
                   </div>
                   <Field type="hidden" name={`jurisdictions.name`} id={`jurisdictions-name`} />
@@ -108,8 +98,6 @@ export const ClientUpload = () => {
                     />
                   }
                 </FormGroup>
-<<<<<<< HEAD
-=======
                 {values && values.jurisdictions && values.jurisdictions.id && (
                   <FormGroup>
                     <Label for="team">Assign team for this school</Label>
@@ -125,7 +113,6 @@ export const ClientUpload = () => {
                     </div>
                   </FormGroup>
                 )}
->>>>>>> fa7dc32... Add LocationSelect component
                 <FormGroup>
                   <Label for="upload-file">Upload File</Label>
                   <Input

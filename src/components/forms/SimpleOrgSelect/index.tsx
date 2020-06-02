@@ -1,3 +1,4 @@
+import { Dictionary } from '@onaio/utils';
 import { FieldProps } from 'formik';
 import React from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
@@ -11,12 +12,16 @@ import { SelectOption } from '../JurisdictionSelect';
 /** SimpleOrgSelect props */
 export interface SimpleOrgSelectProps<T = SelectOption> extends AsyncSelectProps<T> {
   apiEndpoint: string /** the OpenSRP API endpoint */;
+  locationId: string /** selected location identifier */;
   params: URLParams /** extra URL params to send to OpenSRP */;
   serviceClass: typeof OpenSRPService /** the OpenSRP service */;
-  promiseOptions: any;
+  promiseOptions: (
+    serice: OpenSRPService,
+    parameters: Dictionary
+  ) => Promise<() => {}> | Promise<any>; // Todo: Add a a more specific type
 }
 
-export const promiseOptions = (service: OpenSRPService, parameters: any) =>
+export const promiseOptions = (service: OpenSRPService, parameters: Dictionary) =>
   // tslint:disable-next-line:no-inferred-empty-object-type
   new Promise((resolve, reject) => {
     service
@@ -38,12 +43,12 @@ export const defaultProps: Partial<SimpleOrgSelectProps> = {
   promiseOptions,
   serviceClass: OpenSRPService,
 };
-
+/** Async react select Hoc that loads organizations at location level as options */
 const SimpleOrgSelect = (props: SimpleOrgSelectProps & FieldProps) => {
-  const { apiEndpoint, field, form, serviceClass } = props;
+  const { apiEndpoint, field, form, serviceClass, locationId } = props;
   const service = new serviceClass(apiEndpoint);
   const params = {
-    location_id: form.values.jurisdictions.id,
+    location_id: locationId,
   };
   const wrapperPromiseOptions: () => Promise<() => {}> = async () => {
     return await props.promiseOptions(service, params);

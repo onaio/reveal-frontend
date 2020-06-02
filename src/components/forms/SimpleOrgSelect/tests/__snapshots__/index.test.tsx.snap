@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/forms/SimpleOrgSelect renders select options correctly: SimpleOrgSelect Select Props 1`] = `
+Object {
+  "apiEndpoint": "organization",
+  "aria-label": "Select",
+  "bsSize": "lg",
+  "cacheOptions": true,
+  "classNamePrefix": "organization",
+  "defaultInputValue": "",
+  "defaultMenuIsOpen": false,
+  "defaultOptions": true,
+  "defaultProps": Object {
+    "apiEndpoint": "organization",
+    "promiseOptions": [Function],
+    "serviceClass": [Function],
+  },
+  "defaultValue": null,
+  "filterOption": null,
+  "isClearable": true,
+  "isLoading": true,
+  "name": "organization",
+  "noOptionsMessage": [Function],
+  "onChange": [Function],
+  "onInputChange": [Function],
+  "options": Array [],
+  "placeholder": "Select",
+  "promiseOptions": [Function],
+  "serviceClass": [Function],
+}
+`;
+
+exports[`components/forms/SimpleOrgSelect renders select options correctly: SimpleOrgSelect Select Props ownProps 1`] = `
+Object {
+  "children": <Async
+    apiEndpoint="organization"
+    aria-label="Select"
+    bsSize="lg"
+    cacheOptions={true}
+    classNamePrefix="organization"
+    defaultOptions={true}
+    defaultProps={
+      Object {
+        "apiEndpoint": "organization",
+        "promiseOptions": [Function],
+        "serviceClass": [Function],
+      }
+    }
+    filterOption={null}
+    isClearable={true}
+    isLoading={false}
+    loadOptions={[Function]}
+    name="organization"
+    noOptionsMessage={[Function]}
+    onChange={[Function]}
+    placeholder="Select"
+    promiseOptions={[Function]}
+    serviceClass={[Function]}
+  />,
+}
+`;

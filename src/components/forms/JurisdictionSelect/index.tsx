@@ -35,7 +35,14 @@ export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectPr
   cascadingSelect: boolean /** should we have a cascading select or not */;
   params: URLParams /** extra URL params to send to OpenSRP */;
   serviceClass: typeof OpenSRPService /** the OpenSRP service */;
-  promiseOptions: any;
+  promiseOptions: (
+    serice: OpenSRPService,
+    parameters: Dictionary,
+    hierarchy: SelectOption[],
+    jurisdictionStatus: boolean,
+    setFinalLocation: (value: boolean) => void,
+    setJurisdictionParam: (value: boolean) => void
+  ) => Promise<any>; // Todo: Add a a more specific type
 }
 /**
  * Loads options from opensrp
