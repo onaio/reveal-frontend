@@ -43,4 +43,10 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
       JSON.stringify(fixtures.ZambiaJurisdictionsColumns)
     );
   });
+
+  it('should return the correct columns for MDA point', () => {
+    expect(JSON.stringify(helpers.mdaJurisdictionsColumns)).toEqual(
+      JSON.stringify(fixtures.mdaPointColumns)
+    );
+  });
 });

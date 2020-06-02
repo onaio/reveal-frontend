@@ -196,7 +196,7 @@ export const ZambiaJurisdictionsColumns = [
   },
 ];
 
-/** columns for  mda jurisdictions */
+/** columns for  mda point jurisdictions */
 export const mdaJurisdictionsColumns = [
   {
     Header: 'Name',
