@@ -18,7 +18,7 @@ import * as fixtures from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
-describe('reducers/IRS/IRSPlan', () => {
+describe('reducers/MDAPoint/MDAPointPlan', () => {
   let flushThunks;
 
   beforeEach(() => {
@@ -65,14 +65,14 @@ describe('reducers/IRS/IRSPlan', () => {
       plan_title: 'BERG',
     };
 
-    const IRSPlansArraySelector = makeMDAPointPlansArraySelector();
+    const MDAPointPlansArraySelector = makeMDAPointPlansArraySelector();
     expect(getMDAPointPlansArrayByTitle()(store.getState(), titleFilter)).toEqual([
       fixtures.MDAplans[2],
     ]);
     expect(getMDAPointPlansArrayByTitle()(store.getState(), titleUpperFilter)).toEqual([
       fixtures.MDAplans[2],
     ]);
-    expect(IRSPlansArraySelector(store.getState(), { plan_title: 'Berg' })).toEqual([
+    expect(MDAPointPlansArraySelector(store.getState(), { plan_title: 'Berg' })).toEqual([
       fixtures.MDAplans[2],
     ]);
 
