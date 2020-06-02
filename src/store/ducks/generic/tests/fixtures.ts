@@ -186,13 +186,13 @@ export const namibiaIRSJurisdictions = [
   },
 ];
 
-export const MDAplans = [
+export const MDAPointplans = [
   {
-    jurisdiction_root_parent_ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128'],
+    jurisdiction_root_parent_ids: ['2942'],
     plan_date: '2019-09-05',
     plan_effective_period_end: '2019-09-25',
     plan_effective_period_start: '2019-09-05',
-    plan_id: '727c3d40-e118-564a-b231-aac633e6abce',
+    plan_id: '40357eff-81b6-4e32-bd3d-484019689f7c',
     plan_intervention_type: 'MDA-Point',
     plan_name: 'MDA-Point-2019-09-05-TEST',
     plan_status: 'retired',
@@ -200,11 +200,11 @@ export const MDAplans = [
     plan_version: '2',
   },
   {
-    jurisdiction_root_parent_ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128'],
+    jurisdiction_root_parent_ids: ['2942'],
     plan_date: '2019-08-30',
     plan_effective_period_end: '2019-09-14',
     plan_effective_period_start: '2019-08-30',
-    plan_id: '02e358ed-87fe-5720-8782-0afe28cb7e8c',
+    plan_id: '9f19b77c-b9a5-5832-a4e5-4b461d18fce7',
     plan_intervention_type: 'MDA-Point',
     plan_name: 'MDA-Point-2019-08-30m',
     plan_status: 'active',
@@ -212,7 +212,7 @@ export const MDAplans = [
     plan_version: '2',
   },
   {
-    jurisdiction_root_parent_ids: ['f45b9380-c970-4dd1-8533-9e95ab12f128'],
+    jurisdiction_root_parent_ids: ['2942'],
     plan_date: '2019-08-29',
     plan_effective_period_end: '2019-09-18',
     plan_effective_period_start: '2019-08-29',

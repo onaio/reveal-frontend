@@ -53,7 +53,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
         path: `${REPORT_MDA_POINT_PLAN_URL}/`,
         url: `${REPORT_MDA_POINT_PLAN_URL}/`,
       },
-      plans: fixtures.MDAplans as GenericPlan[],
+      plans: fixtures.MDAPointplans as GenericPlan[],
     };
     shallow(
       <Router history={history}>
@@ -67,7 +67,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     const props = {
       ...ownProps,
       ownProps,
-      plans: fixtures.MDAplans as GenericPlan[],
+      plans: fixtures.MDAPointplans as GenericPlan[],
     };
     const wrapper = mount(
       <Provider store={store}>
@@ -90,7 +90,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
   });
 
   it('handles search correctly', async () => {
-    store.dispatch(fetchMDAPointPlans(fixtures.MDAplans as GenericPlan[]));
+    store.dispatch(fetchMDAPointPlans(fixtures.MDAPointplans as GenericPlan[]));
     ownProps.location.search = '?title=Berg';
     const wrapper = mount(
       <Provider store={store}>

@@ -36,25 +36,30 @@ describe('reducers/MDAPoint/MDAPointPlan', () => {
 
   it('Fetches plan definitions correctly', () => {
     // action creators dispatch
-    store.dispatch(fetchMDAPointPlans(fixtures.MDAplans as MDAPointPlan[]));
+    store.dispatch(fetchMDAPointPlans(fixtures.MDAPointplans as MDAPointPlan[]));
 
-    expect(getMDAPointPlansById(store.getState())).toEqual(keyBy(fixtures.MDAplans, 'plan_id'));
+    expect(getMDAPointPlansById(store.getState())).toEqual(
+      keyBy(fixtures.MDAPointplans, 'plan_id')
+    );
 
-    expect(getMDAPointPlansArray(store.getState())).toEqual(fixtures.MDAplans);
+    expect(getMDAPointPlansArray(store.getState())).toEqual(fixtures.MDAPointplans);
 
-    expect(getMDAPointPlanById(store.getState(), '727c3d40-e118-564a-b231-aac633e6abce')).toEqual(
-      fixtures.MDAplans[0]
+    expect(getMDAPointPlanById(store.getState(), '40357eff-81b6-4e32-bd3d-484019689f7c')).toEqual(
+      fixtures.MDAPointplans[0]
     );
 
     // filter by intervention type
     expect(getMDAPointPlansArray(store.getState(), InterventionType.MDAPoint)).toEqual([
-      fixtures.MDAplans[0],
-      fixtures.MDAplans[1],
-      fixtures.MDAplans[2],
+      fixtures.MDAPointplans[0],
+      fixtures.MDAPointplans[1],
+      fixtures.MDAPointplans[2],
     ]);
 
     expect(getMDAPointPlansById(store.getState(), InterventionType.MDAPoint)).toEqual(
-      keyBy([fixtures.MDAplans[0], fixtures.MDAplans[1], fixtures.MDAplans[2]], 'plan_id')
+      keyBy(
+        [fixtures.MDAPointplans[0], fixtures.MDAPointplans[1], fixtures.MDAPointplans[2]],
+        'plan_id'
+      )
     );
 
     // RESELECT TESTS
@@ -67,13 +72,13 @@ describe('reducers/MDAPoint/MDAPointPlan', () => {
 
     const MDAPointPlansArraySelector = makeMDAPointPlansArraySelector();
     expect(getMDAPointPlansArrayByTitle()(store.getState(), titleFilter)).toEqual([
-      fixtures.MDAplans[2],
+      fixtures.MDAPointplans[2],
     ]);
     expect(getMDAPointPlansArrayByTitle()(store.getState(), titleUpperFilter)).toEqual([
-      fixtures.MDAplans[2],
+      fixtures.MDAPointplans[2],
     ]);
     expect(MDAPointPlansArraySelector(store.getState(), { plan_title: 'Berg' })).toEqual([
-      fixtures.MDAplans[2],
+      fixtures.MDAPointplans[2],
     ]);
 
     // reset
@@ -84,20 +89,20 @@ describe('reducers/MDAPoint/MDAPointPlan', () => {
   it('Fetching plans does not replace MDAPointPlansById', () => {
     // fetch two plan definition objects
     store.dispatch(
-      fetchMDAPointPlans([fixtures.MDAplans[0], fixtures.MDAplans[1]] as MDAPointPlan[])
+      fetchMDAPointPlans([fixtures.MDAPointplans[0], fixtures.MDAPointplans[1]] as MDAPointPlan[])
     );
     // we should have them in the store
     expect(getMDAPointPlansArray(store.getState())).toEqual([
-      fixtures.MDAplans[0],
-      fixtures.MDAplans[1],
+      fixtures.MDAPointplans[0],
+      fixtures.MDAPointplans[1],
     ]);
     // fetch one more plan definition objects
-    store.dispatch(fetchMDAPointPlans([fixtures.MDAplans[2]] as MDAPointPlan[]));
+    store.dispatch(fetchMDAPointPlans([fixtures.MDAPointplans[2]] as MDAPointPlan[]));
     // we should now have a total of three plan definition objects in the store
     expect(getMDAPointPlansArray(store.getState())).toEqual([
-      fixtures.MDAplans[0],
-      fixtures.MDAplans[1],
-      fixtures.MDAplans[2],
+      fixtures.MDAPointplans[0],
+      fixtures.MDAPointplans[1],
+      fixtures.MDAPointplans[2],
     ]);
   });
 });
