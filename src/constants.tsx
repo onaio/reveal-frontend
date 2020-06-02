@@ -86,8 +86,8 @@ export const REPORT = 'report';
 export const BACKEND_CALLBACK_URL = '/fe/oauth/callback/opensrp';
 export const BACKEND_CALLBACK_PATH = '/fe/oauth/callback/:id';
 export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
-export const CLIENTS_LIST_URL = '/clients/students';
-export const UPLOAD_STUDENT_CSV_URL = '/clients/students/upload';
+export const CLIENTS_LIST_URL = '/clients';
+export const UPLOAD_CLIENT_CSV_URL = '/clients/upload';
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';
@@ -106,6 +106,7 @@ export const OPENSRP_USERS_ENDPOINT = 'user';
 export const OPENSRP_FIND_EVENTS_ENDPOINT = 'event/findById';
 export const OPENSRP_LOCATIONS_BY_PLAN = 'plans/findLocationNames';
 export const OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT = 'upload/history';
+export const OPENSRP_EVENT_PARAM_VALUE = 'Child Registration';
 
 // colors
 export const GREEN = 'Green';

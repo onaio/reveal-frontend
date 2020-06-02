@@ -17,6 +17,7 @@ import {
 import logo from '../../../assets/images/logo.png';
 import {
   BACKEND_ACTIVE,
+  CLIENT_LABEL,
   ENABLE_ABOUT,
   ENABLE_ASSIGN,
   ENABLE_FI,
@@ -48,6 +49,7 @@ import {
 import {
   ASSIGN_PLAN_URL,
   BACKEND_LOGIN_URL,
+  CLIENTS_LIST_URL,
   FI_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
@@ -57,7 +59,6 @@ import {
   PRACTITIONERS_LIST_URL,
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
-  STUDENTS_LIST_URL,
 } from '../../../constants';
 import './Header.css';
 
@@ -233,11 +234,11 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                       <div>
                         <DropdownItem>
                           <NavLink
-                            to={STUDENTS_LIST_URL}
+                            to={CLIENTS_LIST_URL}
                             className="nav-link"
                             activeClassName="active"
                           >
-                            {STUDENTS_TITLE}
+                            {CLIENT_LABEL === STUDENTS_TITLE ? STUDENTS_TITLE : CLIENTS_LIST_URL}
                           </NavLink>
                         </DropdownItem>
                       </div>
