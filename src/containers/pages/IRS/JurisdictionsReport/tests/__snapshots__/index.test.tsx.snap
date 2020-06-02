@@ -7,7 +7,6 @@ Object {
   "data": Any<Object>,
   "defaultPageSize": 156,
   "extraCellProps": Object {
-    "hideMapLink": false,
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
   "getTdProps": [Function],
@@ -31,7 +30,6 @@ Object {
   "data": Any<Object>,
   "defaultPageSize": 156,
   "extraCellProps": Object {
-    "hideMapLink": false,
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
   "getTdProps": [Function],
@@ -55,7 +53,6 @@ Object {
   "data": Any<Object>,
   "defaultPageSize": 156,
   "extraCellProps": Object {
-    "hideMapLink": false,
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
   "getTdProps": [Function],
@@ -79,7 +76,6 @@ Object {
   "data": Any<Object>,
   "defaultPageSize": 156,
   "extraCellProps": Object {
-    "hideMapLink": false,
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
   "getTdProps": [Function],
@@ -103,7 +99,6 @@ Object {
   "data": Any<Object>,
   "defaultPageSize": 156,
   "extraCellProps": Object {
-    "hideMapLink": false,
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
   "getTdProps": [Function],
@@ -127,7 +122,6 @@ Object {
   "data": Any<Object>,
   "defaultPageSize": 156,
   "extraCellProps": Object {
-    "hideMapLink": false,
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
   "getTdProps": [Function],
