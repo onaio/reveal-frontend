@@ -508,3 +508,7 @@ export const GEOGRAPHICAL_REGION_TO_INCLUDE = translate(
   'GEOGRAPHICAL_REGION_TO_INCLUDE',
   'Geographical level to include'
 );
+export const ASSIGN_TEAM_TO_SCHOOL = translate(
+  'ASSIGN_TEAM_TO_SCHOOL',
+  'Assign team to this school'
+);

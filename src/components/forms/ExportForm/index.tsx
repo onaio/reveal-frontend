@@ -17,7 +17,7 @@ import {
   OPENSRP_UPLOAD_ENDPOINT,
 } from '../../../constants';
 import { handleDownload } from '../../../containers/pages/MDAPoint/ClientListView/helpers/serviceHooks';
-import JurisdictionSelect from '../JurisdictionSelect';
+import LocationSelect from '../LocationSelect';
 /** Yup validation schema for ExportForm */
 export const JurisdictionSchema = Yup.object().shape({
   jurisdictions: Yup.object().shape({
@@ -83,7 +83,7 @@ export const ExportForm = (props: ExportFormProps) => {
                   <div style={{ display: 'inline-block', width: '24rem' }}>
                     <Field
                       required={true}
-                      component={JurisdictionSelect}
+                      component={LocationSelect}
                       cascadingSelect={true}
                       name={`jurisdictions.id`}
                       id={`jurisdictions-id`}
