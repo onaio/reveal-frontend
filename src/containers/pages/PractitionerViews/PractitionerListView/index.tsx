@@ -34,7 +34,7 @@ import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import practitionersReducer, {
   fetchPractitioners,
-  getPractitionersArray,
+  makePractitionersSelector,
   Practitioner,
   reducerName as practitionersReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
@@ -142,8 +142,9 @@ export { PractitionersListView };
 
 /** maps props to state via selectors */
 const mapStateToProps = (state: Partial<Store>) => {
+  const practitionersSelector = makePractitionersSelector();
   return {
-    practitioners: getPractitionersArray(state),
+    practitioners: practitionersSelector(state, {}),
   };
 };
 
