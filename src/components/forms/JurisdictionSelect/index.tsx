@@ -229,13 +229,9 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       }
     }
   };
-  // const clearSelect = () => {
-  //   refs.async.select.state.value = '';
-  // };
   return (
     <AsyncSelect
       /** we are using the key as hack to reload the component when the parentId changes */
-      ref={() => 'async'}
       key={parentId}
       name={field ? field.name : 'jurisdiction'}
       bsSize="lg"
