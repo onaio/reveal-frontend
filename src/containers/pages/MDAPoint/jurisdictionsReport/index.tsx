@@ -1,9 +1,11 @@
+import { hasChildrenFunc } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import 'react-table/react-table.css';
 import { Store } from 'redux';
+import IRSIndicatorLegend from '../../../../components/formatting/IRSIndicatorLegend';
 import {
   SUPERSET_MDA_POINT_REPORTING_FOCUS_AREAS_COLUMNS,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_COLUMNS,
@@ -13,8 +15,15 @@ import {
 } from '../../../../configs/env';
 import { MDA_POINT_REPORTING_TITLE } from '../../../../configs/lang';
 import { REPORT_MDA_POINT_PLAN_URL } from '../../../../constants';
+import { DefaultTableCell } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { RouteParams } from '../../../../helpers/utils';
+import supersetFetch from '../../../../services/superset';
+import {
+  fetchGenericJurisdictions,
+  GenericJurisdiction,
+  getGenericJurisdictionsArray,
+} from '../../../../store/ducks/generic/jurisdictions';
 import MDAPointPlansReducer, {
   reducerName as MDAPointPlansReducerName,
 } from '../../../../store/ducks/generic/MDAPointPlans';
@@ -22,77 +31,42 @@ import {
   fetchMDAPointPlans,
   getMDAPointPlanById,
 } from '../../../../store/ducks/generic/MDAPointPlans';
-import { InterventionType } from '../../../../store/ducks/plans';
-import ConnectedJurisdictionReport from '../../IRS/JurisdictionsReport';
+import { GenericPlan } from '../../../../store/ducks/generic/plans';
+import {
+  GenericJurisdictionProps,
+  GenericJurisdictionReport,
+} from '../../GenericJurisdictionReport';
 import '../../IRS/JurisdictionsReport/style.css';
 
 /** register the reducers */
 reducerRegistry.register(MDAPointPlansReducerName, MDAPointPlansReducer);
 
-/** IRS Jurisdictions props */
-export interface GenericJurisdictionProps {
-  currentBaseURL: string;
-  currentPageTitle: string;
-  fetchPlans: typeof fetchMDAPointPlans;
-  focusAreaColumn: string;
-  focusAreaLevel: string;
-  getPlanById: typeof getMDAPointPlanById;
-  jurisdictionColumn: string;
-  reportingPlanSlice: string;
-  slices: string[];
-  ownProps: any;
-}
-
 /** Renders IRS Jurisdictions reports */
 const MdaPointJurisdictionReport = (
   props: GenericJurisdictionProps & RouteComponentProps<RouteParams>
 ) => {
-  const {
-    currentBaseURL,
-    currentPageTitle,
-    fetchPlans,
-    focusAreaColumn,
-    focusAreaLevel,
-    getPlanById,
-    jurisdictionColumn,
-    reportingPlanSlice,
-    slices,
-    ownProps,
-  } = props;
-
-  const interventionType = InterventionType.MDAPoint;
-
-  const jurisdictionReportprops = {
-    ...ownProps,
-    currentBaseURL,
-    currentPageTitle,
-    fetchPlans,
-    focusAreaColumn,
-    focusAreaLevel,
-    getPlanById,
-    interventionType,
-    jurisdictionColumn,
-    reportingPlanSlice,
-    slices,
-  };
-
   return (
     <div>
-      <ConnectedJurisdictionReport {...jurisdictionReportprops} />
+      <GenericJurisdictionReport {...props} />
     </div>
   );
 };
 
 const defaultProps: GenericJurisdictionProps = {
-  currentBaseURL: REPORT_MDA_POINT_PLAN_URL,
-  currentPageTitle: MDA_POINT_REPORTING_TITLE,
+  LegendIndicatorComp: IRSIndicatorLegend,
+  baseURL: REPORT_MDA_POINT_PLAN_URL,
+  cellComponent: DefaultTableCell,
+  fetchJurisdictions: fetchGenericJurisdictions,
   fetchPlans: fetchMDAPointPlans,
   focusAreaColumn: SUPERSET_MDA_POINT_REPORTING_FOCUS_AREAS_COLUMNS,
   focusAreaLevel: SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
-  getPlanById: getMDAPointPlanById,
+  hasChildren: hasChildrenFunc,
   jurisdictionColumn: SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_COLUMNS,
-  ownProps: {},
+  jurisdictions: null,
+  pageTitle: MDA_POINT_REPORTING_TITLE,
+  plan: null,
   reportingPlanSlice: SUPERSET_MDA_POINT_REPORTING_PLANS_SLICE,
+  service: supersetFetch,
   slices: SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES.split(','),
 };
 
@@ -103,22 +77,34 @@ export { MdaPointJurisdictionReport };
 /** Connect the component to the store */
 
 /** interface to describe props from mapStateToProps */
-interface DispatchedStateProps {
-  ownProps: any;
+interface DispatchedStateProps extends RouteComponentProps<RouteParams> {
+  jurisdictions: GenericJurisdiction[] | null;
+  plan: GenericPlan | null;
 }
 
 /** map state to props */
 const mapStateToProps = (
-  _: Partial<Store>,
+  state: Partial<Store>,
   ownProps: RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
+  const planId = ownProps.match.params.planId || null;
+  const plan = planId ? getMDAPointPlanById(state, planId) : null;
+
+  let jurisdictions: GenericJurisdiction[] = [];
+  defaultProps.slices.forEach(
+    (slice: string) =>
+      (jurisdictions = jurisdictions.concat(getGenericJurisdictionsArray(state, slice, planId)))
+  );
   return {
-    ownProps,
+    ...ownProps,
+    jurisdictions,
+    plan,
   };
 };
 
 /** map dispatch to props */
 const mapDispatchToProps = {
+  fetchJurisdictions: fetchGenericJurisdictions,
   fetchPlans: fetchMDAPointPlans,
 };
 
