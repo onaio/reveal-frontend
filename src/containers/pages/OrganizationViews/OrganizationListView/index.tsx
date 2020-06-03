@@ -8,6 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { createChangeHandler, SearchForm } from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -26,9 +27,11 @@ import {
   CREATE_ORGANIZATION_URL,
   HOME_URL,
   ORGANIZATIONS_LIST_URL,
+  QUERY_PARAM_TITLE,
   SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
@@ -46,6 +49,7 @@ interface OrganizationsListViewProps {
   fetchOrganizationsAction: typeof fetchOrganizations;
   organizations: Organization[];
   serviceClass: typeof OpenSRPService;
+  name?: string;
 }
 
 /** the default props for SingleOrganizationView */
@@ -112,10 +116,12 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   }, []);
 
   // break early if organizations are absent
-  const isLoading = organizations.length < 1;
+  const isLoading = organizations.length < 1 && !props.name;
   if (isLoading) {
     return <Loading />;
   }
+
+  const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
 
   return (
     <div>
@@ -132,6 +138,11 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
         </Col>
       </Row>
       <hr />
+      <Row>
+        <Col>
+          <SearchForm onChangeHandler={searchFormChangeHandler} />
+        </Col>
+      </Row>
       <ListView {...listViewProps} />
     </div>
   );
@@ -143,10 +154,17 @@ export { OrganizationListView };
 
 // connect to store
 
-const mapStateToProps = (state: Partial<Store>) => {
+type MapStateToProps = Pick<OrganizationsListViewProps, 'name' | 'organizations'>;
+
+const mapStateToProps = (
+  state: Partial<Store>,
+  ownProps: OrgsListViewPropsType
+): MapStateToProps => {
   const organizationSelector = makeOrgsArraySelector();
+  const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   return {
-    organizations: organizationSelector(state, {}),
+    name: searchedTitle,
+    organizations: organizationSelector(state, { name: searchedTitle }),
   };
 };
 

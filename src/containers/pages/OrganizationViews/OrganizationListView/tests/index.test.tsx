@@ -124,4 +124,34 @@ describe('src/containers/TeamAssignment/OrganizationListView/', () => {
     expect(foundProps.organizations).toEqual(fixtures.organizations);
     wrapper.unmount();
   });
+
+  it('Search works correctly', () => {
+    fetch.once(JSON.stringify(fixtures.organizations));
+    store.dispatch(fetchOrganizations(fixtures.organizations));
+    const props = {
+      history,
+      location: {
+        pathname: ORGANIZATIONS_LIST_URL,
+        search: '?title=Luang',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: ORGANIZATIONS_LIST_URL,
+        url: ORGANIZATIONS_LIST_URL,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedOrgsListView {...props} />
+        </Router>
+      </Provider>
+    );
+
+    // check that store data is part of passed props
+    const foundProps = wrapper.find('OrganizationListView').props() as any;
+    expect(foundProps.organizations).toEqual([fixtures.organization1]);
+    wrapper.unmount();
+  });
 });

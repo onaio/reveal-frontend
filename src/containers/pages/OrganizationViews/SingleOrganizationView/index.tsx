@@ -51,9 +51,8 @@ import organizationsReducer, {
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/opensrp/organizations';
 import PractitionerReducer, {
-  fetchPractitionerRoles,
   fetchPractitioners,
-  getPractitionersByOrgId,
+  makePractitionersSelector,
   Practitioner,
   reducerName as practitionerReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
@@ -69,14 +68,12 @@ interface SingleOrganizationViewProps {
   practitioners: Practitioner[];
   serviceClass: typeof OpenSRPService;
   fetchOrganizationsAction: typeof fetchOrganizations;
-  fetchPractitionerRolesAction: typeof fetchPractitionerRoles;
   fetchPractitionersAction: typeof fetchPractitioners;
 }
 
 /** the default props for SingleOrganizationView */
 const defaultProps: SingleOrganizationViewProps = {
   fetchOrganizationsAction: fetchOrganizations,
-  fetchPractitionerRolesAction: fetchPractitionerRoles,
   fetchPractitionersAction: fetchPractitioners,
   organization: null,
   practitioners: [],
@@ -93,7 +90,6 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
     practitioners,
     serviceClass,
     fetchOrganizationsAction,
-    fetchPractitionerRolesAction,
     fetchPractitionersAction,
   } = props;
 
@@ -123,24 +119,18 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
             type: toast.TYPE.INFO,
           }
         );
-        loadOrgPractitioners(
-          orgId,
-          serviceClass,
-          fetchPractitionerRolesAction,
-          fetchPractitionersAction
-        ).catch(err => displayError(err));
+        loadOrgPractitioners(orgId, serviceClass, fetchPractitionersAction).catch(err =>
+          displayError(err)
+        );
       })
       .catch((_: Error) => growl(REMOVING_PRACTITIONER_FAILED, { type: toast.TYPE.ERROR }));
   };
 
   useEffect(() => {
     loadOrganization(orgId, serviceClass, fetchOrganizationsAction).catch(err => displayError(err));
-    loadOrgPractitioners(
-      orgId,
-      serviceClass,
-      fetchPractitionerRolesAction,
-      fetchPractitionersAction
-    ).catch(err => displayError(err));
+    loadOrgPractitioners(orgId, serviceClass, fetchPractitionersAction).catch(err =>
+      displayError(err)
+    );
   }, []);
 
   if (!organization) {
@@ -268,10 +258,11 @@ const mapStateToProps = (
   organizationId = organizationId ? organizationId : '';
 
   const orgSelector = makeOrgsArraySelector();
+  const practitionersSelector = makePractitionersSelector();
 
   const organizations = orgSelector(state, { identifiers: [organizationId] });
   const organization = organizations.length === 1 ? organizations[0] : null;
-  const practitioners = getPractitionersByOrgId(state, organizationId);
+  const practitioners = practitionersSelector(state, { organizationId });
 
   return {
     organization,
@@ -282,7 +273,6 @@ const mapStateToProps = (
 /** map props to action creators */
 const mapDispatchToProps = {
   fetchOrganizationsAction: fetchOrganizations,
-  fetchPractitionerRolesAction: fetchPractitionerRoles,
   fetchPractitionersAction: fetchPractitioners,
 };
 
