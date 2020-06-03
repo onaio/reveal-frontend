@@ -121,4 +121,34 @@ describe('src/containers/TeamAssignment/PractitionersListView/', () => {
     expect(foundProps.practitioners).toEqual(fixtures.practitioners);
     wrapper.unmount();
   });
+
+  it('search works correctly', () => {
+    fetch.once(JSON.stringify([]));
+    store.dispatch(practitionerDucks.fetchPractitioners(fixtures.practitioners));
+    const props = {
+      history,
+      location: {
+        pathname: PRACTITIONERS_LIST_URL,
+        search: '?title=Biophics',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: PRACTITIONERS_LIST_URL,
+        url: PRACTITIONERS_LIST_URL,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedPractitionersListView {...props} />
+        </Router>
+      </Provider>
+    );
+
+    // check that store data is part of passed props
+    const foundProps = wrapper.find('PractitionersListView').props() as any;
+    expect(foundProps.practitioners).toEqual([fixtures.practitioner2]);
+    wrapper.unmount();
+  });
 });

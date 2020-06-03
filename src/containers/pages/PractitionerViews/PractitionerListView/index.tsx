@@ -8,6 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { createChangeHandler, SearchForm } from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -29,8 +30,10 @@ import {
   EDIT_PRACTITIONER_URL,
   HOME_URL,
   PRACTITIONERS_LIST_URL,
+  QUERY_PARAM_TITLE,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import practitionersReducer, {
   fetchPractitioners,
@@ -47,6 +50,7 @@ interface Props {
   fetchPractitionersCreator: typeof fetchPractitioners;
   practitioners: Practitioner[];
   serviceClass: typeof OpenSRPService;
+  name?: string;
 }
 
 /** the default props for SinglePractitionerView */
@@ -109,10 +113,12 @@ const PractitionersListView = (props: PropsTypes) => {
   }, []);
 
   // break early if practitioners are absent
-  const isLoading = practitioners.length < 1;
+  const isLoading = practitioners.length < 1 && !props.name;
   if (isLoading) {
     return <Loading />;
   }
+
+  const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
 
   return (
     <div>
@@ -128,6 +134,11 @@ const PractitionersListView = (props: PropsTypes) => {
           <LinkAsButton {...linkAsButtonProps} />
         </Col>
       </Row>
+      <Row>
+        <Col>
+          <SearchForm onChangeHandler={searchFormChangeHandler} />
+        </Col>
+      </Row>
       <hr />
       <ListView {...listViewProps} />
     </div>
@@ -140,11 +151,15 @@ export { PractitionersListView };
 
 // connect to store
 
+type MapStateToProps = Pick<Props, 'name' | 'practitioners'>;
+
 /** maps props to state via selectors */
-const mapStateToProps = (state: Partial<Store>) => {
+const mapStateToProps = (state: Partial<Store>, ownProps: PropsTypes): MapStateToProps => {
   const practitionersSelector = makePractitionersSelector();
+  const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   return {
-    practitioners: practitionersSelector(state, {}),
+    name: searchedTitle,
+    practitioners: practitionersSelector(state, { name: searchedTitle }),
   };
 };
 
