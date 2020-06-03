@@ -19,9 +19,11 @@ import * as planDucks from '../../../../../../store/ducks/plans';
 import * as structureDucks from '../../../../../../store/ducks/structures';
 import * as tasksDucks from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
+// import * as tasksFixtures from '../../../../../../store/ducks/tests/fixtures/tasks';
 import ConnectedMapSingleFI, { MapSingleFIProps, SingleActiveFIMap } from '../../active/';
 import { buildHandlers, fetchData } from '../helpers/utils';
 import * as fixturesMap from './fixtures';
+import nock from 'nock';
 
 jest.mock('../../../../../../components/GisidaWrapper', () => {
   const GisidaWrapperMock = () => <div>I love oov</div>;
@@ -45,7 +47,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
   });
 
   afterEach(() => {
+    jest.restoreAllMocks();
     jest.clearAllMocks();
+
   });
 
   it('renders without crashing', () => {
@@ -589,6 +593,34 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     await new Promise<unknown>(resolve => setImmediate(resolve));
     expect(displayErrorMock.mock.calls.length).toBe(1);
     wrapper.unmount();
+  });
+
+  it('passes historical index cases to gisida wrapper', async () => {
+    // use dispatch
+    const mock = jest.fn();
+    const props = {
+      // currentGoal: fixtures.goal3.goal_id,
+      // goals: [fixtures.goal3 as goalDucks.Goal],
+      history,
+      jurisdiction: fixtures.jurisdictions[0],
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: 'dbd9851f-2548-5aaa-8267-010897f98f45' },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/dbd9851f-2548-5aaa-8267-010897f98f45`,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    // hook up the superset nock response data
+    nock('https://superset.reveal-stage.smartregister.org').log(console.log).get('/superset/slice_json/466').reply(200, [fixtures.plan1]);
+      await new Promise(resolve => setImmediate(resolve));
   });
 
   /**

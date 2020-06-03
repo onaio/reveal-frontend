@@ -5,7 +5,7 @@ import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
-import { MULTI_POLYGON, POLYGON } from '../../constants';
+import { MULTI_POLYGON, POLYGON, CASE_CONFIRMATION_GOAL_ID } from '../../constants';
 import { FeatureCollection, GeoJSON, getColor, wrapFeatureCollection } from '../../helpers/utils';
 /** the reducer name */
 export const reducerName = 'tasks';
@@ -446,7 +446,7 @@ export function getFCByPlanAndJurisdiction(
 /** get tasks as FeatureCollection filtered by plan_id & goal_id & jurisdiction_id
  * @param {partial<Store>} state - the redux store
  * @param {string} planId - the plan id
- * @param {string} goalId - the goal id
+ * @param {string[]} goalIds - A list of goal_ids
  * @param {string} jurisdictionId - the jurisdiction id
  * @param {boolean} includeNullGeoms - if to include features with null geometries in FC
  * @return {FeatureCollection} - an geoJSON Feature Collection object
@@ -454,7 +454,7 @@ export function getFCByPlanAndJurisdiction(
 export function getFCByPlanAndGoalAndJurisdiction(
   state: Partial<Store>,
   planId: string,
-  goalId: string,
+  goalIds: string[],
   jurisdictionId: string,
   includeNullGeoms: boolean = true,
   structureType: string[] | null = null
@@ -466,7 +466,7 @@ export function getFCByPlanAndGoalAndJurisdiction(
   ).filter(
     e =>
       e.properties.plan_id === planId &&
-      e.properties.goal_id === goalId &&
+      goalIds.includes(e.properties.goal_id) &&
       e.properties.jurisdiction_id === jurisdictionId
   );
   return wrapFeatureCollection(geoJsonFeatures);

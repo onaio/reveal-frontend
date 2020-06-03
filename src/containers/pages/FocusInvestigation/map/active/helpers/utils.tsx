@@ -11,7 +11,7 @@ import {
 } from '../../../../../../configs/env';
 import { AN_ERROR_OCCURRED } from '../../../../../../configs/lang';
 import { CASE_CLASSIFICATION_LABEL, END_DATE, START_DATE } from '../../../../../../configs/lang';
-import { JURISDICTION_ID, PLAN_ID } from '../../../../../../constants';
+import { JURISDICTION_ID, PLAN_ID, CASE_CONFIRMATION_CODE, ACTION_CODE } from '../../../../../../constants';
 import { ROUTINE } from '../../../../../../constants';
 import { displayError } from '../../../../../../helpers/errors';
 import { PopHandler, popupHandler } from '../../../../../../helpers/handlers';
@@ -21,6 +21,8 @@ import { fetchJurisdictions, Jurisdiction } from '../../../../../../store/ducks/
 import { fetchPlans, FetchPlansAction, Plan } from '../../../../../../store/ducks/plans';
 import { setStructures, SetStructuresAction } from '../../../../../../store/ducks/structures';
 import { fetchTasks, FetchTasksAction } from '../../../../../../store/ducks/tasks';
+import props from '../../../../../../components/DatePickerWrapper/tests/fixtures';
+
 
 /** abstracts code that actually makes the superset Call since it is quite similar */
 export async function supersetCall<TAction>(
@@ -82,6 +84,12 @@ export const fetchData = async (
       { action_prefix: true }
     );
 
+    /** filter caseConfirmation tasks by action code and jurisdiction_id */
+    const tasksParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
+      { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
+      { comparator: CASE_CONFIRMATION_CODE, operator: '==', subject: ACTION_CODE },
+    ]);
+
     supersetCall(
       SUPERSET_JURISDICTIONS_SLICE,
       fetchJurisdictionsActionCreator,
@@ -116,6 +124,13 @@ export const fetchData = async (
       supersetService,
       supersetParams
     ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+
+    supersetCall<FetchTasksAction>(
+      SUPERSET_TASKS_SLICE,
+      fetchTasksActionCreator,
+      supersetService,
+      tasksParams
+    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
   }
 };
 
@@ -123,10 +138,11 @@ export const fetchData = async (
  * Build mapbox component event handlers
  * @param method  Event handler
  */
-export const buildHandlers = (method: PopHandler = popupHandler) => {
+export const buildHandlers = (planId: string, method: any = popupHandler) => {
+  let customMethod = (e: any) => popupHandler(e, planId);
   return [
     {
-      method,
+      method: customMethod,
       name: 'pointClick',
       type: 'click',
     },
