@@ -16,19 +16,9 @@ Object {
           src="thai-logo.png"
           style={
             Object {
-              "transform": "scale(1.8)",
+              "transform": "scale(2)",
             }
           }
-        />
-      </Link>
-      <Link
-        className="navbar-brand"
-        replace={false}
-        to="/"
-      >
-        <img
-          alt="Reveal"
-          src="logo.png"
         />
       </Link>
     </nav>,
@@ -322,19 +312,9 @@ Object {
           src="thai-logo.png"
           style={
             Object {
-              "transform": "scale(1.8)",
+              "transform": "scale(2)",
             }
           }
-        />
-      </Link>
-      <Link
-        className="navbar-brand"
-        replace={false}
-        to="/"
-      >
-        <img
-          alt="Reveal"
-          src="logo.png"
         />
       </Link>
     </nav>,

@@ -104,27 +104,6 @@ exports[`components/page/Header renders header correctly 1`] = `
                   >
                     <img
                       alt="Reveal"
-                      src="thai-logo.png"
-                      style={
-                        Object {
-                          "transform": "scale(1.8)",
-                        }
-                      }
-                    />
-                  </a>
-                </Link>
-                <Link
-                  className="navbar-brand"
-                  replace={false}
-                  to="/"
-                >
-                  <a
-                    className="navbar-brand"
-                    href="/"
-                    onClick={[Function]}
-                  >
-                    <img
-                      alt="Reveal"
                       src="logo.png"
                     />
                   </a>
@@ -968,27 +947,6 @@ exports[`components/page/Header renders header correctly when authenticated 1`] 
               <nav
                 className="navbar navbar-expand-md navbar-light header-logo-navbar"
               >
-                <Link
-                  className="navbar-brand"
-                  replace={false}
-                  to="/"
-                >
-                  <a
-                    className="navbar-brand"
-                    href="/"
-                    onClick={[Function]}
-                  >
-                    <img
-                      alt="Reveal"
-                      src="thai-logo.png"
-                      style={
-                        Object {
-                          "transform": "scale(1.8)",
-                        }
-                      }
-                    />
-                  </a>
-                </Link>
                 <Link
                   className="navbar-brand"
                   replace={false}

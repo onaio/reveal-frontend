@@ -8,6 +8,9 @@ exports[`App integration: renders App correctly: footer 1`] = `
 <footer
   className="footer"
 >
+  <hr
+    className="p-0 m-0"
+  />
   <span
     className="text-muted"
   >
