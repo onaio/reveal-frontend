@@ -93,7 +93,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       </Provider>
     );
     await flushPromises();
-    expect(wrapper.find('JurisdictionReport').props()).toMatchSnapshot();
+    expect(wrapper.find('GenericJurisdictionReport').props()).toMatchSnapshot();
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
     expect(wrapper.find('.page-title').text()).toEqual(

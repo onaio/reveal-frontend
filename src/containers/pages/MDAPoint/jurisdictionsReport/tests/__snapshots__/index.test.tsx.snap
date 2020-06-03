@@ -2,14 +2,13 @@
 
 exports[`components/IRS Reports/JurisdictionReport renders correctly 1`] = `
 Object {
-  "currentBaseURL": "/intervention/mda-point/report",
-  "currentPageTitle": "MDA Point Reporting",
+  "LegendIndicatorComp": [Function],
+  "baseURL": "/intervention/mda-point/report",
+  "cellComponent": [Function],
   "fetchJurisdictions": [Function],
   "fetchPlans": [Function],
-  "fetchPlansIRS": [Function],
   "focusAreaColumn": "0",
   "focusAreaLevel": "2",
-  "getPlanById": [Function],
   "hasChildren": [Function],
   "history": Object {
     "action": "POP",
@@ -29,7 +28,6 @@ Object {
     "push": [Function],
     "replace": [Function],
   },
-  "interventionType": "MDA-Point",
   "jurisdictionColumn": "0",
   "jurisdictions": Array [
     Object {
@@ -159,6 +157,7 @@ Object {
     "path": "/intervention/mda-point/report/:planId",
     "url": "/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c",
   },
+  "pageTitle": "MDA Point Reporting",
   "plan": Object {
     "jurisdiction_root_parent_ids": Array [
       "2942",
