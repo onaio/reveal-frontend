@@ -1,5 +1,5 @@
 import { Dictionary } from '@onaio/utils/dist/types/types';
-import { FieldProps } from 'formik';
+import { FieldConfig, FieldProps, FormikProps } from 'formik';
 import React, { useState } from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
 import { SELECT } from '../../../configs/lang';
@@ -36,13 +36,32 @@ export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectPr
   params: URLParams /** extra URL params to send to OpenSRP */;
   serviceClass: typeof OpenSRPService /** the OpenSRP service */;
   promiseOptions: (
-    serice: OpenSRPService,
+    service: OpenSRPService,
     parameters: Dictionary,
     hierarchy: SelectOption[],
     jurisdictionStatus: boolean,
     setFinalLocation: (value: boolean) => void,
     setJurisdictionParam: (value: boolean) => void
   ) => Promise<any>; // Todo: Add a a more specific type
+  handleChange: (
+    params: Dictionary,
+    isJurisdiction: boolean,
+    service: OpenSRPService,
+    option: SelectOption,
+    hierarchy: SelectOption[],
+    cascadingSelect: boolean,
+    lowestLocation: boolean,
+    loadLocations: boolean,
+    setSelectShouldMenuOpen: (value: boolean) => void,
+    setSelectParentId: (value: string) => void,
+    setSelectHierarchy: (value: SelectOption[]) => void,
+    setCloseMenuOnSelect: (value: boolean) => void,
+    setSelectIsJurisdiction: (value: boolean) => void,
+    setSelectLowestLocation: (value: boolean) => void,
+    labelFieldName: string,
+    form: FormikProps<any>,
+    field: FieldConfig
+  ) => void;
 }
 /**
  * Loads options from opensrp
@@ -109,10 +128,92 @@ export const promiseOptions = (
       });
   });
 
+/**
+ * onChange callback
+ * unfortunately we have to set the type of option as any (for now)
+ */
+export const handleChange = (
+  params: Dictionary,
+  isJurisdiction: boolean,
+  service: OpenSRPService,
+  option: SelectOption,
+  hierarchy: SelectOption[],
+  cascadingSelect: boolean,
+  lowestLocation: boolean,
+  loadLocations: boolean,
+  setSelectShouldMenuOpen: (value: boolean) => void,
+  setSelectParentId: (value: string) => void,
+  setSelectHierarchy: (value: SelectOption[]) => void,
+  setSelectCloseMenuOnSelect: (value: boolean) => void,
+  setSelectIsJurisdiction: (value: boolean) => void,
+  setSelectLowestLocation: (value: boolean) => void,
+  labelFieldName: string,
+  form: FormikProps<any>,
+  field: FieldConfig
+) => {
+  const optionVal = option as { label: string; value: string };
+  if (optionVal && optionVal.value) {
+    // we are going to check if the current option has children
+    // and if it does, we set it as the new parentId
+
+    const newParamsToUse = {
+      ...params,
+      is_jurisdiction: isJurisdiction,
+      properties_filter: getFilterParams({ parentId: optionVal.value }),
+    };
+
+    service
+      .list(newParamsToUse)
+      .then(e => {
+        setSelectShouldMenuOpen(true);
+        if (e.length > 0 && cascadingSelect === true) {
+          setSelectParentId(optionVal.value);
+
+          hierarchy.push(optionVal);
+          setSelectHierarchy(hierarchy);
+
+          setSelectCloseMenuOnSelect(false);
+        } else if (!e.length && loadLocations && !lowestLocation) {
+          setSelectIsJurisdiction(false);
+          setSelectParentId(optionVal.value);
+          hierarchy.push(optionVal);
+          setSelectHierarchy(hierarchy);
+          setSelectCloseMenuOnSelect(false);
+        } else {
+          // set the Formik field value
+          if (form && field) {
+            form.setFieldValue(field.name, optionVal.value);
+            form.setFieldTouched(field.name, true);
+            if (labelFieldName) {
+              form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
+              form.setFieldTouched(labelFieldName, true); /** dirty hack */
+            }
+          }
+
+          setSelectCloseMenuOnSelect(true);
+          setSelectShouldMenuOpen(false);
+        }
+      })
+      .catch(error => displayError(error));
+  } else {
+    // most probably the select element was reset, so we reset the state vars
+    setSelectParentId('');
+    setSelectHierarchy([]);
+    setSelectShouldMenuOpen(false);
+    setSelectCloseMenuOnSelect(false);
+    setSelectLowestLocation(false);
+    setSelectIsJurisdiction(true);
+    // set the Formik field value
+    if (form && field) {
+      form.setFieldValue(field.name, '');
+    }
+  }
+};
 /** default props for JurisdictionSelect */
 export const defaultProps: Partial<JurisdictionSelectProps> = {
   apiEndpoint: 'location/findByProperties',
   cascadingSelect: true,
+  handleChange,
   params: {
     is_jurisdiction: true,
     return_geometry: false,
@@ -170,65 +271,26 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
    * onChange callback
    * unfortunately we have to set the type of option as any (for now)
    */
-  const handleChange = () => (option: any) => {
-    const optionVal = option as { label: string; value: string };
-    if (optionVal && optionVal.value) {
-      // we are going to check if the current option has children
-      // and if it does, we set it as the new parentId
-
-      const newParamsToUse = {
-        ...params,
-        is_jurisdiction: isJurisdiction,
-        properties_filter: getFilterParams({ parentId: optionVal.value }),
-      };
-
-      service
-        .list(newParamsToUse)
-        .then(e => {
-          setShouldMenuOpen(true);
-          if (e.length > 0 && cascadingSelect === true) {
-            setParentId(optionVal.value);
-
-            hierarchy.push(optionVal);
-            setHierarchy(hierarchy);
-
-            setCloseMenuOnSelect(false);
-          } else if (!e.length && loadLocations && !lowestLocation) {
-            setIsJurisdiction(false);
-            setParentId(optionVal.value);
-            hierarchy.push(optionVal);
-            setHierarchy(hierarchy);
-            setCloseMenuOnSelect(false);
-          } else {
-            // set the Formik field value
-            if (form && field) {
-              form.setFieldValue(field.name, optionVal.value);
-              form.setFieldTouched(field.name, true);
-              if (labelFieldName) {
-                form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
-                form.setFieldTouched(labelFieldName, true); /** dirty hack */
-              }
-            }
-
-            setCloseMenuOnSelect(true);
-            setShouldMenuOpen(false);
-          }
-        })
-        .catch(error => displayError(error));
-    } else {
-      // most probably the select element was reset, so we reset the state vars
-      setParentId('');
-      setHierarchy([]);
-      setShouldMenuOpen(false);
-      setCloseMenuOnSelect(false);
-      setLowestLocation(false);
-      setIsJurisdiction(true);
-      // set the Formik field value
-      if (form && field) {
-        form.setFieldValue(field.name, '');
-      }
-    }
-  };
+  const wrapperHandleChange = () => (option: any) =>
+    props.handleChange(
+      params,
+      isJurisdiction,
+      service,
+      option,
+      hierarchy,
+      cascadingSelect,
+      lowestLocation,
+      loadLocations,
+      setShouldMenuOpen,
+      setParentId,
+      setHierarchy,
+      setCloseMenuOnSelect,
+      setIsJurisdiction,
+      setLowestLocation,
+      labelFieldName,
+      form,
+      field
+    );
   return (
     <AsyncSelect
       /** we are using the key as hack to reload the component when the parentId changes */
@@ -240,7 +302,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       placeholder={props.placeholder ? props.placeholder : SELECT}
       noOptionsMessage={reactSelectNoOptionsText}
       aria-label={props['aria-label'] ? props['aria-label'] : SELECT}
-      onChange={handleChange()}
+      onChange={wrapperHandleChange()}
       defaultOptions={true}
       loadOptions={wrapperPromiseOptions}
       isClearable={true}
