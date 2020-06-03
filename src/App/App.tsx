@@ -481,7 +481,6 @@ const App = (props: AppProps) => {
           </Row>
         </Container>
       </div>
-      <hr className="p-0 m-0" />
       <Container fluid={true} className="footer-row-container">
         <Row>
           <Col>
