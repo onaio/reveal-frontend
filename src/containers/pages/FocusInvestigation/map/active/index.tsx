@@ -14,7 +14,11 @@ import HeaderBreadcrumb, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 import SelectComponent from '../../../../../components/SelectPlan/';
-import { SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
+import {
+  SUPERSET_MAX_RECORDS,
+  SUPERSET_PLANS_SLICE,
+  SUPERSET_TASKS_SLICE,
+} from '../../../../../configs/env';
 import {
   AN_ERROR_OCCURRED,
   FOCUS_INVESTIGATION,
@@ -30,11 +34,15 @@ import {
 } from '../../../../../configs/lang';
 import { FIReasons } from '../../../../../configs/settings';
 import {
+  ACTION_CODE,
+  CASE_CONFIRMATION_CODE,
+  CASE_CONFIRMATION_GOAL_ID,
   CASE_TRIGGERED,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
   HOME_URL,
+  JURISDICTION_ID,
   MULTI_POLYGON,
   POINT,
   POLYGON,
@@ -82,9 +90,11 @@ import structuresReducer, {
 } from '../../../../../store/ducks/structures';
 import tasksReducer, {
   fetchTasks,
+  FetchTasksAction,
   getFCByPlanAndGoalAndJurisdiction,
   reducerName as tasksReducerName,
   TaskGeoJSON,
+  tasksFCSelectorFactory,
 } from '../../../../../store/ducks/tasks';
 import MarkCompleteLink, { MarkCompleteLinkProps } from './helpers/MarkCompleteLink';
 import StatusBadge, { StatusBadgeProps } from './helpers/StatusBadge';
@@ -120,6 +130,7 @@ export interface MapSingleFIProps {
   structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
   supersetService: typeof supersetFetch;
   plansByFocusArea: Plan[];
+  indexCasesByJurisdiction: any;
 }
 
 /** default value for feature Collection */
@@ -145,6 +156,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   setCurrentGoalActionCreator: setCurrentGoal,
   structures: null,
   supersetService: supersetFetch,
+  indexCasesByJurisdiction: [],
 };
 
 /** Map View for Single Active Focus Investigation */
@@ -158,6 +170,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
       const supersetParams = superset.getFormData(2000, [
         { comparator: InterventionType.FI, operator: '==', subject: PLAN_INTERVENTION_TYPE },
       ]);
+
       supersetCall<FetchPlansAction>(
         SUPERSET_PLANS_SLICE,
         fetchPlansActionCreator,
@@ -192,18 +205,6 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
   }, [props.plan && props.plan.plan_id]);
 
   React.useEffect(() => {
-    /** after execution of this, we want to get the goal action,
-     * - see if its Case Confirmation
-     * - if no ; do nothing for this flow
-     * - if yes:
-     *    - we will make 2 calls:
-     *      1. one to update all plans ducks
-     *      2. second to get tasks_structures
-     *    - from here henceforth we should be able to query the ducks for :
-     *      1. get task_stuctures where actioncode='Case Confirmation'& task_business_status = 'complete and plan.jurisdiction_id
-     *      2. out of these we want those whose plan id points to a plan with plan_status='complete'
-     *        - get all plans with plan_status='complete' then do an intersect with task_structures, based on same plan_id.
-     */
     const { setCurrentGoalActionCreator, match } = props;
 
     setCurrentGoalActionCreator(match.params.goalId ? match.params.goalId : null);
@@ -291,7 +292,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
         <div className="col-9">
           <div className="map">
             <GisidaWrapper
-              handlers={buildHandlers()}
+              handlers={buildHandlers(plan.plan_id)}
               geoData={jurisdiction}
               goal={goals}
               structures={structures}
@@ -320,13 +321,19 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
                 const goalReport = getGoalReport(item);
                 return (
                   <div className="responseItem" key={item.goal_id}>
-                    <NavLink
-                      to={`${FI_SINGLE_MAP_URL}/${plan.id}/${item.goal_id}`}
-                      className="task-link"
-                      style={{ textDecoration: 'none' }}
-                    >
-                      <h6>{item.action_title}</h6>
-                    </NavLink>
+                    {item.action_code === CASE_CONFIRMATION_CODE ? (
+                      <span className="task-link" style={{ color: '#57b446' }}>
+                        <h6>{item.action_title}</h6>
+                      </span>
+                    ) : (
+                      <NavLink
+                        to={`${FI_SINGLE_MAP_URL}/${plan.id}/${item.goal_id}`}
+                        className="task-link"
+                        style={{ textDecoration: 'none' }}
+                      >
+                        <h6>{item.action_title}</h6>
+                      </NavLink>
+                    )}
                     <div className="targetItem">
                       <p>
                         {MEASURE}: {item.measure}
@@ -364,6 +371,7 @@ export { SingleActiveFIMap };
  */
 const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   // pass in the plan id to get plan the get the jurisdiction_id from the plan
+  const getTasksFCSelector = tasksFCSelectorFactory();
   const plan = getPlanById(state, ownProps.match.params.id);
   let goals = null;
   let jurisdiction = null;
@@ -389,23 +397,33 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   }
 
   if (plan && jurisdiction && goals && goals.length > 1) {
-    currentGoal = getCurrentGoal(state);
-    pointFeatureCollection = getFCByPlanAndGoalAndJurisdiction(
+    currentGoal = getCurrentGoal(state) || 'Case_Confirmation';
+    const indexCasesByJurisdiction = getTasksFCSelector(state, {
+      actionCode: CASE_CONFIRMATION_CODE,
+      jurisdictionId: plan.jurisdiction_id,
+      taskBusinessStatus: 'Complete',
+    });
+    const pfc = getFCByPlanAndGoalAndJurisdiction(
       state,
       plan.plan_id,
-      ownProps.match.params.goalId,
+      [ownProps.match.params.goalId],
       plan.jurisdiction_id,
       false,
       [POINT]
     );
+
+    pointFeatureCollection = {
+      ...indexCasesByJurisdiction,
+    };
     polygonFeatureCollection = getFCByPlanAndGoalAndJurisdiction(
       state,
       plan.plan_id,
-      ownProps.match.params.goalId,
+      [ownProps.match.params.goalId],
       plan.jurisdiction_id,
       false,
       [POLYGON, MULTI_POLYGON]
     );
+    console.log('PolygonFeatureCollection', polygonFeatureCollection);
     structures = getStructuresFCByJurisdictionId(state, jurisdiction.jurisdiction_id);
   }
   return {

@@ -10,7 +10,7 @@ import {
 } from 'geojson';
 import { GisidaMap } from 'gisida';
 import { LngLat, Map } from 'mapbox-gl';
-import { MAP_ID } from '../../constants';
+import { CASE_CONFIRMATION_CODE, MAP_ID } from '../../constants';
 import { EventData } from '../mapbox';
 import './handlers.css';
 
@@ -35,12 +35,31 @@ export interface FeatureWithLayer
 
 export type PopHandler = (event: EventData) => void;
 
-export function popupHandler(event: EventData) {
-  /** currentGoal is currently not being used but we  may  use it in the future  */
+export function popupHandler(event: EventData, planId: string) {
+  /** differentiate between current index cases and historical index cases by use of plan_id
+   * current_case will be index_case belonging to this plan
+   */
   const features = event.target.queryRenderedFeatures(event.point) as FeatureWithLayer[];
+  console.log('features', features);
   let description: string = '';
+  // if (features.properties.plan_id === planId) {
+  //   description =
+  //     '<strong>Make it Mount Pleasant</strong><p><a href="http://www.mtpleasantdc.com/makeitmtpleasant"' +
+  //     'target="_blank" title="Opens in a new window">Make it Mount Pleasant</a> is a handmade and vintage' +
+  //     ' market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>';
+  // }
+  /** currentGoal is currently not being used but we  may  use it in the future  */
   const goalIds: string[] = [];
   features.forEach((feature: FeatureWithLayer) => {
+    if (feature!.properties!.plan_id !== planId) {
+      /** proof of concept we have a way of getting extra data into the historical index cases tooltips or popovers */
+      description =
+        '<strong>Make it Mount Pleasant</strong><p><a href="http://www.mtpleasantdc.com/makeitmtpleasant"' +
+        'target="_blank" title="Opens in a new window">Make it Mount Pleasant</a> is a handmade and vintage' +
+        ' market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>';
+        return;
+    }
+    description = '';
     if (
       feature &&
       feature.geometry &&
@@ -55,7 +74,7 @@ export function popupHandler(event: EventData) {
         goalIds.push(feature.properties.goal_id);
       }
       // Splitting into two lines to fix breaking tests
-      description += `<p class="heading">${feature.properties.action_code}</b></p>`;
+      description += `<p class="heading">I did this ${feature.properties.action_code}</b></p>`;
       description += `<p>${feature.properties.task_business_status}</p><br/><br/>`;
     }
   });

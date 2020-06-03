@@ -51,6 +51,8 @@ export const TWO_HUNDRED_PX = '200px';
 export const PLAN_RECORD_BY_ID = 'planRecordsById';
 export const MAPBOXGL_POPUP = '.mapboxgl-popup';
 export const TABLE_BORDERED_CLASS = 'table table-bordered';
+export const ACTION_CODE = 'action_code';
+export const CASE_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
