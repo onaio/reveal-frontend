@@ -166,7 +166,7 @@ export function getOrganizationsArray(state: Partial<Store>): Organization[] {
  * @param state - the redux store
  * @param props - the organization filters object
  */
-const getOrganizationsByIds = () =>
+export const getOrganizationsByIds = () =>
   createSelector(
     getOrganizationsById,
     getIdentifiers,
@@ -187,11 +187,16 @@ const getOrganizationsByIds = () =>
  * @param state - the redux store
  * @param props - the organization filters object
  */
-const getOrganizationsByName = () =>
+export const getOrganizationsByName = () =>
   createSelector(getOrganizationsArray, getName, (orgsArray, name) =>
     name ? orgsArray.filter(org => org.name.toLowerCase().includes(name.toLowerCase())) : orgsArray
   );
 
+/** organization array selector factory
+ * aggregates response from all applied filters and returns results
+ * @param state - the redux store
+ * @param props - the organization filters object
+ */
 export const makeOrgsArraySelector = () =>
   createSelector(getOrganizationsByIds(), getOrganizationsByName(), (orgs1, orgs2) => {
     return intersect([orgs1, orgs2], JSON.stringify);
