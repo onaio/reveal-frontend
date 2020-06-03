@@ -8,6 +8,7 @@ import LocationSelect from '../../../../components/forms/LocationSelect';
 import SimpleOrgSelect from '../../../../components/forms/SimpleOrgSelect';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import {
+  ASSIGN_TEAM_TO_SCHOOL,
   CLIENT_UPLOAD_FORM,
   GEOGRAPHICAL_REGION_TO_INCLUDE,
   LOCATION_ERROR_MESSAGE,
@@ -22,6 +23,7 @@ import {
   GO_BACK_TEXT,
   LOCATION_ID_PARAM,
   OPENSRP_EVENT_PARAM_VALUE,
+  TEAM_ID_PARAM,
 } from '../../../../constants';
 import { postUploadedFile } from '../ClientListView/helpers/serviceHooks';
 import UploadStatus from '../ClientUploadStatus/';
@@ -32,6 +34,7 @@ export const uploadValidationSchema = Yup.object().shape({
     id: Yup.string().required(REQUIRED),
     name: Yup.string(),
   }),
+  team: Yup.string(),
 });
 /** Default formik values */
 const defaultInitialValues: UploadFormField = {
@@ -40,12 +43,13 @@ const defaultInitialValues: UploadFormField = {
     id: '',
     name: '',
   },
+  team: '',
 };
 /** interface to describe upload form fields */
 export interface UploadFormField {
   file: Blob | null;
   jurisdictions: Dictionary;
-  team: Dictionary;
+  team: string;
 }
 export interface ClientUploadProps {
   eventValue: string;
@@ -82,7 +86,7 @@ export const ClientUpload = (props: ClientUploadProps) => {
               const setSubmittingStatus = () => setSubmitting(false);
               const data = new FormData();
               data.append('file', selectedFile);
-              const uploadParams = `?${EVENT_NAME_PARAM}=${eventValue}&${LOCATION_ID_PARAM}=${values.jurisdictions.id}`;
+              const uploadParams = `?${EVENT_NAME_PARAM}=${eventValue}&${LOCATION_ID_PARAM}=${values.jurisdictions.id}&${TEAM_ID_PARAM}=${values.team}`;
               await fileUploadService(data, setStateIfDone, setSubmittingStatus, uploadParams);
             }}
           >
@@ -100,7 +104,6 @@ export const ClientUpload = (props: ClientUploadProps) => {
                       id={`jurisdictions-id`}
                       className={'async-select'}
                       labelFieldName={`jurisdictions.name`}
-                      locationId={values.jurisdictions.id}
                     />
                   </div>
                   <Field type="hidden" name={`jurisdictions.name`} id={`jurisdictions-name`} />
@@ -119,7 +122,7 @@ export const ClientUpload = (props: ClientUploadProps) => {
                 </FormGroup>
                 {values && values.jurisdictions && values.jurisdictions.id && (
                   <FormGroup>
-                    <Label for="team">Assign team for this school</Label>
+                    <Label for="team">{ASSIGN_TEAM_TO_SCHOOL}</Label>
                     <div style={{ display: 'inline-block', width: '24rem' }}>
                       <Field
                         required={true}
@@ -128,6 +131,7 @@ export const ClientUpload = (props: ClientUploadProps) => {
                         name={`team`}
                         id={`team-id`}
                         className={'async-select'}
+                        locationId={values.jurisdictions.id}
                       />
                     </div>
                   </FormGroup>
@@ -175,7 +179,7 @@ export const ClientUpload = (props: ClientUploadProps) => {
     </div>
   );
 };
-const defaultProps: ClientUploadProps = {
+export const defaultProps: ClientUploadProps = {
   eventValue: OPENSRP_EVENT_PARAM_VALUE,
   fileType: '.csv',
   fileUploadService: postUploadedFile,

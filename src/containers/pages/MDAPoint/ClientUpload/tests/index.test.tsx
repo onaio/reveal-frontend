@@ -1,10 +1,9 @@
 import { cleanup } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import ClientUpload from '..';
+import ClientUpload, { defaultProps } from '..';
 const history = createBrowserHistory();
 
 describe('components/ClientUpload', () => {
@@ -13,13 +12,16 @@ describe('components/ClientUpload', () => {
     shallow(<ClientUpload />);
   });
 
-  it('Matches snapshot', () => {
+  it('renders props correctly', () => {
+    const props = {
+      ...defaultProps,
+    };
     const wrapper = mount(
       <Router history={history}>
-        <ClientUpload />
+        <ClientUpload {...props} />
       </Router>
     );
-    expect(toJson(wrapper.find('ClientUpload'))).toMatchSnapshot();
+    expect(wrapper.children().props()).toMatchSnapshot('ClientUpload Select Props ownProps');
     wrapper.unmount();
   });
 });
