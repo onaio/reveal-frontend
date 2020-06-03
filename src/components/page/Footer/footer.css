@@ -1,0 +1,15 @@
+.reveal-floating-logo {
+  position: fixed;
+  bottom: 0;
+  left: 10px;
+}
+
+.reveal-floating-logo img {
+  width: 100px !important;
+  height: auto;
+}
+
+.floating-logo-text {
+  vertical-align: bottom;
+  line-height: 45px;
+}
