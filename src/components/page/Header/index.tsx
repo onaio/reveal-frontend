@@ -109,14 +109,15 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
       <div>
         <Navbar light={true} expand="md">
           <nav className="navbar navbar-expand-md navbar-light header-logo-navbar">
-            {REACT_APP_PRODUCTION_INST === TH_PRODUCTION_INST && (
+            {REACT_APP_PRODUCTION_INST === TH_PRODUCTION_INST ? (
               <Link to="/" className="navbar-brand">
-                <img src={thaiLogo} alt={WEBSITE_NAME} style={{ transform: 'scale(1.8)' }} />
+                <img src={thaiLogo} alt={WEBSITE_NAME} style={{ transform: 'scale(2)' }} />
+              </Link>
+            ) : (
+              <Link to="/" className="navbar-brand">
+                <img src={logo} alt={WEBSITE_NAME} />
               </Link>
             )}
-            <Link to="/" className="navbar-brand">
-              <img src={logo} alt={WEBSITE_NAME} />
-            </Link>
           </nav>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar={true}>
