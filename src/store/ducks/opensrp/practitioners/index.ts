@@ -236,6 +236,8 @@ export const getPractitionersByOrgId = () =>
         if (practitionerIds) {
           const practitioners = practitionerIds.map(id => practitionersById[id]);
           return practitioners;
+        } else {
+          return [];
         }
       }
       return practitionersArray;

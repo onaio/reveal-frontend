@@ -84,6 +84,9 @@ describe('reducers/practitioners.reducer- integration test', () => {
       practitionersSelector(store.getState(), { organizationId: fixtures.organization3.identifier })
         .length
     ).toEqual(3);
+    expect(
+      practitionersSelector(store.getState(), { organizationId: 'nonExistingOrgId' }).length
+    ).toEqual(0);
 
     expect(practitionersSelector(store.getState(), { name: 'v2_nam' })).toEqual([
       fixtures.practitioner4,
