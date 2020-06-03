@@ -13,7 +13,7 @@ describe('components/forms/SimpleOrgSelect', () => {
     shallow(<SimpleOrgSelect />);
     mount(<SimpleOrgSelect {...defaultProps} />);
   });
-  it('renders select options correctly', () => {
+  it('renders SimpleOrgSelect props correctly', () => {
     const wrapper = mount(<SimpleOrgSelect {...defaultProps} />);
 
     expect(wrapper.children().props()).toMatchSnapshot('SimpleOrgSelect Select Props ownProps');
