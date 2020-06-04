@@ -37,7 +37,7 @@ store.dispatch(fetchGenericJurisdictions('esw-jurisdictions', jurisdictionData))
 store.dispatch(fetchGenericJurisdictions('esw-focusAreas', focusAreaData));
 store.dispatch(fetchMDAPointPlans(MDAPointplans as GenericPlan[]));
 
-describe('components/IRS Reports/JurisdictionReport', () => {
+describe('components/MDA Reports/JurisdictionReport', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });

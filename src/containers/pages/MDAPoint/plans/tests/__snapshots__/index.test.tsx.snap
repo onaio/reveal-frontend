@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/IRS Reports/IRSPlansList handles search correctly: search results props 1`] = `
+exports[`components/MDA Reports/MDAPlansList handles search correctly: search results props 1`] = `
 Array [
   Object {
     "jurisdiction_root_parent_ids": Array [
@@ -19,7 +19,7 @@ Array [
 ]
 `;
 
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: GenericPlansList props 1`] = `
+exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: GenericPlansList props 1`] = `
 Object {
   "fetchPlans": [Function],
   "history": Object {
@@ -103,7 +103,7 @@ Object {
 }
 `;
 
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: breadcrumbs 1`] = `
+exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: breadcrumbs 1`] = `
 Array [
   <li
     className="breadcrumb-item"
@@ -130,7 +130,7 @@ Array [
 ]
 `;
 
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: page title 1`] = `
+exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: page title 1`] = `
 <h3
   className="mt-3 mb-3 page-title"
 >
@@ -138,7 +138,7 @@ exports[`components/IRS Reports/IRSPlansList renders plan definition list correc
 </h3>
 `;
 
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table headers 1`] = `
+exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: table headers 1`] = `
 Array [
   <th
     className="listview-td"
@@ -173,7 +173,7 @@ Array [
 ]
 `;
 
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table rows 1`] = `
+exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: table rows 1`] = `
 Array [
   <td
     className="listview-th"

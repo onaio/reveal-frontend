@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/IRS Reports/JurisdictionReport renders correctly 1`] = `
+exports[`components/MDA Reports/JurisdictionReport renders correctly 1`] = `
 Object {
   "LegendIndicatorComp": [Function],
   "baseURL": "/intervention/mda-point/report",
@@ -181,7 +181,7 @@ Object {
 }
 `;
 
-exports[`components/IRS Reports/JurisdictionReport renders correctly: breadcrumbs 1`] = `
+exports[`components/MDA Reports/JurisdictionReport renders correctly: breadcrumbs 1`] = `
 Array [
   <li
     className="breadcrumb-item"
@@ -224,7 +224,7 @@ Array [
 ]
 `;
 
-exports[`components/IRS Reports/JurisdictionReport renders correctly: page title 1`] = `
+exports[`components/MDA Reports/JurisdictionReport renders correctly: page title 1`] = `
 <h3
   className="mb-3 page-title"
 >

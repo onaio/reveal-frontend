@@ -33,7 +33,7 @@ const props = {
   },
 };
 
-describe('components/IRS Reports/IRSPlansList', () => {
+describe('components/MDA Reports/MDAPlansList', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });

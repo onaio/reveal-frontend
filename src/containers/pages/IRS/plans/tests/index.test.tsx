@@ -11,6 +11,7 @@ import { GenericPlan } from '../../../../../store/ducks/generic/plans';
 import { fetchIRSPlans } from '../../../../../store/ducks/generic/plans';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 
+jest.mock('../../../../../configs/env');
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
