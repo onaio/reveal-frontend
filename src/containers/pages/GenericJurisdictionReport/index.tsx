@@ -27,7 +27,7 @@ import GenericJurisdictionsReducer, {
 import { fetchMDAPointPlans } from '../../../store/ducks/generic/MDAPointPlans';
 import { fetchIRSPlans, GenericPlan } from '../../../store/ducks/generic/plans';
 import { getJurisdictionBreadcrumbs } from '../IRS/Map/helpers';
-import { IRSTableColumns } from './helpers';
+import { plansTableColumns } from './helpers';
 import './style.css';
 
 /** register the reducers */
@@ -199,10 +199,10 @@ const GenericJurisdictionReport = (
 
   const currLevelData = data.filter(el => el.jurisdiction_parent_id === jurisdictionId);
 
-  let columnsToUse = get(IRSTableColumns, jurisdictionColumn, null);
+  let columnsToUse = get(plansTableColumns, jurisdictionColumn, null);
   if (currLevelData && currLevelData.length > 0) {
     if (currLevelData[0].jurisdiction_depth === +focusAreaLevel) {
-      columnsToUse = get(IRSTableColumns, focusAreaColumn, null);
+      columnsToUse = get(plansTableColumns, focusAreaColumn, null);
     }
   }
 

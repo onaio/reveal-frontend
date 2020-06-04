@@ -24,8 +24,8 @@ import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
 } from '../../../../../store/ducks/generic/plans';
 import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
+import { plansTableColumns } from '../../../GenericJurisdictionReport/helpers';
 import * as fixtures from '../../JurisdictionsReport/tests/fixtures';
-import { IRSTableColumns } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -139,7 +139,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.zambiaJurisdictions2019
+      plansTableColumns.zambiaJurisdictions2019
     );
     expect(wrapper.find('IRSIndicatorLegend').length).toEqual(1);
     expect(wrapper.find('IRSIndicatorLegend').props()).toEqual({
@@ -272,7 +272,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.zambiaJurisdictions2019
+      plansTableColumns.zambiaJurisdictions2019
     );
 
     // Zambia URL
@@ -306,7 +306,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.zambiaJurisdictions2019
+      plansTableColumns.zambiaJurisdictions2019
     );
 
     // Lusaka URL
@@ -340,7 +340,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.zambiaJurisdictions2019
+      plansTableColumns.zambiaJurisdictions2019
     );
 
     // Lusaka Test
@@ -374,7 +374,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.zambiaJurisdictions2019
+      plansTableColumns.zambiaJurisdictions2019
     );
     expect(wrapper.find('DrillDownTable a').map(e => e.props().href)).toEqual([
       '/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/2bf9915d-8725-4061-983d-5938802ac0f0',
@@ -415,7 +415,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.zambiaFocusArea2019
+      plansTableColumns.zambiaFocusArea2019
     );
 
     expect(wrapper.find('DrillDownTable a').length).toEqual(14);

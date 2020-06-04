@@ -373,7 +373,7 @@ export const ZambiaFocusAreasColumns = [
 /** IRS Table Columns
  * These are all the table columns for IRS that we know about.
  */
-export const IRSTableColumns: { [key: string]: Column[] } = {
+export const plansTableColumns: { [key: string]: Column[] } = {
   mdaJurisdictionsColumns,
   namibia2019: NamibiaColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,

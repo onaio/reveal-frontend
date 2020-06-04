@@ -1,5 +1,5 @@
+import * as fixtures from '../../IRS/JurisdictionsReport/tests/fixtures';
 import * as helpers from '../helpers';
-import * as fixtures from './fixtures';
 
 describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
   it('should return the correct columns for Namibia', () => {
@@ -18,28 +18,28 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
     );
   });
 
-  it('should return the correct keys for IRSTableColumns', () => {
-    expect(Object.keys(helpers.IRSTableColumns)).toEqual([
+  it('should return the correct keys for plansTableColumns', () => {
+    expect(Object.keys(helpers.plansTableColumns)).toEqual([
       'mdaJurisdictionsColumns',
       'namibia2019',
       'zambiaFocusArea2019',
       'zambiaJurisdictions2019',
     ]);
   });
-  it('it should return the correct table columns for IRSTableColumns namibia2019', () => {
-    expect(JSON.stringify(helpers.IRSTableColumns.namibia2019)).toEqual(
+  it('it should return the correct table columns for plansTableColumns namibia2019', () => {
+    expect(JSON.stringify(helpers.plansTableColumns.namibia2019)).toEqual(
       JSON.stringify(fixtures.NamibiaColumns)
     );
   });
 
-  it('should return the correct table columns for IRSTableColumns zambiaFocusArea2019', () => {
-    expect(JSON.stringify(helpers.IRSTableColumns.zambiaFocusArea2019)).toEqual(
+  it('should return the correct table columns for plansTableColumns zambiaFocusArea2019', () => {
+    expect(JSON.stringify(helpers.plansTableColumns.zambiaFocusArea2019)).toEqual(
       JSON.stringify(fixtures.ZambiaFocusAreasColumns)
     );
   });
 
-  it('should return the correct columns for IRSTableColumns zambiaJurisdictions2019', () => {
-    expect(JSON.stringify(helpers.IRSTableColumns.zambiaJurisdictions2019)).toEqual(
+  it('should return the correct columns for plansTableColumns zambiaJurisdictions2019', () => {
+    expect(JSON.stringify(helpers.plansTableColumns.zambiaJurisdictions2019)).toEqual(
       JSON.stringify(fixtures.ZambiaJurisdictionsColumns)
     );
   });
