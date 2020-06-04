@@ -4,6 +4,7 @@ exports[`components/forms/LocationSelect renders jurisdictionselect with right p
 Object {
   "apiEndpoint": "location/findByProperties",
   "cascadingSelect": true,
+  "handleChange": [Function],
   "loadLocations": true,
   "params": Object {
     "is_jurisdiction": true,
