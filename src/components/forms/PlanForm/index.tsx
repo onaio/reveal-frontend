@@ -20,6 +20,7 @@ import {
   DATE_FORMAT,
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
+  ENABLED_PLAN_TYPES,
 } from '../../../configs/env';
 import {
   ACTION,
@@ -211,6 +212,13 @@ const PlanForm = (props: PlanFormProps) => {
     );
   }
 
+  /**
+   * Check if a plan type should be visible
+   * @param {InterventionType} planType - plan type
+   */
+  const isPlanTypeEnabled = (planType: InterventionType): boolean =>
+    ENABLED_PLAN_TYPES.includes(planType);
+
   return (
     <div className="form-container">
       {areWeDoneHere === true && <Redirect to={redirectAfterAction} />}
@@ -303,8 +311,12 @@ const PlanForm = (props: PlanFormProps) => {
                 }}
                 className={errors.interventionType ? 'form-control is-invalid' : 'form-control'}
               >
-                <option value={InterventionType.FI}>{FOCUS_INVESTIGATION}</option>
-                <option value={InterventionType.IRS}>{IRS_TITLE}</option>
+                {isPlanTypeEnabled(InterventionType.FI) && (
+                  <option value={InterventionType.FI}>{FOCUS_INVESTIGATION}</option>
+                )}
+                {isPlanTypeEnabled(InterventionType.IRS) && (
+                  <option value={InterventionType.IRS}>{IRS_TITLE}</option>
+                )}
               </Field>
               <ErrorMessage
                 name="interventionType"

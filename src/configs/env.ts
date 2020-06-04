@@ -256,3 +256,6 @@ export type REACT_APP_VERSION = typeof REACT_APP_VERSION;
 
 export const REACT_APP_NAME = process.env.REACT_APP_NAME;
 export type REACT_APP_NAME = typeof REACT_APP_NAME;
+
+export const ENABLED_PLAN_TYPES = String(process.env.REACT_APP_ENABLED_PLAN_TYPES || '').split(',');
+export type ENABLED_PLAN_TYPES = typeof ENABLED_PLAN_TYPES;
