@@ -72,6 +72,8 @@ describe('components/IRS Reports/IRSPlansList', () => {
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
     expect(toJson(wrapper.find('thead tr th'))).toMatchSnapshot('table headers');
     expect(toJson(wrapper.find('tbody tr td'))).toMatchSnapshot('table rows');
+    expect(wrapper.find('GenericPlansList').length).toBe(1);
+    expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('GenericPlansList props');
     wrapper.unmount();
   });
 
@@ -99,6 +101,9 @@ describe('components/IRS Reports/IRSPlansList', () => {
           <ConnectedIRSPlansList {...props} />
         </Router>
       </Provider>
+    );
+    expect((wrapper.find('GenericPlansList').props() as any).plans).toMatchSnapshot(
+      'search results props'
     );
     expect(
       wrapper

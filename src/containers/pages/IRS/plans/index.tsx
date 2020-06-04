@@ -19,13 +19,8 @@ import { GenericPlanListProps, GenericPlansList } from '../../GenericPlansList';
 /** register the IRS plan definitions reducer */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 
-/** interface for IRS PlanList props */
-interface PlanListProps extends GenericPlanListProps {
-  ownProps: any;
-}
-
-/** Simple component that loads a privew list of IRS plans */
-const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
+/** Simple component that loads a preview list of IRS plans */
+const IRSPlansList = (props: GenericPlanListProps & RouteComponentProps) => {
   return (
     <div>
       <GenericPlansList {...props} />
@@ -34,9 +29,8 @@ const IRSPlansList = (props: PlanListProps & RouteComponentProps) => {
 };
 
 /** Declare default props for IRSPlansList */
-const defaultProps: PlanListProps = {
+const defaultProps: GenericPlanListProps = {
   fetchPlans: fetchIRSPlans,
-  ownProps: {},
   pageTitle: IRS_PLANS,
   pageUrl: REPORT_IRS_PLAN_URL,
   plans: [],
