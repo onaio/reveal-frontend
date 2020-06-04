@@ -190,10 +190,6 @@ describe('components/forms/JurisdictionSelect', () => {
     expect(container.querySelector('.jurisdiction__menu')).toMatchSnapshot(
       'Jurisdiction Menu No Options'
     );
-    /** Investigate a way to simulate handle change without selections and
-     * 1. Assert handlechange is called
-     * 2. Assert handleChangeWithoutOptions is called
-     */
     expect(container.querySelector('.jurisdiction__single-value') as HTMLElement).toEqual(null);
     expect(mockedOpenSRPservice).toBeCalledTimes(1);
   });
