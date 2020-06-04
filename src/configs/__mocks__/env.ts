@@ -144,3 +144,9 @@ export const ENABLED_FI_REASONS = ['Case Triggered', 'Routine'];
 export type ENABLED_FI_REASONS = typeof ENABLED_FI_REASONS;
 
 export const WEBSITE_NAME = 'Reveal';
+
+export const NAVBAR_BRAND_IMG_SRC =
+  'https://github.com/onaio/reveal-frontend/raw/master/src/assets/images/logo.png';
+
+export const REVEAL_BRAND_IMG_SRC =
+  'https://github.com/onaio/reveal-frontend/raw/master/src/assets/images/logo.png';
