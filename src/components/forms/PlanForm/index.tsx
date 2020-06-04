@@ -20,8 +20,8 @@ import {
   DATE_FORMAT,
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
+  ENABLED_FI_REASONS,
   ENABLED_PLAN_TYPES,
-  LANGUAGE,
 } from '../../../configs/env';
 import {
   ACTION,
@@ -65,7 +65,7 @@ import {
   planActivities,
   planStatusDisplay,
 } from '../../../configs/settings';
-import { CASE_TRIGGERED, PLAN_LIST_URL } from '../../../constants';
+import { PLAN_LIST_URL } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
@@ -166,8 +166,10 @@ const PlanForm = (props: PlanFormProps) => {
   const fiActivities = getFormActivities(FIActivities);
 
   let filteredFIReasons: FIReasonType[] = [...FIReasons];
-  if (LANGUAGE === 'th') {
-    filteredFIReasons = FIReasons.filter(reason => reason !== CASE_TRIGGERED);
+  if (ENABLED_FI_REASONS.length) {
+    filteredFIReasons = FIReasons.filter((reason: FIReasonType) =>
+      ENABLED_FI_REASONS.includes(reason)
+    );
   }
 
   const disAllowedStatusChoices: string[] = [];

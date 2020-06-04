@@ -6,6 +6,7 @@ import * as fixtures from './fixtures';
 
 jest.mock('../../../../configs/env', () => ({
   DATE_FORMAT: 'yyyy-MM-dd',
+  ENABLED_FI_REASONS: ['Routine'],
   ENABLED_PLAN_TYPES: ['FI'],
   LANGUAGE: 'th',
 }));
