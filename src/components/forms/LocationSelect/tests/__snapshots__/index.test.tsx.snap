@@ -5,6 +5,9 @@ Object {
   "apiEndpoint": "location/findByProperties",
   "cascadingSelect": true,
   "handleChange": [Function],
+  "handleChangeWithOptions": [Function],
+  "handleChangeWithoutOptions": [Function],
+  "handleLoadOptionsPayload": [Function],
   "loadLocations": true,
   "params": Object {
     "is_jurisdiction": true,
