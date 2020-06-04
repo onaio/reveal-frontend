@@ -101,3 +101,6 @@ export const BACKEND_ACTIVE = true;
 export const REACT_APP_VERSION = 'v0.4.2';
 
 export const REACT_APP_NAME = 'Reveal-frontend';
+
+export const ENABLED_PLAN_TYPES = ['FI', 'IRS', 'MDA', 'MDA-Point'];
+export type ENABLED_PLAN_TYPES = typeof ENABLED_PLAN_TYPES;
