@@ -81,8 +81,8 @@ describe('components/IRS Reports/IRSPlansList', () => {
     expect(toJson(wrapper.find('thead tr th'))).toMatchSnapshot('table headers');
     expect(toJson(wrapper.find('tbody tr td'))).toMatchSnapshot('table rows');
 
-    expect(wrapper.find('IRSPlansList').length).toBe(1);
-    expect(wrapper.find('IRSPlansList').props()).toMatchSnapshot('ConnectedIRSPlansList props');
+    expect(wrapper.find('GenericPlansList').length).toBe(1);
+    expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('ConnectedIRSPlansList props');
 
     expect(wrapper.find('.page-title').text()).toEqual('MDA Point Plans');
 
