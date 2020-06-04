@@ -12,6 +12,7 @@ import { UserSelectFilter } from '../../../../components/forms/UserFilter';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import { ENABLED_PLAN_TYPES } from '../../../../configs/env';
 import {
   ADD_PLAN,
   HOME,
@@ -100,18 +101,20 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
   }, []);
 
   const listViewData = (data: PlanDefinition[]) =>
-    data.map(planObj => {
-      const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
+    data
+      .map(planObj => {
+        const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
 
-      return [
-        <Link to={`${PLAN_UPDATE_URL}/${planObj.identifier}`} key={planObj.identifier}>
-          {planObj.title}
-        </Link>,
-        typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : '',
-        planStatusDisplay[planObj.status] || planObj.status,
-        planObj.date,
-      ];
-    });
+        return [
+          <Link to={`${PLAN_UPDATE_URL}/${planObj.identifier}`} key={planObj.identifier}>
+            {planObj.title}
+          </Link>,
+          typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : '',
+          planStatusDisplay[planObj.status] || planObj.status,
+          planObj.date,
+        ];
+      })
+      .filter(result => result[1] && ENABLED_PLAN_TYPES.includes(result[1] as string));
 
   if (loading === true) {
     return <Loading />;
