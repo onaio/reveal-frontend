@@ -21,6 +21,7 @@ import {
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
   ENABLED_PLAN_TYPES,
+  LANGUAGE,
 } from '../../../configs/env';
 import {
   ACTION,
@@ -64,7 +65,7 @@ import {
   planActivities,
   planStatusDisplay,
 } from '../../../configs/settings';
-import { PLAN_LIST_URL } from '../../../constants';
+import { CASE_TRIGGERED, PLAN_LIST_URL } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
@@ -83,7 +84,7 @@ import {
   PlanSchema,
 } from './helpers';
 import './style.css';
-import { PlanActionCodesType } from './types';
+import { FIReasonType, PlanActionCodesType } from './types';
 
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {
@@ -164,6 +165,11 @@ const PlanForm = (props: PlanFormProps) => {
   const irsActivities = getFormActivities(IRSActivities);
   const fiActivities = getFormActivities(FIActivities);
 
+  let filteredFIReasons: FIReasonType[] = [...FIReasons];
+  if (LANGUAGE === 'th') {
+    filteredFIReasons = FIReasons.filter(reason => reason !== CASE_TRIGGERED);
+  }
+
   const disAllowedStatusChoices: string[] = [];
   if (editMode) {
     // Don't allow setting status back to draft
@@ -173,9 +179,9 @@ const PlanForm = (props: PlanFormProps) => {
     // set these fields to friendly defaults if not set or else the form cant be submitted
     if (
       initialValues.interventionType === InterventionType.FI &&
-      (!initialValues.fiReason || !FIReasons.includes(initialValues.fiReason))
+      (!initialValues.fiReason || !filteredFIReasons.includes(initialValues.fiReason))
     ) {
-      initialValues.fiReason = FIReasons[0];
+      initialValues.fiReason = filteredFIReasons[0];
     }
   }
 
@@ -487,7 +493,7 @@ const PlanForm = (props: PlanFormProps) => {
                   className={errors.fiReason ? 'form-control is-invalid' : 'form-control'}
                 >
                   <option>----</option>
-                  {FIReasons.map(e => (
+                  {filteredFIReasons.map(e => (
                     <option key={e} value={e}>
                       {FIReasonsDisplay[e]}
                     </option>
@@ -500,25 +506,30 @@ const PlanForm = (props: PlanFormProps) => {
                 />
               </FormGroup>
             )}
-            {values.interventionType === InterventionType.FI && values.fiReason === FIReasons[1] && (
-              <FormGroup>
-                <Label for="caseNum">{CASE_NUMBER}</Label>
-                <Field
-                  required={
-                    values.interventionType === InterventionType.FI &&
-                    values.fiReason === FIReasons[1]
-                  }
-                  type="text"
-                  name="caseNum"
-                  id="caseNum"
-                  disabled={disabledFields.includes('caseNum')}
-                  className={errors.caseNum ? 'form-control is-invalid' : 'form-control'}
-                />
-                <ErrorMessage name="caseNum" component="small" className="form-text text-danger" />
+            {values.interventionType === InterventionType.FI &&
+              values.fiReason === filteredFIReasons[1] && (
+                <FormGroup>
+                  <Label for="caseNum">{CASE_NUMBER}</Label>
+                  <Field
+                    required={
+                      values.interventionType === InterventionType.FI &&
+                      values.fiReason === filteredFIReasons[1]
+                    }
+                    type="text"
+                    name="caseNum"
+                    id="caseNum"
+                    disabled={disabledFields.includes('caseNum')}
+                    className={errors.caseNum ? 'form-control is-invalid' : 'form-control'}
+                  />
+                  <ErrorMessage
+                    name="caseNum"
+                    component="small"
+                    className="form-text text-danger"
+                  />
 
-                <Field type="hidden" name="opensrpEventId" id="opensrpEventId" readOnly={true} />
-              </FormGroup>
-            )}
+                  <Field type="hidden" name="opensrpEventId" id="opensrpEventId" readOnly={true} />
+                </FormGroup>
+              )}
             <FormGroup>
               <Label for="title">{PLAN_TITLE_LABEL}</Label>
               <Field
