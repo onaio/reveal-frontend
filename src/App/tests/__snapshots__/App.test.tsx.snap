@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App attempts to logout user: should be login page 1`] = `"HomePlanManage PlansIRSAssignMonitorFocus InvestigationIRS ReportingAdminTeamsPractitionersUsersAboutLoginReveal-frontend: v0.4.2"`;
+exports[`App attempts to logout user: should be login page 1`] = `"HomePlanManage PlansIRSAssignMonitorFocus InvestigationIRS ReportingAdminTeamsPractitionersUsersAboutLogin v0.4.2"`;
 
-exports[`App integration: renders App correctly: The displayed text 1`] = `"HomePlanManage PlansIRSAssignMonitorFocus InvestigationIRS ReportingAdminTeamsPractitionersUsersAbout superset-userSign OutWelcome to RevealGet started by selecting an intervention belowIRSFocus InvestigationTeamsReveal-frontend: v0.4.2"`;
+exports[`App integration: renders App correctly: The displayed text 1`] = `"HomePlanManage PlansIRSAssignMonitorFocus InvestigationIRS ReportingAdminTeamsPractitionersUsersAbout superset-userSign OutWelcome to RevealGet started by selecting an intervention belowIRSFocus InvestigationTeams v0.4.2"`;
 
 exports[`App integration: renders App correctly: footer 1`] = `
 <footer
@@ -11,11 +11,20 @@ exports[`App integration: renders App correctly: footer 1`] = `
   <hr
     className="p-0 m-0"
   />
+  <img
+    alt="Reveal"
+    src="https://github.com/onaio/reveal-frontend/raw/b0756b0c1ed95dc6db23dc4fd1375c81bdf7fb1b/src/assets/images/logo.png"
+  />
+   
   <span
     className="text-muted"
+    style={
+      Object {
+        "lineHeight": "40px",
+        "verticalAlign": "bottom",
+      }
+    }
   >
-    Reveal-frontend
-    : 
     v0.4.2
   </span>
 </footer>

@@ -13,7 +13,7 @@ Object {
       >
         <img
           alt="Reveal"
-          src="logo.png"
+          src="https://github.com/onaio/reveal-frontend/raw/b0756b0c1ed95dc6db23dc4fd1375c81bdf7fb1b/src/assets/images/thai-logo.png"
         />
       </Link>
     </nav>,
@@ -304,7 +304,7 @@ Object {
       >
         <img
           alt="Reveal"
-          src="logo.png"
+          src="https://github.com/onaio/reveal-frontend/raw/b0756b0c1ed95dc6db23dc4fd1375c81bdf7fb1b/src/assets/images/thai-logo.png"
         />
       </Link>
     </nav>,
