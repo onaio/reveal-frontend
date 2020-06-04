@@ -1,0 +1,233 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/MDA Reports/JurisdictionReport renders correctly 1`] = `
+Object {
+  "LegendIndicatorComp": [Function],
+  "baseURL": "/intervention/mda-point/report",
+  "cellComponent": [Function],
+  "fetchJurisdictions": [Function],
+  "fetchPlans": [Function],
+  "focusAreaColumn": "0",
+  "focusAreaLevel": "2",
+  "hasChildren": [Function],
+  "history": Object {
+    "action": "POP",
+    "block": [Function],
+    "createHref": [Function],
+    "go": [Function],
+    "goBack": [Function],
+    "goForward": [Function],
+    "length": 1,
+    "listen": [Function],
+    "location": Object {
+      "hash": "",
+      "pathname": "/",
+      "search": "",
+      "state": undefined,
+    },
+    "push": [Function],
+    "replace": [Function],
+  },
+  "jurisdictionColumn": "0",
+  "jurisdictions": Array [
+    Object {
+      "albdist": 0,
+      "id": "92302c47-f880-55b2-bbb5-c1a306af86d2",
+      "is_virtual_jurisdiction": 0,
+      "jurisdiction_depth": 0,
+      "jurisdiction_id": "2942",
+      "jurisdiction_name": "Lusaka",
+      "jurisdiction_name_path": Array [],
+      "jurisdiction_parent_id": "",
+      "jurisdiction_path": Array [],
+      "mmaadr": 0,
+      "mmaadrsev": 0,
+      "mmacov": 2,
+      "mmacovper": 0.3333333333333333,
+      "plan_id": "40357eff-81b6-4e32-bd3d-484019689f7c",
+      "sacrefmedreason": 0,
+      "sacrefused": 0,
+      "sacregistered": 6,
+    },
+    Object {
+      "albdist": 0,
+      "id": "f4746c0b-0bcf-5d5a-a8ff-422826e62642",
+      "is_virtual_jurisdiction": 0,
+      "jurisdiction_depth": 1,
+      "jurisdiction_id": "3019",
+      "jurisdiction_name": "Mtendere",
+      "jurisdiction_name_path": Array [
+        "Lusaka",
+      ],
+      "jurisdiction_parent_id": "2942",
+      "jurisdiction_path": Array [
+        "2942",
+      ],
+      "mmaadr": 0,
+      "mmaadrsev": 0,
+      "mmacov": 2,
+      "mmacovper": 0.3333333333333333,
+      "plan_id": "40357eff-81b6-4e32-bd3d-484019689f7c",
+      "sacrefmedreason": 0,
+      "sacrefused": 0,
+      "sacregistered": 6,
+    },
+    Object {
+      "albdist": 0,
+      "id": "0e0d98e6-7140-5d60-8e3e-e1a181693f7d",
+      "is_virtual_jurisdiction": 0,
+      "jurisdiction_depth": 2,
+      "jurisdiction_id": "1337",
+      "jurisdiction_name": "REVEAL TEST",
+      "jurisdiction_name_path": Array [
+        "Lusaka",
+        "Mtendere",
+      ],
+      "jurisdiction_parent_id": "3019",
+      "jurisdiction_path": Array [
+        "2942",
+        "3019",
+      ],
+      "mmaadr": 0,
+      "mmaadrsev": 0,
+      "mmacov": 0,
+      "mmacovper": 0,
+      "plan_id": "40357eff-81b6-4e32-bd3d-484019689f7c",
+      "sacrefmedreason": 0,
+      "sacrefused": 0,
+      "sacregistered": 0,
+    },
+    Object {
+      "albdist": 0,
+      "id": "abfe5aba-abcb-5416-b254-2b595da625dd",
+      "is_virtual_jurisdiction": 0,
+      "jurisdiction_depth": 2,
+      "jurisdiction_id": "3951",
+      "jurisdiction_name": "Akros_1",
+      "jurisdiction_name_path": Array [
+        "Lusaka",
+        "Mtendere",
+      ],
+      "jurisdiction_parent_id": "3019",
+      "jurisdiction_path": Array [
+        "2942",
+        "3019",
+      ],
+      "mmaadr": 0,
+      "mmaadrsev": 0,
+      "mmacov": 2,
+      "mmacovper": 0.3333333333333333,
+      "plan_id": "40357eff-81b6-4e32-bd3d-484019689f7c",
+      "sacrefmedreason": 0,
+      "sacrefused": 0,
+      "sacregistered": 6,
+    },
+    Object {
+      "albdist": 0,
+      "id": "75143335-c019-52b6-8dcc-0967d640e2f0",
+      "is_virtual_jurisdiction": 0,
+      "jurisdiction_depth": 2,
+      "jurisdiction_id": "3952",
+      "jurisdiction_name": "Akros_2",
+      "jurisdiction_name_path": Array [
+        "Lusaka",
+        "Mtendere",
+      ],
+      "jurisdiction_parent_id": "3019",
+      "jurisdiction_path": Array [
+        "2942",
+        "3019",
+      ],
+      "mmaadr": 0,
+      "mmaadrsev": 0,
+      "mmacov": 0,
+      "mmacovper": 0,
+      "plan_id": "40357eff-81b6-4e32-bd3d-484019689f7c",
+      "sacrefmedreason": 0,
+      "sacrefused": 0,
+      "sacregistered": 0,
+    },
+  ],
+  "location": [MockFunction],
+  "match": Object {
+    "isExact": true,
+    "params": Object {
+      "planId": "40357eff-81b6-4e32-bd3d-484019689f7c",
+    },
+    "path": "/intervention/mda-point/report/:planId",
+    "url": "/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c",
+  },
+  "pageTitle": "MDA Point Reporting",
+  "plan": Object {
+    "jurisdiction_root_parent_ids": Array [
+      "2942",
+    ],
+    "plan_date": "2019-09-05",
+    "plan_effective_period_end": "2019-09-25",
+    "plan_effective_period_start": "2019-09-05",
+    "plan_id": "40357eff-81b6-4e32-bd3d-484019689f7c",
+    "plan_intervention_type": "MDA-Point",
+    "plan_name": "MDA-Point-2019-09-05-TEST",
+    "plan_status": "retired",
+    "plan_title": "MDA-Point-2019-09-05 TEST",
+    "plan_version": "2",
+  },
+  "reportingPlanSlice": "01",
+  "service": [Function],
+  "slices": Array [
+    "12",
+    "esw-jurisdictions",
+  ],
+}
+`;
+
+exports[`components/MDA Reports/JurisdictionReport renders correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      replace={false}
+      to="/"
+    >
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="1"
+      replace={false}
+      to="/intervention/mda-point/report"
+    >
+      <a
+        href="/intervention/mda-point/report"
+        onClick={[Function]}
+      >
+        MDA Point Reporting
+      </a>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    MDA-Point-2019-09-05 TEST
+  </li>,
+]
+`;
+
+exports[`components/MDA Reports/JurisdictionReport renders correctly: page title 1`] = `
+<h3
+  className="mb-3 page-title"
+>
+  MDA Point Reporting: MDA-Point-2019-09-05 TEST
+</h3>
+`;

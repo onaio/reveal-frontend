@@ -64,6 +64,7 @@ import {
   REACT_CALLBACK_PATH,
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
+  REPORT_MDA_POINT_PLAN_URL,
   SINGLE_ORGANIZATION_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
@@ -82,6 +83,8 @@ import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import ConnectedMdaPointJurisdictionReport from '../containers/pages/MDAPoint/jurisdictionsReport';
+import ConnectedMDAPointPlansList from '../containers/pages/MDAPoint/plans';
 import ConnectedAssignPractitioner from '../containers/pages/OrganizationViews/AssignPractitioners';
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
@@ -183,6 +186,28 @@ const App = (props: AppProps) => {
                 exact={true}
                 path={`${ACTIVE_IRS_PLAN_URL}/:id`}
                 component={IrsPlan}
+              />
+              {/* MDA point Reporting plan table view */}
+              <ConnectedPrivateRoute
+                redirectPath={APP_CALLBACK_URL}
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={REPORT_MDA_POINT_PLAN_URL}
+                component={ConnectedMDAPointPlansList}
+              />
+              <ConnectedPrivateRoute
+                redirectPath={APP_CALLBACK_URL}
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${REPORT_MDA_POINT_PLAN_URL}/:planId`}
+                component={ConnectedMdaPointJurisdictionReport}
+              />
+              <ConnectedPrivateRoute
+                redirectPath={APP_CALLBACK_URL}
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={true}
+                path={`${REPORT_MDA_POINT_PLAN_URL}/:planId/:jurisdictionId`}
+                component={ConnectedMdaPointJurisdictionReport}
               />
               {/* IRS Reporting plan table view */}
               <ConnectedPrivateRoute

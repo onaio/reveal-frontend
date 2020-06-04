@@ -23,7 +23,7 @@ import GenericJurisdictionsReducer, {
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
-  IRSPlan,
+  GenericPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../../store/ducks/generic/plans';
 import genericStructuresReducer, {
@@ -86,14 +86,14 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         isExact: true,
         params: {
           jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
         url: `${INTERVENTION_IRS_URL}/${
-          (plans[0] as IRSPlan).plan_id
+          (plans[0] as GenericPlan).plan_id
         }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
       structures: getGenericStructures(
         store.getState(),
         'zm-structures',
@@ -122,14 +122,14 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         isExact: true,
         params: {
           jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
         url: `${INTERVENTION_IRS_URL}/${
-          (plans[0] as IRSPlan).plan_id
+          (plans[0] as GenericPlan).plan_id
         }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
       structures: {} as StructureFeatureCollection,
     };
     shallow(
@@ -172,14 +172,14 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         isExact: true,
         params: {
           jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
         url: `${INTERVENTION_IRS_URL}/${
-          (plans[0] as IRSPlan).plan_id
+          (plans[0] as GenericPlan).plan_id
         }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
       service: supersetServiceMock,
       structures,
     };
@@ -317,14 +317,14 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         isExact: true,
         params: {
           jurisdictionId: '92a0c5f3-8b47-465e-961b-2998ad3f00a5',
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
         url: `${INTERVENTION_IRS_URL}/${
-          (plans[0] as IRSPlan).plan_id
+          (plans[0] as GenericPlan).plan_id
         }/92a0c5f3-8b47-465e-961b-2998ad3f00a5/${MAP}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
       structures,
     };
     const wrapper = mount(
