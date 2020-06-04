@@ -32,6 +32,7 @@ import reducer, {
 } from '../plans';
 import * as fixtures from './fixtures';
 
+jest.mock('../../../configs/env');
 reducerRegistry.register(reducerName, reducer);
 
 // reselect selector

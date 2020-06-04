@@ -11,6 +11,7 @@ import plansReducer, {
 import { plan101, plan102, plan103, plan99 } from '../../../../../../store/ducks/tests/fixtures';
 import JurisdictionList from '../JurisdictionList';
 
+jest.mock('../../../../../../configs/env');
 /** register reducers */
 reducerRegistry.register(plansReducerName, plansReducer);
 

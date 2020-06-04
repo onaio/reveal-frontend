@@ -561,6 +561,7 @@ export const getPlansArrayByTitle = (planKey?: string) =>
  *    - plan jurisdiction parent_id
  *    - plan title
  *    - a list of plan ids
+ * The plans returned are further filtered based on the enabled plan types
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *
