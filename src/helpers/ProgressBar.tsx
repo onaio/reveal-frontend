@@ -1,5 +1,5 @@
 import React from 'react';
-import { CellInfo } from 'react-table-v6';
+import { Cell } from 'react-table';
 import * as colors from '../colors';
 import {
   GREEN_THRESHOLD,
@@ -42,7 +42,7 @@ const ProgressBar = (props: ProgressBarProps) => {
   const percentValueString = percentValue.toFixed(decimalPoints);
 
   const backgroundColor = indicatorThresholds
-    ? getThresholdColor({ value } as CellInfo, indicatorThresholds, true)
+    ? getThresholdColor({ value } as Cell, indicatorThresholds, true)
     : decimalValue >= GREEN_THRESHOLD
     ? colors.GREEN
     : decimalValue >= ORANGE_THRESHOLD

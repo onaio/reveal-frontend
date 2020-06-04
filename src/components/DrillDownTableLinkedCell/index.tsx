@@ -1,4 +1,4 @@
-import { DropDownCellProps } from '@onaio/drill-down-table';
+import { DropDownCellProps } from '@onaio/drill-down-table-v7';
 import React from 'react';
 import { Link } from 'react-router-dom';
 

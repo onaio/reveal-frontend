@@ -1,12 +1,11 @@
-import DrillDownTable from '@onaio/drill-down-table';
+import {DrillDownTable} from '@onaio/drill-down-table-v7';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
-import { Column } from 'react-table-v6';
-import 'react-table-v6/react-table.css';
+import { Column } from 'react-table';
 import { Col, Row } from 'reactstrap';
 import { format } from 'util';
 import HeaderBreadcrumbs, {
@@ -250,13 +249,13 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
           );
         }
         /** Handle all Columns i.e columns unique for reactive and routine (once handled above) plus columns common on both (name)  */
-        const allColumns: Column[] = [
+        const allColumns = [
           ...jsxColumns('name'),
           ...statusColumn,
           ...columnsBasedOnReason,
         ];
         /** Contains columns and data that will build the table */
-        const tableProps = {
+        const tableProps: any = {
           ...defaultTableProps,
           columns: allColumns,
           data: thePlans,
@@ -325,7 +324,7 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
           ...columnsBasedOnReason,
         ];
         /** Contains columns and data that will build the table */
-        const tableProps = {
+        const tableProps: any = {
           ...defaultTableProps,
           columns: allColumns,
           data: thePlans,

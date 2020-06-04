@@ -11,7 +11,7 @@ import querystring from 'querystring';
 import { MouseEvent } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CellInfo, Column } from 'react-table-v6';
+import { Cell, Column } from 'react-table';
 import { toast, ToastOptions } from 'react-toastify';
 import SeamlessImmutable from 'seamless-immutable';
 import uuidv4 from 'uuid/v4';
@@ -558,7 +558,7 @@ export function getFilteredFIPlansURL(jurisdictionPath: string, planId: string):
   return `${FI_FILTER_URL}/${jurisdictionPath}/${planId}`;
 }
 
-/** Returns Table columns Which require external dependencies (Cell, Link, CellInfo)
+/** Returns Table columns Which require external dependencies (Cell, Link, Cell)
  * the columns being built include focusarea, name and action
  * @param {colType} accessor column
  */
@@ -569,13 +569,14 @@ export const jsxColumns = (colType: string): Column[] | [] => {
         Header: FOCUS_AREA_HEADER,
         columns: [
           {
-            Cell: (cell: CellInfo) => {
+            Cell: (cell: Cell) => {
+              const original: Dictionary = cell.row.original;
               return (
                 <div>
-                  {cell.original.focusArea.trim() && cell.value}
+                  {original.focusArea.trim() && cell.value}
                   &nbsp;&nbsp;
-                  {cell.original.focusArea.trim() && (
-                    <Link to={`${FI_SINGLE_URL}/${cell.original.jurisdiction_id}`}>
+                  {original.focusArea.trim() && (
+                    <Link to={`${FI_SINGLE_URL}/${original.jurisdiction_id}`}>
                       <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
                     </Link>
                   )}
@@ -595,14 +596,15 @@ export const jsxColumns = (colType: string): Column[] | [] => {
         Header: NAME,
         columns: [
           {
-            Cell: (cell: CellInfo) => {
+            Cell: (cell: Cell) => {
+              const original: Dictionary = cell.row.original;
               return (
                 <div>
-                  {cell.original.focusArea.trim() && (
-                    <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>{cell.value}</Link>
+                  {original.focusArea.trim() && (
+                    <Link to={`${FI_SINGLE_MAP_URL}/${original.id}`}>{cell.value}</Link>
                   )}
                   &nbsp;
-                  <NewRecordBadge recordDate={cell.original.plan_date} />
+                  <NewRecordBadge recordDate={original.plan_date} />
                 </div>
               );
             },
@@ -642,12 +644,10 @@ export const defaultTableProps = {
   data: [],
   identifierField: 'id',
   linkerField: 'id',
-  minRows: 0,
+  paginate: false,
   parentIdentifierField: 'parent',
   rootParentId: null,
-  showPageSizeOptions: false,
-  showPagination: false,
-  useDrillDownTrProps: false,
+  useDrillDown: false,
 };
 
 /**

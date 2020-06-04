@@ -1,5 +1,9 @@
 import { Cell, Column } from 'react-table';
+<<<<<<< HEAD:src/containers/pages/GenericJurisdictionReport/helpers.ts
 import { getIRSThresholdAdherenceIndicator } from '../../../helpers/indicators';
+=======
+import { getIRSThresholdAdherenceIndicator } from '../../../../helpers/indicators';
+>>>>>>> Replacing typings and props dependent on react-table-v6:src/containers/pages/IRS/JurisdictionsReport/helpers.ts
 
 /** columns for Namibia IRS jurisdictions */
 export const NamibiaColumns = [
@@ -7,7 +11,6 @@ export const NamibiaColumns = [
     Header: 'Name',
     columns: [
       {
-        Header: '',
         accessor: 'jurisdiction_name',
         minWidth: 180,
       },
@@ -17,7 +20,6 @@ export const NamibiaColumns = [
     Header: 'Structures Targeted',
     columns: [
       {
-        Header: '',
         accessor: 'target_2019',
       },
     ],
@@ -26,7 +28,6 @@ export const NamibiaColumns = [
     Header: 'Structures Found',
     columns: [
       {
-        Header: '',
         accessor: 'structuresfound',
       },
     ],
@@ -35,7 +36,6 @@ export const NamibiaColumns = [
     Header: 'Structures Sprayed',
     columns: [
       {
-        Header: '',
         accessor: 'structuressprayed',
       },
     ],
@@ -44,8 +44,8 @@ export const NamibiaColumns = [
     Header: 'Target Coverage',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+
         accessor: 'targetcoverage',
         className: 'indicator centered',
       },
@@ -55,8 +55,8 @@ export const NamibiaColumns = [
     Header: 'Found Coverage',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+
         accessor: 'foundcoverage',
         className: 'indicator centered',
       },
@@ -66,14 +66,14 @@ export const NamibiaColumns = [
     Header: 'Refusals',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell, null),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following first visit',
         accessor: 'refusalsfirst',
         className: 'indicator centered',
         id: 'refusalsfirst',
       },
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell, null),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following mop-up',
         accessor: 'refusalsmopup',
         className: 'indicator centered',
@@ -86,14 +86,14 @@ export const NamibiaColumns = [
     Header: 'Locked',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell, null),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following first visit',
         accessor: 'lockedfirst',
         className: 'indicator centered',
         id: 'lockedfirst',
       },
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell, null),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following mop-up',
         accessor: 'lockedmopup',
         className: 'indicator centered',
@@ -138,7 +138,7 @@ export const ZambiaJurisdictionsColumns = [
     Header: '% visited Spray Areas Effectively sprayed',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'perctvisareaseffect',
         className: 'indicator centered',
@@ -176,7 +176,7 @@ export const ZambiaJurisdictionsColumns = [
     Header: 'Spray coverage of targeted (Progress)',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'spraycovtarg',
         className: 'indicator centered',
@@ -187,7 +187,7 @@ export const ZambiaJurisdictionsColumns = [
     Header: 'Room coverage of structures sprayed',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'roomcov',
         className: 'indicator centered',
@@ -328,7 +328,7 @@ export const ZambiaFocusAreasColumns = [
     Header: 'Spray Coverage (Effectiveness)',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'spraycov',
         className: 'indicator centered',
@@ -339,7 +339,7 @@ export const ZambiaFocusAreasColumns = [
     Header: 'Found Coverage',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'spraytarg',
         className: 'indicator centered',
@@ -350,7 +350,7 @@ export const ZambiaFocusAreasColumns = [
     Header: 'Spray Success Rate (PMI SC)',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'spraysuccess',
         className: 'indicator centered',
@@ -361,7 +361,7 @@ export const ZambiaFocusAreasColumns = [
     Header: 'Room coverage of structures sprayed',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'roomcov',
         className: 'indicator centered',

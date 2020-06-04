@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DropDownCellProps } from '@onaio/drill-down-table';
+import { DropDownCellProps } from '@onaio/drill-down-table-v7';
+import { Dictionary } from '@onaio/utils';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MAP } from '../../constants';
@@ -14,20 +15,20 @@ export interface LinkedCellProps extends DropDownCellProps {
  */
 const IRSTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps) => {
   const { cell, cellValue, hasChildren, urlPath } = props;
-
-  const url = urlPath ? `${urlPath}/${cell.original.jurisdiction_id}` : '';
+  const original = cell.row.original as Dictionary;
+  const url = urlPath ? `${urlPath}/${original.jurisdiction_id}` : '';
   const val =
-    hasChildren || cell.original.is_virtual_jurisdiction ? (
+    hasChildren || original.is_virtual_jurisdiction ? (
       <span className="plan-jurisdiction-name name-label">{cellValue}</span>
     ) : (
       <span className="plan-jurisdiction-name main-span">
         <span className="plan-jurisdiction-name btn-link">
-          <Link to={`${urlPath}/${cell.original.jurisdiction_id}/${MAP}`}>
+          <Link to={`${urlPath}/${original.jurisdiction_id}/${MAP}`}>
             <FontAwesomeIcon icon={['fas', MAP]} />
           </Link>
         </span>
         &nbsp;&nbsp;
-        <Link to={`${urlPath}/${cell.original.jurisdiction_id}/${MAP}`}>{cellValue}</Link>
+        <Link to={`${urlPath}/${original.jurisdiction_id}/${MAP}`}>{cellValue}</Link>
       </span>
     );
   return <div>{hasChildren ? <Link to={url}>{cellValue}</Link> : val}</div>;

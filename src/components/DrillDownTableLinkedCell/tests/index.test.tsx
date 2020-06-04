@@ -2,13 +2,13 @@ import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
-import { CellInfo } from 'react-table-v6';
+import { Cell } from 'react-table';
 import DrillDownTableLinkedCell from '..';
 
 const urlPath: string = '/path';
 /* tslint:disable:object-literal-sort-keys */
 
-const cell: CellInfo = {
+const cell: Cell = {
   index: 0,
   viewIndex: 0,
   pageSize: 20,
