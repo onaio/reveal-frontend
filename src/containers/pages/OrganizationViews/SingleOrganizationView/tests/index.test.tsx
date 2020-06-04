@@ -27,7 +27,6 @@ describe('src/containers/pages/OrganizationViews', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     store.dispatch(practitionersDucks.removePractitionersAction);
-    store.dispatch(practitionersDucks.removePractitionerRolesAction);
     store.dispatch(organizationDucks.removeOrganizationsAction);
     fetch.resetMocks();
   });
@@ -102,8 +101,9 @@ describe('src/containers/pages/OrganizationViews', () => {
     // it gets data from store correctly
     store.dispatch(organizationDucks.fetchOrganizations([fixtures.organization3]));
     store.dispatch(
-      practitionersDucks.fetchPractitionerRoles(
+      practitionersDucks.fetchPractitioners(
         fixtures.org3Practitioners,
+        false,
         fixtures.organization3.identifier
       )
     );
