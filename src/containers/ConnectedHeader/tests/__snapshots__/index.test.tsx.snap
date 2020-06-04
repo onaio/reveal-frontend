@@ -13,12 +13,7 @@ Object {
       >
         <img
           alt="Reveal"
-          src="thai-logo.png"
-          style={
-            Object {
-              "transform": "scale(2)",
-            }
-          }
+          src="logo.png"
         />
       </Link>
     </nav>,
@@ -309,12 +304,7 @@ Object {
       >
         <img
           alt="Reveal"
-          src="thai-logo.png"
-          style={
-            Object {
-              "transform": "scale(2)",
-            }
-          }
+          src="logo.png"
         />
       </Link>
     </nav>,
