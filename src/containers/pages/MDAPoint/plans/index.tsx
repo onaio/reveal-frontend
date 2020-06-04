@@ -20,13 +20,8 @@ import { GenericPlanListProps, GenericPlansList } from '../../GenericPlansList';
 /** register the MDA plan definitions reducer */
 reducerRegistry.register(MDAPointPlansReducerName, MDAPointPlansReducer);
 
-// /** interface for MDA PlanList props */
-interface PlanListProps extends GenericPlanListProps {
-  ownProps: any;
-}
-
 /** Simple component that loads a preview list of MDA plans */
-const MDAPointPlansList = (props: PlanListProps & RouteComponentProps) => {
+const MDAPointPlansList = (props: GenericPlanListProps & RouteComponentProps) => {
   return (
     <div>
       <GenericPlansList {...props} />
@@ -35,9 +30,8 @@ const MDAPointPlansList = (props: PlanListProps & RouteComponentProps) => {
 };
 
 /** Declare default props for MDAPointPlansList */
-const defaultProps: PlanListProps = {
+const defaultProps: GenericPlanListProps = {
   fetchPlans: fetchMDAPointPlans,
-  ownProps: {},
   pageTitle: MDA_POINT_PLANS,
   pageUrl: REPORT_MDA_POINT_PLAN_URL,
   plans: [],

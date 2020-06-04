@@ -17,7 +17,7 @@ const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
-const ownProps = {
+const props = {
   history,
   location: {
     hash: '',
@@ -39,22 +39,6 @@ describe('components/IRS Reports/IRSPlansList', () => {
   });
 
   it('renders without crashing', () => {
-    const props = {
-      history,
-      location: {
-        hash: '',
-        pathname: REPORT_MDA_POINT_PLAN_URL,
-        search: '',
-        state: undefined,
-      },
-      match: {
-        isExact: true,
-        params: {},
-        path: `${REPORT_MDA_POINT_PLAN_URL}/`,
-        url: `${REPORT_MDA_POINT_PLAN_URL}/`,
-      },
-      plans: fixtures.MDAPointplans as GenericPlan[],
-    };
     shallow(
       <Router history={history}>
         <MDAPointPlansList {...props} />
@@ -63,16 +47,12 @@ describe('components/IRS Reports/IRSPlansList', () => {
   });
 
   it('renders plan definition list correctly', () => {
+    store.dispatch(fetchMDAPointPlans(fixtures.MDAPointplans as GenericPlan[]));
     fetch.mockResponseOnce(JSON.stringify({}));
-    const props = {
-      ...ownProps,
-      ownProps,
-      plans: fixtures.MDAPointplans as GenericPlan[],
-    };
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <MDAPointPlansList {...props} />
+          <ConnectedMDAPointPlansList {...props} />
         </Router>
       </Provider>
     );
@@ -82,7 +62,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     expect(toJson(wrapper.find('tbody tr td'))).toMatchSnapshot('table rows');
 
     expect(wrapper.find('GenericPlansList').length).toBe(1);
-    expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('ConnectedIRSPlansList props');
+    expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('GenericPlansList props');
 
     expect(wrapper.find('.page-title').text()).toEqual('MDA Point Plans');
 
@@ -91,14 +71,18 @@ describe('components/IRS Reports/IRSPlansList', () => {
 
   it('handles search correctly', async () => {
     store.dispatch(fetchMDAPointPlans(fixtures.MDAPointplans as GenericPlan[]));
-    ownProps.location.search = '?title=Berg';
+    props.location.search = '?title=Berg';
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedMDAPointPlansList {...ownProps} />
+          <ConnectedMDAPointPlansList {...props} />
         </Router>
       </Provider>
     );
     expect(wrapper.find('tbody tr td Link').text()).toEqual('Berg Eswatini 2019');
+
+    expect((wrapper.find('GenericPlansList').props() as any).plans).toMatchSnapshot(
+      'search results props'
+    );
   });
 });
