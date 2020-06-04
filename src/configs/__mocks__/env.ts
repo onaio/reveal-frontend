@@ -146,7 +146,7 @@ export type ENABLED_FI_REASONS = typeof ENABLED_FI_REASONS;
 export const WEBSITE_NAME = 'Reveal';
 
 export const NAVBAR_BRAND_IMG_SRC =
-  'https://github.com/onaio/reveal-frontend/raw/master/src/assets/images/logo.png';
+  'https://github.com/onaio/reveal-frontend/raw/b0756b0c1ed95dc6db23dc4fd1375c81bdf7fb1b/src/assets/images/thai-logo.png';
 
 export const REVEAL_BRAND_IMG_SRC =
-  'https://github.com/onaio/reveal-frontend/raw/master/src/assets/images/logo.png';
+  'https://github.com/onaio/reveal-frontend/raw/b0756b0c1ed95dc6db23dc4fd1375c81bdf7fb1b/src/assets/images/logo.png';
