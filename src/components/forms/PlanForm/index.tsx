@@ -297,7 +297,9 @@ const PlanForm = (props: PlanFormProps) => {
                 component="select"
                 name="interventionType"
                 id="interventionType"
-                disabled={disabledFields.includes('interventionType')}
+                disabled={
+                  disabledFields.includes('interventionType') || ENABLED_PLAN_TYPES.length < 2
+                }
                 /* tslint:disable-next-line jsx-no-lambda */
                 onChange={(e: FormEvent) => {
                   const target = e.target as HTMLInputElement;
