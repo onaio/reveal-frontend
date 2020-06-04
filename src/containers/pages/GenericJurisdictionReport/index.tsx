@@ -263,6 +263,4 @@ const GenericJurisdictionReport = (
   );
 };
 
-// JurisdictionReport.defaultProps = defaultProps;
-
 export { GenericJurisdictionReport };
