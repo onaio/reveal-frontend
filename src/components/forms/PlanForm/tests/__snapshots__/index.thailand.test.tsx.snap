@@ -1,0 +1,338 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: date field 1`] = `
+<input
+  id="date"
+  name="date"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value={2017-07-13T19:31:00.000Z}
+/>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: end field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="end"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-13"
+/>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: end label 1`] = `
+<Label
+  for="end"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="end"
+  >
+    วันที่สิ้นสุดการทำกิจกรรม
+  </label>
+</Label>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: fiReason field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="fiReason"
+  name="fiReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+>
+  <option>
+    ----
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    งานปกติ
+  </option>
+</select>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: fiStatus field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="fiStatus"
+  name="fiStatus"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+>
+  <option>
+    ----
+  </option>
+  <option
+    key="A1"
+    value="A1"
+  >
+    A1
+     - 
+    Active
+  </option>
+  <option
+    key="A2"
+    value="A2"
+  >
+    A2
+     - 
+    Residual Non-Active
+  </option>
+  <option
+    key="B1"
+    value="B1"
+  >
+    B1
+     - 
+    Cleared Receptive
+  </option>
+  <option
+    key="B2"
+    value="B2"
+  >
+    B2
+     - 
+    Cleared Non-Receptive
+  </option>
+</select>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: identifier field 1`] = `
+<input
+  id="identifier"
+  name="identifier"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: interventionType field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="interventionType"
+  name="interventionType"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="FI"
+>
+  <option
+    value="FI"
+  >
+    กิจกรรมสอบสวนผู้ป่วยและแหล่งแพร่เชื้อ
+  </option>
+</select>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: name field 1`] = `
+<input
+  id="name"
+  name="name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value=""
+/>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: start field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="start"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  readOnly={false}
+  required={true}
+  type="text"
+  value="2017-07-13"
+/>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: start label 1`] = `
+<Label
+  for="start"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="start"
+  >
+    วันที่เริ่มทำกิจกรรม
+  </label>
+</Label>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: status field 1`] = `
+<select
+  className="form-control"
+  disabled={false}
+  id="status"
+  name="status"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="draft"
+>
+  <option
+    key="ACTIVE"
+    value="active"
+  >
+    กำลังดำเนินการ
+  </option>
+  <option
+    key="COMPLETE"
+    value="complete"
+  >
+    ดำเนินการเสร็จแล้ว
+  </option>
+  <option
+    key="DRAFT"
+    value="draft"
+  >
+    ร่าง
+  </option>
+  <option
+    key="RETIRED"
+    value="retired"
+  >
+    ยกเลิก
+  </option>
+</select>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: status label 1`] = `
+<Label
+  for="status"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="status"
+  >
+    สถานะ
+  </label>
+</Label>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: submit button 1`] = `
+<button
+  aria-label="บันทึกแผนปฏิบัติงาน"
+  className="btn btn-block btn btn-primary"
+  disabled={false}
+  id="planform-submit-button"
+  onClick={[Function]}
+  type="submit"
+>
+  บันทึกแผนปฏิบัติงาน
+</button>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: taskGenerationStatus field 1`] = `
+<input
+  id="taskGenerationStatus"
+  name="taskGenerationStatus"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+  value="False"
+/>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: title field 1`] = `
+<input
+  className="form-control"
+  disabled={false}
+  id="title"
+  name="title"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  type="text"
+  value=""
+/>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: title label 1`] = `
+<Label
+  for="title"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="title"
+  >
+    ชื่อแผนปฏิบัติงาน
+  </label>
+</Label>
+`;
+
+exports[`Thailand: containers/forms/PlanForm renders correctly: version field 1`] = `
+<input
+  id="version"
+  name="version"
+  onBlur={[Function]}
+  onChange={[Function]}
+  readOnly={true}
+  type="hidden"
+/>
+`;

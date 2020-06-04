@@ -506,30 +506,25 @@ const PlanForm = (props: PlanFormProps) => {
                 />
               </FormGroup>
             )}
-            {values.interventionType === InterventionType.FI &&
-              values.fiReason === filteredFIReasons[1] && (
-                <FormGroup>
-                  <Label for="caseNum">{CASE_NUMBER}</Label>
-                  <Field
-                    required={
-                      values.interventionType === InterventionType.FI &&
-                      values.fiReason === filteredFIReasons[1]
-                    }
-                    type="text"
-                    name="caseNum"
-                    id="caseNum"
-                    disabled={disabledFields.includes('caseNum')}
-                    className={errors.caseNum ? 'form-control is-invalid' : 'form-control'}
-                  />
-                  <ErrorMessage
-                    name="caseNum"
-                    component="small"
-                    className="form-text text-danger"
-                  />
+            {values.interventionType === InterventionType.FI && values.fiReason === FIReasons[1] && (
+              <FormGroup>
+                <Label for="caseNum">{CASE_NUMBER}</Label>
+                <Field
+                  required={
+                    values.interventionType === InterventionType.FI &&
+                    values.fiReason === FIReasons[1]
+                  }
+                  type="text"
+                  name="caseNum"
+                  id="caseNum"
+                  disabled={disabledFields.includes('caseNum')}
+                  className={errors.caseNum ? 'form-control is-invalid' : 'form-control'}
+                />
+                <ErrorMessage name="caseNum" component="small" className="form-text text-danger" />
 
-                  <Field type="hidden" name="opensrpEventId" id="opensrpEventId" readOnly={true} />
-                </FormGroup>
-              )}
+                <Field type="hidden" name="opensrpEventId" id="opensrpEventId" readOnly={true} />
+              </FormGroup>
+            )}
             <FormGroup>
               <Label for="title">{PLAN_TITLE_LABEL}</Label>
               <Field
