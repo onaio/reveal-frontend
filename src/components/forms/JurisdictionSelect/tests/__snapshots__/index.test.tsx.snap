@@ -9,14 +9,14 @@ exports[`components/forms/JurisdictionSelect drills down to locationlevel: Juris
   >
     <div
       class="jurisdiction__option jurisdiction__option--is-focused css-1n7v3ny-option"
-      id="react-select-9-option-0"
+      id="react-select-10-option-0"
       tabindex="-1"
     >
       Siavonga
     </div>
     <div
       class="jurisdiction__option css-yt9ioa-option"
-      id="react-select-9-option-1"
+      id="react-select-10-option-1"
       tabindex="-1"
     >
       Sinda
@@ -25,7 +25,7 @@ exports[`components/forms/JurisdictionSelect drills down to locationlevel: Juris
 </div>
 `;
 
-exports[`components/forms/JurisdictionSelect handleChange works correctly: Jurisdiction Menu 1`] = `
+exports[`components/forms/JurisdictionSelect handleChange works with options correctly: Jurisdiction Menu 1`] = `
 <div
   class="jurisdiction__menu css-26l3qy-menu"
 >
@@ -45,6 +45,22 @@ exports[`components/forms/JurisdictionSelect handleChange works correctly: Juris
       tabindex="-1"
     >
       Sinda
+    </div>
+  </div>
+</div>
+`;
+
+exports[`components/forms/JurisdictionSelect handleChange works without options correctly: Jurisdiction Menu No Options 1`] = `
+<div
+  class="jurisdiction__menu css-26l3qy-menu"
+>
+  <div
+    class="jurisdiction__menu-list css-4ljt47-MenuList"
+  >
+    <div
+      class="jurisdiction__menu-notice jurisdiction__menu-notice--no-options css-gg45go-NoOptionsMessage"
+    >
+      No Options
     </div>
   </div>
 </div>
@@ -70,6 +86,9 @@ Object {
     "apiEndpoint": "location/findByProperties",
     "cascadingSelect": true,
     "handleChange": [Function],
+    "handleChangeWithOptions": [Function],
+    "handleChangeWithoutOptions": [Function],
+    "handleLoadOptionsPayload": [Function],
     "params": Object {
       "is_jurisdiction": true,
       "return_geometry": false,
@@ -83,6 +102,9 @@ Object {
   "getOptionLabel": [Function],
   "getOptionValue": [Function],
   "handleChange": [Function],
+  "handleChangeWithOptions": [Function],
+  "handleChangeWithoutOptions": [Function],
+  "handleLoadOptionsPayload": [Function],
   "inputValue": "",
   "isClearable": true,
   "isDisabled": false,
@@ -139,6 +161,9 @@ Object {
     "apiEndpoint": "location/findByProperties",
     "cascadingSelect": true,
     "handleChange": [Function],
+    "handleChangeWithOptions": [Function],
+    "handleChangeWithoutOptions": [Function],
+    "handleLoadOptionsPayload": [Function],
     "params": Object {
       "is_jurisdiction": true,
       "return_geometry": false,
@@ -148,6 +173,9 @@ Object {
   },
   "filterOption": null,
   "handleChange": [Function],
+  "handleChangeWithOptions": [Function],
+  "handleChangeWithoutOptions": [Function],
+  "handleLoadOptionsPayload": [Function],
   "isClearable": true,
   "isLoading": false,
   "loadOptions": [Function],

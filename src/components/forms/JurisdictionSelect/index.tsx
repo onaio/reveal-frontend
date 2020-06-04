@@ -41,8 +41,16 @@ export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectPr
     hierarchy: SelectOption[],
     jurisdictionStatus: boolean,
     setFinalLocation: (value: boolean) => void,
-    setJurisdictionParam: (value: boolean) => void
-  ) => Promise<any>; // Todo: Add a a more specific type
+    setJurisdictionParam: (value: boolean) => void,
+    handleLoadOptionsPayload: (
+      jurisdictionApiPayload: JurisdictionOption[],
+      jurisdictionStatus: boolean,
+      setFinalLocation: (value: boolean) => void,
+      hierarchy: SelectOption[],
+      setJurisdictionParam: (value: boolean) => void,
+      resolve: any
+    ) => JurisdictionOption[] // Handles jurisdiction payload from location endpoint
+  ) => Promise<any>; // Todo: Add  a more specific type
   handleChange: (
     params: Dictionary,
     isJurisdiction: boolean,
@@ -60,9 +68,94 @@ export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectPr
     setSelectLowestLocation: (value: boolean) => void,
     labelFieldName: string,
     form: FormikProps<any>,
-    field: FieldConfig
-  ) => void;
+    field: FieldConfig,
+    handleChangeWithOptions: (
+      optionVal: SelectOption,
+      newParamsToUse: Dictionary,
+      service: OpenSRPService,
+      hierarchy: SelectOption[],
+      cascadingSelect: boolean,
+      lowestLocation: boolean,
+      loadLocations: boolean,
+      setSelectShouldMenuOpen: (value: boolean) => void,
+      setSelectParentId: (value: string) => void,
+      setSelectHierarchy: (value: SelectOption[]) => void,
+      setSelectCloseMenuOnSelect: (value: boolean) => void,
+      setSelectIsJurisdiction: (value: boolean) => void,
+      labelFieldName: string,
+      form: FormikProps<any>,
+      field: FieldConfig
+    ) => void, // Handles select changes with options selected
+    handleChangeWithoutOptions: (
+      setSelectShouldMenuOpen: (value: boolean) => void,
+      setSelectParentId: (value: string) => void,
+      setSelectHierarchy: (value: SelectOption[]) => void,
+      setSelectCloseMenuOnSelect: (value: boolean) => void,
+      setSelectIsJurisdiction: (value: boolean) => void,
+      setSelectLowestLocation: (value: boolean) => void,
+      form: FormikProps<any>,
+      field: FieldConfig
+    ) => void // Handles select changes with no options selected
+  ) => void; // Async select onchange callback
 }
+/**
+ *
+ * @param jurisdictionSelectApiPayload payload from location api
+ * @param jurisdictionStatus  flag that determines what is to be loaded location or jurisdiction
+ * @param setSelectFinalLocation  sets if we are at location level
+ * @param hierarchy Drill down hierarchy list
+ * @param setSelectJurisdictionParam  sets jurisdictionparam value on state
+ * @param resolve Promise resolve
+ */
+export const handleLoadOptionsPayload = (
+  jurisdictionSelectApiPayload: JurisdictionOption[],
+  jurisdictionStatus: boolean,
+  setSelectFinalLocation: (value: boolean) => void,
+  hierarchy: SelectOption[],
+  setSelectJurisdictionParam: (value: boolean) => void,
+  resolve: any // unfortunately we have to set the type of option as any (for now)
+) => {
+  /** Check if payload has no name property then use id instead
+   *  If there is no location return no options
+   */
+  if (!jurisdictionStatus) {
+    setSelectFinalLocation(true);
+    if (jurisdictionSelectApiPayload.length >= 1 && !jurisdictionStatus) {
+      const locationOptions = jurisdictionSelectApiPayload.map(item => {
+        return {
+          label: item.properties.name ? item.properties.name : item.id,
+          value: item.id,
+        };
+      });
+      if (hierarchy.length > 0) {
+        const labels = hierarchy.map(j => j.label).join(' > ');
+        setSelectJurisdictionParam(true);
+        return resolve([
+          {
+            label: labels,
+            options: locationOptions,
+          },
+        ]);
+      }
+    } else if (!jurisdictionSelectApiPayload.length) {
+      setSelectJurisdictionParam(true);
+      return resolve([]);
+    }
+  }
+  const options = jurisdictionSelectApiPayload.map(item => {
+    return { label: item.properties.name, value: item.id };
+  });
+  if (hierarchy.length > 0) {
+    const labels = hierarchy.map(j => j.label).join(' > ');
+    return resolve([
+      {
+        label: labels,
+        options,
+      },
+    ]);
+  }
+  resolve(options);
+};
 /**
  * Loads options from opensrp
  * @param service Opensrp service class
@@ -75,53 +168,32 @@ export const promiseOptions = (
   hierarchy: SelectOption[],
   jurisdictionStatus: boolean,
   setFinalLocation: (value: boolean) => void,
-  setJurisdictionParam: (value: boolean) => void
+  setJurisdictionParam: (value: boolean) => void,
+  handleSelectLoadOptionsPayload: (
+    jurisdictionApiPayload: JurisdictionOption[],
+    jurisdictionStatus: boolean,
+    setFinalLocation: (value: boolean) => void,
+    hierarchy: SelectOption[],
+    setJurisdictionParam: (value: boolean) => void,
+    resolve: any
+  ) => JurisdictionOption[]
 ) =>
   // tslint:disable-next-line:no-inferred-empty-object-type
   new Promise((resolve, reject) => {
     service
       .list({ ...paramsToUse, is_jurisdiction: jurisdictionStatus })
-      .then((jurisdictionLocationOptions: JurisdictionOption[]) => {
+      .then((jurisdictionApiPayload: JurisdictionOption[]) => {
         /** Check if payload has no name property then use id instead
          *  If there is no location return no options
          */
-        if (!jurisdictionStatus) {
-          setFinalLocation(true);
-          if (jurisdictionLocationOptions.length >= 1 && !jurisdictionStatus) {
-            const locationOptions = jurisdictionLocationOptions.map(item => {
-              return {
-                label: item.properties.name ? item.properties.name : item.id,
-                value: item.id,
-              };
-            });
-            if (hierarchy.length > 0) {
-              const labels = hierarchy.map(j => j.label).join(' > ');
-              setJurisdictionParam(true);
-              return resolve([
-                {
-                  label: labels,
-                  options: locationOptions,
-                },
-              ]);
-            }
-          } else if (!jurisdictionLocationOptions.length) {
-            setJurisdictionParam(true);
-            return resolve([]);
-          }
-        }
-        const options = jurisdictionLocationOptions.map(item => {
-          return { label: item.properties.name, value: item.id };
-        });
-        if (hierarchy.length > 0) {
-          const labels = hierarchy.map(j => j.label).join(' > ');
-          return resolve([
-            {
-              label: labels,
-              options,
-            },
-          ]);
-        }
-        resolve(options);
+        handleSelectLoadOptionsPayload(
+          jurisdictionApiPayload,
+          jurisdictionStatus,
+          setFinalLocation,
+          hierarchy,
+          setJurisdictionParam,
+          resolve
+        );
       })
       .catch(error => {
         reject(`Opensrp service Error ${error}`);
@@ -132,6 +204,108 @@ export const promiseOptions = (
  * onChange callback
  * unfortunately we have to set the type of option as any (for now)
  */
+/**
+ * Handles async select onchange with options
+ * @param optionVal Selected options
+ * @param newParamsToUse Params to use for the next api call
+ * @param service OpensrpService
+ * @param hierarchy Drill down hierarchy list
+ * @param cascadingSelect Toggles async select cascade option true/false
+ * @param lowestLocation props that informs if we are at the lowest level
+ * @param loadLocations Ownprop that allows drilling down to location level
+ * @param setSelectShouldMenuOpen Controls opening asyncselect menu
+ * @param setSelectParentId Sets parent id to state
+ * @param setSelectHierarchy  Sets select Heirarchy to state
+ * @param setSelectCloseMenuOnSelect Controls closing asyncselect menu
+ * @param setSelectIsJurisdiction Sets isJurisdiction value to state
+ * @param labelFieldName async select label field
+ * @param form Formik form Object
+ * @param field Formik field config
+ */
+export const handleChangeWithOptions = (
+  optionVal: SelectOption,
+  newParamsToUse: Dictionary,
+  service: OpenSRPService,
+  hierarchy: SelectOption[],
+  cascadingSelect: boolean,
+  lowestLocation: boolean,
+  loadLocations: boolean,
+  setSelectShouldMenuOpen: (value: boolean) => void,
+  setSelectParentId: (value: string) => void,
+  setSelectHierarchy: (value: SelectOption[]) => void,
+  setSelectCloseMenuOnSelect: (value: boolean) => void,
+  setSelectIsJurisdiction: (value: boolean) => void,
+  labelFieldName: string,
+  form: FormikProps<any>,
+  field: FieldConfig
+) => {
+  service
+    .list(newParamsToUse)
+    .then(e => {
+      setSelectShouldMenuOpen(true);
+      if (e.length > 0 && cascadingSelect === true) {
+        setSelectParentId(optionVal.value);
+
+        hierarchy.push(optionVal);
+        setSelectHierarchy(hierarchy);
+
+        setSelectCloseMenuOnSelect(false);
+      } else if (!e.length && loadLocations && !lowestLocation) {
+        setSelectIsJurisdiction(false);
+        setSelectParentId(optionVal.value);
+        hierarchy.push(optionVal);
+        setSelectHierarchy(hierarchy);
+        setSelectCloseMenuOnSelect(false);
+      } else {
+        // set the Formik field value
+        if (form && field) {
+          form.setFieldValue(field.name, optionVal.value);
+          form.setFieldTouched(field.name, true);
+          if (labelFieldName) {
+            form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
+            form.setFieldTouched(labelFieldName, true); /** dirty hack */
+          }
+        }
+
+        setSelectCloseMenuOnSelect(true);
+        setSelectShouldMenuOpen(false);
+      }
+    })
+    .catch(error => displayError(error));
+};
+/**
+ * Handles async select onchange with no options
+ * @param setSelectShouldMenuOpen Controls opening asyncselect menu
+ * @param setSelectParentId Sets parent id to state
+ * @param setSelectHierarchy sets drill down hierarchy to state
+ * @param setSelectCloseMenuOnSelect Controls closing asyncselect menu
+ * @param setSelectIsJurisdiction Sets isJurisdiction value to state
+ * @param setSelectLowestLocation Sets lowest location value to state
+ * @param form Formik form Object
+ * @param field Formik field config
+ */
+export const handleChangeWithoutOptions = (
+  setSelectShouldMenuOpen: (value: boolean) => void,
+  setSelectParentId: (value: string) => void,
+  setSelectHierarchy: (value: SelectOption[]) => void,
+  setSelectCloseMenuOnSelect: (value: boolean) => void,
+  setSelectIsJurisdiction: (value: boolean) => void,
+  setSelectLowestLocation: (value: boolean) => void,
+  form: FormikProps<any>,
+  field: FieldConfig
+) => {
+  // most probably the select element was reset, so we reset the state vars
+  setSelectParentId('');
+  setSelectHierarchy([]);
+  setSelectShouldMenuOpen(false);
+  setSelectCloseMenuOnSelect(false);
+  setSelectLowestLocation(false);
+  setSelectIsJurisdiction(true);
+  // set the Formik field value
+  if (form && field) {
+    form.setFieldValue(field.name, '');
+  }
+};
 export const handleChange = (
   params: Dictionary,
   isJurisdiction: boolean,
@@ -149,9 +323,37 @@ export const handleChange = (
   setSelectLowestLocation: (value: boolean) => void,
   labelFieldName: string,
   form: FormikProps<any>,
-  field: FieldConfig
+  field: FieldConfig,
+  handleSelectChangeWithOptions: (
+    OptionVal: SelectOption,
+    newParamsToUse: Dictionary,
+    service: OpenSRPService,
+    hierarchy: SelectOption[],
+    cascadingSelect: boolean,
+    lowestLocation: boolean,
+    loadLocations: boolean,
+    setSelectShouldMenuOpen: (value: boolean) => void,
+    setSelectParentId: (value: string) => void,
+    setSelectHierarchy: (value: SelectOption[]) => void,
+    setSelectCloseMenuOnSelect: (value: boolean) => void,
+    setSelectIsJurisdiction: (value: boolean) => void,
+    labelFieldName: string,
+    form: FormikProps<any>,
+    field: FieldConfig
+  ) => void,
+  handleSelectChangeWithoutOptions: (
+    setSelectShouldMenuOpen: (value: boolean) => void,
+    setSelectParentId: (value: string) => void,
+    setSelectHierarchy: (value: SelectOption[]) => void,
+    setSelectCloseMenuOnSelect: (value: boolean) => void,
+    setSelectIsJurisdiction: (value: boolean) => void,
+    setSelectLowestLocation: (value: boolean) => void,
+    form: FormikProps<any>,
+    field: FieldConfig
+  ) => void
 ) => {
   const optionVal = option as { label: string; value: string };
+
   if (optionVal && optionVal.value) {
     // we are going to check if the current option has children
     // and if it does, we set it as the new parentId
@@ -162,51 +364,35 @@ export const handleChange = (
       properties_filter: getFilterParams({ parentId: optionVal.value }),
     };
 
-    service
-      .list(newParamsToUse)
-      .then(e => {
-        setSelectShouldMenuOpen(true);
-        if (e.length > 0 && cascadingSelect === true) {
-          setSelectParentId(optionVal.value);
-
-          hierarchy.push(optionVal);
-          setSelectHierarchy(hierarchy);
-
-          setSelectCloseMenuOnSelect(false);
-        } else if (!e.length && loadLocations && !lowestLocation) {
-          setSelectIsJurisdiction(false);
-          setSelectParentId(optionVal.value);
-          hierarchy.push(optionVal);
-          setSelectHierarchy(hierarchy);
-          setSelectCloseMenuOnSelect(false);
-        } else {
-          // set the Formik field value
-          if (form && field) {
-            form.setFieldValue(field.name, optionVal.value);
-            form.setFieldTouched(field.name, true);
-            if (labelFieldName) {
-              form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
-              form.setFieldTouched(labelFieldName, true); /** dirty hack */
-            }
-          }
-
-          setSelectCloseMenuOnSelect(true);
-          setSelectShouldMenuOpen(false);
-        }
-      })
-      .catch(error => displayError(error));
+    handleSelectChangeWithOptions(
+      optionVal,
+      newParamsToUse,
+      service,
+      hierarchy,
+      cascadingSelect,
+      lowestLocation,
+      loadLocations,
+      setSelectShouldMenuOpen,
+      setSelectParentId,
+      setSelectHierarchy,
+      setSelectCloseMenuOnSelect,
+      setSelectIsJurisdiction,
+      labelFieldName,
+      form,
+      field
+    );
   } else {
     // most probably the select element was reset, so we reset the state vars
-    setSelectParentId('');
-    setSelectHierarchy([]);
-    setSelectShouldMenuOpen(false);
-    setSelectCloseMenuOnSelect(false);
-    setSelectLowestLocation(false);
-    setSelectIsJurisdiction(true);
-    // set the Formik field value
-    if (form && field) {
-      form.setFieldValue(field.name, '');
-    }
+    handleSelectChangeWithoutOptions(
+      setSelectShouldMenuOpen,
+      setSelectParentId,
+      setSelectHierarchy,
+      setSelectCloseMenuOnSelect,
+      setSelectIsJurisdiction,
+      setSelectLowestLocation,
+      form,
+      field
+    );
   }
 };
 /** default props for JurisdictionSelect */
@@ -214,6 +400,9 @@ export const defaultProps: Partial<JurisdictionSelectProps> = {
   apiEndpoint: 'location/findByProperties',
   cascadingSelect: true,
   handleChange,
+  handleChangeWithOptions,
+  handleChangeWithoutOptions,
+  handleLoadOptionsPayload,
   params: {
     is_jurisdiction: true,
     return_geometry: false,
@@ -264,7 +453,8 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       hierarchy,
       isJurisdiction,
       setLowestLocation,
-      setIsJurisdiction
+      setIsJurisdiction,
+      props.handleLoadOptionsPayload
     );
   };
   /**
@@ -289,7 +479,9 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       setLowestLocation,
       labelFieldName,
       form,
-      field
+      field,
+      props.handleChangeWithOptions,
+      props.handleChangeWithoutOptions
     );
   return (
     <AsyncSelect
