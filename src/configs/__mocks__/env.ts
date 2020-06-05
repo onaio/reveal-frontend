@@ -150,3 +150,5 @@ export const NAVBAR_BRAND_IMG_SRC =
 
 export const REVEAL_BRAND_IMG_SRC =
   'https://github.com/onaio/reveal-frontend/raw/b0756b0c1ed95dc6db23dc4fd1375c81bdf7fb1b/src/assets/images/logo.png';
+
+export const ENABLE_MDA_POINT = true;
