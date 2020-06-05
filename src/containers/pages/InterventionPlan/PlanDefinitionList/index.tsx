@@ -12,7 +12,6 @@ import { UserSelectFilter } from '../../../../components/forms/UserFilter';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { ENABLED_PLAN_TYPES } from '../../../../configs/env';
 import {
   ADD_PLAN,
   HOME,
@@ -58,6 +57,12 @@ interface PlanListProps {
   userName: string | null;
 }
 
+/** Plans filter selector */
+const plansDefinitionsArraySelector = makePlanDefinitionsArraySelector(
+  'planDefinitionsById',
+  'date'
+);
+
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
   const { fetchPlans, plans, service } = props;
@@ -101,20 +106,18 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
   }, []);
 
   const listViewData = (data: PlanDefinition[]) =>
-    data
-      .map(planObj => {
-        const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
+    data.map(planObj => {
+      const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
 
-        return [
-          <Link to={`${PLAN_UPDATE_URL}/${planObj.identifier}`} key={planObj.identifier}>
-            {planObj.title}
-          </Link>,
-          typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : '',
-          planStatusDisplay[planObj.status] || planObj.status,
-          planObj.date,
-        ];
-      })
-      .filter(result => result[1] && ENABLED_PLAN_TYPES.includes(result[1] as string));
+      return [
+        <Link to={`${PLAN_UPDATE_URL}/${planObj.identifier}`} key={planObj.identifier}>
+          {planObj.title}
+        </Link>,
+        typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : '',
+        planStatusDisplay[planObj.status] || planObj.status,
+        planObj.date,
+      ];
+    });
 
   if (loading === true) {
     return <Loading />;
@@ -184,13 +187,10 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const userName = getQueryParams(ownProps.location)[QUERY_PARAM_USER] as string;
   const planIds = makePlansByUserNamesSelector()(state, { userName });
-  const planDefinitionsArray = makePlanDefinitionsArraySelector('planDefinitionsById', 'date')(
-    state,
-    {
-      planIds,
-      title: searchedTitle,
-    }
-  );
+  const planDefinitionsArray = plansDefinitionsArraySelector(state, {
+    planIds,
+    title: searchedTitle,
+  });
 
   return {
     plans: planDefinitionsArray,

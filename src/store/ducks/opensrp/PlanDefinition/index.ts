@@ -4,6 +4,7 @@ import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
+import { ENABLED_PLAN_TYPES } from '../../../../configs/env';
 import { PlanDefinition } from '../../../../configs/settings';
 import { descendingOrderSort, isPlanDefinitionOfType } from '../../../../helpers/utils';
 import { InterventionType } from '../../plans';
@@ -234,6 +235,35 @@ export const getPlanDefinitionsArrayByPlanIds = (planKey?: string) => {
   );
 };
 
+/**
+ * filters plan definitions based on intervention type
+ * @param {PlanDefinition} plans - plans to filter
+ * @param {string[]} filters - list of intervention types to filter against
+ */
+export const FilterPlanDefinitionsByInterventionType = (
+  plans: PlanDefinition[],
+  filters: string[] = ENABLED_PLAN_TYPES
+) => {
+  return plans.filter(
+    plan =>
+      plan.useContext.filter(
+        context =>
+          context.code === 'interventionType' && filters.includes(context.valueCodableConcept)
+      ).length > 0
+  );
+};
+
+/** getPlanDefinitionsArrayByInterventionType
+ * Gets an array of Plan objects filtered by intervention type
+ * @param {Registry} state - the redux store
+ * @param {PlanDefinitionFilters} props - the plan definition filters object
+ */
+export const getPlanDefinitionsArrayByInterventionType = (planKey?: string) => {
+  return createSelector(planDefinitionsArrayBaseSelector(planKey), plans =>
+    FilterPlanDefinitionsByInterventionType(plans)
+  );
+};
+
 /** makePlanDefinitionsArraySelector
  * Returns a selector that gets an array of IRSPlan objects filtered by one or all
  * of the following:
@@ -256,9 +286,13 @@ export const makePlanDefinitionsArraySelector = (
   sortField?: keyof PlanDefinition
 ) => {
   return createSelector(
-    [getPlanDefinitionsArrayByTitle(planKey), getPlanDefinitionsArrayByPlanIds(planKey)],
-    (plans1, plans2) => {
-      let finalPlans = intersect([plans1, plans2], JSON.stringify);
+    [
+      getPlanDefinitionsArrayByInterventionType(planKey),
+      getPlanDefinitionsArrayByTitle(planKey),
+      getPlanDefinitionsArrayByPlanIds(planKey),
+    ],
+    (plans1, plans2, plans3) => {
+      let finalPlans = intersect([plans1, plans2, plans3], JSON.stringify);
       if (sortField) {
         finalPlans = descendingOrderSort(finalPlans, sortField);
       }

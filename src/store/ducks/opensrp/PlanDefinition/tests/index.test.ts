@@ -17,6 +17,8 @@ import reducer, {
 } from '../index';
 import * as fixtures from './fixtures';
 
+jest.mock('../../../../../configs/env');
+
 reducerRegistry.register(reducerName, reducer);
 
 describe('reducers/opensrp/PlanDefinition', () => {
