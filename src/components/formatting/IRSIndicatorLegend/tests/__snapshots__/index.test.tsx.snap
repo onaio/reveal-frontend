@@ -83,6 +83,89 @@ exports[`/components/formatting/IRSIndicatorLegend renders correctly for default
 </Table>
 `;
 
+exports[`/components/formatting/IRSIndicatorLegend renders correctly for namibia indicator colors with namibia indicatorThresholds: header 1`] = `
+<div
+  className="card-header"
+>
+  Conditional formatting rules
+</div>
+`;
+
+exports[`/components/formatting/IRSIndicatorLegend renders correctly for namibia indicator colors with namibia indicatorThresholds: indicator table namibia 1`] = `
+<Table
+  className="text-center"
+  responsiveTag="div"
+  tag="table"
+>
+  <table
+    className="text-center table"
+  >
+    <tbody>
+      <tr
+        key="0"
+        style={
+          Object {
+            "background": "#dddddd",
+          }
+        }
+      >
+        <td>
+          Grey
+        </td>
+        <td>
+          &lt; 20%
+        </td>
+      </tr>
+      <tr
+        key="1"
+        style={
+          Object {
+            "background": "#FF4136",
+          }
+        }
+      >
+        <td>
+          Red
+        </td>
+        <td>
+          20% -&lt; 75%
+        </td>
+      </tr>
+      <tr
+        key="2"
+        style={
+          Object {
+            "background": "#FFDC00",
+          }
+        }
+      >
+        <td>
+          Yellow
+        </td>
+        <td>
+          75% -&lt; 90%
+        </td>
+      </tr>
+      <tr
+        key="3"
+        style={
+          Object {
+            "background": "#4C9A2A",
+          }
+        }
+      >
+        <td>
+          Green
+        </td>
+        <td>
+          90% - 100%
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</Table>
+`;
+
 exports[`/components/formatting/IRSIndicatorLegend renders correctly for namibia indicator colors: header 1`] = `
 <div
   className="card-header"
