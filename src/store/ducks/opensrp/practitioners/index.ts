@@ -1,6 +1,9 @@
 /** practitioners ducks modules: actions, actionCreators, reducer and selectors */
-import { get, keyBy, keys, values } from 'lodash';
+import { Dictionary } from '@onaio/utils/dist/types/types';
+import intersect from 'fast_array_intersect';
+import { keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
+import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 
 /** The reducer name */
@@ -15,55 +18,32 @@ export interface Practitioner {
   username: string;
 }
 
-/** interface of practitionerRole - relation: practitioners belonging to which organization */
-export interface PractitionerRole {
-  [organizationId: string]: { [practitionerId: string]: Practitioner };
-}
-
 // actions
 
 /** action type for fetching practitioners */
 export const PRACTITIONERS_FETCHED = 'opensrp/reducer/practitioners/PRACTITIONERS_FETCHED';
 /** action type for removing practitioners */
 export const REMOVE_PRACTITIONERS = 'opensrp/reducer/practitioners/REMOVE_PRACTITIONERS';
-/** action type for fetching practitionerRoles - information as to what organization a practitioner belongs to */
-export const PRACTITIONER_ROLES_FETCHED =
-  'opensrp/reducer/practitioners/PRACTITIONER_ROLES_FETCHED';
-/** action type for removing practitionerRoles */
-export const REMOVE_PRACTITIONER_ROLES = 'opensrp/reducer/practitioners/REMOVE_PRACTITIONER_ROLES';
 
 /** interface action to add practitioners to store */
 export interface FetchPractitionersAction extends AnyAction {
   overwrite: boolean;
-  practitionersById: { [key: string]: Practitioner };
+  practitionersById: Dictionary<Practitioner>;
+  practitionerRoles: Dictionary<string[]>;
   type: typeof PRACTITIONERS_FETCHED;
 }
 
 /** Interface for removePractitionersAction */
-interface RemovePractitionersAction extends AnyAction {
+export interface RemovePractitionersAction extends AnyAction {
   practitionersById: {};
-  type: typeof REMOVE_PRACTITIONERS;
-}
-
-/** interface for actions that add practitionerRoles */
-interface FetchPractitionerRolesAction extends AnyAction {
-  practitionerRoles: PractitionerRole;
-  overwrite: boolean;
-  type: typeof PRACTITIONER_ROLES_FETCHED;
-}
-
-/** interface for actions that remove PractitionerRoles */
-interface RemovePractitionerRolesAction extends AnyAction {
   practitionerRoles: {};
-  type: typeof REMOVE_PRACTITIONER_ROLES;
+  type: typeof REMOVE_PRACTITIONERS;
 }
 
 /** Create type for practitioners reducer actions */
 export type PractitionersActionTypes =
   | FetchPractitionersAction
   | RemovePractitionersAction
-  | FetchPractitionerRolesAction
-  | RemovePractitionerRolesAction
   | AnyAction;
 
 // action Creators
@@ -75,61 +55,41 @@ export type PractitionersActionTypes =
  */
 export const fetchPractitioners = (
   practitionersList: Practitioner[] = [],
-  overwrite: boolean = false
-): FetchPractitionersAction => ({
-  overwrite,
-  practitionersById: keyBy(
-    practitionersList,
-    (practitioner: Practitioner) => practitioner.identifier
-  ),
-  type: PRACTITIONERS_FETCHED,
-});
+  overwrite: boolean = false,
+  organizationId?: string
+): FetchPractitionersAction => {
+  let practitionerIds = [];
+  let practitionerRoles = {};
+  if (organizationId) {
+    practitionerIds = practitionersList.map(practitioner => practitioner.identifier);
+    practitionerRoles = { [organizationId]: practitionerIds };
+  }
+  return {
+    overwrite,
+    practitionerRoles,
+    practitionersById: keyBy(
+      practitionersList,
+      (practitioner: Practitioner) => practitioner.identifier
+    ),
+    type: PRACTITIONERS_FETCHED,
+  };
+};
 
 // actions
 
 /** removePractitionersAction action */
 export const removePractitionersAction = {
+  practitionerRoles: {},
   practitionersById: {},
   type: REMOVE_PRACTITIONERS,
-};
-
-/** action creator for adding info on organization to practitioners
- * this will modify both the practitionersById as well as the practitionerRoles
- * Use this action creator when pulling data for practitioners belonging to
- * an organization only, otherwise see fetchPractitioners
- *
- * @param {Practitioner []} practitioners - an array of practitioners
- * @param {string}  organizationId - id of organization that the practitioners belong to
- */
-export const fetchPractitionerRoles = (
-  practitioners: Practitioner[],
-  organizationId: string,
-  overwrite: boolean = false
-): FetchPractitionerRolesAction => {
-  const practitionersById = keyBy(
-    practitioners,
-    (practitioner: Practitioner) => practitioner.identifier
-  );
-
-  return {
-    overwrite,
-    practitionerRoles: { [organizationId]: practitionersById },
-    type: PRACTITIONER_ROLES_FETCHED,
-  };
-};
-
-/** Action to remove all PractitionerRoles from store */
-export const removePractitionerRolesAction: RemovePractitionerRolesAction = {
-  practitionerRoles: {},
-  type: REMOVE_PRACTITIONER_ROLES,
 };
 
 // The reducer
 
 /** interface for practitioners state in redux store */
-interface PractitionerState {
-  practitionersById: { [key: string]: Practitioner } | {};
-  practitionerRoles: PractitionerRole | {};
+export interface PractitionerState {
+  practitionersById: Dictionary<Practitioner> | {};
+  practitionerRoles: Dictionary<string[]> | {};
 }
 
 /** Create an immutable practitioners state */
@@ -152,37 +112,55 @@ export default function reducer(
       const practitionersToPut = action.overwrite
         ? { ...action.practitionersById }
         : { ...state.practitionersById, ...action.practitionersById };
+      const practitionerRolesToPut = action.overwrite
+        ? { ...action.practitionerRoles }
+        : { ...state.practitionerRoles, ...action.practitionerRoles };
       return SeamlessImmutable({
         ...state,
+        practitionerRoles: practitionerRolesToPut,
         practitionersById: practitionersToPut,
       });
     case REMOVE_PRACTITIONERS:
       return SeamlessImmutable({
         ...state,
+        practitionerRoles: action.practitionerRoles,
         practitionersById: action.practitionersById,
       });
-    case PRACTITIONER_ROLES_FETCHED:
-      const organizationId = keys(action.practitionerRoles)[0];
-      return SeamlessImmutable({
-        ...state,
-        practitionerRoles: {
-          ...state.practitionerRoles,
-          [organizationId]: {
-            ...action.practitionerRoles[organizationId],
-          },
-        } as PractitionerRole & SeamlessImmutable.ImmutableObject<PractitionerRole>,
-      });
-    case REMOVE_PRACTITIONER_ROLES:
-      return SeamlessImmutable({
-        ...state,
-        practitionerRoles: action.practitionerRoles,
-      });
+
     default:
       return state;
   }
 }
 
 // Selectors
+
+export interface PractitionerFilters {
+  identifiers?: string[] /** get all practitioners whose ids appear in this array */;
+  name?: string /** get practitioner whose name includes text in name */;
+  organizationId?: string /** get practitioners assigned to this organization */;
+}
+
+// NON MEMOIZED SELECTORS
+
+/**
+ * Gets identifiers from PractitionerFilters
+ * @param {Partial<Store>} state - the redux store
+ * @param {PractitionerFilters} props - the practitioner filters object
+ */
+export const getIdentifiers = (_: Partial<Store>, props: PractitionerFilters) => props.identifiers;
+/**
+ * Gets name from PractitionerFilters
+ * @param {Partial<Store>} state - the redux store
+ * @param {PractitionerFilters} props - the practitioner filters object
+ */
+export const getName = (_: Partial<Store>, props: PractitionerFilters) => props.name;
+/**
+ * Gets organizationId from PractitionerFilters
+ * @param {Partial<Store>} state - the redux store
+ * @param {PractitionerFilters} props - the practitioner filters object
+ */
+export const getOrganizationId = (_: Partial<Store>, props: PractitionerFilters) =>
+  props.organizationId;
 
 /** returns all practitioners in the store as values whose keys are their respective ids
  * @param {Partial<Store>} state - the redux store
@@ -200,25 +178,83 @@ export function getPractitionersArray(state: Partial<Store>): Practitioner[] {
   return values(getPractitionersById(state));
 }
 
-/** get a specific practitioner by their id
- * @param {Partial<Store>} state - the redux store
- * @return {Practitioner | null} a practitioner obj if the id is found else null
+/** practitionerRoles slice of state
+ * @param {partial<Store>} state -  the redux store
  */
-export function getPractitionerById(state: Partial<Store>, id: string): Practitioner | null {
-  return get(getPractitionersById(state), id) || null;
-}
+export const getPractitionerRoles = (state: Partial<Store>): Dictionary<string[]> => {
+  return (state as any)[reducerName].practitionerRoles;
+};
 
-/** get practitioners that belong to a certain organization
- * @param {Partial<Store>} state -  the redux store
- * @param {string} organizationId - get practitioners that belong to organization with this id
- *
- * @return {Practitioner[]} - returns a list of practitioners that belong to organization with given id
+// MEMOIZED SELECTORS
+
+/**
+ * Gets all practitioners whose identifiers appear in ids filter prop value
+ * @param {Partial<Store>} state - the redux store
+ * @param {PractitionerFilters} props - the practitioners filters object
  */
-export function getPractitionersByOrgId(
-  state: Partial<Store>,
-  organizationId: string
-): Practitioner[] {
-  let practitionersById = (state as any)[reducerName].practitionerRoles[organizationId];
-  practitionersById = practitionersById !== undefined ? practitionersById : {};
-  return values(practitionersById);
-}
+export const getPractitionersByIds = () =>
+  createSelector(
+    getPractitionersById,
+    getIdentifiers,
+    getPractitionersArray,
+    (practitionersById, identifiers, practitionersArray) => {
+      if (identifiers === undefined) {
+        return practitionersArray;
+      }
+      if (identifiers.length > 0) {
+        return identifiers.map(id => practitionersById[id]);
+      }
+      return [];
+    }
+  );
+
+/**
+ * Gets all practitioners whose name includes phrase given in name filter prop
+ * @param {Partial<Store>} state - the redux store
+ * @param {PractitionerFilters} props - the practitioners filters object
+ */
+export const getPractitionersByName = () =>
+  createSelector(getPractitionersArray, getName, (practitionersArray, name) =>
+    name
+      ? practitionersArray.filter(org => org.name.toLowerCase().includes(name.toLowerCase()))
+      : practitionersArray
+  );
+
+/** get all practitioners that belong to organization with given id
+ * @param {Partial<Store>} state - the redux store
+ * @param {PractitionerFilters} props - the practitioners filters object
+ */
+export const getPractitionersByOrgId = () =>
+  createSelector(
+    getPractitionerRoles,
+    getOrganizationId,
+    getPractitionersById,
+    getPractitionersArray,
+    (practitionerRole, organizationId, practitionersById, practitionersArray) => {
+      if (organizationId) {
+        const practitionerIds: string[] | undefined = practitionerRole[organizationId];
+        if (practitionerIds) {
+          const practitioners = practitionerIds.map(id => practitionersById[id]);
+          return practitioners;
+        } else {
+          return [];
+        }
+      }
+      return practitionersArray;
+    }
+  );
+
+/** practitioner array selector factory
+ * aggregates response from all applied filters and returns results
+ * @param {Partial<Store>} state - the redux store
+ * @param {PractitionerFilters} props - the practitioners filters object
+ */
+export const makePractitionersSelector = () =>
+  createSelector(
+    getPractitionersByIds(),
+    getPractitionersByName(),
+    getPractitionersByOrgId(),
+    (arr1, arr2, arr3) => {
+      return intersect([arr1, arr2, arr3], JSON.stringify);
+    }
+  );

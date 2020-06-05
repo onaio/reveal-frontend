@@ -28,7 +28,7 @@ import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import {
   fetchOrganizations,
-  getOrganizationById,
+  makeOrgsArraySelector,
   Organization,
 } from '../../../../store/ducks/opensrp/organizations';
 import { loadOrganization } from '../helpers/serviceHooks';
@@ -126,8 +126,11 @@ const mapStateToProps = (
 ): DispatchedProps => {
   let organizationId = ownProps.match.params.id;
   organizationId = organizationId ? organizationId : '';
+  const orgSelector = makeOrgsArraySelector();
 
-  const organization = getOrganizationById(state, organizationId);
+  const organizations = orgSelector(state, { identifiers: [organizationId] });
+  const organization = organizations.length === 1 ? organizations[0] : null;
+
   return { organization };
 };
 

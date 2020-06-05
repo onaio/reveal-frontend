@@ -34,7 +34,6 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
 
   it('loadOrgPractitioners works correctly', async () => {
     const mockRead = jest.fn(async () => fixtures.org3Practitioners);
-    const fetchPractitionerRolesMock = jest.fn();
     const fetchPractitionersMock = jest.fn();
     const mockClass = jest.fn().mockImplementation(() => {
       return {
@@ -42,12 +41,7 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
       };
     });
 
-    loadOrgPractitioners(
-      'organization3Id',
-      mockClass,
-      fetchPractitionerRolesMock,
-      fetchPractitionersMock
-    ).catch(e => {
+    loadOrgPractitioners('organization3Id', mockClass, fetchPractitionersMock).catch(e => {
       throw e;
     });
     await flushPromises();
@@ -59,8 +53,9 @@ describe('src/containers/pages/OrganizationViews/helpers/servicehooks', () => {
     expect(mockRead).toHaveBeenCalledWith('organization3Id');
 
     // calls action creator correctly.
-    expect(fetchPractitionerRolesMock).toHaveBeenCalledWith(
+    expect(fetchPractitionersMock).toHaveBeenCalledWith(
       fixtures.org3Practitioners,
+      false,
       'organization3Id'
     );
   });
