@@ -12,7 +12,11 @@ import { growl } from '../../../helpers/utils';
 import store from '../../../store';
 import Loading from '../Loading';
 
+/** checks if the value of next in searchParam is blacklisted
+ * @param {RouteComponentProps} props - the props should contain the routing state.
+ */
 export const nextIsValid = (props: RouteComponentProps) => {
+  let response = true;
   const indirectionURLs = [LOGOUT_URL];
   /** we should probably sieve some routes from being passed on.
    * For instance we don't need to redirect to logout since we are already in
@@ -21,11 +25,11 @@ export const nextIsValid = (props: RouteComponentProps) => {
   const stringifiedUrls = indirectionURLs.map(url => querystring.stringify({ next: url }));
   for (const url of stringifiedUrls) {
     if (props.location.search.includes(url)) {
-      return false;
+      response = false;
       break;
     }
   }
-  return true;
+  return response;
 };
 
 export const BaseSuccessfulLoginComponent: React.FC<RouteComponentProps> = props => {
@@ -50,7 +54,7 @@ export const SuccessfulLoginComponent = withRouter(BaseSuccessfulLoginComponent)
 
 const BaseUnsuccessfulLogin: React.FC<RouteComponentProps> = props => {
   let redirectTo = `${EXPRESS_LOGIN_URL}${props.location.search}`;
-  if (nextIsValid(props)) {
+  if (!nextIsValid(props)) {
     redirectTo = EXPRESS_LOGIN_URL;
   }
 
