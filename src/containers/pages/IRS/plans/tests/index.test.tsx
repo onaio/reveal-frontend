@@ -1,3 +1,4 @@
+import { renderTable } from '@onaio/drill-down-table';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -5,6 +6,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedIRSPlansList, { IRSPlansList } from '../';
+import { NO_DATA_FOUND } from '../../../../../configs/lang';
 import { REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { GenericPlan } from '../../../../../store/ducks/generic/plans';
@@ -46,7 +48,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     );
   });
 
-  it('renders plan definition list correctly', () => {
+  it('renders plan definition list correctly', async () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const props = {
       history,
@@ -69,12 +71,18 @@ describe('components/IRS Reports/IRSPlansList', () => {
         <IRSPlansList {...props} />
       </Router>
     );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
+<<<<<<< HEAD
     expect(toJson(wrapper.find('thead tr th'))).toMatchSnapshot('table headers');
     expect(toJson(wrapper.find('tbody tr td'))).toMatchSnapshot('table rows');
     expect(wrapper.find('GenericPlansList').length).toBe(1);
     expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('GenericPlansList props');
+=======
+    renderTable(wrapper, 'the full rendered rows');
+>>>>>>> Refactor drillDown usage in IRS containers
     wrapper.unmount();
   });
 
@@ -103,12 +111,17 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
+<<<<<<< HEAD
     expect((wrapper.find('GenericPlansList').props() as any).plans).toMatchSnapshot(
       'search results props'
     );
+=======
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+>>>>>>> Refactor drillDown usage in IRS containers
     expect(
       wrapper
-        .find('tbody tr td')
+        .find('.tbody .tr .td')
         .find('Link')
         .at(0)
         .text()
@@ -140,9 +153,11 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
     expect(
       wrapper
-        .find('tbody tr td')
+        .find('.tbody .tr .td')
         .find('Link')
         .at(0)
         .text()
@@ -174,6 +189,8 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
-    expect(toJson(wrapper.find('tbody tr'))).toEqual(null);
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+    expect(wrapper.text().includes(NO_DATA_FOUND)).toBeTruthy();
   });
 });

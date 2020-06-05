@@ -5,7 +5,6 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 156,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -13,13 +12,14 @@ Object {
   "hasChildren": [Function],
   "identifierField": "jurisdiction_id",
   "linkerField": "jurisdiction_name",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "nullDataComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "jurisdiction_parent_id",
-  "resizable": true,
+  "resize": true,
   "rootParentId": "",
-  "shouldUseEffect": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": true,
 }
 `;
 
@@ -28,7 +28,6 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 156,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -36,13 +35,14 @@ Object {
   "hasChildren": [Function],
   "identifierField": "jurisdiction_id",
   "linkerField": "jurisdiction_name",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "nullDataComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "jurisdiction_parent_id",
-  "resizable": true,
+  "resize": true,
   "rootParentId": "22bc44dd-752d-4c20-8761-617361b4f1e7",
-  "shouldUseEffect": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": true,
 }
 `;
 
@@ -51,7 +51,6 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 156,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -59,13 +58,14 @@ Object {
   "hasChildren": [Function],
   "identifierField": "jurisdiction_id",
   "linkerField": "jurisdiction_name",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "nullDataComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "jurisdiction_parent_id",
-  "resizable": true,
+  "resize": true,
   "rootParentId": "fd5a22ba-fa0e-4fdc-ae1c-1db8965b7b43",
-  "shouldUseEffect": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": true,
 }
 `;
 
@@ -74,7 +74,6 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 156,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -82,13 +81,14 @@ Object {
   "hasChildren": [Function],
   "identifierField": "jurisdiction_id",
   "linkerField": "jurisdiction_name",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "nullDataComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "jurisdiction_parent_id",
-  "resizable": true,
+  "resize": true,
   "rootParentId": "8f1fd4cf-264d-4ed6-8838-e538c5845d46",
-  "shouldUseEffect": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": true,
 }
 `;
 
@@ -97,7 +97,6 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 156,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -105,13 +104,14 @@ Object {
   "hasChildren": [Function],
   "identifierField": "jurisdiction_id",
   "linkerField": "jurisdiction_name",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "nullDataComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "jurisdiction_parent_id",
-  "resizable": true,
+  "resize": true,
   "rootParentId": "2bf9915d-8725-4061-983d-5938802ac0f0",
-  "shouldUseEffect": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": true,
 }
 `;
 
@@ -120,7 +120,6 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 156,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -128,13 +127,14 @@ Object {
   "hasChildren": [Function],
   "identifierField": "jurisdiction_id",
   "linkerField": "jurisdiction_name",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "nullDataComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "jurisdiction_parent_id",
-  "resizable": true,
+  "resize": true,
   "rootParentId": "",
-  "shouldUseEffect": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": true,
 }
 `;
 

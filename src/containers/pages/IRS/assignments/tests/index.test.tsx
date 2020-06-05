@@ -1,3 +1,4 @@
+import { renderTable } from '@onaio/drill-down-table';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -40,8 +41,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     );
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
-    expect(toJson(wrapper.find('thead tr th'))).toMatchSnapshot('table headers');
-    expect(toJson(wrapper.find('tbody tr td'))).toMatchSnapshot('table rows');
+    renderTable(wrapper);
     wrapper.unmount();
   });
 });

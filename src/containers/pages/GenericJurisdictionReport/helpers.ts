@@ -9,58 +9,33 @@ import { getIRSThresholdAdherenceIndicator } from '../../../../helpers/indicator
 export const NamibiaColumns = [
   {
     Header: 'Name',
-    columns: [
-      {
-        accessor: 'jurisdiction_name',
-        minWidth: 180,
-      },
-    ],
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
   },
   {
     Header: 'Structures Targeted',
-    columns: [
-      {
-        accessor: 'target_2019',
-      },
-    ],
+    accessor: 'target_2019',
   },
   {
     Header: 'Structures Found',
-    columns: [
-      {
-        accessor: 'structuresfound',
-      },
-    ],
+    accessor: 'structuresfound',
   },
   {
     Header: 'Structures Sprayed',
-    columns: [
-      {
-        accessor: 'structuressprayed',
-      },
-    ],
+    accessor: 'structuressprayed',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Target Coverage',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-
-        accessor: 'targetcoverage',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'targetcoverage',
+    className: 'indicator centered',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
 
-        accessor: 'foundcoverage',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'foundcoverage',
+    className: 'indicator centered',
   },
   {
     Header: 'Refusals',
@@ -108,91 +83,46 @@ export const NamibiaColumns = [
 export const ZambiaJurisdictionsColumns = [
   {
     Header: 'Name',
-    columns: [
-      {
-        Header: '',
-        accessor: 'jurisdiction_name',
-        minWidth: 180,
-      },
-    ],
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
   },
   {
     Header: 'Total Spray Areas',
-    columns: [
-      {
-        Header: '',
-        accessor: 'totareas',
-      },
-    ],
+    accessor: 'totareas',
   },
   {
     Header: 'Targeted Spray Areas',
-    columns: [
-      {
-        Header: '',
-        accessor: 'targareas',
-      },
-    ],
+    accessor: 'targareas',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: '% visited Spray Areas Effectively sprayed',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'perctvisareaseffect',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'perctvisareaseffect',
+    className: 'indicator centered',
   },
   {
     Header: 'Total Structures',
-    columns: [
-      {
-        Header: '',
-        accessor: 'totstruct',
-      },
-    ],
+    accessor: 'totstruct',
   },
   {
     Header: 'Targeted Structures',
-    columns: [
-      {
-        Header: '',
-        accessor: 'targstruct',
-      },
-    ],
+    accessor: 'targstruct',
   },
   {
     Header: 'Sprayed Structures',
-    columns: [
-      {
-        Header: '',
-        accessor: 'sprayedstruct',
-      },
-    ],
+    accessor: 'sprayedstruct',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray coverage of targeted (Progress)',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'spraycovtarg',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'spraycovtarg',
+    className: 'indicator centered',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Room coverage of structures sprayed',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'roomcov',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'roomcov',
+    className: 'indicator centered',
   },
 ];
 
@@ -289,84 +219,44 @@ export const mdaJurisdictionsColumns = [
 export const ZambiaFocusAreasColumns = [
   {
     Header: 'Name',
-    columns: [
-      {
-        Header: '',
-        accessor: 'jurisdiction_name',
-        minWidth: 180,
-      },
-    ],
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
   },
   {
     Header: 'Structures on the ground',
-    columns: [
-      {
-        Header: '',
-        accessor: 'totstruct',
-      },
-    ],
+    accessor: 'totstruct',
   },
   {
     Header: 'Found',
-    columns: [
-      {
-        Header: '',
-        accessor: 'foundstruct',
-      },
-    ],
+    accessor: 'foundstruct',
   },
   {
     Header: 'Sprayed',
-    columns: [
-      {
-        Header: '',
-        accessor: 'sprayedstruct',
-      },
-    ],
+    accessor: 'sprayedstruct',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray Coverage (Effectiveness)',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'spraycov',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'spraycov',
+    className: 'indicator centered',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'spraytarg',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'spraytarg',
+    className: 'indicator centered',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray Success Rate (PMI SC)',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'spraysuccess',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'spraysuccess',
+    className: 'indicator centered',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Room coverage of structures sprayed',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'roomcov',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'roomcov',
+    className: 'indicator centered',
   },
 ];
 

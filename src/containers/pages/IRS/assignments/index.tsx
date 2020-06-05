@@ -1,4 +1,4 @@
-import { DrillDownColumn, DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table-v7';
+import { DrillDownColumn, DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table';
 import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
 import { Dictionary } from '@onaio/utils/';
 import React, { useEffect, useState } from 'react';
@@ -161,17 +161,16 @@ const IRSAssignmentPlansList = (props: PlanAssignmentWithRouteProps) => {
     loading,
     loadingComponent: Loading,
     renderInBottomFilterBar: renderInFilterFactory({
-      history: props.history,
-      location: props.location,
       showColumnHider: false,
+      showFilters: false,
       showPagination: true,
       showRowHeightPicker: false,
       showSearch: false,
     }),
     renderInTopFilterBar: renderInFilterFactory({
-      history: props.history,
-      location: props.location,
       ...defaultOptions,
+      componentProps: props,
+      queryParam: QUERY_PARAM_TITLE,
     }),
     useDrillDown: false,
   };
