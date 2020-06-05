@@ -8,7 +8,7 @@ import { Cell } from 'react-table';
 import { Button } from 'reactstrap';
 import { ActionCreator, Store } from 'redux';
 
-import { DrillDownColumn, DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table-v7';
+import { DrillDownColumn, DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table';
 import { Helmet } from 'react-helmet';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
@@ -167,17 +167,17 @@ export const IrsPlans = (props: IrsPlansProps & RouteComponentProps<RouteParams>
     loading,
     loadingComponent: Loading,
     renderInBottomFilterBar: renderInFilterFactory({
-      history: props.history,
-      location: props.location,
       showColumnHider: false,
+      showFilters: false,
       showPagination: true,
       showRowHeightPicker: false,
       showSearch: false,
     }),
     renderInTopFilterBar: renderInFilterFactory({
-      history: props.history,
-      location: props.location,
       ...defaultOptions,
+      componentProps: props,
+      queryParam: QUERY_PARAM_TITLE,
+      showFilters: false,
     }),
     useDrillDown: false,
   };

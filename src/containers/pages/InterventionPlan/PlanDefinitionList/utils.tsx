@@ -1,4 +1,4 @@
-import { DrillDownColumn } from '@onaio/drill-down-table-v7';
+import { DrillDownColumn } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils/dist/types/types';
 import React from 'react';
 import { Link } from 'react-router-dom';

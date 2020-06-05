@@ -7,11 +7,11 @@ import { MouseEvent } from 'react';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Button, Col, Input, Row } from 'reactstrap';
+import { Button, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 
 import GeojsonExtent from '@mapbox/geojson-extent';
-import {DrillDownTable, DropDownCell } from '@onaio/drill-down-table-v7';
+import { DrillDownTable, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 
 import { Dictionary } from '@onaio/utils';
@@ -31,8 +31,6 @@ import {
   JURISDICTION,
   NAME,
   NEW_PLAN,
-  NEXT,
-  PREVIOUS,
   SAVE_AS_DRAFT,
   SAVE_ASSIGNMENTS,
   SAVE_FINALIZED_PLAN,
@@ -220,7 +218,7 @@ interface IrsPlanState {
   isSaveDraftDisabled: boolean;
   currentPlan: PlanRecord | null;
   planCountry: string;
-  planTableProps: any| null;
+  planTableProps: any | null;
   previousPlanName: string;
   tableCrumbs: TableCrumb[];
 }
@@ -1923,7 +1921,7 @@ class IrsPlan extends React.Component<
     const columns = [
       {
         Header: () => (
-          <Input
+          <input
             checked={headerCheckboxIsChecked}
             className="plan-jurisdiction-select-all-checkbox"
             onChange={onToggleAllCheckboxChange}
@@ -1931,7 +1929,7 @@ class IrsPlan extends React.Component<
           />
         ),
         accessor: (j: JurisdictionRow) => (
-          <Input
+          <input
             checked={planJurisdictionIds.includes(j.jurisdiction_id)}
             className="plan-jurisdiction-selection-checkbox"
             onChange={onTableCheckboxChange}
@@ -1940,6 +1938,7 @@ class IrsPlan extends React.Component<
             value={j.jurisdiction_id}
           />
         ),
+        disableSortBy: true,
         id: 'jurisdiction_selection',
         maxWidth: 24,
       },
@@ -2037,8 +2036,8 @@ class IrsPlan extends React.Component<
       paginate: showPagination,
       parentIdentifierField: 'parent_id',
       rootParentId: this.state.focusJurisdictionId,
-      useDrillDown: true,
       showPagination,
+      useDrillDown: true,
     };
     return tableProps;
   }

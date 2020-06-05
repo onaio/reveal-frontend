@@ -81,8 +81,8 @@ describe('containers/pages/IRS', () => {
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual(`${IRS_PLANS}${DRAFTS_PARENTHESIS}`);
     expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot('drill down table props');
-    expect(wrapper.find('Button').text()).toEqual('Create New Plan');
-    expect(wrapper.find('Button').props()).toMatchSnapshot('button props');
+    expect(wrapper.find('a.create-plan').text()).toEqual('Create New Plan');
+    expect(wrapper.find('a.create-plan').props()).toMatchSnapshot('button props');
     wrapper.unmount();
   });
 

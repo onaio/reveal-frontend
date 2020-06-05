@@ -1395,10 +1395,12 @@ export const completeRoutinePlansColumn = [
   {
     Header: END_DATE,
     accessor: 'plan_effective_period_end',
+    id: END_DATE,
   },
   {
     Header: DATE_COMPLETED,
     accessor: 'plan_effective_period_end',
+    id: DATE_COMPLETED,
   },
 ];
 /** Date completed field not there in the current plan  */
@@ -1414,6 +1416,7 @@ export const statusColumn = [
   {
     Header: FI_STATUS,
     accessor: 'plan_status',
+    id: FI_STATUS,
     minWidth: 80,
   },
 ];

@@ -1,6 +1,6 @@
 // this is the FocusInvestigation "active" page component
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { DrillDownTable } from '@onaio/drill-down-table-v7';
+import { DrillDownTable } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
@@ -14,9 +14,6 @@ import 'react-table-v6/react-table.css';
 import { Col, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
-import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
-import { createChangeHandler, SearchForm } from '../../../../components/forms/Search';
-import { UserSelectFilter } from '../../../../components/forms/UserFilter';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import NewRecordBadge from '../../../../components/NewRecordBadge';
 import HeaderBreadCrumb, {
@@ -39,7 +36,6 @@ import {
   NAME,
   REACTIVE,
   ROUTINE_TITLE,
-  SEARCH,
   START_DATE,
   STATUS_HEADER,
 } from '../../../../configs/lang';
@@ -64,13 +60,6 @@ import { loadPlansByUserFilter } from '../../../../helpers/dataLoading/plans';
 import { displayError } from '../../../../helpers/errors';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
-import {
-  defaultTableProps,
-  getFilteredFIPlansURL,
-  getQueryParams,
-  removeNullJurisdictionPlans,
-} from '../../../../helpers/utils';
-import { extractPlan, getLocationColumns } from '../../../../helpers/utils';
 import { getFilteredFIPlansURL, getQueryParams } from '../../../../helpers/utils';
 import { getLocationColumns } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -111,7 +100,6 @@ export interface ActiveFIProps {
   searchedTitle: string | null;
   serviceClass: typeof OpenSRPService;
   userName: string | null;
-  serviceClass: typeof OpenSRPService;
 }
 
 /** default props for ActiveFI component */
@@ -156,7 +144,8 @@ class ActiveFocusInvestigation extends React.Component<
     const supersetParams = superset.getFormData(2000, [
       { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
     ]);
-    supersetService(SUPERSET_PLANS_SLICE, supersetParams).then((result: Plan[]) => {
+    supersetService(SUPERSET_PLANS_SLICE, supersetParams)
+      .then((result: Plan[]) => {
         fetchPlansActionCreator(result);
         this.setState({
           loading: false,
@@ -168,7 +157,6 @@ class ActiveFocusInvestigation extends React.Component<
           loading: false,
         });
       });
-
 
     if (userName) {
       loadPlansByUserFilter(userName).catch(err => displayError(err));
@@ -200,9 +188,7 @@ class ActiveFocusInvestigation extends React.Component<
       url: HOME_URL,
     };
 
-    const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, this.props);
-
-    const { caseTriggeredPlans, routinePlans, plan, searchedTitle } = this.props;
+    const { caseTriggeredPlans, routinePlans, plan } = this.props;
     // We need to initialize jurisdictionName to a falsy value
     let jurisdictionName = null;
 
@@ -330,7 +316,13 @@ class ActiveFocusInvestigation extends React.Component<
         <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
         <div>
           <DrillDownTable
-            {...createTableProps(caseTriggeredColumns, caseTriggeredPlans, this.props)}
+            {...createTableProps(
+              caseTriggeredColumns,
+              caseTriggeredPlans,
+              this.props,
+              REACTIVE_QUERY_PARAM,
+              this.props.serviceClass
+            )}
           />
         </div>
         <div className="routine-heading">
@@ -344,7 +336,15 @@ class ActiveFocusInvestigation extends React.Component<
           </Row>
         </div>
         <div>
-          <DrillDownTable {...createTableProps(RoutineColumns, routinePlans, this.props)} />
+          <DrillDownTable
+            {...createTableProps(
+              RoutineColumns,
+              routinePlans,
+              this.props,
+              ROUTINE_QUERY_PARAM,
+              this.props.serviceClass
+            )}
+          />
         </div>
         <h5 className="mt-5">{DEFINITIONS}</h5>
         <Table className="definitions">

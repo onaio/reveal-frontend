@@ -17,45 +17,32 @@ Object {
     },
     Object {
       "Header": "FI Status",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "plan_status",
-          "minWidth": 80,
-        },
-      ],
+      "accessor": "plan_status",
+      "id": "FI Status",
+      "minWidth": 80,
     },
     Object {
       "Header": "Case Notif. Date",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "caseNotificationDate",
-          "minWidth": 90,
-        },
-      ],
+      "accessor": "caseNotificationDate",
+      "minWidth": 90,
     },
     Object {
       "Header": "Case Class.",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "caseClassification",
-        },
-      ],
+      "accessor": "caseClassification",
     },
   ],
   "data": Any<Array>,
   "hasChildren": [Function],
   "identifierField": "id",
   "linkerField": "id",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "nullDataComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "parent",
+  "resize": true,
   "rootParentId": null,
-  "shouldUseEffect": false,
-  "showPageSizeOptions": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": false,
 }
 `;
 
@@ -76,13 +63,9 @@ Object {
     },
     Object {
       "Header": "FI Status",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "plan_status",
-          "minWidth": 80,
-        },
-      ],
+      "accessor": "plan_status",
+      "id": "FI Status",
+      "minWidth": 80,
     },
     Object {
       "Header": "Province",
@@ -133,32 +116,17 @@ Object {
     },
     Object {
       "Header": "Status",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "status",
-          "maxWidth": 60,
-        },
-      ],
+      "accessor": "status",
+      "maxWidth": 60,
     },
     Object {
       "Header": "Start Date",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "plan_effective_period_start",
-          "minWidth": 80,
-        },
-      ],
+      "accessor": "plan_effective_period_start",
+      "minWidth": 80,
     },
     Object {
       "Header": "End Date",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "plan_effective_period_end",
-        },
-      ],
+      "accessor": "plan_effective_period_end",
     },
     Object {
       "Header": "Action",
@@ -176,13 +144,14 @@ Object {
   "hasChildren": [Function],
   "identifierField": "id",
   "linkerField": "id",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "nullDataComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "parent",
+  "resize": true,
   "rootParentId": null,
-  "shouldUseEffect": false,
-  "showPageSizeOptions": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": false,
 }
 `;
 
@@ -203,54 +172,35 @@ Object {
     },
     Object {
       "Header": "Date Completed",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "date_completed",
-          "minWidth": 80,
-        },
-      ],
+      "accessor": "date_completed",
+      "minWidth": 80,
     },
     Object {
       "Header": "End Date",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "plan_effective_period_end",
-        },
-      ],
+      "accessor": "plan_effective_period_end",
     },
     Object {
       "Header": "Case Notif. Date",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "caseNotificationDate",
-          "minWidth": 90,
-        },
-      ],
+      "accessor": "caseNotificationDate",
+      "minWidth": 90,
     },
     Object {
       "Header": "Case Class.",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "caseClassification",
-        },
-      ],
+      "accessor": "caseClassification",
     },
   ],
   "data": Any<Array>,
   "hasChildren": [Function],
   "identifierField": "id",
   "linkerField": "id",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "nullDataComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "parent",
+  "resize": true,
   "rootParentId": null,
-  "shouldUseEffect": false,
-  "showPageSizeOptions": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": false,
 }
 `;
 
@@ -271,54 +221,37 @@ Object {
     },
     Object {
       "Header": "Date Completed",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "date_completed",
-          "minWidth": 80,
-        },
-      ],
+      "accessor": "date_completed",
+      "minWidth": 80,
     },
     Object {
       "Header": "Start Date",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "plan_effective_period_start",
-          "minWidth": 80,
-        },
-      ],
+      "accessor": "plan_effective_period_start",
+      "minWidth": 80,
     },
     Object {
       "Header": "End Date",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "plan_effective_period_end",
-        },
-      ],
+      "accessor": "plan_effective_period_end",
+      "id": "End Date",
     },
     Object {
       "Header": "Date Completed",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "plan_effective_period_end",
-        },
-      ],
+      "accessor": "plan_effective_period_end",
+      "id": "Date Completed",
     },
   ],
   "data": Any<Array>,
   "hasChildren": [Function],
   "identifierField": "id",
   "linkerField": "id",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "nullDataComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "parent",
+  "resize": true,
   "rootParentId": null,
-  "shouldUseEffect": false,
-  "showPageSizeOptions": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": false,
 }
 `;
 

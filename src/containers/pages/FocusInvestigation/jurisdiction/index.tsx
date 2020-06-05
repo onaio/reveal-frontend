@@ -1,4 +1,4 @@
-import {DrillDownTable} from '@onaio/drill-down-table-v7';
+import { DrillDownTable } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
@@ -249,11 +249,7 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
           );
         }
         /** Handle all Columns i.e columns unique for reactive and routine (once handled above) plus columns common on both (name)  */
-        const allColumns = [
-          ...jsxColumns('name'),
-          ...statusColumn,
-          ...columnsBasedOnReason,
-        ];
+        const allColumns = [...jsxColumns('name'), ...statusColumn, ...columnsBasedOnReason];
         /** Contains columns and data that will build the table */
         const tableProps: any = {
           ...defaultTableProps,

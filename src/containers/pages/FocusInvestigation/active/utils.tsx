@@ -6,6 +6,7 @@ import {
   renderInFilterFactory,
 } from '../../../../components/Table/DrillDownFilters/utils';
 import { extractPlan, removeNullJurisdictionPlans } from '../../../../helpers/utils';
+import { OpenSRPService } from '../../../../services/opensrp';
 import { Plan } from '../../../../store/ducks/plans';
 
 /** construct props for DrillDown for activeFI page
@@ -19,7 +20,9 @@ import { Plan } from '../../../../store/ducks/plans';
 export const createTableProps = <D extends object, TProps extends RouteComponentProps>(
   columns: Array<Column<D>>,
   data: Plan[] | null,
-  props: TProps
+  props: TProps,
+  paramString: string,
+  service: typeof OpenSRPService
 ) => {
   const cleanedData = data !== null ? data : [];
   const jurisdictionValidPlans = removeNullJurisdictionPlans(cleanedData);
@@ -30,17 +33,17 @@ export const createTableProps = <D extends object, TProps extends RouteComponent
     columns,
     data: thePlans,
     renderInBottomFilterBar: renderInFilterFactory({
-      history: props.history,
-      location: props.location,
       showColumnHider: false,
+      showFilters: false,
       showPagination: true,
       showRowHeightPicker: false,
       showSearch: false,
     }),
     renderInTopFilterBar: renderInFilterFactory({
-      history: props.history,
-      location: props.location,
       ...defaultOptions,
+      componentProps: props,
+      queryParam: paramString,
+      serviceClass: service,
     }),
     useDrillDown: false,
   };

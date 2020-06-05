@@ -5,6 +5,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedPlanDefinitionList, { PlanDefinitionList } from '../';
+import { NO_DATA_FOUND } from '../../../../../configs/lang';
 import { PLAN_LIST_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { fetchPlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDefinition';
@@ -76,8 +77,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     );
     expect(wrapper.find('HeaderBreadcrumb').props()).toMatchSnapshot('bread crumb props');
     expect(toJson(wrapper.find('Row').at(0))).toMatchSnapshot('row heading');
-    expect(wrapper.find('SearchForm').props()).toMatchSnapshot('search form props');
-    expect(wrapper.find('ListView').props()).toMatchSnapshot('list view props');
     expect(toJson(wrapper.find('HelmetWrapper'))).toMatchSnapshot('helmet');
     wrapper.unmount();
   });
@@ -110,7 +109,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     wrapper.mount();
     expect(
       wrapper
-        .find('tbody tr td')
+        .find('.tbody .tr .td')
         .find('Link')
         .at(0)
         .text()
@@ -145,7 +144,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     wrapper.mount();
     expect(
       wrapper
-        .find('tbody tr td')
+        .find('.tbody .tr .td')
         .find('Link')
         .at(0)
         .text()
@@ -178,7 +177,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
       </Provider>
     );
     wrapper.mount();
-    expect(toJson(wrapper.find('tbody tr'))).toEqual(null);
+    expect(wrapper.text().includes(NO_DATA_FOUND)).toBeTruthy();
   });
 
   it('filters correctly when searching by userName', async () => {
@@ -209,7 +208,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     );
     wrapper.mount();
     // only one plan is rendered fixtures.plan1
-    expect(wrapper.find('tbody tr').text()).toMatchInlineSnapshot(
+    expect(wrapper.find('.tbody .tr').text()).toMatchInlineSnapshot(
       `"A2-Lusaka Akros Test Focus 2FIactive2019-05-19"`
     );
   });

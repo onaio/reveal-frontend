@@ -1,4 +1,4 @@
-import { DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table-v7';
+import { DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -6,27 +6,19 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import { createChangeHandler, SearchForm } from '../../../../components/forms/Search';
-import { UserSelectFilter } from '../../../../components/forms/UserFilter';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
-  ADD_PLAN,
-  HOME,
-  INTERVENTION_TYPE_LABEL,
-  LAST_MODIFIED,
-  PLANS,
-  SEARCH,
-  STATUS_HEADER,
-  TITLE,
-} from '../../../../configs/lang';
-import { PlanDefinition, planStatusDisplay } from '../../../../configs/settings';
+  defaultOptions,
+  renderInFilterFactory,
+} from '../../../../components/Table/DrillDownFilters/utils';
+import { ADD_PLAN, HOME, PLANS } from '../../../../configs/lang';
+import { PlanDefinition } from '../../../../configs/settings';
 import {
   HOME_URL,
   OPENSRP_PLANS,
   PLAN_LIST_URL,
-  PLAN_UPDATE_URL,
   QUERY_PARAM_TITLE,
   QUERY_PARAM_USER,
 } from '../../../../constants';
@@ -44,7 +36,6 @@ import plansByUserReducer, {
   reducerName as plansByUserReducerName,
 } from '../../../../store/ducks/opensrp/planIdsByUser';
 import { TableColumns } from './utils';
-import { renderInFilterFactory, defaultOptions } from '../../../../components/Table/DrillDownFilters/utils';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
@@ -121,22 +112,20 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
     loading,
     loadingComponent: Loading,
     renderInBottomFilterBar: renderInFilterFactory({
-      history: props.history,
-      location: props.location,
       showColumnHider: false,
+      showFilters: false,
       showPagination: true,
       showRowHeightPicker: false,
       showSearch: false,
     }),
     renderInTopFilterBar: renderInFilterFactory({
-      history: props.history,
-      location: props.location,
       ...defaultOptions,
+      componentProps: props,
+      queryParam: QUERY_PARAM_TITLE,
+      serviceClass: props.service,
     }),
     useDrillDown: false,
   };
-
-  const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
 
   return (
     <div>
@@ -156,10 +145,6 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <div style={{ display: 'inline-block' }}>
-        <SearchForm placeholder={SEARCH} onChangeHandler={searchFormChangeHandler} />
-      </div>
-      <UserSelectFilter serviceClass={props.service} />
       <Row>
         <Col>
           <DrillDownTable {...tableProps} />

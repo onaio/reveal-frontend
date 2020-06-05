@@ -1,5 +1,6 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faExternalLinkSquareAlt } from '@fortawesome/free-solid-svg-icons';
+import { renderTable } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
@@ -11,9 +12,9 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../configs/lang';
-import { FI_URL } from '../../../../../constants';
+import { FI_URL, REACTIVE_QUERY_PARAM, ROUTINE_QUERY_PARAM } from '../../../../../constants';
 import store from '../../../../../store';
-import { plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import * as planDefFixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { fetchPlansByUser } from '../../../../../store/ducks/opensrp/planIdsByUser';
 import reducer, {
   fetchPlans,
@@ -72,7 +73,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     );
   });
 
-  it('renders ActiveFocusInvestigation correctly $ changes page title', () => {
+  it('renders ActiveFocusInvestigation correctly $ changes page title', async () => {
     const mock: any = jest.fn();
     mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
@@ -89,6 +90,9 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         <ActiveFocusInvestigation {...props} />
       </Router>
     );
+
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual(CURRENT_FOCUS_INVESTIGATION);
     expect(wrapper.find(ActiveFocusInvestigation).props().caseTriggeredPlans).toEqual(
@@ -113,7 +117,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     wrapper.unmount();
   });
 
-  it('renders ActiveFocusInvestigation correctly for null jurisdictions', () => {
+  it('renders ActiveFocusInvestigation correctly for null jurisdictions', async () => {
     const mock: any = jest.fn();
     mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
@@ -130,29 +134,18 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         <ActiveFocusInvestigation {...props} />
       </Router>
     );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
     expect(wrapper.find(ActiveFocusInvestigation).props().caseTriggeredPlans).toEqual(
       activeFocusInvestigationProps.caseTriggeredPlans
     );
     expect(wrapper.find(ActiveFocusInvestigation).props().routinePlans).toEqual(
       activeFocusInvestigationProps.routinePlans
     );
-    expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
-    expect(wrapper.find('HeaderBreadcrumb').props()).toEqual({
-      currentPage: {
-        label: 'Focus Investigations',
-        url: '/focus-investigation',
-      },
-      pages: [
-        {
-          label: 'Home',
-          url: '/',
-        },
-      ],
-    });
     wrapper.unmount();
   });
 
-  it('works with the Redux store', () => {
+  it('works with the Redux store', async () => {
     store.dispatch(fetchPlans(fixtures.plans));
     const mock: any = jest.fn();
     mock.mockImplementation(() => Promise.resolve(fixtures.plans));
@@ -169,32 +162,12 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
+    await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
-    expect(
-      wrapper
-        .find('.ReactTable')
-        .find('Cell')
-        .at(0)
-        .props()
-    ).toMatchSnapshot();
-    expect(
-      wrapper
-        .find('.ReactTable')
-        .find('Cell')
-        .at(1)
-        .props()
-    ).toMatchSnapshot();
-    expect(
-      wrapper
-        .find('.ReactTable')
-        .find('Cell')
-        .at(2)
-        .props()
-    ).toMatchSnapshot();
-    wrapper.unmount();
+    expect(wrapper.text()).toMatchSnapshot('A large unstyled string of the rendered output');
   });
 
-  it('calls superset with the correct params', () => {
+  it('calls superset with the correct params', async () => {
     const actualFormData = superset.getFormData;
     const getFormDataMock: any = jest.fn();
     getFormDataMock.mockImplementation((...args: any) => {
@@ -217,6 +190,8 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
     const supersetParams = {
       adhoc_filters: [
         {
@@ -241,6 +216,32 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     wrapper.unmount();
   });
 
+  it('does not show loading when we have resolved promises', async () => {
+    // resolve superset's request with empty data, it should not show the loader.
+    const mock: any = jest.fn();
+    const supersetMock: any = jest.fn(async () => []);
+    const props = {
+      history,
+      location: mock,
+      match: mock,
+      supersetService: supersetMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    // shows ripple here
+    expect(wrapper.find('Ripple').length).toEqual(1);
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+    // now you dont see the ripple
+    expect(wrapper.find('Ripple').length).toEqual(0);
+    wrapper.unmount();
+  });
+
   it('handles search correctly for case triggered plans', async () => {
     store.dispatch(fetchPlans([fixtures.plan24, fixtures.plan25]));
 
@@ -248,7 +249,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       history,
       location: {
         pathname: FI_URL,
-        search: '?title=Jane',
+        search: `?${REACTIVE_QUERY_PARAM}=Jane`,
       },
       match: {
         isExact: true,
@@ -265,45 +266,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    expect(
-      wrapper
-        .find('ReactTable')
-        .at(0)
-        .prop('data')
-    ).toMatchSnapshot();
-  });
-
-  it('handles search correctly for routine plans', async () => {
-    store.dispatch(fetchPlans([fixtures.plan1, fixtures.plan22]));
-
-    const props = {
-      history,
-      location: {
-        pathname: FI_URL,
-        search: '?title=Luang',
-      },
-      match: {
-        isExact: true,
-        params: {},
-        path: `${FI_URL}`,
-        url: `${FI_URL}`,
-      },
-      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedActiveFocusInvestigation {...props} />
-        </Router>
-      </Provider>
-    );
-    expect(
-      wrapper
-        .find('ReactTable')
-        .at(1)
-        .prop('data')
-    ).toMatchSnapshot();
-    wrapper.unmount();
+    renderTable(wrapper, 'Expect single non header tr with title includes jane');
   });
 
   it('handles case insensitive searches correctly', async () => {
@@ -313,7 +276,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       history,
       location: {
         pathname: FI_URL,
-        search: '?title=LUANG',
+        search: `?${ROUTINE_QUERY_PARAM}=LUANG`,
       },
       match: {
         isExact: true,
@@ -330,12 +293,9 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    expect(
-      wrapper
-        .find('ReactTable')
-        .at(1)
-        .prop('data')
-    ).toMatchSnapshot();
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+    renderTable(wrapper, 'expect the luang tr as only non header tr');
     wrapper.unmount();
   });
 
@@ -346,7 +306,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       history,
       location: {
         pathname: FI_URL,
-        search: '?title=Amazon',
+        search: `?${ROUTINE_QUERY_PARAM}=Amazon&${REACTIVE_QUERY_PARAM}=Amazon`,
       },
       match: {
         isExact: true,
@@ -363,22 +323,14 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    expect(
-      wrapper
-        .find('ReactTable')
-        .at(0)
-        .prop('data')
-    ).toEqual([]);
-    expect(
-      wrapper
-        .find('ReactTable')
-        .at(1)
-        .prop('data')
-    ).toEqual([]);
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+    renderTable(wrapper, 'Should only have header rows');
+    expect(wrapper.text()).toMatchSnapshot('should have 2 no data found texts');
   });
 
   it('filters plans by userName', async () => {
-    const planDef1 = cloneDeep(plans[0]);
+    const planDef1 = cloneDeep(planDefFixtures.plans[0]);
     planDef1.identifier = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
     const userName = 'ghost';
     store.dispatch(
@@ -406,22 +358,25 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
     expect(
       wrapper
-        .find('ReactTable')
+        .find('Table')
         .at(0)
         .prop('data')
     ).toEqual([selectedPlan24]);
     expect(
       wrapper
-        .find('ReactTable')
+        .find('Table')
         .at(1)
         .prop('data')
     ).toEqual([selectedPlan1]);
   });
 
   it('filters plans by userName resulting in no plans', async () => {
-    const planDef1 = cloneDeep(plans[0]);
+    const planDef1 = cloneDeep(planDefFixtures.plans[0]);
     planDef1.identifier = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
     const userName = 'ghost';
     store.dispatch(fetchPlans([fixtures.completeRoutinePlan, fixtures.plan2]));
@@ -447,15 +402,17 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
     expect(
       wrapper
-        .find('ReactTable')
+        .find('Table')
         .at(0)
         .prop('data')
     ).toEqual([]);
     expect(
       wrapper
-        .find('ReactTable')
+        .find('Table')
         .at(1)
         .prop('data')
     ).toEqual([]);
