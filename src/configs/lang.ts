@@ -450,3 +450,5 @@ export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
 export const FILTER = translate('FILTER', 'Filter');
 
 export const USER = translate('USER', 'user');
+
+export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');

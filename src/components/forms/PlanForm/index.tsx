@@ -40,6 +40,7 @@ import {
   INTERVENTION_TYPE_LABEL,
   IRS_TITLE,
   LOCATIONS,
+  MDA_POINT_TITLE,
   PLAN_END_DATE_LABEL,
   PLAN_START_DATE_LABEL,
   PLAN_TITLE_LABEL,
@@ -305,9 +306,7 @@ const PlanForm = (props: PlanFormProps) => {
                 component="select"
                 name="interventionType"
                 id="interventionType"
-                disabled={
-                  disabledFields.includes('interventionType') || ENABLED_PLAN_TYPES.length < 2
-                }
+                disabled={disabledFields.includes('interventionType')}
                 /* tslint:disable-next-line jsx-no-lambda */
                 onChange={(e: FormEvent) => {
                   const target = e.target as HTMLInputElement;
@@ -326,6 +325,9 @@ const PlanForm = (props: PlanFormProps) => {
                 )}
                 {isPlanTypeEnabled(InterventionType.IRS) && (
                   <option value={InterventionType.IRS}>{IRS_TITLE}</option>
+                )}
+                {isPlanTypeEnabled(InterventionType.MDAPoint) && (
+                  <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>
                 )}
               </Field>
               <ErrorMessage

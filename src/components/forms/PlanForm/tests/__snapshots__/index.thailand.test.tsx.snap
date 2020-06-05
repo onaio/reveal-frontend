@@ -136,7 +136,7 @@ exports[`Thailand: containers/forms/PlanForm renders correctly: identifier field
 exports[`Thailand: containers/forms/PlanForm renders correctly: interventionType field 1`] = `
 <select
   className="form-control"
-  disabled={true}
+  disabled={false}
   id="interventionType"
   name="interventionType"
   onBlur={[Function]}
