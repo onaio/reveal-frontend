@@ -1,4 +1,6 @@
+import React from 'react';
 import { EXPRESS_OAUTH_LOGOUT_URL } from '../../configs/env';
+
 /** interface to describe props for Logout component
  * @member {string} logoutURL the url of the logout endpoint of the Oauth server.
  */
