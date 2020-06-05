@@ -4,19 +4,20 @@ import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
-import { SearchForm } from '../../../components/forms/Search';
+import { createChangeHandler, SearchForm } from '../../../components/forms/Search';
 import HeaderBreadcrumb from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../components/page/Loading';
 import {
   DATE_CREATED,
   END_DATE,
   HOME,
+  SEARCH,
   START_DATE,
   STATUS_HEADER,
   TITLE,
 } from '../../../configs/lang';
 import { planStatusDisplay } from '../../../configs/settings';
-import { HOME_URL } from '../../../constants';
+import { HOME_URL, QUERY_PARAM_TITLE } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
 import supersetFetch from '../../../services/superset';
 import { fetchMDAPointPlans } from '../../../store/ducks/generic/MDAPointPlans';
@@ -91,6 +92,8 @@ export const GenericPlansList = (props: GenericPlanListProps & RouteComponentPro
     tableClass: 'table table-bordered plans-list',
   };
 
+  const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
+
   return (
     <div>
       <Helmet>
@@ -103,7 +106,7 @@ export const GenericPlansList = (props: GenericPlanListProps & RouteComponentPro
         </Col>
       </Row>
       <hr />
-      <SearchForm history={props.history} location={props.location} />
+      <SearchForm placeholder={SEARCH} onChangeHandler={searchFormChangeHandler} />
 
       <Row>
         <Col>

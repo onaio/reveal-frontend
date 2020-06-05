@@ -299,3 +299,11 @@ export type ENABLED_PLAN_TYPES = typeof ENABLED_PLAN_TYPES;
 /** list of FI reasons enabled */
 export const ENABLED_FI_REASONS = String(process.env.REACT_APP_ENABLED_FI_REASONS || '').split(',');
 export type ENABLED_FI_REASONS = typeof ENABLED_FI_REASONS;
+
+export const NAVBAR_BRAND_IMG_SRC =
+  process.env.REACT_APP_NAVBAR_BRAND_IMG_SRC ||
+  'https://github.com/onaio/reveal-frontend/raw/master/src/assets/images/logo.png';
+export type NAVBAR_BRAND_IMG_SRC = typeof NAVBAR_BRAND_IMG_SRC;
+
+export const REVEAL_BRAND_IMG_SRC = process.env.REACT_APP_REVEAL_BRAND_IMG_SRC;
+export type REVEAL_BRAND_IMG_SRC = typeof REVEAL_BRAND_IMG_SRC;

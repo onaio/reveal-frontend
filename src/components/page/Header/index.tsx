@@ -14,7 +14,6 @@ import {
   NavItem,
   UncontrolledDropdown,
 } from 'reactstrap';
-import logo from '../../../assets/images/logo.png';
 import {
   BACKEND_ACTIVE,
   CLIENT_LABEL,
@@ -26,6 +25,7 @@ import {
   ENABLE_PRACTITIONERS,
   ENABLE_TEAMS,
   ENABLE_USERS,
+  NAVBAR_BRAND_IMG_SRC,
   WEBSITE_NAME,
 } from '../../../configs/env';
 import {
@@ -108,7 +108,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
         <Navbar light={true} expand="md">
           <nav className="navbar navbar-expand-md navbar-light header-logo-navbar">
             <Link to="/" className="navbar-brand">
-              <img src={logo} alt={WEBSITE_NAME} />
+              <img src={NAVBAR_BRAND_IMG_SRC} alt={WEBSITE_NAME} />
             </Link>
           </nav>
           <NavbarToggler onClick={this.toggle} />
