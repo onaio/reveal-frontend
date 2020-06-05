@@ -6,7 +6,7 @@ export const Footer = () => {
   return (
     <footer className="footer">
       <hr className="p-0 m-0" />
-      <img src={REVEAL_BRAND_IMG_SRC} alt={WEBSITE_NAME} />{' '}
+      {REVEAL_BRAND_IMG_SRC && <img src={REVEAL_BRAND_IMG_SRC} alt={WEBSITE_NAME} />}
       <span className="text-muted" style={{ lineHeight: '40px', verticalAlign: 'bottom' }}>
         {REACT_APP_VERSION}
       </span>
