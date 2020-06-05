@@ -1,4 +1,4 @@
-import * as fixtures from '../../IRS/JurisdictionsReport/tests/fixtures';
+import * as fixtures from '../../IRS/JurisdictionsReport/fixtures';
 import * as helpers from '../helpers';
 
 describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {

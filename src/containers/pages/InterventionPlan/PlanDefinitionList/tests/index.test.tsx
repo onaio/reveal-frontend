@@ -9,7 +9,9 @@ import { PLAN_LIST_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { fetchPlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { fetchPlansByUser } from '../../../../../store/ducks/opensrp/planIdsByUser';
 
+jest.mock('../../../../../configs/env');
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
@@ -177,5 +179,38 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     );
     wrapper.mount();
     expect(toJson(wrapper.find('tbody tr'))).toEqual(null);
+  });
+
+  it('filters correctly when searching by userName', async () => {
+    store.dispatch(fetchPlanDefinitions(fixtures.plans));
+    const userName = 'macTavish';
+    store.dispatch(fetchPlansByUser([fixtures.plans[0]], userName));
+    const props = {
+      fetchPlans: jest.fn(),
+      history,
+      location: {
+        pathname: PLAN_LIST_URL,
+        search: `?user=${userName}`,
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${PLAN_LIST_URL}`,
+        url: `${PLAN_LIST_URL}`,
+      },
+      service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedPlanDefinitionList {...props} />
+        </Router>
+      </Provider>
+    );
+    wrapper.mount();
+    // only one plan is rendered fixtures.plan1
+    expect(wrapper.find('tbody tr').text()).toMatchInlineSnapshot(
+      `"A2-Lusaka Akros Test Focus 2FIactive2019-05-19"`
+    );
   });
 });

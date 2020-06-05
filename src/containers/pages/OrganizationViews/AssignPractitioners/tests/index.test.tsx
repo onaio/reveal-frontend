@@ -19,7 +19,6 @@ import organizationsReducer, {
 } from '../../../../../store/ducks/opensrp/organizations';
 import practitionersReducer, {
   reducerName as practitionerReducerName,
-  removePractitionerRolesAction,
 } from '../../../../../store/ducks/opensrp/practitioners';
 import { removePractitionersAction } from '../../../../../store/ducks/opensrp/practitioners';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
@@ -35,7 +34,6 @@ const history = createBrowserHistory();
 describe('src/pages/*/AssignPractitioners', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    store.dispatch(removePractitionerRolesAction);
     store.dispatch(removePractitionersAction);
     store.dispatch(removeOrganizationsAction);
   });

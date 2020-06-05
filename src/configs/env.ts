@@ -261,9 +261,9 @@ export const PRACTITIONER_FORM_NAMESPACE =
   process.env.REACT_APP_PRACTITIONER_FORM_NAMESPACE || '78295ac0-df73-11e9-a54b-dbf5e5b2d668';
 export type PRACTITIONER_FORM_NAMESPACE = typeof PRACTITIONER_FORM_NAMESPACE;
 
-const openMRSUsersRequestPageSize = process.env.REACT_APP_OPENMRS_USERS_REQUEST_PAGE_SIZE || '100';
-export const OPENMRS_USERS_REQUEST_PAGE_SIZE = parseInt(openMRSUsersRequestPageSize, 10);
-export type OPENMRS_USERS_REQUEST_PAGE_SIZE = typeof OPENMRS_USERS_REQUEST_PAGE_SIZE;
+const usersRequestPageSize = process.env.REACT_APP_USERS_REQUEST_PAGE_SIZE || '100';
+export const USERS_REQUEST_PAGE_SIZE = parseInt(usersRequestPageSize, 10);
+export type USERS_REQUEST_PAGE_SIZE = typeof USERS_REQUEST_PAGE_SIZE;
 
 const toastAutoCloseDelay = process.env.REACT_APP_TOAST_AUTO_CLOSE_DELAY || '2000';
 
@@ -285,3 +285,17 @@ export const HIDE_MAP_FOR_INTERVENTIONS = String(
   process.env.REACT_APP_HIDE_MAP_FOR_INTERVENTIONS || ' '
 ).split(',');
 export type HIDE_MAP_FOR_INTERVENTIONS = typeof HIDE_MAP_FOR_INTERVENTIONS;
+
+export const REACT_APP_VERSION = process.env.REACT_APP_VERSION;
+export type REACT_APP_VERSION = typeof REACT_APP_VERSION;
+
+export const REACT_APP_NAME = process.env.REACT_APP_NAME;
+export type REACT_APP_NAME = typeof REACT_APP_NAME;
+
+/** list of plan types to be added to intervention type field when adding plans */
+export const ENABLED_PLAN_TYPES = String(process.env.REACT_APP_ENABLED_PLAN_TYPES || '').split(',');
+export type ENABLED_PLAN_TYPES = typeof ENABLED_PLAN_TYPES;
+
+/** list of FI reasons enabled */
+export const ENABLED_FI_REASONS = String(process.env.REACT_APP_ENABLED_FI_REASONS || '').split(',');
+export type ENABLED_FI_REASONS = typeof ENABLED_FI_REASONS;

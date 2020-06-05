@@ -22,7 +22,6 @@ const history = createBrowserHistory();
 describe('src/containers/pages/CreateEditPractitioner', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    store.dispatch(practitionerDucks.removePractitionerRolesAction);
     store.dispatch(practitionerDucks.removePractitionersAction);
   });
 
@@ -146,73 +145,6 @@ describe('src/containers/pages/CreateEditPractitioner', () => {
     const connectedProps = wrapper.find('CreateEditPractitionerView').props();
     expect((connectedProps as any).practitioner).toEqual(fixtures.practitioner1);
   });
-});
-
-it('calls selectors with the correct arguments', async () => {
-  const practitionerByIdMock = jest.spyOn(practitionerDucks, 'getPractitionerById');
-  fetch.once(JSON.stringify([]));
-  store.dispatch(practitionerDucks.fetchPractitioners(fixtures.practitioners));
-  const mock: any = jest.fn();
-  const props = {
-    history,
-    location: mock,
-    match: {
-      isExact: true,
-      params: { id: fixtures.practitioner1.identifier },
-      path: `${EDIT_PRACTITIONER_URL}/:id`,
-      url: `${EDIT_PRACTITIONER_URL}/${fixtures.practitioner1.identifier}`,
-    },
-    practitioner: fixtures.practitioner1,
-  };
-  mount(
-    <Provider store={store}>
-      <Router history={history}>
-        <ConnectedCreateEditPractitionerView {...props} />
-      </Router>
-    </Provider>
-  );
-
-  const state = {
-    gatekeeper: { result: {}, success: null, working: false },
-    practitioner: {
-      practitionerRoles: {},
-      practitionersById: {
-        '437cc699-cfa7-414c-ba27-1668b6b517e6': {
-          active: true,
-          identifier: '437cc699-cfa7-414c-ba27-1668b6b517e6',
-          name: 'Test User Lusaka',
-          userId: 'cad04f1e-9b05-4eac-92ce-4b38aa478644',
-          username: 'lusaka',
-        },
-        'd7c9c000-e9b3-427a-890e-49c301aa48e6': {
-          active: true,
-          identifier: 'd7c9c000-e9b3-427a-890e-49c301aa48e6',
-          name: 'Biophics Tester',
-          userId: '8df27310-c7ef-4bb2-b77f-3b9f4bd23713',
-          username: 'tak',
-        },
-        p5id: {
-          active: true,
-          identifier: 'p5id',
-          name: 'tlv2_name',
-          userId: '8af3b7ce-e3fa-420f-8de6-e7c36e08f0bc',
-          username: 'tlv2',
-        },
-        undefined: [],
-      },
-    },
-    router: {
-      action: 'POP',
-      location: { hash: '', pathname: '/', search: '', state: undefined, query: {} },
-    },
-    session: {
-      authenticated: false,
-      extraData: {},
-      user: { email: '', gravatar: '', name: '', username: '' },
-    },
-  };
-
-  expect(practitionerByIdMock.mock.calls[0]).toEqual([state, fixtures.practitioner1.identifier]);
 });
 
 describe('src/containers/practitionerViews/createEditview.createView', () => {

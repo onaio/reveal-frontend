@@ -129,3 +129,14 @@ fieldset[disabled] .gatekeeper-btn.active {
   top: 82% !important;
   padding: 5px !important;
 }
+
+.footer-row-container {
+  position: 'absolute';
+  bottom: '0';
+  line-height: 60px;
+  font-weight: bold;
+}
+
+.header-body {
+  min-height: calc(100vh - 62px);
+}

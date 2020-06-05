@@ -116,6 +116,7 @@ export const EVENT_NAME_PARAM = 'event_name';
 export const LOCATION_ID_PARAM = 'location_id';
 export const TEAM_ID_PARAM = 'team_id';
 export const OPENSRP_TEMPLATE_ENDPOINT = 'template';
+export const OPENSRP_PLANS_BY_USER_FILTER = 'plans/user';
 
 // colors
 export const GREEN = 'Green';
@@ -143,3 +144,4 @@ export const SORT_BY_EFFECTIVE_PERIOD_START_FIELD = 'plan_effective_period_start
 
 /** Query Params */
 export const QUERY_PARAM_TITLE = 'title';
+export const QUERY_PARAM_USER = 'user';

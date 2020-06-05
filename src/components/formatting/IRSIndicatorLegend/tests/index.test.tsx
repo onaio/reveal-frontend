@@ -3,7 +3,11 @@ import toJson from 'enzyme-to-json';
 import { values } from 'lodash';
 import React from 'react';
 import IRSIndicatorLegend, { generateRangeStrings } from '..';
-import { indicatorThresholdsIRS, indicatorThresholdsLookUpIRS } from '../../../../configs/settings';
+import {
+  indicatorThresholdsIRS,
+  indicatorThresholdsIRSNamibia,
+  indicatorThresholdsLookUpIRS,
+} from '../../../../configs/settings';
 
 const zambiaIndicatorRows = 'zambia2019';
 const namibiaIndicatorRows = 'namibia2019';
@@ -32,6 +36,7 @@ describe('/components/formatting/IRSIndicatorLegend', () => {
     expect(toJson(wrapper.find('Table'))).toMatchSnapshot('indicator table namibia');
     wrapper.unmount();
   });
+
   it('generateRangeStrings works correctly nominal case', () => {
     const sampleThresholds = indicatorThresholdsIRS;
 
@@ -43,5 +48,24 @@ describe('/components/formatting/IRSIndicatorLegend', () => {
       { color: '#FFDC00', name: 'Yellow', text: '75% >-< 90%', value: 0.9 },
       { color: '#2ECC40', name: 'Green', orEquals: true, text: '90% - 100%', value: 1 },
     ]);
+  });
+
+  it('renders correctly for namibia indicator colors with namibia indicatorThresholds', () => {
+    const wrapper = mount(
+      <IRSIndicatorLegend
+        indicatorRows={namibiaIndicatorRows}
+        indicatorThresholds={indicatorThresholdsIRSNamibia}
+      />
+    );
+    expect(wrapper.props()).toEqual({
+      indicatorRows: namibiaIndicatorRows,
+      indicatorThresholds: indicatorThresholdsIRSNamibia,
+      indicatorThresholdsLookUp: indicatorThresholdsLookUpIRS,
+    });
+    expect(toJson(wrapper.find('.card-header'))).toMatchSnapshot('header');
+    expect(toJson(wrapper.find('Table'))).toMatchSnapshot('indicator table namibia');
+    expect(wrapper.find('Table tbody tr').length).toEqual(
+      Object.keys(indicatorThresholdsIRSNamibia).length
+    );
   });
 });

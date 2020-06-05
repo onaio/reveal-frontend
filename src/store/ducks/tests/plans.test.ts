@@ -32,7 +32,11 @@ import reducer, {
 } from '../plans';
 import * as fixtures from './fixtures';
 
+jest.mock('../../../configs/env');
 reducerRegistry.register(reducerName, reducer);
+
+// reselect selector
+const plansArraySelector = makePlansArraySelector();
 
 describe('reducers/plans', () => {
   let flushThunks;
@@ -55,12 +59,11 @@ describe('reducers/plans', () => {
     expect(plansArrayBaseSelector()(store.getState())).toEqual([]);
     expect(getPlanRecordById(store.getState(), 'somId')).toEqual(null);
     expect(getPlansArray(store.getState())).toEqual([]);
+    expect(plansArraySelector(store.getState(), {})).toEqual([]);
   });
 
   it('should fetch Plans', () => {
     store.dispatch(fetchPlans([...fixtures.plans, fixtures.plan22]));
-
-    const plansArraySelector = makePlansArraySelector();
 
     const allPlans = keyBy([...fixtures.plans, fixtures.plan22], (plan: Plan) => plan.id);
     const fiPlans = pickBy(allPlans, (e: Plan) => e.plan_intervention_type === InterventionType.FI);
@@ -180,6 +183,17 @@ describe('reducers/plans', () => {
 
     expect(
       plansArraySelector(store.getState(), {
+        planIds: ['10f9e9fa-ce34-4b27-a961-72fab5206ab6'],
+      })
+    ).toEqual([fixtures.plan1, fixtures.plan22]);
+    expect(
+      plansArraySelector(store.getState(), {
+        planIds: null,
+      }).length
+    ).toEqual(5);
+
+    expect(
+      plansArraySelector(store.getState(), {
         interventionType: InterventionType.FI,
         reason: FIReasons[1],
       })
@@ -268,7 +282,7 @@ describe('reducers/plans', () => {
   it('should fetch PlanRecords', () => {
     store.dispatch(fetchPlanRecords(fixtures.planRecordResponses as PlanRecordResponse[]));
     const { planRecordsById: allPlanRecords } = fixtures;
-    const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
+    const planRecordsArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
 
     const fiPlanRecords = pickBy(
       allPlanRecords,
@@ -291,14 +305,14 @@ describe('reducers/plans', () => {
     const fiPlanRecordsArray = values(fiPlanRecords);
     const irsPlanRecordsArray = values(irsPlanRecords);
 
-    expect(plansArraySelector(store.getState(), { interventionType: InterventionType.FI })).toEqual(
-      fiPlanRecordsArray
-    );
     expect(
-      plansArraySelector(store.getState(), { interventionType: InterventionType.IRS })
+      planRecordsArraySelector(store.getState(), { interventionType: InterventionType.FI })
+    ).toEqual(fiPlanRecordsArray);
+    expect(
+      planRecordsArraySelector(store.getState(), { interventionType: InterventionType.IRS })
     ).toEqual(irsPlanRecordsArray);
 
-    const planRecordsArray = [...plansArraySelector(store.getState(), {})].sort(
+    const planRecordsArray = [...planRecordsArraySelector(store.getState(), {})].sort(
       (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
     );
     expect(planRecordsArray).toEqual(fixtures.sortedPlanRecordArray);
@@ -387,12 +401,12 @@ describe('reducers/plans', () => {
   it('should sort planrecords', () => {
     store.dispatch(fetchPlanRecords(fixtures.planRecordResponses as PlanRecordResponse[]));
 
-    const plansArraySelector = makePlansArraySelector(
+    const planRecordsArraySelector = makePlansArraySelector(
       PLAN_RECORD_BY_ID,
       SORT_BY_EFFECTIVE_PERIOD_START_FIELD
     );
 
-    const planRecordsArray = [...plansArraySelector(store.getState(), {})];
+    const planRecordsArray = [...planRecordsArraySelector(store.getState(), {})];
     expect(planRecordsArray).toEqual(fixtures.sortedPlanRecordArray);
   });
 });

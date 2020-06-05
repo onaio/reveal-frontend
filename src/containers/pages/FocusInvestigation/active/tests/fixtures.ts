@@ -1,5 +1,6 @@
 /** Fixtures for tests */
 import { keyBy } from 'lodash';
+import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 
 export const data = [
   {
@@ -222,4 +223,30 @@ export const activeFocusInvestigationProps = {
       },
     ],
   },
+};
+
+export const selectedPlan24 = {
+  canton: 'Chadiza',
+  caseClassification: null,
+  caseNotificationDate: '2019-06-18',
+  district: null,
+  focusArea: 'NVI_439',
+  province: null,
+  reason: 'Case Triggered',
+  status: 'A1',
+  village: 'Naviluli',
+  ...fixtures.plan24,
+};
+
+export const selectedPlan1 = {
+  canton: 'Chadiza',
+  caseClassification: null,
+  caseNotificationDate: null,
+  district: null,
+  focusArea: 'NVI_439',
+  province: null,
+  reason: 'Routine',
+  status: 'A1',
+  village: 'Naviluli',
+  ...fixtures.plan1,
 };

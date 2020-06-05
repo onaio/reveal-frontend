@@ -518,3 +518,7 @@ export const MDA_POINT_REPORTING_TITLE = translate(
   'MDA_POINT_REPORTING_TITLE',
   'MDA Point Reporting'
 );
+
+export const FILTER = translate('FILTER', 'Filter');
+
+export const USER = translate('USER', 'user');

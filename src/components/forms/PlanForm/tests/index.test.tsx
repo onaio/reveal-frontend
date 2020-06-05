@@ -1,12 +1,14 @@
 import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { authenticateUser } from '@onaio/session-reducer';
-import { mount, shallow } from 'enzyme';
+import { mount, ReactWrapper, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import { cloneDeep } from 'lodash';
 import React from 'react';
 import PlanForm, { propsForUpdatingPlans } from '..';
 import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { PlanStatus } from '../../../../store/ducks/plans';
 import { generatePlanDefinition, getPlanFormValues } from '../helpers';
 import * as fixtures from './fixtures';
 
@@ -272,32 +274,28 @@ describe('containers/forms/PlanForm - Edit', () => {
     jest.resetAllMocks();
   });
 
-  it('renders all fields correctly in edit mode', () => {
-    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
-    const props = {
-      ...propsForUpdatingPlans,
-      initialValues: getPlanFormValues(plans[0]),
-    };
-    const wrapper = mount(<PlanForm {...props} />);
+  const picture = (wrapper: ReactWrapper, message: string) => {
     expect(toJson(wrapper.find('#interventionType select'))).toMatchSnapshot(
-      'interventionType field'
+      `${message} : interventionType field`
     );
-    expect(toJson(wrapper.find('#fiStatus select'))).toMatchSnapshot('fiStatus field');
-    expect(toJson(wrapper.find('#fiReason select'))).toMatchSnapshot('fiReason field');
+    expect(toJson(wrapper.find('#fiStatus select'))).toMatchSnapshot(`${message} fiStatus field`);
+    expect(toJson(wrapper.find('#fiReason select'))).toMatchSnapshot(`${message} fiReason field`);
     // caseNum and opensrpEventId are not present in this plan object
     expect(wrapper.find('#caseNum').length).toEqual(0);
     expect(wrapper.find('#opensrpEventId').length).toEqual(0);
-    expect(toJson(wrapper.find('#title input'))).toMatchSnapshot('title field');
-    expect(toJson(wrapper.find('#name input'))).toMatchSnapshot('name field');
-    expect(toJson(wrapper.find('#identifier input'))).toMatchSnapshot('identifier field');
-    expect(toJson(wrapper.find('#version input'))).toMatchSnapshot('version field');
-    expect(toJson(wrapper.find('#taskGenerationStatus input'))).toMatchSnapshot(
-      'taskGenerationStatus field'
+    expect(toJson(wrapper.find('#title input'))).toMatchSnapshot(`${message} title field`);
+    expect(toJson(wrapper.find('#name input'))).toMatchSnapshot(`${message} name field`);
+    expect(toJson(wrapper.find('#identifier input'))).toMatchSnapshot(
+      `${message} identifier field`
     );
-    expect(toJson(wrapper.find('#status select'))).toMatchSnapshot('status field');
-    expect(toJson(wrapper.find('#start input'))).toMatchSnapshot('start field');
-    expect(toJson(wrapper.find('#end input'))).toMatchSnapshot('end field');
-    expect(toJson(wrapper.find('#date input'))).toMatchSnapshot('date field');
+    expect(toJson(wrapper.find('#version input'))).toMatchSnapshot(`${message} version field`);
+    expect(toJson(wrapper.find('#taskGenerationStatus input'))).toMatchSnapshot(
+      `${message} taskGenerationStatus field`
+    );
+    expect(toJson(wrapper.find('#status select'))).toMatchSnapshot(`${message} status field`);
+    expect(toJson(wrapper.find('#start input'))).toMatchSnapshot(`${message} start field`);
+    expect(toJson(wrapper.find('#end input'))).toMatchSnapshot(`${message} end field`);
+    expect(toJson(wrapper.find('#date input'))).toMatchSnapshot(`${message} date field`);
     expect(wrapper.find('#jurisdictions-select-container').length).toEqual(0);
     expect(wrapper.find('#jurisdictions-display-container').length).toEqual(1);
 
@@ -305,12 +303,46 @@ describe('containers/forms/PlanForm - Edit', () => {
     expect(wrapper.find(`.removeActivity`).length).toEqual(0);
     // there is no modal to add more activities
     expect(wrapper.find(`.add-more-activities`).length).toEqual(0);
+  };
+
+  it('ACTIVE renders all fields correctly in edit mode', () => {
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const props = {
+      ...propsForUpdatingPlans(plans[0].status),
+      initialValues: getPlanFormValues(plans[0]),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+    picture(wrapper, 'Active Plan');
+  });
+
+  it('DRAFT renders all fields correctly in edit mode', () => {
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const plan = cloneDeep(plans[0]);
+    plan.status = PlanStatus.DRAFT;
+    const props = {
+      ...propsForUpdatingPlans(plan.status),
+      initialValues: getPlanFormValues(plan),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+    picture(wrapper, 'DRAFT Plan');
+  });
+
+  it('COMPLETE renders all fields correctly in edit mode', () => {
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const plan = cloneDeep(plans[0]);
+    plan.status = PlanStatus.COMPLETE;
+    const props = {
+      ...propsForUpdatingPlans(plan.status),
+      initialValues: getPlanFormValues(plan),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+    picture(wrapper, 'COMPLETE Plan');
   });
 
   it('renders conditional fields correctly in edit mode', () => {
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const props = {
-      ...propsForUpdatingPlans,
+      ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(plans[2]),
     };
     const wrapper = mount(<PlanForm {...props} />);
@@ -332,7 +364,7 @@ describe('containers/forms/PlanForm - Edit', () => {
     );
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const props = {
-      ...propsForUpdatingPlans,
+      ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(plans[1]),
       renderLocationNames: () => <MockComponent />,
     };
@@ -351,7 +383,7 @@ describe('containers/forms/PlanForm - Edit', () => {
 
   it('renders activity fields correctly', () => {
     const props = {
-      ...propsForUpdatingPlans,
+      ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(plans[1]),
     };
 
@@ -774,7 +806,7 @@ describe('containers/forms/PlanForm - Submission', () => {
     fetch.mockResponseOnce(JSON.stringify({}));
 
     const props = {
-      ...propsForUpdatingPlans,
+      ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(plans[1]),
     };
     const wrapper = mount(<PlanForm {...props} />);
@@ -813,7 +845,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       useContext: [interventionType, fiStatus],
     };
     const propsMissingFiReason = {
-      ...propsForUpdatingPlans,
+      ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(planMissingFIReason),
     };
     const wrapper = mount(<PlanForm {...propsMissingFiReason} />);
@@ -839,7 +871,7 @@ describe('containers/forms/PlanForm - Submission', () => {
       ],
     };
     const propsInvalidFiReason = {
-      ...propsForUpdatingPlans,
+      ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(planInvalidFiReason),
     };
     const wrapper = mount(<PlanForm {...propsInvalidFiReason} />);

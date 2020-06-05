@@ -225,4 +225,4 @@ export const MDAPointplans = [
   },
 ];
 /* tslint:disable-next-line no-var-requires */
-export const ZambiaStructures = require('../../../../containers/pages/IRS/JurisdictionsReport/tests/zambia_structures.json');
+export const ZambiaStructures = require('../../../../containers/pages/IRS/JurisdictionsReport/fixtures/zambia_structures.json');

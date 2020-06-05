@@ -20,6 +20,8 @@ import {
   DATE_FORMAT,
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
+  ENABLED_FI_REASONS,
+  ENABLED_PLAN_TYPES,
 } from '../../../configs/env';
 import {
   ACTION,
@@ -84,7 +86,7 @@ import {
   PlanSchema,
 } from './helpers';
 import './style.css';
-import { PlanActionCodesType } from './types';
+import { FIReasonType, PlanActionCodesType } from './types';
 
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {
@@ -166,6 +168,13 @@ const PlanForm = (props: PlanFormProps) => {
   const fiActivities = getFormActivities(FIActivities);
   const mdaPointActivities = getFormActivities(MDAPointActivities);
 
+  let filteredFIReasons: FIReasonType[] = [...FIReasons];
+  if (ENABLED_FI_REASONS.length) {
+    filteredFIReasons = FIReasons.filter((reason: FIReasonType) =>
+      ENABLED_FI_REASONS.includes(reason)
+    );
+  }
+
   const disAllowedStatusChoices: string[] = [];
   if (editMode) {
     // Don't allow setting status back to draft
@@ -175,9 +184,9 @@ const PlanForm = (props: PlanFormProps) => {
     // set these fields to friendly defaults if not set or else the form cant be submitted
     if (
       initialValues.interventionType === InterventionType.FI &&
-      (!initialValues.fiReason || !FIReasons.includes(initialValues.fiReason))
+      (!initialValues.fiReason || !filteredFIReasons.includes(initialValues.fiReason))
     ) {
-      initialValues.fiReason = FIReasons[0];
+      initialValues.fiReason = filteredFIReasons[0];
     }
   }
 
@@ -216,6 +225,13 @@ const PlanForm = (props: PlanFormProps) => {
       ).length === 0
     );
   }
+
+  /**
+   * Check if a plan type should be visible
+   * @param {InterventionType} planType - plan type
+   */
+  const isPlanTypeEnabled = (planType: InterventionType): boolean =>
+    ENABLED_PLAN_TYPES.includes(planType);
 
   /** if plan is updated or saved redirect to plans page */
   if (areWeDoneHere) {
@@ -317,9 +333,15 @@ const PlanForm = (props: PlanFormProps) => {
                 }}
                 className={errors.interventionType ? 'form-control is-invalid' : 'form-control'}
               >
-                <option value={InterventionType.FI}>{FOCUS_INVESTIGATION}</option>
-                <option value={InterventionType.IRS}>{IRS_TITLE}</option>
-                <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>
+                {isPlanTypeEnabled(InterventionType.FI) && (
+                  <option value={InterventionType.FI}>{FOCUS_INVESTIGATION}</option>
+                )}
+                {isPlanTypeEnabled(InterventionType.IRS) && (
+                  <option value={InterventionType.IRS}>{IRS_TITLE}</option>
+                )}
+                {isPlanTypeEnabled(InterventionType.MDAPoint) && (
+                  <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>
+                )}
               </Field>
               <ErrorMessage
                 name="interventionType"
@@ -489,7 +511,7 @@ const PlanForm = (props: PlanFormProps) => {
                   className={errors.fiReason ? 'form-control is-invalid' : 'form-control'}
                 >
                   <option>----</option>
-                  {FIReasons.map(e => (
+                  {filteredFIReasons.map(e => (
                     <option key={e} value={e}>
                       {FIReasonsDisplay[e]}
                     </option>
@@ -981,9 +1003,10 @@ const defaultProps: PlanFormProps = {
 /** props for updating plan definition objects
  * We are defining these here to keep things DRY
  */
-export const propsForUpdatingPlans: Partial<PlanFormProps> = {
-  disabledActivityFields: ['actionReason', 'goalPriority'],
-  disabledFields: [
+export const propsForUpdatingPlans = (
+  planStatus: string = PlanStatus.DRAFT
+): Partial<PlanFormProps> => {
+  let disabledFields = [
     'interventionType',
     'fiReason',
     'fiStatus',
@@ -992,7 +1015,29 @@ export const propsForUpdatingPlans: Partial<PlanFormProps> = {
     'caseNum',
     'opensrpEventId',
     'jurisdictions',
-  ],
+  ];
+  const fieldsForActivePlan = [
+    'activities',
+    'date',
+    'end',
+    'fiReason',
+    'fiStatus',
+    'start',
+    'taskGenerationStatus',
+    'title',
+    'version',
+  ];
+  const fieldsForCompletePlans = ['status'];
+  disabledFields =
+    planStatus === PlanStatus.ACTIVE ? [...disabledFields, ...fieldsForActivePlan] : disabledFields;
+  disabledFields =
+    planStatus === PlanStatus.COMPLETE || planStatus === PlanStatus.RETIRED
+      ? [...disabledFields, ...fieldsForCompletePlans, ...fieldsForActivePlan]
+      : disabledFields;
+  return {
+    disabledActivityFields: ['actionReason', 'goalPriority'],
+    disabledFields,
+  };
 };
 
 PlanForm.defaultProps = defaultProps;
