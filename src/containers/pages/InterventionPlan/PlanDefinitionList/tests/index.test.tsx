@@ -11,6 +11,7 @@ import { fetchPlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDef
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { fetchPlansByUser } from '../../../../../store/ducks/opensrp/planIdsByUser';
 
+jest.mock('../../../../../configs/env');
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 

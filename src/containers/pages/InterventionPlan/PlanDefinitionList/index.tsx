@@ -57,6 +57,12 @@ interface PlanListProps {
   userName: string | null;
 }
 
+/** Plans filter selector */
+const plansDefinitionsArraySelector = makePlanDefinitionsArraySelector(
+  'planDefinitionsById',
+  'date'
+);
+
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
   const { fetchPlans, plans, service } = props;
@@ -181,13 +187,10 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const userName = getQueryParams(ownProps.location)[QUERY_PARAM_USER] as string;
   const planIds = makePlansByUserNamesSelector()(state, { userName });
-  const planDefinitionsArray = makePlanDefinitionsArraySelector('planDefinitionsById', 'date')(
-    state,
-    {
-      planIds,
-      title: searchedTitle,
-    }
-  );
+  const planDefinitionsArray = plansDefinitionsArraySelector(state, {
+    planIds,
+    title: searchedTitle,
+  });
 
   return {
     plans: planDefinitionsArray,

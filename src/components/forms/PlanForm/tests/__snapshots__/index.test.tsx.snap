@@ -21,6 +21,11 @@ exports[`containers/forms/PlanForm - Edit ACTIVE renders all fields correctly in
   >
     IRS
   </option>
+  <option
+    value="MDA-Point"
+  >
+    MDA Point
+  </option>
 </select>
 `;
 
@@ -261,6 +266,11 @@ exports[`containers/forms/PlanForm - Edit COMPLETE renders all fields correctly 
   >
     IRS
   </option>
+  <option
+    value="MDA-Point"
+  >
+    MDA Point
+  </option>
 </select>
 `;
 
@@ -500,6 +510,11 @@ exports[`containers/forms/PlanForm - Edit DRAFT renders all fields correctly in 
     value="IRS"
   >
     IRS
+  </option>
+  <option
+    value="MDA-Point"
+  >
+    MDA Point
   </option>
 </select>
 `;
@@ -4239,6 +4254,11 @@ exports[`containers/forms/PlanForm renders correctly: interventionType field 1`]
     value="IRS"
   >
     IRS
+  </option>
+  <option
+    value="MDA-Point"
+  >
+    MDA Point
   </option>
 </select>
 `;
