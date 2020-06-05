@@ -14,6 +14,7 @@ export interface LinkedCellProps extends DropDownCellProps {
  */
 const IRSTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps) => {
   const { cell, cellValue, hasChildren, urlPath } = props;
+
   const url = urlPath ? `${urlPath}/${cell.original.jurisdiction_id}` : '';
   const val =
     hasChildren || cell.original.is_virtual_jurisdiction ? (

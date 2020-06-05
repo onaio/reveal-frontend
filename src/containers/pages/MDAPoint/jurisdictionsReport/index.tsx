@@ -6,16 +6,16 @@ import { RouteComponentProps } from 'react-router';
 import 'react-table/react-table.css';
 import { Store } from 'redux';
 import IRSIndicatorLegend from '../../../../components/formatting/IRSIndicatorLegend';
-import IRSTableCell from '../../../../components/IRSTableCell';
 import {
-  SUPERSET_IRS_REPORTING_FOCUS_AREAS_COLUMNS,
-  SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS,
-  SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES,
-  SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
-  SUPERSET_IRS_REPORTING_PLANS_SLICE,
+  SUPERSET_MDA_POINT_REPORTING_FOCUS_AREAS_COLUMNS,
+  SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_COLUMNS,
+  SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES,
+  SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
+  SUPERSET_MDA_POINT_REPORTING_PLANS_SLICE,
 } from '../../../../configs/env';
-import { IRS_REPORTING_TITLE } from '../../../../configs/lang';
-import { REPORT_IRS_PLAN_URL } from '../../../../constants';
+import { MDA_POINT_REPORTING_TITLE } from '../../../../configs/lang';
+import { REPORT_MDA_POINT_PLAN_URL } from '../../../../constants';
+import { DefaultTableCell } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -24,22 +24,27 @@ import {
   GenericJurisdiction,
   getGenericJurisdictionsArray,
 } from '../../../../store/ducks/generic/jurisdictions';
-import IRSPlansReducer, {
-  fetchIRSPlans,
-  GenericPlan,
-  getIRSPlanById,
-  reducerName as IRSPlansReducerName,
-} from '../../../../store/ducks/generic/plans';
+import MDAPointPlansReducer, {
+  reducerName as MDAPointPlansReducerName,
+} from '../../../../store/ducks/generic/MDAPointPlans';
+import {
+  fetchMDAPointPlans,
+  getMDAPointPlanById,
+} from '../../../../store/ducks/generic/MDAPointPlans';
+import { GenericPlan } from '../../../../store/ducks/generic/plans';
 import {
   GenericJurisdictionProps,
   GenericJurisdictionReport,
 } from '../../GenericJurisdictionReport';
+import '../../IRS/JurisdictionsReport/style.css';
 
 /** register the reducers */
-reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
+reducerRegistry.register(MDAPointPlansReducerName, MDAPointPlansReducer);
 
 /** Renders IRS Jurisdictions reports */
-const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProps<RouteParams>) => {
+const MdaPointJurisdictionReport = (
+  props: GenericJurisdictionProps & RouteComponentProps<RouteParams>
+) => {
   return (
     <div>
       <GenericJurisdictionReport {...props} />
@@ -49,25 +54,25 @@ const JurisdictionReport = (props: GenericJurisdictionProps & RouteComponentProp
 
 const defaultProps: GenericJurisdictionProps = {
   LegendIndicatorComp: IRSIndicatorLegend,
-  baseURL: REPORT_IRS_PLAN_URL,
-  cellComponent: IRSTableCell,
+  baseURL: REPORT_MDA_POINT_PLAN_URL,
+  cellComponent: DefaultTableCell,
   fetchJurisdictions: fetchGenericJurisdictions,
-  fetchPlans: fetchIRSPlans,
-  focusAreaColumn: SUPERSET_IRS_REPORTING_FOCUS_AREAS_COLUMNS,
-  focusAreaLevel: SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
+  fetchPlans: fetchMDAPointPlans,
+  focusAreaColumn: SUPERSET_MDA_POINT_REPORTING_FOCUS_AREAS_COLUMNS,
+  focusAreaLevel: SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
   hasChildren: hasChildrenFunc,
-  jurisdictionColumn: SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS,
+  jurisdictionColumn: SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_COLUMNS,
   jurisdictions: null,
-  pageTitle: IRS_REPORTING_TITLE,
+  pageTitle: MDA_POINT_REPORTING_TITLE,
   plan: null,
-  reportingPlanSlice: SUPERSET_IRS_REPORTING_PLANS_SLICE,
+  reportingPlanSlice: SUPERSET_MDA_POINT_REPORTING_PLANS_SLICE,
   service: supersetFetch,
-  slices: SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES.split(','),
+  slices: SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES.split(','),
 };
 
-JurisdictionReport.defaultProps = defaultProps;
+MdaPointJurisdictionReport.defaultProps = defaultProps;
 
-export { JurisdictionReport };
+export { MdaPointJurisdictionReport };
 
 /** Connect the component to the store */
 
@@ -80,17 +85,16 @@ interface DispatchedStateProps extends RouteComponentProps<RouteParams> {
 /** map state to props */
 const mapStateToProps = (
   state: Partial<Store>,
-  ownProps: GenericJurisdictionProps & RouteComponentProps<RouteParams>
+  ownProps: RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
   const planId = ownProps.match.params.planId || null;
-  const plan = planId ? getIRSPlanById(state, planId) : null;
+  const plan = planId ? getMDAPointPlanById(state, planId) : null;
 
   let jurisdictions: GenericJurisdiction[] = [];
   defaultProps.slices.forEach(
-    slice =>
+    (slice: string) =>
       (jurisdictions = jurisdictions.concat(getGenericJurisdictionsArray(state, slice, planId)))
   );
-
   return {
     ...ownProps,
     jurisdictions,
@@ -101,13 +105,13 @@ const mapStateToProps = (
 /** map dispatch to props */
 const mapDispatchToProps = {
   fetchJurisdictions: fetchGenericJurisdictions,
-  fetchPlansIRS: fetchIRSPlans,
+  fetchPlans: fetchMDAPointPlans,
 };
 
 /** Connected ActiveFI component */
-const ConnectedJurisdictionReport = connect(
+const ConnectedMdaPointJurisdictionReport = connect(
   mapStateToProps,
   mapDispatchToProps
-)(JurisdictionReport);
+)(MdaPointJurisdictionReport);
 
-export default ConnectedJurisdictionReport;
+export default ConnectedMdaPointJurisdictionReport;

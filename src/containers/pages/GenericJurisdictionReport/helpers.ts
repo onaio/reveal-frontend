@@ -1,5 +1,5 @@
 import { CellInfo, Column } from 'react-table';
-import { getIRSThresholdAdherenceIndicator } from '../../../../helpers/indicators';
+import { getIRSThresholdAdherenceIndicator } from '../../../helpers/indicators';
 
 /** columns for Namibia IRS jurisdictions */
 export const NamibiaColumns = [
@@ -196,6 +196,95 @@ export const ZambiaJurisdictionsColumns = [
   },
 ];
 
+/** columns for  mda point jurisdictions */
+export const mdaJurisdictionsColumns = [
+  {
+    Header: 'Name',
+    columns: [
+      {
+        Header: '',
+        accessor: 'jurisdiction_name',
+        minWidth: 180,
+      },
+    ],
+  },
+  {
+    Header: 'Total SACs Registered',
+    columns: [
+      {
+        Header: '',
+        accessor: 'sacregistered',
+      },
+    ],
+  },
+  {
+    Header: 'MMA Coverage',
+    columns: [
+      {
+        Header: '',
+        accessor: 'mmacov',
+      },
+    ],
+  },
+  {
+    Header: 'MMA Coverage (%)',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'mmacovper',
+      },
+    ],
+  },
+  {
+    Header: 'SACs Refused',
+    columns: [
+      {
+        Header: '',
+        accessor: 'sacrefused',
+      },
+    ],
+  },
+  {
+    Header: 'SACs Sick/Pregnant/Contraindicated',
+    columns: [
+      {
+        Header: '',
+        accessor: 'sacrefmedreason',
+      },
+    ],
+  },
+  {
+    Header: 'ADR Reported (%)',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'mmaadr',
+      },
+    ],
+  },
+  {
+    Header: 'ADR Severe (%)',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'mmaadrsev',
+      },
+    ],
+  },
+  {
+    Header: 'Alb Tablets Distributed',
+    columns: [
+      {
+        Header: '',
+        accessor: 'albdist',
+      },
+    ],
+  },
+];
+
 /** columns for Namibia IRS focus (spray) areas */
 export const ZambiaFocusAreasColumns = [
   {
@@ -284,7 +373,8 @@ export const ZambiaFocusAreasColumns = [
 /** IRS Table Columns
  * These are all the table columns for IRS that we know about.
  */
-export const IRSTableColumns: { [key: string]: Column[] } = {
+export const plansTableColumns: { [key: string]: Column[] } = {
+  mdaJurisdictionsColumns,
   namibia2019: NamibiaColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
   zambiaJurisdictions2019: ZambiaJurisdictionsColumns,

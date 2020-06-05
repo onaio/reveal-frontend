@@ -140,6 +140,7 @@ export const ADD = translate('ADD', 'Add');
 export const REMOVE = translate('REMOVE', 'Remove');
 
 export const IRS_PLANS = translate('IRS_PLANS', 'IRS Plans');
+export const MDA_POINT_PLANS = translate('MDA_POINT_PLANS', 'MDA Point Plans');
 export const COUNTRY = translate('COUNTRY', 'Country');
 export const NEW_TITLE = translate('NEW_TITLE', 'New');
 export const PLAN_TITLE = translate('PLAN_TITLE', 'Plan');
@@ -511,4 +512,9 @@ export const GEOGRAPHICAL_REGION_TO_INCLUDE = translate(
 export const ASSIGN_TEAM_TO_SCHOOL = translate(
   'ASSIGN_TEAM_TO_SCHOOL',
   'Assign team to this school'
+);
+
+export const MDA_POINT_REPORTING_TITLE = translate(
+  'MDA_POINT_REPORTING_TITLE',
+  'MDA Point Reporting'
 );

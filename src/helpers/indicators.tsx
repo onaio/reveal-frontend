@@ -1,3 +1,4 @@
+import { DropDownCellProps } from '@onaio/drill-down-table/dist/types';
 import ElementMap from '@onaio/element-map';
 import { Dictionary } from '@onaio/utils';
 import { keys } from 'lodash';
@@ -230,5 +231,15 @@ export function getIRSThresholdAdherenceIndicator(
     <div className="irs-report-indicator-container" style={{ backgroundColor: cellColor }}>
       {isNumber ? IndicatorThresholdItemPercentage(cell.value) : 'NaN'}
     </div>
+  );
+}
+
+/** default drillDown CellComponent for jurisdiction reporting
+ * @param {DropDownCellProps} props - the ReactTable.Cell being rendered in an indicator drilldown table
+ */
+export function DefaultTableCell(props: DropDownCellProps) {
+  const { hasChildren, cellValue } = props;
+  return (
+    <span className={`plan-jurisdiction-name ${hasChildren ? 'btn-link' : ''}`}>{cellValue}</span>
   );
 }
