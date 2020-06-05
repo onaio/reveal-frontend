@@ -132,7 +132,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
       <Row id="header-row">
         <Col className="xs">
           <h3 className="mb-3 mt-5 page-title">
-            {clientLabel ? UPLOADED_STUDENT_LISTS : UPLOADED_CLIENT_LISTS}
+            {clientLabel === STUDENTS_TITLE ? UPLOADED_STUDENT_LISTS : UPLOADED_CLIENT_LISTS}
           </h3>
         </Col>
         <Col className="xs">

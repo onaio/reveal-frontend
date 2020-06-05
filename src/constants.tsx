@@ -113,6 +113,7 @@ export const OPENSRP_UPLOAD_ENDPOINT = 'upload';
 export const OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT = 'upload/download';
 export const EVENT_NAME_PARAM = 'event_name';
 export const LOCATION_ID_PARAM = 'location_id';
+export const TEAM_ID_PARAM = 'team_id';
 export const OPENSRP_TEMPLATE_ENDPOINT = 'template';
 
 // colors
