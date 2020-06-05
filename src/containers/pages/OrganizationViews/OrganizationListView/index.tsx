@@ -8,10 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import InlineSearchForm, {
-  FieldProps,
-  Props as InlineSearchFormProps,
-} from '../../../../components/InlineSearchForm';
+import { createChangeHandler, SearchForm } from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -22,23 +19,23 @@ import {
   HOME,
   IDENTIFIER,
   NEW_TEAM,
-  ORGANIZATION_LABEL,
   ORGANIZATION_NAME_TITLE,
   ORGANIZATIONS_LABEL,
-  SEARCH,
   VIEW,
 } from '../../../../configs/lang';
 import {
   CREATE_ORGANIZATION_URL,
   HOME_URL,
   ORGANIZATIONS_LIST_URL,
+  QUERY_PARAM_TITLE,
   SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
   fetchOrganizations,
-  getOrganizationsArray,
+  makeOrgsArraySelector,
   Organization,
   reducerName as organizationsReducerName,
 } from '../../../../store/ducks/opensrp/organizations';
@@ -52,6 +49,7 @@ interface OrganizationsListViewProps {
   fetchOrganizationsAction: typeof fetchOrganizations;
   organizations: Organization[];
   serviceClass: typeof OpenSRPService;
+  name?: string;
 }
 
 /** the default props for SingleOrganizationView */
@@ -69,10 +67,6 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
 
   // functions/methods
 
-  /** function to handle the submit on the inline search form */
-  // tslint:disable-next-line: no-empty
-  function handleSubmit(_: FieldProps) {}
-
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
@@ -86,13 +80,6 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
     url: `${HOME_URL}`,
   };
   breadcrumbProps.pages = [homePage];
-
-  /** props for the inline search form, used to search an organization via an api call */
-  const inlineSearchFormProps: InlineSearchFormProps = {
-    handleSubmit,
-    inputId: 'search',
-    inputPlaceholder: `${SEARCH} ${ORGANIZATION_LABEL}`,
-  };
 
   /** Props for the organization's listing table */
   const listViewProps = {
@@ -129,10 +116,12 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   }, []);
 
   // break early if organizations are absent
-  const isLoading = organizations.length < 1;
+  const isLoading = organizations.length < 1 && !props.name;
   if (isLoading) {
     return <Loading />;
   }
+
+  const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
 
   return (
     <div>
@@ -149,8 +138,11 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
         </Col>
       </Row>
       <hr />
-      <InlineSearchForm {...inlineSearchFormProps} />
-
+      <Row>
+        <Col>
+          <SearchForm onChangeHandler={searchFormChangeHandler} />
+        </Col>
+      </Row>
       <ListView {...listViewProps} />
     </div>
   );
@@ -162,9 +154,17 @@ export { OrganizationListView };
 
 // connect to store
 
-const mapStateToProps = (state: Partial<Store>) => {
+type MapStateToProps = Pick<OrganizationsListViewProps, 'name' | 'organizations'>;
+
+const mapStateToProps = (
+  state: Partial<Store>,
+  ownProps: OrgsListViewPropsType
+): MapStateToProps => {
+  const organizationSelector = makeOrgsArraySelector();
+  const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   return {
-    organizations: getOrganizationsArray(state),
+    name: searchedTitle,
+    organizations: organizationSelector(state, { name: searchedTitle }),
   };
 };
 

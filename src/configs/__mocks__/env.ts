@@ -81,8 +81,8 @@ export type DEFAULT_PLAN_DURATION_DAYS = typeof DEFAULT_PLAN_DURATION_DAYS;
 export const DEFAULT_ACTIVITY_DURATION_DAYS = 7;
 export type DEFAULT_ACTIVITY_DURATION_DAYS = typeof DEFAULT_ACTIVITY_DURATION_DAYS;
 
-export const OPENMRS_USERS_REQUEST_PAGE_SIZE = 51;
-export type OPENMRS_USERS_REQUEST_PAGE_SIZE = typeof OPENMRS_USERS_REQUEST_PAGE_SIZE;
+export const USERS_REQUEST_PAGE_SIZE = 51;
+export type USERS_REQUEST_PAGE_SIZE = typeof USERS_REQUEST_PAGE_SIZE;
 
 export const LANGUAGE = 'en';
 export type LANGUAGE = typeof LANGUAGE;
@@ -97,3 +97,7 @@ export const EXPRESS_OAUTH_GET_STATE_URL = 'http://localhost:3000/oauth/state';
 export const EXPRESS_OAUTH_LOGOUT_URL = 'http://localhost:3000/logout';
 
 export const BACKEND_ACTIVE = true;
+
+export const REACT_APP_VERSION = 'v0.4.2';
+
+export const REACT_APP_NAME = 'Reveal-frontend';

@@ -4,6 +4,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
 import { createBrowserHistory } from 'history';
+import { cloneDeep } from 'lodash';
 import MockDate from 'mockdate';
 import React from 'react';
 import { Helmet } from 'react-helmet';
@@ -12,6 +13,8 @@ import { Router } from 'react-router';
 import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../configs/lang';
 import { FI_URL } from '../../../../../constants';
 import store from '../../../../../store';
+import { plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { fetchPlansByUser } from '../../../../../store/ducks/opensrp/planIdsByUser';
 import reducer, {
   fetchPlans,
   reducerName,
@@ -20,7 +23,8 @@ import reducer, {
 import { InterventionType } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
-import { activeFocusInvestigationProps } from './fixtures';
+import { activeFocusInvestigationProps, selectedPlan1, selectedPlan24 } from './fixtures';
+
 reducerRegistry.register(reducerName, reducer);
 
 library.add(faExternalLinkSquareAlt);
@@ -371,5 +375,92 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         .at(1)
         .prop('data')
     ).toEqual([]);
+  });
+
+  it('filters plans by userName', async () => {
+    const planDef1 = cloneDeep(plans[0]);
+    planDef1.identifier = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
+    const userName = 'ghost';
+    store.dispatch(
+      fetchPlans([fixtures.plan1, fixtures.completeRoutinePlan, fixtures.plan24, fixtures.plan2])
+    );
+    store.dispatch(fetchPlansByUser([planDef1], userName));
+    const props = {
+      history,
+      location: {
+        pathname: FI_URL,
+        search: `?user=${userName}`,
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${FI_URL}`,
+        url: `${FI_URL}`,
+      },
+      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(0)
+        .prop('data')
+    ).toEqual([selectedPlan24]);
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(1)
+        .prop('data')
+    ).toEqual([selectedPlan1]);
+  });
+
+  it('filters plans by userName resulting in no plans', async () => {
+    const planDef1 = cloneDeep(plans[0]);
+    planDef1.identifier = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
+    const userName = 'ghost';
+    store.dispatch(fetchPlans([fixtures.completeRoutinePlan, fixtures.plan2]));
+    store.dispatch(fetchPlansByUser([planDef1], userName));
+    const props = {
+      history,
+      location: {
+        pathname: FI_URL,
+        search: `?user=${userName}`,
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${FI_URL}`,
+        url: `${FI_URL}`,
+      },
+      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(0)
+        .prop('data')
+    ).toEqual([]);
+    expect(
+      wrapper
+        .find('ReactTable')
+        .at(1)
+        .prop('data')
+    ).toEqual([]);
+
+    // no plans but loader is not showing
+    expect(wrapper.find('Ripple').length).toEqual(0);
   });
 });

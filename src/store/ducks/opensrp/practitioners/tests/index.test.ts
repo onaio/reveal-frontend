@@ -1,18 +1,13 @@
 /** Test file for the practitioners ducks module */
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { keyBy, values } from 'lodash';
-import { Reducer, Selector } from 'redux-testkit';
-import { FlushThunks } from 'redux-testkit';
 import reducer, {
-  fetchPractitionerRoles,
   fetchPractitioners,
   getPractitionersArray,
   getPractitionersById,
-  getPractitionersByOrgId,
-  initialState,
+  makePractitionersSelector,
   Practitioner,
   reducerName,
-  removePractitionerRolesAction,
   removePractitionersAction,
 } from '..';
 import store from '../../../..';
@@ -23,234 +18,7 @@ reducerRegistry.register(reducerName, reducer);
 const generateKeyBy = (practitioners: Practitioner[]) =>
   keyBy(practitioners, practitioner => practitioner.identifier);
 
-describe('reducers/practitioners.reducer.fetchPractitionersAction', () => {
-  let flushThunks;
-
-  beforeEach(() => {
-    flushThunks = FlushThunks.createMiddleware();
-    jest.resetAllMocks();
-    store.dispatch(removePractitionersAction);
-    store.dispatch(removePractitionerRolesAction);
-  });
-  // should handle dispatch on initialState
-  it('handles dispatch correctly on initial state', () => {
-    const action = fetchPractitioners([fixtures.practitioner1]);
-    const expectedState = {
-      practitionerRoles: {},
-      practitionersById: generateKeyBy([fixtures.practitioner1]),
-    };
-    Reducer(reducer)
-      .expect(action)
-      .toReturnState(expectedState);
-  });
-
-  // should handle dispatch on existing state
-  it('handles dispatch correctly on current state', () => {
-    const currentState = {
-      practitionersById: generateKeyBy([fixtures.practitioner1]),
-    };
-    const action = fetchPractitioners([fixtures.practitioner2]);
-    const expectedState = {
-      practitionersById: generateKeyBy([fixtures.practitioner1, fixtures.practitioner2]),
-    };
-    Reducer(reducer)
-      .withState(currentState)
-      .expect(action)
-      .toReturnState(expectedState);
-  });
-
-  it('handles dispatch correctly on current state with overwrite', () => {
-    const currentState = {
-      practitionersById: generateKeyBy([fixtures.practitioner1]),
-    };
-    const action = fetchPractitioners([fixtures.practitioner2], true);
-    const expectedState = {
-      practitionersById: generateKeyBy([fixtures.practitioner2]),
-    };
-    Reducer(reducer)
-      .withState(currentState)
-      .expect(action)
-      .toReturnState(expectedState);
-  });
-
-  // should return same state for non existing action
-  it('returns current State for unknown action types', () => {
-    const currentState = {
-      practitionersById: generateKeyBy([fixtures.practitioner1]),
-    };
-    const action = { type: 'UNKNOWN_ACTION' };
-    Reducer(reducer)
-      .withState(currentState)
-      .expect(action)
-      .toReturnState(currentState);
-  });
-});
-
-describe('reducers/practitioners.reducer.fetchPractitionerRolesAction', () => {
-  // should handle dispatch on initialState
-  it('handles dispatch correctly on initial state', () => {
-    const action = fetchPractitionerRoles(
-      [fixtures.practitioner5],
-      fixtures.organization3.identifier
-    );
-    const expectedState = {
-      practitionerRoles: {
-        'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': { master: fixtures.practitioner5 },
-      },
-      practitionersById: {},
-    };
-    // without a state, should use the default state
-    Reducer(reducer)
-      .expect(action)
-      .toReturnState(expectedState);
-  });
-
-  // should handle dispatch on existing state
-  it('handles dispatch correctly on current state', () => {
-    const currentState = {
-      practitionerRoles: {
-        'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': { master: fixtures.practitioner5 },
-      },
-      practitionersById: {},
-    };
-    const action = fetchPractitionerRoles(
-      [fixtures.practitioner6],
-      fixtures.organization3.identifier
-    );
-    const expectedState = {
-      practitionerRoles: {
-        'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': {
-          '437cc699-cfd7-414c-ba27-1668b6b517e6': fixtures.practitioner6,
-        },
-      },
-      practitionersById: {},
-    };
-    Reducer(reducer)
-      .withState(currentState)
-      .expect(action)
-      .toReturnState(expectedState);
-  });
-
-  // should return same state for non existing action
-  it('returns current State for unknown action types', () => {
-    const currentState = {
-      practitionerRoles: {
-        'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': { master: fixtures.practitioner5 },
-      },
-      practitionersById: generateKeyBy([fixtures.practitioner5]),
-    };
-    const action = { type: 'UNKNOWN_ACTION' };
-    Reducer(reducer)
-      .withState(currentState)
-      .expect(action)
-      .toReturnState(currentState);
-  });
-});
-
-describe('reducers/practitioners.reducer.removePractitionersAction', () => {
-  // should handle dispatch on initialState
-  it('handles dispatch correctly on initial state', () => {
-    const action = removePractitionersAction;
-    const startingState = { practitionersById: {} };
-    const expectedState = { practitionersById: {} };
-    Reducer(reducer)
-      .withState(startingState)
-      .expect(action)
-      .toReturnState(expectedState);
-  });
-
-  // should handle dispatch on existing state
-  it('handles dispatch correctly on current state', () => {
-    const currentState = {
-      practitionersById: generateKeyBy([fixtures.practitioner1]),
-    };
-    const action = removePractitionersAction;
-    const expectedState = { practitionersById: {} };
-    Reducer(reducer)
-      .withState(currentState)
-      .expect(action)
-      .toReturnState(expectedState);
-  });
-});
-
-describe('reducers/practitioners.reducer.removePractitionerRolesAction', () => {
-  // should handle dispatch on initialState
-  it('handles dispatch correctly on initial state', () => {
-    const currentState = {
-      practitionersById: generateKeyBy([fixtures.practitioner1, fixtures.practitioner2]),
-    };
-    const action = removePractitionersAction;
-    const expectedState = { practitionersById: {} };
-    Reducer(reducer)
-      .withState(currentState)
-      .expect(action)
-      .toReturnState(expectedState);
-  });
-
-  // should handle dispatch on existing state
-  it('handles dispatch correctly on current state', () => {
-    const currentState = {
-      practitionerRoles: {
-        'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': { master: fixtures.practitioner5 },
-      },
-      practitionersById: generateKeyBy([fixtures.practitioner5]),
-    };
-    const action = removePractitionerRolesAction;
-    const expectedState = {
-      practitionerRoles: {},
-      practitionersById: generateKeyBy([fixtures.practitioner5]),
-    };
-    Reducer(reducer)
-      .withState(currentState)
-      .expect(action)
-      .toReturnState(expectedState);
-  });
-});
-
-describe('reducers/practitioners.reducer.selectors', () => {
-  // should select on initial state
-  it('selectors work for empty initialState', () => {
-    const state = { [reducerName]: initialState };
-    Selector(getPractitionersById)
-      .expect(state)
-      .toReturn({});
-    Selector(getPractitionersArray)
-      .expect(state)
-      .toReturn([]);
-    Selector(getPractitionersByOrgId)
-      .expect(state, 'someOrgId')
-      .toReturn([]);
-  });
-
-  it('practitionerRole selectors return correct data from existing state', () => {
-    const currentState = {
-      practitionerRoles: {
-        'd23f7350-d406-11e9-bb65-2a2ae2dbcce4': { master: fixtures.practitioner5 },
-      },
-      practitionersById: generateKeyBy([fixtures.practitioner5]),
-    };
-    const state = { [reducerName]: currentState };
-    Selector(getPractitionersByOrgId)
-      .expect(state, 'd23f7350-d406-11e9-bb65-2a2ae2dbcce4')
-      .toReturn([fixtures.practitioner5]);
-  });
-
-  // return select on existing state
-  it('returns correct data from existing state', () => {
-    const currentState = {
-      practitionersById: generateKeyBy([fixtures.practitioner1]),
-    };
-    const presentState = { [reducerName]: currentState };
-    const getPractitionersIdExpected = generateKeyBy([fixtures.practitioner1]);
-    const getPractitionersArrayExpected = [fixtures.practitioner1];
-    Selector(getPractitionersById)
-      .expect(presentState)
-      .toReturn(getPractitionersIdExpected);
-    Selector(getPractitionersArray)
-      .expect(presentState)
-      .toReturn(getPractitionersArrayExpected);
-  });
-});
+const practitionersSelector = makePractitionersSelector();
 
 describe('reducers/practitioners.reducer- integration test', () => {
   beforeEach(() => {
@@ -307,69 +75,90 @@ describe('reducers/practitioners.reducer- integration test', () => {
     expect(getPractitionersArray(store.getState())).toEqual([]);
 
     store.dispatch(
-      fetchPractitionerRoles(fixtures.org3Practitioners, fixtures.organization3.identifier)
+      fetchPractitioners(fixtures.org3Practitioners, false, fixtures.organization3.identifier)
     );
-    expect(getPractitionersById(store.getState())).toEqual({});
+    expect(getPractitionersById(store.getState())).toEqual(
+      generateKeyBy(fixtures.org3Practitioners)
+    );
     expect(
-      getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier).length
+      practitionersSelector(store.getState(), { organizationId: fixtures.organization3.identifier })
+        .length
     ).toEqual(3);
+    expect(
+      practitionersSelector(store.getState(), { organizationId: 'nonExistingOrgId' }).length
+    ).toEqual(0);
+
+    expect(practitionersSelector(store.getState(), { name: 'v2_nam' })).toEqual([
+      fixtures.practitioner4,
+    ]);
+    expect(
+      practitionersSelector(store.getState(), { identifiers: [fixtures.practitioner4.identifier] })
+    ).toEqual([fixtures.practitioner4]);
   });
 
   it('removePractitionerRole action removes practitioners', () => {
     store.dispatch(
-      fetchPractitionerRoles(fixtures.org3Practitioners, fixtures.organization3.identifier)
+      fetchPractitioners(fixtures.org3Practitioners, false, fixtures.organization3.identifier)
     );
 
-    let org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
-      .length;
+    let org3Practs = practitionersSelector(store.getState(), {
+      organizationId: fixtures.organization3.identifier,
+    }).length;
     expect(org3Practs).toEqual(3);
 
-    store.dispatch(removePractitionerRolesAction);
-    org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
-      .length;
+    store.dispatch(removePractitionersAction);
+    org3Practs = practitionersSelector(store.getState(), {
+      organizationId: fixtures.organization3.identifier,
+    }).length;
     expect(org3Practs).toEqual(0);
   });
 
   it('Adds new practitioners to store instead of overwriting existing ones', () => {
     // impact on practitionersById
     store.dispatch(
-      fetchPractitionerRoles([fixtures.practitioner4], fixtures.organization3.identifier)
+      fetchPractitioners([fixtures.practitioner4], false, fixtures.organization3.identifier)
     );
 
-    let org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
-      .length;
+    let org3Practs = practitionersSelector(store.getState(), {
+      organizationId: fixtures.organization3.identifier,
+    }).length;
     expect(org3Practs).toEqual(1);
 
     // possibilities; adding practitioners to the same organization should override
     store.dispatch(
-      fetchPractitionerRoles([fixtures.practitioner5], fixtures.organization3.identifier)
+      fetchPractitioners([fixtures.practitioner5], false, fixtures.organization3.identifier)
     );
 
-    org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
-      .length;
+    org3Practs = practitionersSelector(store.getState(), {
+      organizationId: fixtures.organization3.identifier,
+    }).length;
     expect(org3Practs).toEqual(1);
 
     // possibilities; adding same practitioners to a different organization
     store.dispatch(
-      fetchPractitionerRoles([fixtures.practitioner5], fixtures.organization2.identifier)
+      fetchPractitioners([fixtures.practitioner5], false, fixtures.organization2.identifier)
     );
 
-    let org2Practs = getPractitionersByOrgId(store.getState(), fixtures.organization2.identifier)
-      .length;
+    let org2Practs = practitionersSelector(store.getState(), {
+      organizationId: fixtures.organization2.identifier,
+    }).length;
     expect(org2Practs).toEqual(1);
 
     // possibilities; adding practitioners to a different organization
     store.dispatch(
-      fetchPractitionerRoles([fixtures.practitioner6], fixtures.organization1.identifier)
+      fetchPractitioners([fixtures.practitioner6], false, fixtures.organization1.identifier)
     );
 
-    const org1Practs = getPractitionersByOrgId(store.getState(), fixtures.organization1.identifier)
-      .length;
+    const org1Practs = practitionersSelector(store.getState(), {
+      organizationId: fixtures.organization1.identifier,
+    }).length;
 
-    org2Practs = getPractitionersByOrgId(store.getState(), fixtures.organization2.identifier)
-      .length;
-    org3Practs = getPractitionersByOrgId(store.getState(), fixtures.organization3.identifier)
-      .length;
+    org2Practs = practitionersSelector(store.getState(), {
+      organizationId: fixtures.organization2.identifier,
+    }).length;
+    org3Practs = practitionersSelector(store.getState(), {
+      organizationId: fixtures.organization3.identifier,
+    }).length;
     expect(org1Practs).toEqual(1);
     expect(org2Practs).toEqual(1);
     expect(org3Practs).toEqual(1);

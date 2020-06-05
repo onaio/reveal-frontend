@@ -173,7 +173,7 @@
   },
   "SELECT_USERNAME": {
     "message": "Select username",
-    "description": "input placeholder: non-selected dropdown to select OpenMRS user for the OpenSRP practitioner"
+    "description": "input placeholder: non-selected dropdown to select user for the OpenSRP practitioner"
   },
   "SELECT": {
     "message": "Select",

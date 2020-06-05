@@ -1,0 +1,7 @@
+.search-input-wrapper {
+  position: relative;
+  max-width: 300px;
+  top: 4px;
+  display: inline-block;
+  margin-right: 20px;
+}

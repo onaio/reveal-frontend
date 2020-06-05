@@ -5,7 +5,7 @@ import React from 'react';
 import PractitionerForm from '..';
 import * as helpers from '../../../../helpers/utils';
 import UserIdSelect from '../UserIdSelect';
-import { openMRSUsers, practitioners } from '../UserIdSelect/tests/fixtures';
+import { practitioners, users } from '../UserIdSelect/tests/fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
@@ -17,12 +17,12 @@ describe('src/components/PractitionerForm', () => {
     fetch.resetMocks();
   });
   it('renders without crashing', () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
     shallow(<PractitionerForm />);
   });
 
   it('renders correctly', () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
     // looking for each fields
     const wrapper = mount(<PractitionerForm />);
 
@@ -31,9 +31,9 @@ describe('src/components/PractitionerForm', () => {
     expect(practitionerInput.length).toEqual(1);
     expect(toJson(practitionerInput)).toMatchSnapshot('name input');
 
-    // async select to retrieve openMRS username
-    const openmrsId = wrapper.find(UserIdSelect);
-    expect(openmrsId.length).toBeGreaterThanOrEqual(1);
+    // async select to retrieve  username
+    const userId = wrapper.find(UserIdSelect);
+    expect(userId.length).toBeGreaterThanOrEqual(1);
 
     // active
     const activeRadioNo = wrapper.find('input#no');
@@ -46,7 +46,7 @@ describe('src/components/PractitionerForm', () => {
   });
 
   it('yup validates correctly', async () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
     // fetch.mockResponse(JSON.stringify([]))
     // looking for each fields
     const wrapper = mount(<PractitionerForm />);
@@ -54,7 +54,7 @@ describe('src/components/PractitionerForm', () => {
     await flushPromises();
     expect(fetch.mock.calls).toEqual([
       [
-        'https://test.smartregister.org/opensrp/rest/practitioner',
+        'https://test.smartregister.org/opensrp/rest/user?page_size=51&start_index=0',
         {
           headers: {
             accept: 'application/json',
@@ -65,7 +65,7 @@ describe('src/components/PractitionerForm', () => {
         },
       ],
       [
-        'https://test.smartregister.org/opensrp/rest/user?page_size=51&start_index=0',
+        'https://test.smartregister.org/opensrp/rest/practitioner',
         {
           headers: {
             accept: 'application/json',
@@ -96,9 +96,9 @@ describe('src/components/PractitionerForm', () => {
     const nameInput = wrapper.find('input#name');
     nameInput.simulate('change', { target: { name: 'name', value: 'someName' } });
 
-    // async select to retrieve openMRS username
-    const openmrsId = wrapper.find(UserIdSelect);
-    (openmrsId.find('Select').instance() as any).selectOption({
+    // async select to retrieve username
+    const userId = wrapper.find(UserIdSelect);
+    (userId.find('Select').instance() as any).selectOption({
       label: 'Drake.Ramole',
       value: '0259c0bc-78a2-4284-a7a9-d61d0005djae',
     });
@@ -115,7 +115,7 @@ describe('src/components/PractitionerForm', () => {
   });
 
   it('creates object to send correctly for creating new practitioner', async () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
     (helpers as any).generateNameSpacedUUID = jest.fn(() => 'someUUId');
     const wrapper = mount(<PractitionerForm />);
 
@@ -123,9 +123,9 @@ describe('src/components/PractitionerForm', () => {
     const nameInput = wrapper.find('input#name');
     nameInput.simulate('change', { target: { name: 'name', value: 'Joey Tribbiani' } });
 
-    // async select to retrieve openMRS username
-    const openmrsId = wrapper.find(UserIdSelect);
-    (openmrsId.find('Select').instance() as any).selectOption({
+    // async select to retrieve  username
+    const userId = wrapper.find(UserIdSelect);
+    (userId.find('Select').instance() as any).selectOption({
       label: 'Drake.Ramole',
       value: '0259c0bc-78a2-4284-a7a9-d61d0005djae',
     });
@@ -152,7 +152,7 @@ describe('src/components/PractitionerForm', () => {
   });
 
   it('creates object to send correctly for editing practitioner', async () => {
-    fetch.once(JSON.stringify(practitioners)).once(JSON.stringify(openMRSUsers));
+    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
     const props = {
       initialValues: {
         active: false,

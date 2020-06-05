@@ -27,7 +27,7 @@ import { RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import {
   fetchPractitioners,
-  getPractitionerById,
+  makePractitionersSelector,
   Practitioner,
 } from '../../../../store/ducks/opensrp/practitioners';
 import { loadPractitioner } from '../helpers/serviceHooks';
@@ -121,8 +121,10 @@ interface DispatchedProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: PropsTypes): DispatchedProps => {
   let practitionerId = ownProps.match.params.id;
   practitionerId = practitionerId ? practitionerId : '';
+  const practitionersSelector = makePractitionersSelector();
 
-  const practitioner = getPractitionerById(state, practitionerId);
+  const practitioners = practitionersSelector(state, { identifiers: [practitionerId] });
+  const practitioner = practitioners.length === 1 ? practitioners[0] : null;
   return { practitioner };
 };
 

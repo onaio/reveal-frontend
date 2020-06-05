@@ -2,7 +2,7 @@ import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { authenticateUser } from '@onaio/session-reducer';
 import { EmptyObject } from '../../../configs/types';
 import store from '../../../store';
-import { getDefaultHeaders, getFilterParams, getURLParams, OpenSRPService } from '../index';
+import { getDefaultHeaders, getFilterParams, getPayloadOptions, OpenSRPService } from '../index';
 import { createPlan, plansListResponse } from './fixtures/plans';
 import { OpenSRPAPIResponse } from './fixtures/session';
 /* tslint:disable-next-line no-var-requires */
@@ -26,18 +26,24 @@ describe('services/OpenSRP', () => {
     });
   });
 
+  it('getPayloadOptions works', async () => {
+    const output = {
+      headers: {
+        accept: 'application/json',
+        authorization: 'Bearer hunter2',
+        'content-type': 'application/json;charset=UTF-8',
+      },
+      method: 'POST',
+    };
+    const signal = new AbortController().signal;
+    expect(getPayloadOptions(signal, 'POST')).toEqual({ ...output });
+  });
+
   it('OpenSRPService constructor works', async () => {
     const planService = new OpenSRPService('plans');
     expect(planService.baseURL).toEqual('https://test.smartregister.org/opensrp/rest/');
     expect(planService.endpoint).toEqual('plans');
     expect(planService.generalURL).toEqual('https://test.smartregister.org/opensrp/rest/plans');
-  });
-
-  it('getURLParams works', async () => {
-    expect(getURLParams({})).toEqual('');
-    expect(getURLParams({ foo: 'bar', leet: 1337, mosh: 'pitt' })).toEqual(
-      'foo=bar&leet=1337&mosh=pitt'
-    );
   });
 
   it('getFilterParams works', async () => {

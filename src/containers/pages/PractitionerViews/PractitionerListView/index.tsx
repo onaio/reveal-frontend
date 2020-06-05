@@ -8,10 +8,7 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import InlineSearchForm, {
-  FieldProps,
-  Props as InlineSearchFormProps,
-} from '../../../../components/InlineSearchForm';
+import { createChangeHandler, SearchForm } from '../../../../components/forms/Search';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -26,7 +23,6 @@ import {
   NAME,
   PRACTITIONER,
   PRACTITIONERS,
-  SEARCH,
   USERNAME,
 } from '../../../../configs/lang';
 import {
@@ -34,12 +30,14 @@ import {
   EDIT_PRACTITIONER_URL,
   HOME_URL,
   PRACTITIONERS_LIST_URL,
+  QUERY_PARAM_TITLE,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import practitionersReducer, {
   fetchPractitioners,
-  getPractitionersArray,
+  makePractitionersSelector,
   Practitioner,
   reducerName as practitionersReducerName,
 } from '../../../../store/ducks/opensrp/practitioners';
@@ -52,6 +50,7 @@ interface Props {
   fetchPractitionersCreator: typeof fetchPractitioners;
   practitioners: Practitioner[];
   serviceClass: typeof OpenSRPService;
+  name?: string;
 }
 
 /** the default props for SinglePractitionerView */
@@ -69,10 +68,6 @@ const PractitionersListView = (props: PropsTypes) => {
 
   // functions/methods
 
-  /** function to handle the submit on the inline search form */
-  // tslint:disable-next-line: no-empty
-  function handleSubmit(_: FieldProps) {}
-
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
@@ -86,13 +81,6 @@ const PractitionersListView = (props: PropsTypes) => {
     url: `${HOME_URL}`,
   };
   breadcrumbProps.pages = [homePage];
-
-  /** props for the inline search form, used to search a practitioner via an api call */
-  const inlineSearchFormProps: InlineSearchFormProps = {
-    handleSubmit,
-    inputId: 'search',
-    inputPlaceholder: `${SEARCH} ${PRACTITIONERS}`,
-  };
 
   /** Props for the practitioner's listing table */
   const listViewProps = {
@@ -125,10 +113,12 @@ const PractitionersListView = (props: PropsTypes) => {
   }, []);
 
   // break early if practitioners are absent
-  const isLoading = practitioners.length < 1;
+  const isLoading = practitioners.length < 1 && !props.name;
   if (isLoading) {
     return <Loading />;
   }
+
+  const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
 
   return (
     <div>
@@ -144,9 +134,12 @@ const PractitionersListView = (props: PropsTypes) => {
           <LinkAsButton {...linkAsButtonProps} />
         </Col>
       </Row>
+      <Row>
+        <Col>
+          <SearchForm onChangeHandler={searchFormChangeHandler} />
+        </Col>
+      </Row>
       <hr />
-      <InlineSearchForm {...inlineSearchFormProps} />
-
       <ListView {...listViewProps} />
     </div>
   );
@@ -158,10 +151,15 @@ export { PractitionersListView };
 
 // connect to store
 
+type MapStateToProps = Pick<Props, 'name' | 'practitioners'>;
+
 /** maps props to state via selectors */
-const mapStateToProps = (state: Partial<Store>) => {
+const mapStateToProps = (state: Partial<Store>, ownProps: PropsTypes): MapStateToProps => {
+  const practitionersSelector = makePractitionersSelector();
+  const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   return {
-    practitioners: getPractitionersArray(state),
+    name: searchedTitle,
+    practitioners: practitionersSelector(state, { name: searchedTitle }),
   };
 };
 

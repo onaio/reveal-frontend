@@ -23,7 +23,7 @@ import {
 import { OPENSRP_PRACTITIONER_ENDPOINT, PRACTITIONERS_LIST_URL } from '../../../constants';
 import { generateNameSpacedUUID, growl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
-import UserIdSelect, { Option } from './UserIdSelect';
+import UserIdSelect, { OptionTypes } from './UserIdSelect';
 
 export interface PractitionerFormFields {
   identifier: string;
@@ -155,8 +155,13 @@ const PractitionerForm = (props: PractitionerFormProps) => {
                   required={true}
                   component={UserIdSelect}
                   // tslint:disable-next-line: jsx-no-lambda
-                  onChangeHandler={(option: Option) => {
-                    setFieldValue('username', option.label), setFieldValue('userId', option.value);
+                  onChangeHandler={(option: OptionTypes) => {
+                    if (option !== null && option !== undefined) {
+                      setFieldValue('username', option.label),
+                        setFieldValue('userId', option.value);
+                    } else {
+                      setFieldValue('username', undefined), setFieldValue('userId', undefined);
+                    }
                   }}
                   name="userId"
                   id="userId"
