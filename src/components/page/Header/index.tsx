@@ -32,6 +32,7 @@ import {
   ABOUT,
   ADMIN,
   ASSIGN,
+  CLIENTS_TITLE,
   FOCUS_INVESTIGATION,
   HOME,
   IRS_REPORTING_TITLE,
@@ -238,7 +239,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                             className="nav-link"
                             activeClassName="active"
                           >
-                            {CLIENT_LABEL === STUDENTS_TITLE ? STUDENTS_TITLE : CLIENTS_LIST_URL}
+                            {CLIENT_LABEL === STUDENTS_TITLE ? STUDENTS_TITLE : CLIENTS_TITLE}
                           </NavLink>
                         </DropdownItem>
                       </div>

@@ -475,13 +475,13 @@ export const TEAM_ASSIGNEMENT_SUCCESSFUL = translate(
   'TEAM_ASSIGNEMENT_SUCCESSFUL',
   'Team(s) assignment updated successfully'
 );
-export const UPLOADED_STUDENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Student Lists');
+export const UPLOADED_STUDENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Students List');
 export const EXPORT_STUDENT_LIST = translate('EXPORT_STUDENT_LIST', 'Export Student List');
 export const ADD_NEW_CSV = translate('ADD_NEW_CSV', 'Add New CSV');
 export const CLIENTS_TITLE = translate('CLIENTS_TITLE', 'Clients');
 export const STUDENTS_TITLE = translate('STUDENTS_TITLE', 'Students');
-export const UPLOADED_CLIENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Student Lists');
-export const EXPORT_CLIENT_LIST = translate('EXPORT_STUDENT_LIST', 'Export Student List');
+export const UPLOADED_CLIENT_LISTS = translate('UPLOADED_CLIENT_LISTS', 'Uploaded Clients List');
+export const EXPORT_CLIENT_LIST = translate('EXPORT_CLIENT_LIST', 'Export Client List');
 export const RESET = translate('RESET', 'Reset');
 export const EXPORT_BASED_ON_GEOGRAPHICAL_REGION = translate(
   'EXPORT_BASED_ON_GEOGRAPHICAL_REGION',
