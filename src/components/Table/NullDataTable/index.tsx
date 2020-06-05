@@ -1,36 +1,46 @@
-import DrillDownTable from '@onaio/drill-down-table';
-import { Dictionary } from '@onaio/utils';
+import { DrillDownColumn, DrillDownTable } from '@onaio/drill-down-table';
 import * as React from 'react';
-import { Column } from 'react-table-v6';
-import { NO_INVESTIGATIONS_FOUND } from '../../../configs/lang';
+import uuid from 'uuid/v1';
 
 /** Interface to describe props for TableProps */
-export interface TableProps {
-  data: Dictionary[];
-  columns: Column[];
-  state?: any;
-  debug?: boolean;
+export interface TableProps<T extends object> {
+  data: T[];
+  columns: Array<DrillDownColumn<T>>;
 }
 /** Interface to describe props for NullDataTable components  */
-export interface NullDataTableProps {
-  tableProps: TableProps;
+export interface NullDataTableProps<D extends object> {
+  tableProps: TableProps<D>;
   reasonType: string;
 }
+
+/** makes sure there is an accessor or unique Id field for each of column objects
+ * passed to table.
+ * There are a lot of columns already defined that have no accessor or id field,
+ * instead of adding the ids to each of this columns I decided to mutate them from
+ * here
+ * @param {DrillDownColumn[]} - original columns
+ */
+const sanitizeColumns = <D extends object>(columns: Array<DrillDownColumn<D>>) => {
+  columns.forEach(column => {
+    column.accessor = column.Header || `${uuid()}`;
+    if (column.columns) {
+      sanitizeColumns(column.columns);
+    }
+  });
+};
+
 /** Component returns table with <th> with no data */
-class NullDataTable extends React.Component<NullDataTableProps, {}> {
-  constructor(props: NullDataTableProps) {
-    super(props);
-  }
-  public render() {
-    const { reasonType, tableProps } = this.props;
-    return (
-      <div>
-        <h3 className="mb-3 mt-5 page-title">{reasonType}</h3>
-        <DrillDownTable {...tableProps} NoDataComponent={(() => null) as any} />
-        <h3 className="text-muted">{NO_INVESTIGATIONS_FOUND}</h3>
-        <hr />
-      </div>
-    );
-  }
+export function NullDataTable<D extends object>(props: NullDataTableProps<D>) {
+  const { reasonType, tableProps } = props;
+  sanitizeColumns(tableProps.columns);
+
+  return (
+    <div>
+      <h3 className="mb-3 mt-5 page-title">{reasonType}</h3>
+      <DrillDownTable {...tableProps} />
+      <hr />
+    </div>
+  );
 }
+
 export default NullDataTable;

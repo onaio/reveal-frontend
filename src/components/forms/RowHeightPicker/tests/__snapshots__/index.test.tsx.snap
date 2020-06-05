@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/forms/FilterForm/rowHeightFilter works correctly: #Short radio button is checked 1`] = `
+Array [
+  <input
+    checked={true}
+    className="form-check-input"
+    id="Short"
+    name="rowHeight"
+    onChange={[Function]}
+    type="radio"
+    value="1em"
+  />,
+  <input
+    checked={false}
+    className="form-check-input"
+    id="Tall"
+    name="rowHeight"
+    onChange={[Function]}
+    type="radio"
+    value="2em"
+  />,
+]
+`;
+
+exports[`src/components/forms/FilterForm/rowHeightFilter works correctly: rendered nodes 1`] = `"Row Height Row HeightShortTall"`;

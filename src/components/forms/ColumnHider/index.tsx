@@ -1,4 +1,5 @@
-import { DrillDownInstanceProps } from '@onaio/drill-down-table-v7';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DrillDownInstanceProps } from '@onaio/drill-down-table';
 import React from 'react';
 import { DropdownMenu } from 'reactstrap';
 import uuid from 'uuid/v1';
@@ -16,10 +17,15 @@ export const ColumnHider = <T extends object>({ allColumns }: DrillDownInstanceP
     <>
       <DropDownRenderer
         // tslint:disable-next-line: jsx-no-lambda
-        renderToggle={() => CUSTOMIZE_COLUMNS}
+        renderToggle={() => (
+          <>
+            <span className="mr-2">{CUSTOMIZE_COLUMNS}</span>
+            <FontAwesomeIcon icon="cog" />
+          </>
+        )}
         // tslint:disable-next-line: jsx-no-lambda
         renderMenu={() => (
-          <DropdownMenu className="p-3" style={{ minWidth: '220px' }}>
+          <DropdownMenu className="p-3 column-hider" style={{ minWidth: '220px' }}>
             <h6>{CUSTOMIZE_COLUMNS}</h6>
             <p>
               <small>{CUSTOMIZE_COLUMNS_FILTER_MESSAGE}</small>
@@ -33,7 +39,7 @@ export const ColumnHider = <T extends object>({ allColumns }: DrillDownInstanceP
                   id={`${salt}-${column.id}`}
                 />
                 <label className="form-check-label" htmlFor={`${salt}-${column.id}`}>
-                  {column.id}
+                  {column.Header}
                 </label>
               </div>
             ))}
