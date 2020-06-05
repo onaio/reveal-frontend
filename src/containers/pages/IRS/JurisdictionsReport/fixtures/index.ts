@@ -287,4 +287,92 @@ export const ZambiaJurisdictionsColumns: Column[] = [
     ],
   },
 ];
+
+export const mdaPointColumns = [
+  {
+    Header: 'Name',
+    columns: [
+      {
+        Header: '',
+        accessor: 'jurisdiction_name',
+        minWidth: 180,
+      },
+    ],
+  },
+  {
+    Header: 'Total SACs Registered',
+    columns: [
+      {
+        Header: '',
+        accessor: 'sacregistered',
+      },
+    ],
+  },
+  {
+    Header: 'MMA Coverage',
+    columns: [
+      {
+        Header: '',
+        accessor: 'mmacov',
+      },
+    ],
+  },
+  {
+    Header: 'MMA Coverage (%)',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'mmacovper',
+      },
+    ],
+  },
+  {
+    Header: 'SACs Refused',
+    columns: [
+      {
+        Header: '',
+        accessor: 'sacrefused',
+      },
+    ],
+  },
+  {
+    Header: 'SACs Sick/Pregnant/Contraindicated',
+    columns: [
+      {
+        Header: '',
+        accessor: 'sacrefmedreason',
+      },
+    ],
+  },
+  {
+    Header: 'ADR Reported (%)',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'mmaadr',
+      },
+    ],
+  },
+  {
+    Header: 'ADR Severe (%)',
+    columns: [
+      {
+        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Header: '',
+        accessor: 'mmaadrsev',
+      },
+    ],
+  },
+  {
+    Header: 'Alb Tablets Distributed',
+    columns: [
+      {
+        Header: '',
+        accessor: 'albdist',
+      },
+    ],
+  },
+];
 /* tslint:enable no-var-requires */

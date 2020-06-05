@@ -6,11 +6,11 @@ import { InterventionType } from '../../plans';
 import reducer, {
   addIRSPlan,
   fetchIRSPlans,
+  GenericPlan,
   getIRSPlanById,
   getIRSPlansArray,
   getIRSPlansArrayByTitle,
   getIRSPlansById,
-  IRSPlan,
   makeIRSPlansArraySelector,
   reducerName,
   removeIRSPlans,
@@ -35,7 +35,7 @@ describe('reducers/IRS/IRSPlan', () => {
 
   it('Fetches plan definitions correctly', () => {
     // action creators dispatch
-    store.dispatch(fetchIRSPlans(fixtures.plans as IRSPlan[]));
+    store.dispatch(fetchIRSPlans(fixtures.plans as GenericPlan[]));
 
     expect(getIRSPlansById(store.getState())).toEqual(keyBy(fixtures.plans, 'plan_id'));
 
@@ -81,11 +81,11 @@ describe('reducers/IRS/IRSPlan', () => {
 
   it('Fetching plans does not replace IRSPlansById', () => {
     // fetch two plan definition objects
-    store.dispatch(fetchIRSPlans([fixtures.plans[0], fixtures.plans[1]] as IRSPlan[]));
+    store.dispatch(fetchIRSPlans([fixtures.plans[0], fixtures.plans[1]] as GenericPlan[]));
     // we should have them in the store
     expect(getIRSPlansArray(store.getState())).toEqual([fixtures.plans[0], fixtures.plans[1]]);
     // fetch one more plan definition objects
-    store.dispatch(fetchIRSPlans([fixtures.plans[2]] as IRSPlan[]));
+    store.dispatch(fetchIRSPlans([fixtures.plans[2]] as GenericPlan[]));
     // we should now have a total of three plan definition objects in the store
     expect(getIRSPlansArray(store.getState())).toEqual([
       fixtures.plans[0],
@@ -99,17 +99,17 @@ describe('reducers/IRS/IRSPlan', () => {
     store.dispatch(removeIRSPlans());
 
     // add one plan definition objects
-    store.dispatch(addIRSPlan(fixtures.plans[2] as IRSPlan));
+    store.dispatch(addIRSPlan(fixtures.plans[2] as GenericPlan));
     // we should have it in the store
     expect(getIRSPlansArray(store.getState())).toEqual([fixtures.plans[2]]);
 
     // fetch one more plan definition objects
-    store.dispatch(addIRSPlan(fixtures.plans[1] as IRSPlan));
+    store.dispatch(addIRSPlan(fixtures.plans[1] as GenericPlan));
     // we should now have a total of three plan definition objects in the store
     expect(getIRSPlansArray(store.getState())).toEqual([fixtures.plans[2], fixtures.plans[1]]);
 
     // add an existing plan again
-    store.dispatch(addIRSPlan(fixtures.plans[2] as IRSPlan));
+    store.dispatch(addIRSPlan(fixtures.plans[2] as GenericPlan));
     // nothing should have changed in the store
     // we should now have a total of three plan definition objects in the store
     expect(getIRSPlansArray(store.getState())).toEqual([fixtures.plans[2], fixtures.plans[1]]);

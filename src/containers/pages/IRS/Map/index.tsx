@@ -44,8 +44,8 @@ import GenericJurisdictionsReducer, {
 } from '../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
   fetchIRSPlans,
+  GenericPlan,
   getIRSPlanById,
-  IRSPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
 import genericStructuresReducer, {
@@ -88,7 +88,7 @@ interface IRSReportingMapProps {
   fetchStructures: typeof fetchGenericStructures;
   focusArea: GenericJurisdiction | null;
   jurisdiction: Jurisdiction | null;
-  plan: IRSPlan | null;
+  plan: GenericPlan | null;
   service: typeof supersetFetch;
   structures: StructureFeatureCollection | null;
 }
@@ -189,7 +189,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       await service(
         SUPERSET_IRS_REPORTING_PLANS_SLICE,
         fetchPlansParams
-      ).then((result: IRSPlan[]) => fetchPlans(result));
+      ).then((result: GenericPlan[]) => fetchPlans(result));
     } catch (e) {
       displayError(e);
     } finally {
@@ -330,7 +330,7 @@ export { IRSReportingMap };
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
   focusArea: GenericJurisdiction | null;
-  plan: IRSPlan | null;
+  plan: GenericPlan | null;
   jurisdiction: Jurisdiction | null;
   structures: StructureFeatureCollection;
 }

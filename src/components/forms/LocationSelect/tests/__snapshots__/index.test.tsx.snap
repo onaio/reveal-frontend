@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/forms/LocationSelect renders jurisdictionselect with right props: Jurisdiction Select Props 1`] = `
+Object {
+  "apiEndpoint": "location/findByProperties",
+  "cascadingSelect": true,
+  "handleChange": [Function],
+  "handleChangeWithOptions": [Function],
+  "handleChangeWithoutOptions": [Function],
+  "handleLoadOptionsPayload": [Function],
+  "loadLocations": true,
+  "params": Object {
+    "is_jurisdiction": true,
+    "return_geometry": false,
+  },
+  "promiseOptions": [Function],
+  "serviceClass": [Function],
+}
+`;

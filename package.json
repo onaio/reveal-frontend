@@ -17,7 +17,7 @@
     "@onaio/formik-effect": "^0.0.1",
     "@onaio/gatekeeper": "^0.0.18",
     "@onaio/google-analytics": "^0.0.2",
-    "@onaio/list-view": "^0.0.1",
+    "@onaio/list-view": "^0.0.3",
     "@onaio/redux-reducer-registry": "^0.0.9",
     "@onaio/session-reducer": "^0.0.10",
     "@onaio/superset-connector": "^0.0.13",

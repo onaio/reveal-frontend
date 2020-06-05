@@ -1179,7 +1179,7 @@ exports[`containers/forms/PlanForm - Submission Form validation works for activi
       actionCode
     </strong>
     : 
-    activities[0].actionCode must be one of the following values: BCC, IRS, Bednet Distribution, Blood Screening, Case Confirmation, RACD Register Family, Larval Dipping, Mosquito Collection
+    activities[0].actionCode must be one of the following values: BCC, IRS, Bednet Distribution, Blood Screening, Case Confirmation, RACD Register Family, Larval Dipping, Mosquito Collection, MDA Dispense, MDA Adverse Event(s)
   </li>
   <li
     id="actionDescription-0-error"

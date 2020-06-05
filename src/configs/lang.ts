@@ -140,6 +140,7 @@ export const ADD = translate('ADD', 'Add');
 export const REMOVE = translate('REMOVE', 'Remove');
 
 export const IRS_PLANS = translate('IRS_PLANS', 'IRS Plans');
+export const MDA_POINT_PLANS = translate('MDA_POINT_PLANS', 'MDA Point Plans');
 export const COUNTRY = translate('COUNTRY', 'Country');
 export const NEW_TITLE = translate('NEW_TITLE', 'New');
 export const PLAN_TITLE = translate('PLAN_TITLE', 'Plan');
@@ -264,6 +265,14 @@ export const ORGANIZATION_EDITED_SUCCESSFULLY = translate(
   'ORGANIZATION_EDITED_SUCCESSFULLY',
   `Team edited successfully.`
 );
+export const FILE_UPLOADED_SUCCESSFULLY = translate(
+  'FILE_UPLOADED_SUCCESSFULLY',
+  `File uploaded successfully.`
+);
+export const FILE_UPLOAD_FAILED = translate(
+  'FILE_UPLOAD_FAILED',
+  `File upload failed please try again.`
+);
 export const ORGANIZATION_CREATED_SUCCESSFULLY = translate(
   'ORGANIZATION_CREATED_SUCCESSFULLY',
   `Team created successfully`
@@ -362,6 +371,22 @@ export const MOSQUITO_COLLECTION_GOAL_MEASURE = translate(
   'MOSQUITO_COLLECTION_GOAL_MEASURE',
   'Number of mosquito collection activities completed'
 );
+export const MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION = translate(
+  'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
+  'Dispense medication to each eligible person'
+);
+export const MDA_POINT_DISPENSE_COLLECTION_GOAL = translate(
+  'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
+  'Percent of eligible people'
+);
+export const MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION = translate(
+  'MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION',
+  'Report any adverse events from medication'
+);
+export const MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL = translate(
+  'MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL',
+  'Percent of people who reported adverse events'
+);
 
 export const A1_DESCRIPTION = translate(
   'A1_DESCRIPTION',
@@ -446,9 +471,54 @@ export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
   'Search active focus investigations'
 );
 export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
+export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');
+export const TEAM_ASSIGNEMENT_SUCCESSFUL = translate(
+  'TEAM_ASSIGNEMENT_SUCCESSFUL',
+  'Team(s) assignment updated successfully'
+);
+export const UPLOADED_STUDENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Students List');
+export const EXPORT_STUDENT_LIST = translate('EXPORT_STUDENT_LIST', 'Export Student List');
+export const ADD_NEW_CSV = translate('ADD_NEW_CSV', 'Add New CSV');
+export const CLIENTS_TITLE = translate('CLIENTS_TITLE', 'Clients');
+export const STUDENTS_TITLE = translate('STUDENTS_TITLE', 'Students');
+export const UPLOADED_CLIENT_LISTS = translate('UPLOADED_CLIENT_LISTS', 'Uploaded Clients List');
+export const EXPORT_CLIENT_LIST = translate('EXPORT_CLIENT_LIST', 'Export Client List');
+export const RESET = translate('RESET', 'Reset');
+export const EXPORT_BASED_ON_GEOGRAPHICAL_REGION = translate(
+  'EXPORT_BASED_ON_GEOGRAPHICAL_REGION',
+  'Export Country based on Geographical level!'
+);
+export const LOCATION_ERROR_MESSAGE = translate(
+  'SELECT_LOCATION_ERROR_MESSAGE',
+  'Please select location'
+);
+export const DOWNLOAD = translate('DOWNLOAD', 'Download');
+export const FILE_NAME = translate('FILE_NAME', 'File Name');
+export const OWNER = translate('OWNER', 'Owner');
+export const UPLOAD_DATE = translate('UPLOAD_DATE', 'Upload Date');
+export const UPLOAD_FILE = translate('UPLOAD_FILE', 'Upload File');
+export const MODAL_BUTTON_CLASS = translate(
+  'MODAL_BUTTON_CLASS',
+  'focus-investigation btn btn-primary float-right mt-0'
+);
+export const SUBMIT = translate('SUBMIT', 'Submit');
+export const CLIENT_UPLOAD_FORM = translate('CLIENT_UPLOAD_FORM', 'Client Upload Form');
+export const FILE_SUBMISSION_READY = translate('FILE_SUBMISSION_READY', 'File is ready to submit');
+export const LOADING = translate('LOADING', 'loading...');
+export const GEOGRAPHICAL_REGION_TO_INCLUDE = translate(
+  'GEOGRAPHICAL_REGION_TO_INCLUDE',
+  'Geographical level to include'
+);
+export const ASSIGN_TEAM_TO_SCHOOL = translate(
+  'ASSIGN_TEAM_TO_SCHOOL',
+  'Assign team to this school'
+);
+
+export const MDA_POINT_REPORTING_TITLE = translate(
+  'MDA_POINT_REPORTING_TITLE',
+  'MDA Point Reporting'
+);
 
 export const FILTER = translate('FILTER', 'Filter');
 
 export const USER = translate('USER', 'user');
-
-export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');

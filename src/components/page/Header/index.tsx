@@ -17,10 +17,12 @@ import {
 import logo from '../../../assets/images/logo.png';
 import {
   BACKEND_ACTIVE,
+  CLIENT_LABEL,
   ENABLE_ABOUT,
   ENABLE_ASSIGN,
   ENABLE_FI,
   ENABLE_IRS,
+  ENABLE_MDA_POINT,
   ENABLE_PRACTITIONERS,
   ENABLE_TEAMS,
   ENABLE_USERS,
@@ -30,22 +32,26 @@ import {
   ABOUT,
   ADMIN,
   ASSIGN,
+  CLIENTS_TITLE,
   FOCUS_INVESTIGATION,
   HOME,
   IRS_REPORTING_TITLE,
   IRS_TITLE,
   LOGIN,
+  MDA_POINT_REPORTING_TITLE,
   MONITOR,
   ORGANIZATIONS_LABEL,
   PLAN_TITLE,
   PLANS,
   PRACTITIONERS,
   SIGN_OUT,
+  STUDENTS_TITLE,
   USERS,
 } from '../../../configs/lang';
 import {
   ASSIGN_PLAN_URL,
   BACKEND_LOGIN_URL,
+  CLIENTS_LIST_URL,
   FI_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
@@ -55,6 +61,7 @@ import {
   PRACTITIONERS_LIST_URL,
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
+  REPORT_MDA_POINT_PLAN_URL,
 } from '../../../constants';
 import './Header.css';
 
@@ -187,11 +194,24 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                         </DropdownItem>
                       </div>
                     )}
+                    {ENABLE_MDA_POINT && (
+                      <div>
+                        <DropdownItem>
+                          <NavLink
+                            to={REPORT_MDA_POINT_PLAN_URL}
+                            className="nav-link"
+                            activeClassName="active"
+                          >
+                            {MDA_POINT_REPORTING_TITLE}
+                          </NavLink>
+                        </DropdownItem>
+                      </div>
+                    )}
                   </DropdownMenu>
                 </UncontrolledDropdown>
               )}
 
-              {(ENABLE_TEAMS || ENABLE_PRACTITIONERS || ENABLE_USERS) && (
+              {(ENABLE_TEAMS || ENABLE_PRACTITIONERS || ENABLE_USERS || ENABLE_MDA_POINT) && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle nav={true} caret={true} className={'nav-link'}>
                     {ADMIN}
@@ -225,6 +245,19 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           {USERS}
                         </NavLink>
                       </DropdownItem>
+                    )}
+                    {ENABLE_MDA_POINT && (
+                      <div>
+                        <DropdownItem>
+                          <NavLink
+                            to={CLIENTS_LIST_URL}
+                            className="nav-link"
+                            activeClassName="active"
+                          >
+                            {CLIENT_LABEL === STUDENTS_TITLE ? STUDENTS_TITLE : CLIENTS_TITLE}
+                          </NavLink>
+                        </DropdownItem>
+                      </div>
                     )}
                   </DropdownMenu>
                 </UncontrolledDropdown>

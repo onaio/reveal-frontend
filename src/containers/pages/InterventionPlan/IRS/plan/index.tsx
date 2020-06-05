@@ -17,6 +17,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Dictionary } from '@onaio/utils';
 import {
   DATE_FORMAT,
+  HIDE_MAP_FOR_INTERVENTIONS,
   SUPERSET_JURISDICTIONS_DATA_SLICE,
   SUPERSET_MAX_RECORDS,
 } from '../../../../../configs/env';
@@ -39,6 +40,7 @@ import {
   SAVE_PLAN_NO_JURISDICTIONS_ERROR,
   SELECT_JURISDICTIONS,
   SPRAY_AREA_HEADER,
+  TEAM_ASSIGNEMENT_SUCCESSFUL,
   TEAMS_ASSIGNMENT,
   TYPE_LABEL,
 } from '../../../../../configs/lang';
@@ -66,6 +68,7 @@ import {
   extractPlanRecordResponseFromPlanPayload,
   getFeatureByProperty,
   getGisidaMapById,
+  growl,
   preventDefault,
   RouteParams,
   setGisidaMapPosition,
@@ -116,6 +119,7 @@ import organizationsReducer, {
 import plansReducer, {
   fetchPlanRecords,
   getPlanRecordById,
+  InterventionType,
   PlanRecord,
   PlanStatus,
   reducerName as plansReducerName,
@@ -128,6 +132,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 
+import { toast } from 'react-toastify';
 import { format } from 'util';
 import AssignTeamTableCell, {
   AssignTeamCellProps,
@@ -211,7 +216,7 @@ interface IrsPlanState {
   isLoadingGeoms: boolean;
   isLoadingJurisdictions: boolean;
   isSaveDraftDisabled: boolean;
-  newPlan: PlanRecord | null;
+  currentPlan: PlanRecord | null;
   planCountry: string;
   planTableProps: DrillDownProps<any> | null;
   previousPlanName: string;
@@ -230,6 +235,7 @@ class IrsPlan extends React.Component<
       childlessChildrenIds: [],
       childrenByParentId: {},
       country: null,
+      currentPlan: (props.planById as PlanRecord) || null,
       doRenderTable: true,
       filteredJurisdictionIds: [],
       focusJurisdictionId: null,
@@ -239,7 +245,6 @@ class IrsPlan extends React.Component<
       isLoadingGeoms: false,
       isLoadingJurisdictions: true,
       isSaveDraftDisabled: false,
-      newPlan: (props.planById as PlanRecord) || null,
       planCountry: '',
       planTableProps: null,
       previousPlanName: '',
@@ -264,7 +269,7 @@ class IrsPlan extends React.Component<
         displayError(err)
       );
     } else if (planById) {
-      this.setState({ newPlan: planById });
+      this.setState({ currentPlan: planById });
     }
 
     // Get assignments
@@ -373,7 +378,7 @@ class IrsPlan extends React.Component<
                       filteredJurisdictions
                     );
 
-                    const newPlan: PlanRecord = {
+                    const currentPlan: PlanRecord = {
                       ...(this.props.planById as PlanRecord),
                       plan_jurisdictions_ids: [...ancestorIds],
                     };
@@ -393,13 +398,13 @@ class IrsPlan extends React.Component<
                         childlessChildrenIds,
                         childrenByParentId,
                         country,
+                        currentPlan,
                         filteredJurisdictionIds: filteredJurisdictions.map(j => j.jurisdiction_id),
                         focusJurisdictionId: country.jurisdictionId.length
                           ? country.jurisdictionId
                           : this.state.focusJurisdictionId,
                         isLoadingGeoms: true,
                         isLoadingJurisdictions: false,
-                        newPlan,
                         planCountry: result.properties.ADM0_PCODE,
                         tableCrumbs,
                       },
@@ -438,12 +443,12 @@ class IrsPlan extends React.Component<
       country,
       isLoadingGeoms,
       isLoadingJurisdictions,
-      newPlan,
+      currentPlan,
     } = this.state;
     const { isFinalizedPlan, jurisdictionsById, planById } = nextProps;
 
     // update state after geometries are fetched from this.loadJurisdictionGeometries()
-    if (newPlan && childlessChildrenIds && country && isLoadingGeoms) {
+    if (currentPlan && childlessChildrenIds && country && isLoadingGeoms) {
       const filteredJurisdictions = childlessChildrenIds.map(j => jurisdictionsById[j]);
       const loadedJurisdictions = filteredJurisdictions.filter((j: Jurisdiction) => j.geojson);
 
@@ -478,11 +483,11 @@ class IrsPlan extends React.Component<
     // update state after saving plan to store
     if (
       planById &&
-      ((!newPlan && planById.plan_jurisdictions_ids) ||
-        (newPlan && newPlan.plan_version !== planById.plan_version))
+      ((!currentPlan && planById.plan_jurisdictions_ids) ||
+        (currentPlan && currentPlan.plan_version !== planById.plan_version))
     ) {
       this.setState({
-        newPlan: planById,
+        currentPlan: planById,
       });
     }
   }
@@ -495,17 +500,17 @@ class IrsPlan extends React.Component<
       isBuildingGisidaProps,
       isLoadingJurisdictions,
       isSaveDraftDisabled,
-      newPlan,
+      currentPlan,
       tableCrumbs,
     } = this.state;
-    if ((planId && !planById) || !newPlan || isLoadingJurisdictions || isBuildingGisidaProps) {
+    if ((planId && !planById) || !currentPlan || isLoadingJurisdictions || isBuildingGisidaProps) {
       return <Loading />;
     }
 
     const pageLabel =
       (isFinalizedPlan && planById && planById.plan_title) ||
       (isDraftPlan && planById && format(DRAFT_PLAN_TITLE, planById.plan_title)) ||
-      (newPlan && newPlan.plan_title) ||
+      (currentPlan && currentPlan.plan_title) ||
       NEW_PLAN;
 
     const displayedPageLabel = this.state.isAssignView ? pageLabel : `${IRS_TITLE}: ${pageLabel}`;
@@ -681,7 +686,12 @@ class IrsPlan extends React.Component<
     if (e && e.currentTarget && e.currentTarget.id) {
       // update map position
       const clickedTableCrumb = this.state.tableCrumbs.find(c => c.id === e.currentTarget.id);
-      if (clickedTableCrumb && clickedTableCrumb.bounds && this.state.country) {
+      const { currentPlan } = this.state;
+      const hideMap =
+        currentPlan &&
+        HIDE_MAP_FOR_INTERVENTIONS &&
+        HIDE_MAP_FOR_INTERVENTIONS.includes(currentPlan.plan_intervention_type);
+      if (clickedTableCrumb && clickedTableCrumb.bounds && this.state.country && !hideMap) {
         // update map position
         setGisidaMapPosition({ bounds: clickedTableCrumb.bounds });
 
@@ -890,15 +900,15 @@ class IrsPlan extends React.Component<
    * @param {string} id - the jurisdiction_id of the Jurisdiction being toggled
    */
   private onToggleJurisdictionSelection(id: string) {
-    const { newPlan: NewPlan, filteredJurisdictionIds, country } = this.state;
+    const { currentPlan: NewPlan, filteredJurisdictionIds, country } = this.state;
     const { jurisdictionsById } = this.props;
 
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const filteredJurisdictionsById = keyBy(filteredJurisdictions, j => j.jurisdiction_id);
     if (NewPlan && NewPlan.plan_jurisdictions_ids && filteredJurisdictions.length) {
-      const newPlanJurisdictionIds = [...NewPlan.plan_jurisdictions_ids];
+      const currentPlanJurisdictionIds = [...NewPlan.plan_jurisdictions_ids];
       const clickedFeatureJurisdiction = jurisdictionsById[id];
-      const doSelect = !newPlanJurisdictionIds.includes(id);
+      const doSelect = !currentPlanJurisdictionIds.includes(id);
       // define child jurisdictions of clicked jurisdiction
       const jurisdictionIdsToToggle = this.getDescendantJurisdictionIds(
         [id],
@@ -908,22 +918,23 @@ class IrsPlan extends React.Component<
       // loop through all child jurisdictions
       for (const jurisdictionId of jurisdictionIdsToToggle) {
         // if checked and not in plan_jurisdictions_ids, add it
-        if (doSelect && !newPlanJurisdictionIds.includes(jurisdictionId)) {
-          newPlanJurisdictionIds.push(jurisdictionId);
+        if (doSelect && !currentPlanJurisdictionIds.includes(jurisdictionId)) {
+          currentPlanJurisdictionIds.push(jurisdictionId);
           // if not checked and in plan_jurisdictions_ids, remove it
-        } else if (!doSelect && newPlanJurisdictionIds.includes(jurisdictionId)) {
-          newPlanJurisdictionIds.splice(newPlanJurisdictionIds.indexOf(jurisdictionId), 1);
+        } else if (!doSelect && currentPlanJurisdictionIds.includes(jurisdictionId)) {
+          currentPlanJurisdictionIds.splice(currentPlanJurisdictionIds.indexOf(jurisdictionId), 1);
         }
       }
 
       const { parent_id } = clickedFeatureJurisdiction;
       const isParentSelected = doSelect
         ? true
-        : parent_id && this.getIsJurisdictionPartiallySelected(parent_id, newPlanJurisdictionIds);
+        : parent_id &&
+          this.getIsJurisdictionPartiallySelected(parent_id, currentPlanJurisdictionIds);
       if (parent_id && !isParentSelected) {
-        newPlanJurisdictionIds.splice(newPlanJurisdictionIds.indexOf(parent_id), 1);
-      } else if (parent_id && isParentSelected && !newPlanJurisdictionIds.includes(parent_id)) {
-        newPlanJurisdictionIds.push(parent_id);
+        currentPlanJurisdictionIds.splice(currentPlanJurisdictionIds.indexOf(parent_id), 1);
+      } else if (parent_id && isParentSelected && !currentPlanJurisdictionIds.includes(parent_id)) {
+        currentPlanJurisdictionIds.push(parent_id);
       }
 
       // loop through all geographic_levels
@@ -937,7 +948,7 @@ class IrsPlan extends React.Component<
             j => j.geographic_level === g
           );
           const nextPaintStops = this.getJurisdictionSelectionStops(
-            newPlanJurisdictionIds,
+            currentPlanJurisdictionIds,
             jurisdictionsByLevelArray,
             country.tilesets[g]
           );
@@ -959,12 +970,12 @@ class IrsPlan extends React.Component<
         }
       }
 
-      // define newPlan with newPlanJurisdictionIds, set state
-      const newPlan: PlanRecord = {
+      // define currentPlan with currentPlanJurisdictionIds, set state
+      const currentPlan: PlanRecord = {
         ...NewPlan,
-        plan_jurisdictions_ids: [...newPlanJurisdictionIds],
+        plan_jurisdictions_ids: [...currentPlanJurisdictionIds],
       };
-      this.setState({ newPlan }, () => {
+      this.setState({ currentPlan }, () => {
         const planTableProps = this.getDrilldownPlanTableProps(this.state);
         this.setState({ planTableProps });
       });
@@ -983,7 +994,7 @@ class IrsPlan extends React.Component<
    * @param {any} e - event object from drilldown table toggle-all checkbox click
    */
   private onToggleAllCheckboxChange(e: any) {
-    const { newPlan: NewPlan, filteredJurisdictionIds, focusJurisdictionId } = this.state;
+    const { currentPlan: NewPlan, filteredJurisdictionIds, focusJurisdictionId } = this.state;
     const { jurisdictionsById } = this.props;
 
     if (e && e.target && NewPlan) {
@@ -997,7 +1008,7 @@ class IrsPlan extends React.Component<
         ? this.getDescendantJurisdictionIds([focusJurisdictionId], jurisdictionsById)
         : [...filteredJurisdictionIds];
 
-      // const newPlanJurisdictionIds: string[] = [];
+      // const currentPlanJurisdictionIds: string[] = [];
       if (focusJurisdictionId && isSelected) {
         // select previously deselected descendants
         for (const d of decendantIds) {
@@ -1019,16 +1030,16 @@ class IrsPlan extends React.Component<
         }
       }
 
-      const newPlan: PlanRecord = {
-        ...(this.state.newPlan as PlanRecord),
+      const currentPlan: PlanRecord = {
+        ...(this.state.currentPlan as PlanRecord),
         plan_jurisdictions_ids: [...selectedIds],
       };
 
-      this.setState({ newPlan }, () => {
+      this.setState({ currentPlan }, () => {
         const {
           country: nextCountry,
           filteredJurisdictionIds: nextFilteredJurisdictionIds,
-          newPlan: nextNewPlan,
+          currentPlan: nextNewPlan,
         } = this.state;
         const Map = getGisidaMapById(MAP_ID);
 
@@ -1251,7 +1262,17 @@ class IrsPlan extends React.Component<
    * @returns {GisidaProps|null} props object for the GisidaWrapper or null
    */
   private getGisidaWrapperProps(): GisidaProps | null {
-    const { country, isLoadingGeoms, filteredJurisdictionIds, newPlan } = this.state;
+    const { country, isLoadingGeoms, filteredJurisdictionIds, currentPlan } = this.state;
+
+    // don't compute gisidaWrapperProps if map will not be displayed
+    if (
+      currentPlan &&
+      HIDE_MAP_FOR_INTERVENTIONS &&
+      HIDE_MAP_FOR_INTERVENTIONS.includes(currentPlan.plan_intervention_type)
+    ) {
+      return null;
+    }
+
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
 
@@ -1289,8 +1310,8 @@ class IrsPlan extends React.Component<
     const ADMIN_FILL_LAYER_IDS: string[] = [];
     const ADMIN_FILL_LAYERS: Dictionary[] = [];
     const selectedJurisdictionsIds =
-      newPlan && newPlan.plan_jurisdictions_ids
-        ? [...newPlan.plan_jurisdictions_ids]
+      currentPlan && currentPlan.plan_jurisdictions_ids
+        ? [...currentPlan.plan_jurisdictions_ids]
         : [...filteredJurisdictionIds];
 
     for (let t = 1; t < tilesets.length; t += 1) {
@@ -1350,8 +1371,8 @@ class IrsPlan extends React.Component<
         tilesets &&
         tilesets.filter(t => t.jurisdictionType === (JurisdictionLevels[1] as JurisdictionTypes));
       const selectedIds =
-        self.state.newPlan && self.state.newPlan.plan_jurisdictions_ids
-          ? [...self.state.newPlan.plan_jurisdictions_ids]
+        self.state.currentPlan && self.state.currentPlan.plan_jurisdictions_ids
+          ? [...self.state.currentPlan.plan_jurisdictions_ids]
           : [...filteredJurisdictionIds];
 
       if (tilesets && operationalTilesets && operationalTilesets.length) {
@@ -1735,7 +1756,7 @@ class IrsPlan extends React.Component<
     const features = point ? Map.queryRenderedFeatures(point) : [];
     const { ADMN0_EN, jurisdictionId, tilesets } = country;
     const bounds = e.bounds || country.bounds;
-    if (!features.length && tilesets && bounds) {
+    if (!features.length && tilesets && bounds && Map) {
       if (tilesets.length) {
         let t = geographicLevel || baseTilesetGeographicLevel;
         for (t; t < tilesets.length; t += 1) {
@@ -1820,26 +1841,47 @@ class IrsPlan extends React.Component<
     }
   }
 
+  private getParentAssignedTeamsIds(
+    parentId: string,
+    assignmentArr: Jurisdiction[],
+    ids: string[] = []
+  ) {
+    if (!ids.length) {
+      ids.push(parentId);
+    }
+    const parentAssignmentsArray = assignmentArr.find(
+      (a: Jurisdiction) => a.jurisdiction_id === parentId
+    );
+    const newParentId = parentAssignmentsArray && parentAssignmentsArray.parent_id;
+    if (newParentId) {
+      ids.push(newParentId);
+      this.getParentAssignedTeamsIds(newParentId, assignmentArr, ids);
+    }
+    return ids;
+  }
+
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
    * @param {IrsPlanState} state - component state
    * @returns {DrillDownProps<any>|null} - compatible object for DrillDownTable props or null
    */
   private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
-    const { newPlan, focusJurisdictionId, tableCrumbs } = state;
+    const { currentPlan, focusJurisdictionId, tableCrumbs } = state;
     const { assignmentsArray, isDraftPlan, jurisdictionsById, planId } = this.props;
 
-    if (!newPlan || !newPlan.plan_jurisdictions_ids) {
+    if (!currentPlan || !currentPlan.plan_jurisdictions_ids) {
       return null;
     }
 
+    const isMdaPoint = currentPlan.plan_intervention_type === InterventionType.MDAPoint;
+
     // finalized plans should only show rows for jurisdictions selected in the plan
     const filteredJurisdictionIds =
-      (!isDraftPlan && state.newPlan!.plan_jurisdictions_ids) || state.filteredJurisdictionIds;
+      (!isDraftPlan && state.currentPlan!.plan_jurisdictions_ids) || state.filteredJurisdictionIds;
 
     const filteredJurisdictions = filteredJurisdictionIds.map(j => jurisdictionsById[j]);
     const isFocusJurisdictionTopLevel = tableCrumbs[0] && focusJurisdictionId === tableCrumbs[0].id;
 
-    const planJurisdictionIds = [...newPlan.plan_jurisdictions_ids];
+    const planJurisdictionIds = [...currentPlan.plan_jurisdictions_ids];
     const onToggleAllCheckboxChange = (e: any) => {
       this.onToggleAllCheckboxChange(e);
     };
@@ -1858,9 +1900,9 @@ class IrsPlan extends React.Component<
     };
 
     const headerCheckboxIsChecked = isFocusJurisdictionTopLevel
-      ? newPlan &&
-        newPlan.plan_jurisdictions_ids &&
-        newPlan.plan_jurisdictions_ids.length === filteredJurisdictionIds.length
+      ? currentPlan &&
+        currentPlan.plan_jurisdictions_ids &&
+        currentPlan.plan_jurisdictions_ids.length === filteredJurisdictionIds.length
       : !!focusJurisdictionId && this.getIsJurisdictionPartiallySelected(focusJurisdictionId);
 
     // a simple interface for the the drilldown table data extending Jurisdiciton
@@ -1923,6 +1965,9 @@ class IrsPlan extends React.Component<
           {
             Header: '',
             accessor: (j: JurisdictionRow) => {
+              if (isMdaPoint) {
+                return <span onClick={stopPropagationAndPreventDefault}>{j.geographic_level}</span>;
+              }
               return (
                 <span onClick={stopPropagationAndPreventDefault}>
                   {j.isChildless ? SPRAY_AREA_HEADER : `${ADMIN_LEVEL} ${j.geographic_level}`}
@@ -1943,11 +1988,13 @@ class IrsPlan extends React.Component<
           {
             Header: '',
             accessor: (j: JurisdictionRow) => {
-              if (!j.isChildless) {
-                return <span />;
-              }
+              const parentAssignedTeamIds = j.parent_id
+                ? this.getParentAssignedTeamsIds(j.parent_id, filteredJurisdictions)
+                : [];
+
               const cellProps = {
                 jurisdictionId: j.jurisdiction_id,
+                parentIds: parentAssignedTeamIds,
                 planId: j.planId,
               } as AssignTeamCellProps;
               return <AssignTeamTableCell {...cellProps} />;
@@ -1966,21 +2013,30 @@ class IrsPlan extends React.Component<
       showPagination = directDescendants.length > 20;
     }
 
-    const data: JurisdictionRow[] = filteredJurisdictions.map(
-      (j: Jurisdiction) =>
-        ({
-          ...j,
-          assignedTeams: assignmentsArray
-            .filter((a: Assignment) => a.jurisdiction === j.jurisdiction_id)
-            .map((a: Assignment) => a.organization),
-          id: j.jurisdiction_id,
-          isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),
-          isPartiallySelected:
-            !this.state.childlessChildrenIds.includes(j.jurisdiction_id) &&
-            this.getChildlessChildrenIds([jurisdictionsById[j.jurisdiction_id]]),
-          planId,
-        } as JurisdictionRow)
-    );
+    const data: JurisdictionRow[] = filteredJurisdictions.map((j: Jurisdiction) => {
+      const parentId = j.parent_id;
+      let assignedTeamsIds: string[] = [j.jurisdiction_id];
+      if (parentId) {
+        const parentAssignedTeamIds = this.getParentAssignedTeamsIds(
+          parentId,
+          filteredJurisdictions
+        );
+        assignedTeamsIds = [j.jurisdiction_id, ...parentAssignedTeamIds];
+      }
+      const assignedTeams = assignmentsArray
+        .filter((a: Assignment) => assignedTeamsIds.includes(a.jurisdiction))
+        .map((a: Assignment) => a.organization);
+      return {
+        ...j,
+        assignedTeams,
+        id: j.jurisdiction_id,
+        isChildless: this.state.childlessChildrenIds.includes(j.jurisdiction_id),
+        isPartiallySelected:
+          !this.state.childlessChildrenIds.includes(j.jurisdiction_id) &&
+          this.getChildlessChildrenIds([jurisdictionsById[j.jurisdiction_id]]),
+        planId,
+      } as JurisdictionRow;
+    });
 
     const tableProps: DrillDownProps<any> = {
       CellComponent: DropDownCell,
@@ -2006,15 +2062,15 @@ class IrsPlan extends React.Component<
    * @returns {boolean}
    */
   private getIsJurisdictionPartiallySelected(id: string | null, selectedIds?: string[]): boolean {
-    const { newPlan, filteredJurisdictionIds } = this.state;
+    const { currentPlan, filteredJurisdictionIds } = this.state;
     const { jurisdictionsById } = this.props;
     const filteredJurisdictions = filteredJurisdictionIds
       .map(j => jurisdictionsById[j])
       .filter(j => !!j);
     const planJurisdictionIds =
       selectedIds ||
-      (newPlan && newPlan.plan_jurisdictions_ids
-        ? [...newPlan.plan_jurisdictions_ids]
+      (currentPlan && currentPlan.plan_jurisdictions_ids
+        ? [...currentPlan.plan_jurisdictions_ids]
         : [...filteredJurisdictionIds]);
 
     if (id) {
@@ -2060,34 +2116,37 @@ class IrsPlan extends React.Component<
     return breadCrumbProps;
   }
 
-  /** onSavePlanButtonClick - extracts PlanPayload from newPlan and PUSHs or PUTs to OpenSRP
+  /** onSavePlanButtonClick - extracts PlanPayload from currentPlan and PUSHs or PUTs to OpenSRP
    * @param {boolean} isFinal - determines if the Plan should be saved as a draft or as a finalized plan
    */
   private async onSavePlanButtonClick(isFinal: boolean = false) {
-    const { newPlan, childlessChildrenIds } = this.state;
-    if (newPlan && newPlan.plan_jurisdictions_ids) {
+    const { currentPlan, childlessChildrenIds } = this.state;
+    if (currentPlan && currentPlan.plan_jurisdictions_ids) {
       const now = moment(new Date());
-      const start = moment(newPlan.plan_effective_period_start);
-      const end = moment(newPlan.plan_effective_period_end);
+      const start = moment(currentPlan.plan_effective_period_start);
+      const end = moment(currentPlan.plan_effective_period_end);
       const dateFormat = DATE_FORMAT.toUpperCase();
-      const newPlanDraft: PlanRecord = {
-        ...newPlan,
+      const currentPlanDraft: PlanRecord = {
+        ...currentPlan,
         plan_date: now.format(dateFormat),
         plan_effective_period_end: end.format(dateFormat),
         plan_effective_period_start: start.format(dateFormat),
-        plan_jurisdictions_ids: newPlan.plan_jurisdictions_ids.filter(j =>
+        plan_jurisdictions_ids: currentPlan.plan_jurisdictions_ids.filter(j =>
           childlessChildrenIds.includes(j)
         ),
         plan_status: isFinal ? PlanStatus.ACTIVE : PlanStatus.DRAFT,
-        plan_version: Number.isNaN(Number(newPlan.plan_version))
+        plan_version: Number.isNaN(Number(currentPlan.plan_version))
           ? '1'
-          : `${Number(newPlan.plan_version) + 1}`,
+          : `${Number(currentPlan.plan_version) + 1}`,
       };
 
       const { assignmentsArray, organizationsById } = this.props;
 
-      if (newPlanDraft.plan_jurisdictions_ids && newPlanDraft.plan_jurisdictions_ids.length) {
-        const planPayload = extractPlanPayloadFromPlanRecord(newPlanDraft);
+      if (
+        currentPlanDraft.plan_jurisdictions_ids &&
+        currentPlanDraft.plan_jurisdictions_ids.length
+      ) {
+        const planPayload = extractPlanPayloadFromPlanRecord(currentPlanDraft);
         if (planPayload) {
           this.setState({ isSaveDraftDisabled: true }, async () => {
             if (this.props.isDraftPlan) {
@@ -2095,16 +2154,16 @@ class IrsPlan extends React.Component<
               OpenSrpPlanService.update(planPayload)
                 .then(() => {
                   this.setState({
-                    isSaveDraftDisabled: false,
-                    newPlan: {
-                      ...newPlanDraft,
-                      plan_jurisdictions_ids: [...(newPlan.plan_jurisdictions_ids as string[])],
+                    currentPlan: {
+                      ...currentPlanDraft,
+                      plan_jurisdictions_ids: [...(currentPlan.plan_jurisdictions_ids as string[])],
                     },
+                    isSaveDraftDisabled: false,
                   });
                 })
                 .finally(() => {
                   // update state with new plan definition
-                  const { plan_id, plan_status } = newPlanDraft;
+                  const { plan_id, plan_status } = currentPlanDraft;
                   const planRecord = extractPlanRecordResponseFromPlanPayload(planPayload);
                   if (planRecord) {
                     this.props.fetchPlansActionCreator([planRecord]);
@@ -2153,7 +2212,7 @@ class IrsPlan extends React.Component<
                     ) {
                       assignmentsToRetire.push({
                         ...result,
-                        fromDate: moment(0).format(),
+                        fromDate: moment(moment().subtract(50, 'years')).format(),
                         toDate: moment(100000000).format(),
                       } as Assignment);
                     }
@@ -2162,11 +2221,16 @@ class IrsPlan extends React.Component<
                 }
               );
 
+              const successGrowl = () =>
+                growl(TEAM_ASSIGNEMENT_SUCCESSFUL, {
+                  type: toast.TYPE.SUCCESS,
+                });
+
               // POST to retire unassigned assignments
               if (retiredAssignments.length) {
                 await OpenSrpAssignmentService.create([...retiredAssignments])
                   .then(_ => {
-                    // todo - hook in success notification
+                    successGrowl();
                   })
                   .catch(err => {
                     displayError(err);
@@ -2176,7 +2240,7 @@ class IrsPlan extends React.Component<
               if (nextAssignments.length) {
                 await OpenSrpAssignmentService.create([...nextAssignments])
                   .then(_ => {
-                    // todo - hook in success notification
+                    successGrowl();
                   })
                   .catch(err => {
                     displayError(err);

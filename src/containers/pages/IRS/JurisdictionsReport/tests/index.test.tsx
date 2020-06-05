@@ -20,12 +20,12 @@ import GenericJurisdictionsReducer, {
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
-  IRSPlan,
+  GenericPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../../store/ducks/generic/plans';
 import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
+import { plansTableColumns } from '../../../GenericJurisdictionReport/helpers';
 import * as fixtures from '../../JurisdictionsReport/fixtures';
-import { IRSTableColumns } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -72,12 +72,12 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       match: {
         isExact: true,
         params: {
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${REPORT_IRS_PLAN_URL}/:planId`,
-        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as IRSPlan).plan_id}`,
+        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as GenericPlan).plan_id}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
     };
     shallow(
       <Router history={history}>
@@ -114,12 +114,12 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       match: {
         isExact: true,
         params: {
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${REPORT_IRS_PLAN_URL}/:planId`,
-        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as IRSPlan).plan_id}`,
+        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as GenericPlan).plan_id}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
       service: supersetServiceMock,
     };
 
@@ -139,7 +139,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.zambiaJurisdictions2019
+      plansTableColumns.zambiaJurisdictions2019
     );
     expect(wrapper.find('IRSIndicatorLegend').length).toEqual(1);
     expect(wrapper.find('IRSIndicatorLegend').props()).toEqual({
@@ -228,12 +228,12 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       match: {
         isExact: true,
         params: {
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${REPORT_IRS_PLAN_URL}/:planId`,
-        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as IRSPlan).plan_id}`,
+        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as GenericPlan).plan_id}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
       service: supersetServiceMock,
     };
 
@@ -272,7 +272,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.zambiaJurisdictions2019
+      plansTableColumns.zambiaJurisdictions2019
     );
 
     // Zambia URL
@@ -306,7 +306,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.zambiaJurisdictions2019
+      plansTableColumns.zambiaJurisdictions2019
     );
 
     // Lusaka URL
@@ -340,7 +340,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.zambiaJurisdictions2019
+      plansTableColumns.zambiaJurisdictions2019
     );
 
     // Lusaka Test
@@ -374,7 +374,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.zambiaJurisdictions2019
+      plansTableColumns.zambiaJurisdictions2019
     );
     expect(wrapper.find('DrillDownTable a').map(e => e.props().href)).toEqual([
       '/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/2bf9915d-8725-4061-983d-5938802ac0f0',
@@ -415,7 +415,7 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.zambiaFocusArea2019
+      plansTableColumns.zambiaFocusArea2019
     );
 
     expect(wrapper.find('DrillDownTable a').length).toEqual(14);

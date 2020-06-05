@@ -20,12 +20,12 @@ import GenericJurisdictionsReducer, {
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
-  IRSPlan,
+  GenericPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../../store/ducks/generic/plans';
 import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
+import { plansTableColumns } from '../../../GenericJurisdictionReport/helpers';
 import * as fixtures from '../../JurisdictionsReport/fixtures';
-import { IRSTableColumns } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -86,12 +86,12 @@ describe('Namibia configs: components/IRS Reports/JurisdictionReport', () => {
       match: {
         isExact: true,
         params: {
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${REPORT_IRS_PLAN_URL}/:planId`,
-        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as IRSPlan).plan_id}`,
+        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as GenericPlan).plan_id}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
       service: supersetServiceMock,
     };
 
@@ -113,7 +113,7 @@ describe('Namibia configs: components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.namibia2019
+      plansTableColumns.namibia2019
     );
     expect(wrapper.find('IRSIndicatorLegend').length).toEqual(1);
     expect(wrapper.find('IRSIndicatorLegend').props()).toEqual({
@@ -204,12 +204,12 @@ describe('Namibia configs: components/IRS Reports/JurisdictionReport', () => {
       match: {
         isExact: true,
         params: {
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${REPORT_IRS_PLAN_URL}/:planId`,
-        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as IRSPlan).plan_id}`,
+        url: `${REPORT_IRS_PLAN_URL}/${(plans[0] as GenericPlan).plan_id}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
       service: supersetServiceMock,
     };
 
@@ -249,7 +249,7 @@ describe('Namibia configs: components/IRS Reports/JurisdictionReport', () => {
 
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.namibia2019
+      plansTableColumns.namibia2019
     );
 
     // namibia URL
@@ -283,7 +283,7 @@ describe('Namibia configs: components/IRS Reports/JurisdictionReport', () => {
     });
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
-      IRSTableColumns.namibia2019
+      plansTableColumns.namibia2019
     );
 
     expect(wrapper.find('DrillDownTable a').map(e => e.props().href)).toEqual([

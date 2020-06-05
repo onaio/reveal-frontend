@@ -164,6 +164,21 @@ Object {
                 </NavLink>
               </DropdownItem>
             </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/intervention/mda-point/report"
+                >
+                  MDA Point Reporting
+                </NavLink>
+              </DropdownItem>
+            </div>
           </DropdownMenu>
         </UncontrolledDropdown>
         <UncontrolledDropdown
@@ -223,6 +238,21 @@ Object {
                 Users
               </NavLink>
             </DropdownItem>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/clients"
+                >
+                  Clients
+                </NavLink>
+              </DropdownItem>
+            </div>
           </DropdownMenu>
         </UncontrolledDropdown>
         <NavItem
@@ -425,6 +455,21 @@ Object {
                 </NavLink>
               </DropdownItem>
             </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/intervention/mda-point/report"
+                >
+                  MDA Point Reporting
+                </NavLink>
+              </DropdownItem>
+            </div>
           </DropdownMenu>
         </UncontrolledDropdown>
         <UncontrolledDropdown
@@ -484,6 +529,21 @@ Object {
                 Users
               </NavLink>
             </DropdownItem>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  aria-current="page"
+                  className="nav-link"
+                  to="/clients"
+                >
+                  Clients
+                </NavLink>
+              </DropdownItem>
+            </div>
           </DropdownMenu>
         </UncontrolledDropdown>
         <NavItem
