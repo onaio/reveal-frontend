@@ -62,5 +62,10 @@ describe('/components/formatting/IRSIndicatorLegend', () => {
       indicatorThresholds: indicatorThresholdsIRSNamibia,
       indicatorThresholdsLookUp: indicatorThresholdsLookUpIRS,
     });
+    expect(toJson(wrapper.find('.card-header'))).toMatchSnapshot('header');
+    expect(toJson(wrapper.find('Table'))).toMatchSnapshot('indicator table namibia');
+    expect(wrapper.find('Table tbody tr').length).toEqual(
+      Object.keys(indicatorThresholdsIRSNamibia).length
+    );
   });
 });
