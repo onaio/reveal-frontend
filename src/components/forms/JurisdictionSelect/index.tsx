@@ -157,8 +157,8 @@ export const handleLoadOptionsPayload = (
   resolve(options);
 };
 /**
- * Loads options from opensrp
- * @param service Opensrp service class
+ * Loads options from OpenSRP
+ * @param service OpenSRP service class
  * @param paramsToUse params to be used when making the call
  * @param hierarchy async select order
  */
@@ -183,9 +183,6 @@ export const promiseOptions = (
     service
       .list({ ...paramsToUse, is_jurisdiction: jurisdictionStatus })
       .then((jurisdictionApiPayload: JurisdictionOption[]) => {
-        /** Check if payload has no name property then use id instead
-         *  If there is no location return no options
-         */
         handleSelectLoadOptionsPayload(
           jurisdictionApiPayload,
           jurisdictionStatus,
@@ -195,27 +192,23 @@ export const promiseOptions = (
           resolve
         );
       })
-      .catch(error => {
-        reject(`Opensrp service Error ${error}`);
+      .catch((error: Error) => {
+        reject(`OpenSRP service Error ${error}`);
       });
   });
 
 /**
- * onChange callback
- * unfortunately we have to set the type of option as any (for now)
- */
-/**
  * Handles async select onchange with options
  * @param optionVal Selected options
  * @param newParamsToUse Params to use for the next api call
- * @param service OpensrpService
+ * @param service OpenSRPService
  * @param hierarchy Drill down hierarchy list
  * @param cascadingSelect Toggles async select cascade option true/false
  * @param lowestLocation props that informs if we are at the lowest level
  * @param loadLocations Ownprop that allows drilling down to location level
  * @param setSelectShouldMenuOpen Controls opening asyncselect menu
  * @param setSelectParentId Sets parent id to state
- * @param setSelectHierarchy  Sets select Heirarchy to state
+ * @param setSelectHierarchy  Sets select Hierarchy to state
  * @param setSelectCloseMenuOnSelect Controls closing asyncselect menu
  * @param setSelectIsJurisdiction Sets isJurisdiction value to state
  * @param labelFieldName async select label field
@@ -241,7 +234,7 @@ export const handleChangeWithOptions = (
 ) => {
   service
     .list(newParamsToUse)
-    .then(e => {
+    .then((e: JurisdictionOption[]) => {
       setSelectShouldMenuOpen(true);
       if (e.length > 0 && cascadingSelect === true) {
         setSelectParentId(optionVal.value);
@@ -271,7 +264,7 @@ export const handleChangeWithOptions = (
         setSelectShouldMenuOpen(false);
       }
     })
-    .catch(error => displayError(error));
+    .catch((error: Error) => displayError(error));
 };
 /**
  * Handles async select onchange with no options
@@ -306,6 +299,10 @@ export const handleChangeWithoutOptions = (
     form.setFieldValue(field.name, '');
   }
 };
+/**
+ * onChange callback
+ * unfortunately we have to set the type of option as any (for now)
+ */
 export const handleChange = (
   params: Dictionary,
   isJurisdiction: boolean,
