@@ -1644,14 +1644,13 @@
     react-table "^7.0.6"
     reactstrap "^8.4.1"
 
-"@onaio/drill-down-table@^0.0.21":
-  version "0.0.21"
-  resolved "https://registry.yarnpkg.com/@onaio/drill-down-table/-/drill-down-table-0.0.21.tgz#d6cc8acb4ff2800cd41607c8bc896d50deb48721"
-  integrity sha512-dU9aexD6Y31LthxXiFaWxd7WyglLJ61nSx/F2eFv4Fn2XPLJdHiUp7vAGppT9I/COy4NmADD9eEiQcFY5CYiMQ==
+"@onaio/drill-down-table@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@onaio/drill-down-table/-/drill-down-table-1.0.1.tgz#774ad27deffc559aca2e41c5f423931fa393ba96"
+  integrity sha512-83anCl5L64KbFM5r5UYV5FFsL6tYxJXAXCoHdG23bTNMW+QnCOhO3UVBWMfwBQP6HfDf/EdHb/CDqzQIMrv/Kg==
   dependencies:
-    "@types/react-table" "^6.7.22"
-    prop-types "^15.6.1"
-    react-table "^6.9.2"
+    react-table "^7.0.6"
+    reactstrap "^8.4.1"
 
 "@onaio/element-map@^0.0.2":
   version "0.0.2"
@@ -2109,13 +2108,6 @@
     "@types/react" "*"
     "@types/react-dom" "*"
     "@types/react-transition-group" "*"
-
-"@types/react-table@^6.7.22", "@types/react-table@^6.8.5":
-  version "6.8.7"
-  resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-6.8.7.tgz#210ffa2862dd3711350676c0bdbbfbff45f14b84"
-  integrity sha512-1U0xl47jk0BzE+HNHgxZYSLvtybSvnlLhOpW9Mfqf9iuRm/fGqgRab3TKivPCY6Tl7WPFM2hWEJ1GnsuSFc9AQ==
-  dependencies:
-    "@types/react" "*"
 
 "@types/react-table@^7.0.17":
   version "7.0.17"
@@ -13233,15 +13225,6 @@ react-table-v6@^6.8.6:
   integrity sha512-jxo20BTIU/tQxToOZFnfr0V123VSQ2kNdxR+JbA7V4Zfj1jNtBaiFW/lYgVwejnbnUOuj96pV8Dd+yXXMdAMDA==
   dependencies:
     classnames "^2.2.5"
-
-react-table@^6.9.2:
-  version "6.11.5"
-  resolved "https://registry.yarnpkg.com/react-table/-/react-table-6.11.5.tgz#84e52885db426a07a6c4ce2c7e942f2cd4e2aa58"
-  integrity sha512-LM+AS9v//7Y7lAlgTWW/cW6Sn5VOb3EsSkKQfQTzOW8FngB1FUskLLNEVkAYsTX9LjOWR3QlGjykJqCE6eXT/g==
-  dependencies:
-    "@types/react-table" "^6.8.5"
-    classnames "^2.2.5"
-    react-is "^16.8.1"
 
 react-table@^7.0.4:
   version "7.0.4"
