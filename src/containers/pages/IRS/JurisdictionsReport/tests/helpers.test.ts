@@ -1,5 +1,5 @@
+import * as fixtures from '../fixtures';
 import * as helpers from '../helpers';
-import * as fixtures from './fixtures';
 
 describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
   it('should return the correct columns for Namibia', () => {

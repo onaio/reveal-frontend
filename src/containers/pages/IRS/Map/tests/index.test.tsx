@@ -39,7 +39,7 @@ import jurisdictionReducer, {
   Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
-import * as fixtures from '../../JurisdictionsReport/tests/fixtures';
+import * as fixtures from '../../JurisdictionsReport/fixtures';
 import { getGisidaWrapperProps, IRSIndicatorStops } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
