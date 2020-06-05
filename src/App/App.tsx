@@ -125,7 +125,7 @@ export interface AppState {
 }
 /** Interface defining component props */
 interface AppProps {
-  logoutComponent: (props: LogoutProps) => null;
+  logoutComponent: (props: LogoutProps) => JSX.Element;
 }
 
 const APP_CALLBACK_URL = BACKEND_ACTIVE ? BACKEND_CALLBACK_URL : REACT_LOGIN_URL;

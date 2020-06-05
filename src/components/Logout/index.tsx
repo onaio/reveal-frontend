@@ -12,21 +12,16 @@ export interface LogoutProps {
  * url of the authentication server in order to go around the browser's CORS policy.
  */
 export const logoutFromAuthServer = (logoutURL: string) => {
-  const logoutWindow: Window | null = window.open(logoutURL);
-  const timer: NodeJS.Timeout = setInterval(() => {
-    if (logoutWindow) {
-      logoutWindow.close();
-      window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
-    }
-    clearInterval(timer);
-  }, 20);
+  window.open(logoutURL);
 };
 
 /** Component handles opensrp logout and goes to express serve */
 const Logout = (props: LogoutProps) => {
   const { logoutURL } = props;
   logoutFromAuthServer(logoutURL);
-  return null;
+  window.focus();
+  window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
+  return <></>;
 };
 
 export default Logout;
