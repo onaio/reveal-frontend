@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/MDAPoints/ClientListView works with the Redux store 1`] = `
+Object {
+  "children": Array [
+    <thead
+      className="listview-thead"
+    >
+      <tr
+        className="listview-tr"
+      >
+        <ElementMap
+          HTMLTag="th"
+          className="listview-td"
+          items={
+            Array [
+              "File Name",
+              "Owner",
+              "Upload Date",
+            ]
+          }
+        />
+      </tr>
+    </thead>,
+    <tbody
+      className="listview-tbody"
+    >
+      <tr
+        className="listview-tr"
+      >
+        <ElementMap
+          HTMLTag="td"
+          className="listview-th"
+          items={
+            Array [
+              <p>
+                Barush_school.csv
+                  
+                <a
+                  href="#"
+                  onClick={[Function]}
+                >
+                  (Download)
+                </a>
+              </p>,
+              "Mowshaqs",
+              "4/05/2020",
+            ]
+          }
+        />
+      </tr>
+    </tbody>,
+  ],
+  "className": "table table-bordered",
+}
+`;
+
+exports[`containers/pages/MDAPoints/ClientListView works with the Redux store 2`] = `
+Object {
+  "children": <tr
+    className="listview-tr"
+  >
+    <ElementMap
+      HTMLTag="th"
+      className="listview-td"
+      items={
+        Array [
+          "File Name",
+          "Owner",
+          "Upload Date",
+        ]
+      }
+    />
+  </tr>,
+  "className": "listview-thead",
+}
+`;
+
+exports[`containers/pages/MDAPoints/ClientListView works with the Redux store 3`] = `
+Object {
+  "children": Array [
+    <tr
+      className="listview-tr"
+    >
+      <ElementMap
+        HTMLTag="td"
+        className="listview-th"
+        items={
+          Array [
+            <p>
+              Barush_school.csv
+                
+              <a
+                href="#"
+                onClick={[Function]}
+              >
+                (Download)
+              </a>
+            </p>,
+            "Mowshaqs",
+            "4/05/2020",
+          ]
+        }
+      />
+    </tr>,
+  ],
+  "className": "listview-tbody",
+}
+`;

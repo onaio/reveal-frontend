@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/ClientUpload renders props correctly: ClientUpload Select Props ownProps 1`] = `
+Object {
+  "eventValue": "Child Registration",
+  "fileType": ".csv",
+  "fileUploadService": [Function],
+  "formFieldStyles": Object {
+    "display": "inline-block",
+    "width": "24rem",
+  },
+  "initialValues": Object {
+    "file": null,
+    "jurisdictions": Object {
+      "id": "",
+      "name": "",
+    },
+    "team": "",
+  },
+}
+`;

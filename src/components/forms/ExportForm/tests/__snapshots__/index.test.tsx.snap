@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/forms/ExportForm renders correctly: jurisdiction-select form label 1`] = `
+<Label
+  for="jurisdictions-1-id"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="jurisdictions-1-id"
+  >
+    Geographical level to include
+  </label>
+</Label>
+`;
+
+exports[`components/forms/ExportForm renders correctly: submit button 1`] = `null`;
+
+exports[`components/forms/ExportForm renders jurisdictions fields correctly: jurisdictions.id field 1`] = `null`;
+
+exports[`components/forms/ExportForm renders jurisdictions fields correctly: jurisdictions.id label 1`] = `
+<Label
+  for="jurisdictions-1-id"
+  tag="label"
+  widths={
+    Array [
+      "xs",
+      "sm",
+      "md",
+      "lg",
+      "xl",
+    ]
+  }
+>
+  <label
+    className=""
+    htmlFor="jurisdictions-1-id"
+  >
+    Geographical level to include
+  </label>
+</Label>
+`;
+
+exports[`components/forms/ExportForm renders jurisdictions fields correctly: jurisdictions.name field 1`] = `
+<input
+  id="jurisdictions-name"
+  name="jurisdictions.name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value=""
+/>
+`;

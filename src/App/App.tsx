@@ -40,6 +40,7 @@ import {
   BACKEND_CALLBACK_PATH,
   BACKEND_CALLBACK_URL,
   BACKEND_LOGIN_URL,
+  CLIENTS_LIST_URL,
   CREATE_ORGANIZATION_URL,
   CREATE_PRACTITIONER_URL,
   DRAFT_IRS_PLAN_URL,
@@ -83,6 +84,7 @@ import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import ConnectedClientListView from '../containers/pages/MDAPoint/ClientListView';
 import ConnectedMdaPointJurisdictionReport from '../containers/pages/MDAPoint/jurisdictionsReport';
 import ConnectedMDAPointPlansList from '../containers/pages/MDAPoint/plans';
 import ConnectedAssignPractitioner from '../containers/pages/OrganizationViews/AssignPractitioners';
@@ -364,6 +366,14 @@ const App = (props: AppProps) => {
                 exact={true}
                 path={`${SINGLE_ORGANIZATION_URL}/:id`}
                 component={ConnectedSingleOrgView}
+              />
+              {/* Student listing page */}
+              <ConnectedPrivateRoute
+                redirectPath={APP_CALLBACK_URL}
+                disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                exact={false}
+                path={CLIENTS_LIST_URL}
+                component={ConnectedClientListView}
               />
               {/* Practitioner listing page */}
               <ConnectedPrivateRoute
