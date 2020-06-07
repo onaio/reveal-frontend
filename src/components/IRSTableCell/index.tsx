@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DropDownCellProps } from '@onaio/drill-down-table';
+import { Dictionary } from '@onaio/utils';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { MAP } from '../../constants';
@@ -14,7 +15,7 @@ export interface LinkedCellProps extends DropDownCellProps {
  */
 const IRSTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps) => {
   const { cell, cellValue, hasChildren, urlPath } = props;
-  const original = cell.row.original;
+  const original: Dictionary = cell.row.original;
   const url = urlPath ? `${urlPath}/${original.jurisdiction_id}` : '';
   const val =
     hasChildren || original.is_virtual_jurisdiction ? (
