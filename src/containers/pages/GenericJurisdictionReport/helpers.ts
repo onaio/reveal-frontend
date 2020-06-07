@@ -1,9 +1,5 @@
 import { Cell, Column } from 'react-table';
-<<<<<<< HEAD:src/containers/pages/GenericJurisdictionReport/helpers.ts
 import { getIRSThresholdAdherenceIndicator } from '../../../helpers/indicators';
-=======
-import { getIRSThresholdAdherenceIndicator } from '../../../../helpers/indicators';
->>>>>>> Replacing typings and props dependent on react-table-v6:src/containers/pages/IRS/JurisdictionsReport/helpers.ts
 
 /** columns for Namibia IRS jurisdictions */
 export const NamibiaColumns = [
@@ -130,13 +126,8 @@ export const ZambiaJurisdictionsColumns = [
 export const mdaJurisdictionsColumns = [
   {
     Header: 'Name',
-    columns: [
-      {
-        Header: '',
-        accessor: 'jurisdiction_name',
-        minWidth: 180,
-      },
-    ],
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
   },
   {
     Header: 'Total SACs Registered',
@@ -160,7 +151,7 @@ export const mdaJurisdictionsColumns = [
     Header: 'MMA Coverage (%)',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'mmacovper',
       },
@@ -185,33 +176,18 @@ export const mdaJurisdictionsColumns = [
     ],
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'ADR Reported (%)',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'mmaadr',
-      },
-    ],
+    accessor: 'mmaadr',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'ADR Severe (%)',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'mmaadrsev',
-      },
-    ],
+    accessor: 'mmaadrsev',
   },
   {
     Header: 'Alb Tablets Distributed',
-    columns: [
-      {
-        Header: '',
-        accessor: 'albdist',
-      },
-    ],
+    accessor: 'albdist',
   },
 ];
 

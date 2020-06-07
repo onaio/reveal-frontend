@@ -1,4 +1,4 @@
-import DrillDownTable, { hasChildrenFunc } from '@onaio/drill-down-table';
+import { DrillDownTable, hasChildrenFunc } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
@@ -6,10 +6,8 @@ import { get } from 'lodash';
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
-import { Column, RowInfo } from 'react-table';
-import 'react-table/react-table.css';
+import { Cell } from 'react-table';
 import { Col, Row } from 'reactstrap';
-import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../components/page/Loading';
 import { SUPERSET_MAX_RECORDS } from '../../../configs/env';
@@ -206,21 +204,24 @@ const GenericJurisdictionReport = (
     }
   }
 
-  const tableProps = {
+  const tableProps: any = {
+    columns: [],
     ...(columnsToUse && { columns: columnsToUse }),
     CellComponent: cellComponent,
     data,
     defaultPageSize: data.length,
     extraCellProps: { urlPath: currentBaseURL },
-    getTdProps: (_: Partial<Store>, rowInfo: RowInfo | undefined, column: Column | undefined) => {
+    getTdProps: (cell: Cell) => {
       return {
         onClick: (__: SyntheticEvent, handleOriginal: () => void) => {
+          const column = cell.column;
+          const rowInfo = cell.row;
           if (rowInfo && column) {
             if (
               column.id === 'jurisdiction_name' &&
-              hasChildren(rowInfo, parentNodes, 'jurisdiction_id')
+              hasChildren(cell, parentNodes, 'jurisdiction_id')
             ) {
-              setJurisdictionId(rowInfo.original.jurisdiction_id);
+              setJurisdictionId((rowInfo.original as Dictionary).jurisdiction_id);
             }
             if (handleOriginal) {
               handleOriginal();
