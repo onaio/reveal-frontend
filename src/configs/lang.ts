@@ -522,3 +522,18 @@ export const MDA_POINT_REPORTING_TITLE = translate(
 export const FILTER = translate('FILTER', 'Filter');
 
 export const USER = translate('USER', 'user');
+
+export const USER_HAS_NO_VALID_ASSIGNMENTS = translate(
+  'USER_HAS_NO_VALID_ASSIGNMENTS',
+  'User does not have a valid plan assignments'
+);
+
+export const NETWORK_ERROR = translate(
+  'NETWORK_ERROR',
+  'We are having trouble retrieving requested resource'
+);
+
+export const ACCESS_DENIED = translate(
+  'ACCESS_DENIED',
+  'Sorry, access was denied for the requested resource'
+);
