@@ -211,7 +211,7 @@ export const mdaPointColumns = [
     Header: 'MMA Coverage (%)',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'mmacovper',
       },
@@ -239,7 +239,7 @@ export const mdaPointColumns = [
     Header: 'ADR Reported (%)',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'mmaadr',
       },
@@ -249,7 +249,7 @@ export const mdaPointColumns = [
     Header: 'ADR Severe (%)',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
         Header: '',
         accessor: 'mmaadrsev',
       },
