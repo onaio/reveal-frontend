@@ -167,88 +167,43 @@ export const ZambiaJurisdictionsColumns: Array<DrillDownColumn<Dictionary>> = [
 export const mdaPointColumns = [
   {
     Header: 'Name',
-    columns: [
-      {
-        Header: '',
-        accessor: 'jurisdiction_name',
-        minWidth: 180,
-      },
-    ],
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
   },
   {
     Header: 'Total SACs Registered',
-    columns: [
-      {
-        Header: '',
-        accessor: 'sacregistered',
-      },
-    ],
+    accessor: 'sacregistered',
   },
   {
     Header: 'MMA Coverage',
-    columns: [
-      {
-        Header: '',
-        accessor: 'mmacov',
-      },
-    ],
+    accessor: 'mmacov',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'MMA Coverage (%)',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'mmacovper',
-      },
-    ],
+    accessor: 'mmacovper',
   },
   {
     Header: 'SACs Refused',
-    columns: [
-      {
-        Header: '',
-        accessor: 'sacrefused',
-      },
-    ],
+    accessor: 'sacrefused',
   },
   {
     Header: 'SACs Sick/Pregnant/Contraindicated',
-    columns: [
-      {
-        Header: '',
-        accessor: 'sacrefmedreason',
-      },
-    ],
+    accessor: 'sacrefmedreason',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'ADR Reported (%)',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'mmaadr',
-      },
-    ],
+    accessor: 'mmaadr',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'ADR Severe (%)',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'mmaadrsev',
-      },
-    ],
+    accessor: 'mmaadrsev',
   },
   {
     Header: 'Alb Tablets Distributed',
-    columns: [
-      {
-        Header: '',
-        accessor: 'albdist',
-      },
-    ],
+    accessor: 'albdist',
   },
 ];
 /* tslint:enable no-var-requires */

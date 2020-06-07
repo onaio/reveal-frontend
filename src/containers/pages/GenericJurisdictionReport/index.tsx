@@ -209,7 +209,6 @@ const GenericJurisdictionReport = (
     ...(columnsToUse && { columns: columnsToUse }),
     CellComponent: cellComponent,
     data,
-    defaultPageSize: data.length,
     extraCellProps: { urlPath: currentBaseURL },
     getTdProps: (cell: Cell) => {
       return {
@@ -232,13 +231,11 @@ const GenericJurisdictionReport = (
     },
     identifierField: 'jurisdiction_id',
     linkerField: 'jurisdiction_name',
-    minRows: 0,
+    paginate: false,
     parentIdentifierField: 'jurisdiction_parent_id',
     resizable: true,
     rootParentId: jurisdictionId || '',
-    shouldUseEffect: false,
-    showPagination: false,
-    useDrillDownTrProps: false,
+    useDrillDown: true,
   };
 
   const currentTitle = currentJurisdictionName
