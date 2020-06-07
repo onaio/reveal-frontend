@@ -6,7 +6,6 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedIRSPlansList, { IRSPlansList } from '../';
-import { NO_DATA_FOUND } from '../../../../../configs/lang';
 import { REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { GenericPlan } from '../../../../../store/ducks/generic/plans';
@@ -116,7 +115,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     );
     expect(
       wrapper
-        .find('.tbody .tr .td')
+        .find('tbody tr td')
         .find('Link')
         .at(0)
         .text()
@@ -150,13 +149,10 @@ describe('components/IRS Reports/IRSPlansList', () => {
     );
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
-    expect(
-      wrapper
-        .find('.tbody .tr .td')
-        .find('Link')
-        .at(0)
-        .text()
-    ).toEqual('Berg Namibia 2019');
+
+    expect((wrapper.find('GenericPlansList').props() as any).plans).toMatchSnapshot(
+      'search results props'
+    );
   });
 
   it('renders empty table if no search matches', async () => {
@@ -186,6 +182,8 @@ describe('components/IRS Reports/IRSPlansList', () => {
     );
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
-    expect(wrapper.text().includes(NO_DATA_FOUND)).toBeTruthy();
+    expect((wrapper.find('GenericPlansList').props() as any).plans).toMatchSnapshot(
+      'search results props'
+    );
   });
 });

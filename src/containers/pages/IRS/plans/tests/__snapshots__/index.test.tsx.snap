@@ -1,5 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/IRS Reports/IRSPlansList handles a case insensitive search: search results props 1`] = `
+Array [
+  Object {
+    "jurisdiction_root_parent_ids": Array [
+      "f45b9380-c970-4dd1-8533-9e95ab12f128",
+    ],
+    "plan_date": "2019-08-29",
+    "plan_effective_period_end": "2019-09-18",
+    "plan_effective_period_start": "2019-08-29",
+    "plan_id": "c6e59ec1-8c54-5fdf-acf3-ee3692983f38",
+    "plan_intervention_type": "IRS",
+    "plan_name": "Berg-Namibia-2019",
+    "plan_status": "active",
+    "plan_title": "Berg Namibia 2019",
+    "plan_version": "2",
+  },
+]
+`;
+
 exports[`components/IRS Reports/IRSPlansList handles search correctly: search results props 1`] = `
 Array [
   Object {
@@ -18,6 +37,8 @@ Array [
   },
 ]
 `;
+
+exports[`components/IRS Reports/IRSPlansList renders empty table if no search matches: search results props 1`] = `Array []`;
 
 exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: GenericPlansList props 1`] = `
 Object {
@@ -138,10 +159,6 @@ exports[`components/IRS Reports/IRSPlansList renders plan definition list correc
 </h3>
 `;
 
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: the full rendered rows tr index 0 1`] = `"TitleDate CreatedStart DateEnd DateStatus"`;
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table headers 1`] = `null`;
 
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: the full rendered rows tr index 1 1`] = `"IRS 2019-09-05 TEST2019-09-052019-09-052019-09-25retired"`;
-
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: the full rendered rows tr index 2 1`] = `"IRS 2019-08-30m2019-08-302019-08-302019-09-14active"`;
-
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: the full rendered rows tr index 3 1`] = `"Berg Namibia 20192019-08-292019-08-292019-09-18active"`;
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table rows 1`] = `null`;
