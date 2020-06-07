@@ -1731,12 +1731,10 @@
   resolved "https://registry.yarnpkg.com/@onaio/utils/-/utils-0.0.1.tgz#c4b6b0afb3b7ad6e2b6135a160d3d79e53e286af"
   integrity sha512-JybtApO1LqxidE+avNdu6Qq+EOvywn92/h++HIMvA5DIKMZ6e1OGdG2ZMbFkylmx8JpvVcFypSIomPzKUYvL7w==
 
-"@opensrp/server-service@^0.0.1":
+"@opensrp/server-service@file:/home/peter/Desktop/opensrp/mpower/opensrp-web/packages/opensrp-server-service/":
   version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@opensrp/server-service/-/server-service-0.0.1.tgz#4a66c991bfb61658af2db12961c9fde4e8a3c396"
-  integrity sha512-2E5rszxz7yiLp1RHsz1Cl6ppaPknpiUxtT2DSm+R7YeWepaKLQVM5A9Cp4ONkNXIDRweWOvJo8PUpLqaE2AlQg==
   dependencies:
-    "@onaio/session-reducer" "^0.0.11"
+    "@onaio/utils" "^0.0.1"
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"
