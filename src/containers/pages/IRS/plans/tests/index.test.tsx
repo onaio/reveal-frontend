@@ -75,14 +75,11 @@ describe('components/IRS Reports/IRSPlansList', () => {
     wrapper.update();
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
-<<<<<<< HEAD
-    expect(toJson(wrapper.find('thead tr th'))).toMatchSnapshot('table headers');
-    expect(toJson(wrapper.find('tbody tr td'))).toMatchSnapshot('table rows');
+    expect(toJson(wrapper.find('.thead .tr .th'))).toMatchSnapshot('table headers');
+    expect(toJson(wrapper.find('.tbody .tr .td'))).toMatchSnapshot('table rows');
     expect(wrapper.find('GenericPlansList').length).toBe(1);
     expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('GenericPlansList props');
-=======
     renderTable(wrapper, 'the full rendered rows');
->>>>>>> Refactor drillDown usage in IRS containers
     wrapper.unmount();
   });
 
@@ -111,14 +108,12 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
-<<<<<<< HEAD
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
     expect((wrapper.find('GenericPlansList').props() as any).plans).toMatchSnapshot(
       'search results props'
     );
-=======
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
->>>>>>> Refactor drillDown usage in IRS containers
     expect(
       wrapper
         .find('.tbody .tr .td')
