@@ -11,7 +11,7 @@ import { Button, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 
 import GeojsonExtent from '@mapbox/geojson-extent';
-import { DrillDownTable, DropDownCell } from '@onaio/drill-down-table';
+import { DrillDownTable, DrillDownTableProps, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 
 import { Dictionary } from '@onaio/utils';
@@ -1862,15 +1862,10 @@ class IrsPlan extends React.Component<
 
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
    * @param {IrsPlanState} state - component state
-   * @returns {DrillDownProps<any>|null} - compatible object for DrillDownTable props or null
+   * @returns {DrillDownTableProps<any>|null} - compatible object for DrillDownTable props or null
    */
-<<<<<<< HEAD
-  private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
+  private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownTableProps<any> | null {
     const { currentPlan, focusJurisdictionId, tableCrumbs } = state;
-=======
-  private getDrilldownPlanTableProps(state: IrsPlanState): any | null {
-    const { newPlan, focusJurisdictionId, tableCrumbs } = state;
->>>>>>> Replacing typings and props dependent on react-table-v6
     const { assignmentsArray, isDraftPlan, jurisdictionsById, planId } = this.props;
 
     if (!currentPlan || !currentPlan.plan_jurisdictions_ids) {
@@ -1957,22 +1952,17 @@ class IrsPlan extends React.Component<
       },
       {
         Header: TYPE_LABEL,
-        columns: [
-          {
-            Header: '',
-            accessor: (j: JurisdictionRow) => {
-              if (isMdaPoint) {
-                return <span onClick={stopPropagationAndPreventDefault}>{j.geographic_level}</span>;
-              }
-              return (
-                <span onClick={stopPropagationAndPreventDefault}>
-                  {j.isChildless ? SPRAY_AREA_HEADER : `${ADMIN_LEVEL} ${j.geographic_level}`}
-                </span>
-              );
-            },
-            id: 'jurisdiction-type',
-          },
-        ],
+        accessor: (j: JurisdictionRow) => {
+          if (isMdaPoint) {
+            return <span onClick={stopPropagationAndPreventDefault}>{j.geographic_level}</span>;
+          }
+          return (
+            <span onClick={stopPropagationAndPreventDefault}>
+              {j.isChildless ? SPRAY_AREA_HEADER : `${ADMIN_LEVEL} ${j.geographic_level}`}
+            </span>
+          );
+        },
+        id: 'jurisdiction-type',
       },
     ];
 
