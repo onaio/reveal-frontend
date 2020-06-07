@@ -1,5 +1,7 @@
+import { HTTPError, NetworkError } from '@opensrp/server-service';
 import { toast } from 'react-toastify';
-import { displayError } from '../errors';
+import { ACCESS_DENIED, NETWORK_ERROR, USER_HAS_NO_VALID_ASSIGNMENTS } from '../../configs/lang';
+import { apiPlansErrorObject, displayError } from '../errors';
 import * as helperUtils from '../utils';
 
 describe('helpers/errors', () => {
@@ -25,6 +27,44 @@ describe('helpers/errors', () => {
     displayError(new Error('I love oov'), 'insert custom message');
 
     expect(mockGrowl).toHaveBeenCalledWith('insert custom message', {
+      type: toast.TYPE.ERROR,
+    });
+  });
+
+  it('displays HTTP error messages correctly', () => {
+    const mockGrowl: any = jest.fn();
+    (helperUtils as any).growl = mockGrowl;
+
+    const mockResponse: any = { status: 403 };
+    const error = new HTTPError(mockResponse, '');
+    displayError(error);
+
+    expect(mockGrowl).toHaveBeenCalledWith(ACCESS_DENIED, {
+      type: toast.TYPE.ERROR,
+    });
+  });
+
+  it('displays invalid plans assignment error correctly', () => {
+    const mockGrowl: any = jest.fn();
+    (helperUtils as any).growl = mockGrowl;
+
+    const mockResponse: any = { status: 500 };
+    const error = new HTTPError(mockResponse, apiPlansErrorObject);
+    displayError(error);
+
+    expect(mockGrowl).toHaveBeenCalledWith(USER_HAS_NO_VALID_ASSIGNMENTS, {
+      type: toast.TYPE.ERROR,
+    });
+  });
+
+  it('displays error for network requests', () => {
+    const mockGrowl: any = jest.fn();
+    (helperUtils as any).growl = mockGrowl;
+
+    const error = new NetworkError();
+    displayError(error);
+
+    expect(mockGrowl).toHaveBeenCalledWith(NETWORK_ERROR, {
       type: toast.TYPE.ERROR,
     });
   });
