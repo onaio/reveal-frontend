@@ -1,7 +1,5 @@
 import React from 'react';
 import { EXPRESS_OAUTH_LOGOUT_URL } from '../../configs/env';
-import store from '../../store';
-import { logOutUser } from '@onaio/session-reducer';
 
 /** interface to describe props for Logout component
  * @member {string} logoutURL the url of the logout endpoint of the Oauth server.
@@ -16,16 +14,21 @@ export interface LogoutProps {
  * url of the authentication server in order to go around the browser's CORS policy.
  */
 export const logoutFromAuthServer = (logoutURL: string) => {
-  window.open(logoutURL);
+  const logoutWindow = window.open(logoutURL);
+  // if(logoutWindow){
+  //   setTimeout(() => logoutWindow.close(), 2000);
+  // }
+  setTimeout(() => {window.location.href = EXPRESS_OAUTH_LOGOUT_URL}, 2000)
+  // window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
 };
 
 /** Component handles opensrp logout and goes to express serve */
 const Logout = (props: LogoutProps) => {
   const { logoutURL } = props;
   // store.dispatch(logOutUser());
-  // logoutFromAuthServer(logoutURL);
+  logoutFromAuthServer(logoutURL);
   // window.focus();
-  window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
+  // window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
   return <>This is the Logout page</>;
 };
 
