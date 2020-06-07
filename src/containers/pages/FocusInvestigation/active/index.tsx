@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Cell, Column } from 'react-table';
-import 'react-table-v6/react-table.css';
 import { Col, Row, Table } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
