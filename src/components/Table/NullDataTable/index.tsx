@@ -1,4 +1,5 @@
 import { DrillDownColumn, DrillDownTable } from '@onaio/drill-down-table';
+import { Dictionary } from '@onaio/utils';
 import * as React from 'react';
 import uuid from 'uuid/v1';
 
@@ -21,7 +22,8 @@ export interface NullDataTableProps<D extends object> {
  * @param {DrillDownColumn[]} - original columns
  */
 const sanitizeColumns = <D extends object>(columns: Array<DrillDownColumn<D>>) => {
-  columns.forEach(column => {
+  const localColumns = columns as Dictionary[];
+  localColumns.forEach(column => {
     column.accessor = column.Header || `${uuid()}`;
     if (column.columns) {
       sanitizeColumns(column.columns);
