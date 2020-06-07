@@ -268,7 +268,7 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
   }
   /** if current reactive plans array is empty build table with no data  */
   if (!currentReactivePlans || !currentReactivePlans.length) {
-    const tableProps = {
+    const tableProps: any = {
       ...defaultTableProps,
       columns: emptyCurrentReactivePlans,
     };
