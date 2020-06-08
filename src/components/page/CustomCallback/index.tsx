@@ -12,25 +12,11 @@ import { growl } from '../../../helpers/utils';
 import store from '../../../store';
 import Loading from '../Loading';
 
-export const BaseSuccessfulLoginComponent: React.FC<RouteComponentProps> = props => {
-  let pathToRedirectTo = HOME_URL;
-  const searchString = trimStart(props.location.search, '?');
-  const searchParams = querystring.parse(searchString);
-  const nextPath = searchParams.next as string | undefined;
-  if (nextPath) {
-    pathToRedirectTo = nextPath;
-  }
-  if (nextPath === '/') {
-    const user = getUser(store.getState());
-    growl(`${WELCOME_BACK}, ${user.username}`, { type: toast.TYPE.INFO });
-  }
-  return <Redirect to={pathToRedirectTo} />;
-};
-
-export const SuccessfulLoginComponent = withRouter(BaseSuccessfulLoginComponent);
-
-const BaseUnsuccessfulLogin: React.FC<RouteComponentProps> = props => {
-  let redirectTo = `${EXPRESS_LOGIN_URL}${props.location.search}`;
+/** checks if the value of next in searchParam is blacklisted
+ * @param {RouteComponentProps} props - the props should contain the routing state.
+ */
+export const nextIsValid = (props: RouteComponentProps) => {
+  let response = true;
   const indirectionURLs = [LOGOUT_URL];
   /** we should probably sieve some routes from being passed on.
    * For instance we don't need to redirect to logout since we are already in
@@ -39,9 +25,37 @@ const BaseUnsuccessfulLogin: React.FC<RouteComponentProps> = props => {
   const stringifiedUrls = indirectionURLs.map(url => querystring.stringify({ next: url }));
   for (const url of stringifiedUrls) {
     if (props.location.search.includes(url)) {
-      redirectTo = EXPRESS_LOGIN_URL;
+      response = false;
       break;
     }
+  }
+  return response;
+};
+
+export const BaseSuccessfulLoginComponent: React.FC<RouteComponentProps> = props => {
+  let pathToRedirectTo = HOME_URL;
+
+  if (nextIsValid(props)) {
+    const searchString = trimStart(props.location.search, '?');
+    const searchParams = querystring.parse(searchString);
+    const nextPath = searchParams.next as string | undefined;
+    if (nextPath) {
+      pathToRedirectTo = nextPath;
+    }
+    if (nextPath === '/') {
+      const user = getUser(store.getState());
+      growl(`${WELCOME_BACK}, ${user.username}`, { type: toast.TYPE.INFO });
+    }
+  }
+  return <Redirect to={pathToRedirectTo} />;
+};
+
+export const SuccessfulLoginComponent = withRouter(BaseSuccessfulLoginComponent);
+
+const BaseUnsuccessfulLogin: React.FC<RouteComponentProps> = props => {
+  let redirectTo = `${EXPRESS_LOGIN_URL}${props.location.search}`;
+  if (!nextIsValid(props)) {
+    redirectTo = EXPRESS_LOGIN_URL;
   }
 
   window.location.href = redirectTo;
