@@ -32,7 +32,7 @@ export const displayError = (error: ServiceError, customMessage: string = '') =>
       growl(msg, { type: toast.TYPE.ERROR });
       return;
     }
-    if (error.statusCode === 500 && isEqual(error.description, apiPlansErrorObject)) {
+    if (error.statusCode === 500 && isEqual(JSON.parse(error.description), apiPlansErrorObject)) {
       const msg = customMessage !== '' ? customMessage : USER_HAS_NO_VALID_ASSIGNMENTS;
       growl(msg, { type: toast.TYPE.ERROR });
       return;
