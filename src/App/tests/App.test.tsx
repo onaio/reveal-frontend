@@ -18,8 +18,6 @@ jest.mock('../../configs/env');
 const fetch = require('jest-fetch-mock');
 const history = createBrowserHistory();
 
-// jest.useFakeTimers();
-
 describe('App', () => {
   beforeEach(() => {
     jest.resetAllMocks();
