@@ -65,6 +65,7 @@ export const DRAFT_IRS_PLAN_URL = '/intervention/irs/draft';
 export const ACTIVE_IRS_PLAN_URL = `/intervention/irs/plan`;
 export const REPORT_IRS_PLAN_URL = `/intervention/irs/report`;
 export const REPORT_MDA_POINT_PLAN_URL = `/intervention/mda-point/report`;
+export const MDA_POINT_SCHOOL_REPORT_URL = '/intervention/mda-point/school-report';
 export const ASSIGN_PLAN_URL = `/assign`;
 export const FI_URL = '/focus-investigation';
 export const FI_FILTER_URL = '/focus-investigation/filter';

@@ -138,8 +138,9 @@ export interface SchoolReportFilters {
  */
 export const MDAPointSchoolReportsArrayBaseSelector = (planId: string, schoolKey?: string) => (
   state: Partial<Store>
-): SchoolReport[] =>
-  (state as any)[reducerName][schoolKey ? schoolKey : 'schoolReportByPlanId'][planId];
+): SchoolReport[] => {
+  return (state as any)[reducerName][schoolKey ? schoolKey : 'schoolReportByPlanId'][planId] || [];
+};
 
 /** getMDAPointSchoolReportArrayByLocation
  * Gets jurisdiction id from PlanFilters
