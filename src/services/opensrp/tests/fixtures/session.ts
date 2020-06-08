@@ -7,5 +7,5 @@ export const OpenSRPAPIResponse = {
   },
   preferredName: 'Superset User',
   roles: ['Provider'],
-  userName: 'superset-user',
+  username: 'superset-user',
 };
