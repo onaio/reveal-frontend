@@ -10,7 +10,7 @@ export const expressAPIResponse = {
       },
       preferredName: 'Superset User',
       roles: ['Provider'],
-      userName: 'superset-user',
+      username: 'superset-user',
     },
     success: true,
   },
@@ -26,7 +26,7 @@ export const expressAPIResponse = {
       },
       preferredName: 'Superset User',
       roles: ['Provider'],
-      userName: 'superset-user',
+      username: 'superset-user',
     },
     user: {
       email: '',
