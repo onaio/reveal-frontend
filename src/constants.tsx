@@ -125,3 +125,9 @@ export const SORT_BY_EFFECTIVE_PERIOD_START_FIELD = 'plan_effective_period_start
 
 /** Query Params */
 export const QUERY_PARAM_TITLE = 'title';
+
+/** how long after opening a logout window should we wait before redirecting to express' server logout
+ * I am not sure the optimum value for this, mozilla firefox seems to take some
+ * time loading up the logoutWindow and actually making the request.
+ */
+export const LOGOUT_REDIRECTION_DELAY = 1000;
