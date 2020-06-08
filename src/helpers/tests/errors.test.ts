@@ -35,7 +35,7 @@ describe('helpers/errors', () => {
     const mockGrowl: any = jest.fn();
     (helperUtils as any).growl = mockGrowl;
 
-    const mockResponse: any = { status: 403 };
+    const mockResponse: any = { status: 403, url: '' };
     const error = new HTTPError(mockResponse, '');
     displayError(error);
 
@@ -48,7 +48,7 @@ describe('helpers/errors', () => {
     const mockGrowl: any = jest.fn();
     (helperUtils as any).growl = mockGrowl;
 
-    const mockResponse: any = { status: 500 };
+    const mockResponse: any = { status: 500, url: 'http://reveal-stage/rest/plans/user/someUser' };
     const error = new HTTPError(mockResponse, apiPlansErrorObject);
     displayError(error);
 

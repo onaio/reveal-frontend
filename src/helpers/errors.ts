@@ -6,12 +6,6 @@ import { growl } from './utils';
 /** union of all ErrorTypes that we are working with */
 type ServiceError = HTTPError | Error | NetworkError;
 
-/** this is a special case of the error message that is returned for the
- * plans filter by user endpoint when the user has no valid assignments.
- */
-export const apiPlansErrorObject =
-  '{"message":"The server encountered an error processing the request.","status":"500 INTERNAL_SERVER_ERROR","data":null,"success":false}';
-
 /**
  * Display error message using growl
  * @param error - the error object
@@ -22,12 +16,13 @@ export const displayError = (error: ServiceError, customMessage: string = '') =>
    * unfortunately putting this in constants does not work; it has a value of undefined during runtime.
    */
   if (error instanceof HTTPError) {
+    const isPlansFilterByUserRoute = error.url.includes('rest/plans/user/');
     if (error.statusCode === 403) {
       const msg = customMessage !== '' ? customMessage : ACCESS_DENIED;
       growl(msg, { type: toast.TYPE.ERROR });
       return;
     }
-    if (error.statusCode === 500 && error.description === apiPlansErrorObject) {
+    if (error.statusCode === 500 && isPlansFilterByUserRoute) {
       const msg = customMessage !== '' ? customMessage : USER_HAS_NO_VALID_ASSIGNMENTS;
       growl(msg, { type: toast.TYPE.ERROR });
       return;
