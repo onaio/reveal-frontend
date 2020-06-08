@@ -9,7 +9,9 @@ import {
   GenericSupersetDataTable,
   GenericSupersetDataTableProps,
 } from '../../../../components/GenericSupersetDataTable';
-import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import HeaderBreadcrumb, {
+  Page,
+} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { SUPERSET_MDA_POINT_SCHOOL_REPORT_DATA } from '../../../../configs/env';
 import { HOME, MDA_POINT_SCHOOL_REPORT_TITLE } from '../../../../configs/lang';
 import { HOME_URL, MDA_POINT_SCHOOL_REPORT_URL } from '../../../../constants';
@@ -17,22 +19,19 @@ import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import MDAPointSchoolReportReducer, {
   FetchMDAPointSchoolReportAction,
-  makeMDAPointSchollReportsArraySelector,
+  makeMDAPointSchoolReportsArraySelector,
   reducerName as MDAPointSchoolReportReducerName,
   SchoolReport,
 } from '../../../../store/ducks/generic/MDASchoolReport';
+import { getPrevPageAndTitle } from './helpers';
 
-/** register the MDA plan definitions reducer */
+/** register the MDA point school report definitions reducer */
 reducerRegistry.register(MDAPointSchoolReportReducerName, MDAPointSchoolReportReducer);
 
-interface SchoolReportsProps {
-  data: React.ReactNode[][];
-  fetchItems: typeof FetchMDAPointSchoolReportAction;
-  headerItems: React.ReactNode[];
+interface SchoolReportsProps extends GenericSupersetDataTableProps {
   pageTitle: typeof MDA_POINT_SCHOOL_REPORT_TITLE;
   pageUrl: string;
-  service: typeof supersetFetch;
-  supersetSliceId: string;
+  prevPage: Page;
 }
 
 const tableHeaders = [
@@ -48,7 +47,17 @@ const tableHeaders = [
 ];
 
 const SchoolReportsList = (props: SchoolReportsProps) => {
-  const { pageTitle, pageUrl, supersetSliceId, fetchItems, service, data, headerItems } = props;
+  const {
+    pageTitle,
+    pageUrl,
+    supersetSliceId,
+    fetchItems,
+    service,
+    data,
+    headerItems,
+    tableClass,
+    prevPage,
+  } = props;
 
   const breadcrumbProps = {
     currentPage: {
@@ -60,6 +69,7 @@ const SchoolReportsList = (props: SchoolReportsProps) => {
         label: HOME,
         url: HOME_URL,
       },
+      prevPage,
     ],
   };
 
@@ -69,7 +79,7 @@ const SchoolReportsList = (props: SchoolReportsProps) => {
     headerItems,
     service,
     supersetSliceId,
-    tableClass: 'table table-striped table-bordered plans-list',
+    tableClass,
   };
 
   return (
@@ -99,8 +109,10 @@ const defaultProps: SchoolReportsProps = {
   headerItems: tableHeaders,
   pageTitle: MDA_POINT_SCHOOL_REPORT_TITLE,
   pageUrl: MDA_POINT_SCHOOL_REPORT_URL,
+  prevPage: { label: '' },
   service: supersetFetch,
   supersetSliceId: SUPERSET_MDA_POINT_SCHOOL_REPORT_DATA,
+  tableClass: 'table table-striped table-bordered plans-list',
 };
 
 SchoolReportsList.defaultProps = defaultProps;
@@ -110,6 +122,8 @@ export { SchoolReportsList };
 interface DispatchedStateProps {
   data: React.ReactNode[][];
   pageUrl: string;
+  pageTitle: string;
+  prevPage: Page;
 }
 
 /** map state to props */
@@ -123,7 +137,7 @@ const mapStateToProps = (
 
   if (planId && jurisdictionId) {
     pageUrl = `${MDA_POINT_SCHOOL_REPORT_URL}/${planId}/${jurisdictionId}`;
-    schoolData = makeMDAPointSchollReportsArraySelector(planId)(state, {
+    schoolData = makeMDAPointSchoolReportsArraySelector(planId)(state, {
       jurisdiction_id: jurisdictionId,
     });
   }
@@ -142,9 +156,19 @@ const mapStateToProps = (
     ];
   });
 
+  let pageTitle = MDA_POINT_SCHOOL_REPORT_TITLE;
+  let prevPage: Page = { label: '', url: '' };
+  if (schoolData) {
+    const pageData = getPrevPageAndTitle(schoolData[0]);
+    pageTitle = pageData.pageTitle;
+    prevPage = pageData.prevPage;
+  }
+
   return {
     data,
+    pageTitle,
     pageUrl,
+    prevPage,
   };
 };
 

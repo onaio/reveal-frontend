@@ -13,7 +13,7 @@ export interface SchoolReport {
   client_age_category: string;
   jurisdiction_id: string;
   jurisdiction_depth: number;
-  jurisdiction_id_path: string;
+  jurisdiction_id_path: string[];
   jurisdiction_name_path: string[];
   sacregistered: number;
   mmacov: number;
@@ -51,12 +51,6 @@ interface RemoveMDAPointSchoolReportAction extends AnyAction {
   type: typeof REMOVE_MDA_SCHOOL_REPORT_PLANS;
 }
 
-// /** interface for adding a single MDAPointSchoolReport action */
-// interface AddIRSPlanAction extends AnyAction {
-//   IRSPlanObj: GenericPlan;
-//   type: typeof ADD_IRS_PLAN;
-// }
-
 /** Create type for MDAPointSchoolReportPlan reducer actions */
 export type MDAPointSchoolReportActionTypes =
   | FetchMDAPointSchoolReportAction
@@ -83,7 +77,7 @@ export const FetchMDAPointSchoolReportAction = (
 };
 
 /** Reset plan definitions state action creator */
-export const removeMDAPointPlans = () => ({
+export const removeMDAPointSchoolReports = () => ({
   schoolReportByPlanId: {},
   type: REMOVE_MDA_SCHOOL_REPORT_PLANS,
 });
@@ -168,7 +162,7 @@ export const getMDAPointSchoolReportsArrayByTitle = (planId: string, schoolKey?:
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *
- * This selector is meant to be a memoized replacement for getMDAPointPlansArray.
+ * This selector is meant to be a memoized replacement for getMDASchoolReportsPlansArray.
  *
  * To use this selector, do something like:
  *    const MDAPointSchoolReportsArraySelector = makeMDAPointSchollReportsArraySelector();
@@ -176,7 +170,7 @@ export const getMDAPointSchoolReportsArrayByTitle = (planId: string, schoolKey?:
  * @param {Partial<Store>} state - the redux store
  * @param {SchoolFilters} props - the schools filters object
  */
-export const makeMDAPointSchollReportsArraySelector = (planId: string, schoolKey?: string) => {
+export const makeMDAPointSchoolReportsArraySelector = (planId: string, schoolKey?: string) => {
   return createSelector([getMDAPointSchoolReportsArrayByTitle(planId, schoolKey)], schools =>
     intersect([schools], JSON.stringify)
   );
