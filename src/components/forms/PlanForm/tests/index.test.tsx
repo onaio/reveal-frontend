@@ -763,7 +763,6 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper.find('form').simulate('submit');
 
     await new Promise<any>(resolve => setImmediate(resolve));
-    wrapper.update();
 
     // no errors are initially shown
     expect(
