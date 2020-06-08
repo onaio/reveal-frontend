@@ -525,7 +525,7 @@ export const USER = translate('USER', 'user');
 
 export const USER_HAS_NO_VALID_ASSIGNMENTS = translate(
   'USER_HAS_NO_VALID_ASSIGNMENTS',
-  'User does not have a valid plan assignments'
+  'User does not have valid plan assignments'
 );
 
 export const NETWORK_ERROR = translate(
@@ -535,7 +535,7 @@ export const NETWORK_ERROR = translate(
 
 export const ACCESS_DENIED = translate(
   'ACCESS_DENIED',
-  'Sorry, access was denied for the requested resource'
+  'Sorry, access was denied to the requested resource'
 );
 
 export const USER_HAS_NO_PLAN_ASSIGNMENTS = translate(
