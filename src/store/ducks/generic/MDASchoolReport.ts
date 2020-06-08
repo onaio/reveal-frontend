@@ -41,13 +41,13 @@ export const ADD_MDA_SCHOOL_REPORT_PLAN =
 
 /** interface for fetch MDAPointSchoolReport action */
 interface FetchMDAPointSchoolReportAction extends AnyAction {
-  schoolReportByPlanId: { [key: string]: SchoolReport };
+  schoolReportByPlanId: { [key: string]: SchoolReport[] };
   type: typeof MDA_POINT_SCHOOL_REPORT_FETCHED;
 }
 
 /** interface for removing MDAPointSchoolReport action */
 interface RemoveMDAPointSchoolReportAction extends AnyAction {
-  schoolReportByPlanId: { [key: string]: SchoolReport };
+  schoolReportByPlanId: { [key: string]: SchoolReport[] };
   type: typeof REMOVE_MDA_SCHOOL_REPORT_PLANS;
 }
 
@@ -111,7 +111,7 @@ export default function reducer(
 ): ImmutableSchoolReportState {
   switch (action.type) {
     case MDA_POINT_SCHOOL_REPORT_FETCHED:
-      if (action.MDAPointPlansById) {
+      if (action.schoolReportByPlanId) {
         return SeamlessImmutable({
           ...state,
           schoolReportByPlanId: { ...state.schoolReportByPlanId, ...action.schoolReportByPlanId },
