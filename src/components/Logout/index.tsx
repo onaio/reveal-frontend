@@ -1,4 +1,5 @@
 import { EXPRESS_OAUTH_LOGOUT_URL } from '../../configs/env';
+import { LOGOUT_REDIRECTION_DELAY } from '../../constants';
 
 /** interface to describe props for Logout component
  * @member {string} logoutURL the url of the logout endpoint of the Oauth server.
@@ -14,19 +15,16 @@ export interface LogoutProps {
  */
 export const logoutFromAuthServer = (logoutURL: string) => {
   const logoutWindow = window.open(logoutURL);
-  /** I am not sure the optimum value for this, mozilla firefox seems to take some
-   * time loading up the logoutWindow and actually making the request.
-   */
-  const RedirectAfter = 1000;
   if (logoutWindow) {
     logoutWindow.opener.focus();
-    setTimeout(() => logoutWindow.close(), RedirectAfter);
+    setTimeout(() => logoutWindow.close(), LOGOUT_REDIRECTION_DELAY);
   }
-  /** Redirect to express logout after the logoutWindow has loaded,
+  /** Redirect to express logout after allowing for some time for the logoutWindow to load,
+   * if it doesn't proceed with redirecting to express logout anyway.
    */
   setTimeout(() => {
     window.location.href = EXPRESS_OAUTH_LOGOUT_URL;
-  }, RedirectAfter);
+  }, LOGOUT_REDIRECTION_DELAY);
 };
 
 /** Component handles opensrp logout and goes to express serve */
