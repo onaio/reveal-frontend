@@ -1,5 +1,4 @@
 import { HTTPError, NetworkError } from '@opensrp/server-service';
-import { isEqual } from 'lodash';
 import { toast } from 'react-toastify';
 import { ACCESS_DENIED, NETWORK_ERROR, USER_HAS_NO_VALID_ASSIGNMENTS } from '../configs/lang';
 import { growl } from './utils';
@@ -10,12 +9,8 @@ type ServiceError = HTTPError | Error | NetworkError;
 /** this is a special case of the error message that is returned for the
  * plans filter by user endpoint when the user has no valid assignments.
  */
-export const apiPlansErrorObject = {
-  data: null,
-  message: 'The server encountered an error processing the request.',
-  status: '500 INTERNAL_SERVER_ERROR',
-  success: false,
-};
+export const apiPlansErrorObject =
+  '{"message":"The server encountered an error processing the request.","status":"500 INTERNAL_SERVER_ERROR","data":null,"success":false}';
 
 /**
  * Display error message using growl
@@ -32,7 +27,7 @@ export const displayError = (error: ServiceError, customMessage: string = '') =>
       growl(msg, { type: toast.TYPE.ERROR });
       return;
     }
-    if (error.statusCode === 500 && isEqual(JSON.parse(error.description), apiPlansErrorObject)) {
+    if (error.statusCode === 500 && error.description === apiPlansErrorObject) {
       const msg = customMessage !== '' ? customMessage : USER_HAS_NO_VALID_ASSIGNMENTS;
       growl(msg, { type: toast.TYPE.ERROR });
       return;
