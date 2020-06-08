@@ -1,4 +1,5 @@
 import { ActionCreator, AnyAction } from 'redux';
+import { USER_HAS_NO_PLAN_ASSIGNMENTS } from '../../configs/lang';
 import { OPENSRP_PLANS_BY_USER_FILTER } from '../../constants';
 import { OpenSRPService } from '../../services/opensrp';
 import store from '../../store';
@@ -20,7 +21,10 @@ export async function loadPlansByUserFilter<T>(
   const serve = new service(`${OPENSRP_PLANS_BY_USER_FILTER}/${userName}`);
   serve
     .list()
-    .then((response: T[]) => {
+    .then((response: T[] | null) => {
+      if (response === null) {
+        return Promise.reject(new Error(USER_HAS_NO_PLAN_ASSIGNMENTS));
+      }
       store.dispatch(actionCreator(response, userName));
       if (responseActionCreator) {
         store.dispatch(responseActionCreator(response));

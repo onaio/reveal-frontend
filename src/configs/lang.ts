@@ -537,3 +537,8 @@ export const ACCESS_DENIED = translate(
   'ACCESS_DENIED',
   'Sorry, access was denied for the requested resource'
 );
+
+export const USER_HAS_NO_PLAN_ASSIGNMENTS = translate(
+  'USER_HAS_NO_PLAN_ASSIGNMENTS',
+  'User does not have any plans assigned'
+);
