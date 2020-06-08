@@ -98,7 +98,7 @@ describe('App', () => {
         hrefMock(url);
       },
     };
-    const logoutUserMock = jest.spyOn(sessionDux, 'logOutUser');
+
     const mockLogout = jest.fn(() => null);
     const wrapper = mount(
       <Provider store={store}>
@@ -111,32 +111,21 @@ describe('App', () => {
     wrapper.update();
 
     // At this point we have an authenticated user
-    let loggedIn = sessionDux.isAuthenticated(store.getState());
+    const loggedIn = sessionDux.isAuthenticated(store.getState());
     expect(loggedIn).toBeTruthy();
 
     // simulate logout
     history.push('/logout');
     wrapper.update();
 
-    // we should be on the login page; caveat, in production
-    // it is by the express server's redirect action that we find ourselves here
-    expect(wrapper.text()).toMatchSnapshot('should be login page');
-    const isTheLoginPage = wrapper.text().includes('Login');
-    expect(isTheLoginPage).toBeTruthy();
-
-    // the logout user action creator was invoked
-    expect(logoutUserMock).toHaveBeenCalledTimes(1);
-
-    // at this point the session reducer has no authenticated details
-    loggedIn = sessionDux.isAuthenticated(store.getState());
-    expect(loggedIn).toBeFalsy();
-
     // unfortunately we don't have a definitive way to test that the user session was invalidated;
     // since the functionality that does this is in the express server and is thus out of the
     // react-app's scope.
     // ensure we are calling the logout component which handles opensrp logout and redirects to backend
+    // PS: only after redirecting to the express server and back is the user unauthenticated.
     expect(mockLogout).toBeCalled();
   });
+
   it('tracks dimensions correctly', async () => {
     fetch.mockResponse(JSON.stringify(expressAPIResponse));
     GoogleAnalytics.set = jest.fn();
