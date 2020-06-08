@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App integration: renders App correctly: The displayed text 1`] = `"Home superset-userSign OutWelcome to RevealGet started by selecting an intervention belowReveal-frontend: v0.4.2"`;
+exports[`App integration: renders App correctly: The displayed text 1`] = `"HomePlanManage PlansIRSAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingAdminTeamsPractitionersUsersClientsAbout superset-userSign OutWelcome to RevealGet started by selecting an intervention belowIRSFocus InvestigationTeamsv0.4.2"`;
 
 exports[`App integration: renders App correctly: footer 1`] = `
 <footer
