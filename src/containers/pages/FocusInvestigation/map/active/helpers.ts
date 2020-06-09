@@ -6,8 +6,16 @@ import {
   circleLayerConfig,
   fillLayerConfig,
   lineLayerConfig,
+  symbolLayerConfig,
 } from '../../../../../configs/settings';
-import { MAIN_PLAN, STRUCTURE_LAYER } from '../../../../../constants';
+import {
+  CASE_CONFIRMATION_GOAL_ID,
+  GOAL_CONFIRMATION_GOAL_ID,
+  LARVAL_DIPPING_ID,
+  MAIN_PLAN,
+  MOSQUITO_COLLECTION_ID,
+  STRUCTURE_LAYER,
+} from '../../../../../constants';
 import { FeatureCollection } from '../../../../../helpers/utils';
 import { Jurisdiction } from '../../../../../store/ducks/jurisdictions';
 import { StructureGeoJSON } from '../../../../../store/ducks/structures';
@@ -28,7 +36,8 @@ export interface FILayers {
 export const getGisidaWrapperProps = (
   jurisdiction: Jurisdiction,
   structures: FeatureCollection<StructureGeoJSON> | null = null,
-  fiLayers: FILayers[] = []
+  fiLayers: FILayers[] = [],
+  currentGoalId: string
 ): GisidaProps | null => {
   if (!jurisdiction.geojson) {
     return null;
@@ -88,24 +97,32 @@ export const getGisidaWrapperProps = (
   layers.push(structuresFillLayer);
   layers.push(structuresLineLayer);
 
+  let iconGoal: string = 'case-confirmation';
+  switch (currentGoalId) {
+    case MOSQUITO_COLLECTION_ID:
+      iconGoal = 'mosquito';
+      break;
+    case LARVAL_DIPPING_ID:
+      iconGoal = 'larval';
+      break;
+  }
+
+  const goalsWithSymbols = [MOSQUITO_COLLECTION_ID, LARVAL_DIPPING_ID, CASE_CONFIRMATION_GOAL_ID];
+
   // deal with FI Layers
   fiLayers.forEach(element => {
-    const layerConfig = element.layerType === 'circle' ? circleLayerConfig : null;
-
-    if (layerConfig) {
+    const elementIsIndexCase = element.id.includes('index-cases');
+    const isGoalWithSymbol = goalsWithSymbols.includes(currentGoalId);
+    if (element.layerType === 'symbol' && (isGoalWithSymbol || elementIsIndexCase)) {
       const thisLayer = {
-        ...layerConfig,
-        filter: ['==', '$type', 'Point'],
+        ...symbolLayerConfig,
         id: element.id,
-        paint: {
-          ...layerConfig.paint,
-          'circle-color': '#ff0000',
-          'circle-radius': ['interpolate', ['exponential', 2], ['zoom'], 15.75, 2.5, 20.8, 50],
-          'circle-stroke-color': '#ff0000',
-          'circle-stroke-opacity': 1,
+        layout: {
+          'icon-image': iconGoal,
+          'icon-size': currentGoalId === GOAL_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
         },
         source: {
-          ...layerConfig.source,
+          ...symbolLayerConfig.source,
           data: {
             data: JSON.stringify(element.features),
             type: 'stringified-geojson',
@@ -115,6 +132,84 @@ export const getGisidaWrapperProps = (
         visible: element.visible,
       };
       layers.push(thisLayer);
+    }
+
+    if (element.layerType === 'circle') {
+      const thisLayer = {
+        ...circleLayerConfig,
+        filter: ['==', '$type', 'Point'],
+        id: element.id,
+        paint: element.id.includes('historical-index-cases')
+          ? {
+              ...circleLayerConfig.paint,
+              'circle-color': '#ff0000',
+              // 'circle-radius': ['interpolate', ['exponential', 2], ['zoom'], 15.75, 2.5, 20.8, 50],
+              'circle-stroke-color': '#ff0000',
+              'circle-stroke-opacity': 1,
+            }
+          : {
+              ...circleLayerConfig.paint,
+              'circle-color': ['get', 'color'],
+              'circle-stroke-color': ['get', 'color'],
+              'circle-stroke-opacity': 1,
+            },
+        source: {
+          ...circleLayerConfig.source,
+          data: {
+            data: JSON.stringify(element.features),
+            type: 'stringified-geojson',
+          },
+          type: 'geojson',
+        },
+        visible: element.visible,
+      };
+      layers.push(thisLayer);
+    }
+
+    // fill layer
+    if (element.layerType === 'fill') {
+      const fillLayer = {
+        ...fillLayerConfig,
+        filter: ['==', '$type', 'Polygon'],
+        id: `${element.id}-fill`,
+        paint: {
+          ...fillLayerConfig.paint,
+          'fill-color': ['get', 'color'],
+          'fill-outline-color': ['get', 'color'],
+        },
+        source: {
+          ...fillLayerConfig.source,
+          data: {
+            data: JSON.stringify(element.features),
+            type: 'stringified-geojson',
+          },
+          type: 'geojson',
+        },
+        visible: element.visible,
+      };
+      layers.push(fillLayer);
+    }
+    if (element.layerType === 'line') {
+      const polygonLineLayer = {
+        ...lineLayerConfig,
+        filter: ['==', '$type', 'Polygon'],
+        id: `${element.id}-fill-line`,
+        paint: {
+          'line-color': ['get', 'color'],
+          'line-opacity': 1,
+          'line-width': 2,
+        },
+        source: {
+          ...lineLayerConfig.source,
+          data: {
+            data: JSON.stringify(element.features),
+            type: 'stringified-geojson',
+          },
+          type: 'geojson',
+        },
+        visible: element.visible,
+      };
+      layers.push(polygonLineLayer);
     }
   });
 
