@@ -9,7 +9,11 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import SelectComponent from '../../../../../../components/SelectPlan';
 import { FIReasons } from '../../../../../../configs/settings';
-import { CASE_CONFIRMATION_GOAL_ID, FI_SINGLE_URL } from '../../../../../../constants';
+import {
+  CASE_CONFIRMATION_GOAL_ID,
+  FI_SINGLE_URL,
+  RACD_REGISTER_FAMILY_ID,
+} from '../../../../../../constants';
 import * as helperErrors from '../../../../../../helpers/errors';
 import { wrapFeatureCollection } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';
@@ -123,9 +127,6 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
 
     // We should have progressBars somewhere in there
     expect(toJson(wrapper.find('.targetItem').first())).toMatchSnapshot('ProgressBar instance');
-
-    // case confirmation activity link si not clickable
-    expect(wrapper.find(CASE_CONFIRMATION_GOAL_ID)).toMatchSnapshot('Should not be clickable tag');
     wrapper.unmount();
   });
 
@@ -156,6 +157,15 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
           <ConnectedMapSingleFI {...props} />
         </Router>
       </Provider>
+    );
+    wrapper.update();
+
+    // case confirmation activity link si not clickable
+    expect(wrapper.find(CASE_CONFIRMATION_GOAL_ID)).toMatchSnapshot('Should not be clickable tag');
+
+    // by default the RACD register families should be active
+    expect(wrapper.find(`#${RACD_REGISTER_FAMILY_ID}`)).toMatchSnapshot(
+      'should be active by default'
     );
     // Check data passed to component props that should come from redux
 
