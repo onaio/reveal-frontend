@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import SelectComponent from '../../../../../../components/SelectPlan';
 import { FIReasons } from '../../../../../../configs/settings';
-import { FI_SINGLE_URL } from '../../../../../../constants';
+import { CASE_CONFIRMATION_GOAL_ID, FI_SINGLE_URL } from '../../../../../../constants';
 import * as helperErrors from '../../../../../../helpers/errors';
 import { wrapFeatureCollection } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';
@@ -23,7 +23,6 @@ import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { MapSingleFIProps, SingleActiveFIMap } from '../../active/';
 import { buildHandlers, fetchData } from '../helpers/utils';
 import * as fixturesMap from './fixtures';
-import nock from 'nock';
 
 jest.mock('../../../../../../components/GisidaWrapper', () => {
   const GisidaWrapperMock = () => <div>I love oov</div>;
@@ -49,7 +48,6 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
   afterEach(() => {
     jest.restoreAllMocks();
     jest.clearAllMocks();
-
   });
 
   it('renders without crashing', () => {
@@ -126,6 +124,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     // We should have progressBars somewhere in there
     expect(toJson(wrapper.find('.targetItem').first())).toMatchSnapshot('ProgressBar instance');
 
+    // case confirmation activity link si not clickable
+    expect(wrapper.find(CASE_CONFIRMATION_GOAL_ID)).toMatchSnapshot('Should not be clickable tag');
     wrapper.unmount();
   });
 
@@ -595,33 +595,36 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
-  it('passes historical index cases to gisida wrapper', async () => {
-    // use dispatch
-    const mock = jest.fn();
-    const props = {
-      // currentGoal: fixtures.goal3.goal_id,
-      // goals: [fixtures.goal3 as goalDucks.Goal],
-      history,
-      jurisdiction: fixtures.jurisdictions[0],
-      location: mock,
-      match: {
-        isExact: true,
-        params: { id: 'dbd9851f-2548-5aaa-8267-010897f98f45' },
-        path: `${FI_SINGLE_URL}/:id`,
-        url: `${FI_SINGLE_URL}/dbd9851f-2548-5aaa-8267-010897f98f45`,
-      },
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedMapSingleFI {...props} />
-        </Router>
-      </Provider>
-    );
-    // hook up the superset nock response data
-    nock('https://superset.reveal-stage.smartregister.org').log(console.log).get('/superset/slice_json/466').reply(200, [fixtures.plan1]);
-      await new Promise(resolve => setImmediate(resolve));
-  });
+  // it('passes historical index cases to gisida wrapper', async () => {
+  //   // use dispatch
+  //   const mock = jest.fn();
+  //   const props = {
+  //     // currentGoal: fixtures.goal3.goal_id,
+  //     // goals: [fixtures.goal3 as goalDucks.Goal],
+  //     history,
+  //     jurisdiction: fixtures.jurisdictions[0],
+  //     location: mock,
+  //     match: {
+  //       isExact: true,
+  //       params: { id: 'dbd9851f-2548-5aaa-8267-010897f98f45' },
+  //       path: `${FI_SINGLE_URL}/:id`,
+  //       url: `${FI_SINGLE_URL}/dbd9851f-2548-5aaa-8267-010897f98f45`,
+  //     },
+  //   };
+  //   const wrapper = mount(
+  //     <Provider store={store}>
+  //       <Router history={history}>
+  //         <ConnectedMapSingleFI {...props} />
+  //       </Router>
+  //     </Provider>
+  //   );
+  //   // hook up the superset nock response data
+  //   nock('https://superset.reveal-stage.smartregister.org')
+  //     .log(console.log)
+  //     .get('/superset/slice_json/466')
+  //     .reply(200, [fixtures.plan1]);
+  //   await new Promise(resolve => setImmediate(resolve));
+  // });
 
   /**
    * @todo Investigate why this test case that contains jest.spyon is leading to failure of other tests
