@@ -39,6 +39,7 @@ import {
   MULTI_POLYGON,
   POINT,
   POLYGON,
+  RACD_REGISTER_FAMILY_ID,
 } from '../../../../../constants';
 import { PLAN_INTERVENTION_TYPE } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
@@ -388,8 +389,14 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
                       </span>
                     ) : (
                       <NavLink
+                        id={item.goal_id}
                         to={`${FI_SINGLE_MAP_URL}/${plan.id}/${item.goal_id}`}
-                        className="task-link"
+                        className={`task-link ${
+                          item.goal_id === RACD_REGISTER_FAMILY_ID &&
+                          currentGoal === RACD_REGISTER_FAMILY_ID
+                            ? 'active'
+                            : ''
+                        }`}
                         style={{ textDecoration: 'none' }}
                       >
                         <h6>{item.action_title}</h6>
