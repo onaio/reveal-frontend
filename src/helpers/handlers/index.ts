@@ -57,15 +57,17 @@ export function popupHandler(event: EventData, planId: string) {
       if (feature.properties.goal_id) {
         goalIds.push(feature.properties.goal_id);
       }
-      // Splitting into two lines to fix breaking tests
-      description += `<p class="heading">${feature.properties.action_code}</b></p>`;
-      description += `<p>${feature.properties.task_business_status}</p><br/><br/>`;
       if (
         feature.properties.action_code === CASE_CONFIRMATION_CODE &&
         feature.properties.plan_id !== planId
       ) {
-        description = '<strong>Historical index case</strong>';
+        description += '<p class="heading">historical index cases </b></p>';
+        description += '<p></p><br/><br/>';
+        return;
       }
+      // Splitting into two lines to fix breaking tests
+      description += `<p class="heading">${feature.properties.action_code}</b></p>`;
+      description += `<p>${feature.properties.task_business_status}</p><br/><br/>`;
     }
   });
   if (description.length) {
