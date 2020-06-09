@@ -52,7 +52,6 @@ import {
 import supersetFetch from '../../../../../services/superset';
 import goalsReducer, {
   fetchGoals,
-  getCurrentGoal,
   getGoalsByPlanAndJurisdiction,
   Goal,
   reducerName as goalsReducerName,
@@ -118,7 +117,8 @@ export interface MapSingleFIProps {
   structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
   supersetService: typeof supersetFetch;
   plansByFocusArea: Plan[];
-  indexCasesByJurisdiction: FeatureCollection<TaskGeoJSON> | null;
+  historicalIndexCases: FeatureCollection<TaskGeoJSON> | null;
+  currentIndexCases: FeatureCollection<TaskGeoJSON> | null;
 }
 
 /** default value for feature Collection */
@@ -130,13 +130,14 @@ const defaultFeatureCollection: FeatureCollection<TaskGeoJSON> = {
 /** default props for ActiveFI Map component */
 export const defaultMapSingleFIProps: MapSingleFIProps = {
   currentGoal: null,
+  currentIndexCases: null,
   fetchGoalsActionCreator: fetchGoals,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
   fetchStructuresActionCreator: setStructures,
   fetchTasksActionCreator: fetchTasks,
   goals: null,
-  indexCasesByJurisdiction: null,
+  historicalIndexCases: null,
   jurisdiction: null,
   plan: null,
   plansByFocusArea: [],
@@ -196,13 +197,14 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     const { setCurrentGoalActionCreator, match } = props;
 
     setCurrentGoalActionCreator(match.params.goalId ? match.params.goalId : null);
-    /**
-     * Only re-run effect if props.match.params.goalId changes
-     */
+    // /**
+    //  * Only re-run effect if props.match.params.goalId changes
+    //  */
   }, [props.match.params.goalId]);
 
   const {
-    indexCasesByJurisdiction,
+    historicalIndexCases,
+    currentIndexCases,
     jurisdiction,
     plan,
     goals,
@@ -255,17 +257,78 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
 
   const fiLayers: FILayers[] = [];
 
-  if (indexCasesByJurisdiction) {
+  if (currentIndexCases) {
     fiLayers.push({
-      features: indexCasesByJurisdiction,
+      features: currentIndexCases,
+      id: `current-index-cases-${jurisdiction.jurisdiction_id}-symbol`,
+      layerType: 'symbol',
+      visible: true,
+    });
+    fiLayers.push({
+      features: currentIndexCases,
       // TODO: remove magic strings
-      id: `historical-index-cases-${jurisdiction.jurisdiction_id}`,
+      id: `current-index-cases-${jurisdiction.jurisdiction_id}-point`,
+      layerType: 'circle',
+      visible: true,
+    });
+  }
+  if (historicalIndexCases) {
+    fiLayers.push({
+      features: historicalIndexCases,
+      id: `historical-index-cases-${jurisdiction.jurisdiction_id}-symbol`,
+      layerType: 'symbol',
+      visible: true,
+    });
+    fiLayers.push({
+      features: historicalIndexCases,
+      // TODO: remove magic strings
+      id: `historical-index-cases-${jurisdiction.jurisdiction_id}-point`,
       layerType: 'circle',
       visible: true,
     });
   }
 
-  const gisidaProps = getGisidaWrapperProps(jurisdiction, structures, fiLayers);
+  if (pointFeatureCollection) {
+    fiLayers.push({
+      features: pointFeatureCollection,
+      id: `${currentGoal}-symbol`,
+      layerType: 'symbol',
+      visible: true,
+    });
+    fiLayers.push({
+      features: pointFeatureCollection,
+      id: `${currentGoal}-point`,
+      layerType: 'circle',
+      visible: true,
+    });
+  }
+  if (polygonFeatureCollection) {
+    fiLayers.push({
+      features: polygonFeatureCollection,
+      id: `${currentGoal}-symbol`,
+      layerType: 'symbol',
+      visible: true,
+    });
+    fiLayers.push({
+      features: polygonFeatureCollection,
+      id: `${currentGoal}-fill`,
+      layerType: 'fill',
+      visible: true,
+    });
+    fiLayers.push({
+      features: polygonFeatureCollection,
+      id: `${currentGoal}-fill-line`,
+      layerType: 'line',
+      visible: true,
+    });
+  }
+
+  const gisidaProps = getGisidaWrapperProps(
+    jurisdiction,
+    structures,
+    fiLayers,
+    props.currentGoal || ''
+  );
 
   return (
     <div>
@@ -293,19 +356,10 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
       </div>
       <div className="row no-gutters mb-5">
         <div className="col-9">
-          <div className="map">
+          <div className="map" key={currentGoal ? currentGoal : ''}>
             <GisidaWrapper
               {...gisidaProps}
-              // handlers={buildHandlers(plan.plan_id)} TODO: deal with this
-
-              // TODO: delete these once we port them to the new setup
-              // geoData={jurisdiction}
-              // goal={goals}
-              // layers={gisidaLayers}
-              // structures={structures}
-              //   currentGoal={currentGoal}
-              //   pointFeatureCollection={pointFeatureCollection}
-              //   polygonFeatureCollection={polygonFeatureCollection}
+              // handlers={buildHandlers(plan.plan_id)}
             />
           </div>
         </div>
@@ -379,15 +433,16 @@ export { SingleActiveFIMap };
 const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   // pass in the plan id to get plan the get the jurisdiction_id from the plan
   const getTasksFCSelector = tasksFCSelectorFactory();
+  const currentGoal = ownProps.match.params.goalId || 'RACD_register_families';
   const plan = getPlanById(state, ownProps.match.params.id);
   let goals = null;
   let jurisdiction = null;
-  let currentGoal;
   let pointFeatureCollection = defaultFeatureCollection;
   let polygonFeatureCollection = defaultFeatureCollection;
   let structures = null;
   let plansByFocusArea: Plan[] = [];
-  let indexCasesByJurisdiction = null;
+  let historicalIndexCases = null;
+  let currentIndexCases = null;
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
@@ -405,40 +460,45 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   }
 
   if (plan && jurisdiction && goals && goals.length > 1) {
-    currentGoal = getCurrentGoal(state) || 'Case_Confirmation';
-    indexCasesByJurisdiction = getTasksFCSelector(state, {
+    /** include all complete index cases including current index case */
+    historicalIndexCases = getTasksFCSelector(state, {
       actionCode: CASE_CONFIRMATION_CODE,
+      excludePlanId: plan.plan_id,
       jurisdictionId: plan.jurisdiction_id,
       taskBusinessStatus: 'Complete',
     });
-    const pfc = getFCByPlanAndGoalAndJurisdiction(
+
+    currentIndexCases = getTasksFCSelector(state, {
+      actionCode: CASE_CONFIRMATION_CODE,
+      jurisdictionId: plan.jurisdiction_id,
+      planId: plan.plan_id,
+      taskBusinessStatus: 'Complete',
+    });
+
+    /** point feature collection for selected goalId within */
+    pointFeatureCollection = getFCByPlanAndGoalAndJurisdiction(
       state,
       plan.plan_id,
-      [ownProps.match.params.goalId],
+      [currentGoal],
       plan.jurisdiction_id,
       false,
       [POINT]
     );
-
-    pointFeatureCollection = {
-      ...indexCasesByJurisdiction,
-    };
     polygonFeatureCollection = getFCByPlanAndGoalAndJurisdiction(
       state,
       plan.plan_id,
-      [ownProps.match.params.goalId],
+      [currentGoal],
       plan.jurisdiction_id,
       false,
       [POLYGON, MULTI_POLYGON]
     );
-    // console.log('PolygonFeatureCollection', polygonFeatureCollection);
-    // console.log("indexCasesByJurisdiction | mapstate >>> ", indexCasesByJurisdiction);
     structures = getStructuresFCByJurisdictionId(state, jurisdiction.jurisdiction_id);
   }
   return {
     currentGoal,
+    currentIndexCases,
     goals,
-    indexCasesByJurisdiction,
+    historicalIndexCases,
     jurisdiction,
     plan,
     plansArray: getPlansArray(state, InterventionType.FI, [PlanStatus.ACTIVE, PlanStatus.COMPLETE]),
