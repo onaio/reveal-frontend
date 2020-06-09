@@ -40,26 +40,10 @@ export function popupHandler(event: EventData, planId: string) {
    * current_case will be index_case belonging to this plan
    */
   const features = event.target.queryRenderedFeatures(event.point) as FeatureWithLayer[];
-  console.log('features', features);
   let description: string = '';
-  // if (features.properties.plan_id === planId) {
-  //   description =
-  //     '<strong>Make it Mount Pleasant</strong><p><a href="http://www.mtpleasantdc.com/makeitmtpleasant"' +
-  //     'target="_blank" title="Opens in a new window">Make it Mount Pleasant</a> is a handmade and vintage' +
-  //     ' market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>';
-  // }
   /** currentGoal is currently not being used but we  may  use it in the future  */
   const goalIds: string[] = [];
   features.forEach((feature: FeatureWithLayer) => {
-    if (feature!.properties!.plan_id !== planId) {
-      /** proof of concept we have a way of getting extra data into the historical index cases tooltips or popovers */
-      description =
-        '<strong>Make it Mount Pleasant</strong><p><a href="http://www.mtpleasantdc.com/makeitmtpleasant"' +
-        'target="_blank" title="Opens in a new window">Make it Mount Pleasant</a> is a handmade and vintage' +
-        ' market and afternoon of live entertainment and kids activities. 12:00-6:00 p.m.</p>';
-        return;
-    }
-    description = '';
     if (
       feature &&
       feature.geometry &&
@@ -74,8 +58,14 @@ export function popupHandler(event: EventData, planId: string) {
         goalIds.push(feature.properties.goal_id);
       }
       // Splitting into two lines to fix breaking tests
-      description += `<p class="heading">I did this ${feature.properties.action_code}</b></p>`;
+      description += `<p class="heading">${feature.properties.action_code}</b></p>`;
       description += `<p>${feature.properties.task_business_status}</p><br/><br/>`;
+      if (
+        feature.properties.action_code === CASE_CONFIRMATION_CODE &&
+        feature.properties.plan_id !== planId
+      ) {
+        description = '<strong>Historical index case</strong>';
+      }
     }
   });
   if (description.length) {
