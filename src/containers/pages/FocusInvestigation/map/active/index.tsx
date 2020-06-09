@@ -14,11 +14,7 @@ import HeaderBreadcrumb, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 import SelectComponent from '../../../../../components/SelectPlan/';
-import {
-  SUPERSET_MAX_RECORDS,
-  SUPERSET_PLANS_SLICE,
-  SUPERSET_TASKS_SLICE,
-} from '../../../../../configs/env';
+import { SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
 import {
   AN_ERROR_OCCURRED,
   FOCUS_INVESTIGATION,
@@ -34,15 +30,12 @@ import {
 } from '../../../../../configs/lang';
 import { FIReasons } from '../../../../../configs/settings';
 import {
-  ACTION_CODE,
   CASE_CONFIRMATION_CODE,
-  CASE_CONFIRMATION_GOAL_ID,
   CASE_TRIGGERED,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
   HOME_URL,
-  JURISDICTION_ID,
   MULTI_POLYGON,
   POINT,
   POLYGON,
@@ -90,20 +83,15 @@ import structuresReducer, {
 } from '../../../../../store/ducks/structures';
 import tasksReducer, {
   fetchTasks,
-  FetchTasksAction,
   getFCByPlanAndGoalAndJurisdiction,
   reducerName as tasksReducerName,
   TaskGeoJSON,
   tasksFCSelectorFactory,
 } from '../../../../../store/ducks/tasks';
+import { FILayers, getGisidaWrapperProps } from './helpers';
 import MarkCompleteLink, { MarkCompleteLinkProps } from './helpers/MarkCompleteLink';
 import StatusBadge, { StatusBadgeProps } from './helpers/StatusBadge';
-import {
-  buildHandlers,
-  fetchData,
-  getDetailViewPlanInvestigationContainer,
-  supersetCall,
-} from './helpers/utils';
+import { fetchData, getDetailViewPlanInvestigationContainer, supersetCall } from './helpers/utils';
 import './style.css';
 
 /** register reducers */
@@ -130,7 +118,7 @@ export interface MapSingleFIProps {
   structures: FeatureCollection<StructureGeoJSON> | null /** we use this to get all structures */;
   supersetService: typeof supersetFetch;
   plansByFocusArea: Plan[];
-  indexCasesByJurisdiction: any;
+  indexCasesByJurisdiction: FeatureCollection<TaskGeoJSON> | null;
 }
 
 /** default value for feature Collection */
@@ -148,6 +136,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   fetchStructuresActionCreator: setStructures,
   fetchTasksActionCreator: fetchTasks,
   goals: null,
+  indexCasesByJurisdiction: null,
   jurisdiction: null,
   plan: null,
   plansByFocusArea: [],
@@ -156,7 +145,6 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   setCurrentGoalActionCreator: setCurrentGoal,
   structures: null,
   supersetService: supersetFetch,
-  indexCasesByJurisdiction: [],
 };
 
 /** Map View for Single Active Focus Investigation */
@@ -214,6 +202,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
   }, [props.match.params.goalId]);
 
   const {
+    indexCasesByJurisdiction,
     jurisdiction,
     plan,
     goals,
@@ -264,6 +253,20 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     plan,
   };
 
+  const fiLayers: FILayers[] = [];
+
+  if (indexCasesByJurisdiction) {
+    fiLayers.push({
+      features: indexCasesByJurisdiction,
+      // TODO: remove magic strings
+      id: `historical-index-cases-${jurisdiction.jurisdiction_id}`,
+      layerType: 'circle',
+      visible: true,
+    });
+  }
+
+  const gisidaProps = getGisidaWrapperProps(jurisdiction, structures, fiLayers);
+
   return (
     <div>
       <Helmet>
@@ -292,13 +295,17 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
         <div className="col-9">
           <div className="map">
             <GisidaWrapper
-              handlers={buildHandlers(plan.plan_id)}
-              geoData={jurisdiction}
-              goal={goals}
-              structures={structures}
-              currentGoal={currentGoal}
-              pointFeatureCollection={pointFeatureCollection}
-              polygonFeatureCollection={polygonFeatureCollection}
+              {...gisidaProps}
+              // handlers={buildHandlers(plan.plan_id)} TODO: deal with this
+
+              // TODO: delete these once we port them to the new setup
+              // geoData={jurisdiction}
+              // goal={goals}
+              // layers={gisidaLayers}
+              // structures={structures}
+              //   currentGoal={currentGoal}
+              //   pointFeatureCollection={pointFeatureCollection}
+              //   polygonFeatureCollection={polygonFeatureCollection}
             />
           </div>
         </div>
@@ -380,6 +387,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   let polygonFeatureCollection = defaultFeatureCollection;
   let structures = null;
   let plansByFocusArea: Plan[] = [];
+  let indexCasesByJurisdiction = null;
   if (plan) {
     jurisdiction = getJurisdictionById(state, plan.jurisdiction_id);
     goals = getGoalsByPlanAndJurisdiction(state, plan.plan_id, plan.jurisdiction_id);
@@ -398,7 +406,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
 
   if (plan && jurisdiction && goals && goals.length > 1) {
     currentGoal = getCurrentGoal(state) || 'Case_Confirmation';
-    const indexCasesByJurisdiction = getTasksFCSelector(state, {
+    indexCasesByJurisdiction = getTasksFCSelector(state, {
       actionCode: CASE_CONFIRMATION_CODE,
       jurisdictionId: plan.jurisdiction_id,
       taskBusinessStatus: 'Complete',
@@ -423,12 +431,14 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       false,
       [POLYGON, MULTI_POLYGON]
     );
-    console.log('PolygonFeatureCollection', polygonFeatureCollection);
+    // console.log('PolygonFeatureCollection', polygonFeatureCollection);
+    // console.log("indexCasesByJurisdiction | mapstate >>> ", indexCasesByJurisdiction);
     structures = getStructuresFCByJurisdictionId(state, jurisdiction.jurisdiction_id);
   }
   return {
     currentGoal,
     goals,
+    indexCasesByJurisdiction,
     jurisdiction,
     plan,
     plansArray: getPlansArray(state, InterventionType.FI, [PlanStatus.ACTIVE, PlanStatus.COMPLETE]),
