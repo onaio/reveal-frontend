@@ -383,4 +383,19 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
       }).features
     ).toEqual(expected);
   });
+
+  it('removes tasks that belong to excluded plan', () => {
+    const thisTasks = cloneDeep(fixtures.tasks);
+    store.dispatch(fetchTasks(thisTasks));
+
+    const expected = [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task4.geojson];
+
+    // reselect selector test
+    expect(
+      getTasksFCSelector(store.getState(), {
+        excludePlanId: '356b6b84-fc36-4389-a44a-2b038ed2f38d',
+        includeNullGeoms: true,
+      }).features
+    ).toEqual(expected);
+  });
 });
