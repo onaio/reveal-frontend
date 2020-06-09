@@ -547,3 +547,5 @@ export const USER_HAS_NO_PLAN_ASSIGNMENTS = translate(
   'USER_HAS_NO_PLAN_ASSIGNMENTS',
   'User does not have any plans assigned'
 );
+
+export const NO_ROWS_FOUND = translate('NO_ROWS_FOUND', 'No rows found');

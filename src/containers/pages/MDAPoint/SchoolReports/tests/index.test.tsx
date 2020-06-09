@@ -16,6 +16,7 @@ import GenericJurisdictionsReducer, {
 import MDAPointSchoolReportReducer, {
   FetchMDAPointSchoolReportAction,
   reducerName as MDAPointSchoolReportReducerName,
+  removeMDAPointSchoolReports,
 } from '../../../../../store/ducks/generic/MDASchoolReport';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 import { MDAPointJurisdictionsJSON } from '../../jurisdictionsReport/tests/fixtures';
@@ -92,5 +93,10 @@ describe('components/MDA Reports/MDAPlansList', () => {
     expect(toJson(wrapper.find('ListView table'))).toMatchSnapshot('table');
     // two reports rendered
     expect(wrapper.find('.listview-tbody tr').length).toEqual(2);
+
+    // clear store
+    store.dispatch(removeMDAPointSchoolReports());
+    wrapper.update();
+    expect(wrapper.find('GenericSupersetDataTable div div').text()).toEqual('No rows found');
   });
 });

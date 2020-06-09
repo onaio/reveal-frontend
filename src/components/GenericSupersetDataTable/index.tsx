@@ -1,6 +1,7 @@
 import ListView from '@onaio/list-view';
 import React, { useEffect, useState } from 'react';
 import Loading from '../../components/page/Loading';
+import { NO_ROWS_FOUND } from '../../configs/lang';
 import { displayError } from '../../helpers/errors';
 import supersetFetch from '../../services/superset';
 import {
@@ -50,5 +51,15 @@ export const GenericSupersetDataTable = (props: GenericSupersetDataTableProps) =
     return <Loading />;
   }
 
-  return <ListView {...listViewProps} />;
+  return (
+    <div>
+      <ListView {...listViewProps} />
+      {!data.length && (
+        <div style={{ textAlign: 'center' }}>
+          {NO_ROWS_FOUND}
+          <hr />
+        </div>
+      )}
+    </div>
+  );
 };
