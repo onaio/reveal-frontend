@@ -1,0 +1,289 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/MDA Reports/MDAPlansList should render school reports correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      replace={false}
+      to="/"
+    >
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="1"
+      replace={false}
+      to="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/3019"
+    >
+      <a
+        href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/3019"
+        onClick={[Function]}
+      >
+        Mtendere
+      </a>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    MDA Point School Reporting: Akros_1
+  </li>,
+]
+`;
+
+exports[`components/MDA Reports/MDAPlansList should render school reports correctly: table 1`] = `
+<table
+  className="table table-striped table-bordered plans-list t"
+>
+  <thead
+    className="listview-thead"
+  >
+    <tr
+      className="listview-tr"
+    >
+      <ElementMap
+        HTMLTag="th"
+        className="listview-td"
+        items={
+          Array [
+            "Age Range",
+            "Total SACs Registered",
+            "MMA coverage",
+            "MMA Coverage (%)",
+            "SACs refused",
+            "SACs sick/pregnant/contraindicated",
+            "ADR reported (%)",
+            "ADR severe (%)",
+            "Alb tablets distributed",
+          ]
+        }
+      >
+        <th
+          className="listview-td"
+          key="0"
+        >
+          Age Range
+        </th>
+        <th
+          className="listview-td"
+          key="1"
+        >
+          Total SACs Registered
+        </th>
+        <th
+          className="listview-td"
+          key="2"
+        >
+          MMA coverage
+        </th>
+        <th
+          className="listview-td"
+          key="3"
+        >
+          MMA Coverage (%)
+        </th>
+        <th
+          className="listview-td"
+          key="4"
+        >
+          SACs refused
+        </th>
+        <th
+          className="listview-td"
+          key="5"
+        >
+          SACs sick/pregnant/contraindicated
+        </th>
+        <th
+          className="listview-td"
+          key="6"
+        >
+          ADR reported (%)
+        </th>
+        <th
+          className="listview-td"
+          key="7"
+        >
+          ADR severe (%)
+        </th>
+        <th
+          className="listview-td"
+          key="8"
+        >
+          Alb tablets distributed
+        </th>
+      </ElementMap>
+    </tr>
+  </thead>
+  <tbody
+    className="listview-tbody"
+  >
+    <tr
+      className="listview-tr"
+      key="0"
+    >
+      <ElementMap
+        HTMLTag="td"
+        className="listview-th"
+        items={
+          Array [
+            "11 - 15",
+            9,
+            6,
+            0.6666666666666666,
+            0,
+            0,
+            0,
+            0,
+            0,
+          ]
+        }
+      >
+        <td
+          className="listview-th"
+          key="0"
+        >
+          11 - 15
+        </td>
+        <td
+          className="listview-th"
+          key="1"
+        >
+          9
+        </td>
+        <td
+          className="listview-th"
+          key="2"
+        >
+          6
+        </td>
+        <td
+          className="listview-th"
+          key="3"
+        >
+          0.6666666666666666
+        </td>
+        <td
+          className="listview-th"
+          key="4"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="5"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="6"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="7"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="8"
+        >
+          0
+        </td>
+      </ElementMap>
+    </tr>
+    <tr
+      className="listview-tr"
+      key="1"
+    >
+      <ElementMap
+        HTMLTag="td"
+        className="listview-th"
+        items={
+          Array [
+            "< 6",
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+          ]
+        }
+      >
+        <td
+          className="listview-th"
+          key="0"
+        >
+          &lt; 6
+        </td>
+        <td
+          className="listview-th"
+          key="1"
+        >
+          6
+        </td>
+        <td
+          className="listview-th"
+          key="2"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="3"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="4"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="5"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="6"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="7"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="8"
+        >
+          0
+        </td>
+      </ElementMap>
+    </tr>
+  </tbody>
+</table>
+`;

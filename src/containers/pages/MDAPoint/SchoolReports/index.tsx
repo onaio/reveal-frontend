@@ -158,7 +158,7 @@ const mapStateToProps = (
 
   let pageTitle = MDA_POINT_SCHOOL_REPORT_TITLE;
   let prevPage: Page = { label: '', url: '' };
-  if (schoolData) {
+  if (schoolData.length) {
     const pageData = getPrevPageAndTitle(schoolData[0]);
     pageTitle = pageData.pageTitle;
     prevPage = pageData.prevPage;
