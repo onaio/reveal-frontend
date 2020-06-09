@@ -91,7 +91,12 @@ import tasksReducer, {
 import { FILayers, getGisidaWrapperProps } from './helpers';
 import MarkCompleteLink, { MarkCompleteLinkProps } from './helpers/MarkCompleteLink';
 import StatusBadge, { StatusBadgeProps } from './helpers/StatusBadge';
-import { fetchData, getDetailViewPlanInvestigationContainer, supersetCall } from './helpers/utils';
+import {
+  buildHandlers,
+  fetchData,
+  getDetailViewPlanInvestigationContainer,
+  supersetCall,
+} from './helpers/utils';
 import './style.css';
 
 /** register reducers */
@@ -358,10 +363,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
       <div className="row no-gutters mb-5">
         <div className="col-9">
           <div className="map" key={currentGoal ? currentGoal : ''}>
-            <GisidaWrapper
-              {...gisidaProps}
-              // handlers={buildHandlers(plan.plan_id)}
-            />
+            <GisidaWrapper {...gisidaProps} handlers={buildHandlers(plan.plan_id)} />
           </div>
         </div>
         <div className="col-3">
@@ -472,6 +474,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       actionCode: CASE_CONFIRMATION_CODE,
       excludePlanId: plan.plan_id,
       jurisdictionId: plan.jurisdiction_id,
+      structureType: [POINT, POLYGON],
       taskBusinessStatus: 'Complete',
     });
 
@@ -479,6 +482,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       actionCode: CASE_CONFIRMATION_CODE,
       jurisdictionId: plan.jurisdiction_id,
       planId: plan.plan_id,
+      structureType: [POINT, POLYGON],
       taskBusinessStatus: 'Complete',
     });
 
