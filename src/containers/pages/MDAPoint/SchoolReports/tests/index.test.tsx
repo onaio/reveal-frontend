@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -8,11 +9,16 @@ import { Router } from 'react-router';
 import ConnectedSchoolReports, { SchoolReportsList } from '..';
 import { MDA_POINT_SCHOOL_REPORT_URL } from '../../../../../constants';
 import store from '../../../../../store';
+import GenericJurisdictionsReducer, {
+  fetchGenericJurisdictions,
+  reducerName as GenericJurisdictionsReducerName,
+} from '../../../../../store/ducks/generic/jurisdictions';
 import MDAPointSchoolReportReducer, {
   FetchMDAPointSchoolReportAction,
   reducerName as MDAPointSchoolReportReducerName,
 } from '../../../../../store/ducks/generic/MDASchoolReport';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
+import { MDAPointJurisdictionsJSON } from '../../jurisdictionsReport/tests/fixtures';
 
 jest.mock('../../../../../configs/env');
 /* tslint:disable-next-line no-var-requires */
@@ -21,6 +27,10 @@ const fetch = require('jest-fetch-mock');
 const history = createBrowserHistory();
 
 reducerRegistry.register(MDAPointSchoolReportReducerName, MDAPointSchoolReportReducer);
+reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
+
+const jurisdictionData = superset.processData(MDAPointJurisdictionsJSON) || [];
+store.dispatch(fetchGenericJurisdictions('esw-jurisdictions', jurisdictionData));
 
 const props = {
   history,
