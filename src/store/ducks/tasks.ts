@@ -5,7 +5,7 @@ import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
-import { MULTI_POLYGON, POLYGON, CASE_CONFIRMATION_GOAL_ID } from '../../constants';
+import { MULTI_POLYGON, POLYGON } from '../../constants';
 import { FeatureCollection, GeoJSON, getColor, wrapFeatureCollection } from '../../helpers/utils';
 /** the reducer name */
 export const reducerName = 'tasks';
@@ -481,6 +481,7 @@ export interface TaskFCSelectorFilters {
   includeNullGeoms?: boolean /** include features with null geometries in Feature Collection */;
   structureType?: string[] /** e.g points, polygons, lines e.t.c */;
   taskBusinessStatus?: string /** filter tasks with given task_businessStatus */;
+  excludePlanId?: string /** filters out tasks that belong to plan that has this id */;
 }
 
 /** get tasks by id
@@ -516,6 +517,9 @@ export const getStructureType = getPropValue<TaskFCSelectorFilters, 'structureTy
 );
 export const getTasksBusinessStatus = getPropValue<TaskFCSelectorFilters, 'taskBusinessStatus'>(
   'taskBusinessStatus'
+);
+export const getExcludePlanID = getPropValue<TaskFCSelectorFilters, 'excludePlanId'>(
+  'excludePlanId'
 );
 
 /** get tasks by value selector */
@@ -572,6 +576,18 @@ export const selectFCByPlanId = () =>
     return wrapFeatureCollection(geoJsonFeatures);
   });
 
+/** get tasks' Feature Collection that do not belong to plan_id
+ * @param {Partial<Store>} state - the redux store
+ * @param {TaskFCSelectorFilters} props - the taskFC selector filters object
+ */
+export const selectFCExcludingPlanId = () =>
+  createSelector(baseTasksGeoJsonData, getExcludePlanID, (tasksGeoJsonArray, excludePlanId) => {
+    const geoJsonFeatures = excludePlanId
+      ? tasksGeoJsonArray.filter(task => task.properties.plan_id !== excludePlanId)
+      : tasksGeoJsonArray;
+    return wrapFeatureCollection(geoJsonFeatures);
+  });
+
 /** get tasks' Feature Collection filtered by task_business_status
  * @param {Partial<Store>} state - the redux store
  * @param {TaskFCSelectorFilters} props - the taskFC selector filters object
@@ -612,10 +628,15 @@ export const tasksFCSelectorFactory = () =>
     selectFCByJurisdictionId(),
     selectFCByPlanId(),
     selectFCByTaskBusinessStatus(),
-    (actionFC, jurisdictionFC, planFC, taskBusinessStatusFC) => {
-      const featuresArrays = [actionFC, jurisdictionFC, planFC, taskBusinessStatusFC].map(
-        (featureCollection: FeatureCollection<TaskGeoJSON>) => featureCollection.features
-      );
+    selectFCExcludingPlanId(),
+    (actionFC, jurisdictionFC, planFC, taskBusinessStatusFC, excludedPlanFC) => {
+      const featuresArrays = [
+        actionFC,
+        jurisdictionFC,
+        planFC,
+        taskBusinessStatusFC,
+        excludedPlanFC,
+      ].map((featureCollection: FeatureCollection<TaskGeoJSON>) => featureCollection.features);
       const intersectedArrays = intersect(featuresArrays, JSON.stringify);
       return wrapFeatureCollection(intersectedArrays);
     }
