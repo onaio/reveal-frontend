@@ -92,6 +92,11 @@ export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
 export const CLIENTS_LIST_URL = '/clients';
 export const UPLOAD_CLIENT_CSV_URL = '/clients/upload';
 export const GO_BACK_TEXT = 'Go Back';
+/** how long after opening a logout window should we wait before redirecting to express' server logout
+ * I am not sure the optimum value for this, mozilla firefox seems to take some
+ * time loading up the logoutWindow and actually making the request.
+ */
+export const LOGOUT_REDIRECTION_DELAY = 1000;
 
 // OpenSRP API strings
 export const OPENSRP_PRACTITIONER_ENDPOINT = 'practitioner';

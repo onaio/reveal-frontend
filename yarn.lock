@@ -1662,10 +1662,10 @@
   resolved "https://registry.yarnpkg.com/@onaio/formik-effect/-/formik-effect-0.0.1.tgz#7c234b031e311eaebcaa7da3beded575949c4fc8"
   integrity sha512-4Gvtwa4AKL+ksYyqUBS9FRSGZohk9ppi0uBPhY17wlkfuhSIp9nEuJbZCKc+tQqU19Y0jNtaYzYvvsPl3HziMA==
 
-"@onaio/gatekeeper@^0.0.18":
-  version "0.0.18"
-  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.18.tgz#684ab8c10c0058063bbe6d36230bde0a1d80f08b"
-  integrity sha512-FZ74RgibzLcXqrtH8SqOcb/she+9pbDOotZmfGaoX+/hzbOCCAnof1NrLcYs8xtOLkwzAYdRzDWOy4HB1ndzoQ==
+"@onaio/gatekeeper@^0.0.21":
+  version "0.0.21"
+  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.21.tgz#ebf445833330ebc09548999b85a9da253b7ebd1a"
+  integrity sha512-0kN42NehnehGnPn8rMQnUvQOGstU8xkR6GEpeTPHqt0G/8pcWULUSzDZOZyADO1oZOpyz+dzC70NuvTw8jHt1w==
   dependencies:
     "@onaio/session-reducer" "^0.0.11"
     client-oauth2 "^4.2.3"
@@ -1731,12 +1731,10 @@
   resolved "https://registry.yarnpkg.com/@onaio/utils/-/utils-0.0.1.tgz#c4b6b0afb3b7ad6e2b6135a160d3d79e53e286af"
   integrity sha512-JybtApO1LqxidE+avNdu6Qq+EOvywn92/h++HIMvA5DIKMZ6e1OGdG2ZMbFkylmx8JpvVcFypSIomPzKUYvL7w==
 
-"@opensrp/server-service@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@opensrp/server-service/-/server-service-0.0.1.tgz#4a66c991bfb61658af2db12961c9fde4e8a3c396"
-  integrity sha512-2E5rszxz7yiLp1RHsz1Cl6ppaPknpiUxtT2DSm+R7YeWepaKLQVM5A9Cp4ONkNXIDRweWOvJo8PUpLqaE2AlQg==
-  dependencies:
-    "@onaio/session-reducer" "^0.0.11"
+"@opensrp/server-service@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@opensrp/server-service/-/server-service-0.0.2.tgz#db9de1d6ce6d5ebc14daf838c89b235268d41c17"
+  integrity sha512-vCjPNAeNv9hgESlqr87lmpb/FPT3kyMXeHNfKXBMYwdgaVriCcIicL5HtsiYQLi49ydWtBYz7N6i78O4iM0olw==
 
 "@samverschueren/stream-to-observable@^0.3.0":
   version "0.3.0"

@@ -15,7 +15,6 @@ import {
 } from '@onaio/gatekeeper';
 import { initGoogleAnalytics, RouteTracker, setDimensions } from '@onaio/google-analytics';
 import { getUser } from '@onaio/session-reducer';
-import { logOutUser } from '@onaio/session-reducer';
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Route, Switch } from 'react-router';
@@ -471,8 +470,7 @@ const App = (props: AppProps) => {
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
                     if (BACKEND_ACTIVE) {
-                      store.dispatch(logOutUser());
-                      /** returns logout component responsible for opensrp logot and moving execution to express server */
+                      /** returns logout component responsible for opensrp logout and moving execution to express server */
                       return <props.logoutComponent logoutURL={OPENSRP_LOGOUT_URL} />;
                     }
                     const state = getOauthProviderState(store.getState());

@@ -72,7 +72,7 @@ describe('/containers/forms/OrganizationSelect', () => {
     expect(wrapper.find('.reveal__indicator').length).toBe(2);
   });
 
-  it('works with store', () => {
+  it('works with store', async () => {
     /** check mapState to props passes expected props to dumb component */
 
     const { assignments, organizations } = ducksFixtures;
@@ -89,6 +89,9 @@ describe('/containers/forms/OrganizationSelect', () => {
         <ConnectedOrganizationSelect {...props} />
       </Provider>
     );
+
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
 
     const passedProps: any = wrapper.find('OrganizationSelect').props();
     // assignments
