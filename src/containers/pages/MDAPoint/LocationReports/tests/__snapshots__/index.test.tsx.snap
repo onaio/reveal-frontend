@@ -60,13 +60,13 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
           Array [
             "Age Range",
             "Total SACs Registered",
-            "MMA coverage",
+            "MMA Coverage",
             "MMA Coverage (%)",
-            "SACs refused",
-            "SACs sick/pregnant/contraindicated",
-            "ADR reported (%)",
-            "ADR severe (%)",
-            "Alb tablets distributed",
+            "SACs Refused",
+            "SACs Sick/Pregnant/Contraindicated",
+            "ADR Reported (%)",
+            "ADR Severe (%)",
+            "Alb Tablets Distributed",
           ]
         }
       >
@@ -86,7 +86,7 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
           className="listview-td"
           key="2"
         >
-          MMA coverage
+          MMA Coverage
         </th>
         <th
           className="listview-td"
@@ -98,31 +98,31 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
           className="listview-td"
           key="4"
         >
-          SACs refused
+          SACs Refused
         </th>
         <th
           className="listview-td"
           key="5"
         >
-          SACs sick/pregnant/contraindicated
+          SACs Sick/Pregnant/Contraindicated
         </th>
         <th
           className="listview-td"
           key="6"
         >
-          ADR reported (%)
+          ADR Reported (%)
         </th>
         <th
           className="listview-td"
           key="7"
         >
-          ADR severe (%)
+          ADR Severe (%)
         </th>
         <th
           className="listview-td"
           key="8"
         >
-          Alb tablets distributed
+          Alb Tablets Distributed
         </th>
       </ElementMap>
     </tr>

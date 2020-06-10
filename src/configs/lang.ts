@@ -557,12 +557,12 @@ export const NO_ROWS_FOUND = translate('NO_ROWS_FOUND', 'No rows found');
 
 export const AGE_RANGE = translate('AGE_RANGE', 'Age Range');
 export const TOTAL_SACS_REGISTERED = translate('', 'Total SACs Registered');
-export const MMA_COVERAGE = translate('MMA_COVERAGE', 'MMA coverage');
-export const SACS_REFUSED = translate('SACS_REFUSED', 'SACs refused');
-export const SACS_SICK = translate('SACS_SICK', 'SACs sick/pregnant/contraindicated');
-export const ADR_REPORTED = translate('ADR_REPORTED', 'ADR reported');
-export const ADR_SEVERE = translate('ADR_SEVERE', 'ADR severe');
+export const MMA_COVERAGE = translate('MMA_COVERAGE', 'MMA Coverage');
+export const SACS_REFUSED = translate('SACS_REFUSED', 'SACs Refused');
+export const SACS_SICK = translate('SACS_SICK', 'SACs Sick/Pregnant/Contraindicated');
+export const ADR_REPORTED = translate('ADR_REPORTED', 'ADR Reported');
+export const ADR_SEVERE = translate('ADR_SEVERE', 'ADR Severe');
 export const ALB_TABLETS_DISTRIBUTED = translate(
   'ALB_TABLETS_DISTRIBUTED',
-  'Alb tablets distributed'
+  'Alb Tablets Distributed'
 );
