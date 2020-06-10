@@ -247,25 +247,6 @@
         "mmacov": 0,
         "mmacovper": 0
       }
-    ],
-    "columns": [
-      "id",
-      "plan_id",
-      "jurisdiction_id",
-      "jurisdiction_name",
-      "jurisdiction_depth",
-      "jurisdiction_parent_id",
-      "jurisdiction_path",
-      "jurisdiction_name_path",
-      "is_virtual_jurisdiction",
-      "sacrefused",
-      "sacrefmedreason",
-      "mmaadr",
-      "mmaadrsev",
-      "albdist",
-      "sacregistered",
-      "mmacov",
-      "mmacovper"
     ]
   }
 }

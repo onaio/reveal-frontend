@@ -24,6 +24,7 @@ import {
   ALB_TABLETS_DISTRIBUTED,
   HOME,
   MDA_POINT_LOCATION_REPORT_TITLE,
+  MDA_POINT_PLANS,
   MMA_COVERAGE,
   SACS_REFUSED,
   SACS_SICK,
@@ -43,6 +44,8 @@ import MDAPointLocationReportReducer, {
   makeMDAPointLocationReportsArraySelector,
   reducerName as MDAPointLocationReportReducerName,
 } from '../../../../store/ducks/generic/MDALocationsReport';
+import { getMDAPointPlanById } from '../../../../store/ducks/generic/MDAPointPlans';
+import { buildBreadCrumbs } from './helpers';
 
 /** register the MDA point school report definitions reducer */
 reducerRegistry.register(MDAPointLocationReportReducerName, MDAPointLocationReportReducer);
@@ -52,7 +55,7 @@ const slices = SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES.split(',')
 interface LocationReportsProps extends GenericSupersetDataTableProps {
   pageTitle: string | null;
   pageUrl: string;
-  prevPage: Page | null;
+  prevPage: Page[] | null;
 }
 
 const tableHeaders = [
@@ -84,12 +87,18 @@ const LocationReportsList = (props: LocationReportsProps) => {
     prevPage,
   } = props;
 
-  const homePage = {
-    label: HOME,
-    url: HOME_URL,
-  };
+  const homePage = [
+    {
+      label: HOME,
+      url: HOME_URL,
+    },
+    {
+      label: MDA_POINT_PLANS,
+      url: REPORT_MDA_POINT_PLAN_URL,
+    },
+  ];
 
-  const pages = prevPage ? [homePage, prevPage] : [homePage];
+  const pages = prevPage ? [...homePage, ...prevPage] : [...homePage];
   const breadcrumbProps = {
     currentPage: {
       label: pageTitle || MDA_POINT_LOCATION_REPORT_TITLE,
@@ -134,7 +143,7 @@ const defaultProps: LocationReportsProps = {
   headerItems: tableHeaders,
   pageTitle: null,
   pageUrl: MDA_POINT_LOCATION_REPORT_URL,
-  prevPage: { label: '' },
+  prevPage: [],
   service: supersetFetch,
   supersetSliceId: SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE,
   tableClass: 'table table-striped table-bordered plans-list',
@@ -148,7 +157,7 @@ interface DispatchedStateProps {
   data: React.ReactNode[][];
   pageUrl: string;
   pageTitle: string | null;
-  prevPage: Page | null;
+  prevPage: Page[];
 }
 
 /** map state to props */
@@ -161,32 +170,22 @@ const mapStateToProps = (
   let pageUrl = MDA_POINT_LOCATION_REPORT_URL;
   let locationData: LocationReport[] = [];
   let pageTitle = null;
-  let prevPage = null;
+  let prevPage: Page[] = [];
 
   if (planId && jurisdictionId) {
     // get parent jurisdiction id and name
     const jurisdictions = slices.map((slice: string) =>
       getGenericJurisdictionsArray(state, slice, planId)
     );
-    let parentId = null;
-    let parentName = null;
-    jurisdictions.forEach(juris =>
-      juris.forEach(jur => {
-        if (jur.jurisdiction_id === jurisdictionId && jur.plan_id === planId) {
-          parentId = jur.jurisdiction_path.length ? [...jur.jurisdiction_path].pop() : null;
-          parentName = jur.jurisdiction_name_path.length
-            ? [...jur.jurisdiction_name_path].pop()
-            : null;
-          pageTitle = jur.jurisdiction_name;
-        }
-      })
-    );
-    if (parentId && parentName) {
-      prevPage = {
-        label: parentName,
-        url: `${REPORT_MDA_POINT_PLAN_URL}/${planId}/${parentId}`,
-      };
+    // build page bread crumbs
+    const { pTitle, prevPages } = buildBreadCrumbs(jurisdictions, planId, jurisdictionId);
+    pageTitle = pTitle;
+    prevPage = prevPages;
+    const plan = getMDAPointPlanById(state, planId);
+    if (plan) {
+      prevPage.unshift({ label: plan.plan_name, url: `${REPORT_MDA_POINT_PLAN_URL}/${planId}` });
     }
+
     // build page url
     pageUrl = `${MDA_POINT_LOCATION_REPORT_URL}/${planId}/${jurisdictionId}`;
     // get school reporting data
