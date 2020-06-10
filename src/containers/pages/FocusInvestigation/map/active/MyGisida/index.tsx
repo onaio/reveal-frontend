@@ -1,47 +1,20 @@
-import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Dictionary } from '@onaio/utils';
 import { Actions, ducks, GisidaMap, loadLayers } from 'gisida';
 import { Map } from 'gisida-react';
-import { some } from 'lodash';
-import { FillPaint, LinePaint, Map as mbMap, Style, SymbolPaint } from 'mapbox-gl';
+import { Map as mbMap } from 'mapbox-gl';
 import * as React from 'react';
-import { GREY } from '../../../../../../colors';
-import Loading from '../../../../../../components/page/Loading/index';
-import {
-  GISIDA_MAPBOX_TOKEN,
-  GISIDA_ONADATA_API_TOKEN,
-  GISIDA_TIMEOUT,
-} from '../../../../../../configs/env';
-import {
-  circleLayerConfig,
-  fillLayerConfig,
-  lineLayerConfig,
-  symbolLayerConfig,
-} from '../../../../../../configs/settings';
-import {
-  APP,
-  MAIN_PLAN,
-  MAP_ID,
-  MAPBOXGL_POPUP,
-  STRUCTURE_LAYER,
-} from '../../../../../../constants';
-import { displayError } from '../../../../../../helpers/errors';
-import { EventData } from '../../../../../../helpers/mapbox';
-import { ConfigStore, FeatureCollection } from '../../../../../../helpers/utils';
-import store from '../../../../../../store';
-import { Goal, setCurrentGoal } from '../../../../../../store/ducks/goals';
-import { Jurisdiction, JurisdictionGeoJSON } from '../../../../../../store/ducks/jurisdictions';
-import { StructureGeoJSON } from '../../../../../../store/ducks/structures';
-import { TaskGeoJSON } from '../../../../../../store/ducks/tasks';
 // import './gisida.css';
 import {
-  PointLayerObj,
-  LineLayerObj,
   FillLayerObj,
+  LineLayerObj,
+  PointLayerObj,
 } from '../../../../../../components/GisidaWrapper';
-import { selectorState } from '../../../../OrganizationViews/SingleOrganizationView/tests/fixtures';
-import { currentGoal } from '../../../../../../store/ducks/tests/fixtures';
+import Loading from '../../../../../../components/page/Loading/index';
+import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../../../../../configs/env';
+import { APP, MAIN_PLAN, MAP_ID, STRUCTURE_LAYER, RACD_REGISTER_FAMILY_ID } from '../../../../../../constants';
+import { ConfigStore } from '../../../../../../helpers/utils';
+import store from '../../../../../../store';
 
 /** Returns a single layer configuration */
 // WHY ???
@@ -63,11 +36,28 @@ if (!initialState[MAP_ID] && ducks.MAP) {
 
 export function GWrapper(props: any) {
   // Define map site-config object to init the store
+  console.log('GWrapper', props);
   const [renderMap, setRenderMap] = React.useState<boolean>(false);
 
   React.useEffect(() => {
+    console.log('GWRAPPER, in effect', props);
     initMap();
-  }, []);
+  }, [props.currentGoalId]);
+
+  /** we let the component render as it does, only we add another useeffect
+   * such that on the first render we save the layers and the current goal
+   * on the second 
+   */
+  /** special case on the default currentGoalId where the currentGoalId
+   * does not change but the layers change.
+   */
+  
+  React.useEffect(() => {
+    console.log('&&&&&&&&&&&&&&&&&&&&&&&');
+    if (props.currentGoalId === RACD_REGISTER_FAMILY_ID){
+      initMap();
+    }
+  }, [props.layers]);
 
   const { minHeight } = props || '80vh';
   const nowState = store.getState();
@@ -127,10 +117,13 @@ export function GWrapper(props: any) {
         window.maps.find((e: mbMap) => (e as GisidaMap)._container.id === MAP_ID)
       ) {
         const map = window.maps.find((e: mbMap) => (e as GisidaMap)._container.id === MAP_ID);
+        console.log('Starting interval', map);
         if (map && map.isStyleLoaded) {
+          console.log('VisibleLayers', visibleLayers, props.layers);
           loadLayers(MAP_ID, store.dispatch, visibleLayers);
           window.clearInterval(styleLoadInterval);
         } else if (new Date().getTime() > styleLoadIntervalTimeout) {
+          console.log('Map not loaded interval timed out');
           window.clearInterval(styleLoadInterval);
         }
       }

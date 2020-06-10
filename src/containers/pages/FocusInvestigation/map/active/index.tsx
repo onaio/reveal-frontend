@@ -28,7 +28,12 @@ import {
   REACTIVE_INVESTIGATION,
   ROUTINE_INVESTIGATION_TITLE,
 } from '../../../../../configs/lang';
-import { FIReasons } from '../../../../../configs/settings';
+import {
+  circleLayerConfig,
+  FIReasons,
+  lineLayerConfig,
+  symbolLayerConfig,
+} from '../../../../../configs/settings';
 import {
   CASE_CONFIRMATION_CODE,
   CASE_TRIGGERED,
@@ -36,6 +41,7 @@ import {
   FI_SINGLE_URL,
   FI_URL,
   HOME_URL,
+  MAIN_PLAN,
   MULTI_POLYGON,
   POINT,
   POLYGON,
@@ -88,7 +94,7 @@ import tasksReducer, {
   TaskGeoJSON,
   tasksFCSelectorFactory,
 } from '../../../../../store/ducks/tasks';
-import { FILayers, getGisidaWrapperProps } from './helpers';
+import { FILayers, buildLayers } from './helpers';
 import MarkCompleteLink, { MarkCompleteLinkProps } from './helpers/MarkCompleteLink';
 import StatusBadge, { StatusBadgeProps } from './helpers/StatusBadge';
 import {
@@ -97,6 +103,8 @@ import {
   getDetailViewPlanInvestigationContainer,
   supersetCall,
 } from './helpers/utils';
+import { GWrapper } from './MyGisida';
+import { MyMap } from './MyGisida/myMap';
 import './style.css';
 
 /** register reducers */
@@ -165,6 +173,8 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
       const supersetParams = superset.getFormData(2000, [
         { comparator: InterventionType.FI, operator: '==', subject: PLAN_INTERVENTION_TYPE },
       ]);
+
+      /** TODO:// huge data set fetching to tasks slice */
 
       supersetCall<FetchPlansAction>(
         SUPERSET_PLANS_SLICE,
@@ -260,17 +270,17 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
   const markCompleteLinkProps: MarkCompleteLinkProps = {
     plan,
   };
-
-  const fiLayers: FILayers[] = [];
-
+  const fiLayers = [];
+  const absoluteLayers = [];
+  
   if (currentIndexCases) {
-    fiLayers.push({
+    absoluteLayers.push({
       features: currentIndexCases,
       id: `current-index-cases-${jurisdiction.jurisdiction_id}-symbol`,
       layerType: 'symbol',
       visible: true,
     });
-    fiLayers.push({
+    absoluteLayers.push({
       features: currentIndexCases,
       // TODO: remove magic strings
       id: `current-index-cases-${jurisdiction.jurisdiction_id}-point`,
@@ -279,13 +289,13 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     });
   }
   if (historicalIndexCases) {
-    fiLayers.push({
+    absoluteLayers.push({
       features: historicalIndexCases,
       id: `historical-index-cases-${jurisdiction.jurisdiction_id}-symbol`,
       layerType: 'symbol',
       visible: true,
     });
-    fiLayers.push({
+    absoluteLayers.push({
       features: historicalIndexCases,
       // TODO: remove magic strings
       id: `historical-index-cases-${jurisdiction.jurisdiction_id}-point`,
@@ -329,7 +339,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     });
   }
 
-  const gisidaProps = getGisidaWrapperProps(
+  const gisidaProps = buildLayers(
     jurisdiction,
     structures,
     fiLayers,
@@ -362,8 +372,12 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
       </div>
       <div className="row no-gutters mb-5">
         <div className="col-9">
-          <div className="map" key={currentGoal ? currentGoal : ''}>
-            <GisidaWrapper {...gisidaProps} handlers={buildHandlers(plan.plan_id)} />
+          <div className="map">
+
+            <GWrapper
+              {...gisidaProps}
+
+            />
           </div>
         </div>
         <div className="col-3">
@@ -380,6 +394,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
             <MarkCompleteLink {...markCompleteLinkProps} />
             <h6 />
             <hr />
+
             {goals &&
               goals.map((item: Goal) => {
                 const goalReport = getGoalReport(item);
@@ -395,7 +410,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
                         to={`${FI_SINGLE_MAP_URL}/${plan.id}/${item.goal_id}`}
                         className={`task-link ${
                           item.goal_id === RACD_REGISTER_FAMILY_ID &&
-                          currentGoal === RACD_REGISTER_FAMILY_ID
+                          (currentGoal === RACD_REGISTER_FAMILY_ID || currentGoal === null) 
                             ? 'active'
                             : ''
                         }`}
@@ -442,7 +457,7 @@ export { SingleActiveFIMap };
 const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
   // pass in the plan id to get plan the get the jurisdiction_id from the plan
   const getTasksFCSelector = tasksFCSelectorFactory();
-  const currentGoal = ownProps.match.params.goalId || 'RACD_register_families';
+  const currentGoal = ownProps.match.params.goalId || RACD_REGISTER_FAMILY_ID;
   const plan = getPlanById(state, ownProps.match.params.id);
   let goals = null;
   let jurisdiction = null;

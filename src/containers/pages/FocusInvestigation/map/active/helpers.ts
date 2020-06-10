@@ -1,5 +1,7 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
 import { Dictionary } from '@onaio/utils';
+import React from 'react';
+import { MapSingleFIProps } from '.';
 import { GREY } from '../../../../../colors';
 import { GisidaProps } from '../../../../../components/GisidaWrapper';
 import {
@@ -20,6 +22,7 @@ import { FeatureCollection } from '../../../../../helpers/utils';
 import { Jurisdiction } from '../../../../../store/ducks/jurisdictions';
 import { StructureGeoJSON } from '../../../../../store/ducks/structures';
 import { TaskGeoJSON } from '../../../../../store/ducks/tasks';
+import { currentGoal } from '../../../../../store/ducks/tests/fixtures';
 
 /** FILayers - represents layers to be rendered on the FI Map */
 export interface FILayers {
@@ -33,7 +36,7 @@ export interface FILayers {
  * @param {Jurisdiction} jurisdiction - the jurisdiction (with geojson field)
  * @param {structures} FeatureCollection<StructureGeoJSON> - represents pre-loaded structures i.e. not added by a user
  */
-export const getGisidaWrapperProps = (
+export const buildLayers = (
   jurisdiction: Jurisdiction,
   structures: FeatureCollection<StructureGeoJSON> | null = null,
   fiLayers: FILayers[] = [],
@@ -42,6 +45,7 @@ export const getGisidaWrapperProps = (
   if (!jurisdiction.geojson) {
     return null;
   }
+  // const layers: Dictionary[] = [];
   const layers: Dictionary[] = [];
 
   // define line layer for Jurisdiction outline
@@ -143,7 +147,7 @@ export const getGisidaWrapperProps = (
           ? {
               ...circleLayerConfig.paint,
               'circle-color': '#ff0000',
-              // 'circle-radius': ['interpolate', ['exponential', 2], ['zoom'], 15.75, 2.5, 20.8, 50],
+              'circle-radius': ['interpolate', ['exponential', 2], ['zoom'], 15.75, 2.5, 20.8, 50],
               'circle-stroke-color': '#ff0000',
               'circle-stroke-opacity': 1,
             }
@@ -171,7 +175,7 @@ export const getGisidaWrapperProps = (
       const fillLayer = {
         ...fillLayerConfig,
         filter: ['==', '$type', 'Polygon'],
-        id: `${element.id}-fill`,
+        id: element.id,
         paint: {
           ...fillLayerConfig.paint,
           'fill-color': ['get', 'color'],
@@ -189,11 +193,12 @@ export const getGisidaWrapperProps = (
       };
       layers.push(fillLayer);
     }
+    // layers for points and polygons of line type
     if (element.layerType === 'line') {
       const polygonLineLayer = {
         ...lineLayerConfig,
         filter: ['==', '$type', 'Polygon'],
-        id: `${element.id}-fill-line`,
+        id: element.id,
         paint: {
           'line-color': ['get', 'color'],
           'line-opacity': 1,
@@ -218,18 +223,93 @@ export const getGisidaWrapperProps = (
   const featureCollection = { features: [jurisdiction.geojson], type: 'FeatureCollection' };
   // define bounds for gisida map position
   const bounds = GeojsonExtent(featureCollection);
-  // GET BOUNDS
 
-  const gisidaWrapperProps: GisidaProps = {
+  const gisidaWrapperProps: any = {
     bounds,
-    currentGoal: null,
-    geoData: null,
-    goal: null,
-    handlers: [],
+    currentGoalId,
     layers,
-    pointFeatureCollection: null,
-    polygonFeatureCollection: null,
-    structures: null,
   };
   return gisidaWrapperProps;
+};
+
+export const getGisidaWrapperProps = (props: MapSingleFIProps) => {
+  const {
+    currentIndexCases,
+    historicalIndexCases,
+    jurisdiction,
+    pointFeatureCollection,
+    polygonFeatureCollection,
+    structures,
+  } = props;
+  const fiLayers = [];
+  if (!jurisdiction || !currentGoal) {
+    return null;
+  }
+  if (currentIndexCases) {
+    fiLayers.push({
+      features: currentIndexCases,
+      id: `current-index-cases-${jurisdiction.jurisdiction_id}-symbol`,
+      layerType: 'symbol',
+      visible: true,
+    });
+    fiLayers.push({
+      features: currentIndexCases,
+      // TODO: remove magic strings
+      id: `current-index-cases-${jurisdiction.jurisdiction_id}-point`,
+      layerType: 'circle',
+      visible: true,
+    });
+  }
+  if (historicalIndexCases) {
+    fiLayers.push({
+      features: historicalIndexCases,
+      id: `historical-index-cases-${jurisdiction.jurisdiction_id}-symbol`,
+      layerType: 'symbol',
+      visible: true,
+    });
+    fiLayers.push({
+      features: historicalIndexCases,
+      // TODO: remove magic strings
+      id: `historical-index-cases-${jurisdiction.jurisdiction_id}-point`,
+      layerType: 'circle',
+      visible: true,
+    });
+  }
+
+  if (pointFeatureCollection) {
+    fiLayers.push({
+      features: pointFeatureCollection,
+      id: `${currentGoal}-symbol`,
+      layerType: 'symbol',
+      visible: true,
+    });
+    fiLayers.push({
+      features: pointFeatureCollection,
+      id: `${currentGoal}-point`,
+      layerType: 'circle',
+      visible: true,
+    });
+  }
+  if (polygonFeatureCollection) {
+    fiLayers.push({
+      features: polygonFeatureCollection,
+      id: `${currentGoal}-symbol`,
+      layerType: 'symbol',
+      visible: true,
+    });
+    fiLayers.push({
+      features: polygonFeatureCollection,
+      id: `${currentGoal}-fill`,
+      layerType: 'fill',
+      visible: true,
+    });
+    fiLayers.push({
+      features: polygonFeatureCollection,
+      id: `${currentGoal}-fill-line`,
+      layerType: 'line',
+      visible: true,
+    });
+  }
+  const gisidaProps = buildLayers(jurisdiction, structures, fiLayers, currentGoal)
+  return gisidaProps;
 };
