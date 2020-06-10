@@ -525,6 +525,11 @@ export const USER = translate('USER', 'user');
 
 export const MDA_POINT_LOCATION_REPORT_TITLE = translate(
   'MDA_POINT_LOCATION_REPORT_TITLE',
+  'MDA Point Location Report'
+);
+
+export const MDA_POINT_SCHOOL_REPORT_TITLE = translate(
+  'MDA_POINT_SCHOOL_REPORT_TITLE',
   'MDA Point School Report'
 );
 
@@ -549,3 +554,15 @@ export const USER_HAS_NO_PLAN_ASSIGNMENTS = translate(
 );
 
 export const NO_ROWS_FOUND = translate('NO_ROWS_FOUND', 'No rows found');
+
+export const AGE_RANGE = translate('AGE_RANGE', 'Age Range');
+export const TOTAL_SACS_REGISTERED = translate('', 'Total SACs Registered');
+export const MMA_COVERAGE = translate('MMA_COVERAGE', 'MMA coverage');
+export const SACS_REFUSED = translate('SACS_REFUSED', 'SACs refused');
+export const SACS_SICK = translate('SACS_SICK', 'SACs sick/pregnant/contraindicated');
+export const ADR_REPORTED = translate('ADR_REPORTED', 'ADR reported');
+export const ADR_SEVERE = translate('ADR_SEVERE', 'ADR severe');
+export const ALB_TABLETS_DISTRIBUTED = translate(
+  'ALB_TABLETS_DISTRIBUTED',
+  'Alb tablets distributed'
+);

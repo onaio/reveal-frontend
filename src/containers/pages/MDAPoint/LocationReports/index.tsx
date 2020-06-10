@@ -16,7 +16,18 @@ import {
   SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES,
 } from '../../../../configs/env';
-import { HOME, MDA_POINT_LOCATION_REPORT_TITLE } from '../../../../configs/lang';
+import {
+  ADR_REPORTED,
+  ADR_SEVERE,
+  AGE_RANGE,
+  ALB_TABLETS_DISTRIBUTED,
+  HOME,
+  MDA_POINT_LOCATION_REPORT_TITLE,
+  MMA_COVERAGE,
+  SACS_REFUSED,
+  SACS_SICK,
+  TOTAL_SACS_REGISTERED,
+} from '../../../../configs/lang';
 import {
   HOME_URL,
   MDA_POINT_LOCATION_REPORT_URL,
@@ -44,17 +55,21 @@ interface LocationReportsProps extends GenericSupersetDataTableProps {
 }
 
 const tableHeaders = [
-  'Age Range',
-  'Total SACs Registered',
-  'MMA coverage',
-  'MMA Coverage (%)',
-  'SACs refused',
-  'SACs sick/pregnant/contraindicated',
-  'ADR reported (%)',
-  'ADR severe (%)',
-  'Alb tablets distributed',
+  AGE_RANGE,
+  TOTAL_SACS_REGISTERED,
+  MMA_COVERAGE,
+  `${MMA_COVERAGE} (%)`,
+  SACS_REFUSED,
+  SACS_SICK,
+  `${ADR_REPORTED} (%)`,
+  `${ADR_SEVERE} (%)`,
+  ALB_TABLETS_DISTRIBUTED,
 ];
 
+/**
+ * Renders a table list of location report
+ * @param {LocationReportsProps} props
+ */
 const LocationReportsList = (props: LocationReportsProps) => {
   const {
     pageTitle,
