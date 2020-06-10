@@ -2,6 +2,14 @@ import { Page } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcr
 import { REPORT_MDA_POINT_PLAN_URL } from '../../../../constants';
 import { GenericJurisdiction } from '../../../../store/ducks/generic/jurisdictions';
 
+/**
+ * Build bread crumbs from jurisdiction data
+ * @param {GenericJurisdiction[][]} jurisdictions
+ * @param {string} planId
+ * @param {string} jurisdictionId
+ * @param {Page[]} prevPages
+ * @param {string | null} pTitle
+ */
 export const buildBreadCrumbs = (
   jurisdictions: GenericJurisdiction[][],
   planId: string,
