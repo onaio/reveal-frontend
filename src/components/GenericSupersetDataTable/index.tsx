@@ -5,13 +5,13 @@ import { NO_ROWS_FOUND } from '../../configs/lang';
 import { displayError } from '../../helpers/errors';
 import supersetFetch from '../../services/superset';
 import {
-  FetchMDAPointSchoolReportAction,
-  SchoolReport,
-} from '../../store/ducks/generic/MDASchoolReport';
+  FetchMDAPointLocationReportAction,
+  LocationReport,
+} from '../../store/ducks/generic/MDALocationsReport';
 
 export interface GenericSupersetDataTableProps {
   data: React.ReactNode[][];
-  fetchItems: typeof FetchMDAPointSchoolReportAction;
+  fetchItems: typeof FetchMDAPointLocationReportAction;
   headerItems: React.ReactNode[];
   service: typeof supersetFetch;
   supersetSliceId: string;
@@ -27,7 +27,7 @@ export const GenericSupersetDataTable = (props: GenericSupersetDataTableProps) =
   async function loadData() {
     try {
       setLoading(data.length < 1); // only set loading when there are no records
-      await service(supersetSliceId).then((result: SchoolReport[]) => {
+      await service(supersetSliceId).then((result: LocationReport[]) => {
         fetchItems(result);
       });
     } catch (e) {
@@ -44,7 +44,7 @@ export const GenericSupersetDataTable = (props: GenericSupersetDataTableProps) =
   const listViewProps = {
     data,
     headerItems,
-    tableClass: tableClass || 'table table-striped table-bordered plans-list t',
+    tableClass: tableClass || 'table table-striped table-bordered plans-list',
   };
 
   if (loading === true) {

@@ -1,7 +1,7 @@
 import { DropDownCellProps } from '@onaio/drill-down-table';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MDA_POINT_SCHOOL_REPORT_URL } from '../../constants';
+import { MDA_POINT_LOCATION_REPORT_URL } from '../../constants';
 
 /** Interface for linked cell props */
 export interface LinkedCellProps extends DropDownCellProps {
@@ -18,7 +18,7 @@ const MDAPointTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCell
   if (hasChildren) {
     url = urlPath ? `${urlPath}/${cell.original.jurisdiction_id}` : '';
   } else {
-    url = `${MDA_POINT_SCHOOL_REPORT_URL}/${plan_id}/${jurisdiction_id}`;
+    url = `${MDA_POINT_LOCATION_REPORT_URL}/${plan_id}/${jurisdiction_id}`;
   }
   const val =
     hasChildren || cell.original.is_virtual_jurisdiction ? (

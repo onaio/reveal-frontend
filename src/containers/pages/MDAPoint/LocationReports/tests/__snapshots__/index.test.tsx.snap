@@ -38,14 +38,14 @@ Array [
     aria-current="page"
     className="active breadcrumb-item"
   >
-    MDA Point School Reporting: Akros_1
+    Akros_1
   </li>,
 ]
 `;
 
 exports[`components/MDA Reports/MDAPlansList should render school reports correctly: table 1`] = `
 <table
-  className="table table-striped table-bordered plans-list t"
+  className="table table-striped table-bordered plans-list"
 >
   <thead
     className="listview-thead"

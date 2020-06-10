@@ -523,9 +523,9 @@ export const FILTER = translate('FILTER', 'Filter');
 
 export const USER = translate('USER', 'user');
 
-export const MDA_POINT_SCHOOL_REPORT_TITLE = translate(
-  'MDA_POINT_SCHOOL_REPORT_TITLE',
-  'MDA Point School Reporting'
+export const MDA_POINT_LOCATION_REPORT_TITLE = translate(
+  'MDA_POINT_LOCATION_REPORT_TITLE',
+  'MDA Point School Report'
 );
 
 export const USER_HAS_NO_VALID_ASSIGNMENTS = translate(

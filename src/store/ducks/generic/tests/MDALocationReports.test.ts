@@ -2,13 +2,13 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../..';
 import reducer, {
-  FetchMDAPointSchoolReportAction,
+  FetchMDAPointLocationReportAction,
   getJurisdictionId,
-  makeMDAPointSchoolReportsArraySelector,
-  MDAPointSchoolReportsArrayBaseSelector,
+  makeMDAPointLocationReportsArraySelector,
+  MDAPointLocationReportsArrayBaseSelector,
   reducerName,
-  removeMDAPointSchoolReports,
-} from '../MDASchoolReport';
+  removeMDAPointLocationReports,
+} from '../MDALocationsReport';
 import * as fixtures from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
@@ -23,7 +23,7 @@ describe('reducers/MDAPoint/MDAPointPlan', () => {
 
   it('should have initial state', () => {
     expect(
-      MDAPointSchoolReportsArrayBaseSelector('40357eff-81b6-4e32-bd3d-484019689f7c')(
+      MDAPointLocationReportsArrayBaseSelector('40357eff-81b6-4e32-bd3d-484019689f7c')(
         store.getState()
       )
     ).toEqual([]);
@@ -31,9 +31,9 @@ describe('reducers/MDAPoint/MDAPointPlan', () => {
 
   it('Fetches school reports correctly', () => {
     const { MDAPointSchoolReportData } = fixtures;
-    store.dispatch(FetchMDAPointSchoolReportAction(MDAPointSchoolReportData));
+    store.dispatch(FetchMDAPointLocationReportAction(MDAPointSchoolReportData));
 
-    const MDAPointSchoolReportsArraySelector = makeMDAPointSchoolReportsArraySelector(
+    const MDAPointSchoolReportsArraySelector = makeMDAPointLocationReportsArraySelector(
       '40357eff-81b6-4e32-bd3d-484019689f7c'
     );
 
@@ -42,13 +42,13 @@ describe('reducers/MDAPoint/MDAPointPlan', () => {
     expect(getJurisdictionId(store.getState(), { jurisdiction_id: '3951' })).toEqual('3951');
 
     expect(
-      MDAPointSchoolReportsArrayBaseSelector('9f19b77c-b9a5-5832-a4e5-4b461d18fce7')(
+      MDAPointLocationReportsArrayBaseSelector('9f19b77c-b9a5-5832-a4e5-4b461d18fce7')(
         store.getState()
       )
     ).toEqual([MDAPointSchoolReportData[3], MDAPointSchoolReportData[4]]);
 
     expect(
-      MDAPointSchoolReportsArrayBaseSelector('40357eff-81b6-4e32-bd3d-484019689f7c')(
+      MDAPointLocationReportsArrayBaseSelector('40357eff-81b6-4e32-bd3d-484019689f7c')(
         store.getState()
       )
     ).toEqual([
@@ -68,7 +68,7 @@ describe('reducers/MDAPoint/MDAPointPlan', () => {
     ).toEqual([MDAPointSchoolReportData[0], MDAPointSchoolReportData[1]]);
 
     // clear store
-    store.dispatch(removeMDAPointSchoolReports());
+    store.dispatch(removeMDAPointLocationReports());
     expect(MDAPointSchoolReportsArraySelector(store.getState(), {})).toEqual([]);
   });
 });

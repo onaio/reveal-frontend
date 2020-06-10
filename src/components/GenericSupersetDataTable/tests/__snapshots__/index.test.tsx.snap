@@ -2,7 +2,7 @@
 
 exports[`components/GenericSupersetDataTable should render list correctly: table with data 1`] = `
 <table
-  className="table table-striped table-bordered plans-list t"
+  className="table table-striped table-bordered plans-list"
 >
   <thead
     className="listview-thead"

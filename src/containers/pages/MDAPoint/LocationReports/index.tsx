@@ -13,31 +13,32 @@ import HeaderBreadcrumb, {
   Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
+  SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES,
-  SUPERSET_MDA_POINT_SCHOOL_REPORT_DATA,
 } from '../../../../configs/env';
-import { HOME, MDA_POINT_SCHOOL_REPORT_TITLE } from '../../../../configs/lang';
+import { HOME, MDA_POINT_LOCATION_REPORT_TITLE } from '../../../../configs/lang';
 import {
   HOME_URL,
-  MDA_POINT_SCHOOL_REPORT_URL,
+  MDA_POINT_LOCATION_REPORT_URL,
   REPORT_MDA_POINT_PLAN_URL,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import { getGenericJurisdictionsArray } from '../../../../store/ducks/generic/jurisdictions';
-import MDAPointSchoolReportReducer, {
-  FetchMDAPointSchoolReportAction,
-  makeMDAPointSchoolReportsArraySelector,
-  reducerName as MDAPointSchoolReportReducerName,
-  SchoolReport,
-} from '../../../../store/ducks/generic/MDASchoolReport';
+import MDAPointLocationReportReducer, {
+  FetchMDAPointLocationReportAction,
+  LocationReport,
+  makeMDAPointLocationReportsArraySelector,
+  reducerName as MDAPointLocationReportReducerName,
+} from '../../../../store/ducks/generic/MDALocationsReport';
 
 /** register the MDA point school report definitions reducer */
-reducerRegistry.register(MDAPointSchoolReportReducerName, MDAPointSchoolReportReducer);
+reducerRegistry.register(MDAPointLocationReportReducerName, MDAPointLocationReportReducer);
 
 const slices = SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
-interface SchoolReportsProps extends GenericSupersetDataTableProps {
-  pageTitle: typeof MDA_POINT_SCHOOL_REPORT_TITLE;
+
+interface LocationReportsProps extends GenericSupersetDataTableProps {
+  pageTitle: string | null;
   pageUrl: string;
   prevPage: Page | null;
 }
@@ -54,7 +55,7 @@ const tableHeaders = [
   'Alb tablets distributed',
 ];
 
-const SchoolReportsList = (props: SchoolReportsProps) => {
+const LocationReportsList = (props: LocationReportsProps) => {
   const {
     pageTitle,
     pageUrl,
@@ -75,7 +76,7 @@ const SchoolReportsList = (props: SchoolReportsProps) => {
   const pages = prevPage ? [homePage, prevPage] : [homePage];
   const breadcrumbProps = {
     currentPage: {
-      label: pageTitle,
+      label: pageTitle || MDA_POINT_LOCATION_REPORT_TITLE,
       url: pageUrl,
     },
     pages,
@@ -111,26 +112,26 @@ const SchoolReportsList = (props: SchoolReportsProps) => {
 };
 
 /** Declare default props for MDAPointPlansList */
-const defaultProps: SchoolReportsProps = {
+const defaultProps: LocationReportsProps = {
   data: [],
-  fetchItems: FetchMDAPointSchoolReportAction,
+  fetchItems: FetchMDAPointLocationReportAction,
   headerItems: tableHeaders,
-  pageTitle: MDA_POINT_SCHOOL_REPORT_TITLE,
-  pageUrl: MDA_POINT_SCHOOL_REPORT_URL,
+  pageTitle: null,
+  pageUrl: MDA_POINT_LOCATION_REPORT_URL,
   prevPage: { label: '' },
   service: supersetFetch,
-  supersetSliceId: SUPERSET_MDA_POINT_SCHOOL_REPORT_DATA,
+  supersetSliceId: SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE,
   tableClass: 'table table-striped table-bordered plans-list',
 };
 
-SchoolReportsList.defaultProps = defaultProps;
+LocationReportsList.defaultProps = defaultProps;
 
-export { SchoolReportsList };
+export { LocationReportsList };
 
 interface DispatchedStateProps {
   data: React.ReactNode[][];
   pageUrl: string;
-  pageTitle: string;
+  pageTitle: string | null;
   prevPage: Page | null;
 }
 
@@ -141,9 +142,9 @@ const mapStateToProps = (
 ): DispatchedStateProps => {
   const { planId, jurisdictionId } = ownProps.match.params;
 
-  let pageUrl = MDA_POINT_SCHOOL_REPORT_URL;
-  let schoolData: SchoolReport[] = [];
-  let pageTitle = MDA_POINT_SCHOOL_REPORT_TITLE;
+  let pageUrl = MDA_POINT_LOCATION_REPORT_URL;
+  let locationData: LocationReport[] = [];
+  let pageTitle = null;
   let prevPage = null;
 
   if (planId && jurisdictionId) {
@@ -160,7 +161,7 @@ const mapStateToProps = (
           parentName = jur.jurisdiction_name_path.length
             ? [...jur.jurisdiction_name_path].pop()
             : null;
-          pageTitle = `${pageTitle}: ${jur.jurisdiction_name}`;
+          pageTitle = jur.jurisdiction_name;
         }
       })
     );
@@ -171,14 +172,14 @@ const mapStateToProps = (
       };
     }
     // build page url
-    pageUrl = `${MDA_POINT_SCHOOL_REPORT_URL}/${planId}/${jurisdictionId}`;
+    pageUrl = `${MDA_POINT_LOCATION_REPORT_URL}/${planId}/${jurisdictionId}`;
     // get school reporting data
-    schoolData = makeMDAPointSchoolReportsArraySelector(planId)(state, {
+    locationData = makeMDAPointLocationReportsArraySelector(planId)(state, {
       jurisdiction_id: jurisdictionId,
     });
   }
 
-  const data = schoolData.map(sch => {
+  const data = locationData.map(sch => {
     return [
       sch.client_age_category,
       sch.sacregistered,
@@ -201,9 +202,9 @@ const mapStateToProps = (
 };
 
 /** map dispatch to props */
-const mapDispatchToProps = { fetchItems: FetchMDAPointSchoolReportAction };
+const mapDispatchToProps = { fetchItems: FetchMDAPointLocationReportAction };
 
 /** Connected ActiveFI component */
-const ConnectedSchoolReports = connect(mapStateToProps, mapDispatchToProps)(SchoolReportsList);
+const ConnectedSchoolReports = connect(mapStateToProps, mapDispatchToProps)(LocationReportsList);
 
 export default ConnectedSchoolReports;

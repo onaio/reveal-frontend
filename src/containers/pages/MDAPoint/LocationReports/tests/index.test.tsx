@@ -6,18 +6,18 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import ConnectedSchoolReports, { SchoolReportsList } from '..';
-import { MDA_POINT_SCHOOL_REPORT_URL } from '../../../../../constants';
+import ConnectedLocationReports, { LocationReportsList } from '..';
+import { MDA_POINT_LOCATION_REPORT_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../../store/ducks/generic/jurisdictions';
-import MDAPointSchoolReportReducer, {
-  FetchMDAPointSchoolReportAction,
-  reducerName as MDAPointSchoolReportReducerName,
-  removeMDAPointSchoolReports,
-} from '../../../../../store/ducks/generic/MDASchoolReport';
+import MDAPointLocationReportReducer, {
+  FetchMDAPointLocationReportAction,
+  reducerName as MDAPointLocationReportReducerName,
+  removeMDAPointLocationReports,
+} from '../../../../../store/ducks/generic/MDALocationsReport';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 import { MDAPointJurisdictionsJSON } from '../../jurisdictionsReport/tests/fixtures';
 
@@ -27,7 +27,7 @@ const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
-reducerRegistry.register(MDAPointSchoolReportReducerName, MDAPointSchoolReportReducer);
+reducerRegistry.register(MDAPointLocationReportReducerName, MDAPointLocationReportReducer);
 reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
 
 const jurisdictionData = superset.processData(MDAPointJurisdictionsJSON) || [];
@@ -37,7 +37,7 @@ const props = {
   history,
   location: {
     hash: '',
-    pathname: MDA_POINT_SCHOOL_REPORT_URL,
+    pathname: MDA_POINT_LOCATION_REPORT_URL,
     search: '',
     state: undefined,
   },
@@ -47,8 +47,8 @@ const props = {
       jurisdictionId: '3951',
       planId: '40357eff-81b6-4e32-bd3d-484019689f7c',
     },
-    path: `${MDA_POINT_SCHOOL_REPORT_URL}`,
-    url: `${MDA_POINT_SCHOOL_REPORT_URL}`,
+    path: `${MDA_POINT_LOCATION_REPORT_URL}`,
+    url: `${MDA_POINT_LOCATION_REPORT_URL}`,
   },
 };
 
@@ -60,13 +60,13 @@ describe('components/MDA Reports/MDAPlansList', () => {
   it('renders without crashing', () => {
     shallow(
       <Router history={history}>
-        <SchoolReportsList {...props} />
+        <LocationReportsList {...props} />
       </Router>
     );
   });
 
   it('should render school reports correctly', () => {
-    store.dispatch(FetchMDAPointSchoolReportAction(fixtures.MDAPointSchoolReportData));
+    store.dispatch(FetchMDAPointLocationReportAction(fixtures.MDAPointSchoolReportData));
 
     const tableData = [
       ['11 - 15', 9, 6, 0.6666666666666666, 0, 0, 0, 0, 0],
@@ -78,12 +78,12 @@ describe('components/MDA Reports/MDAPlansList', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedSchoolReports {...props} />
+          <ConnectedLocationReports {...props} />
         </Router>
       </Provider>
     );
 
-    expect(wrapper.find('h3.page-title').text()).toEqual('MDA Point School Reporting: Akros_1');
+    expect(wrapper.find('h3.page-title').text()).toEqual('Akros_1');
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
 
     // correct table data is passed
@@ -95,7 +95,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
     expect(wrapper.find('.listview-tbody tr').length).toEqual(2);
 
     // clear store
-    store.dispatch(removeMDAPointSchoolReports());
+    store.dispatch(removeMDAPointLocationReports());
     wrapper.update();
     expect(wrapper.find('GenericSupersetDataTable div div').text()).toEqual('No rows found');
   });
