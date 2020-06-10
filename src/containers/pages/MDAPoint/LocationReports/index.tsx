@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { percentage } from '@onaio/utils';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -199,11 +200,11 @@ const mapStateToProps = (
       sch.client_age_category,
       sch.sacregistered,
       sch.mmacov,
-      sch.mmacovper,
+      percentage(sch.mmacovper, 2).value,
       sch.sacrefused,
       sch.sacrefmedreason,
-      sch.mmaadr,
-      sch.mmaadrsev,
+      percentage(sch.mmaadr, 2).value,
+      percentage(sch.mmaadrsev, 2).value,
       sch.albdist,
     ];
   });
