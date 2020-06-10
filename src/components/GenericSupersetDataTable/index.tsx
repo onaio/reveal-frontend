@@ -15,18 +15,18 @@ export interface GenericSupersetDataTableProps {
   headerItems: React.ReactNode[];
   service: typeof supersetFetch;
   supersetSliceId: string;
-  tableClass: string;
+  tableClass?: string;
 }
 
 export const GenericSupersetDataTable = (props: GenericSupersetDataTableProps) => {
-  const { supersetSliceId, fetchItems, service, data, headerItems } = props;
+  const { supersetSliceId, fetchItems, service, data, headerItems, tableClass } = props;
 
   const [loading, setLoading] = useState<boolean>(false);
 
   /** async function to load the data */
   async function loadData() {
     try {
-      setLoading(data.length < 1); // only set loading when there are no plans
+      setLoading(data.length < 1); // only set loading when there are no records
       await service(supersetSliceId).then((result: SchoolReport[]) => {
         fetchItems(result);
       });
@@ -44,7 +44,7 @@ export const GenericSupersetDataTable = (props: GenericSupersetDataTableProps) =
   const listViewProps = {
     data,
     headerItems,
-    tableClass: 'table table-striped table-bordered plans-list t',
+    tableClass: tableClass || 'table table-striped table-bordered plans-list t',
   };
 
   if (loading === true) {
