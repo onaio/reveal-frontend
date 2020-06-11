@@ -12,13 +12,7 @@ import {
 } from '../../../../../../components/GisidaWrapper';
 import Loading from '../../../../../../components/page/Loading/index';
 import { GISIDA_MAPBOX_TOKEN, GISIDA_ONADATA_API_TOKEN } from '../../../../../../configs/env';
-import {
-  APP,
-  MAIN_PLAN,
-  MAP_ID,
-  RACD_REGISTER_FAMILY_ID,
-  STRUCTURE_LAYER,
-} from '../../../../../../constants';
+import { APP, MAP_ID } from '../../../../../../constants';
 import { ConfigStore } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';
 
@@ -50,10 +44,10 @@ export function GWrapper(props: any) {
     console.log('GWRAPPER, in effect', props);
     initMap();
 
-    return () => {mounted.current = true}
+    return () => {
+      mounted.current = true;
+    };
   }, []);
-
-
 
   /** we let the component render as it does, only we add another useeffect
    * such that on the first render we save the layers and the current goal
@@ -101,9 +95,8 @@ export function GWrapper(props: any) {
     return <Loading minHeight={minHeight} />;
   }
   console.log('Going into render');
-  
-  return <Map mapId={mapId} store={store} handlers={props.handlers} />;
 
+  return <Map mapId={mapId} store={store} handlers={props.handlers} />;
 
   function initMap() {
     const builtGeometriesContainer:
@@ -167,23 +160,23 @@ export function GWrapper(props: any) {
 
     // toggle off layers that aren't structures, main plan and currentGoal layers
 
-  //   if (Object.keys(currentState[MAP_ID].layers).length > 1) {
-  //     const allLayers = Object.keys(currentState[MAP_ID].layers);
-  //     let eachLayer: string;
-  //     for (eachLayer of allLayers) {
-  //       layer = currentState[MAP_ID].layers[eachLayer];
-  //       /** Filter out the main plan layer and the current selected goal tasks
-  //        *  so we toggle off previously selected layers in the store
-  //        */
-  //       if (
-  //         layer.visible &&
-  //         !layer.id.includes(props.currentGoal) &&
-  //         !layer.id.includes(MAIN_PLAN) &&
-  //         !layer.id.includes(STRUCTURE_LAYER)
-  //       ) {
-  //         store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, false));
-  //       }
-  //     }
-  //   }
+    //   if (Object.keys(currentState[MAP_ID].layers).length > 1) {
+    //     const allLayers = Object.keys(currentState[MAP_ID].layers);
+    //     let eachLayer: string;
+    //     for (eachLayer of allLayers) {
+    //       layer = currentState[MAP_ID].layers[eachLayer];
+    //       /** Filter out the main plan layer and the current selected goal tasks
+    //        *  so we toggle off previously selected layers in the store
+    //        */
+    //       if (
+    //         layer.visible &&
+    //         !layer.id.includes(props.currentGoal) &&
+    //         !layer.id.includes(MAIN_PLAN) &&
+    //         !layer.id.includes(STRUCTURE_LAYER)
+    //       ) {
+    //         store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, false));
+    //       }
+    //     }
+    //   }
   }
 }
