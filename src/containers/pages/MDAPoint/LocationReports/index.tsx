@@ -14,6 +14,7 @@ import HeaderBreadcrumb, {
   Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
+  SHOW_SCHOOL_REPORT_LABEL,
   SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES,
 } from '../../../../configs/env';
@@ -25,6 +26,7 @@ import {
   HOME,
   MDA_POINT_LOCATION_REPORT_TITLE,
   MDA_POINT_PLANS,
+  MDA_POINT_SCHOOL_REPORT_TITLE,
   MMA_COVERAGE,
   SACS_REFUSED,
   SACS_SICK,
@@ -98,10 +100,13 @@ const LocationReportsList = (props: LocationReportsProps) => {
     },
   ];
 
+  const useSchoolLabel = SHOW_SCHOOL_REPORT_LABEL
+    ? MDA_POINT_SCHOOL_REPORT_TITLE
+    : MDA_POINT_LOCATION_REPORT_TITLE;
   const pages = prevPage ? [...homePage, ...prevPage] : [...homePage];
   const breadcrumbProps = {
     currentPage: {
-      label: pageTitle || MDA_POINT_LOCATION_REPORT_TITLE,
+      label: pageTitle || useSchoolLabel,
       url: pageUrl,
     },
     pages,
@@ -116,15 +121,17 @@ const LocationReportsList = (props: LocationReportsProps) => {
     tableClass,
   };
 
+  const fullTitle = `${useSchoolLabel}: ${pageTitle}`;
+
   return (
     <div>
       <Helmet>
-        <title>{pageTitle}</title>
+        <title>{fullTitle}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row>
         <Col md={8}>
-          <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
+          <h3 className="mt-3 mb-3 page-title">{fullTitle}</h3>
         </Col>
       </Row>
       <Row>

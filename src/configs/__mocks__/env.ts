@@ -154,3 +154,5 @@ export const REVEAL_BRAND_IMG_SRC =
 export const ENABLE_MDA_POINT = true;
 
 export const SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE = '01';
+
+export const SHOW_SCHOOL_REPORT_LABEL = true;

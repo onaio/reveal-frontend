@@ -90,7 +90,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
       </Provider>
     );
 
-    expect(wrapper.find('h3.page-title').text()).toEqual('Akros_1');
+    expect(wrapper.find('h3.page-title').text()).toEqual('MDA Point School Report: Akros_1');
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
 
     // correct table data is passed
