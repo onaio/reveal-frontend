@@ -329,52 +329,6 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     expect(wrapper.text()).toMatchSnapshot('should have 2 no data found texts');
   });
 
-  it('filters plans by userName', async () => {
-    const planDef1 = cloneDeep(planDefFixtures.plans[0]);
-    planDef1.identifier = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
-    const userName = 'ghost';
-    store.dispatch(
-      fetchPlans([fixtures.plan1, fixtures.completeRoutinePlan, fixtures.plan24, fixtures.plan2])
-    );
-    store.dispatch(fetchPlansByUser([planDef1], userName));
-    const props = {
-      history,
-      location: {
-        pathname: FI_URL,
-        search: `?user=${userName}`,
-      },
-      match: {
-        isExact: true,
-        params: {},
-        path: `${FI_URL}`,
-        url: `${FI_URL}`,
-      },
-      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedActiveFocusInvestigation {...props} />
-        </Router>
-      </Provider>
-    );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
-
-    expect(
-      wrapper
-        .find('Table')
-        .at(0)
-        .prop('data')
-    ).toEqual([selectedPlan24]);
-    expect(
-      wrapper
-        .find('Table')
-        .at(1)
-        .prop('data')
-    ).toEqual([selectedPlan1]);
-  });
-
   it('filters plans by userName resulting in no plans', async () => {
     const planDef1 = cloneDeep(planDefFixtures.plans[0]);
     planDef1.identifier = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
@@ -419,5 +373,51 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
 
     // no plans but loader is not showing
     expect(wrapper.find('Ripple').length).toEqual(0);
+  });
+
+  it('filters plans by userName', async () => {
+    const planDef1 = cloneDeep(planDefFixtures.plans[0]);
+    planDef1.identifier = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
+    const userName = 'ghost';
+    store.dispatch(
+      fetchPlans([fixtures.plan1, fixtures.completeRoutinePlan, fixtures.plan24, fixtures.plan2])
+    );
+    store.dispatch(fetchPlansByUser([planDef1], userName));
+    const props = {
+      history,
+      location: {
+        pathname: FI_URL,
+        search: `?user=${userName}`,
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${FI_URL}`,
+        url: `${FI_URL}`,
+      },
+      supersetService: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    expect(
+      wrapper
+        .find('Table')
+        .at(0)
+        .prop('data')
+    ).toEqual([selectedPlan24]);
+    expect(
+      wrapper
+        .find('Table')
+        .at(1)
+        .prop('data')
+    ).toEqual([selectedPlan1]);
   });
 });
