@@ -1943,7 +1943,7 @@ class IrsPlan extends React.Component<
           <span
             id={j.jurisdiction_id}
             onClick={onDrilldownClick}
-            className={`plan-jurisdiction-name${!j.isChildless ? ' btn-link' : ''}`}
+            className={`plan-jurisdiction-name ${!j.isChildless ? ' btn-link' : ''}`}
           >
             {j.name}
           </span>
