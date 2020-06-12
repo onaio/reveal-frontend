@@ -2,13 +2,22 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
+import { GeoJSONLayer } from 'react-mapbox-gl';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
-import GisidaWrapper from '../../../../../components/GisidaWrapper';
+import { GREY } from '../../../../../colors';
+import { GisidaLite } from '../../../../../components/GisidaLite';
+import {
+  circleLayerTemplate,
+  fillLayerTemplate,
+  getCenter,
+  lineLayerTemplate,
+} from '../../../../../components/GisidaLite/helpers';
+// import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -88,15 +97,9 @@ import tasksReducer, {
   TaskGeoJSON,
   tasksFCSelectorFactory,
 } from '../../../../../store/ducks/tasks';
-import { FILayers, getGisidaWrapperProps } from './helpers';
 import MarkCompleteLink, { MarkCompleteLinkProps } from './helpers/MarkCompleteLink';
 import StatusBadge, { StatusBadgeProps } from './helpers/StatusBadge';
-import {
-  buildHandlers,
-  fetchData,
-  getDetailViewPlanInvestigationContainer,
-  supersetCall,
-} from './helpers/utils';
+import { fetchData, getDetailViewPlanInvestigationContainer, supersetCall } from './helpers/utils';
 import './style.css';
 
 /** register reducers */
@@ -209,8 +212,8 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
   }, [props.match.params.goalId]);
 
   const {
-    historicalIndexCases,
-    currentIndexCases,
+    // historicalIndexCases,
+    // currentIndexCases,
     jurisdiction,
     plan,
     goals,
@@ -261,80 +264,128 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     plan,
   };
 
-  const fiLayers: FILayers[] = [];
+  // TODO: Redo these as GisidaLite layers
+  // const fiLayers: FILayers[] = [];
 
-  if (currentIndexCases) {
-    fiLayers.push({
-      features: currentIndexCases,
-      id: `current-index-cases-${jurisdiction.jurisdiction_id}-symbol`,
-      layerType: 'symbol',
-      visible: true,
-    });
-    fiLayers.push({
-      features: currentIndexCases,
-      // TODO: remove magic strings
-      id: `current-index-cases-${jurisdiction.jurisdiction_id}-point`,
-      layerType: 'circle',
-      visible: true,
-    });
+  // if (currentIndexCases) {
+  //   fiLayers.push({
+  //     features: currentIndexCases,
+  //     id: `current-index-cases-${jurisdiction.jurisdiction_id}-symbol`,
+  //     layerType: 'symbol',
+  //     visible: true,
+  //   });
+  //   fiLayers.push({
+  //     features: currentIndexCases,
+  //     // TODO: remove magic strings
+  //     id: `current-index-cases-${jurisdiction.jurisdiction_id}-point`,
+  //     layerType: 'circle',
+  //     visible: true,
+  //   });
+  // }
+  // if (historicalIndexCases) {
+  //   fiLayers.push({
+  //     features: historicalIndexCases,
+  //     id: `historical-index-cases-${jurisdiction.jurisdiction_id}-symbol`,
+  //     layerType: 'symbol',
+  //     visible: true,
+  //   });
+  //   fiLayers.push({
+  //     features: historicalIndexCases,
+  //     // TODO: remove magic strings
+  //     id: `historical-index-cases-${jurisdiction.jurisdiction_id}-point`,
+  //     layerType: 'circle',
+  //     visible: true,
+  //   });
+  // }
+
+  const gsLayers = [];
+
+  if (jurisdiction) {
+    gsLayers.push(
+      <GeoJSONLayer
+        {...lineLayerTemplate}
+        id="${MAIN_PLAN}-${jurisdiction.jurisdiction_id}"
+        data={jurisdiction.geojson}
+        key={'${MAIN_PLAN}-${jurisdiction.jurisdiction_id}'} // TODO: clean up
+      />
+    );
   }
-  if (historicalIndexCases) {
-    fiLayers.push({
-      features: historicalIndexCases,
-      id: `historical-index-cases-${jurisdiction.jurisdiction_id}-symbol`,
-      layerType: 'symbol',
-      visible: true,
-    });
-    fiLayers.push({
-      features: historicalIndexCases,
-      // TODO: remove magic strings
-      id: `historical-index-cases-${jurisdiction.jurisdiction_id}-point`,
-      layerType: 'circle',
-      visible: true,
-    });
+  if (structures) {
+    gsLayers.push([
+      <GeoJSONLayer
+        {...lineLayerTemplate}
+        linePaint={{
+          ...lineLayerTemplate.linePaint,
+          'line-color': GREY,
+          'line-opacity': 1,
+          'line-width': 2,
+        }}
+        data={structures}
+        id="structures-line"
+        key="structures-line" // TODO: clean up
+      />,
+      <GeoJSONLayer
+        {...fillLayerTemplate}
+        fillPaint={{
+          ...fillLayerTemplate.fillPaint,
+          'fill-color': GREY,
+          'fill-outline-color': GREY,
+        }}
+        data={structures}
+        id="structures-fill"
+        key="structures-fill" // TODO: clean up
+      />,
+    ]);
   }
 
   if (pointFeatureCollection) {
-    fiLayers.push({
-      features: pointFeatureCollection,
-      id: `${currentGoal}-symbol`,
-      layerType: 'symbol',
-      visible: true,
-    });
-    fiLayers.push({
-      features: pointFeatureCollection,
-      id: `${currentGoal}-point`,
-      layerType: 'circle',
-      visible: true,
-    });
+    gsLayers.push(
+      <GeoJSONLayer
+        {...circleLayerTemplate}
+        circlePaint={{
+          ...circleLayerTemplate.circlePaint,
+          'circle-color': ['get', 'color'],
+          'circle-stroke-color': ['get', 'color'],
+          'circle-stroke-opacity': 1,
+        }}
+        id="${currentGoal}-point"
+        key="${currentGoal}-point" // TODO: clean up
+        data={pointFeatureCollection}
+      />
+    );
   }
   if (polygonFeatureCollection) {
-    fiLayers.push({
-      features: polygonFeatureCollection,
-      id: `${currentGoal}-symbol`,
-      layerType: 'symbol',
-      visible: true,
-    });
-    fiLayers.push({
-      features: polygonFeatureCollection,
-      id: `${currentGoal}-fill`,
-      layerType: 'fill',
-      visible: true,
-    });
-    fiLayers.push({
-      features: polygonFeatureCollection,
-      id: `${currentGoal}-fill-line`,
-      layerType: 'line',
-      visible: true,
-    });
+    gsLayers.push([
+      <GeoJSONLayer
+        {...lineLayerTemplate}
+        linePaint={{
+          ...lineLayerTemplate.linePaint,
+          'line-color': ['get', 'color'],
+          'line-opacity': 1,
+          'line-width': 2,
+        }}
+        data={polygonFeatureCollection}
+        id="${currentGoal}-fill-line"
+        key="${currentGoal}-fill-line" // TODO: clean up
+      />,
+      <GeoJSONLayer
+        {...fillLayerTemplate}
+        fillPaint={{
+          ...fillLayerTemplate.fillPaint,
+          'fill-color': ['get', 'color'],
+          'fill-outline-color': ['get', 'color'],
+        }}
+        data={polygonFeatureCollection}
+        id="${currentGoal}-fill"
+        key="${currentGoal}-fill" // TODO: clean up
+      />,
+    ]);
   }
 
-  const gisidaProps = getGisidaWrapperProps(
-    jurisdiction,
-    structures,
-    fiLayers,
-    props.currentGoal || ''
-  );
+  const mapCenter = getCenter({
+    features: [jurisdiction.geojson as any],
+    type: 'FeatureCollection',
+  });
 
   return (
     <div>
@@ -362,8 +413,8 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
       </div>
       <div className="row no-gutters mb-5">
         <div className="col-9">
-          <div className="map" key={currentGoal ? currentGoal : ''}>
-            <GisidaWrapper {...gisidaProps} handlers={buildHandlers(plan.plan_id)} />
+          <div className="map">
+            <GisidaLite layers={gsLayers} mapCenter={mapCenter} mapHeight="78vh" />
           </div>
         </div>
         <div className="col-3">

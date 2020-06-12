@@ -39,6 +39,7 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
  * Inspired by the Map component in Akuko
  *
  * TODO: Add support for handlers and popups
+ * TODO: Fix map jankiness
  */
 const GisidaLite = (props: GisidaLiteProps) => {
   const [renderlayers, setRenderLayers] = React.useState<boolean>(false);
