@@ -1,6 +1,6 @@
-import { Page } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { REPORT_MDA_POINT_PLAN_URL } from '../../../../constants';
-import { GenericJurisdiction } from '../../../../store/ducks/generic/jurisdictions';
+import { REPORT_MDA_POINT_PLAN_URL } from '../../constants';
+import { GenericJurisdiction } from '../../store/ducks/generic/jurisdictions';
+import { Page } from '../page/HeaderBreadcrumb/HeaderBreadcrumb';
 
 /**
  * Build bread crumbs from jurisdiction data

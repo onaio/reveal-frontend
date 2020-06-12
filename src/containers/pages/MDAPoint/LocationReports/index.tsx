@@ -10,11 +10,12 @@ import {
   GenericSupersetDataTable,
   GenericSupersetDataTableProps,
 } from '../../../../components/GenericSupersetDataTable';
+import { buildBreadCrumbs } from '../../../../components/GenericSupersetDataTable/helpers';
 import HeaderBreadcrumb, {
   Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
-  SHOW_SCHOOL_REPORT_LABEL,
+  SHOW_MDA_SCHOOL_REPORT_LABEL,
   SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES,
 } from '../../../../configs/env';
@@ -47,7 +48,6 @@ import MDAPointLocationReportReducer, {
   reducerName as MDAPointLocationReportReducerName,
 } from '../../../../store/ducks/generic/MDALocationsReport';
 import { getMDAPointPlanById } from '../../../../store/ducks/generic/MDAPointPlans';
-import { buildBreadCrumbs } from './helpers';
 
 /** register the MDA point school report definitions reducer */
 reducerRegistry.register(MDAPointLocationReportReducerName, MDAPointLocationReportReducer);
@@ -100,7 +100,7 @@ const LocationReportsList = (props: LocationReportsProps) => {
     },
   ];
 
-  const useSchoolLabel = SHOW_SCHOOL_REPORT_LABEL
+  const useSchoolLabel = SHOW_MDA_SCHOOL_REPORT_LABEL
     ? MDA_POINT_SCHOOL_REPORT_TITLE
     : MDA_POINT_LOCATION_REPORT_TITLE;
   const pages = prevPage ? [...homePage, ...prevPage] : [...homePage];

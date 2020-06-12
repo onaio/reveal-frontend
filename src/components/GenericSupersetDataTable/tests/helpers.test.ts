@@ -1,6 +1,6 @@
 import superset from '@onaio/superset-connector';
-import { GenericJurisdiction } from '../../../../../store/ducks/generic/jurisdictions';
-import { MDAPointJurisdictionsJSON } from '../../jurisdictionsReport/tests/fixtures';
+import { MDAPointJurisdictionsJSON } from '../../../containers/pages/MDAPoint/jurisdictionsReport/tests/fixtures';
+import { GenericJurisdiction } from '../../../store/ducks/generic/jurisdictions';
 import { buildBreadCrumbs } from '../helpers';
 
 describe('LocationReports/helpers', () => {
