@@ -1638,10 +1638,8 @@
   dependencies:
     "@onaio/redux-reducer-registry" "^0.0.9"
 
-"@onaio/drill-down-table@^1.0.1":
+"@onaio/drill-down-table@file:../js-tools/packages/DrillDownTable":
   version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@onaio/drill-down-table/-/drill-down-table-1.0.1.tgz#774ad27deffc559aca2e41c5f423931fa393ba96"
-  integrity sha512-83anCl5L64KbFM5r5UYV5FFsL6tYxJXAXCoHdG23bTNMW+QnCOhO3UVBWMfwBQP6HfDf/EdHb/CDqzQIMrv/Kg==
   dependencies:
     react-table "^7.0.6"
     reactstrap "^8.4.1"
