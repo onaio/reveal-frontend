@@ -6,6 +6,7 @@ import { RouteComponentProps } from 'react-router';
 import 'react-table/react-table.css';
 import { Store } from 'redux';
 import IRSIndicatorLegend from '../../../../components/formatting/IRSIndicatorLegend';
+import MDAPointTableCell from '../../../../components/MDAPointCellTable';
 import {
   SUPERSET_MDA_POINT_REPORTING_FOCUS_AREAS_COLUMNS,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_COLUMNS,
@@ -15,7 +16,6 @@ import {
 } from '../../../../configs/env';
 import { MDA_POINT_REPORTING_TITLE } from '../../../../configs/lang';
 import { REPORT_MDA_POINT_PLAN_URL } from '../../../../constants';
-import { DefaultTableCell } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -55,7 +55,7 @@ const MdaPointJurisdictionReport = (
 const defaultProps: GenericJurisdictionProps = {
   LegendIndicatorComp: IRSIndicatorLegend,
   baseURL: REPORT_MDA_POINT_PLAN_URL,
-  cellComponent: DefaultTableCell,
+  cellComponent: MDAPointTableCell,
   fetchJurisdictions: fetchGenericJurisdictions,
   fetchPlans: fetchMDAPointPlans,
   focusAreaColumn: SUPERSET_MDA_POINT_REPORTING_FOCUS_AREAS_COLUMNS,

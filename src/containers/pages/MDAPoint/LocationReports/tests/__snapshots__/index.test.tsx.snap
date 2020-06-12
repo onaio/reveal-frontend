@@ -1,0 +1,337 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/MDA Reports/MDAPlansList should render school reports correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      replace={false}
+      to="/"
+    >
+      <a
+        href="/"
+        onClick={[Function]}
+      >
+        Home
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="1"
+      replace={false}
+      to="/intervention/mda-point/report"
+    >
+      <a
+        href="/intervention/mda-point/report"
+        onClick={[Function]}
+      >
+        MDA Point Plans
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="2"
+      replace={false}
+      to="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c"
+    >
+      <a
+        href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c"
+        onClick={[Function]}
+      >
+        MDA-Point-2019-09-05-TEST
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="3"
+      replace={false}
+      to="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/2942"
+    >
+      <a
+        href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/2942"
+        onClick={[Function]}
+      >
+        Lusaka
+      </a>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="4"
+      replace={false}
+      to="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/3019"
+    >
+      <a
+        href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/3019"
+        onClick={[Function]}
+      >
+        Mtendere
+      </a>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    Akros_1
+  </li>,
+]
+`;
+
+exports[`components/MDA Reports/MDAPlansList should render school reports correctly: table 1`] = `
+<table
+  className="table table-striped table-bordered plans-list"
+>
+  <thead
+    className="listview-thead"
+  >
+    <tr
+      className="listview-tr"
+    >
+      <ElementMap
+        HTMLTag="th"
+        className="listview-td"
+        items={
+          Array [
+            "Age Range",
+            "Total SACs Registered",
+            "MMA Coverage",
+            "MMA Coverage (%)",
+            "SACs Refused",
+            "SACs Sick/Pregnant/Contraindicated",
+            "ADR Reported (%)",
+            "ADR Severe (%)",
+            "Alb Tablets Distributed",
+          ]
+        }
+      >
+        <th
+          className="listview-td"
+          key="0"
+        >
+          Age Range
+        </th>
+        <th
+          className="listview-td"
+          key="1"
+        >
+          Total SACs Registered
+        </th>
+        <th
+          className="listview-td"
+          key="2"
+        >
+          MMA Coverage
+        </th>
+        <th
+          className="listview-td"
+          key="3"
+        >
+          MMA Coverage (%)
+        </th>
+        <th
+          className="listview-td"
+          key="4"
+        >
+          SACs Refused
+        </th>
+        <th
+          className="listview-td"
+          key="5"
+        >
+          SACs Sick/Pregnant/Contraindicated
+        </th>
+        <th
+          className="listview-td"
+          key="6"
+        >
+          ADR Reported (%)
+        </th>
+        <th
+          className="listview-td"
+          key="7"
+        >
+          ADR Severe (%)
+        </th>
+        <th
+          className="listview-td"
+          key="8"
+        >
+          Alb Tablets Distributed
+        </th>
+      </ElementMap>
+    </tr>
+  </thead>
+  <tbody
+    className="listview-tbody"
+  >
+    <tr
+      className="listview-tr"
+      key="0"
+    >
+      <ElementMap
+        HTMLTag="td"
+        className="listview-th"
+        items={
+          Array [
+            "11 - 15",
+            9,
+            6,
+            "66.67%",
+            0,
+            0,
+            "0.00%",
+            "0.00%",
+            0,
+          ]
+        }
+      >
+        <td
+          className="listview-th"
+          key="0"
+        >
+          11 - 15
+        </td>
+        <td
+          className="listview-th"
+          key="1"
+        >
+          9
+        </td>
+        <td
+          className="listview-th"
+          key="2"
+        >
+          6
+        </td>
+        <td
+          className="listview-th"
+          key="3"
+        >
+          66.67%
+        </td>
+        <td
+          className="listview-th"
+          key="4"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="5"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="6"
+        >
+          0.00%
+        </td>
+        <td
+          className="listview-th"
+          key="7"
+        >
+          0.00%
+        </td>
+        <td
+          className="listview-th"
+          key="8"
+        >
+          0
+        </td>
+      </ElementMap>
+    </tr>
+    <tr
+      className="listview-tr"
+      key="1"
+    >
+      <ElementMap
+        HTMLTag="td"
+        className="listview-th"
+        items={
+          Array [
+            "< 6",
+            6,
+            0,
+            "0.00%",
+            0,
+            0,
+            "0.00%",
+            "0.00%",
+            0,
+          ]
+        }
+      >
+        <td
+          className="listview-th"
+          key="0"
+        >
+          &lt; 6
+        </td>
+        <td
+          className="listview-th"
+          key="1"
+        >
+          6
+        </td>
+        <td
+          className="listview-th"
+          key="2"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="3"
+        >
+          0.00%
+        </td>
+        <td
+          className="listview-th"
+          key="4"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="5"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="6"
+        >
+          0.00%
+        </td>
+        <td
+          className="listview-th"
+          key="7"
+        >
+          0.00%
+        </td>
+        <td
+          className="listview-th"
+          key="8"
+        >
+          0
+        </td>
+      </ElementMap>
+    </tr>
+  </tbody>
+</table>
+`;
