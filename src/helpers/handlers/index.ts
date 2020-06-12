@@ -19,7 +19,7 @@ declare global {
   interface Window {
     maps: mapboxgl.Map[];
   }
-  const mapboxgl: typeof mapboxgl;
+  // const mapboxgl: typeof mapboxgl; TODO: fix this
 }
 /**
  * Geometry type is a union of seven types.
