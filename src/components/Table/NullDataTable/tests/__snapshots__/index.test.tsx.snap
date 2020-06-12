@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`components/Table/NullDateTable renders completeReactivePlans correctly 1`] = `"ReactiveNameDate CompletedCase Notif. DateCase Class.No Data Found"`;
+exports[`components/Table/NullDateTable renders completeReactivePlans correctly 1`] = `"ReactiveNameDate CompletedCase Notif. DateCase Class.    No Data Found"`;
 
 exports[`components/Table/NullDateTable renders completeRoutinePlans with no data correctly 1`] = `"RoutineNameStart DateEnd DateDate Completed    No Data Found"`;
 
