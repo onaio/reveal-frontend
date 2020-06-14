@@ -350,7 +350,7 @@ class IrsPlan extends React.Component<
             // GET parentlessParent Jurisdiction from OpenSRP
             OpenSrpLocationService.read(OPENSRP_FIND_BY_PROPERTIES, {
               is_jurisdiction: true,
-              properties_filter: `name:${jurisdictionsById[parentlessParent].name}`,
+              properties_filter: `name:${jurisdictionsById[parentlessParent].name},status:Active`,
               return_geometry: false,
             })
               .then(results => {
