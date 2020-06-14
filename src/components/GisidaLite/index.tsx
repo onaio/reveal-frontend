@@ -26,7 +26,7 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   injectCSS: true,
   layers: [],
   mapCenter: undefined,
-  mapHeight: '60vh', // what is the correct default height?
+  mapHeight: '800px', // what is the correct default height?
   mapStyle: 'mapbox://styles/mapbox/satellite-v9', // is this the right one?
   mapWidth: '100%',
   scrollZoom: false,
@@ -42,7 +42,7 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
  * TODO: Fix map jankiness
  */
 const GisidaLite = (props: GisidaLiteProps) => {
-  const [renderlayers, setRenderLayers] = React.useState<boolean>(false);
+  const [renderLayers, setRenderLayers] = React.useState<boolean>(false);
   const {
     accessToken,
     attributionControl,
@@ -70,7 +70,7 @@ const GisidaLite = (props: GisidaLiteProps) => {
   }
 
   const runAfterMapLoaded = () => {
-    if (!renderlayers) {
+    if (!renderLayers) {
       setRenderLayers(true);
     }
   };
@@ -88,9 +88,8 @@ const GisidaLite = (props: GisidaLiteProps) => {
         }}
         onStyleLoad={runAfterMapLoaded}
       >
-        {renderlayers &&
+        {renderLayers &&
           layers.map((item: any, index: number) => <Fragment key={index}>{item}</Fragment>)}
-        {/* TODO: figure out why removing this comment raises type errors */}
         <ZoomControl />
       </Map>
     </Fragment>
