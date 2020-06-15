@@ -31,6 +31,11 @@ reducerRegistry.register(reducerName, reducer);
 library.add(faExternalLinkSquareAlt);
 const history = createBrowserHistory();
 jest.mock('../../../../../configs/env');
+jest.mock('../../../../../helpers/dataLoading/plans', () => {
+  return {
+    loadPlansByUserFilter: async () => [],
+  };
+});
 
 describe('containers/pages/ActiveFocusInvestigation', () => {
   beforeEach(() => {
