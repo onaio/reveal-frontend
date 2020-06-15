@@ -8,10 +8,6 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import InlineSearchForm, {
-  FieldProps,
-  Props as InlineSearchFormProps,
-} from '../../../../components/InlineSearchForm';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -22,10 +18,8 @@ import {
   HOME,
   IDENTIFIER,
   NEW_TEAM,
-  ORGANIZATION_LABEL,
   ORGANIZATION_NAME_TITLE,
   ORGANIZATIONS_LABEL,
-  SEARCH,
   VIEW,
 } from '../../../../configs/lang';
 import {
@@ -69,10 +63,6 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
 
   // functions/methods
 
-  /** function to handle the submit on the inline search form */
-  // tslint:disable-next-line: no-empty
-  function handleSubmit(_: FieldProps) {}
-
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
@@ -86,13 +76,6 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
     url: `${HOME_URL}`,
   };
   breadcrumbProps.pages = [homePage];
-
-  /** props for the inline search form, used to search an organization via an api call */
-  const inlineSearchFormProps: InlineSearchFormProps = {
-    handleSubmit,
-    inputId: 'search',
-    inputPlaceholder: `${SEARCH} ${ORGANIZATION_LABEL}`,
-  };
 
   /** Props for the organization's listing table */
   const listViewProps = {
@@ -149,7 +132,6 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
         </Col>
       </Row>
       <hr />
-      <InlineSearchForm {...inlineSearchFormProps} />
 
       <ListView {...listViewProps} />
     </div>

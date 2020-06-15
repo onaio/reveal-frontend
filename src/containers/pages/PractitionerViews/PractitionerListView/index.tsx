@@ -8,10 +8,6 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import InlineSearchForm, {
-  FieldProps,
-  Props as InlineSearchFormProps,
-} from '../../../../components/InlineSearchForm';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -26,7 +22,6 @@ import {
   NAME,
   PRACTITIONER,
   PRACTITIONERS,
-  SEARCH,
   USERNAME,
 } from '../../../../configs/lang';
 import {
@@ -69,10 +64,6 @@ const PractitionersListView = (props: PropsTypes) => {
 
   // functions/methods
 
-  /** function to handle the submit on the inline search form */
-  // tslint:disable-next-line: no-empty
-  function handleSubmit(_: FieldProps) {}
-
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
@@ -86,13 +77,6 @@ const PractitionersListView = (props: PropsTypes) => {
     url: `${HOME_URL}`,
   };
   breadcrumbProps.pages = [homePage];
-
-  /** props for the inline search form, used to search a practitioner via an api call */
-  const inlineSearchFormProps: InlineSearchFormProps = {
-    handleSubmit,
-    inputId: 'search',
-    inputPlaceholder: `${SEARCH} ${PRACTITIONERS}`,
-  };
 
   /** Props for the practitioner's listing table */
   const listViewProps = {
@@ -145,7 +129,6 @@ const PractitionersListView = (props: PropsTypes) => {
         </Col>
       </Row>
       <hr />
-      <InlineSearchForm {...inlineSearchFormProps} />
 
       <ListView {...listViewProps} />
     </div>
