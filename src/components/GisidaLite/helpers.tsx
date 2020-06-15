@@ -1,4 +1,6 @@
 import { center as turfCenter, FeatureCollection as TurfFeatureCollection } from '@turf/turf';
+import { Style } from 'mapbox-gl';
+import { DIGITAL_GLOBE_CONNECT_ID } from '../../configs/env';
 
 /** Get the centre coordinates from a feature collection */
 export const getCenter = (fc: TurfFeatureCollection): [number, number] | undefined => {
@@ -20,6 +22,24 @@ export const lineLayerTemplate = {
     'line-width': 3,
   },
   type: 'line',
+};
+
+/** Symbol layer configuration */
+export const symbolLayerTemplate = {
+  data: null,
+  id: 'id',
+  symbolLayout: {
+    'icon-image': 'mosquito',
+    'icon-size': 2,
+    ...visibleLayer,
+  },
+  symbolPaint: {
+    'text-color': '#0000ff',
+    'text-halo-blur': 1,
+    'text-halo-color': '#fff',
+    'text-halo-width': 1.3,
+  },
+  type: 'symbol',
 };
 
 export const circleLayerTemplate = {
@@ -45,3 +65,28 @@ export const fillLayerTemplate = {
   id: 'id',
   type: 'fill',
 };
+
+export const gsLiteStyle: Style | string = DIGITAL_GLOBE_CONNECT_ID
+  ? {
+      layers: [
+        {
+          id: 'earthwatch-basemap',
+          maxzoom: 22,
+          minzoom: 0,
+          source: 'diimagery',
+          type: 'raster',
+        },
+      ],
+      sources: {
+        diimagery: {
+          scheme: 'tms',
+          tileSize: 256,
+          tiles: [
+            `https://access.maxar.com/earthservice/tmsaccess/tms/1.0.0/DigitalGlobe:ImageryTileService@EPSG:3857@png/{z}/{x}/{y}.png?connectId=${DIGITAL_GLOBE_CONNECT_ID}`,
+          ],
+          type: 'raster',
+        },
+      },
+      version: 8,
+    }
+  : 'mapbox://styles/mapbox/satellite-v9';

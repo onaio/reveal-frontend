@@ -1,7 +1,9 @@
+import { Style } from 'mapbox-gl';
 import React, { Fragment } from 'react';
 import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl';
 import Loading from '../../components/page/Loading';
 import { GISIDA_MAPBOX_TOKEN } from '../../configs/env';
+import { gsLiteStyle } from './helpers';
 
 /** interface for  GisidaLite props */
 interface GisidaLiteProps {
@@ -12,7 +14,7 @@ interface GisidaLiteProps {
   layers: any; // TODO: type this correctly
   mapCenter: [number, number] | undefined;
   mapHeight: string;
-  mapStyle: string;
+  mapStyle: Style | string;
   mapWidth: string;
   scrollZoom: boolean;
   zoom: number;
@@ -26,11 +28,11 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   injectCSS: true,
   layers: [],
   mapCenter: undefined,
-  mapHeight: '800px', // what is the correct default height?
-  mapStyle: 'mapbox://styles/mapbox/satellite-v9', // is this the right one?
+  mapHeight: '800px',
+  mapStyle: gsLiteStyle,
   mapWidth: '100%',
   scrollZoom: false,
-  zoom: 15, // what's the default zoom level we use right now?
+  zoom: 15,
 };
 
 /**
