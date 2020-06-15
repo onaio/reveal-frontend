@@ -53,6 +53,10 @@ export const CASE_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
 export const MOSQUITO_COLLECTION_ID = 'Mosquito_Collection';
 export const LARVAL_DIPPING_ID = 'Larval_Dipping';
 export const RACD_REGISTER_FAMILY_ID = 'RACD_register_families';
+export const STRUCTURES_LINE = 'structures-line';
+export const STRUCTURES_FILL = 'structures-fill';
+export const HISTORICAL_INDEX_CASES = 'historical-index-cases';
+export const CURRENT_INDEX_CASES = 'current-index-cases';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
