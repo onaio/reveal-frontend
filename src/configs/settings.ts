@@ -1088,7 +1088,7 @@ export const ZambiaStageAdminRA0: JurisdictionsByCountry = {
 export const ZambiaProd0: JurisdictionsByCountry = {
   ADMN0_EN: 'Zambia',
   ADMN0_PCODE: 'ZM',
-  bounds: [28.20209213900005, -15.549759923999941, 32.755632835000085, -13.718855579980357],
+  bounds: [21.9993509, -18.0765945, 33.701111, -8.2712822],
   jurisdictionId: '22bc44dd-752d-4c20-8761-617361b4f1e7',
   jurisdictionIds: [],
   tilesets: [],
