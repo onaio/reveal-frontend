@@ -53,6 +53,9 @@ export const MAPBOXGL_POPUP = '.mapboxgl-popup';
 export const TABLE_BORDERED_CLASS = 'table table-bordered';
 export const ACTION_CODE = 'action_code';
 export const CASE_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
+export const MOSQUITO_COLLECTION_ID = 'Mosquito_Collection';
+export const LARVAL_DIPPING_ID = 'Larval_Dipping';
+export const RACD_REGISTER_FAMILY_ID = 'RACD_register_families';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
@@ -144,9 +147,6 @@ export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
 export const MDA_POINT_DISPENSE_CODE = 'MDA Dispense';
 export const MDA_POINT_ADVERSE_EFFECTS_CODE = 'MDA Adverse Event(s)';
 export const GOAL_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
-export const MOSQUITO_COLLECTION_ID = 'Mosquito_Collection';
-export const LARVAL_DIPPING_ID = 'Larval_Dipping';
-export const RACD_REGISTER_FAMILY_ID = 'RACD_register_families';
 
 export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',
