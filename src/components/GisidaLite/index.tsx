@@ -31,7 +31,7 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   mapHeight: '800px',
   mapStyle: gsLiteStyle,
   mapWidth: '100%',
-  scrollZoom: false,
+  scrollZoom: true,
   zoom: 15,
 };
 
@@ -79,7 +79,6 @@ const GisidaLite = (props: GisidaLiteProps) => {
 
   return (
     <Fragment>
-      {/* TODO: figure out how to use digital globe  */}
       <Map
         center={mapCenter}
         zoom={[zoom]}
