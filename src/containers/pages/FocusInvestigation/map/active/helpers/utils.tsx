@@ -233,10 +233,12 @@ export const buildJurisdictionLayers = (jurisdiction: Jurisdiction | null) => {
 /** returns the layers for the structures
  * @param {FeatureCollection<StructureGeoJSON> | null} structs - the structures
  */
-export const buildStructureLayers = (structs: FeatureCollection<StructureGeoJSON> | null) => {
-  const structureLayers = [];
+export const buildStructureLayers = (
+  structs: FeatureCollection<StructureGeoJSON> | null
+): JSX.Element[] => {
+  const structureLayers: JSX.Element[] = [];
   if (structs && structs.features && structs.features.length) {
-    structureLayers.push([
+    structureLayers.push(
       <GeoJSONLayer
         {...lineLayerTemplate}
         linePaint={{
@@ -248,7 +250,9 @@ export const buildStructureLayers = (structs: FeatureCollection<StructureGeoJSON
         data={structs}
         id={STRUCTURES_LINE}
         key={STRUCTURES_LINE}
-      />,
+      />
+    );
+    structureLayers.push(
       <GeoJSONLayer
         {...fillLayerTemplate}
         fillPaint={{
@@ -259,8 +263,8 @@ export const buildStructureLayers = (structs: FeatureCollection<StructureGeoJSON
         data={structs}
         id={STRUCTURES_FILL}
         key={STRUCTURES_FILL}
-      />,
-    ]);
+      />
+    );
   }
   return structureLayers;
 };
@@ -348,7 +352,7 @@ export const buildGsLiteLayers = (
         />
       );
     }
-    gsLayers.push([
+    gsLayers.push(
       <GeoJSONLayer
         {...lineLayerTemplate}
         linePaint={{
@@ -360,7 +364,9 @@ export const buildGsLiteLayers = (
         data={polygonFeatureCollection}
         id={`${idToUse}-fill-line`}
         key={`${idToUse}-fill-line`}
-      />,
+      />
+    );
+    gsLayers.push(
       <GeoJSONLayer
         {...fillLayerTemplate}
         fillPaint={{
@@ -371,8 +377,8 @@ export const buildGsLiteLayers = (
         data={polygonFeatureCollection}
         id={`${idToUse}-fill`}
         key={`${idToUse}-fill`}
-      />,
-    ]);
+      />
+    );
   }
   return gsLayers;
 };
