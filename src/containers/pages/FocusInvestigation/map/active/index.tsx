@@ -43,6 +43,8 @@ import {
   POINT,
   POLYGON,
   RACD_REGISTER_FAMILY_ID,
+  HISTORICAL_INDEX_CASES,
+  CURRENT_INDEX_CASES,
 } from '../../../../../constants';
 import { PLAN_INTERVENTION_TYPE } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
@@ -95,6 +97,8 @@ import MarkCompleteLink, { MarkCompleteLinkProps } from './helpers/MarkCompleteL
 import StatusBadge, { StatusBadgeProps } from './helpers/StatusBadge';
 import {
   buildGsLiteLayers,
+  buildJurisdictionLayers,
+  buildStructureLayers,
   fetchData,
   getDetailViewPlanInvestigationContainer,
   supersetCall,
@@ -140,8 +144,6 @@ const defaultFeatureCollection: FeatureCollection<TaskGeoJSON> = {
 /** default props for ActiveFI Map component */
 export const defaultMapSingleFIProps: MapSingleFIProps = {
   currentGoal: null,
-  historicalPointIndexCases: null,
-  historicalPolyIndexCases: null,
   currentPointIndexCases: null,
   currentPolyIndexCases: null,
   fetchGoalsActionCreator: fetchGoals,
@@ -150,6 +152,8 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   fetchStructuresActionCreator: setStructures,
   fetchTasksActionCreator: fetchTasks,
   goals: null,
+  historicalPointIndexCases: null,
+  historicalPolyIndexCases: null,
   jurisdiction: null,
   plan: null,
   plansByFocusArea: [],
@@ -215,8 +219,6 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
   }, [props.match.params.goalId]);
 
   const {
-    // historicalIndexCases,
-    // currentIndexCases,
     jurisdiction,
     plan,
     goals,
@@ -267,32 +269,35 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     plan,
   };
 
+  const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
+  const structureLayers = buildStructureLayers(structures);
+
   const historicalIndexLayers = buildGsLiteLayers(
-    null,
-    null,
     CASE_CONFIRMATION_GOAL_ID,
     props.historicalPointIndexCases,
     props.historicalPolyIndexCases,
-    { useId: 'historical-index-cases' }
+    { useId: HISTORICAL_INDEX_CASES }
   );
   const currentIndexLayers = buildGsLiteLayers(
-    null,
-    null,
     CASE_CONFIRMATION_GOAL_ID,
     props.currentPointIndexCases,
     props.currentPolyIndexCases,
-    { useId: 'current-index-cases' }
+    { useId: CURRENT_INDEX_CASES }
   );
   const otherLayers = buildGsLiteLayers(
-    jurisdiction,
-    structures,
     currentGoal,
     pointFeatureCollection,
     polygonFeatureCollection,
     {}
   );
 
-  const gsLayers = [...otherLayers, ...historicalIndexLayers, ...currentIndexLayers];
+  const gsLayers = [
+    ...jurisdictionLayers,
+    ...structureLayers,
+    ...historicalIndexLayers,
+    ...currentIndexLayers,
+    ...otherLayers,
+  ];
 
   const mapCenter = getCenter({
     features: [jurisdiction.geojson as any],

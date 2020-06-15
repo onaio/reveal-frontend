@@ -25,8 +25,11 @@ import {
   CASE_CONFIRMATION_GOAL_ID,
   JURISDICTION_ID,
   LARVAL_DIPPING_ID,
+  MAIN_PLAN,
   MOSQUITO_COLLECTION_ID,
   PLAN_ID,
+  STRUCTURES_FILL,
+  STRUCTURES_LINE,
 } from '../../../../../../constants';
 import { ROUTINE } from '../../../../../../constants';
 import { displayError } from '../../../../../../helpers/errors';
@@ -35,8 +38,14 @@ import supersetFetch from '../../../../../../services/superset';
 import { fetchGoals, FetchGoalsAction } from '../../../../../../store/ducks/goals';
 import { fetchJurisdictions, Jurisdiction } from '../../../../../../store/ducks/jurisdictions';
 import { fetchPlans, FetchPlansAction, Plan } from '../../../../../../store/ducks/plans';
-import { setStructures, SetStructuresAction } from '../../../../../../store/ducks/structures';
+import {
+  setStructures,
+  SetStructuresAction,
+  StructureGeoJSON,
+} from '../../../../../../store/ducks/structures';
 import { fetchTasks, FetchTasksAction } from '../../../../../../store/ducks/tasks';
+
+import { FeatureCollection } from '../../../../../../helpers/utils';
 
 /** abstracts code that actually makes the superset Call since it is quite similar */
 export async function supersetCall<TAction>(
@@ -153,7 +162,7 @@ export const fetchData = async (
  * @param method  Event handler
  */
 export const buildHandlers = (planId: string, method: any = popupHandler) => {
-  const customMethod = (e: any) => popupHandler(e, planId);
+  const customMethod = (e: any) => method(e, planId);
   return [
     {
       method: customMethod,
@@ -204,15 +213,77 @@ export const getDetailViewPlanInvestigationContainer = (plan: Plan): React.React
   return detailViewPlanInvestigationContainer;
 };
 
+/** returns layer for the jurisdiction
+ * @param {Jurisdiction | null} jurisdiction - the jurisdiction
+ */
+export const buildJurisdictionLayers = (jurisdiction: Jurisdiction | null) => {
+  const jurisdictionLayer = [];
+  if (jurisdiction) {
+    jurisdictionLayer.push(
+      <GeoJSONLayer
+        {...lineLayerTemplate}
+        id={`${MAIN_PLAN}-${jurisdiction.jurisdiction_id}`}
+        data={jurisdiction.geojson}
+        key={`${MAIN_PLAN}-${jurisdiction.jurisdiction_id}`}
+      />
+    );
+  }
+  return jurisdictionLayer;
+};
+
+/** returns the layers for the structures
+ * @param {FeatureCollection<StructureGeoJSON> | null} structs - the structures
+ */
+export const buildStructureLayers = (structs: FeatureCollection<StructureGeoJSON> | null) => {
+  const structureLayers = [];
+  if (structs && structs.features && structs.features.length) {
+    structureLayers.push([
+      <GeoJSONLayer
+        {...lineLayerTemplate}
+        linePaint={{
+          ...lineLayerTemplate.linePaint,
+          'line-color': GREY,
+          'line-opacity': 1,
+          'line-width': 2,
+        }}
+        data={structs}
+        id={STRUCTURES_LINE}
+        key={STRUCTURES_LINE}
+      />,
+      <GeoJSONLayer
+        {...fillLayerTemplate}
+        fillPaint={{
+          ...fillLayerTemplate.fillPaint,
+          'fill-color': GREY,
+          'fill-outline-color': GREY,
+        }}
+        data={structs}
+        id={STRUCTURES_FILL}
+        key={STRUCTURES_FILL}
+      />,
+    ]);
+  }
+  return structureLayers;
+};
+
+/** describes the last arg to buildGsLiteLayers */
+interface ExtraVars {
+  useId?: string; // override the goalId to be used for the layer;
+}
+
+/** build layers for all other points , polygons and multi-polygons
+ * @param {string | null} currentGoal - goal id for the layer that is being built
+ * @param {FeatureCollection<TaskGeoJSON>} pointFeatureCollection- feature collection for points
+ * @param {FeatureCollection<TaskGeoJSON>} polygonFeatureCollection - feature collection for polygons and multi-polygons
+ * @param {ExtraVars} - some vars to help in if branches within the function
+ */
 export const buildGsLiteLayers = (
-  jurisdiction: any,
-  structures: any,
   currentGoal: string | null,
   pointFeatureCollection: any,
   polygonFeatureCollection: any,
-  attention: any
+  extraVars: ExtraVars
 ) => {
-  const idToUse = attention.useId ? attention.useId : currentGoal;
+  const idToUse = extraVars.useId ? extraVars.useId : currentGoal;
   const gsLayers = [];
 
   // define which goal ids will also include the symbols.
@@ -231,58 +302,6 @@ export const buildGsLiteLayers = (
       break;
   }
 
-  if (jurisdiction) {
-    gsLayers.push(
-      <GeoJSONLayer
-        {...lineLayerTemplate}
-        id="${MAIN_PLAN}-${jurisdiction.jurisdiction_id}"
-        data={jurisdiction.geojson}
-        key={'${MAIN_PLAN}-${jurisdiction.jurisdiction_id}'} // TODO: clean up
-      />
-    );
-  }
-  if (structures) {
-    gsLayers.push([
-      <GeoJSONLayer
-        {...lineLayerTemplate}
-        linePaint={{
-          ...lineLayerTemplate.linePaint,
-          'line-color': GREY,
-          'line-opacity': 1,
-          'line-width': 2,
-        }}
-        data={structures}
-        id="structures-line"
-        key="structures-line" // TODO: clean up
-      />,
-      <GeoJSONLayer
-        {...fillLayerTemplate}
-        fillPaint={{
-          ...fillLayerTemplate.fillPaint,
-          'fill-color': GREY,
-          'fill-outline-color': GREY,
-        }}
-        data={structures}
-        id="structures-fill"
-        key="structures-fill" // TODO: clean up
-      />,
-    ]);
-  }
-
-  /** for case confirmation we have historical and index cases that should be displayed differently
-   * the affected layout properties include circle paint for pointFC and fillPaint for polyFC
-   */
-  // TODO - these colours are for proper
-  const historicalCirclePaint = {
-    circlePaint: { ...circleLayerTemplate.circlePaint, 'circle-color': '#FF0000' },
-  };
-
-  const historicalFillPaint = {
-    fillPaint: { 'fill-color': '#FF0000', 'fill-outline-color': '#FF0000' },
-  };
-
-  const HISTORICAL_INDEX_CASE = 'historical index cases';
-
   if (pointFeatureCollection) {
     if (goalIsWithSymbol) {
       gsLayers.push(
@@ -294,7 +313,7 @@ export const buildGsLiteLayers = (
             'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
           }}
           id={`${idToUse}-point-symbol`}
-          key={`${idToUse}-point-symbol`} // TODO: clean up
+          key={`${idToUse}-point-symbol`}
           data={pointFeatureCollection}
         />
       );
@@ -302,18 +321,14 @@ export const buildGsLiteLayers = (
     gsLayers.push(
       <GeoJSONLayer
         {...circleLayerTemplate}
-        circlePaint={
-          attention.pointType !== HISTORICAL_INDEX_CASE
-            ? {
-                ...circleLayerTemplate.circlePaint,
-                'circle-color': ['get', 'color'],
-                'circle-stroke-color': ['get', 'color'],
-                'circle-stroke-opacity': 1,
-              }
-            : { ...historicalCirclePaint }
-        }
+        circlePaint={{
+          ...circleLayerTemplate.circlePaint,
+          'circle-color': ['get', 'color'],
+          'circle-stroke-color': ['get', 'color'],
+          'circle-stroke-opacity': 1,
+        }}
         id={`${idToUse}-point`}
-        key={`${idToUse}-point`} // TODO: clean up
+        key={`${idToUse}-point`}
         data={pointFeatureCollection}
       />
     );
@@ -329,7 +344,7 @@ export const buildGsLiteLayers = (
             'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
           }}
           id={`${idToUse}-poly-symbol`}
-          key={`${idToUse}-poly-symbol`} // TODO: clean up
+          key={`${idToUse}-poly-symbol`}
           data={polygonFeatureCollection}
         />
       );
@@ -345,22 +360,18 @@ export const buildGsLiteLayers = (
         }}
         data={polygonFeatureCollection}
         id={`${idToUse}-fill-line`}
-        key={`${idToUse}-fill-line`} // TODO: clean up
+        key={`${idToUse}-fill-line`}
       />,
       <GeoJSONLayer
         {...fillLayerTemplate}
-        fillPaint={
-          attention.pointType !== HISTORICAL_INDEX_CASE
-            ? {
-                ...fillLayerTemplate.fillPaint,
-                'fill-color': ['get', 'color'],
-                'fill-outline-color': ['get', 'color'],
-              }
-            : { ...historicalFillPaint }
-        }
+        fillPaint={{
+          ...fillLayerTemplate.fillPaint,
+          'fill-color': ['get', 'color'],
+          'fill-outline-color': ['get', 'color'],
+        }}
         data={polygonFeatureCollection}
         id={`${idToUse}-fill`}
-        key={`${idToUse}-fill`} // TODO: clean up
+        key={`${idToUse}-fill`}
       />,
     ]);
   }
