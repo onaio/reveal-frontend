@@ -1,6 +1,14 @@
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import * as React from 'react';
+import { GeoJSONLayer } from 'react-mapbox-gl';
 import { ActionCreator } from 'redux';
+import { GREY } from '../../../../../../colors';
+import {
+  circleLayerTemplate,
+  fillLayerTemplate,
+  lineLayerTemplate,
+  symbolLayerTemplate,
+} from '../../../../../../components/GisidaLite/helpers';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
@@ -11,7 +19,15 @@ import {
 } from '../../../../../../configs/env';
 import { AN_ERROR_OCCURRED } from '../../../../../../configs/lang';
 import { CASE_CLASSIFICATION_LABEL, END_DATE, START_DATE } from '../../../../../../configs/lang';
-import { JURISDICTION_ID, PLAN_ID, CASE_CONFIRMATION_CODE, ACTION_CODE } from '../../../../../../constants';
+import {
+  ACTION_CODE,
+  CASE_CONFIRMATION_CODE,
+  CASE_CONFIRMATION_GOAL_ID,
+  JURISDICTION_ID,
+  LARVAL_DIPPING_ID,
+  MOSQUITO_COLLECTION_ID,
+  PLAN_ID,
+} from '../../../../../../constants';
 import { ROUTINE } from '../../../../../../constants';
 import { displayError } from '../../../../../../helpers/errors';
 import { PopHandler, popupHandler } from '../../../../../../helpers/handlers';
@@ -21,8 +37,6 @@ import { fetchJurisdictions, Jurisdiction } from '../../../../../../store/ducks/
 import { fetchPlans, FetchPlansAction, Plan } from '../../../../../../store/ducks/plans';
 import { setStructures, SetStructuresAction } from '../../../../../../store/ducks/structures';
 import { fetchTasks, FetchTasksAction } from '../../../../../../store/ducks/tasks';
-import props from '../../../../../../components/DatePickerWrapper/tests/fixtures';
-
 
 /** abstracts code that actually makes the superset Call since it is quite similar */
 export async function supersetCall<TAction>(
@@ -139,7 +153,7 @@ export const fetchData = async (
  * @param method  Event handler
  */
 export const buildHandlers = (planId: string, method: any = popupHandler) => {
-  let customMethod = (e: any) => popupHandler(e, planId);
+  const customMethod = (e: any) => popupHandler(e, planId);
   return [
     {
       method: customMethod,
@@ -188,4 +202,167 @@ export const getDetailViewPlanInvestigationContainer = (plan: Plan): React.React
   }
 
   return detailViewPlanInvestigationContainer;
+};
+
+export const buildGsLiteLayers = (
+  jurisdiction: any,
+  structures: any,
+  currentGoal: string | null,
+  pointFeatureCollection: any,
+  polygonFeatureCollection: any,
+  attention: any
+) => {
+  const idToUse = attention.useId ? attention.useId : currentGoal;
+  const gsLayers = [];
+
+  // define which goal ids will also include the symbols.
+  const goalsWithSymbols = [MOSQUITO_COLLECTION_ID, CASE_CONFIRMATION_GOAL_ID, LARVAL_DIPPING_ID];
+  const goalIsWithSymbol = goalsWithSymbols.includes(currentGoal || '');
+
+  // define the icon for goals with symbols
+
+  let iconGoal: string = 'case-confirmation';
+  switch (currentGoal) {
+    case MOSQUITO_COLLECTION_ID:
+      iconGoal = 'mosquito';
+      break;
+    case LARVAL_DIPPING_ID:
+      iconGoal = 'larval';
+      break;
+  }
+
+  if (jurisdiction) {
+    gsLayers.push(
+      <GeoJSONLayer
+        {...lineLayerTemplate}
+        id="${MAIN_PLAN}-${jurisdiction.jurisdiction_id}"
+        data={jurisdiction.geojson}
+        key={'${MAIN_PLAN}-${jurisdiction.jurisdiction_id}'} // TODO: clean up
+      />
+    );
+  }
+  if (structures) {
+    gsLayers.push([
+      <GeoJSONLayer
+        {...lineLayerTemplate}
+        linePaint={{
+          ...lineLayerTemplate.linePaint,
+          'line-color': GREY,
+          'line-opacity': 1,
+          'line-width': 2,
+        }}
+        data={structures}
+        id="structures-line"
+        key="structures-line" // TODO: clean up
+      />,
+      <GeoJSONLayer
+        {...fillLayerTemplate}
+        fillPaint={{
+          ...fillLayerTemplate.fillPaint,
+          'fill-color': GREY,
+          'fill-outline-color': GREY,
+        }}
+        data={structures}
+        id="structures-fill"
+        key="structures-fill" // TODO: clean up
+      />,
+    ]);
+  }
+
+  /** for case confirmation we have historical and index cases that should be displayed differently
+   * the affected layout properties include circle paint for pointFC and fillPaint for polyFC
+   */
+  // TODO - these colours are for proper
+  const historicalCirclePaint = {
+    circlePaint: { ...circleLayerTemplate.circlePaint, 'circle-color': '#FF0000' },
+  };
+
+  const historicalFillPaint = {
+    fillPaint: { 'fill-color': '#FF0000', 'fill-outline-color': '#FF0000' },
+  };
+
+  const HISTORICAL_INDEX_CASE = 'historical index cases';
+
+  if (pointFeatureCollection) {
+    if (goalIsWithSymbol) {
+      gsLayers.push(
+        <GeoJSONLayer
+          {...symbolLayerTemplate}
+          symbolLayout={{
+            ...symbolLayerTemplate.symbolLayout,
+            'icon-image': iconGoal,
+            'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+          }}
+          id={`${idToUse}-point-symbol`}
+          key={`${idToUse}-point-symbol`} // TODO: clean up
+          data={pointFeatureCollection}
+        />
+      );
+    }
+    gsLayers.push(
+      <GeoJSONLayer
+        {...circleLayerTemplate}
+        circlePaint={
+          attention.pointType !== HISTORICAL_INDEX_CASE
+            ? {
+                ...circleLayerTemplate.circlePaint,
+                'circle-color': ['get', 'color'],
+                'circle-stroke-color': ['get', 'color'],
+                'circle-stroke-opacity': 1,
+              }
+            : { ...historicalCirclePaint }
+        }
+        id={`${idToUse}-point`}
+        key={`${idToUse}-point`} // TODO: clean up
+        data={pointFeatureCollection}
+      />
+    );
+  }
+  if (polygonFeatureCollection) {
+    if (goalIsWithSymbol) {
+      gsLayers.push(
+        <GeoJSONLayer
+          {...symbolLayerTemplate}
+          symbolLayout={{
+            ...symbolLayerTemplate.symbolLayout,
+            'icon-image': iconGoal,
+            'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+          }}
+          id={`${idToUse}-poly-symbol`}
+          key={`${idToUse}-poly-symbol`} // TODO: clean up
+          data={polygonFeatureCollection}
+        />
+      );
+    }
+    gsLayers.push([
+      <GeoJSONLayer
+        {...lineLayerTemplate}
+        linePaint={{
+          ...lineLayerTemplate.linePaint,
+          'line-color': ['get', 'color'],
+          'line-opacity': 1,
+          'line-width': 2,
+        }}
+        data={polygonFeatureCollection}
+        id={`${idToUse}-fill-line`}
+        key={`${idToUse}-fill-line`} // TODO: clean up
+      />,
+      <GeoJSONLayer
+        {...fillLayerTemplate}
+        fillPaint={
+          attention.pointType !== HISTORICAL_INDEX_CASE
+            ? {
+                ...fillLayerTemplate.fillPaint,
+                'fill-color': ['get', 'color'],
+                'fill-outline-color': ['get', 'color'],
+              }
+            : { ...historicalFillPaint }
+        }
+        data={polygonFeatureCollection}
+        id={`${idToUse}-fill`}
+        key={`${idToUse}-fill`} // TODO: clean up
+      />,
+    ]);
+  }
+  return gsLayers;
 };

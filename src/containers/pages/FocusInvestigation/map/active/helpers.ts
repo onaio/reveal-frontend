@@ -10,7 +10,6 @@ import {
 } from '../../../../../configs/settings';
 import {
   CASE_CONFIRMATION_GOAL_ID,
-  GOAL_CONFIRMATION_GOAL_ID,
   LARVAL_DIPPING_ID,
   MAIN_PLAN,
   MOSQUITO_COLLECTION_ID,
@@ -119,7 +118,7 @@ export const getGisidaWrapperProps = (
         id: element.id,
         layout: {
           'icon-image': iconGoal,
-          'icon-size': currentGoalId === GOAL_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+          'icon-size': currentGoalId === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
         },
         source: {
           ...symbolLayerConfig.source,
