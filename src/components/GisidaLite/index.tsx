@@ -11,7 +11,7 @@ interface GisidaLiteProps {
   attributionControl: boolean;
   customAttribution: string;
   injectCSS: boolean;
-  layers: any; // TODO: type this correctly
+  layers: JSX.Element[];
   mapCenter: [number, number] | undefined;
   mapHeight: string;
   mapStyle: Style | string;
@@ -89,9 +89,13 @@ const GisidaLite = (props: GisidaLiteProps) => {
         }}
         onStyleLoad={runAfterMapLoaded}
       >
-        {renderLayers &&
-          layers.map((item: any, index: number) => <Fragment key={index}>{item}</Fragment>)}
-        <ZoomControl />
+        <>
+          {renderLayers &&
+            layers.map((item: any, index: number) => (
+              <Fragment key={`gsLite-${index}`}>{item}</Fragment>
+            ))}
+          <ZoomControl />
+        </>
       </Map>
     </Fragment>
   );
