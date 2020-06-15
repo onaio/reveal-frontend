@@ -299,8 +299,8 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     polygonFeatureCollection,
     {}
   );
-  const gsLayers = [...otherLayers, ...[], ...[]];
-  console.log('>>>>>>>>>>>>>>>>>>>>>', gsLayers);
+
+  const gsLayers = [...otherLayers, ...historicalIndexLayers, ...currentIndexLayers];
 
   const mapCenter = getCenter({
     features: [jurisdiction.geojson as any],
