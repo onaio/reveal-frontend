@@ -30,7 +30,7 @@ import {
 } from '../../../../../../constants';
 import { ROUTINE } from '../../../../../../constants';
 import { displayError } from '../../../../../../helpers/errors';
-import { PopHandler, popupHandler } from '../../../../../../helpers/handlers';
+import { popupHandler } from '../../../../../../helpers/handlers';
 import supersetFetch from '../../../../../../services/superset';
 import { fetchGoals, FetchGoalsAction } from '../../../../../../store/ducks/goals';
 import { fetchJurisdictions, Jurisdiction } from '../../../../../../store/ducks/jurisdictions';
