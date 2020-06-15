@@ -980,7 +980,7 @@ export interface JurisdictionsByCountry extends ADMN0 {
   tilesets?: Tileset[];
 }
 /** Country Jurisdictions definition for Zambia */
-export const ZambiaAdmin0: JurisdictionsByCountry = {
+export const ZambiaStageAdmin0: JurisdictionsByCountry = {
   ADMN0_EN: 'Zambia',
   ADMN0_PCODE: 'ZM',
   bounds: [28.20209213900005, -15.549759923999941, 32.755632835000085, -13.718855579980357],
@@ -989,7 +989,7 @@ export const ZambiaAdmin0: JurisdictionsByCountry = {
   tilesets: [],
 };
 /** Country Jurisdictions definition for Zambia */
-export const ZambiaAdminRA0: JurisdictionsByCountry = {
+export const ZambiaStageAdminRA0: JurisdictionsByCountry = {
   ADMN0_EN: 'ra Zambia',
   ADMN0_PCODE: 'ZMra',
   bounds: [28.20209213900005, -15.549759923999941, 32.755632835000085, -13.718855579980357],
@@ -1170,8 +1170,8 @@ export const CountriesAdmin0 = {
   Sinda: SindaAdmin0,
   TH: ThailandAdmin0,
   Tak: TakAdmin0,
-  ZM: ZambiaAdmin0,
-  ['ra Zambia']: ZambiaAdminRA0,
+  ZM: ZambiaStageAdmin0,
+  ['ra Zambia']: ZambiaStageAdminRA0,
   ราชอาณาจักรไทย: ราชอาณาจักรไทยAdmin0,
 };
 /** Columns for various Plans */
