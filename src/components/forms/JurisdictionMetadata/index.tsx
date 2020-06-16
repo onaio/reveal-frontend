@@ -1,4 +1,5 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import Papaparse from 'papaparse';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import { toast } from 'react-toastify';
@@ -6,12 +7,13 @@ import { Button, Label } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
 import {
+  CSV_FILE,
   FILE,
   FILE_UPLOADED_SUCCESSFULLY,
   REQUIRED,
-  SAVE,
-  SAVE_FILE,
-  SAVING,
+  UPLOAD,
+  UPLOAD_FILE,
+  UPLOADING,
 } from '../../../configs/lang';
 import { HOME_URL, OPENSRP_SETTINGS_ENDPOINT } from '../../../constants';
 import { growl } from '../../../helpers/utils';
@@ -21,13 +23,25 @@ const SUPPORTED_FORMATS = ['text/csv'];
 
 /** yup validation schema for teams Form input */
 export const JurisdictionSchema = Yup.object().shape({
-  csvFile: Yup.mixed()
+  file: Yup.mixed()
     .required(REQUIRED)
     .test('fileFormat', 'CSV Files only', value => value && SUPPORTED_FORMATS.includes(value.type)),
 });
 
 export interface JurisdictionMetadataFormFields {
   file: File;
+}
+
+export interface JurisdictionMetadataPayLoad {
+  description: string;
+  label: string;
+  value: string;
+  key: string;
+  type: string;
+  identifier: string;
+  providerId: string;
+  locationId: string;
+  settingsId: string;
 }
 
 export interface JurisdictionMetadataFormProps {
@@ -48,6 +62,35 @@ export const defaultInitialValues: JurisdictionMetadataFormFields = {
   file: new File([], ''),
 };
 
+const createPayload = (result: any): JurisdictionMetadataPayLoad[] => {
+  const { data } = result;
+  const payload: JurisdictionMetadataPayLoad[] = [];
+  for (const item of data) {
+    const payloadItem: JurisdictionMetadataPayLoad = {
+      description: 'nj',
+      identifier: '',
+      key: '',
+      label: '',
+      locationId: item.jurisdiction_id,
+      providerId: '',
+      settingsId: '',
+      type: 'SettingConfiguration',
+      value: '',
+    };
+    payload.push(payloadItem);
+  }
+  return payload;
+};
+
+const handleFile = (file: File) => {
+  Papaparse.parse(file, {
+    complete: results => {
+      createPayload(results);
+    },
+    header: true,
+  });
+};
+
 export const submitForm = (
   setSubmitting: (isSubmitting: boolean) => void,
   setGlobalError: (errorMessage: string) => void,
@@ -55,23 +98,27 @@ export const submitForm = (
   props: JurisdictionMetadataFormProps,
   values?: JurisdictionMetadataFormFields
 ) => {
-  const jurisdictionService = new props.OpenSRPService(OPENSRP_SETTINGS_ENDPOINT);
-  const valuesToSend = {
-    ...values,
-  };
-  jurisdictionService
-    .create(valuesToSend)
-    .then(() => {
-      setSubmitting(false);
-      growl(FILE_UPLOADED_SUCCESSFULLY, {
-        onClose: () => setIfDoneHere(true),
-        type: toast.TYPE.SUCCESS,
+  if (values) {
+    const jurisdictionService = new props.OpenSRPService(OPENSRP_SETTINGS_ENDPOINT);
+
+    handleFile(values.file);
+    const valuesToSend = {
+      ...values,
+    };
+    jurisdictionService
+      .create(valuesToSend)
+      .then(() => {
+        setSubmitting(false);
+        growl(FILE_UPLOADED_SUCCESSFULLY, {
+          onClose: () => setIfDoneHere(true),
+          type: toast.TYPE.SUCCESS,
+        });
+      })
+      .catch((e: Error) => {
+        setGlobalError(e.message);
+        setSubmitting(false);
       });
-    })
-    .catch((e: Error) => {
-      setGlobalError(e.message);
-      setSubmitting(false);
-    });
+  }
 };
 const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
   /** track when redirection from this form page should occur */
@@ -90,20 +137,28 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
           props.submitForm(setSubmitting, setGlobalError, setIfDoneHere, props, values);
         }}
       >
-        {({ errors, isSubmitting }) => (
+        {({ errors, isSubmitting, setFieldValue }) => (
           <Form className="mb-5" data-testid="form">
             <FormGroup className="non-field-errors">
               {globalError !== '' && <p className="form-text text-danger">{globalError}</p>}
             </FormGroup>
             <FormGroup>
-              <Label>{FILE}</Label>
+              <Label>{CSV_FILE}</Label>
               <Field
                 type="file"
-                name="CSV File"
+                name="csv file"
                 id="file"
-                disabled={disabledFields.includes('csvFile')}
+                accept=".csv"
+                disabled={disabledFields.includes('file')}
+                // tslint:disable-next-line: jsx-no-lambda
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setFieldValue(
+                    'file',
+                    event && event.target && event.target.files && event.target.files[0]
+                  );
+                }}
                 className={errors.file ? `form-control is-invalid` : `form-control`}
-                data-testid="csvFile"
+                data-testid="file"
               />
               <ErrorMessage
                 name="csvFile"
@@ -116,10 +171,10 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
               type="submit"
               id="jurisdiction-metadata-form-submit-button"
               className="btn btn-block btn btn-primary"
-              aria-label={SAVE_FILE}
+              aria-label={UPLOAD_FILE}
               disabled={isSubmitting || Object.keys(errors).length > 0}
             >
-              {isSubmitting ? SAVING : `${SAVE} ${FILE}`}
+              {isSubmitting ? UPLOADING : `${UPLOAD} ${FILE}`}
             </Button>
           </Form>
         )}

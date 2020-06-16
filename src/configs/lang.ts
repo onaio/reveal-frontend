@@ -139,6 +139,7 @@ export const NO = translate('NO', 'No');
 export const EDIT = translate('EDIT', 'Edit');
 export const ADD = translate('ADD', 'Add');
 export const REMOVE = translate('REMOVE', 'Remove');
+export const UPLOAD = translate('UPLOAD', 'Upload');
 
 export const IRS_PLANS = translate('IRS_PLANS', 'IRS Plans');
 export const MDA_POINT_PLANS = translate('MDA_POINT_PLANS', 'MDA Point Plans');
@@ -167,6 +168,7 @@ export const REACTIVE = translate('REACTIVE', 'Reactive');
 export const REACTIVE_INVESTIGATION = translate('REACTIVE_INVESTIGATION', 'Reactive Investigation');
 export const REQUIRED = translate('REQUIRED', 'Required');
 export const SAVING = translate('SAVING', 'Saving');
+export const UPLOADING = translate('UPLOADING', 'Uploading');
 export const PLANS = translate('PLANS', 'Manage Plans');
 export const PLANNING = translate('PLANNING', 'Planning');
 export const MONITOR = translate('MONITOR', 'Monitor');
@@ -572,3 +574,4 @@ export const ALB_TABLETS_DISTRIBUTED = translate(
   'Alb Tablets Distributed'
 );
 export const FILE = translate('FILE', 'File');
+export const CSV_FILE = translate('CSV_FILE', 'CSV File');
