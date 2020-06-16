@@ -118,6 +118,7 @@ export const SAVE_PLAN = translate('SAVE_PLAN', 'Save Plan');
 export const SAVE_AS_DRAFT = translate('SAVE_AS_DRAFT', 'Save as a Draft');
 export const SAVE_FINALIZED_PLAN = translate('SAVE_FINALIZED_PLAN', 'Save Finalized Plan');
 export const SAVE_ASSIGNMENTS = translate('SAVE_ASSIGNMENTS', 'Save Assignments');
+export const SAVE_FILE = translate('SAVE_FILE', 'Save File');
 export const NO_PLANS_LOADED_MESSAGE = translate('NO_PLANS_LOADED_MESSAGE', 'No plans found...');
 export const SELECT = translate('SELECT', 'Select');
 export const SELECT_USERNAME = translate('SELECT_USERNAME', 'Select username');
@@ -552,7 +553,6 @@ export const USER_HAS_NO_PLAN_ASSIGNMENTS = translate(
   'USER_HAS_NO_PLAN_ASSIGNMENTS',
   'User does not have any plans assigned'
 );
-
 export const NO_ROWS_FOUND = translate('NO_ROWS_FOUND', 'No rows found');
 
 export const AGE_RANGE = translate('AGE_RANGE', 'Age Range');
@@ -566,3 +566,4 @@ export const ALB_TABLETS_DISTRIBUTED = translate(
   'ALB_TABLETS_DISTRIBUTED',
   'Alb Tablets Distributed'
 );
+export const FILE = translate('FILE', 'File');
