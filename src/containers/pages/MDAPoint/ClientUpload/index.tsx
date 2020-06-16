@@ -27,6 +27,8 @@ import {
 } from '../../../../constants';
 import { postUploadedFile } from '../ClientListView/helpers/serviceHooks';
 import UploadStatus from '../ClientUploadStatus/';
+import './index.css';
+
 /** Yup client upload validation schema */
 export const uploadValidationSchema = Yup.object().shape({
   file: Yup.mixed().required(),
