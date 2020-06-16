@@ -121,7 +121,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(toJson(headerWrapper)).toMatchSnapshot('Breadcrumb');
 
     // Check gisida component using a mock
-    expect(toJson(wrapper.find('GisidaWrapperMock div'))).toMatchSnapshot('GisidaWrapperMock div');
+    expect(toJson(wrapper.find('GisidaLiteMock div'))).toMatchSnapshot('GisidaWrapperMock div');
 
     // how about the selectPlan component
     expect(wrapper.find('SelectPlan').length).toEqual(1);
@@ -281,18 +281,56 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }],
         { action_prefix: true },
       ],
+      [
+        3000,
+        [
+          {
+            comparator: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+            operator: '==',
+            subject: 'jurisdiction_id',
+          },
+          {
+            comparator: 'Case Confirmation',
+            operator: '==',
+            subject: 'action_code',
+          },
+        ],
+      ],
     ];
+
     const callList = [
       [1, jurisdictionParams],
       [2, jurisdictionParams],
       [0, jurisdictionParams],
       [3, goalParams],
       [4, supersetParams],
+      [
+        4,
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'jurisdiction_id',
+            },
+            {
+              clause: 'WHERE',
+              comparator: 'Case Confirmation',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'action_code',
+            },
+          ],
+          row_limit: 3000,
+        },
+      ],
     ];
 
     await flushPromises();
     expect(supersetServiceMock.mock.calls).toEqual(callList);
-    expect(supersetServiceMock).toHaveBeenCalledTimes(5);
+    expect(supersetServiceMock).toHaveBeenCalledTimes(6);
     expect((superset.getFormData as any).mock.calls).toEqual(getformDataCallList);
     wrapper.unmount();
   });
@@ -340,7 +378,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       </Provider>
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(supersetServiceMock.mock.calls.length).toEqual(5);
+    expect(supersetServiceMock.mock.calls.length).toEqual(6);
     wrapper.unmount();
   });
 
@@ -529,7 +567,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       supersetServiceMock
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(supersetServiceMock.mock.calls.length).toBe(5);
+    expect(supersetServiceMock.mock.calls.length).toBe(6);
   });
 
   it('should not fetch data if no plan id is provided', async () => {
@@ -577,7 +615,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       supersetServiceMock
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(displayErrorMock.mock.calls.length).toBe(5);
+    expect(displayErrorMock.mock.calls.length).toBe(6);
   });
 
   it('handles errors correctly when fetching data', async () => {
@@ -602,7 +640,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       </Provider>
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(displayErrorMock.mock.calls.length).toBe(1);
+    expect(displayErrorMock).toHaveBeenCalled();
     wrapper.unmount();
   });
 
