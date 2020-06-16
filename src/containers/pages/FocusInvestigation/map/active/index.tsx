@@ -10,7 +10,6 @@ import { Store } from 'redux';
 import { format } from 'util';
 import { GisidaLite } from '../../../../../components/GisidaLite';
 import { getCenter } from '../../../../../components/GisidaLite/helpers';
-// import GisidaWrapper from '../../../../../components/GisidaWrapper';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -35,16 +34,16 @@ import {
   CASE_CONFIRMATION_CODE,
   CASE_CONFIRMATION_GOAL_ID,
   CASE_TRIGGERED,
+  CURRENT_INDEX_CASES,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   FI_URL,
+  HISTORICAL_INDEX_CASES,
   HOME_URL,
   MULTI_POLYGON,
   POINT,
   POLYGON,
   RACD_REGISTER_FAMILY_ID,
-  HISTORICAL_INDEX_CASES,
-  CURRENT_INDEX_CASES,
 } from '../../../../../constants';
 import { PLAN_INTERVENTION_TYPE } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
@@ -227,6 +226,10 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     polygonFeatureCollection,
     structures,
     plansByFocusArea,
+    historicalPolyIndexCases,
+    historicalPointIndexCases,
+    currentPointIndexCases,
+    currentPolyIndexCases,
   } = props;
   if (!jurisdiction || !plan) {
     return <Loading />;
@@ -274,14 +277,14 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
 
   const historicalIndexLayers = buildGsLiteLayers(
     CASE_CONFIRMATION_GOAL_ID,
-    props.historicalPointIndexCases,
-    props.historicalPolyIndexCases,
+    historicalPointIndexCases,
+    historicalPolyIndexCases,
     { useId: HISTORICAL_INDEX_CASES }
   );
   const currentIndexLayers = buildGsLiteLayers(
     CASE_CONFIRMATION_GOAL_ID,
-    props.currentPointIndexCases,
-    props.currentPolyIndexCases,
+    currentPointIndexCases,
+    currentPolyIndexCases,
     { useId: CURRENT_INDEX_CASES }
   );
   const otherLayers = buildGsLiteLayers(
