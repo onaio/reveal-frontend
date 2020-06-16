@@ -1,10 +1,8 @@
-import { DrillDownTable, hasChildrenFunc } from '@onaio/drill-down-table';
+import { hasChildrenFunc } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Cell } from 'react-table';
-import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import IRSIndicatorLegend from '../../../../components/formatting/IRSIndicatorLegend';
 import IRSTableCell from '../../../../components/IRSTableCell';

@@ -22,7 +22,7 @@ export interface NullDataTableProps<D extends object> {
  * @param {DrillDownColumn[]} - original columns
  */
 const sanitizeColumns = <D extends object>(columns: Array<DrillDownColumn<D>>) => {
-  const localColumns = columns as Dictionary[];
+  const localColumns: Dictionary[] = columns;
   localColumns.forEach(column => {
     column.accessor = column.Header || `${uuid()}`;
     if (column.columns) {
