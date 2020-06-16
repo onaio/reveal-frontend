@@ -1,0 +1,411 @@
+{
+  "cache_key": null,
+  "cached_dttm": null,
+  "cache_timeout": 300,
+  "error": null,
+  "form_data": {
+    "datasource": "93__table",
+    "viz_type": "table",
+    "granularity_sqla": null,
+    "time_grain_sqla": "P1D",
+    "time_range": "100 years ago : ",
+    "groupby": [],
+    "metrics": [],
+    "percent_metrics": [],
+    "timeseries_limit_metric": null,
+    "row_limit": 10000,
+    "include_time": false,
+    "order_desc": true,
+    "all_columns": [
+      "task_identifier",
+      "plan_id",
+      "jurisdiction_id",
+      "goal_id",
+      "action_code",
+      "task_business_status",
+      "geojson"
+    ],
+    "order_by_cols": [],
+    "adhoc_filters": [
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": "3951",
+        "operator": "==",
+        "subject": "jurisdiction_id"
+      },
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": "Case Confirmation",
+        "operator": "==",
+        "subject": "action_code"
+      }
+    ],
+    "table_timestamp_format": "%Y-%m-%d %H:%M:%S",
+    "page_length": 0,
+    "include_search": false,
+    "table_filter": false,
+    "align_pn": false,
+    "color_pn": true,
+    "slice_id": 570,
+    "where": "",
+    "having": "",
+    "having_filters": [],
+    "filters": [
+      { "col": "jurisdiction_id", "op": "==", "val": "3951" },
+      { "col": "action_code", "op": "==", "val": "Case Confirmation" }
+    ]
+  },
+  "is_cached": false,
+  "query": "SELECT task_identifier AS task_identifier,\n       plan_id AS plan_id,\n       jurisdiction_id AS jurisdiction_id,\n       goal_id AS goal_id,\n       action_code AS action_code,\n       task_business_status AS task_business_status,\n       geojson AS geojson\nFROM\n  (SELECT task_identifier,\n          plan_id,\n          jurisdiction_id,\n          goal_id,\n          action_code,\n          task_business_status,\n          jsonb_build_object('type', 'Feature', 'id', task_identifier, 'geometry', ST_AsGeoJSON(structure_geometry)::jsonb, 'properties', to_jsonb(row) - 'task_identifier' - 'structure_geometry') AS geojson\n   FROM\n     (SELECT task_identifier,\n             plan_id,\n             jurisdiction_id,\n             task_status,\n             task_business_status,\n             task_focus,\n             task_task_for,\n             task_execution_start_date,\n             task_execution_end_date,\n             goal_id,\n             action_code,\n             jurisdiction_name,\n             jurisdiction_parent_id,\n             structure_id,\n             structure_code,\n             structure_name,\n             structure_type,\n             structure_geometry\n      FROM task_structures_materialized_view) row) AS expr_qry\nWHERE jurisdiction_id = '3951'\n  AND action_code = 'Case Confirmation'\nLIMIT 10000;",
+  "status": "success",
+  "stacktrace": null,
+  "rowcount": 37,
+  "data": {
+    "records": [
+      {
+        "task_identifier": "aee7dc62-4ec5-4db3-9985-05f4e914f2ec",
+        "plan_id": "125ce534-9d84-5f94-8eb1-dd7616b7ba67",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Complete",
+        "geojson": "{\"id\": \"aee7dc62-4ec5-4db3-9985-05f4e914f2ec\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3514374, -15.4193609], [28.3516475, -15.4194092], [28.3516207, -15.4195178], [28.3514106, -15.4194695], [28.3514374, -15.4193609]]]}, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"125ce534-9d84-5f94-8eb1-dd7616b7ba67\", \"task_focus\": \"71d3349f-25d5-593d-b88d-704467e0945f\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Completed\", \"structure_id\": \"154149\", \"task_task_for\": \"03137c91-7818-4a77-b2cb-f811f80c0efc\", \"structure_code\": \"154149\", \"structure_name\": \"154149\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-03-30\", \"task_execution_start_date\": \"2020-03-23\"}}"
+      },
+      {
+        "task_identifier": "ae7118ca-9918-419c-a6da-4850f99b686d",
+        "plan_id": "c08a318d-9b63-5b46-9ce7-ac3a4c0ade6e",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"ae7118ca-9918-419c-a6da-4850f99b686d\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"c08a318d-9b63-5b46-9ce7-ac3a4c0ade6e\", \"task_focus\": \"67119e69-f14a-590f-8df6-570a8e6e3554\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-03-30\", \"task_execution_start_date\": \"2020-03-23\"}}"
+      },
+      {
+        "task_identifier": "1d56dd3a-84df-481a-a193-3f305f98751d",
+        "plan_id": "ff94ba68-70c6-4a16-bfa3-cde22befdb63",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"1d56dd3a-84df-481a-a193-3f305f98751d\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"ff94ba68-70c6-4a16-bfa3-cde22befdb63\", \"task_focus\": \"d913c234-110b-40d4-9fa0-41c88d137c3e\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "210df2c5-de35-4d2b-8d5b-c2213fc8c2ee",
+        "plan_id": "92420647-8b4d-47d5-8324-6d6c0498bfe2",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"210df2c5-de35-4d2b-8d5b-c2213fc8c2ee\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"92420647-8b4d-47d5-8324-6d6c0498bfe2\", \"task_focus\": \"e7b68df8-3964-4096-a878-00f75e708beb\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "2857112b-0111-4104-911e-8badb8779e42",
+        "plan_id": "e223f704-ab03-49ff-9d1f-20ed094d9f33",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"2857112b-0111-4104-911e-8badb8779e42\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"e223f704-ab03-49ff-9d1f-20ed094d9f33\", \"task_focus\": \"a821a4d1-666c-48ed-8c03-a050c7380fee\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "b421e054-b2b1-443b-b0b8-14bdfb6a1ad6",
+        "plan_id": "02b3629b-8eb8-531a-ada4-2dfa541f1dcf",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Complete",
+        "geojson": "{\"id\": \"b421e054-b2b1-443b-b0b8-14bdfb6a1ad6\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3512898, -15.4182898], [28.3513309, -15.4182819], [28.3513454, -15.4183521], [28.3510395, -15.4184111], [28.3510239, -15.4183359], [28.3511749, -15.4183068], [28.35116, -15.418235], [28.3512739, -15.4182131], [28.3512898, -15.4182898]]]}, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"02b3629b-8eb8-531a-ada4-2dfa541f1dcf\", \"task_focus\": \"608d4d53-0276-5c7d-9333-635c96a7e839\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Completed\", \"structure_id\": \"154142\", \"task_task_for\": \"8492a2c5-35d5-4669-92a7-0ba20d10a31d\", \"structure_code\": \"154142\", \"structure_name\": \"154142\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-03-30\", \"task_execution_start_date\": \"2020-03-23\"}}"
+      },
+      {
+        "task_identifier": "02035ac9-09f3-4698-b916-95eea0dbba42",
+        "plan_id": "c8a6a307-2403-556e-bf47-d8db2b100180",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Complete",
+        "geojson": "{\"id\": \"02035ac9-09f3-4698-b916-95eea0dbba42\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3517041814393, -15.4191251286028]}, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"c8a6a307-2403-556e-bf47-d8db2b100180\", \"task_focus\": \"63f94189-e51b-5f13-b64c-252aeceb4876\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Completed\", \"structure_id\": \"f3b0a597-6d35-40d4-a342-1fce938ef517\", \"task_task_for\": \"c74dc359-28f9-4873-90f4-70b8db55ebd0\", \"structure_code\": \"f3b0a597-6d35-40d4-a342-1fce938ef517\", \"structure_name\": \"f3b0a597-6d35-40d4-a342-1fce938ef517\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-04-06\", \"task_execution_start_date\": \"2020-03-30\"}}"
+      },
+      {
+        "task_identifier": "313895a4-e5e6-4897-b76e-3c72e4841b6d",
+        "plan_id": "23661d4c-08d0-49f0-8f25-22b2754c56d8",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"313895a4-e5e6-4897-b76e-3c72e4841b6d\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"23661d4c-08d0-49f0-8f25-22b2754c56d8\", \"task_focus\": \"483fdb4b-f7f6-49a4-8613-5f0ad05a5b19\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "32f0160c-1d43-4779-9168-0c5ba4d8a5aa",
+        "plan_id": "3bebdc80-c8e3-4cad-85f2-4e69182aab32",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"32f0160c-1d43-4779-9168-0c5ba4d8a5aa\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"3bebdc80-c8e3-4cad-85f2-4e69182aab32\", \"task_focus\": \"e39c7f03-e38b-4296-a1ac-4e3ef3df7385\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "1c13b985-0f45-40bb-9c63-45b4a7bcdbc7",
+        "plan_id": "7b6f9214-e4e8-525e-b7af-df593f0ea034",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"1c13b985-0f45-40bb-9c63-45b4a7bcdbc7\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"7b6f9214-e4e8-525e-b7af-df593f0ea034\", \"task_focus\": \"18216de5-2c7d-53ef-8ff9-563a8fb342d4\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-04-07\", \"task_execution_start_date\": \"2020-03-31\"}}"
+      },
+      {
+        "task_identifier": "4e1fefce-805d-4906-918d-d6accaa40601",
+        "plan_id": "4275102c-ef7c-465b-a210-e765ba630bf4",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"4e1fefce-805d-4906-918d-d6accaa40601\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"4275102c-ef7c-465b-a210-e765ba630bf4\", \"task_focus\": \"c0fb9191-3d69-4080-9c9c-081852679b57\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "511be78e-fc8a-11e9-8f0b-362b9e155667",
+        "plan_id": "a8b3010c-1ba5-556d-8b16-71266397b8b9",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"511be78e-fc8a-11e9-8f0b-362b9e155667\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"a8b3010c-1ba5-556d-8b16-71266397b8b9\", \"task_focus\": \"3951\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-12-21\", \"task_execution_start_date\": \"2019-11-01\"}}"
+      },
+      {
+        "task_identifier": "52bda9e3-6009-405e-81d7-f5f322f8096b",
+        "plan_id": "77895afb-539a-5b3e-9066-87dfc4fe2b60",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"52bda9e3-6009-405e-81d7-f5f322f8096b\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"77895afb-539a-5b3e-9066-87dfc4fe2b60\", \"task_focus\": \"672143cf-a853-5cad-a08e-38fe649bf233\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-02-25\", \"task_execution_start_date\": \"2020-02-18\"}}"
+      },
+      {
+        "task_identifier": "5b6aab91-b868-4f18-a9e1-3e1230d83a93",
+        "plan_id": "31308deb-1faf-4ac2-9ddb-d2775e57cb9b",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"5b6aab91-b868-4f18-a9e1-3e1230d83a93\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"31308deb-1faf-4ac2-9ddb-d2775e57cb9b\", \"task_focus\": \"786621f0-feac-4469-9fa6-92d654b293b3\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "6000b126-9a5e-45ae-befc-6787c148cd3d",
+        "plan_id": "c2676067-090e-4fa3-a578-8b6b0138d09b",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"6000b126-9a5e-45ae-befc-6787c148cd3d\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"c2676067-090e-4fa3-a578-8b6b0138d09b\", \"task_focus\": \"8d75bca7-7ff0-45ca-bc1b-639431023710\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-16\", \"task_execution_start_date\": \"2019-09-06\"}}"
+      },
+      {
+        "task_identifier": "f3ad033e-9f77-4255-83b0-41bfee5aeea5",
+        "plan_id": "a8b3010c-1ba5-556d-8b16-71266397b8b9",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Complete",
+        "geojson": "{\"id\": \"f3ad033e-9f77-4255-83b0-41bfee5aeea5\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"a8b3010c-1ba5-556d-8b16-71266397b8b9\", \"task_focus\": \"ae158ee0-dbd1-5eb9-ae4b-cc3f1f7805fc\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Completed\", \"structure_id\": null, \"task_task_for\": \"864381e4-bcef-4173-a638-dd86a4c130d3\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-11-08\", \"task_execution_start_date\": \"2019-11-01\"}}"
+      },
+      {
+        "task_identifier": "56c9ecbc-c64b-4561-9dd9-1e6ab2cd93e0",
+        "plan_id": "920fc0ea-769c-46b7-9c55-f5fdbc09a508",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"56c9ecbc-c64b-4561-9dd9-1e6ab2cd93e0\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"920fc0ea-769c-46b7-9c55-f5fdbc09a508\", \"task_focus\": \"8eb76fdd-86d1-46c6-a822-64aaccd6d4ea\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-06-15\", \"task_execution_start_date\": \"2020-06-05\"}}"
+      },
+      {
+        "task_identifier": "2cec0705-496f-45bc-89d9-bc94a62d6602",
+        "plan_id": "1fcf2b9d-4682-488a-8f70-062963ac708d",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"2cec0705-496f-45bc-89d9-bc94a62d6602\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"1fcf2b9d-4682-488a-8f70-062963ac708d\", \"task_focus\": \"86b9024c-c524-4c60-a980-53493bb0debd\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-06-15\", \"task_execution_start_date\": \"2020-06-05\"}}"
+      },
+      {
+        "task_identifier": "e5bd8bc4-5e43-468f-8305-ddfa32ea7bf3",
+        "plan_id": "24e34432-4767-5d81-b128-c3f0658519fe",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"e5bd8bc4-5e43-468f-8305-ddfa32ea7bf3\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"24e34432-4767-5d81-b128-c3f0658519fe\", \"task_focus\": \"bdc26b53-7265-52dc-a588-aef6aa70fbe3\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-05-28\", \"task_execution_start_date\": \"2020-05-21\"}}"
+      },
+      {
+        "task_identifier": "4cefcfb9-f04a-4e33-83e7-d8c806768bd2",
+        "plan_id": "45796561-e1bc-50eb-9e34-66361c428b57",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"4cefcfb9-f04a-4e33-83e7-d8c806768bd2\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"45796561-e1bc-50eb-9e34-66361c428b57\", \"task_focus\": \"822868b0-67dd-5bea-9006-d93bf87659ad\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-05-01\", \"task_execution_start_date\": \"2020-04-24\"}}"
+      },
+      {
+        "task_identifier": "6a113160-a9ea-4fd1-915f-9c357f24471b",
+        "plan_id": "75c3dac4-82d0-5a9e-8925-a59dbe1fd6ef",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"6a113160-a9ea-4fd1-915f-9c357f24471b\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"75c3dac4-82d0-5a9e-8925-a59dbe1fd6ef\", \"task_focus\": \"466ab423-41d3-54a8-9ccf-5f48da20badb\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-02-20\", \"task_execution_start_date\": \"2020-02-13\"}}"
+      },
+      {
+        "task_identifier": "1b378bcb-614a-4f0b-9d72-e949d5367a59",
+        "plan_id": "183df737-3e18-5a59-be69-fcaecd84eec3",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"1b378bcb-614a-4f0b-9d72-e949d5367a59\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"183df737-3e18-5a59-be69-fcaecd84eec3\", \"task_focus\": \"52ba683e-6a0f-5e8a-bd0d-720925aa2954\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-06-19\", \"task_execution_start_date\": \"2020-06-12\"}}"
+      },
+      {
+        "task_identifier": "845a1b9d-16f3-4fa2-9e52-c607c0098c36",
+        "plan_id": "36adfd55-3a61-4fcf-be39-3c9ccb2ffd78",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Complete",
+        "geojson": "{\"id\": \"845a1b9d-16f3-4fa2-9e52-c607c0098c36\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"36adfd55-3a61-4fcf-be39-3c9ccb2ffd78\", \"task_focus\": \"1e53b8c9-d649-487d-b45f-e775588ca6a0\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Completed\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-16\", \"task_execution_start_date\": \"2019-09-06\"}}"
+      },
+      {
+        "task_identifier": "8520e673-ee1d-407b-9429-9d5e383246b9",
+        "plan_id": "e1f9fbcf-abef-4f12-ad5f-efbf89736720",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"8520e673-ee1d-407b-9429-9d5e383246b9\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"e1f9fbcf-abef-4f12-ad5f-efbf89736720\", \"task_focus\": \"6c5bb84d-f26a-4777-afba-9b823bf83e18\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "9564b631-ea2d-4f8f-b24f-8e356195b7e2",
+        "plan_id": "67f864e8-2519-411c-88f5-bd2a4e50ce69",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"9564b631-ea2d-4f8f-b24f-8e356195b7e2\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"67f864e8-2519-411c-88f5-bd2a4e50ce69\", \"task_focus\": \"cee00581-87d0-4550-a50d-34b320f0c9db\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "a0287f11-e1e7-4633-91ab-338e359fc3a8",
+        "plan_id": "a6f7bc8f-d3ca-4cc7-820c-5c158936bfbc",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"a0287f11-e1e7-4633-91ab-338e359fc3a8\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"a6f7bc8f-d3ca-4cc7-820c-5c158936bfbc\", \"task_focus\": \"14d463af-8cb9-4fa3-b6cc-53727f93fde0\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "bb843e76-ebe2-44c4-8c8a-d68673f18d64",
+        "plan_id": "be407fd0-ee75-4445-b8ad-65473ee6c0b4",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"bb843e76-ebe2-44c4-8c8a-d68673f18d64\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"be407fd0-ee75-4445-b8ad-65473ee6c0b4\", \"task_focus\": \"c4164a00-5019-4c55-8a8b-2519e9d72697\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "c518d6da-a75c-43b2-a4b3-d8f3e21ca568",
+        "plan_id": "ff84771c-e86a-4468-8df6-01aa5d199a73",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"c518d6da-a75c-43b2-a4b3-d8f3e21ca568\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"ff84771c-e86a-4468-8df6-01aa5d199a73\", \"task_focus\": \"c305dc15-003c-47c1-9664-7defe110de0e\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "cef1959c-efbc-42d6-8225-a00a07ef1f4e",
+        "plan_id": "7e6b3d64-e92a-46e8-a000-cbf8898f5148",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"cef1959c-efbc-42d6-8225-a00a07ef1f4e\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"7e6b3d64-e92a-46e8-a000-cbf8898f5148\", \"task_focus\": \"2a2506c8-c2f9-47e8-984c-2f93d8a0b7bb\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "d0d8767b-5ccf-41ec-b527-59149ce8092f",
+        "plan_id": "1fa4f735-424f-5e15-9ec1-82a7eb5bb89c",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"d0d8767b-5ccf-41ec-b527-59149ce8092f\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"1fa4f735-424f-5e15-9ec1-82a7eb5bb89c\", \"task_focus\": \"b5839ded-381e-551e-a367-14f455e594a2\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-10-19\", \"task_execution_start_date\": \"2019-09-19\"}}"
+      },
+      {
+        "task_identifier": "d2f5c7ce-39ea-4ce8-8532-1a0db4eb645c",
+        "plan_id": "b6026aa7-f9d1-4533-9068-1fa9983b28c1",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"d2f5c7ce-39ea-4ce8-8532-1a0db4eb645c\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"b6026aa7-f9d1-4533-9068-1fa9983b28c1\", \"task_focus\": \"da455854-003d-4ca8-9920-f5b1de9d8545\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "e71ba47e-0356-44dd-93c7-438969e7d196",
+        "plan_id": "c252801c-56c2-4f33-bbf4-ad3184230209",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"e71ba47e-0356-44dd-93c7-438969e7d196\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"c252801c-56c2-4f33-bbf4-ad3184230209\", \"task_focus\": \"70bb8170-060e-4083-99fc-754ae9bf53f5\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "ec294c5a-cc31-42ab-aadd-f8742679813d",
+        "plan_id": "6702dc44-691c-50bc-9e64-23d0af1fa2be",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"ec294c5a-cc31-42ab-aadd-f8742679813d\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"6702dc44-691c-50bc-9e64-23d0af1fa2be\", \"task_focus\": \"f61063b4-a9b1-5f0f-88ef-92798adfd2ce\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-03-03\", \"task_execution_start_date\": \"2020-02-25\"}}"
+      },
+      {
+        "task_identifier": "f1b0e46b-95c7-4a83-86e6-78100764c315",
+        "plan_id": "855d4d1e-b366-510c-8c8a-6d997cd6408a",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"f1b0e46b-95c7-4a83-86e6-78100764c315\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"855d4d1e-b366-510c-8c8a-6d997cd6408a\", \"task_focus\": \"75b02922-cb21-5b48-ba7d-b9c1a3302078\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-10-19\", \"task_execution_start_date\": \"2019-09-19\"}}"
+      },
+      {
+        "task_identifier": "f34f53f1-5289-4b8d-92ae-f8566c0b9325",
+        "plan_id": "46a2a28c-102f-46ec-9d59-37aa22638ccb",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"f34f53f1-5289-4b8d-92ae-f8566c0b9325\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"46a2a28c-102f-46ec-9d59-37aa22638ccb\", \"task_focus\": \"e477a86c-eff5-4a87-b15a-8de965cfd4c0\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-09-19\", \"task_execution_start_date\": \"2019-09-09\"}}"
+      },
+      {
+        "task_identifier": "8c467ca2-08a9-41b1-b715-e333525d2ff1",
+        "plan_id": "dbff1960-1959-516e-b8db-64fe07860e7f",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"8c467ca2-08a9-41b1-b715-e333525d2ff1\", \"type\": \"Feature\", \"geometry\": null, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"dbff1960-1959-516e-b8db-64fe07860e7f\", \"task_focus\": \"469c3733-7f86-557d-8570-be83f21b26c2\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": null, \"task_task_for\": \"3951\", \"structure_code\": null, \"structure_name\": null, \"structure_type\": null, \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2020-03-24\", \"task_execution_start_date\": \"2020-03-17\"}}"
+      },
+      {
+        "task_identifier": "797bfffb-1981-4efc-ac7f-f428ec9795c2",
+        "plan_id": "bb1e64e5-850b-4cfb-9bd2-e876debd4a21",
+        "jurisdiction_id": "3951",
+        "goal_id": "Case_Confirmation",
+        "action_code": "Case Confirmation",
+        "task_business_status": "Not Visited",
+        "geojson": "{\"id\": \"797bfffb-1981-4efc-ac7f-f428ec9795c2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3522153, -15.4190714], [28.3523197, -15.4190534], [28.3523331, -15.4191258], [28.3522287, -15.4191438], [28.3522153, -15.4190714]]]}, \"properties\": {\"goal_id\": \"Case_Confirmation\", \"plan_id\": \"bb1e64e5-850b-4cfb-9bd2-e876debd4a21\", \"task_focus\": \"Case Confirmation\", \"action_code\": \"Case Confirmation\", \"task_status\": \"Ready\", \"structure_id\": \"154143\", \"task_task_for\": \"058b9e10-02f0-4b2b-928e-156e59ae9d03\", \"structure_code\": \"154143\", \"structure_name\": \"154143\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"3951\", \"jurisdiction_name\": \"Akros_1\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"3019\", \"task_execution_end_date\": \"2019-05-21\", \"task_execution_start_date\": \"2019-05-20\"}}"
+      }
+    ],
+    "columns": [
+      "task_identifier",
+      "plan_id",
+      "jurisdiction_id",
+      "goal_id",
+      "action_code",
+      "task_business_status",
+      "geojson"
+    ]
+  }
+}
