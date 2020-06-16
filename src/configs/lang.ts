@@ -157,6 +157,11 @@ export const ACTIONS = translate('ACTIONS', 'Actions');
 export const IDENTIFIER = translate('IDENTIFIER', 'Identifier');
 export const USERNAME = translate('USERNAME', 'Username');
 export const VIEW = translate('VIEW', 'view');
+export const JURISDICTION_METADATA = translate('JURISDICTION_METADATA', 'Jurisdiction Metadata');
+export const UPLOAD_JURISDICTION_METADATA = translate(
+  'UPLOAD_JURISDICTION_METADATA',
+  'Upload Jurisdiction Metadata'
+);
 
 export const REACTIVE = translate('REACTIVE', 'Reactive');
 export const REACTIVE_INVESTIGATION = translate('REACTIVE_INVESTIGATION', 'Reactive Investigation');

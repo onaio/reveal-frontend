@@ -73,6 +73,7 @@ import {
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
   SINGLE_ORGANIZATION_URL,
+  UPLOAD_JURISDICTION_METADATA_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -90,6 +91,7 @@ import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
 import ConnectedClientListView from '../containers/pages/MDAPoint/ClientListView';
 import ConnectedMdaPointJurisdictionReport from '../containers/pages/MDAPoint/jurisdictionsReport';
 import ConnectedSchoolReports from '../containers/pages/MDAPoint/LocationReports';
@@ -427,6 +429,14 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={`${ASSIGN_PRACTITIONERS_URL}/:id`}
                   component={ConnectedAssignPractitioner}
+                />
+                {/* Upload Jurisdiction Metadata view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={UPLOAD_JURISDICTION_METADATA_URL}
+                  component={JurisdictionMetadata}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route

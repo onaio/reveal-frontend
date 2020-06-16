@@ -91,6 +91,7 @@ export const BACKEND_CALLBACK_PATH = '/fe/oauth/callback/:id';
 export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
 export const CLIENTS_LIST_URL = '/clients';
 export const UPLOAD_CLIENT_CSV_URL = '/clients/upload';
+export const UPLOAD_JURISDICTION_METADATA_URL = '/jurisdiction-metadata/upload';
 export const GO_BACK_TEXT = 'Go Back';
 /** how long after opening a logout window should we wait before redirecting to express' server logout
  * I am not sure the optimum value for this, mozilla firefox seems to take some
