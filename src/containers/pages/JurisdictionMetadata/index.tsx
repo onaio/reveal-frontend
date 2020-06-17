@@ -14,11 +14,7 @@ import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { HOME, UPLOAD_JURISDICTION_METADATA } from '../../../configs/lang';
-import {
-  HOME_URL,
-  ORGANIZATIONS_LIST_URL,
-  UPLOAD_JURISDICTION_METADATA_URL,
-} from '../../../constants';
+import { HOME_URL, UPLOAD_JURISDICTION_METADATA_URL } from '../../../constants';
 import { RouteParams } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import { JurisdictionMetadataImport } from '../../../store/ducks/opensrp/jurisdictionMetadata';
@@ -57,7 +53,7 @@ const JurisdictionMetadataImportView = () => {
     OpenSRPService,
     disabledFields: [],
     initialValues: defaultInitialValues,
-    redirectAfterAction: ORGANIZATIONS_LIST_URL,
+    redirectAfterAction: HOME_URL,
     submitForm,
   };
 

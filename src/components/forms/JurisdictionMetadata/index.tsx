@@ -24,7 +24,7 @@ import { OpenSRPService } from '../../../services/opensrp';
 
 const SUPPORTED_FORMATS = ['text/csv'];
 
-/** yup validation schema for teams Form input */
+/** yup validation schema for Jurisdiction Metadata Form input */
 export const JurisdictionSchema = Yup.object().shape({
   file: Yup.mixed()
     .required(REQUIRED)
