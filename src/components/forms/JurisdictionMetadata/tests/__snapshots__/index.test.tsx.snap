@@ -15,5 +15,3 @@ exports[`components/forms/JurisdictionMetadata renders correctly: JurisdictionMe
   type="file"
 />
 `;
-
-exports[`components/forms/JurisdictionMetadata renders team form correctly: JurisdictionMetadata file 1`] = `null`;
