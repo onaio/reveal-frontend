@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/Table/NoDataComponent renders correctly 1`] = `
+<NoDataComponent
+  message="No Data Found"
+>
+  <div
+    className="no-data-cls"
+  >
+    <p>
+      No Data Found
+    </p>
+  </div>
+</NoDataComponent>
+`;
+
+exports[`src/components/Table/NoDataComponent renders custom message 1`] = `
+<NoDataComponent
+  message="No Investigations Found"
+>
+  <div
+    className="no-data-cls"
+  >
+    <p>
+      No Investigations Found
+    </p>
+  </div>
+</NoDataComponent>
+`;
