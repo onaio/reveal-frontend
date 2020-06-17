@@ -110,6 +110,7 @@ export const fetchData = async (
     /** filter caseConfirmation tasks by action code and jurisdiction_id */
     const tasksParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
       { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
+      { comparator: CASE_CONFIRMATION_CODE, operator: '==', subject: ACTION_CODE },
     ]);
 
     supersetCall(
