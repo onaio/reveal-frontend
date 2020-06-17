@@ -18,7 +18,7 @@ import {
   UPLOAD_FILE,
   UPLOADING,
 } from '../../../configs/lang';
-import { HOME_URL, OPENSRP_SETTINGS_ENDPOINT } from '../../../constants';
+import { HOME_URL, OPENSRP_V1_SETTINGS_ENDPOINT } from '../../../constants';
 import { growl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 
@@ -115,7 +115,7 @@ export const submitForm = (
   values?: JurisdictionMetadataFormFields
 ) => {
   if (values) {
-    const jurisdictionService = new props.OpenSRPService(OPENSRP_SETTINGS_ENDPOINT);
+    const jurisdictionService = new props.OpenSRPService(OPENSRP_V1_SETTINGS_ENDPOINT);
     handleFile(values.file, results => {
       const payload: JurisdictionMetadataPayLoad[] = createPayload(results);
       const valuesToSend = JSON.stringify(payload);
