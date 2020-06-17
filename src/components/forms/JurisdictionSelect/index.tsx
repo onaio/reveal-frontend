@@ -3,6 +3,7 @@ import { FieldConfig, FieldProps, FormikProps } from 'formik';
 import React, { useState } from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
 import { SELECT } from '../../../configs/lang';
+import { OPENSRP_ACTIVE, OPENSRP_FIND_BY_PROPERTIES, OPENSRP_LOCATION } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../helpers/utils';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
@@ -394,7 +395,7 @@ export const handleChange = (
 };
 /** default props for JurisdictionSelect */
 export const defaultProps: Partial<JurisdictionSelectProps> = {
-  apiEndpoint: 'location/findByProperties',
+  apiEndpoint: `${OPENSRP_LOCATION}/${OPENSRP_FIND_BY_PROPERTIES}`,
   cascadingSelect: true,
   handleChange,
   handleChangeWithOptions,
@@ -433,6 +434,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
 
   const service = new serviceClass(apiEndpoint);
   const propertiesToFilter = {
+    status: OPENSRP_ACTIVE,
     ...(parentId === '' && { geographicLevel: 0 }),
     ...(parentId !== '' && { parentId }),
   };
