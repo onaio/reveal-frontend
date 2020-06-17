@@ -1,6 +1,14 @@
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import * as React from 'react';
+import { GeoJSONLayer } from 'react-mapbox-gl';
 import { ActionCreator } from 'redux';
+import { GREY } from '../../../../../../colors';
+import {
+  circleLayerTemplate,
+  fillLayerTemplate,
+  lineLayerTemplate,
+  symbolLayerTemplate,
+} from '../../../../../../components/GisidaLite/helpers';
 import {
   SUPERSET_GOALS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
@@ -11,18 +19,33 @@ import {
 } from '../../../../../../configs/env';
 import { AN_ERROR_OCCURRED } from '../../../../../../configs/lang';
 import { CASE_CLASSIFICATION_LABEL, END_DATE, START_DATE } from '../../../../../../configs/lang';
-import { JURISDICTION_ID, PLAN_ID, CASE_CONFIRMATION_CODE, ACTION_CODE } from '../../../../../../constants';
+import {
+  ACTION_CODE,
+  CASE_CONFIRMATION_CODE,
+  CASE_CONFIRMATION_GOAL_ID,
+  JURISDICTION_ID,
+  LARVAL_DIPPING_ID,
+  MAIN_PLAN,
+  MOSQUITO_COLLECTION_ID,
+  PLAN_ID,
+  STRUCTURES_FILL,
+  STRUCTURES_LINE,
+} from '../../../../../../constants';
 import { ROUTINE } from '../../../../../../constants';
 import { displayError } from '../../../../../../helpers/errors';
-import { PopHandler, popupHandler } from '../../../../../../helpers/handlers';
+import { popupHandler } from '../../../../../../helpers/handlers';
 import supersetFetch from '../../../../../../services/superset';
 import { fetchGoals, FetchGoalsAction } from '../../../../../../store/ducks/goals';
 import { fetchJurisdictions, Jurisdiction } from '../../../../../../store/ducks/jurisdictions';
 import { fetchPlans, FetchPlansAction, Plan } from '../../../../../../store/ducks/plans';
-import { setStructures, SetStructuresAction } from '../../../../../../store/ducks/structures';
-import { fetchTasks, FetchTasksAction } from '../../../../../../store/ducks/tasks';
-import props from '../../../../../../components/DatePickerWrapper/tests/fixtures';
+import {
+  setStructures,
+  SetStructuresAction,
+  StructureGeoJSON,
+} from '../../../../../../store/ducks/structures';
+import { fetchTasks, FetchTasksAction, TaskGeoJSON } from '../../../../../../store/ducks/tasks';
 
+import { FeatureCollection } from '../../../../../../helpers/utils';
 
 /** abstracts code that actually makes the superset Call since it is quite similar */
 export async function supersetCall<TAction>(
@@ -139,7 +162,7 @@ export const fetchData = async (
  * @param method  Event handler
  */
 export const buildHandlers = (planId: string, method: any = popupHandler) => {
-  let customMethod = (e: any) => popupHandler(e, planId);
+  const customMethod = (e: any) => method(e, planId);
   return [
     {
       method: customMethod,
@@ -188,4 +211,175 @@ export const getDetailViewPlanInvestigationContainer = (plan: Plan): React.React
   }
 
   return detailViewPlanInvestigationContainer;
+};
+
+/** returns layer for the jurisdiction
+ * @param {Jurisdiction | null} jurisdiction - the jurisdiction
+ */
+export const buildJurisdictionLayers = (jurisdiction: Jurisdiction | null) => {
+  const jurisdictionLayer = [];
+  if (jurisdiction) {
+    jurisdictionLayer.push(
+      <GeoJSONLayer
+        {...lineLayerTemplate}
+        id={`${MAIN_PLAN}-${jurisdiction.jurisdiction_id}`}
+        data={jurisdiction.geojson}
+        key={`${MAIN_PLAN}-${jurisdiction.jurisdiction_id}`}
+      />
+    );
+  }
+  return jurisdictionLayer;
+};
+
+/** returns the layers for the structures
+ * @param {FeatureCollection<StructureGeoJSON> | null} structs - the structures
+ */
+export const buildStructureLayers = (
+  structs: FeatureCollection<StructureGeoJSON> | null
+): JSX.Element[] => {
+  const structureLayers: JSX.Element[] = [];
+  if (structs && structs.features && structs.features.length) {
+    structureLayers.push(
+      <GeoJSONLayer
+        {...lineLayerTemplate}
+        linePaint={{
+          ...lineLayerTemplate.linePaint,
+          'line-color': GREY,
+          'line-opacity': 1,
+          'line-width': 2,
+        }}
+        data={structs}
+        id={STRUCTURES_LINE}
+        key={STRUCTURES_LINE}
+      />
+    );
+    structureLayers.push(
+      <GeoJSONLayer
+        {...fillLayerTemplate}
+        fillPaint={{
+          ...fillLayerTemplate.fillPaint,
+          'fill-color': GREY,
+          'fill-outline-color': GREY,
+        }}
+        data={structs}
+        id={STRUCTURES_FILL}
+        key={STRUCTURES_FILL}
+      />
+    );
+  }
+  return structureLayers;
+};
+
+/** describes the last arg to buildGsLiteLayers */
+interface ExtraVars {
+  useId?: string; // override the goalId to be used for the layer;
+}
+
+/** build layers for all other points , polygons and multi-polygons
+ * @param {string | null} currentGoal - goal id for the layer that is being built
+ * @param {FeatureCollection<TaskGeoJSON>} pointFeatureCollection- feature collection for points
+ * @param {FeatureCollection<TaskGeoJSON>} polygonFeatureCollection - feature collection for polygons and multi-polygons
+ * @param {ExtraVars} - some vars to help in if branches within the function
+ */
+export const buildGsLiteLayers = (
+  currentGoal: string | null,
+  pointFeatureCollection: FeatureCollection<TaskGeoJSON>,
+  polygonFeatureCollection: FeatureCollection<TaskGeoJSON>,
+  extraVars: ExtraVars
+) => {
+  const idToUse = extraVars.useId ? extraVars.useId : currentGoal;
+  const gsLayers = [];
+
+  // define which goal ids will also include the symbols.
+  const goalsWithSymbols = [MOSQUITO_COLLECTION_ID, CASE_CONFIRMATION_GOAL_ID, LARVAL_DIPPING_ID];
+  const goalIsWithSymbol = goalsWithSymbols.includes(currentGoal || '');
+
+  // define the icon for goals with symbols
+
+  let iconGoal: string = 'case-confirmation';
+  switch (currentGoal) {
+    case MOSQUITO_COLLECTION_ID:
+      iconGoal = 'mosquito';
+      break;
+    case LARVAL_DIPPING_ID:
+      iconGoal = 'larval';
+      break;
+  }
+
+  if (pointFeatureCollection) {
+    if (goalIsWithSymbol) {
+      gsLayers.push(
+        <GeoJSONLayer
+          {...symbolLayerTemplate}
+          symbolLayout={{
+            ...symbolLayerTemplate.symbolLayout,
+            'icon-image': iconGoal,
+            'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+          }}
+          id={`${idToUse}-point-symbol`}
+          key={`${idToUse}-point-symbol`}
+          data={pointFeatureCollection}
+        />
+      );
+    }
+    gsLayers.push(
+      <GeoJSONLayer
+        {...circleLayerTemplate}
+        circlePaint={{
+          ...circleLayerTemplate.circlePaint,
+          'circle-color': ['get', 'color'],
+          'circle-stroke-color': ['get', 'color'],
+          'circle-stroke-opacity': 1,
+        }}
+        id={`${idToUse}-point`}
+        key={`${idToUse}-point`}
+        data={pointFeatureCollection}
+      />
+    );
+  }
+  if (polygonFeatureCollection) {
+    if (goalIsWithSymbol) {
+      gsLayers.push(
+        <GeoJSONLayer
+          {...symbolLayerTemplate}
+          symbolLayout={{
+            ...symbolLayerTemplate.symbolLayout,
+            'icon-image': iconGoal,
+            'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+          }}
+          id={`${idToUse}-poly-symbol`}
+          key={`${idToUse}-poly-symbol`}
+          data={polygonFeatureCollection}
+        />
+      );
+    }
+    gsLayers.push(
+      <GeoJSONLayer
+        {...lineLayerTemplate}
+        linePaint={{
+          ...lineLayerTemplate.linePaint,
+          'line-color': ['get', 'color'],
+          'line-opacity': 1,
+          'line-width': 2,
+        }}
+        data={polygonFeatureCollection}
+        id={`${idToUse}-fill-line`}
+        key={`${idToUse}-fill-line`}
+      />
+    );
+    gsLayers.push(
+      <GeoJSONLayer
+        {...fillLayerTemplate}
+        fillPaint={{
+          ...fillLayerTemplate.fillPaint,
+          'fill-color': ['get', 'color'],
+          'fill-outline-color': ['get', 'color'],
+        }}
+        data={polygonFeatureCollection}
+        id={`${idToUse}-fill`}
+        key={`${idToUse}-fill`}
+      />
+    );
+  }
+  return gsLayers;
 };

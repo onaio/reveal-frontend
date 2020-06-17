@@ -1,0 +1,342 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 1`] = `
+Object {
+  "id": "main-plan-layer-3951",
+  "lineLayout": Object {
+    "visibility": "visible",
+  },
+  "linePaint": Object {
+    "line-color": "#FFDC00",
+    "line-opacity": 1,
+    "line-width": 3,
+  },
+  "type": "line",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 2`] = `
+Object {
+  "id": "structures-line",
+  "lineLayout": Object {
+    "visibility": "visible",
+  },
+  "linePaint": Object {
+    "line-color": "#666a6d",
+    "line-opacity": 1,
+    "line-width": 2,
+  },
+  "type": "line",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 3`] = `
+Object {
+  "fillLayout": Object {
+    "visibility": "visible",
+  },
+  "fillPaint": Object {
+    "fill-color": "#666a6d",
+    "fill-outline-color": "#666a6d",
+  },
+  "id": "structures-fill",
+  "type": "fill",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 4`] = `
+Object {
+  "id": "historical-index-cases-point-symbol",
+  "symbolLayout": Object {
+    "icon-image": "case-confirmation",
+    "icon-size": 0.045,
+    "visibility": "visible",
+  },
+  "symbolPaint": Object {
+    "text-color": "#0000ff",
+    "text-halo-blur": 1,
+    "text-halo-color": "#fff",
+    "text-halo-width": 1.3,
+  },
+  "type": "symbol",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 5`] = `
+Object {
+  "circleLayout": Object {
+    "visibility": "visible",
+  },
+  "circlePaint": Object {
+    "circle-color": Array [
+      "get",
+      "color",
+    ],
+    "circle-opacity": 0.7,
+    "circle-radius": Array [
+      "interpolate",
+      Array [
+        "exponential",
+        2,
+      ],
+      Array [
+        "zoom",
+      ],
+      15.75,
+      2.5,
+      20.8,
+      50,
+    ],
+    "circle-stroke-color": Array [
+      "get",
+      "color",
+    ],
+    "circle-stroke-opacity": 1,
+    "circle-stroke-width": 2,
+  },
+  "id": "historical-index-cases-point",
+  "type": "circle",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 6`] = `
+Object {
+  "id": "historical-index-cases-poly-symbol",
+  "symbolLayout": Object {
+    "icon-image": "case-confirmation",
+    "icon-size": 0.045,
+    "visibility": "visible",
+  },
+  "symbolPaint": Object {
+    "text-color": "#0000ff",
+    "text-halo-blur": 1,
+    "text-halo-color": "#fff",
+    "text-halo-width": 1.3,
+  },
+  "type": "symbol",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 7`] = `
+Object {
+  "id": "historical-index-cases-fill-line",
+  "lineLayout": Object {
+    "visibility": "visible",
+  },
+  "linePaint": Object {
+    "line-color": Array [
+      "get",
+      "color",
+    ],
+    "line-opacity": 1,
+    "line-width": 2,
+  },
+  "type": "line",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 8`] = `
+Object {
+  "fillLayout": Object {
+    "visibility": "visible",
+  },
+  "fillPaint": Object {
+    "fill-color": Array [
+      "get",
+      "color",
+    ],
+    "fill-outline-color": Array [
+      "get",
+      "color",
+    ],
+  },
+  "id": "historical-index-cases-fill",
+  "type": "fill",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 9`] = `
+Object {
+  "id": "current-index-cases-point-symbol",
+  "symbolLayout": Object {
+    "icon-image": "case-confirmation",
+    "icon-size": 0.045,
+    "visibility": "visible",
+  },
+  "symbolPaint": Object {
+    "text-color": "#0000ff",
+    "text-halo-blur": 1,
+    "text-halo-color": "#fff",
+    "text-halo-width": 1.3,
+  },
+  "type": "symbol",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 10`] = `
+Object {
+  "circleLayout": Object {
+    "visibility": "visible",
+  },
+  "circlePaint": Object {
+    "circle-color": Array [
+      "get",
+      "color",
+    ],
+    "circle-opacity": 0.7,
+    "circle-radius": Array [
+      "interpolate",
+      Array [
+        "exponential",
+        2,
+      ],
+      Array [
+        "zoom",
+      ],
+      15.75,
+      2.5,
+      20.8,
+      50,
+    ],
+    "circle-stroke-color": Array [
+      "get",
+      "color",
+    ],
+    "circle-stroke-opacity": 1,
+    "circle-stroke-width": 2,
+  },
+  "id": "current-index-cases-point",
+  "type": "circle",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 11`] = `
+Object {
+  "id": "current-index-cases-poly-symbol",
+  "symbolLayout": Object {
+    "icon-image": "case-confirmation",
+    "icon-size": 0.045,
+    "visibility": "visible",
+  },
+  "symbolPaint": Object {
+    "text-color": "#0000ff",
+    "text-halo-blur": 1,
+    "text-halo-color": "#fff",
+    "text-halo-width": 1.3,
+  },
+  "type": "symbol",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 12`] = `
+Object {
+  "id": "current-index-cases-fill-line",
+  "lineLayout": Object {
+    "visibility": "visible",
+  },
+  "linePaint": Object {
+    "line-color": Array [
+      "get",
+      "color",
+    ],
+    "line-opacity": 1,
+    "line-width": 2,
+  },
+  "type": "line",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 13`] = `
+Object {
+  "fillLayout": Object {
+    "visibility": "visible",
+  },
+  "fillPaint": Object {
+    "fill-color": Array [
+      "get",
+      "color",
+    ],
+    "fill-outline-color": Array [
+      "get",
+      "color",
+    ],
+  },
+  "id": "current-index-cases-fill",
+  "type": "fill",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 14`] = `
+Object {
+  "circleLayout": Object {
+    "visibility": "visible",
+  },
+  "circlePaint": Object {
+    "circle-color": Array [
+      "get",
+      "color",
+    ],
+    "circle-opacity": 0.7,
+    "circle-radius": Array [
+      "interpolate",
+      Array [
+        "exponential",
+        2,
+      ],
+      Array [
+        "zoom",
+      ],
+      15.75,
+      2.5,
+      20.8,
+      50,
+    ],
+    "circle-stroke-color": Array [
+      "get",
+      "color",
+    ],
+    "circle-stroke-opacity": 1,
+    "circle-stroke-width": 2,
+  },
+  "id": "RACD_register_families-point",
+  "type": "circle",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 15`] = `
+Object {
+  "id": "RACD_register_families-fill-line",
+  "lineLayout": Object {
+    "visibility": "visible",
+  },
+  "linePaint": Object {
+    "line-color": Array [
+      "get",
+      "color",
+    ],
+    "line-opacity": 1,
+    "line-width": 2,
+  },
+  "type": "line",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 16`] = `
+Object {
+  "fillLayout": Object {
+    "visibility": "visible",
+  },
+  "fillPaint": Object {
+    "fill-color": Array [
+      "get",
+      "color",
+    ],
+    "fill-outline-color": Array [
+      "get",
+      "color",
+    ],
+  },
+  "id": "RACD_register_families-fill",
+  "type": "fill",
+}
+`;

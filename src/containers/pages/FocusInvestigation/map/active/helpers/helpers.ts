@@ -1,25 +1,24 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
 import { Dictionary } from '@onaio/utils';
-import { GREY } from '../../../../../colors';
-import { GisidaProps } from '../../../../../components/GisidaWrapper';
+import { GREY } from '../../../../../../colors';
+import { GisidaProps } from '../../../../../../components/GisidaWrapper';
 import {
   circleLayerConfig,
   fillLayerConfig,
   lineLayerConfig,
   symbolLayerConfig,
-} from '../../../../../configs/settings';
+} from '../../../../../../configs/settings';
 import {
   CASE_CONFIRMATION_GOAL_ID,
-  GOAL_CONFIRMATION_GOAL_ID,
   LARVAL_DIPPING_ID,
   MAIN_PLAN,
   MOSQUITO_COLLECTION_ID,
   STRUCTURE_LAYER,
-} from '../../../../../constants';
-import { FeatureCollection } from '../../../../../helpers/utils';
-import { Jurisdiction } from '../../../../../store/ducks/jurisdictions';
-import { StructureGeoJSON } from '../../../../../store/ducks/structures';
-import { TaskGeoJSON } from '../../../../../store/ducks/tasks';
+} from '../../../../../../constants';
+import { FeatureCollection } from '../../../../../../helpers/utils';
+import { Jurisdiction } from '../../../../../../store/ducks/jurisdictions';
+import { StructureGeoJSON } from '../../../../../../store/ducks/structures';
+import { TaskGeoJSON } from '../../../../../../store/ducks/tasks';
 
 /** FILayers - represents layers to be rendered on the FI Map */
 export interface FILayers {
@@ -119,7 +118,7 @@ export const getGisidaWrapperProps = (
         id: element.id,
         layout: {
           'icon-image': iconGoal,
-          'icon-size': currentGoalId === GOAL_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+          'icon-size': currentGoalId === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
         },
         source: {
           ...symbolLayerConfig.source,

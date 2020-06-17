@@ -205,9 +205,9 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
     const placebo = 'randomId';
     expect(getAllFC(store.getState())).toEqual(expected);
     expect(getFCByGoalId(store.getState(), placebo)).toEqual(expected);
-    expect(getFCByPlanAndGoalAndJurisdiction(store.getState(), placebo, placebo, placebo)).toEqual(
-      expected
-    );
+    expect(
+      getFCByPlanAndGoalAndJurisdiction(store.getState(), placebo, [placebo], placebo)
+    ).toEqual(expected);
     expect(getFCByJurisdictionId(store.getState(), placebo)).toEqual(expected);
     expect(getFCByPlanId(store.getState(), placebo)).toEqual(expected);
     expect(getFCByPlanAndJurisdiction(store.getState(), placebo, placebo)).toEqual(expected);
@@ -320,7 +320,7 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
       type: 'FeatureCollection',
     };
     expect(
-      getFCByPlanAndGoalAndJurisdiction(store.getState(), planId, goalId, jurisdictionId)
+      getFCByPlanAndGoalAndJurisdiction(store.getState(), planId, [goalId], jurisdictionId)
     ).toEqual(expected);
   });
 

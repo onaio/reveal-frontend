@@ -1,7 +1,9 @@
+import { Style } from 'mapbox-gl';
 import React, { Fragment } from 'react';
 import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl';
 import Loading from '../../components/page/Loading';
 import { GISIDA_MAPBOX_TOKEN } from '../../configs/env';
+import { gsLiteStyle } from './helpers';
 
 /** interface for  GisidaLite props */
 interface GisidaLiteProps {
@@ -9,10 +11,10 @@ interface GisidaLiteProps {
   attributionControl: boolean;
   customAttribution: string;
   injectCSS: boolean;
-  layers: any; // TODO: type this correctly
+  layers: JSX.Element[];
   mapCenter: [number, number] | undefined;
   mapHeight: string;
-  mapStyle: string;
+  mapStyle: Style | string;
   mapWidth: string;
   scrollZoom: boolean;
   zoom: number;
@@ -26,11 +28,11 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   injectCSS: true,
   layers: [],
   mapCenter: undefined,
-  mapHeight: '60vh', // what is the correct default height?
-  mapStyle: 'mapbox://styles/mapbox/satellite-v9', // is this the right one?
+  mapHeight: '800px',
+  mapStyle: gsLiteStyle,
   mapWidth: '100%',
-  scrollZoom: false,
-  zoom: 15, // what's the default zoom level we use right now?
+  scrollZoom: true,
+  zoom: 15,
 };
 
 /**
@@ -42,7 +44,7 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
  * TODO: Fix map jankiness
  */
 const GisidaLite = (props: GisidaLiteProps) => {
-  const [renderlayers, setRenderLayers] = React.useState<boolean>(false);
+  const [renderLayers, setRenderLayers] = React.useState<boolean>(false);
   const {
     accessToken,
     attributionControl,
@@ -70,14 +72,13 @@ const GisidaLite = (props: GisidaLiteProps) => {
   }
 
   const runAfterMapLoaded = () => {
-    if (!renderlayers) {
+    if (!renderLayers) {
       setRenderLayers(true);
     }
   };
 
   return (
     <Fragment>
-      {/* TODO: figure out how to use digital globe  */}
       <Map
         center={mapCenter}
         zoom={[zoom]}
@@ -88,10 +89,13 @@ const GisidaLite = (props: GisidaLiteProps) => {
         }}
         onStyleLoad={runAfterMapLoaded}
       >
-        {renderlayers &&
-          layers.map((item: any, index: number) => <Fragment key={index}>{item}</Fragment>)}
-        {/* TODO: figure out why removing this comment raises type errors */}
-        <ZoomControl />
+        <>
+          {renderLayers &&
+            layers.map((item: any, index: number) => (
+              <Fragment key={`gsLite-${index}`}>{item}</Fragment>
+            ))}
+          <ZoomControl />
+        </>
       </Map>
     </Fragment>
   );
