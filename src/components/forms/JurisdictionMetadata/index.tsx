@@ -10,6 +10,9 @@ import {
   CSV_FILE,
   FILE,
   FILE_UPLOADED_SUCCESSFULLY,
+  JURISDICTION_ID,
+  JURISDICTION_METADATA,
+  JURISDICTION_NAME,
   REQUIRED,
   UPLOAD,
   UPLOAD_FILE,
@@ -35,7 +38,7 @@ export interface JurisdictionMetadataFormFields {
 export interface JurisdictionMetadataPayLoad {
   description: string;
   label: string;
-  value: string;
+  value: string | unknown;
   key: string;
   type: string;
   identifier: string;
@@ -62,30 +65,43 @@ export const defaultInitialValues: JurisdictionMetadataFormFields = {
   file: new File([], ''),
 };
 
+// create payload items
 const createPayload = (result: any): JurisdictionMetadataPayLoad[] => {
-  const { data } = result;
   const payload: JurisdictionMetadataPayLoad[] = [];
-  for (const item of data) {
-    const payloadItem: JurisdictionMetadataPayLoad = {
-      description: 'nj',
-      identifier: '',
-      key: '',
-      label: '',
-      locationId: item.jurisdiction_id,
-      providerId: '',
-      settingsId: '',
-      type: 'SettingConfiguration',
-      value: '',
-    };
-    payload.push(payloadItem);
+  const { data } = result;
+
+  // check if jurisdiction_id exists
+  if (data.length > 0 && data[0].jurisdiction_id) {
+    // get entries per jurisdiction
+    for (const item of data) {
+      // get entries under a jurisdiction
+      const entries = Object.entries(item);
+      for (const [key, value] of entries) {
+        if (key !== JURISDICTION_ID && key !== JURISDICTION_NAME) {
+          const payloadItem: JurisdictionMetadataPayLoad = {
+            description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
+            identifier: 'jurisdiction_metadata',
+            key,
+            label: `${item.jurisdiction_name} metadata`,
+            locationId: item.jurisdiction_id,
+            providerId: 'demo',
+            settingsId: '',
+            type: 'SettingConfiguration',
+            value,
+          };
+          payload.push(payloadItem);
+        }
+      }
+    }
   }
   return payload;
 };
 
-const handleFile = (file: File) => {
+// read csv and convert to json
+const handleFile = (file: File, complete: (results: any) => any) => {
   Papaparse.parse(file, {
     complete: results => {
-      createPayload(results);
+      complete(results);
     },
     header: true,
   });
@@ -100,24 +116,28 @@ export const submitForm = (
 ) => {
   if (values) {
     const jurisdictionService = new props.OpenSRPService(OPENSRP_SETTINGS_ENDPOINT);
-
-    handleFile(values.file);
-    const valuesToSend = {
-      ...values,
-    };
-    jurisdictionService
-      .create(valuesToSend)
-      .then(() => {
+    handleFile(values.file, results => {
+      const payload: JurisdictionMetadataPayLoad[] = createPayload(results);
+      const valuesToSend = JSON.stringify(payload);
+      if (payload.length > 0) {
+        jurisdictionService
+          .create(valuesToSend)
+          .then(() => {
+            setSubmitting(false);
+            growl(FILE_UPLOADED_SUCCESSFULLY, {
+              onClose: () => setIfDoneHere(true),
+              type: toast.TYPE.SUCCESS,
+            });
+          })
+          .catch((e: Error) => {
+            setGlobalError(e.message);
+            setSubmitting(false);
+          });
+      } else {
+        setGlobalError('Invalid CSV');
         setSubmitting(false);
-        growl(FILE_UPLOADED_SUCCESSFULLY, {
-          onClose: () => setIfDoneHere(true),
-          type: toast.TYPE.SUCCESS,
-        });
-      })
-      .catch((e: Error) => {
-        setGlobalError(e.message);
-        setSubmitting(false);
-      });
+      }
+    });
   }
 };
 const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {

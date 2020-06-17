@@ -575,3 +575,5 @@ export const ALB_TABLETS_DISTRIBUTED = translate(
 );
 export const FILE = translate('FILE', 'File');
 export const CSV_FILE = translate('CSV_FILE', 'CSV File');
+export const JURISDICTION_ID = translate('JURISDICTION_ID', 'jurisdiction_id');
+export const JURISDICTION_NAME = translate('JURISDICTION_NAME', 'jurisdiction_name');
