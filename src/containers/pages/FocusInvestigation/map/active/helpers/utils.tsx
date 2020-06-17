@@ -282,8 +282,8 @@ interface ExtraVars {
  */
 export const buildGsLiteLayers = (
   currentGoal: string | null,
-  pointFeatureCollection: FeatureCollection<TaskGeoJSON>,
-  polygonFeatureCollection: FeatureCollection<TaskGeoJSON>,
+  pointFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
+  polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
   extraVars: ExtraVars
 ) => {
   const idToUse = extraVars.useId ? extraVars.useId : currentGoal;
