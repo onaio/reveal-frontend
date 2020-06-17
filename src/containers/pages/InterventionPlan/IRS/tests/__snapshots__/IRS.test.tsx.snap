@@ -24,11 +24,15 @@ Object {
     Object {
       "Header": "Date Created",
       "accessor": "plan_date",
+      "maxWidth": 50,
+      "minWidth": 20,
     },
     Object {
       "Header": "Status",
       "accessor": [Function],
       "id": "plan_status",
+      "maxWidth": 50,
+      "minWidth": 20,
     },
   ],
   "data": Array [
@@ -63,11 +67,11 @@ Object {
   "linkerField": "id",
   "loading": false,
   "loadingComponent": [Function],
-  "nullDataComponent": [Function],
   "paginate": true,
   "parentIdentifierField": "parent_id",
   "renderInBottomFilterBar": [Function],
   "renderInTopFilterBar": [Function],
+  "renderNullDataComponent": [Function],
   "resize": true,
   "rootParentId": null,
   "useDrillDown": false,

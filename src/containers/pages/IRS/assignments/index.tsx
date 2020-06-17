@@ -249,6 +249,7 @@ const mapStateToProps = (
   const mdaPointPlans = plansArraySelector(state as Registry, {
     interventionType: InterventionType.MDAPoint,
     statusList: planStatus,
+    title,
   });
   const plans = [...fiPlans, ...irsPlans, ...mdaPlans, ...mdaPointPlans].sort(
     (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
