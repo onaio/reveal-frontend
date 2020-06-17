@@ -35,16 +35,20 @@ export interface JurisdictionMetadataFormFields {
   file: File;
 }
 
-export interface JurisdictionMetadataPayLoad {
+export interface Setting {
   description: string;
   label: string;
   value: string | unknown;
   key: string;
+}
+
+export interface SettingConfiguration {
   type: string;
   identifier: string;
   providerId: string;
   locationId: string;
-  settingsId: string;
+  settings: Setting[];
+  teamId: string;
 }
 
 export interface JurisdictionMetadataFormProps {
@@ -65,36 +69,45 @@ export const defaultInitialValues: JurisdictionMetadataFormFields = {
   file: new File([], ''),
 };
 
-// create payload items
-const createPayload = (result: any): JurisdictionMetadataPayLoad[] => {
-  const payload: JurisdictionMetadataPayLoad[] = [];
+// create payloads for sending
+const createPayloads = (result: any): SettingConfiguration[] => {
+  const payloads: SettingConfiguration[] = [];
   const { data } = result;
-
   // check if jurisdiction_id exists
   if (data.length > 0 && data[0].jurisdiction_id) {
-    // get entries per jurisdiction
-    for (const item of data) {
-      // get entries under a jurisdiction
-      const entries = Object.entries(item);
-      for (const [key, value] of entries) {
-        if (key !== JURISDICTION_ID && key !== JURISDICTION_NAME) {
-          const payloadItem: JurisdictionMetadataPayLoad = {
-            description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
-            identifier: 'jurisdiction_metadata',
-            key,
-            label: `${item.jurisdiction_name} metadata`,
-            locationId: item.jurisdiction_id,
-            providerId: 'demo',
-            settingsId: '',
-            type: 'SettingConfiguration',
-            value,
-          };
-          payload.push(payloadItem);
+    // get the metadata items
+    const headers = Object.keys(data[0]);
+    for (const header of headers) {
+      const settings: Setting[] = [];
+      if (header !== JURISDICTION_ID && header !== JURISDICTION_NAME) {
+        // add the metadata values with jurisdiction as the key
+        for (const item of data) {
+          const entries = Object.entries(item);
+          for (const [key, value] of entries) {
+            if (key === header) {
+              const setting: Setting = {
+                description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
+                key: item.jurisdiction_id,
+                label: `${item.jurisdiction_name} metadata`,
+                value,
+              };
+              settings.push(setting);
+            }
+          }
         }
+        const payload: SettingConfiguration = {
+          identifier: `jurisdiction_metadata-${header}`,
+          locationId: '',
+          providerId: 'demo',
+          settings,
+          teamId: '',
+          type: 'SettingConfiguration',
+        };
+        payloads.push(payload);
       }
     }
   }
-  return payload;
+  return payloads;
 };
 
 // read csv and convert to json
@@ -117,22 +130,24 @@ export const submitForm = (
   if (values) {
     const jurisdictionService = new props.OpenSRPService(OPENSRP_V1_SETTINGS_ENDPOINT);
     handleFile(values.file, results => {
-      const payload: JurisdictionMetadataPayLoad[] = createPayload(results);
-      const valuesToSend = JSON.stringify(payload);
-      if (payload.length > 0) {
-        jurisdictionService
-          .create(valuesToSend)
-          .then(() => {
-            setSubmitting(false);
-            growl(FILE_UPLOADED_SUCCESSFULLY, {
-              onClose: () => setIfDoneHere(true),
-              type: toast.TYPE.SUCCESS,
+      const payloads: SettingConfiguration[] = createPayloads(results);
+      if (payloads.length > 0) {
+        // loop through payloads and send
+        for (const payload of payloads) {
+          const valuesToSend = JSON.stringify(payload);
+          jurisdictionService
+            .create(valuesToSend)
+            .then(() => {
+              growl(FILE_UPLOADED_SUCCESSFULLY, {
+                onClose: () => setIfDoneHere(true),
+                type: toast.TYPE.SUCCESS,
+              });
+            })
+            .catch((e: Error) => {
+              setGlobalError(e.message);
             });
-          })
-          .catch((e: Error) => {
-            setGlobalError(e.message);
-            setSubmitting(false);
-          });
+        }
+        setSubmitting(false);
       } else {
         setGlobalError('Invalid CSV');
         setSubmitting(false);
