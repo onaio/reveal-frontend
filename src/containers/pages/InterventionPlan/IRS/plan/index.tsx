@@ -280,9 +280,29 @@ class IrsPlan extends React.Component<
           // save all organizations to store
           store.dispatch(fetchOrganizationsActionCreator(response));
           // get all assignments
-          return this.getAllAssignments(planId, response, (nextAssignments: Assignment[]) =>
-            store.dispatch(fetchAssignmentsActionCreator(nextAssignments))
-          );
+          // TODO: remove this
+          // return this.getAllAssignments(planId, response, (nextAssignments: Assignment[]) =>
+          //   store.dispatch(fetchAssignmentsActionCreator(nextAssignments))
+          // );
+        })
+        .catch((err: Error) => {
+          displayError(err);
+        });
+
+      // get all assignments
+      OpenSrpAssignedService.list({ plan: planId })
+        .then((response: any[]) => {
+          // TODO: remove any
+          const assignments: Assignment[] = response.map(assignment => {
+            return {
+              fromDate: moment(assignment.fromDate).format(),
+              jurisdiction: assignment.jurisdictionId,
+              organization: assignment.organizationId,
+              plan: assignment.planId,
+              toDate: moment(assignment.toDate).format(),
+            };
+          });
+          store.dispatch(fetchAssignmentsActionCreator(assignments));
         })
         .catch((err: Error) => {
           displayError(err);
