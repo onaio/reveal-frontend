@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { getUser, SessionState } from '@onaio/session-reducer';
 import { Dictionary, percentage } from '@onaio/utils';
@@ -11,7 +12,7 @@ import querystring from 'querystring';
 import { MouseEvent } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Cell, Column } from 'react-table';
+import { Cell } from 'react-table';
 import { toast, ToastOptions } from 'react-toastify';
 import SeamlessImmutable from 'seamless-immutable';
 import uuidv4 from 'uuid/v4';
@@ -99,7 +100,7 @@ export interface GeoJSON {
 export function getLocationColumns(
   locations: LocationItem[] = locationHierarchy,
   padHeader: boolean = false
-): Column[] {
+): Array<DrillDownColumn<Dictionary>> {
   // sort locations using the level field and then remove duplicates
   const locationSet = uniq(locations.sort((a, b) => (a.level > b.level ? 1 : -1)));
 
@@ -562,7 +563,7 @@ export function getFilteredFIPlansURL(jurisdictionPath: string, planId: string):
  * the columns being built include focusarea, name and action
  * @param {colType} accessor column
  */
-export const jsxColumns = (colType: string): Column[] | [] => {
+export const jsxColumns = (colType: string): Array<DrillDownColumn<Dictionary>> | [] => {
   if (colType === 'focusarea') {
     return [
       {
@@ -637,8 +638,21 @@ export const jsxColumns = (colType: string): Column[] | [] => {
   }
 };
 
+export type TablePropsType = Pick<
+  DrillDownTableProps<Dictionary>,
+  | 'CellComponent'
+  | 'columns'
+  | 'data'
+  | 'identifierField'
+  | 'linkerField'
+  | 'paginate'
+  | 'parentIdentifierField'
+  | 'rootParentId'
+  | 'useDrillDown'
+>;
+
 /** Default table props config */
-export const defaultTableProps = {
+export const defaultTableProps: TablePropsType = {
   CellComponent: DrillDownTableLinkedCell,
   columns: [],
   data: [],

@@ -1306,7 +1306,7 @@ export const emptyCompleteRoutinePlans = [
   },
 ];
 /** current reactive columns with no data */
-export const emptyCurrentReactivePlans = [{}, {}, {}, {}];
+export const emptyCurrentReactivePlans: any = [{}, {}, {}, {}];
 /** current routine columns with no data */
 export const emptyCurrentRoutinePlans = [
   {
