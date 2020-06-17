@@ -14,6 +14,7 @@ import {
   defaultOptions,
   renderInFilterFactory,
 } from '../../../../components/Table/DrillDownFilters/utils';
+import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
 import {
   ASSIGN_PLANS,
   END_DATE,
@@ -163,6 +164,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentWithRouteProps) => {
     | 'renderInBottomFilterBar'
     | 'renderInTopFilterBar'
     | 'useDrillDown'
+    | 'renderNullDataComponent'
   > = {
     columns: tableColumns,
     data: plans,
@@ -180,6 +182,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentWithRouteProps) => {
       componentProps: props,
       queryParam: QUERY_PARAM_TITLE,
     }),
+    renderNullDataComponent: () => <NoDataComponent />,
     useDrillDown: false,
   };
 

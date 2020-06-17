@@ -1,15 +1,14 @@
 // this is the IRS LIST view page component
+import { DrillDownColumn, DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table';
 import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
 import * as React from 'react';
+import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Cell } from 'react-table';
 import { Button } from 'reactstrap';
 import { ActionCreator, Store } from 'redux';
-
-import { DrillDownColumn, DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table';
-import { Helmet } from 'react-helmet';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -18,6 +17,7 @@ import {
   defaultOptions,
   renderInFilterFactory,
 } from '../../../../components/Table/DrillDownFilters/utils';
+import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
 import {
   CREATE_NEW_PLAN,
   DATE_CREATED,
@@ -165,6 +165,7 @@ export const IrsPlans = (props: IrsPlansProps & RouteComponentProps<RouteParams>
     | 'renderInBottomFilterBar'
     | 'renderInTopFilterBar'
     | 'useDrillDown'
+    | 'renderNullDataComponent'
   > = {
     columns,
     data: plansArray,
@@ -183,6 +184,7 @@ export const IrsPlans = (props: IrsPlansProps & RouteComponentProps<RouteParams>
       queryParam: QUERY_PARAM_TITLE,
       showFilters: false,
     }),
+    renderNullDataComponent: () => <NoDataComponent />,
     useDrillDown: false,
   };
 

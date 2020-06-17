@@ -13,6 +13,7 @@ import {
   defaultOptions,
   renderInFilterFactory,
 } from '../../../../components/Table/DrillDownFilters/utils';
+import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
 import { ADD_PLAN, HOME, PLANS } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import {
@@ -106,6 +107,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
     | 'renderInBottomFilterBar'
     | 'renderInTopFilterBar'
     | 'useDrillDown'
+    | 'renderNullDataComponent'
   > = {
     columns: TableColumns,
     data: plans,
@@ -124,6 +126,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
       queryParam: QUERY_PARAM_TITLE,
       serviceClass: props.service,
     }),
+    renderNullDataComponent: () => <NoDataComponent />,
     useDrillDown: false,
   };
 
