@@ -43,7 +43,7 @@ import {
   SetStructuresAction,
   StructureGeoJSON,
 } from '../../../../../../store/ducks/structures';
-import { fetchTasks, FetchTasksAction } from '../../../../../../store/ducks/tasks';
+import { fetchTasks, FetchTasksAction, TaskGeoJSON } from '../../../../../../store/ducks/tasks';
 
 import { FeatureCollection } from '../../../../../../helpers/utils';
 
@@ -283,8 +283,8 @@ interface ExtraVars {
  */
 export const buildGsLiteLayers = (
   currentGoal: string | null,
-  pointFeatureCollection: any,
-  polygonFeatureCollection: any,
+  pointFeatureCollection: FeatureCollection<TaskGeoJSON>,
+  polygonFeatureCollection: FeatureCollection<TaskGeoJSON>,
   extraVars: ExtraVars
 ) => {
   const idToUse = extraVars.useId ? extraVars.useId : currentGoal;
