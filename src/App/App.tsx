@@ -39,6 +39,7 @@ import {
 import { LOGIN_PROMPT } from '../configs/lang';
 import { providers } from '../configs/settings';
 
+import '@onaio/drill-down-table/dist/table.css';
 import { Footer } from '../components/page/Footer';
 import {
   ACTIVE_IRS_PLAN_URL,
