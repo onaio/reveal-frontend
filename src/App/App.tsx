@@ -60,6 +60,7 @@ import {
   INTERVENTION_IRS_DRAFTS_URL,
   LOGOUT_URL,
   MAP,
+  MDA_POINT_LOCATION_REPORT_URL,
   NEW_IRS_PLAN_URL,
   NEW_PLAN_URL,
   ORGANIZATIONS_LIST_URL,
@@ -91,6 +92,7 @@ import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedClientListView from '../containers/pages/MDAPoint/ClientListView';
 import ConnectedMdaPointJurisdictionReport from '../containers/pages/MDAPoint/jurisdictionsReport';
+import ConnectedSchoolReports from '../containers/pages/MDAPoint/LocationReports';
 import ConnectedMDAPointPlansList from '../containers/pages/MDAPoint/plans';
 import ConnectedAssignPractitioner from '../containers/pages/OrganizationViews/AssignPractitioners';
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
@@ -222,6 +224,13 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={`${REPORT_MDA_POINT_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMdaPointJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${MDA_POINT_LOCATION_REPORT_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedSchoolReports}
                 />
                 {/* IRS Reporting plan table view */}
                 <ConnectedPrivateRoute

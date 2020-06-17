@@ -152,3 +152,7 @@ export const REVEAL_BRAND_IMG_SRC =
   'https://github.com/onaio/reveal-frontend/raw/b0756b0c1ed95dc6db23dc4fd1375c81bdf7fb1b/src/assets/images/logo.png';
 
 export const ENABLE_MDA_POINT = true;
+
+export const SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE = '01';
+
+export const SHOW_MDA_SCHOOL_REPORT_LABEL = true;
