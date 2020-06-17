@@ -554,7 +554,7 @@ class GisidaWrapper extends React.Component<GisidaProps, GisidaState> {
         if (
           window.maps &&
           window.maps.find((e: mbMap) => (e as GisidaMap)._container.id === MAP_ID)
-        ) { 
+        ) {
           const map = window.maps.find((e: mbMap) => (e as GisidaMap)._container.id === MAP_ID);
           if (map && map.isStyleLoaded) {
             loadLayers(MAP_ID, store.dispatch, visibleLayers);
