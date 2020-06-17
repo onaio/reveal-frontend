@@ -640,7 +640,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       </Provider>
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(displayErrorMock).toHaveBeenCalled();
+    expect(displayErrorMock).toHaveBeenCalledTimes(6);
     wrapper.unmount();
   });
 
