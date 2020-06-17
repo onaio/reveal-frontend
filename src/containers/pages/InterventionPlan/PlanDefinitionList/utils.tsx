@@ -33,7 +33,7 @@ export const TableColumns: Array<DrillDownColumn<PlanDefinition>> = [
     },
     Header: INTERVENTION_TYPE_LABEL,
     accessor: 'useContext',
-    maxWidth: 30,
+    maxWidth: 40,
     minWidth: 10,
     sortType: (rowA: Row<PlanDefinition>, rowB: Row<PlanDefinition>, columnId: string) => {
       /** custom sort function based useContext */
@@ -60,7 +60,7 @@ export const TableColumns: Array<DrillDownColumn<PlanDefinition>> = [
   {
     Header: LAST_MODIFIED,
     accessor: 'date',
-    maxWidth: 50,
+    maxWidth: 30,
     minWidth: 20,
   },
 ];
