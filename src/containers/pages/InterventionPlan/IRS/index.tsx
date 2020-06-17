@@ -96,11 +96,15 @@ const columns: Array<DrillDownColumn<PlanRecord>> = [
   {
     Header: DATE_CREATED,
     accessor: 'plan_date',
+    maxWidth: 50,
+    minWidth: 20,
   },
   {
     Header: STATUS_HEADER,
     accessor: (d: PlanRecord) => planStatusDisplay[d.plan_status] || d.plan_status,
     id: 'plan_status',
+    maxWidth: 50,
+    minWidth: 20,
   },
 ];
 

@@ -128,14 +128,20 @@ const IRSAssignmentPlansList = (props: PlanAssignmentWithRouteProps) => {
     {
       Header: INTERVENTION,
       accessor: 'plan_intervention_type',
+      maxWidth: 30,
+      minWidth: 10,
     },
     {
       Header: START_DATE,
       accessor: 'plan_effective_period_start',
+      maxWidth: 30,
+      minWidth: 10,
     },
     {
       Header: END_DATE,
       accessor: 'plan_effective_period_end',
+      maxWidth: 30,
+      minWidth: 10,
     },
     {
       Cell: (cell: Cell<PlanRecord>) => {
@@ -143,6 +149,8 @@ const IRSAssignmentPlansList = (props: PlanAssignmentWithRouteProps) => {
       },
       Header: PLAN_STATUS,
       accessor: 'plan_status',
+      maxWidth: 30,
+      minWidth: 10,
     },
   ];
 

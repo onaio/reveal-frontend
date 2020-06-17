@@ -1,3 +1,4 @@
+import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Column } from 'react-table';
 import DrillDownTableLinkedCell from '../../../../components/DrillDownTableLinkedCell';
@@ -5,6 +6,8 @@ import {
   defaultOptions,
   renderInFilterFactory,
 } from '../../../../components/Table/DrillDownFilters/utils';
+import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
+import { NO_INVESTIGATIONS_FOUND } from '../../../../configs/lang';
 import { extractPlan, removeNullJurisdictionPlans } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import { Plan } from '../../../../store/ducks/plans';
@@ -45,6 +48,7 @@ export const createTableProps = <D extends object, TProps extends RouteComponent
       queryParam: paramString,
       serviceClass: service,
     }),
+    renderNullDataComponent: () => <NoDataComponent message={NO_INVESTIGATIONS_FOUND} />,
     useDrillDown: false,
   };
 };
