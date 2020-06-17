@@ -125,6 +125,8 @@ export const TEAM_ID_PARAM = 'team_id';
 export const OPENSRP_TEMPLATE_ENDPOINT = 'template';
 export const OPENSRP_PLANS_BY_USER_FILTER = 'plans/user';
 export const OPENSRP_V1_SETTINGS_ENDPOINT = 'settings/sync';
+export const OPENSRP_ACTIVE = 'Active';
+export const OPENSRP_STATUS = 'status';
 
 // colors
 export const GREEN = 'Green';

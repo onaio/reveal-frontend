@@ -53,6 +53,7 @@ import {
   JURISDICTION_ID,
   MAP_ID,
   NEW,
+  OPENSRP_ACTIVE,
   OPENSRP_FIND_BY_PROPERTIES,
   OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
   OPENSRP_LOCATION,
@@ -60,6 +61,7 @@ import {
   OPENSRP_PARENT_ID,
   OPENSRP_PLANS,
   OPENSRP_POST_ASSIGNMENTS_ENDPOINT,
+  OPENSRP_STATUS,
   PARENTID,
 } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
@@ -350,7 +352,7 @@ class IrsPlan extends React.Component<
             // GET parentlessParent Jurisdiction from OpenSRP
             OpenSrpLocationService.read(OPENSRP_FIND_BY_PROPERTIES, {
               is_jurisdiction: true,
-              properties_filter: `name:${jurisdictionsById[parentlessParent].name}`,
+              properties_filter: `name:${jurisdictionsById[parentlessParent].name},${OPENSRP_STATUS}:${OPENSRP_ACTIVE}`,
               return_geometry: false,
             })
               .then(results => {
