@@ -29,12 +29,7 @@ import {
   REACTIVE_INVESTIGATION,
   ROUTINE_INVESTIGATION_TITLE,
 } from '../../../../../configs/lang';
-import {
-  circleLayerConfig,
-  FIReasons,
-  lineLayerConfig,
-  symbolLayerConfig,
-} from '../../../../../configs/settings';
+import { FIReasons } from '../../../../../configs/settings';
 import {
   CASE_CONFIRMATION_CODE,
   CASE_CONFIRMATION_GOAL_ID,
@@ -45,7 +40,6 @@ import {
   FI_URL,
   HISTORICAL_INDEX_CASES,
   HOME_URL,
-  MAIN_PLAN,
   MULTI_POLYGON,
   POINT,
   POLYGON,
@@ -375,7 +369,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
                         to={`${FI_SINGLE_MAP_URL}/${plan.id}/${item.goal_id}`}
                         className={`task-link ${
                           item.goal_id === RACD_REGISTER_FAMILY_ID &&
-                          (currentGoal === RACD_REGISTER_FAMILY_ID || currentGoal === null) 
+                          (currentGoal === RACD_REGISTER_FAMILY_ID || currentGoal === null)
                             ? 'active'
                             : ''
                         }`}
