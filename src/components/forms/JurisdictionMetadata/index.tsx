@@ -75,21 +75,18 @@ export const submitForm = (
     handleFile(values.file, results => {
       const payloads: SettingConfiguration[] = createPayloads(results);
       if (payloads.length > 0) {
-        // loop through payloads and send
-        for (const payload of payloads) {
-          const valuesToSend = JSON.stringify(payload);
-          jurisdictionService
-            .create(valuesToSend)
-            .then(() => {
-              growl(FILE_UPLOADED_SUCCESSFULLY, {
-                onClose: () => setIfDoneHere(true),
-                type: toast.TYPE.SUCCESS,
-              });
-            })
-            .catch((e: Error) => {
-              setGlobalError(e.message);
+        const valuesToSend = JSON.stringify({ settingConfigurations: payloads });
+        jurisdictionService
+          .create(valuesToSend)
+          .then(() => {
+            growl(FILE_UPLOADED_SUCCESSFULLY, {
+              onClose: () => setIfDoneHere(true),
+              type: toast.TYPE.SUCCESS,
             });
-        }
+          })
+          .catch((e: Error) => {
+            setGlobalError(e.message);
+          });
         setSubmitting(false);
       } else {
         setGlobalError(INVALID_CSV);
