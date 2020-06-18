@@ -16,9 +16,9 @@ export const defaultLocationParams = {
  * of the supplied jurisdiction, including the jurisdiction
  *
  * @param jurisdiction - the jurisdiction in question
- * @param path - array of ancestors
  * @param apiEndpoint - the API endpoint
  * @param serviceClass - the API helper class
+ * @param path - array of ancestors
  */
 export const getAncestors = async (
   jurisdiction: OpenSRPJurisdiction,
@@ -65,8 +65,8 @@ export const getAncestors = async (
 
 /** Get children of a jurisdiction from OpenSRP
  *
+ * @param params - URL params to send with the request to the API
  * @param jurisdiction - the jurisdiction in question
- * @param path - array of ancestors
  * @param apiEndpoint - the API endpoint
  * @param serviceClass - the API helper class
  */
