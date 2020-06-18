@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import { displayError } from '../helpers/errors';
-import { getFilterParams, OpenSRPService, URLParams } from '../services/opensrp';
+import { displayError } from '../../helpers/errors';
+import { getFilterParams, OpenSRPService, URLParams } from '../../services/opensrp';
 
 /** interface for jurisdiction options
  * These are received from the OpenSRP API
