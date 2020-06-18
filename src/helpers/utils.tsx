@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
-import { SessionState } from '@onaio/session-reducer';
+import { getUser, SessionState } from '@onaio/session-reducer';
 import { Dictionary, percentage } from '@onaio/utils';
 import { Color } from 'csstype';
 import { GisidaMap } from 'gisida';
@@ -59,6 +59,7 @@ import {
   RACD_REGISTER_FAMILY_CODE,
   SETTINGS_CONFIGURATION,
 } from '../constants';
+import store from '../store';
 import {
   InterventionType,
   Plan,
@@ -486,14 +487,14 @@ export function wrapFeatureCollection<T>(objFeatureCollection: T[]): FeatureColl
     type: FEATURE_COLLECTION,
   };
 }
-export function toggleLayer(allLayers: Dictionary, currentGoal: string, store: any, Actions: any) {
+export function toggleLayer(allLayers: Dictionary, currentGoal: string, stores: any, Actions: any) {
   let layer;
   let eachLayer: string;
   for (eachLayer of Object.keys(allLayers)) {
     layer = allLayers[eachLayer];
     /** Toggle layers to show on the map */
     if (layer.visible && (layer.id.includes(currentGoal) || layer.id.includes('main-plan-layer'))) {
-      store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, true));
+      stores.dispatch(Actions.toggleLayer(MAP_ID, layer.id, true));
     }
   }
 }
@@ -922,36 +923,36 @@ export const createPayloads = (result: PapaResult): SettingConfiguration[] => {
   if (data.length > 0 && data[0].jurisdiction_id) {
     // get the metadata items
     const headers = Object.keys(data[0]);
-    for (const header of headers) {
+    const filteredHeaders = headers.filter(f => ![JURISDICTION_ID, JURISDICTION_NAME].includes(f));
+    for (const header of filteredHeaders) {
       const settings: Setting[] = [];
-      if (header !== JURISDICTION_ID && header !== JURISDICTION_NAME) {
-        // add the metadata values with jurisdiction as the key
-        for (const item of data) {
-          const entries = Object.entries(item);
-          for (const [key, value] of entries) {
-            if (key === header) {
-              const setting: Setting = {
-                description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
-                key: item.jurisdiction_id,
-                label: `${
-                  item.jurisdiction_name ? item.jurisdiction_name : item.jurisdiction_id
-                } metadata`,
-                value,
-              };
-              settings.push(setting);
-            }
+      // add the metadata values with jurisdiction as the key
+      for (const item of data) {
+        const entries = Object.entries(item);
+        for (const [key, value] of entries) {
+          if (key === header) {
+            const setting: Setting = {
+              description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
+              key: item.jurisdiction_id,
+              label: `${
+                item.jurisdiction_name ? item.jurisdiction_name : item.jurisdiction_id
+              } metadata`,
+              value,
+            };
+            settings.push(setting);
           }
         }
-        const payload: SettingConfiguration = {
-          identifier: `jurisdiction_metadata-${header}`,
-          locationId: '',
-          providerId: 'demo',
-          settings,
-          teamId: '',
-          type: SETTINGS_CONFIGURATION,
-        };
-        payloads.push(payload);
       }
+      const username = getUser(store.getState()).username;
+      const payload: SettingConfiguration = {
+        identifier: `jurisdiction_metadata-${header}`,
+        locationId: '',
+        providerId: username,
+        settings,
+        teamId: '',
+        type: SETTINGS_CONFIGURATION,
+      };
+      payloads.push(payload);
     }
   }
   return payloads;
