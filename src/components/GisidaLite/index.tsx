@@ -36,7 +36,7 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   mapStyle: gsLiteStyle,
   mapWidth: '100%',
   scrollZoom: true,
-  zoom: 15,
+  zoom: 16,
 };
 
 const Mapbox = ReactMapboxGl({
