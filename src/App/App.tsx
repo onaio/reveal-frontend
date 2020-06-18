@@ -59,6 +59,7 @@ import {
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   LOGOUT_URL,
+  MANIFEST_RELEASE_URL,
   MAP,
   MDA_POINT_LOCATION_REPORT_URL,
   NEW_IRS_PLAN_URL,
@@ -75,6 +76,7 @@ import {
   SINGLE_ORGANIZATION_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
+import { ManifestReleasesPage } from '../containers/pages/ConfigForm/manifest/releases';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
 import FIJurisdiction from '../containers/pages/FocusInvestigation/jurisdiction';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
@@ -427,6 +429,14 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={`${ASSIGN_PRACTITIONERS_URL}/:id`}
                   component={ConnectedAssignPractitioner}
+                />
+                {/** form config views */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={MANIFEST_RELEASE_URL}
+                  component={ManifestReleasesPage}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
