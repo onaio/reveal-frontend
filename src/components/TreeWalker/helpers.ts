@@ -9,6 +9,11 @@ export const defaultLocationParams = {
   return_geometry: false,
 };
 
+/** Default property to be used when fetching locations from OpenSRP */
+export const defaultLocationPropertyFilters = {
+  status: 'Active',
+};
+
 /** Get ancestors of a jurisdiction from OpenSRP
  *
  * This is a recursive function that traverses the OpenSRP jurisdiction tree
