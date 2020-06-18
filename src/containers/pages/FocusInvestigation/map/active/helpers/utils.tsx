@@ -1,6 +1,6 @@
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import * as React from 'react';
-import { GeoJSONLayer } from 'react-mapbox-gl';
+import { GeoJSONLayer, Layer } from 'react-mapbox-gl';
 import { ActionCreator } from 'redux';
 import { GREY } from '../../../../../../colors';
 import {
@@ -304,14 +304,14 @@ export const buildGsLiteLayers = (
       break;
   }
 
-  if (pointFeatureCollection) {
+  if (pointFeatureCollection && pointFeatureCollection.features.length) {
     if (goalIsWithSymbol) {
       gsLayers.push(
-        <GeoJSONLayer
+        <Layer
           {...symbolLayerTemplate}
           symbolLayout={{
             ...symbolLayerTemplate.symbolLayout,
-            'icon-image': iconGoal,
+            ...{ 'icon-image': iconGoal },
             'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
           }}
           id={`${idToUse}-point-symbol`}
@@ -335,14 +335,14 @@ export const buildGsLiteLayers = (
       />
     );
   }
-  if (polygonFeatureCollection) {
+  if (polygonFeatureCollection && polygonFeatureCollection.features.length) {
     if (goalIsWithSymbol) {
       gsLayers.push(
         <GeoJSONLayer
           {...symbolLayerTemplate}
           symbolLayout={{
             ...symbolLayerTemplate.symbolLayout,
-            'icon-image': iconGoal,
+            ...{ 'icon-image': iconGoal },
             'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
           }}
           id={`${idToUse}-poly-symbol`}
@@ -378,98 +378,6 @@ export const buildGsLiteLayers = (
         key={`${idToUse}-fill`}
       />
     );
-  }
-  return gsLayers;
-};
-export const buildLayers = (
-  currentGoal: string | null,
-  pointFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
-  polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
-  extraVars: ExtraVars
-) => {
-  const idToUse = extraVars.useId ? extraVars.useId : currentGoal;
-  const gsLayers = [];
-
-  // define which goal ids will also include the symbols.
-  const goalsWithSymbols = [MOSQUITO_COLLECTION_ID, CASE_CONFIRMATION_GOAL_ID, LARVAL_DIPPING_ID];
-  const goalIsWithSymbol = goalsWithSymbols.includes(currentGoal || '');
-
-  // define the icon for goals with symbols
-
-  let iconGoal: string = 'case-confirmation';
-  switch (currentGoal) {
-    case MOSQUITO_COLLECTION_ID:
-      iconGoal = 'mosquito';
-      break;
-    case LARVAL_DIPPING_ID:
-      iconGoal = 'larval';
-      break;onclick
-  }
-
-  if (pointFeatureCollection) {
-    if (goalIsWithSymbol) {
-      gsLayers.push({
-        ...symbolLayerTemplate,
-        symbolLayout: {
-          ...symbolLayerTemplate.symbolLayout,
-          'icon-image': iconGoal,
-          'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
-        },
-        id: `${idToUse}-point-symbol`,
-        key: `${idToUse}-point-symbol`,
-        data: pointFeatureCollection,
-      });
-    }
-    gsLayers.push({
-      ...circleLayerTemplate,
-      circlePaint: {
-        ...circleLayerTemplate.circlePaint,
-        'circle-color': ['get', 'color'],
-        'circle-stroke-color': ['get', 'color'],
-        'circle-stroke-opacity': 1,
-      },
-      id: `${idToUse}-point`,
-      key: `${idToUse}-point`,
-      data: pointFeatureCollection,
-    });
-  }
-  if (polygonFeatureCollection) {
-    if (goalIsWithSymbol) {
-      gsLayers.push({
-        ...symbolLayerTemplate,
-        symbolLayout: {
-          ...symbolLayerTemplate.symbolLayout,
-          'icon-image': iconGoal,
-          'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
-        },
-        id: `${idToUse}-poly-symbol`,
-        key: `${idToUse}-poly-symbol`,
-        data: polygonFeatureCollection,
-      });
-    }
-    gsLayers.push({
-      ...lineLayerTemplate,
-      linePaint: {
-        ...lineLayerTemplate.linePaint,
-        'line-color': ['get', 'color'],
-        'line-opacity': 1,
-        'line-width': 2,
-      },
-      data: polygonFeatureCollection,
-      id: `${idToUse}-fill-line`,
-      key: `${idToUse}-fill-line`,
-    });
-    gsLayers.push({
-      ...fillLayerTemplate,
-      fillPaint: {
-        ...fillLayerTemplate.fillPaint,
-        'fill-color': ['get', 'color'],
-        'fill-outline-color': ['get', 'color'],
-      },
-      data: polygonFeatureCollection,
-      id: `${idToUse}-fill`,
-      key: `${idToUse}-fill`,
-    });
   }
   return gsLayers;
 };
