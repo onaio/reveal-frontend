@@ -1,22 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { displayError } from '../../helpers/errors';
 import { getFilterParams, OpenSRPService, URLParams } from '../../services/opensrp';
-
-/** interface for jurisdiction options
- * These are received from the OpenSRP API
- */
-interface OpenSRPJurisdiction {
-  id: string;
-  properties: {
-    status: string;
-    name: string;
-    geographicLevel: number;
-    parentId?: string;
-    version: string | number;
-  };
-  serverVersion: number;
-  type: 'Feature';
-}
+import { defaultLocationParams, getAncestors } from './helpers';
+import { OpenSRPJurisdiction } from './types';
 
 interface SimpleProps {
   apiEndpoint: string;
@@ -25,45 +11,11 @@ interface SimpleProps {
   serviceClass: typeof OpenSRPService;
 }
 
-const defaultParams = {
-  is_jurisdiction: true,
-  return_geometry: false,
-};
-
 const defaultSimpleProps: SimpleProps = {
   apiEndpoint: 'location/findByProperties',
   jurisdictionId: '',
-  params: defaultParams,
+  params: defaultLocationParams,
   serviceClass: OpenSRPService,
-};
-
-const getAncestors = async (
-  jurisdiction: OpenSRPJurisdiction,
-  path: OpenSRPJurisdiction[] = []
-): Promise<OpenSRPJurisdiction[] | null> => {
-  if (!path.includes(jurisdiction)) {
-    path.unshift(jurisdiction);
-  }
-
-  if (jurisdiction.properties.geographicLevel === 0 || !jurisdiction.properties.parentId) {
-    return path;
-  }
-
-  const service = new OpenSRPService('location');
-  const parentJurisdiction = await service
-    .read(jurisdiction.properties.parentId, defaultParams)
-    .then((response: OpenSRPJurisdiction) => {
-      if (response) {
-        return response;
-      }
-    })
-    .catch((error: Error) => displayError(error));
-
-  if (!parentJurisdiction) {
-    return null;
-  } else {
-    return getAncestors(parentJurisdiction, path);
-  }
 };
 
 const Simple = (props: SimpleProps) => {
@@ -101,9 +53,11 @@ const Simple = (props: SimpleProps) => {
           if (response) {
             setSelectedJurisdiction(response);
             getAncestors(response)
-              .then((path: OpenSRPJurisdiction[] | null) => {
-                if (path) {
-                  setHierarchy(path);
+              .then(result => {
+                if (result.value !== null) {
+                  setHierarchy(result.value);
+                } else {
+                  displayError(result.error);
                 }
               })
               .catch((error: Error) => displayError(error));
