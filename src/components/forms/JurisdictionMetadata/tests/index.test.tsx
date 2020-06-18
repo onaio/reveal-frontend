@@ -1,8 +1,8 @@
-import { render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
-import JurisdictionMetadataForm from '..';
+import JurisdictionMetadataForm, { submitForm } from '..';
 
 describe('components/forms/JurisdictionMetadata', () => {
   beforeEach(() => {
@@ -28,5 +28,37 @@ describe('components/forms/JurisdictionMetadata', () => {
     expect(container.querySelector('input[name="file"]')).toMatchSnapshot(
       'JurisdictionMetadata file'
     );
+  });
+
+  it('Upload disabled', async () => {
+    const { getByText, getByTestId } = render(<JurisdictionMetadataForm />);
+    fireEvent.submit(getByTestId('form'));
+    await waitFor(() => {
+      expect(getByText('Upload File')).toBeDisabled();
+    });
+  });
+
+  it('submitForm uploads CSV file', async () => {
+    const file = new File([''], 'jurisdiction.csv', { type: 'text/csv' });
+    const setSubmitting = jest.fn();
+    const setGlobalError = jest.fn();
+    const setIfDoneHere = jest.fn();
+    const mockedOpenSRPservice = jest.fn().mockImplementation(() => {
+      return {
+        create: () => {
+          return Promise.resolve({});
+        },
+      };
+    });
+    const props = {
+      OpenSRPService: mockedOpenSRPservice,
+      initialValues: {
+        file: new File([], ''),
+      },
+    };
+    submitForm(setSubmitting, setGlobalError, setIfDoneHere, props as any, { file });
+    await waitFor(() => {
+      expect(mockedOpenSRPservice).toHaveBeenCalledTimes(1);
+    });
   });
 });
