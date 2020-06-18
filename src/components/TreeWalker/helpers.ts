@@ -1,4 +1,5 @@
 import { Result } from '@onaio/utils';
+import { URLParams } from '@opensrp/server-service/dist/types';
 import { OpenSRPService } from '../../services/opensrp';
 import { OpenSRPJurisdiction } from './types';
 
@@ -16,9 +17,13 @@ export const defaultLocationParams = {
  *
  * @param jurisdiction - the jurisdiction in question
  * @param path - array of ancestors
+ * @param apiEndpoint - the API endpoint
+ * @param serviceClass - the API helper class
  */
 export const getAncestors = async (
   jurisdiction: OpenSRPJurisdiction,
+  apiEndpoint: string,
+  serviceClass: typeof OpenSRPService,
   path: OpenSRPJurisdiction[] = []
 ): Promise<Result<OpenSRPJurisdiction[]>> => {
   if (!path.includes(jurisdiction)) {
@@ -32,7 +37,8 @@ export const getAncestors = async (
     };
   }
 
-  const service = new OpenSRPService('location');
+  const service = new serviceClass(apiEndpoint);
+
   const result = await service
     .read(jurisdiction.properties.parentId, defaultLocationParams)
     .then((response: OpenSRPJurisdiction) => {
@@ -46,13 +52,51 @@ export const getAncestors = async (
 
   if (!result) {
     return {
-      error: Error('Could not load parents'),
+      error: Error('Could get load parents'),
       value: null,
     };
   } else {
     if (result.value !== null) {
-      return getAncestors(result.value, path);
+      return getAncestors(result.value, apiEndpoint, serviceClass, path);
     }
     return result;
   }
+};
+
+/** Get children of a jurisdiction from OpenSRP
+ *
+ * @param jurisdiction - the jurisdiction in question
+ * @param path - array of ancestors
+ * @param apiEndpoint - the API endpoint
+ * @param serviceClass - the API helper class
+ */
+export const getChildren = async (
+  params: URLParams,
+  _: OpenSRPJurisdiction | null,
+  apiEndpoint: string,
+  serviceClass: typeof OpenSRPService
+): Promise<Result<OpenSRPJurisdiction[]>> => {
+  const service = new serviceClass(apiEndpoint);
+
+  const result = await service
+    .list(params)
+    .then((response: OpenSRPJurisdiction[]) => {
+      if (response) {
+        return { error: null, value: response };
+      }
+    })
+    .catch((error: Error) => {
+      return { error, value: null };
+    });
+
+  if (result && result.value !== null) {
+    return result;
+  }
+
+  return result === undefined
+    ? {
+        error: Error('Could get load children'),
+        value: null,
+      }
+    : result;
 };
