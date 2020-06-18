@@ -4,50 +4,79 @@ import { getFilterParams, OpenSRPService, URLParams } from '../../services/opens
 import { defaultLocationParams, getAncestors } from './helpers';
 import { OpenSRPJurisdiction } from './types';
 
+/** Type def for the TreeWalker component */
 export interface TreeWalkerProps {
-  apiEndpoint: string;
-  jurisdictionId: string;
-  params: URLParams;
-  serviceClass: typeof OpenSRPService;
+  LoadingIndicator: React.FC /** Element to show loading indicator */;
+  getAncestorsFunc: typeof getAncestors /** function to get ancestors */;
+  jurisdictionId: string /** jurisdiction id --> used to start walking the tree from a particular point/node */;
+  listAPIEndpoint: string /** the API endpoint to get a list of objects */;
+  params: URLParams /** URL params to send with the request to the API */;
+  readAPIEndpoint: string /** the API endpoint to get a single object */;
+  serviceClass: typeof OpenSRPService /** the API helper class */;
 }
 
+/** Defaults for TreeWalker component props */
 export const defaultTreeWalkerProps: TreeWalkerProps = {
-  apiEndpoint: 'location/findByProperties',
+  LoadingIndicator: () => <Fragment>Loading...</Fragment>,
+  getAncestorsFunc: getAncestors,
   jurisdictionId: '',
+  listAPIEndpoint: 'location/findByProperties',
   params: defaultLocationParams,
+  readAPIEndpoint: 'location',
   serviceClass: OpenSRPService,
 };
 
+/** Type definition for getChildren function */
+type GetChildrenType = (node: OpenSRPJurisdiction, _: Event | React.MouseEvent) => void;
+
+/** Type def for the WithWalkerProps HoC */
 export interface WithWalkerProps extends TreeWalkerProps {
-  current: OpenSRPJurisdiction[];
-  hierarchy: OpenSRPJurisdiction[];
-  loadMore: any;
-  selectedJurisdiction: OpenSRPJurisdiction | null;
+  currentChildren: OpenSRPJurisdiction[] /** array of current children */;
+  currentNode: OpenSRPJurisdiction | null /** the currently selected Node */;
+  getChildren: GetChildrenType | null /** function to get children */;
+  hierarchy: OpenSRPJurisdiction[] /** array of current hierarchy as a path from root to currentNode */;
 }
 
+/** Defaults for WithWalker higher order component props */
 export const defaultWalkerProps: WithWalkerProps = {
   ...defaultTreeWalkerProps,
-  current: [],
+  currentChildren: [],
+  currentNode: null,
+  getChildren: null,
   hierarchy: [],
-  loadMore: null,
-  selectedJurisdiction: null,
 };
 
-// This function takes a component...
+/** TreeWalker Higher order Component
+ *
+ * This function takes in a component and returns the same component wrapped with
+ * tree walking super powers.
+ *
+ * @param WrappedComponent - the component to wrap
+ * @typeparam T - the type definition of the wrapped component's props
+ */
 export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
-  // ...and returns another component...
+  /** The TreeWalker
+   * This component adds functionality to traverse down and up a tree.
+   */
   const TreeWalker = (props: TreeWalkerProps & T) => {
-    const [current, setCurrent] = useState<OpenSRPJurisdiction[]>([]);
-    const [selectedJurisdiction, setSelectedJurisdiction] = useState<OpenSRPJurisdiction | null>(
-      null
-    );
+    const [currentChildren, setCurrentChildren] = useState<OpenSRPJurisdiction[]>([]);
+    const [currentNode, setCurrentNode] = useState<OpenSRPJurisdiction | null>(null);
     const [hierarchy, setHierarchy] = useState<OpenSRPJurisdiction[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    const { apiEndpoint, jurisdictionId, params, serviceClass } = props;
+    const {
+      LoadingIndicator,
+      getAncestorsFunc,
+      jurisdictionId,
+      listAPIEndpoint,
+      params,
+      readAPIEndpoint,
+      serviceClass,
+    } = props;
 
-    const service = new serviceClass(apiEndpoint);
+    const service = new serviceClass(listAPIEndpoint);
 
-    const parentId = selectedJurisdiction ? selectedJurisdiction.id : jurisdictionId;
+    // Set the parentId to be the currentNode's id
+    const parentId = currentNode ? currentNode.id : jurisdictionId;
 
     const propertiesToFilter = {
       status: 'Active',
@@ -62,15 +91,21 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
       }),
     };
 
+    // When the component mounts we check if jurisdictionId is set, because if
+    // it is set then we have a situation where we are loading the tree from a certain
+    // node that may be a leaf, in the middle or anywhere
+    // we therefore:
+    //  1. get the object for jurisdictionId and set it as the currentNode
+    //  2. get this currentNode's ancestors and add them to the hierarchy
     useEffect(() => {
-      if (!selectedJurisdiction && jurisdictionId !== '') {
-        const singleService = new OpenSRPService('location');
+      if (!currentNode && jurisdictionId !== '') {
+        const singleService = new OpenSRPService(readAPIEndpoint);
         singleService
           .read(jurisdictionId, params)
           .then((response: OpenSRPJurisdiction) => {
             if (response) {
-              setSelectedJurisdiction(response);
-              getAncestors(response)
+              setCurrentNode(response);
+              getAncestorsFunc(response)
                 .then(result => {
                   if (result.value !== null) {
                     setHierarchy(result.value);
@@ -85,12 +120,13 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
       }
     }, []);
 
+    // On component mount or whenever parentId changes, we try and get the currentNode's children
     useEffect(() => {
       service
         .list(paramsToUse)
         .then((response: OpenSRPJurisdiction[]) => {
           if (response) {
-            setCurrent(response);
+            setCurrentChildren(response);
           }
         })
         .finally(() => setLoading(false))
@@ -98,93 +134,47 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
     }, [parentId]);
 
     if (loading === true) {
-      return <Fragment>Loading...</Fragment>;
+      return <LoadingIndicator />;
     }
 
-    const loadMore = (item: OpenSRPJurisdiction, _: Event | React.MouseEvent) => {
-      if (!hierarchy.includes(item)) {
-        hierarchy.push(item);
+    /** Function to get children of the currentNode
+     *
+     * This function is passed to the wrapped component and is supposed to be
+     * called from there (a click or something usually).  When run, it sets the
+     * currentNode to the clicked node, and adds it to the hierarchy
+     *
+     * @param node - the clicked node
+     * @param _ - the Mouse Event
+     */
+    const getChildren = (node: OpenSRPJurisdiction, _: Event | React.MouseEvent) => {
+      if (!hierarchy.includes(node)) {
+        hierarchy.push(node);
       } else {
-        // remove all elements in the array that come after item
-        // hierarchy should include elements only up to the current item
-        hierarchy.length = hierarchy.indexOf(item) + 1;
+        // remove all elements in the array that come after node
+        // hierarchy should include elements only up to the current node
+        hierarchy.length = hierarchy.indexOf(node) + 1;
       }
       setHierarchy(hierarchy);
-      setSelectedJurisdiction(item);
+      setCurrentNode(node);
     };
 
+    // get the props to pass down to the wrapped component
     const wrappedProps = {
       ...props,
-      current,
+      currentChildren,
+      currentNode,
+      getChildren,
       hierarchy,
-      loadMore,
-      selectedJurisdiction,
     };
 
+    // return the wrapped component, passing all WalkerProps
     return <WrappedComponent {...wrappedProps} />;
   };
 
+  // Set the default Props
   TreeWalker.defaultProps = {
-    ...defaultTreeWalkerProps,
     ...defaultWalkerProps,
   };
 
   return TreeWalker;
 }
-
-// interface BaseProps extends WithWalkerProps {
-//   smile: string;
-// }
-
-// const Base = (props: BaseProps) => {
-//   const { current, hierarchy, loadMore, selectedJurisdiction, smile } = props;
-
-//   if (current.length > 0 || selectedJurisdiction !== null) {
-//     return (
-//       <Fragment>
-//         {selectedJurisdiction && (
-//           <Fragment>
-//             <h4>Currently Selected {smile}</h4>
-//             <span>{selectedJurisdiction.properties.name}</span>
-//           </Fragment>
-//         )}
-//         <h4>Path</h4>
-//         {hierarchy.map((item: OpenSRPJurisdiction, index: number) => (
-//           <span key={`jzz-${index}`} onClick={e => loadMore(item, e)}>
-//             {' '}
-//             {item.properties.name}
-//             {'>> '}
-//           </span>
-//         ))}
-//         <h4>Current children</h4>
-//         <ul>
-//           {current.map((item: OpenSRPJurisdiction, index: number) => (
-//             <li key={`jxx-${index}`} onClick={e => loadMore(item, e)}>
-//               {item.properties.name}
-//             </li>
-//           ))}
-//         </ul>
-//         ;
-//       </Fragment>
-//     );
-//   } else {
-//     return <Fragment>No Options</Fragment>;
-//   }
-// };
-
-// const xxx: BaseProps = {
-//   ...defaultTreeWalkerProps,
-//   ...defaultWalkerProps,
-//   smile: ":=)"
-// };
-
-// Base.defaultProps = xxx;
-
-// const Simple = withTreeWalker<BaseProps>(Base);
-
-// Simple.defaultProps = {
-//   ...Simple.defaultProps,
-//   // smile: ":=)"
-// }
-
-// export { Simple };
