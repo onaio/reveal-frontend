@@ -38,6 +38,7 @@ import {
   IRS_REPORTING_TITLE,
   IRS_TITLE,
   LOGIN,
+  MANIFEST_RELEASES,
   MDA_POINT_REPORTING_TITLE,
   MONITOR,
   ORGANIZATIONS_LABEL,
@@ -56,6 +57,7 @@ import {
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
   LOGOUT_URL,
+  MANIFEST_RELEASE_URL,
   ORGANIZATIONS_LIST_URL,
   PLAN_LIST_URL,
   PRACTITIONERS_LIST_URL,
@@ -259,6 +261,17 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                         </DropdownItem>
                       </div>
                     )}
+                    {
+                      <DropdownItem>
+                        <NavLink
+                          to={MANIFEST_RELEASE_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {MANIFEST_RELEASES}
+                        </NavLink>
+                      </DropdownItem>
+                    }
                   </DropdownMenu>
                 </UncontrolledDropdown>
               )}
