@@ -2,11 +2,21 @@ import { Result } from '@onaio/utils';
 import { OpenSRPService } from '../../services/opensrp';
 import { OpenSRPJurisdiction } from './types';
 
-export const defaultParams = {
+/** Default params to be used when fetching locations from OpenSRP */
+export const defaultLocationParams = {
   is_jurisdiction: true,
   return_geometry: false,
 };
 
+/** Get ancestors of a jurisdiction from OpenSRP
+ *
+ * This is a recursive function that traverses the OpenSRP jurisdiction tree
+ * upwards (i.e. towards the root parent), and returns an array of all the ancestors
+ * of the supplied jurisdiction, including the jurisdiction
+ *
+ * @param jurisdiction - the jurisdiction in question
+ * @param path - array of ancestors
+ */
 export const getAncestors = async (
   jurisdiction: OpenSRPJurisdiction,
   path: OpenSRPJurisdiction[] = []
@@ -24,7 +34,7 @@ export const getAncestors = async (
 
   const service = new OpenSRPService('location');
   const result = await service
-    .read(jurisdiction.properties.parentId, defaultParams)
+    .read(jurisdiction.properties.parentId, defaultLocationParams)
     .then((response: OpenSRPJurisdiction) => {
       if (response) {
         return { error: null, value: response };
