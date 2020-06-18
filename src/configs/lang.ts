@@ -574,6 +574,9 @@ export const ALB_TABLETS_DISTRIBUTED = translate(
   'Alb Tablets Distributed'
 );
 export const FILE = translate('FILE', 'File');
+export const FILE_FORMAT = translate('FILE_FORMAT', 'fileFormat');
 export const CSV_FILE = translate('CSV_FILE', 'CSV File');
 export const JURISDICTION_ID = translate('JURISDICTION_ID', 'jurisdiction_id');
 export const JURISDICTION_NAME = translate('JURISDICTION_NAME', 'jurisdiction_name');
+export const INVALID_CSV = translate('INVALID_CSV', 'Invalid CSV');
+export const CSV_ONLY = translate('CSV_ONLY', 'CSV Files Only');

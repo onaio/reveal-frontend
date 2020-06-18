@@ -25,6 +25,9 @@ import {
   ACTION,
   FAILED_TO_EXTRACT_PLAN_RECORD,
   FOCUS_AREA_HEADER,
+  JURISDICTION_ID,
+  JURISDICTION_METADATA,
+  JURISDICTION_NAME,
   NAME,
   NO_OPTIONS,
 } from '../configs/lang';
@@ -54,6 +57,7 @@ import {
   MAP_ID,
   MOSQUITO_COLLECTION_CODE,
   RACD_REGISTER_FAMILY_CODE,
+  SETTINGS_CONFIGURATION,
 } from '../constants';
 import {
   InterventionType,
@@ -881,4 +885,74 @@ export const reactSelectNoOptionsText = () => NO_OPTIONS;
  */
 export const getQueryParams = (location: Location) => {
   return querystring.parse(trimStart(location.search, '?'));
+};
+
+export interface PapaResult {
+  data: JurisdictionMetadata[];
+  errors?: any;
+  meta?: any;
+}
+
+export interface JurisdictionMetadata {
+  jurisdiction_id: string;
+  [property: string]: string;
+}
+
+export interface Setting {
+  description: string;
+  label: string;
+  value: string | unknown;
+  key: string;
+}
+
+export interface SettingConfiguration {
+  type: string;
+  identifier: string;
+  providerId: string;
+  locationId: string;
+  settings: Setting[];
+  teamId: string;
+}
+
+// create payloads for sending
+export const createPayloads = (result: PapaResult): SettingConfiguration[] => {
+  const payloads: SettingConfiguration[] = [];
+  const { data } = result;
+  // check if jurisdiction_id exists
+  if (data.length > 0 && data[0].jurisdiction_id) {
+    // get the metadata items
+    const headers = Object.keys(data[0]);
+    for (const header of headers) {
+      const settings: Setting[] = [];
+      if (header !== JURISDICTION_ID && header !== JURISDICTION_NAME) {
+        // add the metadata values with jurisdiction as the key
+        for (const item of data) {
+          const entries = Object.entries(item);
+          for (const [key, value] of entries) {
+            if (key === header) {
+              const setting: Setting = {
+                description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
+                key: item.jurisdiction_id,
+                label: `${
+                  item.jurisdiction_name ? item.jurisdiction_name : item.jurisdiction_id
+                } metadata`,
+                value,
+              };
+              settings.push(setting);
+            }
+          }
+        }
+        const payload: SettingConfiguration = {
+          identifier: `jurisdiction_metadata-${header}`,
+          locationId: '',
+          providerId: 'demo',
+          settings,
+          teamId: '',
+          type: SETTINGS_CONFIGURATION,
+        };
+        payloads.push(payload);
+      }
+    }
+  }
+  return payloads;
 };

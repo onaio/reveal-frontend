@@ -165,18 +165,6 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                 </NavItem>
               )}
 
-              {ENABLE_JURISDICTION_METADATA_UPLOAD && (
-                <NavItem>
-                  <NavLink
-                    to={UPLOAD_JURISDICTION_METADATA_URL}
-                    className="nav-link"
-                    activeClassName="active"
-                  >
-                    {JURISDICTION_METADATA}
-                  </NavLink>
-                </NavItem>
-              )}
-
               {(ENABLE_IRS || ENABLE_FI) && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle
@@ -273,6 +261,17 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           </NavLink>
                         </DropdownItem>
                       </div>
+                    )}
+                    {ENABLE_JURISDICTION_METADATA_UPLOAD && (
+                      <DropdownItem>
+                        <NavLink
+                          to={UPLOAD_JURISDICTION_METADATA_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {JURISDICTION_METADATA}
+                        </NavLink>
+                      </DropdownItem>
                     )}
                   </DropdownMenu>
                 </UncontrolledDropdown>

@@ -8,18 +8,18 @@ import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
 import {
   CSV_FILE,
+  CSV_ONLY,
   FILE,
+  FILE_FORMAT,
   FILE_UPLOADED_SUCCESSFULLY,
-  JURISDICTION_ID,
-  JURISDICTION_METADATA,
-  JURISDICTION_NAME,
+  INVALID_CSV,
   REQUIRED,
   UPLOAD,
   UPLOAD_FILE,
   UPLOADING,
 } from '../../../configs/lang';
 import { HOME_URL, OPENSRP_V1_SETTINGS_ENDPOINT } from '../../../constants';
-import { growl } from '../../../helpers/utils';
+import { createPayloads, growl, PapaResult, SettingConfiguration } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 
 const SUPPORTED_FORMATS = ['text/csv'];
@@ -28,27 +28,11 @@ const SUPPORTED_FORMATS = ['text/csv'];
 export const JurisdictionSchema = Yup.object().shape({
   file: Yup.mixed()
     .required(REQUIRED)
-    .test('fileFormat', 'CSV Files only', value => value && SUPPORTED_FORMATS.includes(value.type)),
+    .test(FILE_FORMAT, CSV_ONLY, value => value && SUPPORTED_FORMATS.includes(value.type)),
 });
 
 export interface JurisdictionMetadataFormFields {
   file: File;
-}
-
-export interface Setting {
-  description: string;
-  label: string;
-  value: string | unknown;
-  key: string;
-}
-
-export interface SettingConfiguration {
-  type: string;
-  identifier: string;
-  providerId: string;
-  locationId: string;
-  settings: Setting[];
-  teamId: string;
 }
 
 export interface JurisdictionMetadataFormProps {
@@ -69,49 +53,8 @@ export const defaultInitialValues: JurisdictionMetadataFormFields = {
   file: new File([], ''),
 };
 
-// create payloads for sending
-const createPayloads = (result: any): SettingConfiguration[] => {
-  const payloads: SettingConfiguration[] = [];
-  const { data } = result;
-  // check if jurisdiction_id exists
-  if (data.length > 0 && data[0].jurisdiction_id) {
-    // get the metadata items
-    const headers = Object.keys(data[0]);
-    for (const header of headers) {
-      const settings: Setting[] = [];
-      if (header !== JURISDICTION_ID && header !== JURISDICTION_NAME) {
-        // add the metadata values with jurisdiction as the key
-        for (const item of data) {
-          const entries = Object.entries(item);
-          for (const [key, value] of entries) {
-            if (key === header) {
-              const setting: Setting = {
-                description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
-                key: item.jurisdiction_id,
-                label: `${item.jurisdiction_name} metadata`,
-                value,
-              };
-              settings.push(setting);
-            }
-          }
-        }
-        const payload: SettingConfiguration = {
-          identifier: `jurisdiction_metadata-${header}`,
-          locationId: '',
-          providerId: 'demo',
-          settings,
-          teamId: '',
-          type: 'SettingConfiguration',
-        };
-        payloads.push(payload);
-      }
-    }
-  }
-  return payloads;
-};
-
 // read csv and convert to json
-const handleFile = (file: File, complete: (results: any) => any) => {
+const handleFile = (file: File, complete: (results: PapaResult) => void) => {
   Papaparse.parse(file, {
     complete: results => {
       complete(results);
@@ -149,7 +92,7 @@ export const submitForm = (
         }
         setSubmitting(false);
       } else {
-        setGlobalError('Invalid CSV');
+        setGlobalError(INVALID_CSV);
         setSubmitting(false);
       }
     });
