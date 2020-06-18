@@ -1,6 +1,8 @@
 import { Style } from 'mapbox-gl';
+import { Map } from 'mapbox-gl';
 import React, { Fragment } from 'react';
 import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl';
+import { FitBounds } from 'react-mapbox-gl/lib/map';
 import Loading from '../../components/page/Loading';
 import { GISIDA_MAPBOX_TOKEN } from '../../configs/env';
 import { gsLiteStyle } from './helpers';
@@ -11,13 +13,15 @@ interface GisidaLiteProps {
   attributionControl: boolean;
   customAttribution: string;
   injectCSS: boolean;
-  layers: JSX.Element[];
+  layers: any[];
   mapCenter: [number, number] | undefined;
+  mapBounds?: FitBounds;
   mapHeight: string;
   mapStyle: Style | string;
   mapWidth: string;
   scrollZoom: boolean;
   zoom: number;
+  onClickHandler?: (map: Map, event: any) => void;
 }
 
 /** Default props for GisidaLite */
@@ -34,6 +38,10 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   scrollZoom: true,
   zoom: 15,
 };
+
+const Mapbox = ReactMapboxGl({
+  accessToken: GISIDA_MAPBOX_TOKEN,
+});
 
 /**
  * Really simple Gisida :)
@@ -56,16 +64,9 @@ const GisidaLite = (props: GisidaLiteProps) => {
     mapWidth,
     mapStyle,
     scrollZoom,
+    onClickHandler,
     zoom,
   } = props;
-
-  const Map = ReactMapboxGl({
-    accessToken,
-    attributionControl,
-    customAttribution,
-    injectCSS,
-    scrollZoom,
-  });
 
   if (mapCenter === undefined) {
     return <Loading />;
@@ -78,26 +79,30 @@ const GisidaLite = (props: GisidaLiteProps) => {
   };
 
   return (
-    <Fragment>
-      <Map
-        center={mapCenter}
-        zoom={[zoom]}
-        style={mapStyle}
-        containerStyle={{
-          height: mapHeight,
-          width: mapWidth,
-        }}
-        onStyleLoad={runAfterMapLoaded}
-      >
-        <>
-          {renderLayers &&
-            layers.map((item: any, index: number) => (
-              <Fragment key={`gsLite-${index}`}>{item}</Fragment>
-            ))}
-          <ZoomControl />
-        </>
-      </Map>
-    </Fragment>
+    <Mapbox
+      center={mapCenter}
+      zoom={[zoom]}
+      style={mapStyle}
+      containerStyle={{
+        height: mapHeight,
+        width: mapWidth,
+      }}
+      fitBounds={props.mapBounds}
+      onStyleLoad={runAfterMapLoaded}
+      onClick={onClickHandler}
+    >
+      <>
+        {renderLayers &&
+          layers.map((item: any, index: number) => (
+            <Fragment key={`gsLite-${index}`}>{item}</Fragment>
+          ))}
+        {/* {renderLayers &&
+          layers.map((item: any, index: number) => {
+            return <GeoJSONLayer {...item} key={`gs-layers-${index}`} />;
+          })} */}
+        <ZoomControl />
+      </>
+    </Mapbox>
   );
 };
 
