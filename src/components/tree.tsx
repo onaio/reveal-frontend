@@ -37,7 +37,7 @@ const defaultSimpleProps: SimpleProps = {
   serviceClass: OpenSRPService,
 };
 
-const getPath = async (
+const getAncestors = async (
   jurisdiction: OpenSRPJurisdiction,
   path: OpenSRPJurisdiction[] = []
 ): Promise<OpenSRPJurisdiction[] | null> => {
@@ -62,7 +62,7 @@ const getPath = async (
   if (!parentJurisdiction) {
     return null;
   } else {
-    return getPath(parentJurisdiction, path);
+    return getAncestors(parentJurisdiction, path);
   }
 };
 
@@ -100,7 +100,7 @@ const Simple = (props: SimpleProps) => {
         .then((response: OpenSRPJurisdiction) => {
           if (response) {
             setSelectedJurisdiction(response);
-            getPath(response)
+            getAncestors(response)
               .then((path: OpenSRPJurisdiction[] | null) => {
                 if (path) {
                   setHierarchy(path);
