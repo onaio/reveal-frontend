@@ -1,7 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { displayError } from '../../helpers/errors';
 import { getFilterParams, OpenSRPService, URLParams } from '../../services/opensrp';
-import { defaultLocationParams, getAncestors, getChildren } from './helpers';
+import {
+  defaultLocationParams,
+  defaultLocationPropertyFilters,
+  getAncestors,
+  getChildren,
+} from './helpers';
 import { OpenSRPJurisdiction } from './types';
 
 /** Type def for the TreeWalker component */
@@ -12,6 +17,7 @@ export interface TreeWalkerProps {
   jurisdictionId: string /** jurisdiction id --> used to start walking the tree from a particular point/node */;
   listAPIEndpoint: string /** the API endpoint to get a list of objects */;
   params: URLParams /** URL params to send with the request to the API */;
+  propertyFilters: URLParams /** property filters to send with the request to the API */;
   readAPIEndpoint: string /** the API endpoint to get a single object */;
   serviceClass: typeof OpenSRPService /** the API helper class */;
 }
@@ -24,6 +30,7 @@ export const defaultTreeWalkerProps: TreeWalkerProps = {
   jurisdictionId: '',
   listAPIEndpoint: 'location/findByProperties',
   params: defaultLocationParams,
+  propertyFilters: defaultLocationPropertyFilters,
   readAPIEndpoint: 'location',
   serviceClass: OpenSRPService,
 };
@@ -72,6 +79,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
       jurisdictionId,
       listAPIEndpoint,
       params,
+      propertyFilters,
       readAPIEndpoint,
       serviceClass,
     } = props;
@@ -80,7 +88,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
     const parentId = currentNode ? currentNode.id : jurisdictionId;
 
     const propertiesToFilter = {
-      status: 'Active',
+      ...propertyFilters,
       ...(parentId === '' && { geographicLevel: 0 }),
       ...(parentId !== '' && { parentId }),
     };
