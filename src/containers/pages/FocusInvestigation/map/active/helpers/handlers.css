@@ -6,7 +6,7 @@
 
 .mapboxgl-popup-content {
   font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
-  padding: 0;
+  padding: 0 !important;
 }
 
 .mapboxgl-popup-content-wrapper {
