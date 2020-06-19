@@ -21,20 +21,9 @@ import {
 } from '../../../constants';
 import { RouteParams } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
-import { JurisdictionMetadataImport } from '../../../store/ducks/opensrp/jurisdictionMetadata';
-
-export interface Props {
-  jurisdictionMetadataImport: JurisdictionMetadataImport | null;
-  serviceClass: typeof OpenSRPService;
-}
-
-export const defaultProps: Props = {
-  jurisdictionMetadataImport: null,
-  serviceClass: OpenSRPService,
-};
 
 /** type intersection for all types that pertain to the props */
-export type JurisdictionMetadataImportViewTypes = Props & RouteComponentProps<RouteParams>;
+export type JurisdictionMetadataImportViewTypes = RouteComponentProps<RouteParams>;
 
 /** JurisdictionMetadataImportView component */
 const JurisdictionMetadataImportView = () => {
@@ -75,7 +64,5 @@ const JurisdictionMetadataImportView = () => {
     </div>
   );
 };
-
-JurisdictionMetadataImportView.defaultProps = defaultProps;
 
 export default JurisdictionMetadataImportView;

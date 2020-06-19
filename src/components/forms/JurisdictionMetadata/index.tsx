@@ -72,10 +72,11 @@ export const submitForm = (
 ) => {
   if (values) {
     handleFile(values.file, results => {
+      const { serviceClass } = props;
       const payloads: SettingConfiguration[] = createPayloads(results);
       if (payloads.length > 0) {
         const valuesToSend = { settingConfigurations: payloads };
-        props.serviceClass
+        serviceClass
           .create(valuesToSend)
           .then(() => {
             growl(FILE_UPLOADED_SUCCESSFULLY, {
