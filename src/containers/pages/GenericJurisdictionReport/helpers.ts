@@ -1,4 +1,6 @@
-import { Cell, Column } from 'react-table';
+import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
+import { Dictionary } from '@onaio/utils';
+import { Cell } from 'react-table';
 import { getIRSThresholdAdherenceIndicator } from '../../../helpers/indicators';
 
 /** columns for Namibia IRS jurisdictions */
@@ -203,9 +205,26 @@ export const ZambiaFocusAreasColumns = [
 /** IRS Table Columns
  * These are all the table columns for IRS that we know about.
  */
-export const plansTableColumns: { [key: string]: Column[] } = {
+export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionary>> } = {
   mdaJurisdictionsColumns,
   namibia2019: NamibiaColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
   zambiaJurisdictions2019: ZambiaJurisdictionsColumns,
 };
+
+export type TableProps = Pick<
+  DrillDownTableProps<Dictionary>,
+  | 'columns'
+  | 'CellComponent'
+  | 'data'
+  | 'extraCellProps'
+  | 'getTdProps'
+  | 'identifierField'
+  | 'linkerField'
+  | 'paginate'
+  | 'parentIdentifierField'
+  | 'resize'
+  | 'rootParentId'
+  | 'useDrillDown'
+  | 'renderNullDataComponent'
+>;

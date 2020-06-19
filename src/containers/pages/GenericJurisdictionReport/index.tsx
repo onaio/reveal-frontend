@@ -1,4 +1,4 @@
-import { DrillDownTable, hasChildrenFunc } from '@onaio/drill-down-table';
+import { DrillDownColumn, DrillDownTable, hasChildrenFunc } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
@@ -10,6 +10,7 @@ import { Cell } from 'react-table';
 import { Col, Row } from 'reactstrap';
 import HeaderBreadcrumb from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../components/page/Loading';
+import { NoDataComponent } from '../../../components/Table/NoDataComponent';
 import { SUPERSET_MAX_RECORDS } from '../../../configs/env';
 import { HOME } from '../../../configs/lang';
 import { HOME_URL } from '../../../constants';
@@ -25,7 +26,7 @@ import GenericJurisdictionsReducer, {
 import { fetchMDAPointPlans } from '../../../store/ducks/generic/MDAPointPlans';
 import { fetchIRSPlans, GenericPlan } from '../../../store/ducks/generic/plans';
 import { getJurisdictionBreadcrumbs } from '../IRS/Map/helpers';
-import { plansTableColumns } from './helpers';
+import { plansTableColumns, TableProps } from './helpers';
 import './style.css';
 
 /** register the reducers */
@@ -204,8 +205,8 @@ const GenericJurisdictionReport = (
     }
   }
 
-  const tableProps: any = {
-    columns: [],
+  const tableProps: TableProps = {
+    columns: [] as Array<DrillDownColumn<Dictionary>>,
     ...(columnsToUse && { columns: columnsToUse }),
     CellComponent: cellComponent,
     data,
@@ -233,7 +234,8 @@ const GenericJurisdictionReport = (
     linkerField: 'jurisdiction_name',
     paginate: false,
     parentIdentifierField: 'jurisdiction_parent_id',
-    resizable: true,
+    renderNullDataComponent: () => <NoDataComponent />,
+    resize: true,
     rootParentId: jurisdictionId || '',
     useDrillDown: true,
   };
