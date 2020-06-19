@@ -91,6 +91,7 @@ export const BACKEND_CALLBACK_PATH = '/fe/oauth/callback/:id';
 export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
 export const CLIENTS_LIST_URL = '/clients';
 export const UPLOAD_CLIENT_CSV_URL = '/clients/upload';
+export const UPLOAD_JURISDICTION_METADATA_URL = '/jurisdiction-metadata/upload';
 export const GO_BACK_TEXT = 'Go Back';
 /** how long after opening a logout window should we wait before redirecting to express' server logout
  * I am not sure the optimum value for this, mozilla firefox seems to take some
@@ -123,6 +124,7 @@ export const LOCATION_ID_PARAM = 'location_id';
 export const TEAM_ID_PARAM = 'team_id';
 export const OPENSRP_TEMPLATE_ENDPOINT = 'template';
 export const OPENSRP_PLANS_BY_USER_FILTER = 'plans/user';
+export const OPENSRP_V1_SETTINGS_ENDPOINT = 'settings/sync';
 export const OPENSRP_ACTIVE = 'Active';
 export const OPENSRP_STATUS = 'status';
 
@@ -153,3 +155,6 @@ export const SORT_BY_EFFECTIVE_PERIOD_START_FIELD = 'plan_effective_period_start
 /** Query Params */
 export const QUERY_PARAM_TITLE = 'title';
 export const QUERY_PARAM_USER = 'user';
+
+/** Settings Configuration */
+export const SETTINGS_CONFIGURATION = 'SettingConfiguration';
