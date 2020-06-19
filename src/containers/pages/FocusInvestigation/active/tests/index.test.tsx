@@ -130,7 +130,16 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       fetchPlansActionCreator: jest.fn(),
       history,
       location: mock,
-      match: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdiction_parent_id: '2977',
+          plan_id: fixtures.plan2.id,
+        },
+        path: FI_URL,
+        url: FI_URL,
+      },
+      plan: fixtures.plan2,
       routinePlans: [fixtures.plan1],
       supersetService: mock,
     };
