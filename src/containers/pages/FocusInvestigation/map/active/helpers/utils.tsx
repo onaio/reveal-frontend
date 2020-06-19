@@ -1,6 +1,6 @@
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import * as React from 'react';
-import { GeoJSONLayer, Layer } from 'react-mapbox-gl';
+import { GeoJSONLayer } from 'react-mapbox-gl';
 import { ActionCreator } from 'redux';
 import { GREY } from '../../../../../../colors';
 import {
@@ -305,21 +305,6 @@ export const buildGsLiteLayers = (
   }
 
   if (pointFeatureCollection && pointFeatureCollection.features.length) {
-    if (goalIsWithSymbol) {
-      gsLayers.push(
-        <Layer
-          {...symbolLayerTemplate}
-          symbolLayout={{
-            ...symbolLayerTemplate.symbolLayout,
-            ...{ 'icon-image': iconGoal },
-            'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
-          }}
-          id={`${idToUse}-point-symbol`}
-          key={`${idToUse}-point-symbol`}
-          data={pointFeatureCollection}
-        />
-      );
-    }
     gsLayers.push(
       <GeoJSONLayer
         {...circleLayerTemplate}
@@ -334,8 +319,6 @@ export const buildGsLiteLayers = (
         data={pointFeatureCollection}
       />
     );
-  }
-  if (polygonFeatureCollection && polygonFeatureCollection.features.length) {
     if (goalIsWithSymbol) {
       gsLayers.push(
         <GeoJSONLayer
@@ -345,12 +328,14 @@ export const buildGsLiteLayers = (
             ...{ 'icon-image': iconGoal },
             'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
           }}
-          id={`${idToUse}-poly-symbol`}
-          key={`${idToUse}-poly-symbol`}
-          data={polygonFeatureCollection}
+          id={`${idToUse}-point-symbol`}
+          key={`${idToUse}-point-symbol`}
+          data={pointFeatureCollection}
         />
       );
     }
+  }
+  if (polygonFeatureCollection && polygonFeatureCollection.features.length) {
     gsLayers.push(
       <GeoJSONLayer
         {...lineLayerTemplate}
@@ -379,9 +364,27 @@ export const buildGsLiteLayers = (
       />
     );
   }
+  if (goalIsWithSymbol) {
+    gsLayers.push(
+      <GeoJSONLayer
+        {...symbolLayerTemplate}
+        symbolLayout={{
+          ...symbolLayerTemplate.symbolLayout,
+          ...{ 'icon-image': iconGoal },
+          'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+        }}
+        id={`${idToUse}-poly-symbol`}
+        key={`${idToUse}-poly-symbol`}
+        data={polygonFeatureCollection}
+      />
+    );
+  }
   return gsLayers;
 };
 
+/** returns bounds for the map derived from the jurisdiction
+ * @param Jurisdiction - the jurisdiction
+ */
 export const getMapBounds = (jurisdiction: Jurisdiction | null) => {
   let mapBounds;
   if (jurisdiction && jurisdiction.geojson) {
@@ -404,7 +407,7 @@ export const getMapBounds = (jurisdiction: Jurisdiction | null) => {
  * Geometry type is a union of seven types.
  * For union type we can only access members that are common to all types in the union.
  * Unfortunately, not all of those types include the coordinates property
- * Let's narrow down GeometryCollection which has no coordinates for our case when extending Feature
+ * Let's narrow dow n GeometryCollection which has no coordinates for our case when extending Feature
  * Let's also add layer prop which is missing on Feature
  */
 export interface FeatureWithLayer
@@ -416,7 +419,7 @@ export interface FeatureWithLayer
  * Build mapbox component onclick event handler
  */
 export const buildOnClickHandler = (currentPlanId: string) => {
-  return (map: Map, event: EventData) => {
+  function clickHandler(map: Map, event: EventData) {
     /** differentiate between current index cases and historical index cases by use of plan_id
      * current_case will be index_case belonging to this plan
      */
@@ -467,5 +470,6 @@ export const buildOnClickHandler = (currentPlanId: string) => {
         .setHTML(description)
         .addTo(map);
     }
-  };
+  }
+  return clickHandler;
 };
