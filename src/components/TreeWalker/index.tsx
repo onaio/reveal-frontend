@@ -128,7 +128,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
 
     // On component mount or whenever parentId changes, we try and get the currentNode's children
     useEffect(() => {
-      getChildrenFunc(paramsToUse, currentNode)
+      getChildrenFunc(paramsToUse, currentNode || parentId)
         .then(result => {
           if (result.value !== null) {
             setCurrentChildren(result.value);
