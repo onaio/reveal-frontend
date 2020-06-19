@@ -212,23 +212,26 @@ const GenericJurisdictionReport = (
     data,
     extraCellProps: { urlPath: currentBaseURL },
     getTdProps: (cell: Cell) => {
-      return {
-        onClick: (__: SyntheticEvent, handleOriginal: () => void) => {
-          const column = cell.column;
-          const rowInfo = cell.row;
-          if (rowInfo && column) {
-            if (
-              column.id === 'jurisdiction_name' &&
-              hasChildren(cell, parentNodes, 'jurisdiction_id')
-            ) {
-              setJurisdictionId((rowInfo.original as Dictionary).jurisdiction_id);
+      return [
+        {
+          datatd: 'pm-0',
+          onClick: (__: SyntheticEvent, handleOriginal: () => void) => {
+            const column = cell.column;
+            const rowInfo = cell.row;
+            if (rowInfo && column) {
+              if (
+                column.id === 'jurisdiction_name' &&
+                hasChildren(cell, parentNodes, 'jurisdiction_id')
+              ) {
+                setJurisdictionId((rowInfo.original as Dictionary).jurisdiction_id);
+              }
+              if (handleOriginal) {
+                handleOriginal();
+              }
             }
-            if (handleOriginal) {
-              handleOriginal();
-            }
-          }
+          },
         },
-      };
+      ];
     },
     identifierField: 'jurisdiction_id',
     linkerField: 'jurisdiction_name',

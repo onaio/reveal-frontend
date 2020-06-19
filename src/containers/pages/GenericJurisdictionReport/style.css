@@ -20,3 +20,16 @@
   line-height: 1.2rem;
   padding: 4px 7px;
 }
+
+/** Hack to remove padding from Mda-reporting tds */
+.generic-report-table .td[datatd='pm-0'] {
+  padding: 0 !important;
+  line-height: 3em;
+  height: 3em;
+}
+
+.generic-report-table .td[datatd='pm-0'] div {
+  padding: 0 5px !important;
+  line-height: inherit;
+  height: initial;
+}
