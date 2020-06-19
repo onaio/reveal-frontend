@@ -1,3 +1,4 @@
+/** The shape of a jurisdiction received from the OpenSRP API */
 export interface OpenSRPJurisdiction {
   id: string;
   properties: {
@@ -9,4 +10,15 @@ export interface OpenSRPJurisdiction {
   };
   serverVersion: number;
   type: 'Feature';
+}
+
+/** Used to describe OpenSRP jurisdictions in short form */
+export interface SimpleJurisdicion {
+  id: string;
+  parentId: string;
+}
+
+/** Object containing known API endpoints by name */
+export interface APIEndpoints {
+  [key: string]: string;
 }
