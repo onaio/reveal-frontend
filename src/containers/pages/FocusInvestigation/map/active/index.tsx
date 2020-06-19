@@ -481,7 +481,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       actionCode: CASE_CONFIRMATION_CODE,
       jurisdictionId: plan.jurisdiction_id,
       planId: plan.plan_id,
-      structureType: [POINT, MULTI_POLYGON],
+      structureType: [POLYGON, MULTI_POLYGON],
       taskBusinessStatus: 'Complete',
     });
 
