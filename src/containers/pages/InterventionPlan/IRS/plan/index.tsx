@@ -7,11 +7,11 @@ import { MouseEvent } from 'react';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Button, Col, Input, Row } from 'reactstrap';
+import { Button, Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 
 import GeojsonExtent from '@mapbox/geojson-extent';
-import DrillDownTable, { DrillDownProps, DropDownCell } from '@onaio/drill-down-table';
+import { DrillDownTable, DrillDownTableProps, DropDownCell } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 
 import { Dictionary } from '@onaio/utils';
@@ -31,8 +31,6 @@ import {
   JURISDICTION,
   NAME,
   NEW_PLAN,
-  NEXT,
-  PREVIOUS,
   SAVE_AS_DRAFT,
   SAVE_ASSIGNMENTS,
   SAVE_FINALIZED_PLAN,
@@ -53,6 +51,7 @@ import {
   JURISDICTION_ID,
   MAP_ID,
   NEW,
+  OPENSRP_ACTIVE,
   OPENSRP_FIND_BY_PROPERTIES,
   OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
   OPENSRP_LOCATION,
@@ -60,6 +59,7 @@ import {
   OPENSRP_PARENT_ID,
   OPENSRP_PLANS,
   OPENSRP_POST_ASSIGNMENTS_ENDPOINT,
+  OPENSRP_STATUS,
   PARENTID,
 } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
@@ -218,7 +218,7 @@ interface IrsPlanState {
   isSaveDraftDisabled: boolean;
   currentPlan: PlanRecord | null;
   planCountry: string;
-  planTableProps: DrillDownProps<any> | null;
+  planTableProps: any | null;
   previousPlanName: string;
   tableCrumbs: TableCrumb[];
 }
@@ -350,7 +350,7 @@ class IrsPlan extends React.Component<
             // GET parentlessParent Jurisdiction from OpenSRP
             OpenSrpLocationService.read(OPENSRP_FIND_BY_PROPERTIES, {
               is_jurisdiction: true,
-              properties_filter: `name:${jurisdictionsById[parentlessParent].name}`,
+              properties_filter: `name:${jurisdictionsById[parentlessParent].name},${OPENSRP_STATUS}:${OPENSRP_ACTIVE}`,
               return_geometry: false,
             })
               .then(results => {
@@ -1862,9 +1862,9 @@ class IrsPlan extends React.Component<
 
   /** getDrilldownPlanTableProps - getter for hierarchical DrilldownTable props
    * @param {IrsPlanState} state - component state
-   * @returns {DrillDownProps<any>|null} - compatible object for DrillDownTable props or null
+   * @returns {DrillDownTableProps<any>|null} - compatible object for DrillDownTable props or null
    */
-  private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownProps<any> | null {
+  private getDrilldownPlanTableProps(state: IrsPlanState): DrillDownTableProps<any> | null {
     const { currentPlan, focusJurisdictionId, tableCrumbs } = state;
     const { assignmentsArray, isDraftPlan, jurisdictionsById, planId } = this.props;
 
@@ -1916,67 +1916,53 @@ class IrsPlan extends React.Component<
     const columns = [
       {
         Header: () => (
-          <Input
+          <input
             checked={headerCheckboxIsChecked}
             className="plan-jurisdiction-select-all-checkbox"
             onChange={onToggleAllCheckboxChange}
             type="checkbox"
           />
         ),
-        columns: [
-          {
-            Header: '',
-            accessor: (j: JurisdictionRow) => (
-              <Input
-                checked={planJurisdictionIds.includes(j.jurisdiction_id)}
-                className="plan-jurisdiction-selection-checkbox"
-                onChange={onTableCheckboxChange}
-                onClick={stopPropagation}
-                type="checkbox"
-                value={j.jurisdiction_id}
-              />
-            ),
-            id: 'jurisdiction_selection',
-            maxWidth: 24,
-          },
-        ],
+        accessor: (j: JurisdictionRow) => (
+          <input
+            checked={planJurisdictionIds.includes(j.jurisdiction_id)}
+            className="plan-jurisdiction-selection-checkbox"
+            onChange={onTableCheckboxChange}
+            onClick={stopPropagation}
+            type="checkbox"
+            value={j.jurisdiction_id}
+          />
+        ),
+        disableSortBy: true,
+        id: 'jurisdiction_selection',
+        maxWidth: 24,
       },
       {
         Header: NAME,
-        columns: [
-          {
-            Header: '',
-            accessor: (j: JurisdictionRow) => (
-              <span
-                id={j.jurisdiction_id}
-                onClick={onDrilldownClick}
-                className={`plan-jurisdiction-name${!j.isChildless ? ' btn-link' : ''}`}
-              >
-                {j.name}
-              </span>
-            ),
-            id: 'name',
-          },
-        ],
+        accessor: (j: JurisdictionRow) => (
+          <span
+            id={j.jurisdiction_id}
+            onClick={onDrilldownClick}
+            className={`plan-jurisdiction-name ${!j.isChildless ? ' btn-link' : ''}`}
+          >
+            {j.name}
+          </span>
+        ),
+        id: 'name',
       },
       {
         Header: TYPE_LABEL,
-        columns: [
-          {
-            Header: '',
-            accessor: (j: JurisdictionRow) => {
-              if (isMdaPoint) {
-                return <span onClick={stopPropagationAndPreventDefault}>{j.geographic_level}</span>;
-              }
-              return (
-                <span onClick={stopPropagationAndPreventDefault}>
-                  {j.isChildless ? SPRAY_AREA_HEADER : `${ADMIN_LEVEL} ${j.geographic_level}`}
-                </span>
-              );
-            },
-            id: 'jurisdiction-type',
-          },
-        ],
+        accessor: (j: JurisdictionRow) => {
+          if (isMdaPoint) {
+            return <span onClick={stopPropagationAndPreventDefault}>{j.geographic_level}</span>;
+          }
+          return (
+            <span onClick={stopPropagationAndPreventDefault}>
+              {j.isChildless ? SPRAY_AREA_HEADER : `${ADMIN_LEVEL} ${j.geographic_level}`}
+            </span>
+          );
+        },
+        id: 'jurisdiction-type',
       },
     ];
 
@@ -1984,24 +1970,17 @@ class IrsPlan extends React.Component<
       columns.shift();
       columns.push({
         Header: TEAMS_ASSIGNMENT,
-        columns: [
-          {
-            Header: '',
-            accessor: (j: JurisdictionRow) => {
-              const parentAssignedTeamIds = j.parent_id
-                ? this.getParentAssignedTeamsIds(j.parent_id, filteredJurisdictions)
-                : [];
-
-              const cellProps = {
-                jurisdictionId: j.jurisdiction_id,
-                parentIds: parentAssignedTeamIds,
-                planId: j.planId,
-              } as AssignTeamCellProps;
-              return <AssignTeamTableCell {...cellProps} />;
-            },
-            id: 'teams_assigned',
-          },
-        ],
+        accessor: (j: JurisdictionRow) => {
+          if (!j.isChildless) {
+            return <span />;
+          }
+          const cellProps = {
+            jurisdictionId: j.jurisdiction_id,
+            planId: j.planId,
+          } as AssignTeamCellProps;
+          return <AssignTeamTableCell {...cellProps} />;
+        },
+        id: 'teams_assigned',
       });
     }
 
@@ -2038,20 +2017,17 @@ class IrsPlan extends React.Component<
       } as JurisdictionRow;
     });
 
-    const tableProps: DrillDownProps<any> = {
+    const tableProps: any = {
       CellComponent: DropDownCell,
       columns,
       data,
       identifierField: 'jurisdiction_id',
       linkerField: 'name',
-      minRows: 0,
-      nextText: NEXT,
+      paginate: showPagination,
       parentIdentifierField: 'parent_id',
-      previousText: PREVIOUS,
       rootParentId: this.state.focusJurisdictionId,
-      showPageSizeOptions: false,
       showPagination,
-      useDrillDownTrProps: true,
+      useDrillDown: true,
     };
     return tableProps;
   }

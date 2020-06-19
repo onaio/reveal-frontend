@@ -276,5 +276,9 @@ describe('components/forms/JurisdictionSelect', () => {
     expect(mockedOpenSRPservice).toHaveBeenCalledTimes(4);
     /** Called after firing select event */
     expect(handleChange).toBeCalledTimes(1);
+    // properties to filter has status as active
+    promiseOptions.mock.calls.forEach(call => {
+      expect(call[1].properties_filter.includes('status:Active')).toBeTruthy();
+    });
   });
 });

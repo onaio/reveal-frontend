@@ -1,33 +1,25 @@
-import ListView from '@onaio/list-view';
+import { DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import { createChangeHandler, SearchForm } from '../../../../components/forms/Search';
-import { UserSelectFilter } from '../../../../components/forms/UserFilter';
 import LinkAsButton from '../../../../components/LinkAsButton';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
-  ADD_PLAN,
-  HOME,
-  INTERVENTION_TYPE_LABEL,
-  LAST_MODIFIED,
-  PLANS,
-  SEARCH,
-  STATUS_HEADER,
-  TITLE,
-} from '../../../../configs/lang';
-import { PlanDefinition, planStatusDisplay } from '../../../../configs/settings';
+  defaultOptions,
+  renderInFilterFactory,
+} from '../../../../components/Table/DrillDownFilters/utils';
+import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
+import { ADD_PLAN, HOME, PLANS } from '../../../../configs/lang';
+import { PlanDefinition } from '../../../../configs/settings';
 import {
   HOME_URL,
   OPENSRP_PLANS,
   PLAN_LIST_URL,
-  PLAN_UPDATE_URL,
   QUERY_PARAM_TITLE,
   QUERY_PARAM_USER,
 } from '../../../../constants';
@@ -44,6 +36,7 @@ import plansByUserReducer, {
   makePlansByUserNamesSelector,
   reducerName as plansByUserReducerName,
 } from '../../../../store/ducks/opensrp/planIdsByUser';
+import { TableColumns } from './utils';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
@@ -105,31 +98,37 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
     loadData().catch(err => displayError(err));
   }, []);
 
-  const listViewData = (data: PlanDefinition[]) =>
-    data.map(planObj => {
-      const typeUseContext = planObj.useContext.filter(e => e.code === 'interventionType');
-
-      return [
-        <Link to={`${PLAN_UPDATE_URL}/${planObj.identifier}`} key={planObj.identifier}>
-          {planObj.title}
-        </Link>,
-        typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : '',
-        planStatusDisplay[planObj.status] || planObj.status,
-        planObj.date,
-      ];
-    });
-
-  if (loading === true) {
-    return <Loading />;
-  }
-
-  const listViewProps = {
-    data: listViewData(plans),
-    headerItems: [TITLE, INTERVENTION_TYPE_LABEL, STATUS_HEADER, LAST_MODIFIED],
-    tableClass: 'table table-bordered plans-list',
+  const tableProps: Pick<
+    DrillDownTableProps<PlanDefinition>,
+    | 'columns'
+    | 'data'
+    | 'loading'
+    | 'loadingComponent'
+    | 'renderInBottomFilterBar'
+    | 'renderInTopFilterBar'
+    | 'useDrillDown'
+    | 'renderNullDataComponent'
+  > = {
+    columns: TableColumns,
+    data: plans,
+    loading,
+    loadingComponent: Loading,
+    renderInBottomFilterBar: renderInFilterFactory({
+      showColumnHider: false,
+      showFilters: false,
+      showPagination: true,
+      showRowHeightPicker: false,
+      showSearch: false,
+    }),
+    renderInTopFilterBar: renderInFilterFactory({
+      ...defaultOptions,
+      componentProps: props,
+      queryParam: QUERY_PARAM_TITLE,
+      serviceClass: props.service,
+    }),
+    renderNullDataComponent: () => <NoDataComponent />,
+    useDrillDown: false,
   };
-
-  const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
 
   return (
     <div>
@@ -149,13 +148,9 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
         </Col>
       </Row>
       <hr />
-      <div style={{ display: 'inline-block' }}>
-        <SearchForm placeholder={SEARCH} onChangeHandler={searchFormChangeHandler} />
-      </div>
-      <UserSelectFilter serviceClass={props.service} />
       <Row>
         <Col>
-          <ListView {...listViewProps} />
+          <DrillDownTable {...tableProps} />
         </Col>
       </Row>
     </div>

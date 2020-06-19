@@ -1,11 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`containers/pages/IRS Search works correctly: find single row for entry with Khlong  tr index 0 1`] = `"NameDate CreatedStatus"`;
+
+exports[`containers/pages/IRS Search works correctly: find single row for entry with Khlong  tr index 1 1`] = `"A1 - Khlong Nam Sai - IRS 012019-05-24draft"`;
+
+exports[`containers/pages/IRS does not show loader for no data: find No Data Found text tr index 0 1`] = `"NameDate CreatedStatus"`;
+
 exports[`containers/pages/IRS renders plans list correctly: button props 1`] = `
 Object {
+  "aria-label": null,
   "children": "Create New Plan",
-  "color": "primary",
-  "tag": [Function],
-  "to": "/intervention/irs/new",
+  "className": "create-plan btn btn-primary",
+  "href": "/intervention/irs/new",
+  "onClick": [Function],
+  "type": undefined,
 }
 `;
 
@@ -14,34 +22,23 @@ Object {
   "CellComponent": [Function],
   "columns": Array [
     Object {
+      "Cell": [Function],
       "Header": "Name",
-      "columns": Array [
-        Object {
-          "Cell": [Function],
-          "Header": "",
-          "accessor": "plan_title",
-          "minWidth": 200,
-        },
-      ],
+      "accessor": "plan_title",
+      "minWidth": 200,
     },
     Object {
       "Header": "Date Created",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "plan_date",
-        },
-      ],
+      "accessor": "plan_date",
+      "maxWidth": 50,
+      "minWidth": 20,
     },
     Object {
       "Header": "Status",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": [Function],
-          "id": "plan_status",
-        },
-      ],
+      "accessor": [Function],
+      "id": "plan_status",
+      "maxWidth": 50,
+      "minWidth": 20,
     },
   ],
   "data": Array [
@@ -74,14 +71,15 @@ Object {
   "hasChildren": [Function],
   "identifierField": "id",
   "linkerField": "id",
-  "minRows": 0,
-  "nextText": "Next",
+  "loading": false,
+  "loadingComponent": [Function],
+  "paginate": true,
   "parentIdentifierField": "parent_id",
-  "previousText": "Previous",
+  "renderInBottomFilterBar": [Function],
+  "renderInTopFilterBar": [Function],
+  "renderNullDataComponent": [Function],
+  "resize": true,
   "rootParentId": null,
-  "shouldUseEffect": false,
-  "showPageSizeOptions": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": false,
 }
 `;

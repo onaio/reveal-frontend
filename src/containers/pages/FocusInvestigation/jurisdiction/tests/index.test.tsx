@@ -379,31 +379,18 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
 
     expect(
       wrapper
-        .find('.current-plans NullDataTable h3.text-muted')
+        .find('.current-plans NullDataTable')
         .first()
         .text()
-    ).toEqual('No Investigations Found');
+    ).toMatchInlineSnapshot(`"Reactive    No Data Found"`);
     expect(
       wrapper
-        .find('.current-plans NullDataTable h3.text-muted')
+        .find('.current-plans NullDataTable')
         .last()
         .text()
-    ).toEqual('No Investigations Found');
-
-    expect(wrapper.find('.complete-plans NullDataTable').length).toEqual(2);
-
-    expect(
-      wrapper
-        .find('.complete-plans NullDataTable h3.text-muted')
-        .first()
-        .text()
-    ).toEqual('No Investigations Found');
-    expect(
-      wrapper
-        .find('.complete-plans NullDataTable h3.text-muted')
-        .last()
-        .text()
-    ).toEqual('No Investigations Found');
+    ).toMatchInlineSnapshot(
+      `"RoutineNameFI StatusProvinceDistrictCantonVillageFocus AreaStatusStart DateEnd DateNo Data Found"`
+    );
   });
 
   it('renders supersetService error correctly', async () => {

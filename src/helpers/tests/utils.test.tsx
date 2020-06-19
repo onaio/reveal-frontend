@@ -29,6 +29,7 @@ import {
 import * as helpers from '../errors';
 import { colorMaps } from '../structureColorMaps';
 import {
+  creatSettingsPayloads,
   descendingOrderSort,
   extractPlan,
   extractPlanRecordResponseFromPlanPayload,
@@ -40,8 +41,10 @@ import {
   IndicatorThresholdItemPercentage,
   isPlanDefinitionOfType,
   oAuthUserInfoGetter,
+  PapaResult,
   removeNullJurisdictionPlans,
   roundToPrecision,
+  SettingConfiguration,
 } from '../utils';
 interface SampleColorMap {
   [key: string]: string;
@@ -372,5 +375,35 @@ describe('helpers/utils', () => {
     expect(getQueryParams(location)).toEqual({
       q: 'venom',
     });
+  });
+
+  it('creates Payloads correctly', () => {
+    const result: PapaResult = {
+      data: [
+        {
+          coverage: '30',
+          jurisdiction_id: '79b139c-3a20-4656-b684-d2d9ed83c94e',
+          jurisdiction_name: 'test1',
+          risk: '80',
+        },
+        {
+          coverage: '50',
+          jurisdiction_id: '02ebbc84-5e29-4cd5-9b79-c594058923e9',
+          jurisdiction_name: 'test2',
+          risk: '70',
+        },
+      ],
+      errors: [],
+      meta: [],
+    };
+
+    const payloads: SettingConfiguration[] = creatSettingsPayloads(result);
+    const payload: SettingConfiguration = payloads[0];
+
+    expect(payloads).toHaveLength(2);
+    expect(payload.identifier).toEqual('jurisdiction_metadata-coverage');
+    expect(payload.settings).toHaveLength(2);
+    expect(payload.settings[0].value).toEqual('30');
+    expect(payload.settings[0].key).toEqual('79b139c-3a20-4656-b684-d2d9ed83c94e');
   });
 });

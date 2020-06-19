@@ -36,82 +36,6 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
 </HelmetWrapper>
 `;
 
-exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: list view props 1`] = `
-Object {
-  "data": Array [
-    Array [
-      <Link
-        replace={false}
-        to="/plans/update/356b6b84-fc36-4389-a44a-2b038ed2f38d"
-      >
-        A2-Lusaka Akros Test Focus 2
-      </Link>,
-      "FI",
-      "active",
-      "2019-05-19",
-    ],
-    Array [
-      <Link
-        replace={false}
-        to="/plans/update/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"
-      >
-        TwoTwoOne_01 IRS 2019-07-10
-      </Link>,
-      "IRS",
-      "active",
-      "2019-07-10",
-    ],
-    Array [
-      <Link
-        replace={false}
-        to="/plans/update/f0558ad1-396d-4d97-9fff-c46cf92b6ce6"
-      >
-        A1 - TwoTwoTwo_03 - 2019-07-18
-      </Link>,
-      "FI",
-      "active",
-      "2019-07-18",
-    ],
-    Array [
-      <Link
-        replace={false}
-        to="/plans/update/0e85c238-39c1-4cea-a926-3d89f0c98429"
-      >
-        A Test By Mosh
-      </Link>,
-      "FI",
-      "draft",
-      "2019-05-19",
-    ],
-    Array [
-      <Link
-        replace={false}
-        to="/plans/update/f3da140c-2d2c-4bf7-8189-c2349f143a72"
-      >
-        Macepa MDA Campaign
-      </Link>,
-      "MDA",
-      "active",
-      "2019-10-18",
-    ],
-  ],
-  "headerItems": Array [
-    "Title",
-    "Intervention Type",
-    "Status",
-    "Last Modified",
-  ],
-  "renderHeaders": [Function],
-  "renderRows": [Function],
-  "tableClass": "table table-bordered plans-list",
-  "tbodyClass": "listview-tbody",
-  "tdClass": "listview-td",
-  "thClass": "listview-th",
-  "theadClass": "listview-thead",
-  "trClass": "listview-tr",
-}
-`;
-
 exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: row heading 1`] = `
 <Row
   tag="div"
@@ -183,9 +107,26 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
 </Row>
 `;
 
-exports[`components/InterventionPlan/PlanDefinitionList renders plan definition list correctly: search form props 1`] = `
-Object {
-  "onChangeHandler": [Function],
-  "placeholder": "Search",
-}
-`;
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 0 1`] = `"TitleIntervention TypeStatusLast Modified"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 1 1`] = `"A Test By MoshFIdraft2019-05-19"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 2 1`] = `"A1 - TwoTwoTwo_03 - 2019-07-18FIactive2019-07-18"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 3 1`] = `"A2-Lusaka Akros Test Focus 2FIactive2019-05-19"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 4 1`] = `"TwoTwoOne_01 IRS 2019-07-10IRSactive2019-07-10"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 5 1`] = `"Macepa MDA CampaignMDAactive2019-10-18"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: before clicking on sort tr index 0 1`] = `"TitleIntervention TypeStatusLast Modified"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: before clicking on sort tr index 1 1`] = `"A2-Lusaka Akros Test Focus 2FIactive2019-05-19"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: before clicking on sort tr index 2 1`] = `"TwoTwoOne_01 IRS 2019-07-10IRSactive2019-07-10"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: before clicking on sort tr index 3 1`] = `"A1 - TwoTwoTwo_03 - 2019-07-18FIactive2019-07-18"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: before clicking on sort tr index 4 1`] = `"A Test By MoshFIdraft2019-05-19"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: before clicking on sort tr index 5 1`] = `"Macepa MDA CampaignMDAactive2019-10-18"`;

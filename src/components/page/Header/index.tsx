@@ -21,6 +21,7 @@ import {
   ENABLE_ASSIGN,
   ENABLE_FI,
   ENABLE_IRS,
+  ENABLE_JURISDICTION_METADATA_UPLOAD,
   ENABLE_MDA_POINT,
   ENABLE_PRACTITIONERS,
   ENABLE_TEAMS,
@@ -37,6 +38,7 @@ import {
   HOME,
   IRS_REPORTING_TITLE,
   IRS_TITLE,
+  JURISDICTION_METADATA,
   LOGIN,
   MDA_POINT_REPORTING_TITLE,
   MONITOR,
@@ -62,6 +64,7 @@ import {
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
+  UPLOAD_JURISDICTION_METADATA_URL,
 } from '../../../constants';
 import './Header.css';
 
@@ -258,6 +261,17 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           </NavLink>
                         </DropdownItem>
                       </div>
+                    )}
+                    {ENABLE_JURISDICTION_METADATA_UPLOAD && (
+                      <DropdownItem>
+                        <NavLink
+                          to={UPLOAD_JURISDICTION_METADATA_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {JURISDICTION_METADATA}
+                        </NavLink>
+                      </DropdownItem>
                     )}
                   </DropdownMenu>
                 </UncontrolledDropdown>

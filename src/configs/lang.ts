@@ -118,6 +118,7 @@ export const SAVE_PLAN = translate('SAVE_PLAN', 'Save Plan');
 export const SAVE_AS_DRAFT = translate('SAVE_AS_DRAFT', 'Save as a Draft');
 export const SAVE_FINALIZED_PLAN = translate('SAVE_FINALIZED_PLAN', 'Save Finalized Plan');
 export const SAVE_ASSIGNMENTS = translate('SAVE_ASSIGNMENTS', 'Save Assignments');
+export const SAVE_FILE = translate('SAVE_FILE', 'Save File');
 export const NO_PLANS_LOADED_MESSAGE = translate('NO_PLANS_LOADED_MESSAGE', 'No plans found...');
 export const SELECT = translate('SELECT', 'Select');
 export const SELECT_USERNAME = translate('SELECT_USERNAME', 'Select username');
@@ -138,6 +139,7 @@ export const NO = translate('NO', 'No');
 export const EDIT = translate('EDIT', 'Edit');
 export const ADD = translate('ADD', 'Add');
 export const REMOVE = translate('REMOVE', 'Remove');
+export const UPLOAD = translate('UPLOAD', 'Upload');
 
 export const IRS_PLANS = translate('IRS_PLANS', 'IRS Plans');
 export const MDA_POINT_PLANS = translate('MDA_POINT_PLANS', 'MDA Point Plans');
@@ -156,11 +158,17 @@ export const ACTIONS = translate('ACTIONS', 'Actions');
 export const IDENTIFIER = translate('IDENTIFIER', 'Identifier');
 export const USERNAME = translate('USERNAME', 'Username');
 export const VIEW = translate('VIEW', 'view');
+export const JURISDICTION_METADATA = translate('JURISDICTION_METADATA', 'Jurisdiction Metadata');
+export const UPLOAD_JURISDICTION_METADATA = translate(
+  'UPLOAD_JURISDICTION_METADATA',
+  'Upload Jurisdiction Metadata'
+);
 
 export const REACTIVE = translate('REACTIVE', 'Reactive');
 export const REACTIVE_INVESTIGATION = translate('REACTIVE_INVESTIGATION', 'Reactive Investigation');
 export const REQUIRED = translate('REQUIRED', 'Required');
 export const SAVING = translate('SAVING', 'Saving');
+export const UPLOADING = translate('UPLOADING', 'Uploading');
 export const PLANS = translate('PLANS', 'Manage Plans');
 export const PLANNING = translate('PLANNING', 'Planning');
 export const MONITOR = translate('MONITOR', 'Monitor');
@@ -552,7 +560,6 @@ export const USER_HAS_NO_PLAN_ASSIGNMENTS = translate(
   'USER_HAS_NO_PLAN_ASSIGNMENTS',
   'User does not have any plans assigned'
 );
-
 export const NO_ROWS_FOUND = translate('NO_ROWS_FOUND', 'No rows found');
 
 export const AGE_RANGE = translate('AGE_RANGE', 'Age Range');
@@ -565,4 +572,33 @@ export const ADR_SEVERE = translate('ADR_SEVERE', 'ADR Severe');
 export const ALB_TABLETS_DISTRIBUTED = translate(
   'ALB_TABLETS_DISTRIBUTED',
   'Alb Tablets Distributed'
+);
+export const FILE = translate('FILE', 'File');
+export const FILE_FORMAT = translate('FILE_FORMAT', 'fileFormat');
+export const CSV_FILE = translate('CSV_FILE', 'CSV File');
+export const JURISDICTION_ID = translate('JURISDICTION_ID', 'jurisdiction_id');
+export const JURISDICTION_NAME = translate('JURISDICTION_NAME', 'jurisdiction_name');
+export const INVALID_CSV = translate('INVALID_CSV', 'Invalid CSV');
+export const CSV_ONLY = translate('CSV_ONLY', 'CSV Files Only');
+export const ROW_HEIGHT = translate('ROW_HEIGHT', 'Row Height');
+
+export const ROWS_TO_DISPLAY = translate('ROWS_TO_DISPLAY', 'Rows to display');
+
+export const PAGE = translate('PAGE', 'page');
+
+export const OF = translate('OF', 'of');
+
+export const DEFAULT = translate('DEFAULT', 'default');
+
+export const SHORT = translate('SHORT', 'short');
+
+export const TALL = translate('TALL', 'tall');
+
+export const NO_DATA_FOUND = translate('NO_DATA_FOUND', 'No Data Found');
+
+export const CUSTOMIZE_COLUMNS = translate('CUSTOMIZE_COLUMNS', 'Customize Columns');
+
+export const CUSTOMIZE_COLUMNS_FILTER_MESSAGE = translate(
+  'CUSTOMIZE_COLUMNS_FILTER_MESSAGE',
+  'Select columns to be displayed'
 );

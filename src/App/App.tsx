@@ -1,10 +1,12 @@
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import {
+  faCog,
   faExternalLinkSquareAlt,
   faMap,
   faSearch,
   faSlidersH,
+  faTextHeight,
 } from '@fortawesome/free-solid-svg-icons';
 import ConnectedPrivateRoute from '@onaio/connected-private-route';
 import {
@@ -37,6 +39,7 @@ import {
 import { LOGIN_PROMPT } from '../configs/lang';
 import { providers } from '../configs/settings';
 
+import '@onaio/drill-down-table/dist/table.css';
 import { Footer } from '../components/page/Footer';
 import {
   ACTIVE_IRS_PLAN_URL,
@@ -73,6 +76,7 @@ import {
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
   SINGLE_ORGANIZATION_URL,
+  UPLOAD_JURISDICTION_METADATA_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -90,6 +94,7 @@ import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
 import ConnectedClientListView from '../containers/pages/MDAPoint/ClientListView';
 import ConnectedMdaPointJurisdictionReport from '../containers/pages/MDAPoint/jurisdictionsReport';
 import ConnectedSchoolReports from '../containers/pages/MDAPoint/LocationReports';
@@ -105,9 +110,8 @@ import store from '../store';
 import { getOauthProviderState } from '../store/selectors';
 import './App.css';
 
-library.add(faMap);
-library.add(faUser);
-library.add(faExternalLinkSquareAlt, faSearch, faSlidersH);
+library.add(faExternalLinkSquareAlt, faSearch, faSlidersH, faCog, faMap, faUser, faTextHeight);
+
 toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
 });
@@ -427,6 +431,14 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={`${ASSIGN_PRACTITIONERS_URL}/:id`}
                   component={ConnectedAssignPractitioner}
+                />
+                {/* Upload Jurisdiction Metadata view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={UPLOAD_JURISDICTION_METADATA_URL}
+                  component={JurisdictionMetadata}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
