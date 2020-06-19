@@ -915,8 +915,10 @@ export interface SettingConfiguration {
   teamId: string;
 }
 
-// create payloads for sending
-export const createPayloads = (result: PapaResult): SettingConfiguration[] => {
+/**
+ * Create payload for sending settings to OpenSRP v1 Settings endpoint
+ */
+export const creatSettingsPayloads = (result: PapaResult): SettingConfiguration[] => {
   const payloads: SettingConfiguration[] = [];
   const { data } = result;
   // check if jurisdiction_id exists

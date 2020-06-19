@@ -29,7 +29,7 @@ import {
 import * as helpers from '../errors';
 import { colorMaps } from '../structureColorMaps';
 import {
-  createPayloads,
+  creatSettingsPayloads,
   descendingOrderSort,
   extractPlan,
   extractPlanRecordResponseFromPlanPayload,
@@ -397,7 +397,7 @@ describe('helpers/utils', () => {
       meta: [],
     };
 
-    const payloads: SettingConfiguration[] = createPayloads(result);
+    const payloads: SettingConfiguration[] = creatSettingsPayloads(result);
     const payload: SettingConfiguration = payloads[0];
 
     expect(payloads).toHaveLength(2);

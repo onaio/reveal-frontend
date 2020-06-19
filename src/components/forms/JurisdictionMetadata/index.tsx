@@ -19,7 +19,12 @@ import {
   UPLOADING,
 } from '../../../configs/lang';
 import { HOME_URL, OPENSRP_V1_SETTINGS_ENDPOINT } from '../../../constants';
-import { createPayloads, growl, PapaResult, SettingConfiguration } from '../../../helpers/utils';
+import {
+  creatSettingsPayloads,
+  growl,
+  PapaResult,
+  SettingConfiguration,
+} from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 
 const SUPPORTED_FORMATS = ['text/csv'];
@@ -73,7 +78,7 @@ export const submitForm = (
   if (values) {
     handleFile(values.file, results => {
       const { serviceClass } = props;
-      const payloads: SettingConfiguration[] = createPayloads(results);
+      const payloads: SettingConfiguration[] = creatSettingsPayloads(results);
       if (payloads.length > 0) {
         const valuesToSend = { settingConfigurations: payloads };
         serviceClass
