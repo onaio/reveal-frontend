@@ -13,7 +13,7 @@ export interface OpenSRPJurisdiction {
 }
 
 /** Used to describe OpenSRP jurisdictions in short form */
-export interface SimpleJurisdicion {
+export interface SimpleJurisdiction {
   id: string;
   parentId: string;
 }
