@@ -5,7 +5,6 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 4,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -13,13 +12,14 @@ Object {
   "hasChildren": [Function],
   "identifierField": "jurisdiction_id",
   "linkerField": "jurisdiction_name",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "jurisdiction_parent_id",
-  "resizable": true,
+  "renderNullDataComponent": [Function],
+  "resize": true,
   "rootParentId": "",
-  "shouldUseEffect": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": true,
 }
 `;
 
@@ -79,7 +79,6 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 4,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -87,13 +86,14 @@ Object {
   "hasChildren": [Function],
   "identifierField": "jurisdiction_id",
   "linkerField": "jurisdiction_name",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "jurisdiction_parent_id",
-  "resizable": true,
+  "renderNullDataComponent": [Function],
+  "resize": true,
   "rootParentId": "",
-  "shouldUseEffect": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": true,
 }
 `;
 
@@ -102,7 +102,6 @@ Object {
   "CellComponent": [Function],
   "columns": Any<Object>,
   "data": Any<Object>,
-  "defaultPageSize": 4,
   "extraCellProps": Object {
     "urlPath": "/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce",
   },
@@ -110,12 +109,13 @@ Object {
   "hasChildren": [Function],
   "identifierField": "jurisdiction_id",
   "linkerField": "jurisdiction_name",
-  "minRows": 0,
+  "loading": false,
+  "loadingComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "jurisdiction_parent_id",
-  "resizable": true,
+  "renderNullDataComponent": [Function],
+  "resize": true,
   "rootParentId": "0dc2d15b-be1d-45d3-93d8-043a3a916f30",
-  "shouldUseEffect": false,
-  "showPagination": false,
-  "useDrillDownTrProps": false,
+  "useDrillDown": true,
 }
 `;

@@ -3,7 +3,6 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
-import 'react-table/react-table.css';
 import { Store } from 'redux';
 import IRSIndicatorLegend from '../../../../components/formatting/IRSIndicatorLegend';
 import MDAPointTableCell from '../../../../components/MDAPointCellTable';

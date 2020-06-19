@@ -1,0 +1,56 @@
+.column-hider .checkbox {
+  width: 100%;
+  margin: 5px auto;
+  position: relative;
+  display: block;
+}
+.column-hider .checkbox label {
+  position: relative;
+  display: block;
+  padding-left: 40px;
+  margin-bottom: 0;
+  font-weight: normal;
+  cursor: pointer;
+}
+.column-hider .checkbox label:before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 4px;
+  width: 22px;
+  height: 22px;
+  transition: transform 0.28s ease;
+  border-radius: 3px;
+  border: 2px solid #9b9b9b;
+}
+.column-hider .checkbox label:after {
+  content: '';
+  display: block;
+  width: 10px;
+  height: 5px;
+  border-bottom: 2px solid #fff;
+  border-left: 2px solid white;
+  transform: rotate(-45deg) scale(0);
+  transition: transform ease 0.25s;
+  position: absolute;
+  top: 12px;
+  left: 10px;
+}
+.column-hider .checkbox input[type='checkbox'] {
+  width: auto;
+  opacity: 0.00000001;
+  position: absolute;
+  left: 0;
+  margin-left: -20px;
+}
+.column-hider .checkbox input[type='checkbox']:checked ~ label:before {
+  border: 2px solid #0192d4;
+  background: #0192d4;
+}
+.column-hider .checkbox input[type='checkbox']:checked ~ label:after {
+  transform: rotate(-45deg) scale(1);
+}
+.column-hider .checkbox input[type='checkbox']:focus + label::before {
+  outline: 0;
+}

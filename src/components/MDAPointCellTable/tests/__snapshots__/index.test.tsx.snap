@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/mdaPointCellTable renders correctly when is_virtual_jurisdiction and has not children: has children 1`] = `
+<div>
+  <span
+    className="plan-jurisdiction-name name-label"
+  >
+    CellValue
+  </span>
+</div>
+`;
+
+exports[`src/components/mdaPointCellTable renders correctly: has children 1`] = `
+<div>
+  <Link
+    replace={false}
+    to=""
+  >
+    CellValue
+  </Link>
+</div>
+`;
+
+exports[`src/components/mdaPointCellTable renders correctly: has not children 1`] = `
+<div>
+  <Link
+    replace={false}
+    to="/intervention/mda-point/location-report/plan_id/jurisdiction_id"
+  >
+    CellValue
+  </Link>
+</div>
+`;

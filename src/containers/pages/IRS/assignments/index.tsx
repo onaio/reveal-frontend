@@ -1,19 +1,25 @@
-import ListView from '@onaio/list-view';
+import { DrillDownColumn, DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table';
 import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
+import { Dictionary } from '@onaio/utils/';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Cell } from 'react-table';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  defaultOptions,
+  renderInFilterFactory,
+} from '../../../../components/Table/DrillDownFilters/utils';
+import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
+import {
   ASSIGN_PLANS,
   END_DATE,
   HOME,
   INTERVENTION,
-  NO_PLANS_LOADED_MESSAGE,
   PLAN_STATUS,
   START_DATE,
   TITLE,
@@ -22,11 +28,16 @@ import { planStatusDisplay } from '../../../../configs/settings';
 import {
   ASSIGN_PLAN_URL,
   HOME_URL,
+  OPENSRP_PLANS,
   PLAN_RECORD_BY_ID,
+  QUERY_PARAM_TITLE,
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { extractPlanRecordResponseFromPlanPayload } from '../../../../helpers/utils';
+import {
+  extractPlanRecordResponseFromPlanPayload,
+  getQueryParams,
+} from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
@@ -43,19 +54,20 @@ import {
 /** register the plan definitions reducer */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 
-const OpenSrpPlanService = new OpenSRPService('plans');
-
 /** Plans filter selector */
-const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
+const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID, 'plan_date');
 
 /** interface for PlanAssignmentsListProps props */
 interface PlanAssignmentsListProps {
   fetchPlans: typeof fetchPlanRecords;
   plans: PlanRecord[];
+  serviceClass: typeof OpenSRPService;
 }
 
+export type PlanAssignmentWithRouteProps = PlanAssignmentsListProps & RouteComponentProps;
+
 /** Simple component that loads plans and allows you to manage plan-jurisdiciton-organization assignments */
-const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
+const IRSAssignmentPlansList = (props: PlanAssignmentWithRouteProps) => {
   const { fetchPlans, plans } = props;
   const [loading, setLoading] = useState<boolean>(plans.length < 1);
 
@@ -76,6 +88,8 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
 
   /** async function to load the data */
   async function loadData() {
+    const OpenSrpPlanService = new props.serviceClass(OPENSRP_PLANS);
+
     try {
       setLoading(plans.length < 1); // only set loading when there are no plans
       await OpenSrpPlanService.list()
@@ -99,24 +113,77 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
     loadData().catch(error => displayError(error));
   }, []);
 
-  if (loading) {
-    return <Loading />;
-  }
+  const tableColumns: Array<DrillDownColumn<PlanRecord>> = [
+    {
+      Cell: (cell: Cell<PlanRecord>) => {
+        const original = cell.row.original as Dictionary;
+        return (
+          <Link to={`${ASSIGN_PLAN_URL}/${original.plan_id}`} key={original.plan_id}>
+            {cell.value}
+          </Link>
+        );
+      },
+      Header: TITLE,
+      accessor: 'plan_title',
+    },
+    {
+      Header: INTERVENTION,
+      accessor: 'plan_intervention_type',
+      maxWidth: 30,
+      minWidth: 10,
+    },
+    {
+      Header: START_DATE,
+      accessor: 'plan_effective_period_start',
+      maxWidth: 30,
+      minWidth: 10,
+    },
+    {
+      Header: END_DATE,
+      accessor: 'plan_effective_period_end',
+      maxWidth: 30,
+      minWidth: 10,
+    },
+    {
+      Cell: (cell: Cell<PlanRecord>) => {
+        return planStatusDisplay[cell.value] || null;
+      },
+      Header: PLAN_STATUS,
+      accessor: 'plan_status',
+      maxWidth: 30,
+      minWidth: 10,
+    },
+  ];
 
-  const listViewProps = {
-    data: plans.map(planObj => {
-      return [
-        <Link to={`${ASSIGN_PLAN_URL}/${planObj.plan_id}`} key={planObj.plan_id}>
-          {planObj.plan_title}
-        </Link>,
-        planObj.plan_intervention_type,
-        planObj.plan_effective_period_start,
-        planObj.plan_effective_period_end,
-        planStatusDisplay[planObj.plan_status] || planObj.plan_status,
-      ];
+  const tableProps: Pick<
+    DrillDownTableProps<PlanRecord>,
+    | 'columns'
+    | 'data'
+    | 'loading'
+    | 'loadingComponent'
+    | 'renderInBottomFilterBar'
+    | 'renderInTopFilterBar'
+    | 'useDrillDown'
+    | 'renderNullDataComponent'
+  > = {
+    columns: tableColumns,
+    data: plans,
+    loading,
+    loadingComponent: Loading,
+    renderInBottomFilterBar: renderInFilterFactory({
+      showColumnHider: false,
+      showFilters: false,
+      showPagination: true,
+      showRowHeightPicker: false,
+      showSearch: false,
     }),
-    headerItems: [TITLE, INTERVENTION, START_DATE, END_DATE, PLAN_STATUS],
-    tableClass: 'table table-bordered plans-list',
+    renderInTopFilterBar: renderInFilterFactory({
+      ...defaultOptions,
+      componentProps: props,
+      queryParam: QUERY_PARAM_TITLE,
+    }),
+    renderNullDataComponent: () => <NoDataComponent />,
+    useDrillDown: false,
   };
 
   return (
@@ -132,11 +199,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
       </Row>
       <Row>
         <Col>
-          {plans.length < 1 ? (
-            <span>{NO_PLANS_LOADED_MESSAGE}</span>
-          ) : (
-            <ListView {...listViewProps} />
-          )}
+          <DrillDownTable {...tableProps} />
         </Col>
       </Row>
     </div>
@@ -147,6 +210,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
 const defaultProps: PlanAssignmentsListProps = {
   fetchPlans: fetchPlanRecords,
   plans: [],
+  serviceClass: OpenSRPService,
 };
 
 IRSAssignmentPlansList.defaultProps = defaultProps;
@@ -161,23 +225,31 @@ interface DispatchedStateProps {
 }
 
 /** map state to props */
-const mapStateToProps = (state: Partial<Store>): DispatchedStateProps => {
+const mapStateToProps = (
+  state: Partial<Store>,
+  ownProps: PlanAssignmentWithRouteProps
+): DispatchedStateProps => {
+  const title = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const planStatus = [PlanStatus.ACTIVE];
   const fiPlans = plansArraySelector(state as Registry, {
     interventionType: InterventionType.FI,
     statusList: planStatus,
+    title,
   });
   const irsPlans = plansArraySelector(state as Registry, {
     interventionType: InterventionType.IRS,
     statusList: planStatus,
+    title,
   });
   const mdaPlans = plansArraySelector(state as Registry, {
     interventionType: InterventionType.MDA,
     statusList: planStatus,
+    title,
   });
   const mdaPointPlans = plansArraySelector(state as Registry, {
     interventionType: InterventionType.MDAPoint,
     statusList: planStatus,
+    title,
   });
   const plans = [...fiPlans, ...irsPlans, ...mdaPlans, ...mdaPointPlans].sort(
     (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)

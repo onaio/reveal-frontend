@@ -3,7 +3,7 @@ import ElementMap from '@onaio/element-map';
 import { Dictionary } from '@onaio/utils';
 import { keys } from 'lodash';
 import * as React from 'react';
-import { CellInfo } from 'react-table';
+import { Cell } from 'react-table';
 import { GREEN, ORANGE, RED, WHITE, YELLOW } from '../colors';
 import { PERSONS, STRUCTURES } from '../configs/lang';
 import {
@@ -104,7 +104,7 @@ export function getGoalReport(goal: Goal): GoalReport {
 /** Returns a table cell rendered with different colors based on focus
  * investigation response adherence conditional formatting
  */
-export function getFIAdherenceIndicator(cell: CellInfo) {
+export function getFIAdherenceIndicator(cell: Cell) {
   return (
     <div
       className="indicator-container"
@@ -136,7 +136,7 @@ export function get137Value(value: number): string {
 /** Returns a table cell rendered with different colors based on focus
  * investigation 1-3-7 adherence conditional formatting
  */
-export function get137AdherenceIndicator(cell: CellInfo) {
+export function get137AdherenceIndicator(cell: Cell) {
   return (
     <div
       className="137-container"
@@ -159,13 +159,13 @@ export function renderClassificationRow(rowObject: Dictionary) {
 }
 
 /** Determines the color of a indicator based on cell.value and threshold configs
- * @param {CellInfo} cell - the ReactTable.Cell being rendered in an indicator drill-down table
+ * @param {Cell} cell - the ReactTable.Cell being rendered in an indicator drill-down table
  * @param {IndicatorThresholds} thresholds - the threshold configuration from settings
  * @param {boolean} doMakeDecimal -  determines if the cell value needs to be divided by 100
  * @returns {string} - the value corresponding the cell.value according to the reporting config
  */
 export function getThresholdColor(
-  cell: CellInfo,
+  cell: Cell,
   thresholds: IndicatorThresholds,
   doMakeDecimal: boolean = false
 ) {
@@ -191,11 +191,11 @@ export function getThresholdColor(
 }
 
 /** Renders an indicator Cell based on cell.value and threshold configs
- * @param {CellInfo} cell - the ReactTable.Cell being rendered in an indicator drilldown table
+ * @param {Cell} cell - the ReactTable.Cell being rendered in an indicator drilldown table
  * @param {string} configId - the key vause used to get the custom reporting configs
  * @returns {React.ReactElement} - the ReactTable.Cell element to be rendered for the indicator
  */
-export function getThresholdAdherenceIndicator(cell: CellInfo, configId: string) {
+export function getThresholdAdherenceIndicator(cell: Cell, configId: string) {
   // determine if cell.value is a number
   const isNumber = !Number.isNaN(Number(cell.value));
   // get thresholds config from settings
@@ -214,12 +214,12 @@ export function getThresholdAdherenceIndicator(cell: CellInfo, configId: string)
 }
 
 /** Renders an indicator Cell based on cell.value and threshold configs
- * @param {CellInfo} cell - the ReactTable.Cell being rendered in an indicator drilldown table
+ * @param {Cell} cell - the ReactTable.Cell being rendered in an indicator drilldown table
  * @param {IndicatorThresholds | null} thresholds - the indicator thresholds
  * @returns {React.ReactElement} - the ReactTable.Cell element to be rendered for the indicator
  */
 export function getIRSThresholdAdherenceIndicator(
-  cell: CellInfo,
+  cell: Cell,
   thresholds: IndicatorThresholds | null = indicatorThresholdsIRS
 ) {
   // determine if cell.value is a number
