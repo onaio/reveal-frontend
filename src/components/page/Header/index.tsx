@@ -19,6 +19,7 @@ import {
   CLIENT_LABEL,
   ENABLE_ABOUT,
   ENABLE_ASSIGN,
+  ENABLE_CONFIG_FORM,
   ENABLE_FI,
   ENABLE_IRS,
   ENABLE_MDA_POINT,
@@ -34,9 +35,11 @@ import {
   ASSIGN,
   CLIENTS_TITLE,
   FOCUS_INVESTIGATION,
+  FORM_DRAFT_FILES,
   HOME,
   IRS_REPORTING_TITLE,
   IRS_TITLE,
+  JSON_VALIDATORS,
   LOGIN,
   MANIFEST_RELEASES,
   MDA_POINT_REPORTING_TITLE,
@@ -56,6 +59,7 @@ import {
   FI_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
+  JSON_VALIDATORS_URL,
   LOGOUT_URL,
   MANIFEST_RELEASE_URL,
   ORGANIZATIONS_LIST_URL,
@@ -64,6 +68,7 @@ import {
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
+  VIEW_DRAFT_FILES_URL,
 } from '../../../constants';
 import './Header.css';
 
@@ -261,7 +266,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                         </DropdownItem>
                       </div>
                     )}
-                    {
+                    {ENABLE_CONFIG_FORM && (
                       <DropdownItem>
                         <NavLink
                           to={MANIFEST_RELEASE_URL}
@@ -271,7 +276,29 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           {MANIFEST_RELEASES}
                         </NavLink>
                       </DropdownItem>
-                    }
+                    )}
+                    {ENABLE_CONFIG_FORM && (
+                      <DropdownItem>
+                        <NavLink
+                          to={JSON_VALIDATORS_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {JSON_VALIDATORS}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_CONFIG_FORM && (
+                      <DropdownItem>
+                        <NavLink
+                          to={VIEW_DRAFT_FILES_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {FORM_DRAFT_FILES}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
                   </DropdownMenu>
                 </UncontrolledDropdown>
               )}

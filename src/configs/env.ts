@@ -56,6 +56,10 @@ export type CLIENT_LABEL = typeof CLIENT_LABEL;
 export const DISABLE_LOGIN_PROTECTION = process.env.REACT_APP_DISABLE_LOGIN_PROTECTION === 'true';
 export type DISABLE_LOGIN_PROTECTION = typeof DISABLE_LOGIN_PROTECTION;
 
+/** Do you want to enable the MDA Point plan features? */
+export const ENABLE_CONFIG_FORM = process.env.REACT_APP_ENABLE_CONFIG_FORM === 'true';
+export type ENABLE_CONFIG_FORM = typeof ENABLE_CONFIG_FORM;
+
 /** The Superset API base */
 export const SUPERSET_API_BASE = process.env.REACT_APP_SUPERSET_API_BASE || 'http://localhost';
 export type SUPERSET_API_BASE = typeof SUPERSET_API_BASE;

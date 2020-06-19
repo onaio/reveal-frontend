@@ -65,7 +65,7 @@ const mapStateToProps = (
   ownProps: RouteComponentProps<RouteParams>
 ): Pageprops => {
   const formVersion = ownProps.match.params.id || null;
-  const isJsonValidator = ownProps.match.params.validator || null;
+  const isJsonValidator = ownProps.match.params.type || null;
   return {
     formVersion,
     isJsonValidator,

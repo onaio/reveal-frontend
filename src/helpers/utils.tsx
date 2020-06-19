@@ -74,7 +74,7 @@ export interface RouteParams {
   id?: string;
   jurisdictionId?: string;
   planId?: string;
-  validator?: string;
+  type?: string;
 }
 
 /** Geometry object interface */
