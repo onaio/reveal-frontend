@@ -23,6 +23,8 @@ import {
   ACTION_CODE,
   CASE_CONFIRMATION_CODE,
   CASE_CONFIRMATION_GOAL_ID,
+  CURRENT_INDEX_CASES,
+  FEATURE_COLLECTION,
   JURISDICTION_ID,
   LARVAL_DIPPING_ID,
   MAIN_PLAN,
@@ -33,7 +35,6 @@ import {
 } from '../../../../../../constants';
 import { ROUTINE } from '../../../../../../constants';
 import { displayError } from '../../../../../../helpers/errors';
-import { popupHandler } from '../../../../../../helpers/handlers';
 import supersetFetch from '../../../../../../services/superset';
 import { fetchGoals, FetchGoalsAction } from '../../../../../../store/ducks/goals';
 import { fetchJurisdictions, Jurisdiction } from '../../../../../../store/ducks/jurisdictions';
@@ -45,7 +46,20 @@ import {
 } from '../../../../../../store/ducks/structures';
 import { fetchTasks, FetchTasksAction, TaskGeoJSON } from '../../../../../../store/ducks/tasks';
 
+import GeojsonExtent from '@mapbox/geojson-extent';
+import { Dictionary } from '@onaio/utils';
+import {
+  Feature,
+  LineString,
+  MultiLineString,
+  MultiPoint,
+  MultiPolygon,
+  Point,
+  Polygon,
+} from 'geojson';
+import { EventData, LngLat, Map } from 'mapbox-gl';
 import { FeatureCollection } from '../../../../../../helpers/utils';
+import './handlers.css';
 
 /** abstracts code that actually makes the superset Call since it is quite similar */
 export async function supersetCall<TAction>(
@@ -155,21 +169,6 @@ export const fetchData = async (
       tasksParams
     ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
   }
-};
-
-/**
- * Build mapbox component event handlers
- * @param method  Event handler
- */
-export const buildHandlers = (planId: string, method: any = popupHandler) => {
-  const customMethod = (e: any) => method(e, planId);
-  return [
-    {
-      method: customMethod,
-      name: 'pointClick',
-      type: 'click',
-    },
-  ];
 };
 
 /**
@@ -297,6 +296,9 @@ export const buildGsLiteLayers = (
   // define the icon for goals with symbols
 
   let iconGoal: string = 'case-confirmation';
+  if (idToUse === CURRENT_INDEX_CASES) {
+    iconGoal = 'current-case-confirmation';
+  }
   switch (currentGoal) {
     case MOSQUITO_COLLECTION_ID:
       iconGoal = 'mosquito';
@@ -306,22 +308,7 @@ export const buildGsLiteLayers = (
       break;
   }
 
-  if (pointFeatureCollection) {
-    if (goalIsWithSymbol) {
-      gsLayers.push(
-        <GeoJSONLayer
-          {...symbolLayerTemplate}
-          symbolLayout={{
-            ...symbolLayerTemplate.symbolLayout,
-            'icon-image': iconGoal,
-            'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
-          }}
-          id={`${idToUse}-point-symbol`}
-          key={`${idToUse}-point-symbol`}
-          data={pointFeatureCollection}
-        />
-      );
-    }
+  if (pointFeatureCollection && pointFeatureCollection.features.length) {
     gsLayers.push(
       <GeoJSONLayer
         {...circleLayerTemplate}
@@ -336,23 +323,23 @@ export const buildGsLiteLayers = (
         data={pointFeatureCollection}
       />
     );
-  }
-  if (polygonFeatureCollection) {
     if (goalIsWithSymbol) {
       gsLayers.push(
         <GeoJSONLayer
           {...symbolLayerTemplate}
           symbolLayout={{
             ...symbolLayerTemplate.symbolLayout,
-            'icon-image': iconGoal,
+            ...{ 'icon-image': iconGoal },
             'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
           }}
-          id={`${idToUse}-poly-symbol`}
-          key={`${idToUse}-poly-symbol`}
-          data={polygonFeatureCollection}
+          id={`${idToUse}-point-symbol`}
+          key={`${idToUse}-point-symbol`}
+          data={pointFeatureCollection}
         />
       );
     }
+  }
+  if (polygonFeatureCollection && polygonFeatureCollection.features.length) {
     gsLayers.push(
       <GeoJSONLayer
         {...lineLayerTemplate}
@@ -381,5 +368,112 @@ export const buildGsLiteLayers = (
       />
     );
   }
+  if (goalIsWithSymbol) {
+    gsLayers.push(
+      <GeoJSONLayer
+        {...symbolLayerTemplate}
+        symbolLayout={{
+          ...symbolLayerTemplate.symbolLayout,
+          ...{ 'icon-image': iconGoal },
+          'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+        }}
+        id={`${idToUse}-poly-symbol`}
+        key={`${idToUse}-poly-symbol`}
+        data={polygonFeatureCollection}
+      />
+    );
+  }
   return gsLayers;
+};
+
+/** returns bounds for the map derived from the jurisdiction
+ * @param Jurisdiction - the jurisdiction
+ */
+export const getMapBounds = (jurisdiction: Jurisdiction | null) => {
+  let mapBounds;
+  if (jurisdiction && jurisdiction.geojson) {
+    const jurisdictionFC = {
+      features: [
+        {
+          ...jurisdiction.geojson,
+          type: 'Feature',
+        },
+      ],
+      type: FEATURE_COLLECTION,
+    };
+    mapBounds = GeojsonExtent(jurisdictionFC);
+  }
+  mapBounds = mapBounds === null ? undefined : mapBounds;
+  return mapBounds;
+};
+
+/**
+ * Geometry type is a union of seven types.
+ * For union type we can only access members that are common to all types in the union.
+ * Unfortunately, not all of those types include the coordinates property
+ * Let's narrow dow n GeometryCollection which has no coordinates for our case when extending Feature
+ * Let's also add layer prop which is missing on Feature
+ */
+export interface FeatureWithLayer
+  extends Feature<Point | MultiPoint | LineString | MultiLineString | Polygon | MultiPolygon> {
+  layer: Dictionary;
+}
+
+/**
+ * Build mapbox component onclick event handler
+ */
+export const buildOnClickHandler = (currentPlanId: string) => {
+  function clickHandler(map: Map, event: EventData) {
+    /** differentiate between current index cases and historical index cases by use of plan_id
+     * current_case will be index_case belonging to this plan
+     */
+    const features = event.target.queryRenderedFeatures(event.point) as Dictionary[];
+    let description: string = '';
+    /** currentGoal is currently not being used but we  may  use it in the future  */
+    const goalIds: string[] = [];
+    features.forEach((feature: any) => {
+      if (
+        feature &&
+        feature.geometry &&
+        feature.geometry.coordinates &&
+        feature.properties &&
+        feature.properties.action_code &&
+        feature.layer.type !== 'line' &&
+        feature.layer.id &&
+        !goalIds.includes(feature.properties.goal_id)
+      ) {
+        if (feature.properties.goal_id) {
+          goalIds.push(feature.properties.goal_id);
+        }
+        if (
+          feature.properties.action_code === CASE_CONFIRMATION_CODE &&
+          feature.properties.plan_id !== currentPlanId
+        ) {
+          description += '<p class="heading">historical index cases </b></p>';
+          description += '<p></p><br/><br/>';
+          return;
+        }
+        // Splitting into two lines to fix breaking tests
+        description += `<p class="heading">${feature.properties.action_code}</b></p>`;
+        description += `<p>${feature.properties.task_business_status}</p><br/><br/>`;
+      }
+    });
+    if (description.length) {
+      description = '<div>' + description + '</div>';
+      const coordinates: LngLat = event.lngLat;
+      /** Ensure that if the map is zoomed out such that multiple
+       * copies of the feature are visible,
+       * the popup appears over the copy being pointed to
+       */
+
+      while (Math.abs(event.lngLat.lng - coordinates.lng) > 180) {
+        coordinates.lng += event.lngLat.lng > coordinates.lng ? 360 : -360;
+      }
+      new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(description)
+        .addTo(map);
+    }
+  }
+  return clickHandler;
 };

@@ -97,9 +97,11 @@ import StatusBadge, { StatusBadgeProps } from './helpers/StatusBadge';
 import {
   buildGsLiteLayers,
   buildJurisdictionLayers,
+  buildOnClickHandler,
   buildStructureLayers,
   fetchData,
   getDetailViewPlanInvestigationContainer,
+  getMapBounds,
   supersetCall,
 } from './helpers/utils';
 import './style.css';
@@ -309,6 +311,8 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     type: 'FeatureCollection',
   });
 
+  const mapBounds = getMapBounds(jurisdiction);
+
   return (
     <div>
       <Helmet>
@@ -336,7 +340,12 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
       <div className="row no-gutters mb-5">
         <div className="col-9">
           <div className="map">
-            <GisidaLite layers={gsLayers} mapCenter={mapCenter} />
+            <GisidaLite
+              layers={gsLayers}
+              mapCenter={mapCenter}
+              mapBounds={mapBounds}
+              onClickHandler={buildOnClickHandler(plan.plan_id)}
+            />
           </div>
         </div>
         <div className="col-3">
@@ -472,7 +481,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       actionCode: CASE_CONFIRMATION_CODE,
       jurisdictionId: plan.jurisdiction_id,
       planId: plan.plan_id,
-      structureType: [POINT, MULTI_POLYGON],
+      structureType: [POLYGON, MULTI_POLYGON],
       taskBusinessStatus: 'Complete',
     });
 

@@ -24,7 +24,7 @@ import * as structureDucks from '../../../../../../store/ducks/structures';
 import * as tasksDucks from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { MapSingleFIProps, SingleActiveFIMap } from '../../active/';
-import { buildHandlers, fetchData } from '../helpers/utils';
+import { fetchData } from '../helpers/utils';
 import * as fixturesMap from './fixtures';
 
 jest.mock('../../../../../../components/GisidaLite', () => {
@@ -588,12 +588,6 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
     expect(supersetServiceMock.mock.calls.length).toBe(0);
-  });
-
-  it('should provide the correct build handlers for the map', () => {
-    expect(JSON.stringify(buildHandlers(jest.fn()))).toEqual(
-      JSON.stringify(fixturesMap.buildHandlers)
-    );
   });
 
   it('should display an error if fetch data result is falsy', async () => {

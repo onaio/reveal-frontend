@@ -1518,6 +1518,11 @@ export const statusColumn = [
 // icons to add to map
 export const imgArr = [
   {
+    id: 'current-case-confirmation',
+    imageUrl:
+      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/current-case-confirmation.png',
+  },
+  {
     id: 'case-confirmation',
     imageUrl:
       'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png',
