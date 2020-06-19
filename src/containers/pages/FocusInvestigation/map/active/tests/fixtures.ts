@@ -48,14 +48,6 @@ export const existingState = {
   },
 };
 
-export const buildHandlers = [
-  {
-    method: jest.fn(),
-    name: 'pointClick',
-    type: 'click',
-  },
-];
-
 // tslint:disable: no-var-requires
 export const planJSON = require('./supersetFixtures/plans.json');
 export const jurisdictionJSON = require('./supersetFixtures/jurisdictions.json');

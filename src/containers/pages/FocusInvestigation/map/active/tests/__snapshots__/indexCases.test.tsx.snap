@@ -46,7 +46,45 @@ Object {
 
 exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 4`] = `
 Object {
-  "id": "historical-index-cases-point-symbol",
+  "id": "historical-index-cases-fill-line",
+  "lineLayout": Object {
+    "visibility": "visible",
+  },
+  "linePaint": Object {
+    "line-color": Array [
+      "get",
+      "color",
+    ],
+    "line-opacity": 1,
+    "line-width": 2,
+  },
+  "type": "line",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 5`] = `
+Object {
+  "fillLayout": Object {
+    "visibility": "visible",
+  },
+  "fillPaint": Object {
+    "fill-color": Array [
+      "get",
+      "color",
+    ],
+    "fill-outline-color": Array [
+      "get",
+      "color",
+    ],
+  },
+  "id": "historical-index-cases-fill",
+  "type": "fill",
+}
+`;
+
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 6`] = `
+Object {
+  "id": "historical-index-cases-poly-symbol",
   "symbolLayout": Object {
     "icon-image": "case-confirmation",
     "icon-size": 0.045,
@@ -62,7 +100,7 @@ Object {
 }
 `;
 
-exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 5`] = `
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 7`] = `
 Object {
   "circleLayout": Object {
     "visibility": "visible",
@@ -94,14 +132,14 @@ Object {
     "circle-stroke-opacity": 1,
     "circle-stroke-width": 2,
   },
-  "id": "historical-index-cases-point",
+  "id": "current-index-cases-point",
   "type": "circle",
 }
 `;
 
-exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 6`] = `
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 8`] = `
 Object {
-  "id": "historical-index-cases-poly-symbol",
+  "id": "current-index-cases-point-symbol",
   "symbolLayout": Object {
     "icon-image": "case-confirmation",
     "icon-size": 0.045,
@@ -117,47 +155,9 @@ Object {
 }
 `;
 
-exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 7`] = `
-Object {
-  "id": "historical-index-cases-fill-line",
-  "lineLayout": Object {
-    "visibility": "visible",
-  },
-  "linePaint": Object {
-    "line-color": Array [
-      "get",
-      "color",
-    ],
-    "line-opacity": 1,
-    "line-width": 2,
-  },
-  "type": "line",
-}
-`;
-
-exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 8`] = `
-Object {
-  "fillLayout": Object {
-    "visibility": "visible",
-  },
-  "fillPaint": Object {
-    "fill-color": Array [
-      "get",
-      "color",
-    ],
-    "fill-outline-color": Array [
-      "get",
-      "color",
-    ],
-  },
-  "id": "historical-index-cases-fill",
-  "type": "fill",
-}
-`;
-
 exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 9`] = `
 Object {
-  "id": "current-index-cases-point-symbol",
+  "id": "current-index-cases-poly-symbol",
   "symbolLayout": Object {
     "icon-image": "case-confirmation",
     "icon-size": 0.045,
@@ -205,105 +205,12 @@ Object {
     "circle-stroke-opacity": 1,
     "circle-stroke-width": 2,
   },
-  "id": "current-index-cases-point",
-  "type": "circle",
-}
-`;
-
-exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 11`] = `
-Object {
-  "id": "current-index-cases-poly-symbol",
-  "symbolLayout": Object {
-    "icon-image": "case-confirmation",
-    "icon-size": 0.045,
-    "visibility": "visible",
-  },
-  "symbolPaint": Object {
-    "text-color": "#0000ff",
-    "text-halo-blur": 1,
-    "text-halo-color": "#fff",
-    "text-halo-width": 1.3,
-  },
-  "type": "symbol",
-}
-`;
-
-exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 12`] = `
-Object {
-  "id": "current-index-cases-fill-line",
-  "lineLayout": Object {
-    "visibility": "visible",
-  },
-  "linePaint": Object {
-    "line-color": Array [
-      "get",
-      "color",
-    ],
-    "line-opacity": 1,
-    "line-width": 2,
-  },
-  "type": "line",
-}
-`;
-
-exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 13`] = `
-Object {
-  "fillLayout": Object {
-    "visibility": "visible",
-  },
-  "fillPaint": Object {
-    "fill-color": Array [
-      "get",
-      "color",
-    ],
-    "fill-outline-color": Array [
-      "get",
-      "color",
-    ],
-  },
-  "id": "current-index-cases-fill",
-  "type": "fill",
-}
-`;
-
-exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 14`] = `
-Object {
-  "circleLayout": Object {
-    "visibility": "visible",
-  },
-  "circlePaint": Object {
-    "circle-color": Array [
-      "get",
-      "color",
-    ],
-    "circle-opacity": 0.7,
-    "circle-radius": Array [
-      "interpolate",
-      Array [
-        "exponential",
-        2,
-      ],
-      Array [
-        "zoom",
-      ],
-      15.75,
-      2.5,
-      20.8,
-      50,
-    ],
-    "circle-stroke-color": Array [
-      "get",
-      "color",
-    ],
-    "circle-stroke-opacity": 1,
-    "circle-stroke-width": 2,
-  },
   "id": "RACD_register_families-point",
   "type": "circle",
 }
 `;
 
-exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 15`] = `
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 11`] = `
 Object {
   "id": "RACD_register_families-fill-line",
   "lineLayout": Object {
@@ -321,7 +228,7 @@ Object {
 }
 `;
 
-exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 16`] = `
+exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 12`] = `
 Object {
   "fillLayout": Object {
     "visibility": "visible",

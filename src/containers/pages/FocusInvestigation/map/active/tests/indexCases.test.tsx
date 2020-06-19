@@ -79,7 +79,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(componentProps.pointFeatureCollection.features.length).toEqual(95);
     expect(componentProps.polygonFeatureCollection.features.length).toEqual(7);
     expect(componentProps.currentPointIndexCases.features.length).toEqual(1);
-    expect(componentProps.currentPolyIndexCases.features.length).toEqual(1);
+    expect(componentProps.currentPolyIndexCases.features.length).toEqual(0);
     expect(componentProps.historicalPointIndexCases.features.length).toEqual(0);
     expect(componentProps.historicalPolyIndexCases.features.length).toEqual(2);
 
