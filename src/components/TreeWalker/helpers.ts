@@ -1,6 +1,6 @@
 import { Result } from '@onaio/utils';
 import { OpenSRPService, URLParams } from '../../services/opensrp';
-import { APIEndpoints, OpenSRPJurisdiction, SimpleJurisdicion } from './types';
+import { APIEndpoints, OpenSRPJurisdiction, SimpleJurisdiction } from './types';
 
 /** Default params to be used when fetching locations from OpenSRP */
 export const defaultLocationParams = {
@@ -84,7 +84,7 @@ export const getAncestors = async (
 export const getChildren = async (
   params: URLParams,
   jurisdiction: OpenSRPJurisdiction | null,
-  limitTree: SimpleJurisdicion[] = [
+  limitTree: SimpleJurisdiction[] = [
     { id: '1337', parentId: '3019' },
     {
       id: 'dad42fa6-b9b8-4658-bf25-bfa7ab5b16ae',
