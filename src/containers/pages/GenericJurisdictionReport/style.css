@@ -1,8 +1,8 @@
-.generic-report-table .ReactTable .rt-thead.-headerGroups .rt-th {
+.generic-report-table .table .rt-thead.-headerGroups .th {
   white-space: normal;
 }
 
-.generic-report-table .ReactTable .rt-thead.-header .rt-th {
+.generic-report-table .table .rt-thead.-header .th {
   font-weight: normal;
   white-space: normal;
 }
@@ -11,40 +11,12 @@
   padding: 7px 5px;
 }
 
-.generic-report-table .ReactTable .rt-resizable-header {
+.generic-report-table .table .rt-resizable-header {
   -webkit-box-shadow: none !important;
   box-shadow: none !important;
 }
 
-.generic-report-table .ReactTable .rt-resizer:before {
-  display: inline-block;
-  position: absolute;
-  right: 25px;
-  top: 3px;
-  color: transparent;
-  content: '.';
-  background-size: 18px 18px;
-  background-repeat: no-repeat;
-  height: 0;
-  width: 0;
-}
-
-.generic-report-table .ReactTable .rt-th:hover .rt-resizer:before {
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 5px solid #999;
-}
-
-.generic-report-table .ReactTable .rt-th.-sort-asc .rt-resizer:before,
-.generic-report-table .ReactTable .rt-th.-sort-asc:hover .rt-resizer:before {
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid black;
-}
-
-.generic-report-table .ReactTable .rt-th.-sort-desc .rt-resizer:before,
-.generic-report-table .ReactTable .rt-th.-sort-desc:hover .rt-resizer:before {
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 5px solid black;
+.generic-report-table .thead .th {
+  line-height: 1.2rem;
+  padding: 4px 7px;
 }
