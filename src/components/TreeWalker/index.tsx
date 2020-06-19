@@ -15,7 +15,6 @@ export interface TreeWalkerProps {
   getAncestorsFunc: typeof getAncestors /** function to get ancestors */;
   getChildrenFunc: typeof getChildren /** function to get children */;
   jurisdictionId: string /** jurisdiction id --> used to start walking the tree from a particular point/node */;
-  listAPIEndpoint: string /** the API endpoint to get a list of objects */;
   params: URLParams /** URL params to send with the request to the API */;
   propertyFilters: URLParams /** property filters to send with the request to the API */;
   readAPIEndpoint: string /** the API endpoint to get a single object */;
@@ -28,7 +27,6 @@ export const defaultTreeWalkerProps: TreeWalkerProps = {
   getAncestorsFunc: getAncestors,
   getChildrenFunc: getChildren,
   jurisdictionId: '',
-  listAPIEndpoint: 'location/findByProperties',
   params: defaultLocationParams,
   propertyFilters: defaultLocationPropertyFilters,
   readAPIEndpoint: 'location',
@@ -77,7 +75,6 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
       getAncestorsFunc,
       getChildrenFunc,
       jurisdictionId,
-      listAPIEndpoint,
       params,
       propertyFilters,
       readAPIEndpoint,
@@ -108,13 +105,13 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
     //  2. get this currentNode's ancestors and add them to the hierarchy
     useEffect(() => {
       if (!currentNode && jurisdictionId !== '') {
-        const singleService = new OpenSRPService(readAPIEndpoint);
+        const singleService = new serviceClass(readAPIEndpoint);
         singleService
           .read(jurisdictionId, params)
           .then((response: OpenSRPJurisdiction) => {
             if (response) {
               setCurrentNode(response);
-              getAncestorsFunc(response, readAPIEndpoint, serviceClass)
+              getAncestorsFunc(response)
                 .then(result => {
                   if (result.value !== null) {
                     setHierarchy(result.value);
@@ -131,7 +128,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
 
     // On component mount or whenever parentId changes, we try and get the currentNode's children
     useEffect(() => {
-      getChildrenFunc(paramsToUse, currentNode, listAPIEndpoint, serviceClass)
+      getChildrenFunc(paramsToUse, currentNode)
         .then(result => {
           if (result.value !== null) {
             setCurrentChildren(result.value);
