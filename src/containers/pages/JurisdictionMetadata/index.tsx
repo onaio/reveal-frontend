@@ -14,7 +14,11 @@ import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { HOME, UPLOAD_JURISDICTION_METADATA } from '../../../configs/lang';
-import { HOME_URL, UPLOAD_JURISDICTION_METADATA_URL } from '../../../constants';
+import {
+  HOME_URL,
+  OPENSRP_V1_SETTINGS_ENDPOINT,
+  UPLOAD_JURISDICTION_METADATA_URL,
+} from '../../../constants';
 import { RouteParams } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import { JurisdictionMetadataImport } from '../../../store/ducks/opensrp/jurisdictionMetadata';
@@ -50,10 +54,10 @@ const JurisdictionMetadataImportView = () => {
 
   /** props for the Jurisdiction Metadata form */
   const jurisdictionMetadataFormProps: JurisdictionMetadataFormProps = {
-    OpenSRPService,
     disabledFields: [],
     initialValues: defaultInitialValues,
     redirectAfterAction: HOME_URL,
+    serviceClass: new OpenSRPService(OPENSRP_V1_SETTINGS_ENDPOINT),
     submitForm,
   };
 

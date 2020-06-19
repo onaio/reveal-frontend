@@ -37,7 +37,7 @@ export interface JurisdictionMetadataFormFields {
 
 export interface JurisdictionMetadataFormProps {
   disabledFields: string[];
-  OpenSRPService: new (...args: any[]) => any;
+  serviceClass: OpenSRPService;
   submitForm: (
     setSubmitting: (isSubmitting: boolean) => void,
     setGlobalError: (errorMessage: string) => void,
@@ -71,12 +71,11 @@ export const submitForm = (
   values?: JurisdictionMetadataFormFields
 ) => {
   if (values) {
-    const jurisdictionService = new props.OpenSRPService(OPENSRP_V1_SETTINGS_ENDPOINT);
     handleFile(values.file, results => {
       const payloads: SettingConfiguration[] = createPayloads(results);
       if (payloads.length > 0) {
-        const valuesToSend = JSON.stringify({ settingConfigurations: payloads });
-        jurisdictionService
+        const valuesToSend = { settingConfigurations: payloads };
+        props.serviceClass
           .create(valuesToSend)
           .then(() => {
             growl(FILE_UPLOADED_SUCCESSFULLY, {
@@ -127,6 +126,7 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
                 disabled={disabledFields.includes('file')}
                 // tslint:disable-next-line: jsx-no-lambda
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setGlobalError('');
                   setFieldValue(
                     'file',
                     event && event.target && event.target.files && event.target.files[0]
@@ -159,10 +159,10 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
 };
 
 const defaultProps: JurisdictionMetadataFormProps = {
-  OpenSRPService,
   disabledFields: [],
   initialValues: defaultInitialValues,
   redirectAfterAction: HOME_URL,
+  serviceClass: new OpenSRPService(OPENSRP_V1_SETTINGS_ENDPOINT),
   submitForm,
 };
 

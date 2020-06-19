@@ -51,10 +51,10 @@ describe('components/forms/JurisdictionMetadata', () => {
       };
     });
     const props = {
-      OpenSRPService: mockedOpenSRPservice,
       initialValues: {
         file: new File([], ''),
       },
+      serviceClass: new mockedOpenSRPservice(),
     };
     submitForm(setSubmitting, setGlobalError, setIfDoneHere, props as any, { file });
     await waitFor(() => {
