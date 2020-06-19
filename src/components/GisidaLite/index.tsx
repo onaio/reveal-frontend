@@ -1,11 +1,18 @@
-import { Style } from 'mapbox-gl';
+import { EventData, Style } from 'mapbox-gl';
 import { Map } from 'mapbox-gl';
 import React, { Fragment } from 'react';
 import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl';
 import { FitBounds } from 'react-mapbox-gl/lib/map';
 import Loading from '../../components/page/Loading';
 import { GISIDA_MAPBOX_TOKEN } from '../../configs/env';
+import { imgArr } from '../../configs/settings';
 import { gsLiteStyle } from './helpers';
+
+/** single map icon description */
+interface MapIcon {
+  id: string;
+  imageUrl: string;
+}
 
 /** interface for  GisidaLite props */
 interface GisidaLiteProps {
@@ -13,7 +20,7 @@ interface GisidaLiteProps {
   attributionControl: boolean;
   customAttribution: string;
   injectCSS: boolean;
-  layers: any[];
+  layers: JSX.Element[];
   mapCenter: [number, number] | undefined;
   mapBounds?: FitBounds;
   mapHeight: string;
@@ -21,7 +28,8 @@ interface GisidaLiteProps {
   mapWidth: string;
   scrollZoom: boolean;
   zoom: number;
-  onClickHandler?: (map: Map, event: any) => void;
+  mapIcons: MapIcon[];
+  onClickHandler?: (map: Map, event: EventData) => void;
 }
 
 /** Default props for GisidaLite */
@@ -33,15 +41,12 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   layers: [],
   mapCenter: undefined,
   mapHeight: '800px',
+  mapIcons: imgArr,
   mapStyle: gsLiteStyle,
   mapWidth: '100%',
   scrollZoom: true,
-  zoom: 16,
+  zoom: 17,
 };
-
-const Mapbox = ReactMapboxGl({
-  accessToken: GISIDA_MAPBOX_TOKEN,
-});
 
 /**
  * Really simple Gisida :)
@@ -63,18 +68,43 @@ const GisidaLite = (props: GisidaLiteProps) => {
     mapHeight,
     mapWidth,
     mapStyle,
-    scrollZoom,
+    mapIcons,
     onClickHandler,
     zoom,
+    mapBounds,
   } = props;
 
   if (mapCenter === undefined) {
     return <Loading />;
   }
 
-  const runAfterMapLoaded = () => {
-    if (!renderLayers) {
-      setRenderLayers(true);
+  const Mapbox = ReactMapboxGl({
+    accessToken,
+    attributionControl,
+    customAttribution,
+    injectCSS,
+  });
+
+  const runAfterMapLoaded = (map: Map) => {
+    if (mapIcons) {
+      mapIcons.forEach(element => {
+        map.loadImage(
+          element.imageUrl,
+          (
+            _: Error,
+            res:
+              | HTMLImageElement
+              | ArrayBufferView
+              | { width: number; height: number; data: Uint8Array | Uint8ClampedArray }
+              | ImageData
+          ) => {
+            map.addImage(element.id, res);
+            if (!renderLayers) {
+              setRenderLayers(true);
+            }
+          }
+        );
+      });
     }
   };
 
@@ -87,7 +117,7 @@ const GisidaLite = (props: GisidaLiteProps) => {
         height: mapHeight,
         width: mapWidth,
       }}
-      fitBounds={props.mapBounds}
+      fitBounds={mapBounds}
       onStyleLoad={runAfterMapLoaded}
       onClick={onClickHandler}
     >
@@ -96,10 +126,6 @@ const GisidaLite = (props: GisidaLiteProps) => {
           layers.map((item: any, index: number) => (
             <Fragment key={`gsLite-${index}`}>{item}</Fragment>
           ))}
-        {/* {renderLayers &&
-          layers.map((item: any, index: number) => {
-            return <GeoJSONLayer {...item} key={`gs-layers-${index}`} />;
-          })} */}
         <ZoomControl />
       </>
     </Mapbox>
