@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`containers/pages/IRS Search works correctly: find single row for entry with Khlong  tr index 0 1`] = `"NameDate CreatedStatus"`;
+
+exports[`containers/pages/IRS Search works correctly: find single row for entry with Khlong  tr index 1 1`] = `"A1 - Khlong Nam Sai - IRS 012019-05-24draft"`;
+
+exports[`containers/pages/IRS does not show loader for no data: find No Data Found text tr index 0 1`] = `"NameDate CreatedStatus"`;
+
 exports[`containers/pages/IRS renders plans list correctly: button props 1`] = `
 Object {
   "aria-label": null,
