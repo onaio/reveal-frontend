@@ -23,6 +23,7 @@ import {
   ACTION_CODE,
   CASE_CONFIRMATION_CODE,
   CASE_CONFIRMATION_GOAL_ID,
+  CURRENT_INDEX_CASES,
   FEATURE_COLLECTION,
   JURISDICTION_ID,
   LARVAL_DIPPING_ID,
@@ -295,6 +296,9 @@ export const buildGsLiteLayers = (
   // define the icon for goals with symbols
 
   let iconGoal: string = 'case-confirmation';
+  if (idToUse === CURRENT_INDEX_CASES) {
+    iconGoal = 'current-case-confirmation';
+  }
   switch (currentGoal) {
     case MOSQUITO_COLLECTION_ID:
       iconGoal = 'mosquito';
