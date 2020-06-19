@@ -214,6 +214,8 @@ const GenericJurisdictionReport = (
     getTdProps: (cell: Cell) => {
       return [
         {
+          // datatd is basically used as a selector here, we cannot use className since, at the moment
+          // the className props returned by getTdProps are overridden by default className(just bad architecture)
           datatd: 'pm-0',
           onClick: (__: SyntheticEvent, handleOriginal: () => void) => {
             const column = cell.column;
