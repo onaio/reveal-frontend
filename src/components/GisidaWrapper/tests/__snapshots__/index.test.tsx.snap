@@ -558,6 +558,10 @@ Object {
   },
   "mapIcons": Array [
     Object {
+      "id": "current-case-confirmation",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/current-case-confirmation.png",
+    },
+    Object {
       "id": "case-confirmation",
       "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png",
     },
@@ -2716,6 +2720,10 @@ Object {
     },
   },
   "mapIcons": Array [
+    Object {
+      "id": "current-case-confirmation",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/current-case-confirmation.png",
+    },
     Object {
       "id": "case-confirmation",
       "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png",
@@ -6459,6 +6467,10 @@ Object {
   },
   "mapIcons": Array [
     Object {
+      "id": "current-case-confirmation",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/current-case-confirmation.png",
+    },
+    Object {
       "id": "case-confirmation",
       "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png",
     },
@@ -7630,6 +7642,10 @@ Object {
     },
   },
   "mapIcons": Array [
+    Object {
+      "id": "current-case-confirmation",
+      "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/current-case-confirmation.png",
+    },
     Object {
       "id": "case-confirmation",
       "imageUrl": "https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/case-confirmation.png",

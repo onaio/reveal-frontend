@@ -141,7 +141,7 @@ exports[`containers/pages/FocusInvestigation/activeMap passes historical index c
 Object {
   "id": "current-index-cases-point-symbol",
   "symbolLayout": Object {
-    "icon-image": "case-confirmation",
+    "icon-image": "current-case-confirmation",
     "icon-size": 0.045,
     "visibility": "visible",
   },
@@ -159,7 +159,7 @@ exports[`containers/pages/FocusInvestigation/activeMap passes historical index c
 Object {
   "id": "current-index-cases-poly-symbol",
   "symbolLayout": Object {
-    "icon-image": "case-confirmation",
+    "icon-image": "current-case-confirmation",
     "icon-size": 0.045,
     "visibility": "visible",
   },
