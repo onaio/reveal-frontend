@@ -1,3 +1,4 @@
+// tslint:disable: object-literal-sort-keys
 import { clone, cloneDeep } from 'lodash';
 import { OrganizationFormFields } from '../../../components/forms/OrganizationForm';
 import { FIReasonType, FIStatusType } from '../../../components/forms/PlanForm/types';
@@ -906,6 +907,126 @@ export const task7 = {
   jurisdiction_id: '304cbcd4-0850-404a-a8b1-486b02f7b84d',
   plan_id: '89fh38sg-h83s-9xf2-a7h2-pl98dh320lbc',
   task_identifier: '16a794e4-46de-4733-8f4d-9d0b9db8b298',
+};
+
+export const task8 = {
+  task_identifier: 'aee7dc62-4ec5-4db3-9985-05f4e914f2ec',
+  plan_id: '125ce534-9d84-5f94-8eb1-dd7616b7ba67',
+  jurisdiction_id: '3951',
+  goal_id: 'Case_Confirmation',
+  action_code: 'Case Confirmation',
+  task_business_status: 'Complete',
+  geojson: {
+    id: 'aee7dc62-4ec5-4db3-9985-05f4e914f2ec',
+    type: 'Feature',
+    geometry: {
+      type: 'Polygon',
+      coordinates: [
+        [
+          [28.3514374, -15.4193609],
+          [28.3516475, -15.4194092],
+          [28.3516207, -15.4195178],
+          [28.3514106, -15.4194695],
+          [28.3514374, -15.4193609],
+        ],
+      ],
+    },
+    properties: {
+      goal_id: 'Case_Confirmation',
+      plan_id: '125ce534-9d84-5f94-8eb1-dd7616b7ba67',
+      task_focus: '71d3349f-25d5-593d-b88d-704467e0945f',
+      action_code: 'Case Confirmation',
+      task_status: 'Completed',
+      structure_id: '154149',
+      task_task_for: '03137c91-7818-4a77-b2cb-f811f80c0efc',
+      structure_code: '154149',
+      structure_name: '154149',
+      structure_type: 'Feature',
+      jurisdiction_id: '3951',
+      jurisdiction_name: 'Akros_1',
+      task_business_status: 'Complete',
+      jurisdiction_parent_id: '3019',
+      task_execution_end_date: '2020-03-30',
+      task_execution_start_date: '2020-03-23',
+    },
+  },
+};
+export const task9 = {
+  task_identifier: 'b421e054-b2b1-443b-b0b8-14bdfb6a1ad6',
+  plan_id: '02b3629b-8eb8-531a-ada4-2dfa541f1dcf',
+  jurisdiction_id: '3951',
+  goal_id: 'Case_Confirmation',
+  action_code: 'Case Confirmation',
+  task_business_status: 'Complete',
+  geojson: {
+    id: 'b421e054-b2b1-443b-b0b8-14bdfb6a1ad6',
+    type: 'Feature',
+    geometry: {
+      type: 'Polygon',
+      coordinates: [
+        [
+          [28.3512898, -15.4182898],
+          [28.3513309, -15.4182819],
+          [28.3513454, -15.4183521],
+          [28.3510395, -15.4184111],
+          [28.3510239, -15.4183359],
+          [28.3511749, -15.4183068],
+          [28.35116, -15.418235],
+          [28.3512739, -15.4182131],
+          [28.3512898, -15.4182898],
+        ],
+      ],
+    },
+    properties: {
+      goal_id: 'Case_Confirmation',
+      plan_id: '02b3629b-8eb8-531a-ada4-2dfa541f1dcf',
+      task_focus: '608d4d53-0276-5c7d-9333-635c96a7e839',
+      action_code: 'Case Confirmation',
+      task_status: 'Completed',
+      structure_id: '154142',
+      task_task_for: '8492a2c5-35d5-4669-92a7-0ba20d10a31d',
+      structure_code: '154142',
+      structure_name: '154142',
+      structure_type: 'Feature',
+      jurisdiction_id: '3951',
+      jurisdiction_name: 'Akros_1',
+      task_business_status: 'Complete',
+      jurisdiction_parent_id: '3019',
+      task_execution_end_date: '2020-03-30',
+      task_execution_start_date: '2020-03-23',
+    },
+  },
+};
+export const task10 = {
+  task_identifier: 'ae7118ca-9918-419c-a6da-4850f99b686d',
+  plan_id: 'c08a318d-9b63-5b46-9ce7-ac3a4c0ade6e',
+  jurisdiction_id: '3951',
+  goal_id: 'Case_Confirmation',
+  action_code: 'Case Confirmation',
+  task_business_status: 'Not Visited',
+  geojson: {
+    id: 'ae7118ca-9918-419c-a6da-4850f99b686d',
+    type: 'Feature',
+    geometry: null,
+    properties: {
+      goal_id: 'Case_Confirmation',
+      plan_id: 'c08a318d-9b63-5b46-9ce7-ac3a4c0ade6e',
+      task_focus: '67119e69-f14a-590f-8df6-570a8e6e3554',
+      action_code: 'Case Confirmation',
+      task_status: 'Ready',
+      structure_id: null,
+      task_task_for: '3951',
+      structure_code: null,
+      structure_name: null,
+      structure_type: null,
+      jurisdiction_id: '3951',
+      jurisdiction_name: 'Akros_1',
+      task_business_status: 'Not Visited',
+      jurisdiction_parent_id: '3019',
+      task_execution_end_date: '2020-03-30',
+      task_execution_start_date: '2020-03-23',
+    },
+  },
 };
 
 const task76 = cloneDeep(task2);

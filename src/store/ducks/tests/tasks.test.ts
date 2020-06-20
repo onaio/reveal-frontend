@@ -1,7 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
-import { MULTI_POLYGON, POINT, POLYGON } from '../../../constants';
+import { CASE_CONFIRMATION_CODE, MULTI_POLYGON, POINT, POLYGON } from '../../../constants';
 import { FeatureCollection } from '../../../helpers/utils';
 import store from '../../index';
 import reducer, {
@@ -30,10 +30,13 @@ import reducer, {
   reducerName,
   removeTasksAction,
   Task,
+  tasksFCSelectorFactory,
 } from '../tasks';
 import * as fixtures from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
+
+const getTasksFCSelector = tasksFCSelectorFactory();
 
 describe('reducers/tasks', () => {
   let flushThunks;
@@ -202,13 +205,16 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
     const placebo = 'randomId';
     expect(getAllFC(store.getState())).toEqual(expected);
     expect(getFCByGoalId(store.getState(), placebo)).toEqual(expected);
-    expect(getFCByPlanAndGoalAndJurisdiction(store.getState(), placebo, placebo, placebo)).toEqual(
-      expected
-    );
+    expect(
+      getFCByPlanAndGoalAndJurisdiction(store.getState(), placebo, [placebo], placebo)
+    ).toEqual(expected);
     expect(getFCByJurisdictionId(store.getState(), placebo)).toEqual(expected);
     expect(getFCByPlanId(store.getState(), placebo)).toEqual(expected);
     expect(getFCByPlanAndJurisdiction(store.getState(), placebo, placebo)).toEqual(expected);
     expect(getFCByStructureId(store.getState(), placebo)).toEqual(expected);
+
+    // reselect selectors tests
+    expect(getTasksFCSelector(store.getState(), {})).toEqual(expected);
   });
 
   it('gets all tasks as Feature Collection', () => {
@@ -221,13 +227,35 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
   });
 
   it('filters tasks as FeatureCollection by plan', () => {
-    store.dispatch(fetchTasks(fixtures.tasks));
-    const planId = '356b6b84-fc36-4389-a44a-2b038ed2f38d';
+    const { task8, task9, task10 } = fixtures;
+    store.dispatch(fetchTasks([task8, task9, task10]));
+    const planId = '02b3629b-8eb8-531a-ada4-2dfa541f1dcf';
     const expected: FeatureCollection<InitialTaskGeoJSON> = {
-      features: [fixtures.task3.geojson],
+      features: [fixtures.task9.geojson],
       type: 'FeatureCollection',
     };
     expect(getFCByPlanId(store.getState(), planId)).toEqual(expected);
+
+    // reselect selector
+    expect(getTasksFCSelector(store.getState(), { planId })).toEqual(expected);
+  });
+
+  it('filters tasks as FeatureCollection by action_code', () => {
+    const { task8, task9, task10, task7 } = fixtures;
+    store.dispatch(fetchTasks([task8, task9, task10, task7]));
+    const actionCode = CASE_CONFIRMATION_CODE;
+    const result = getTasksFCSelector(store.getState(), { includeNullGeoms: true, actionCode });
+    expect(result.features.length).toEqual(3);
+  });
+
+  it('filters tasks as FeatureCollection by task_business_status', () => {
+    const { task8, task7, task10 } = fixtures;
+    store.dispatch(fetchTasks([task8, task7, task10]));
+    const result = getTasksFCSelector(store.getState(), {
+      includeNullGeoms: true,
+      taskBusinessStatus: 'Complete',
+    });
+    expect(result.features.length).toEqual(1);
   });
 
   it('filters tasks as FeatureCollection by goal', () => {
@@ -242,12 +270,17 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
 
   it('filters tasks as FeatureCollection by jurisdiction', () => {
     store.dispatch(fetchTasks(fixtures.tasks));
-    const JurisdictionId = '450fc15b-5bd2-468a-927a-49cb10d3bcac';
+    const jurisdictionId = '450fc15b-5bd2-468a-927a-49cb10d3bcac';
     const expected: FeatureCollection<InitialTaskGeoJSON> = {
       features: [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task4.geojson],
       type: 'FeatureCollection',
     };
-    expect(getFCByJurisdictionId(store.getState(), JurisdictionId)).toEqual(expected);
+    expect(getFCByJurisdictionId(store.getState(), jurisdictionId)).toEqual(expected);
+
+    // reselect selector
+    expect(
+      getTasksFCSelector(store.getState(), { includeNullGeoms: true, jurisdictionId })
+    ).toEqual(expected);
   });
 
   it('filters tasks as structures FeatureCollection by jurisdiction', () => {
@@ -269,6 +302,11 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
       type: 'FeatureCollection',
     };
     expect(getFCByPlanAndJurisdiction(store.getState(), planId, jurisdictionId)).toEqual(expected);
+
+    // reselect usage
+    expect(
+      getTasksFCSelector(store.getState(), { includeNullGeoms: true, planId, jurisdictionId })
+    ).toEqual(expected);
   });
 
   it('filters tasks as FeatureCollection by plan && jurisdiction && goal', () => {
@@ -282,7 +320,7 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
       type: 'FeatureCollection',
     };
     expect(
-      getFCByPlanAndGoalAndJurisdiction(store.getState(), planId, goalId, jurisdictionId)
+      getFCByPlanAndGoalAndJurisdiction(store.getState(), planId, [goalId], jurisdictionId)
     ).toEqual(expected);
   });
 
@@ -301,23 +339,63 @@ describe('reducers/tasks/FeatureCollectionSelectors', () => {
     store.dispatch(fetchTasks(thisTasks));
     const expected = [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task3.geojson];
     expect(getTasksGeoJsonData(store.getState(), false)).toEqual(expected);
-  });
 
-  it('filters out tasks by structure type Point', () => {
-    const thisTasks = cloneDeep(fixtures.tasks);
-    store.dispatch(fetchTasks(thisTasks));
-    const expected = [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task3.geojson];
-    expect(getTasksGeoJsonData(store.getState(), false, [POINT])).toEqual(
-      expected.filter(e => e.geometry.type === 'Point')
+    // reselect selector test
+    expect(getTasksFCSelector(store.getState(), { includeNullGeoms: false }).features).toEqual(
+      expected
     );
   });
 
-  it('filters out tasks by structure type Polygon or MultiPolygon', () => {
+  it('filters tasks by structure type Point', () => {
     const thisTasks = cloneDeep(fixtures.tasks);
     store.dispatch(fetchTasks(thisTasks));
-    const expected = [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task3.geojson];
+    const expected = [
+      fixtures.task1.geojson,
+      fixtures.task2.geojson,
+      fixtures.task3.geojson,
+    ].filter(e => e.geometry.type === 'Point');
+    expect(getTasksGeoJsonData(store.getState(), false, [POINT])).toEqual(expected);
+
+    // reselect selector test
+    expect(
+      getTasksFCSelector(store.getState(), { includeNullGeoms: false, structureType: [POINT] })
+        .features
+    ).toEqual(expected);
+  });
+
+  it('filters tasks by structure type Polygon or MultiPolygon', () => {
+    const thisTasks = cloneDeep(fixtures.tasks);
+    store.dispatch(fetchTasks(thisTasks));
+    const expected = [
+      fixtures.task1.geojson,
+      fixtures.task2.geojson,
+      fixtures.task3.geojson,
+    ].filter(e => e.geometry.type !== 'Point');
     expect(getTasksGeoJsonData(store.getState(), false, [POLYGON, MULTI_POLYGON])).toEqual(
-      expected.filter(e => e.geometry.type !== 'Point')
+      expected
     );
+
+    // reselect selector test
+    expect(
+      getTasksFCSelector(store.getState(), {
+        includeNullGeoms: false,
+        structureType: [POLYGON, MULTI_POLYGON],
+      }).features
+    ).toEqual(expected);
+  });
+
+  it('removes tasks that belong to excluded plan', () => {
+    const thisTasks = cloneDeep(fixtures.tasks);
+    store.dispatch(fetchTasks(thisTasks));
+
+    const expected = [fixtures.task1.geojson, fixtures.task2.geojson, fixtures.task4.geojson];
+
+    // reselect selector test
+    expect(
+      getTasksFCSelector(store.getState(), {
+        excludePlanId: '356b6b84-fc36-4389-a44a-2b038ed2f38d',
+        includeNullGeoms: true,
+      }).features
+    ).toEqual(expected);
   });
 });

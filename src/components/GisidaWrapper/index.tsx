@@ -111,6 +111,7 @@ export interface GisidaProps {
 }
 
 /** Returns a single layer configuration */
+// WHY ???
 const LayerStore = (layer: Dictionary) => {
   if (typeof layer === 'string') {
     return layer;

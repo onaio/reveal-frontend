@@ -293,3 +293,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders correct detail vi
   </span>
 </div>
 `;
+
+exports[`containers/pages/FocusInvestigation/activeMap works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks): Should not be clickable tag 1`] = `ReactWrapper {}`;
+
+exports[`containers/pages/FocusInvestigation/activeMap works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks): should be active by default 1`] = `ReactWrapper {}`;

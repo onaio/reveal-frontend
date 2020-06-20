@@ -1,7 +1,9 @@
 import { UpdateType } from '@onaio/utils';
 import { Color } from 'csstype';
+import intersect from 'fast_array_intersect';
 import { get, keyBy, keys, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
+import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { MULTI_POLYGON, POLYGON } from '../../constants';
 import { FeatureCollection, GeoJSON, getColor, wrapFeatureCollection } from '../../helpers/utils';
@@ -79,13 +81,13 @@ export const TASKS_FETCHED = 'reveal/reducer/tasks/TASKS_FETCHED';
 export const REMOVE_TASKS = 'reveal/reducer/tasks/REMOVE_TASKS';
 
 /** interface for authorize action */
-interface FetchTasksAction extends AnyAction {
+export interface FetchTasksAction extends AnyAction {
   tasksById: { [key: string]: Task };
   type: typeof TASKS_FETCHED;
 }
 
 /** Interface for reset tasks action */
-interface ResetTaskAction extends AnyAction {
+export interface ResetTaskAction extends AnyAction {
   tasksById: {};
   type: typeof REMOVE_TASKS;
 }
@@ -441,10 +443,10 @@ export function getFCByPlanAndJurisdiction(
   return wrapFeatureCollection(geoJsonFeatures);
 }
 
-/** get tasks as FeatureCollection filtered by structure_id
+/** get tasks as FeatureCollection filtered by plan_id & goal_id & jurisdiction_id
  * @param {partial<Store>} state - the redux store
  * @param {string} planId - the plan id
- * @param {string} goalId - the goal id
+ * @param {string[]} goalIds - A list of goal_ids
  * @param {string} jurisdictionId - the jurisdiction id
  * @param {boolean} includeNullGeoms - if to include features with null geometries in FC
  * @return {FeatureCollection} - an geoJSON Feature Collection object
@@ -452,7 +454,7 @@ export function getFCByPlanAndJurisdiction(
 export function getFCByPlanAndGoalAndJurisdiction(
   state: Partial<Store>,
   planId: string,
-  goalId: string,
+  goalIds: string[],
   jurisdictionId: string,
   includeNullGeoms: boolean = true,
   structureType: string[] | null = null
@@ -464,8 +466,178 @@ export function getFCByPlanAndGoalAndJurisdiction(
   ).filter(
     e =>
       e.properties.plan_id === planId &&
-      e.properties.goal_id === goalId &&
+      goalIds.includes(e.properties.goal_id) &&
       e.properties.jurisdiction_id === jurisdictionId
   );
   return wrapFeatureCollection(geoJsonFeatures);
 }
+
+/** RESELECT USAGE STARTS HERE */
+
+export interface TaskFCSelectorFilters {
+  actionCode?: string /** filter tasks for given action code */;
+  planId?: string /** filter tasks for given planId */;
+  jurisdictionId?: string /** filter tasks withing given jurisdiction */;
+  includeNullGeoms?: boolean /** include features with null geometries in Feature Collection */;
+  structureType?: string[] /** e.g points, polygons, lines e.t.c */;
+  taskBusinessStatus?: string /** filter tasks with given task_businessStatus */;
+  excludePlanId?: string /** filters out tasks that belong to plan that has this id */;
+}
+
+/** get tasks by id
+ * @param {Partial<Store>} state - the redux store
+ */
+export const baseTasksByIdSelector = getTasksById;
+
+/** factory function to create non_memorized functions that only return the value
+ * of  the given propKey from the TaskSelectorFilters props
+ */
+export const getPropValue = <T extends object, U extends keyof T>(propKey: U) => {
+  /** get <propKey>from TaskSelectorFilters
+   * @param {Partial<Store>} _ - the redux store state
+   * @param {TaskSelectorFilters} props - filter props
+   * @return {string | undefined}
+   */
+  return (_: Partial<Store>, props: T) => props[propKey];
+};
+
+// non memoized functions that return the value of their propKeys in TaskSelectorFilters
+// without applying any transformations to the value
+
+export const getActionCode = getPropValue<TaskFCSelectorFilters, 'actionCode'>('actionCode');
+export const getPlanId = getPropValue<TaskFCSelectorFilters, 'planId'>('planId');
+export const getJurisdictionId = getPropValue<TaskFCSelectorFilters, 'jurisdictionId'>(
+  'jurisdictionId'
+);
+export const getIncludeNullGeoms = getPropValue<TaskFCSelectorFilters, 'includeNullGeoms'>(
+  'includeNullGeoms'
+);
+export const getStructureType = getPropValue<TaskFCSelectorFilters, 'structureType'>(
+  'structureType'
+);
+export const getTasksBusinessStatus = getPropValue<TaskFCSelectorFilters, 'taskBusinessStatus'>(
+  'taskBusinessStatus'
+);
+export const getExcludePlanID = getPropValue<TaskFCSelectorFilters, 'excludePlanId'>(
+  'excludePlanId'
+);
+
+/** get tasks by value selector */
+export const baseTasksGeoJsonData = createSelector(
+  baseTasksByIdSelector,
+  getIncludeNullGeoms,
+  getStructureType,
+  (tasksById, includeNullGeoms, structureType) => {
+    let results = values(tasksById).map(e => e.geojson);
+    if (!includeNullGeoms || structureType) {
+      if (structureType) {
+        results = results.filter(e => e && e.geometry && structureType.includes(e.geometry.type));
+      } else {
+        results = results.filter(e => e && e.geometry);
+      }
+    }
+    return results;
+  }
+);
+
+/** get tasks' Feature Collection filtered by action_code
+ * @param {Partial<Store>} state - the redux store
+ * @param {TaskFCSelectorFilters} props - the taskFC selector filters object
+ */
+export const selectFCByActionCode = () =>
+  createSelector(baseTasksGeoJsonData, getActionCode, (tasksGeoJsonArray, actionCode) => {
+    const geoJsonFeatures = actionCode
+      ? tasksGeoJsonArray.filter(task => task.properties.action_code === actionCode)
+      : tasksGeoJsonArray;
+    return wrapFeatureCollection(geoJsonFeatures);
+  });
+
+/** get tasks' Feature Collection filtered by jurisdiction_id
+ * @param {Partial<Store>} state - the redux store
+ * @param {TaskFCSelectorFilters} props - the taskFC selector filters object
+ */
+export const selectFCByJurisdictionId = () =>
+  createSelector(baseTasksGeoJsonData, getJurisdictionId, (tasksGeoJsonArray, jurisdictionId) => {
+    const geoJsonFeatures = jurisdictionId
+      ? tasksGeoJsonArray.filter(task => task.properties.jurisdiction_id === jurisdictionId)
+      : tasksGeoJsonArray;
+    return wrapFeatureCollection(geoJsonFeatures);
+  });
+
+/** get tasks' Feature Collection filtered by plan_id
+ * @param {Partial<Store>} state - the redux store
+ * @param {TaskFCSelectorFilters} props - the taskFC selector filters object
+ */
+export const selectFCByPlanId = () =>
+  createSelector(baseTasksGeoJsonData, getPlanId, (tasksGeoJsonArray, planId) => {
+    const geoJsonFeatures = planId
+      ? tasksGeoJsonArray.filter(task => task.properties.plan_id === planId)
+      : tasksGeoJsonArray;
+    return wrapFeatureCollection(geoJsonFeatures);
+  });
+
+/** get tasks' Feature Collection that do not belong to plan_id
+ * @param {Partial<Store>} state - the redux store
+ * @param {TaskFCSelectorFilters} props - the taskFC selector filters object
+ */
+export const selectFCExcludingPlanId = () =>
+  createSelector(baseTasksGeoJsonData, getExcludePlanID, (tasksGeoJsonArray, excludePlanId) => {
+    const geoJsonFeatures = excludePlanId
+      ? tasksGeoJsonArray.filter(task => task.properties.plan_id !== excludePlanId)
+      : tasksGeoJsonArray;
+    return wrapFeatureCollection(geoJsonFeatures);
+  });
+
+/** get tasks' Feature Collection filtered by task_business_status
+ * @param {Partial<Store>} state - the redux store
+ * @param {TaskFCSelectorFilters} props - the taskFC selector filters object
+ */
+export const selectFCByTaskBusinessStatus = () =>
+  createSelector(
+    baseTasksGeoJsonData,
+    getTasksBusinessStatus,
+    (tasksGeoJsonArray, taskBusinessStatus) => {
+      const geoJsonFeatures = taskBusinessStatus
+        ? tasksGeoJsonArray.filter(
+            task => task.properties.task_business_status === taskBusinessStatus
+          )
+        : tasksGeoJsonArray;
+      return wrapFeatureCollection(geoJsonFeatures);
+    }
+  );
+
+/** tasksFCSelectorFactory
+ * Returns a selector that gets an array of tasks feature Collection objects filtered by one or all
+ * of the following:
+ *    - actionCode
+ *    - jurisdictionId
+ *    - plan id
+ *    - task_business_status
+ *
+ * These filter params are all optional and are supplied via the prop parameter.
+ *
+ * To use this selector, do something like:
+ *    const tasksFCSelector = tasksFCSelectorFactory();
+ *
+ * @param {Partial<Store>} state - the redux store
+ * @param {TaskFCSelectorFilters} props - the plan filters object
+ */
+export const tasksFCSelectorFactory = () =>
+  createSelector(
+    selectFCByActionCode(),
+    selectFCByJurisdictionId(),
+    selectFCByPlanId(),
+    selectFCByTaskBusinessStatus(),
+    selectFCExcludingPlanId(),
+    (actionFC, jurisdictionFC, planFC, taskBusinessStatusFC, excludedPlanFC) => {
+      const featuresArrays = [
+        actionFC,
+        jurisdictionFC,
+        planFC,
+        taskBusinessStatusFC,
+        excludedPlanFC,
+      ].map((featureCollection: FeatureCollection<TaskGeoJSON>) => featureCollection.features);
+      const intersectedArrays = intersect(featuresArrays, JSON.stringify);
+      return wrapFeatureCollection(intersectedArrays);
+    }
+  );
