@@ -4,7 +4,6 @@ import moment from 'moment';
 import React, { Fragment, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
 import HeaderBreadcrumb from '../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { HOME, NO_ROWS_FOUND } from '../../configs/lang';
 import { PlanDefinition } from '../../configs/settings';
@@ -23,6 +22,7 @@ import { Organization } from '../../store/ducks/opensrp/organizations';
 import { defaultWalkerProps, withTreeWalker, WithWalkerProps } from './';
 import { AssignedOrgs } from './AssignedOrgs';
 import { EditOrg } from './EditOrg';
+import { JurisdictionCell } from './JurisdictionCell';
 import { SimpleJurisdiction } from './types';
 
 interface BaseProps extends WithWalkerProps {
@@ -40,7 +40,15 @@ export interface RouteParams {
 type XXX = RouteComponentProps<RouteParams> & BaseProps;
 
 const Base = (props: XXX) => {
-  const { assignments, currentChildren, currentNode, hierarchy, organizations, plan } = props;
+  const {
+    assignments,
+    currentChildren,
+    currentNode,
+    hierarchy,
+    limits,
+    organizations,
+    plan,
+  } = props;
 
   if (!plan) {
     return null;
@@ -101,9 +109,7 @@ const Base = (props: XXX) => {
     });
 
     return [
-      <Link key={`${node.id}-link`} to={`${ASSIGN2_PLAN_URL}/${plan.identifier}/${node.id}`}>
-        {node.properties.name}
-      </Link>,
+      <JurisdictionCell key={`${node.id}-jurisdiction`} node={node} plan={plan} limits={limits} />,
       <AssignedOrgs key={`${node.id}-txt`} id={node.id} orgs={jurisdictionOrgs} />,
       <EditOrg
         defaultValue={selectedOrgs}
