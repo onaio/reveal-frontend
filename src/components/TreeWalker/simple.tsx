@@ -21,6 +21,8 @@ import supersetFetch from '../../services/superset';
 import { Assignment } from '../../store/ducks/opensrp/assignments';
 import { Organization } from '../../store/ducks/opensrp/organizations';
 import { defaultWalkerProps, withTreeWalker, WithWalkerProps } from './';
+import { AssignedOrgs } from './AssignedOrgs';
+import { EditOrg } from './EditOrg';
 import { SimpleJurisdiction } from './types';
 
 interface BaseProps extends WithWalkerProps {
@@ -37,7 +39,7 @@ export interface RouteParams {
 type XXX = RouteComponentProps<RouteParams> & BaseProps;
 
 const Base = (props: XXX) => {
-  const { assignments, currentChildren, currentNode, hierarchy, organizations } = props;
+  const { assignments, currentChildren, currentNode, hierarchy, organizations, plan } = props;
 
   const pageTitle = 'Better Assignments';
 
@@ -85,22 +87,46 @@ const Base = (props: XXX) => {
       return jurisdictionOrgIds.includes(org.identifier);
     });
 
-    const jurisdictionOrgNames = jurisdictionOrgs.map(org => org.name).join(', ');
+    const orgOptions = organizations.map(org => {
+      return { label: org.name, value: org.identifier };
+    });
+
+    const selectedOrgs = jurisdictionOrgs.map(org => {
+      return { label: org.name, value: org.identifier };
+    });
 
     return [
-      <Link key={node.id} to={`${ASSIGN2_PLAN_URL}/${node.id}`}>
+      <Link key={`${node.id}-link`} to={`${ASSIGN2_PLAN_URL}/${node.id}`}>
         {node.properties.name}
       </Link>,
-      `${jurisdictionOrgNames}`,
-      'Assign Team Button Goes Here',
+      <AssignedOrgs key={`${node.id}-txt`} id={node.id} orgs={jurisdictionOrgs} />,
+      <EditOrg
+        defaultValue={selectedOrgs}
+        jurisdiction={node}
+        key={`${node.id}-form`}
+        options={orgOptions}
+        plan={plan}
+      />,
     ];
   });
-  const headerItems = ['Name', 'Team Assignment', '???'];
+  const headerItems = ['Name', 'Team Assignment', ''];
   const tableClass = 'table table-bordered';
+  const renderHeaders = () => {
+    return (
+      <thead className="thead-plan-orgs">
+        <tr>
+          <th style={{ width: '25%' }}>{headerItems[0]}</th>
+          <th style={{ width: '25%' }}>{headerItems[1]}</th>
+          <th>{headerItems[2]}</th>
+        </tr>
+      </thead>
+    );
+  };
 
   const listViewProps = {
     data,
     headerItems,
+    renderHeaders,
     tableClass,
   };
 
