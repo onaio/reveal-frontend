@@ -707,6 +707,15 @@ export function growl(message: string, options: ToastOptions = {}) {
   }
   toast(message, { ...options, className, progressClassName });
 }
+
+/** Send a growl success message
+ * @param message - the success message
+ */
+export const successGrowl = (message: string) =>
+  growl(message, {
+    type: toast.TYPE.SUCCESS,
+  });
+
 /**
  * Creates a key with an empty array if it didn't exist
  * @param {Dictionary} target - object to be
