@@ -6,7 +6,7 @@ import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/He
 import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/TreeWalker';
 import { HOME, NO_ROWS_FOUND } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
-import { ASSIGN2_PLAN_URL, HOME_URL } from '../../../../../constants';
+import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../../constants';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 import { Organization } from '../../../../../store/ducks/opensrp/organizations';
 import { AssignedOrgs } from '../AssignedOrgs';
@@ -47,7 +47,7 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
   const breadcrumbProps = {
     currentPage: {
       label: currentNode ? 'loading...' : pageTitle,
-      url: `${ASSIGN2_PLAN_URL}`,
+      url: `${ASSIGN_PLAN_URL}`,
     },
     pages: [
       {
@@ -60,7 +60,7 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
   if (currentNode) {
     breadcrumbProps.pages.push({
       label: pageTitle,
-      url: `${ASSIGN2_PLAN_URL}`,
+      url: `${ASSIGN_PLAN_URL}`,
     });
   }
 
@@ -69,12 +69,12 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
     if (index < hierarchy.length - 1) {
       breadcrumbProps.pages.push({
         label: element.properties.name,
-        url: `${ASSIGN2_PLAN_URL}/${element.id}`,
+        url: `${ASSIGN_PLAN_URL}/${plan.identifier}/${element.id}`,
       });
     } else {
       breadcrumbProps.currentPage = {
         label: element.properties.name,
-        url: `${ASSIGN2_PLAN_URL}/${element.id}`,
+        url: `${ASSIGN_PLAN_URL}/${plan.identifier}/${element.id}`,
       };
     }
   }
