@@ -7,7 +7,7 @@ import {
   getAncestors,
   getChildren,
 } from './helpers';
-import { OpenSRPJurisdiction } from './types';
+import { OpenSRPJurisdiction, SimpleJurisdiction } from './types';
 
 /** Type def for the TreeWalker component */
 export interface TreeWalkerProps {
@@ -15,6 +15,7 @@ export interface TreeWalkerProps {
   getAncestorsFunc: typeof getAncestors /** function to get ancestors */;
   getChildrenFunc: typeof getChildren /** function to get children */;
   jurisdictionId: string /** jurisdiction id --> used to start walking the tree from a particular point/node */;
+  limits: SimpleJurisdiction[] /** If set, tree-walking will be limited to these jurisdictions */;
   params: URLParams /** URL params to send with the request to the API */;
   propertyFilters: URLParams /** property filters to send with the request to the API */;
   readAPIEndpoint: string /** the API endpoint to get a single object */;
@@ -27,6 +28,7 @@ export const defaultTreeWalkerProps: TreeWalkerProps = {
   getAncestorsFunc: getAncestors,
   getChildrenFunc: getChildren,
   jurisdictionId: '',
+  limits: [],
   params: defaultLocationParams,
   propertyFilters: defaultLocationPropertyFilters,
   readAPIEndpoint: 'location',
@@ -75,6 +77,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
       getAncestorsFunc,
       getChildrenFunc,
       jurisdictionId,
+      limits,
       params,
       propertyFilters,
       readAPIEndpoint,
@@ -128,7 +131,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
 
     // On component mount or whenever parentId changes, we try and get the currentNode's children
     useEffect(() => {
-      getChildrenFunc(paramsToUse, currentNode || parentId)
+      getChildrenFunc(paramsToUse, currentNode || parentId, limits)
         .then(result => {
           if (result.value !== null) {
             setCurrentChildren(result.value);
