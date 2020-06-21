@@ -2,14 +2,14 @@ import { ErrorMessage, Field, Form, Formik, FormikActions } from 'formik';
 import moment from 'moment';
 import React, { Fragment } from 'react';
 import { Button, Col, FormGroup, Row } from 'reactstrap';
-import { SAVE, SAVING, TEAM_ASSIGNEMENT_SUCCESSFUL } from '../../configs/lang';
-import { PlanDefinition } from '../../configs/settings';
-import { OPENSRP_POST_ASSIGNMENTS_ENDPOINT } from '../../constants';
-import { successGrowl } from '../../helpers/utils';
-import { OpenSRPService } from '../../services/opensrp';
-import { Assignment } from '../../store/ducks/opensrp/assignments';
-import { SelectField, SelectOption } from './SelectField';
-import { OpenSRPJurisdiction } from './types';
+import { SelectField, SelectOption } from '../../../../../components/TreeWalker/SelectField';
+import { OpenSRPJurisdiction } from '../../../../../components/TreeWalker/types';
+import { SAVE, SAVING, TEAM_ASSIGNEMENT_SUCCESSFUL } from '../../../../../configs/lang';
+import { PlanDefinition } from '../../../../../configs/settings';
+import { OPENSRP_POST_ASSIGNMENTS_ENDPOINT } from '../../../../../constants';
+import { successGrowl } from '../../../../../helpers/utils';
+import { OpenSRPService } from '../../../../../services/opensrp';
+import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 
 export interface AssignmentFormProps {
   callBackFunc: () => void;
