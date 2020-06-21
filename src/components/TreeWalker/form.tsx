@@ -31,6 +31,28 @@ interface FormValues {
   organizations: string[];
 }
 
+const getPayload = (
+  selectedOrgs: string[],
+  selectedPlan: PlanDefinition,
+  selectedJurisdiction: OpenSRPJurisdiction
+): Assignment[] => {
+  if (selectedOrgs.length > 0) {
+    return selectedOrgs.map(orgId => {
+      const now = moment(new Date());
+      const planStart = moment(selectedPlan.effectivePeriod.start);
+      return {
+        fromDate: planStart > now ? now.format() : planStart.format(),
+        jurisdiction: selectedJurisdiction.id,
+        organization: orgId,
+        plan: selectedPlan.identifier,
+        toDate: moment(selectedPlan.effectivePeriod.end).format(),
+      };
+    });
+  }
+  // TODO: remove assignments for this plan and jurisdiction
+  return [];
+};
+
 const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
   const { callBackFunc, defaultValue, jurisdiction, options, plan } = props;
 
@@ -40,25 +62,6 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
 
   const initialValues: FormValues = {
     organizations: defaultValue.map(e => e.value),
-  };
-
-  const getPayload = (
-    selectedOrgs: string[],
-    selectedPlan: PlanDefinition = plan,
-    selectedJurisdiction: OpenSRPJurisdiction = jurisdiction
-  ): Assignment[] => {
-    return selectedOrgs.map(orgId => {
-      const now = moment(new Date());
-      const planStart = moment(selectedPlan.effectivePeriod.start);
-
-      return {
-        fromDate: planStart > now ? now.format() : planStart.format(),
-        jurisdiction: selectedJurisdiction.id,
-        organization: orgId,
-        plan: selectedPlan.identifier,
-        toDate: moment(selectedPlan.effectivePeriod.end).format(),
-      };
-    });
   };
 
   const submitForm = (
