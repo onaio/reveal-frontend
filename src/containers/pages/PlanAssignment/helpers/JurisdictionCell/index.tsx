@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { PlanDefinition } from '../../configs/settings';
-import { ASSIGN2_PLAN_URL } from '../../constants';
-import { OpenSRPJurisdiction, SimpleJurisdiction } from './types';
+import {
+  OpenSRPJurisdiction,
+  SimpleJurisdiction,
+} from '../../../../../components/TreeWalker/types';
+import { PlanDefinition } from '../../../../../configs/settings';
+import { ASSIGN2_PLAN_URL } from '../../../../../constants';
 
 interface JurisdictionCellProps {
   limits: SimpleJurisdiction[];
