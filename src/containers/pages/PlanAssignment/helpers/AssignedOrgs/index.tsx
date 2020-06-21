@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { Tooltip } from 'reactstrap';
-import { Organization } from '../../store/ducks/opensrp/organizations';
+import { Organization } from '../../../../../store/ducks/opensrp/organizations';
 
 interface AssignedOrgsProps {
   displayLimit: number;
