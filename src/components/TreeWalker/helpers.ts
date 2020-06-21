@@ -105,16 +105,23 @@ export const getChildren = async (
       }
     }
 
-    // Next, if limitTree contains any elements whose parent is currentParentId then
-    // we only fetch those and not all the children that may possibly be on the API server
+    // We next want to find relevant jurisdictionIds for the current parent
+    // If we do find them, we will ONLY fetch them from
+    let jurisdictionIds: string[] = [];
     if (currentParentId) {
-      const jurisdictionIds = limitTree
-        .filter(elem => elem.parentId === currentParentId)
-        .map(elem => elem.id);
-      if (jurisdictionIds.length > 0) {
-        service = new serviceClass(apiEndpoints.findByJurisdictionIds);
-        params.jurisdiction_ids = jurisdictionIds.join(',');
-      }
+      // if we have a currentParentId then we check if limitTree contains any jurisdictions whose parent is currentParentId
+      jurisdictionIds = limitTree
+        .filter(elem => elem.jurisdiction_parent_id === currentParentId)
+        .map(elem => elem.jurisdiction_id);
+    } else {
+      // if no currentParentId then we check if we have any jurisdictions that have no parent
+      jurisdictionIds = limitTree
+        .filter(elem => elem.jurisdiction_parent_id === '' || !elem.jurisdiction_parent_id)
+        .map(elem => elem.jurisdiction_id);
+    }
+    if (jurisdictionIds.length > 0) {
+      service = new serviceClass(apiEndpoints.findByJurisdictionIds);
+      params.jurisdiction_ids = jurisdictionIds.join(',');
     }
   }
 
