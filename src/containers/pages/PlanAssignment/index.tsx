@@ -16,6 +16,8 @@ import { Assignment } from '../../../store/ducks/opensrp/assignments';
 import { Organization } from '../../../store/ducks/opensrp/organizations';
 import { JurisdictionTable, JurisdictionTableProps } from './helpers/JurisdictionTable';
 
+const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
+
 const PlanAssignment = (props: JurisdictionTableProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [hierarchyLimits, setHierarchyLimits] = useState<SimpleJurisdiction[]>([]);
@@ -60,7 +62,6 @@ const PlanAssignment = (props: JurisdictionTableProps) => {
             };
           });
           setAssignments(receivedAssignments);
-          // console.log('receivedAssignments >>> ', receivedAssignments);
           // store.dispatch(fetchAssignmentsActionCreator(assignments));
         }
         // TODO: add error if no response
@@ -73,7 +74,6 @@ const PlanAssignment = (props: JurisdictionTableProps) => {
       .then((response: Organization[]) => {
         if (response) {
           setOrganizations(response);
-          // console.log('Organizations >>> ', response);
           // save all organizations to store
           // store.dispatch(fetchOrganizationsActionCreator(response));
         }
@@ -87,7 +87,6 @@ const PlanAssignment = (props: JurisdictionTableProps) => {
       .then((response: PlanDefinition[]) => {
         if (response && response.length > 0) {
           setPlan(response[0]);
-          // console.log('currentPlan >>> ', response[0]);
         }
         // TODO: add error if no response
       })
@@ -103,8 +102,6 @@ const PlanAssignment = (props: JurisdictionTableProps) => {
     jurisdictionId = '';
   }
 
-  const Wrapped = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
-
   const wrappedProps = {
     ...props,
     assignments,
@@ -114,7 +111,7 @@ const PlanAssignment = (props: JurisdictionTableProps) => {
     plan,
   };
 
-  return <Wrapped {...wrappedProps} />;
+  return <WrappedJurisdictionTable {...wrappedProps} />;
 };
 
 export { PlanAssignment };
