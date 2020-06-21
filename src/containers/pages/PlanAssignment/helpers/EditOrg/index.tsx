@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Button } from 'reactstrap';
-import { ASSIGN_TEAMS } from '../../configs/lang';
-import { JurisdictionAssignmentForm } from './form';
-import { AssignmentFormProps, defaultAssignmentProps } from './form';
+import { ASSIGN_TEAMS } from '../../../../../configs/lang';
+import {
+  AssignmentFormProps,
+  defaultAssignmentProps,
+  JurisdictionAssignmentForm,
+} from '../JurisdictionAssignmentForm';
 
 const EditOrg = (props: AssignmentFormProps) => {
   const [showForm, setShowForm] = useState(false);
