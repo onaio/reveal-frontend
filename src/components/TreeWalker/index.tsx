@@ -107,7 +107,10 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
     //  1. get the object for jurisdictionId and set it as the currentNode
     //  2. get this currentNode's ancestors and add them to the hierarchy
     useEffect(() => {
-      if (!currentNode && jurisdictionId !== '') {
+      if (
+        (!currentNode && jurisdictionId) !== '' ||
+        (currentNode && currentNode.id !== jurisdictionId)
+      ) {
         const singleService = new serviceClass(readAPIEndpoint);
         singleService
           .read(jurisdictionId, params)
@@ -127,7 +130,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
           })
           .catch((error: Error) => displayError(error));
       }
-    }, []);
+    }, [jurisdictionId]);
 
     // On component mount or whenever parentId changes, we try and get the currentNode's children
     useEffect(() => {
