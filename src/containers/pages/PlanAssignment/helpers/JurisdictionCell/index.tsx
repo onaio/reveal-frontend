@@ -5,7 +5,7 @@ import {
   SimpleJurisdiction,
 } from '../../../../../components/TreeWalker/types';
 import { PlanDefinition } from '../../../../../configs/settings';
-import { ASSIGN2_PLAN_URL } from '../../../../../constants';
+import { ASSIGN_PLAN_URL } from '../../../../../constants';
 
 interface JurisdictionCellProps {
   limits: SimpleJurisdiction[];
@@ -25,7 +25,7 @@ const JurisdictionCell = (props: JurisdictionCellProps) => {
   }
 
   return (
-    <Link key={`${node.id}-link`} to={`${ASSIGN2_PLAN_URL}/${plan.identifier}/${node.id}`}>
+    <Link key={`${node.id}-link`} to={`${ASSIGN_PLAN_URL}/${plan.identifier}/${node.id}`}>
       {node.properties.name}
     </Link>
   );
