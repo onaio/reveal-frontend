@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/TreeWalker';
-import { HOME, NO_ROWS_FOUND } from '../../../../../configs/lang';
+import { ASSIGN_PLANS, HOME, NO_ROWS_FOUND } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../../constants';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
@@ -42,17 +42,22 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
     return null;
   }
 
-  const pageTitle = 'Better Assignments';
+  const pageTitle = plan.title;
+  const baseUrl = `${ASSIGN_PLAN_URL}/${plan.identifier}`;
 
   const breadcrumbProps = {
     currentPage: {
       label: currentNode ? 'loading...' : pageTitle,
-      url: `${ASSIGN_PLAN_URL}`,
+      url: baseUrl,
     },
     pages: [
       {
         label: HOME,
         url: HOME_URL,
+      },
+      {
+        label: ASSIGN_PLANS,
+        url: ASSIGN_PLAN_URL,
       },
     ],
   };
@@ -60,7 +65,7 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
   if (currentNode) {
     breadcrumbProps.pages.push({
       label: pageTitle,
-      url: `${ASSIGN_PLAN_URL}`,
+      url: baseUrl,
     });
   }
 
@@ -69,12 +74,12 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
     if (index < hierarchy.length - 1) {
       breadcrumbProps.pages.push({
         label: element.properties.name,
-        url: `${ASSIGN_PLAN_URL}/${plan.identifier}/${element.id}`,
+        url: `${baseUrl}/${element.id}`,
       });
     } else {
       breadcrumbProps.currentPage = {
         label: element.properties.name,
-        url: `${ASSIGN_PLAN_URL}/${plan.identifier}/${element.id}`,
+        url: `${baseUrl}/${element.id}`,
       };
     }
   }
