@@ -1,6 +1,9 @@
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import moment from 'moment';
 import React, { Fragment, useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import { Store } from 'redux';
 import { withTreeWalker } from '../../../components/TreeWalker';
 import { SimpleJurisdiction } from '../../../components/TreeWalker/types';
 import { PlanDefinition } from '../../../configs/settings';
@@ -14,17 +17,29 @@ import { OpenSRPService } from '../../../services/opensrp';
 import supersetFetch from '../../../services/superset';
 import { Assignment } from '../../../store/ducks/opensrp/assignments';
 import { Organization } from '../../../store/ducks/opensrp/organizations';
+import planDefinitionReducer, {
+  addPlanDefinition,
+  getPlanDefinitionById,
+  reducerName as planDefinitionReducerName,
+} from '../../../store/ducks/opensrp/PlanDefinition';
 import { JurisdictionTable, JurisdictionTableProps } from './helpers/JurisdictionTable';
+
+// register reducers
+reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
 const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
 
-const PlanAssignment = (props: JurisdictionTableProps) => {
+interface PlanAssignmentProps extends JurisdictionTableProps {
+  addPlan: typeof addPlanDefinition;
+}
+
+const PlanAssignment = (props: PlanAssignmentProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [hierarchyLimits, setHierarchyLimits] = useState<SimpleJurisdiction[]>([]);
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [organizations, setOrganizations] = useState<Organization[]>([]);
-  const [plan, setPlan] = useState<PlanDefinition | null>(null);
 
+  const { plan, addPlan } = props;
   const planId = props.match.params.planId;
 
   if (!planId) {
@@ -86,7 +101,8 @@ const PlanAssignment = (props: JurisdictionTableProps) => {
     OpenSRPPlanService.read(planId)
       .then((response: PlanDefinition[]) => {
         if (response && response.length > 0) {
-          setPlan(response[0]);
+          // setPlan(response[0]);
+          addPlan(response[0]);
         }
         // TODO: add error if no response
       })
@@ -115,3 +131,22 @@ const PlanAssignment = (props: JurisdictionTableProps) => {
 };
 
 export { PlanAssignment };
+
+/** interface to describe props from mapStateToProps */
+interface DispatchedStateProps {
+  plan: PlanDefinition | null;
+}
+
+/** map dispatch to props */
+const mapDispatchToProps = { addPlan: addPlanDefinition };
+
+/** map state to props */
+const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  const plan = getPlanDefinitionById(state, ownProps.match.params.planId); // TODO: use reselect
+  return {
+    plan,
+  };
+};
+
+/** Connected ActiveFI component */
+export const ConnectedPlanAssignment = connect(mapStateToProps, mapDispatchToProps)(PlanAssignment);
