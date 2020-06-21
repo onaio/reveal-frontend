@@ -34,12 +34,17 @@ interface BaseProps extends WithWalkerProps {
 /** Route params interface */
 export interface RouteParams {
   jurisdictionId: string;
+  planId: string;
 }
 
 type XXX = RouteComponentProps<RouteParams> & BaseProps;
 
 const Base = (props: XXX) => {
   const { assignments, currentChildren, currentNode, hierarchy, organizations, plan } = props;
+
+  if (!plan) {
+    return null;
+  }
 
   const pageTitle = 'Better Assignments';
 
@@ -96,7 +101,7 @@ const Base = (props: XXX) => {
     });
 
     return [
-      <Link key={`${node.id}-link`} to={`${ASSIGN2_PLAN_URL}/${node.id}`}>
+      <Link key={`${node.id}-link`} to={`${ASSIGN2_PLAN_URL}/${plan.identifier}/${node.id}`}>
         {node.properties.name}
       </Link>,
       <AssignedOrgs key={`${node.id}-txt`} id={node.id} orgs={jurisdictionOrgs} />,
@@ -166,9 +171,14 @@ const Exposed = (props: XXX) => {
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [plan, setPlan] = useState<PlanDefinition | null>(null);
 
+  const planId = props.match.params.planId;
+
+  if (!planId) {
+    return null;
+  }
+
   /** define superset filter params for jurisdictions */
-  const planId = 'd05e8df9-7b6a-58a4-98a3-d76daf7cf0b9';
-  const supersetParams = superset.getFormData(1, [
+  const supersetParams = superset.getFormData(15000, [
     { comparator: planId, operator: '==', subject: 'plan_id' },
   ]);
 
