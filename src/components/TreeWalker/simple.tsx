@@ -7,11 +7,13 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import HeaderBreadcrumb from '../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { HOME, NO_ROWS_FOUND } from '../../configs/lang';
+import { PlanDefinition } from '../../configs/settings';
 import {
   ASSIGN2_PLAN_URL,
   HOME_URL,
   OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
+  OPENSRP_PLANS,
 } from '../../constants';
 import { displayError } from '../../helpers/errors';
 import { OpenSRPService } from '../../services/opensrp';
@@ -24,6 +26,7 @@ import { SimpleJurisdiction } from './types';
 interface BaseProps extends WithWalkerProps {
   assignments: Assignment[];
   organizations: Organization[];
+  plan: PlanDefinition | null;
 }
 
 /** Route params interface */
@@ -123,6 +126,7 @@ const defaultX: BaseProps = {
   ...defaultWalkerProps,
   assignments: [],
   organizations: [],
+  plan: null,
 };
 
 Base.defaultProps = defaultX;
@@ -134,6 +138,7 @@ const Exposed = (props: XXX) => {
   const [hierarchyLimits, setHierarchyLimits] = useState<SimpleJurisdiction[]>([]);
   const [assignments, setAssignments] = useState<Assignment[]>([]);
   const [organizations, setOrganizations] = useState<Organization[]>([]);
+  const [plan, setPlan] = useState<PlanDefinition | null>(null);
 
   /** define superset filter params for jurisdictions */
   const planId = 'd05e8df9-7b6a-58a4-98a3-d76daf7cf0b9';
@@ -187,6 +192,18 @@ const Exposed = (props: XXX) => {
         // TODO: add error if no response
       })
       .catch(e => displayError(e));
+
+    // fetch current plan
+    const OpenSRPPlanService = new OpenSRPService(OPENSRP_PLANS);
+    OpenSRPPlanService.read(planId)
+      .then((response: PlanDefinition[]) => {
+        if (response && response.length > 0) {
+          setPlan(response[0]);
+          // console.log('currentPlan >>> ', response[0]);
+        }
+        // TODO: add error if no response
+      })
+      .catch(e => displayError(e));
   }, []);
 
   if (loading) {
@@ -206,6 +223,7 @@ const Exposed = (props: XXX) => {
     jurisdictionId,
     limits: hierarchyLimits,
     organizations,
+    plan,
   };
 
   return <Wrapped {...wrappedProps} />;
