@@ -1,6 +1,6 @@
 /** Assignments redux module */
 import { Dictionary } from '@onaio/utils';
-import { get, isEqual, uniqWith } from 'lodash';
+import { get, uniqWith } from 'lodash';
 import moment from 'moment';
 import { Store } from 'redux';
 import { AnyAction } from 'redux';
@@ -74,14 +74,32 @@ export default function reducer(
       }
 
       if (!action.overwrite) {
+        // so what we want to do is to ensure all action.assignmentsByPlanId arrays of the
+        // same plan are merged.  But while merging we want to that the array elements are
+        // unique based on fromDate, jurisdiction and organization
         const currentState = state.assignmentsByPlanId.asMutable();
-
+        // loop through each plan in the action object
         for (const [planId, assignments] of Object.entries(action.assignmentsByPlanId)) {
+          // check if the plan is already in current state
           if (planId in currentState) {
-            action.assignmentsByPlanId[planId] = uniqWith(
-              (assignments as Assignment[]).concat((currentState as AssignmentsByPlanId)[planId]),
-              isEqual
+            // merge the two assignment arrays
+            const allAssignments = (assignments as Assignment[]).concat(
+              (currentState as AssignmentsByPlanId)[planId]
             );
+            // sort by whether an element was NOT in the current state i.e. elements NOT in
+            // current state will be ordered first.  We do this because we want to remove elements
+            // that were in current state.  We assume that they are being overwritten
+            allAssignments.sort((_, b) => ((assignments as Assignment[]).includes(b) ? 1 : -1));
+            // remove the elements in the current state.  This works because we hard already ordered
+            // the elements.  uniqWith keeps the first found item
+            const filteredAssignments = (action.assignmentsByPlanId[planId] = uniqWith(
+              allAssignments,
+              (a, b) =>
+                a.fromDate + a.jurisdiction + a.organization ===
+                b.fromDate + b.jurisdiction + b.organization
+            ));
+            // finally, save this to the action object
+            action.assignmentsByPlanId[planId] = filteredAssignments;
           }
         }
       }
