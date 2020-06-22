@@ -47,6 +47,33 @@ describe('reducers/assignments', () => {
     expect(jurisdictionAssignments).toEqual([fixtures.assignment1, fixtures.assignment2]);
   });
 
+  it('does not override existing Assignments with newly fetched', () => {
+    store.dispatch(fetchAssignments([fixtures.assignments[0]]));
+    store.dispatch(fetchAssignments([fixtures.assignment5]));
+    let assignmentsNum = getAssignmentsArrayByPlanId(store.getState(), 'alpha').length;
+    expect(assignmentsNum).toEqual(1);
+
+    store.dispatch(fetchAssignments([fixtures.assignments[1]]));
+    assignmentsNum = getAssignmentsArrayByPlanId(store.getState(), 'alpha').length;
+    expect(assignmentsNum).toEqual(2);
+
+    store.dispatch(fetchAssignments([fixtures.assignments[2]]));
+    assignmentsNum = getAssignmentsArrayByPlanId(store.getState(), 'alpha').length;
+    expect(assignmentsNum).toEqual(3);
+
+    expect(getAssignmentsArrayByPlanId(store.getState(), 'beta').length).toEqual(1);
+  });
+
+  it('does not be able to overwrite existing Assignments with newly fetched', () => {
+    store.dispatch(fetchAssignments([fixtures.assignments[0]]));
+    let assignmentsNum = getAssignmentsArrayByPlanId(store.getState(), 'alpha').length;
+    expect(assignmentsNum).toEqual(1);
+
+    store.dispatch(fetchAssignments([fixtures.assignments[1]], true));
+    assignmentsNum = getAssignmentsArrayByPlanId(store.getState(), 'alpha').length;
+    expect(assignmentsNum).toEqual(1);
+  });
+
   it('should reset existing Assignments', () => {
     store.dispatch(fetchAssignments(fixtures.assignments));
     store.dispatch(
@@ -57,6 +84,7 @@ describe('reducers/assignments', () => {
     const assignments = getAssignmentsArrayByPlanId(store.getState(), fixtures.assignment1.plan);
     expect(assignments.length).toBe(1);
   });
+
   it('should set default value', () => {
     expect(setDefaultValues({}, 'planId')).toEqual({ planId: [] });
   });
