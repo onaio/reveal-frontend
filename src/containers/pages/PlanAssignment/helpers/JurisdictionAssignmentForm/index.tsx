@@ -17,6 +17,7 @@ export interface AssignmentFormProps {
   jurisdiction: OpenSRPJurisdiction | null;
   options: SelectOption[];
   plan: PlanDefinition | null;
+  submitCallBackFunc: (assignments: Assignment[]) => void;
 }
 
 export const defaultAssignmentProps: AssignmentFormProps = {
@@ -25,6 +26,7 @@ export const defaultAssignmentProps: AssignmentFormProps = {
   jurisdiction: null,
   options: [],
   plan: null,
+  submitCallBackFunc: () => null,
 };
 
 interface FormValues {
@@ -54,7 +56,14 @@ const getPayload = (
 };
 
 const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
-  const { cancelCallBackFunc, defaultValue, jurisdiction, options, plan } = props;
+  const {
+    cancelCallBackFunc,
+    defaultValue,
+    jurisdiction,
+    options,
+    plan,
+    submitCallBackFunc,
+  } = props;
 
   if (!jurisdiction || !plan) {
     return <span>something bad happened</span>;
@@ -75,6 +84,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
       .then(response => {
         if (response) {
           successGrowl(TEAM_ASSIGNEMENT_SUCCESSFUL);
+          submitCallBackFunc(payload);
         } else {
           setFieldError('organizations', "Didn't save successfully");
         }
