@@ -16,7 +16,12 @@ import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import supersetFetch from '../../../services/superset';
 import { Assignment } from '../../../store/ducks/opensrp/assignments';
-import { Organization } from '../../../store/ducks/opensrp/organizations';
+import organizationsReducer, {
+  fetchOrganizations,
+  getOrganizationsArray,
+  Organization,
+  reducerName as organizationsReducerName,
+} from '../../../store/ducks/opensrp/organizations';
 import planDefinitionReducer, {
   addPlanDefinition,
   getPlanDefinitionById,
@@ -25,21 +30,22 @@ import planDefinitionReducer, {
 import { JurisdictionTable, JurisdictionTableProps } from './helpers/JurisdictionTable';
 
 // register reducers
+reducerRegistry.register(organizationsReducerName, organizationsReducer);
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
 const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
 
 interface PlanAssignmentProps extends JurisdictionTableProps {
   addPlan: typeof addPlanDefinition;
+  fetchOrganizationsActionCreator: typeof fetchOrganizations;
 }
 
 const PlanAssignment = (props: PlanAssignmentProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [hierarchyLimits, setHierarchyLimits] = useState<SimpleJurisdiction[]>([]);
   const [assignments, setAssignments] = useState<Assignment[]>([]);
-  const [organizations, setOrganizations] = useState<Organization[]>([]);
 
-  const { plan, addPlan } = props;
+  const { addPlan, fetchOrganizationsActionCreator, organizations, plan } = props;
   const planId = props.match.params.planId;
 
   if (!planId) {
@@ -88,9 +94,8 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     OpenSRPOrganizationService.list()
       .then((response: Organization[]) => {
         if (response) {
-          setOrganizations(response);
           // save all organizations to store
-          // store.dispatch(fetchOrganizationsActionCreator(response));
+          fetchOrganizationsActionCreator(response);
         }
         // TODO: add error if no response
       })
@@ -133,16 +138,24 @@ export { PlanAssignment };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
+  organizations: Organization[];
   plan: PlanDefinition | null;
 }
 
 /** map dispatch to props */
-const mapDispatchToProps = { addPlan: addPlanDefinition };
+const mapDispatchToProps = {
+  addPlan: addPlanDefinition,
+  fetchOrganizationsActionCreator: fetchOrganizations,
+};
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
-  const plan = getPlanDefinitionById(state, ownProps.match.params.planId); // TODO: use reselect
+  // TODO: use reselect
+  const plan = getPlanDefinitionById(state, ownProps.match.params.planId);
+  const organizations = getOrganizationsArray(state);
+
   return {
+    organizations,
     plan,
   };
 };
