@@ -1,5 +1,5 @@
-import { OpenSRPService } from '../../../../../../services/opensrp';
-import { irsPlanDefinition1 } from '../../tests/fixtures';
+import { OpenSRPService } from '../../../../../services/opensrp';
+import { irsPlanDefinition1 } from '../../PlanningView/tests/fixtures';
 import { loadPlan } from '../serviceCalls';
 
 // tslint:disable-next-line: no-var-requires
