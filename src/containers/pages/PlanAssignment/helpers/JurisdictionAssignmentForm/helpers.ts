@@ -3,47 +3,42 @@ import { OpenSRPJurisdiction } from '../../../../../components/TreeWalker/types'
 import { PlanDefinition } from '../../../../../configs/settings';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 
+export interface Payload {
+  toCreate: Assignment[];
+  toUpdate: Assignment[];
+}
+
 export const getPayload = (
   selectedOrgs: string[],
   selectedPlan: PlanDefinition,
   selectedJurisdiction: OpenSRPJurisdiction,
   initialOrgs: string[] = []
 ): Assignment[] => {
-  let currentAssignments: Assignment[] = [];
-  let retiredAssignments: Assignment[] = [];
+  const now = moment(new Date());
+  const planStart = moment(selectedPlan.effectivePeriod.start);
+  const startDate = planStart > now ? now.format() : planStart.format();
+  const endDate = moment(selectedPlan.effectivePeriod.end).format();
+  const payload: Assignment[] = [];
 
-  if (selectedOrgs.length > 0) {
-    currentAssignments = selectedOrgs.map(orgId => {
-      const now = moment(new Date());
-      const planStart = moment(selectedPlan.effectivePeriod.start);
-      return {
-        fromDate: planStart > now ? now.format() : planStart.format(),
-        jurisdiction: selectedJurisdiction.id,
-        organization: orgId,
-        plan: selectedPlan.identifier,
-        toDate: moment(selectedPlan.effectivePeriod.end).format(),
-      };
+  for (const orgId of selectedOrgs) {
+    payload.push({
+      fromDate: startDate,
+      jurisdiction: selectedJurisdiction.id,
+      organization: orgId,
+      plan: selectedPlan.identifier,
+      toDate: endDate,
     });
   }
 
-  if (initialOrgs.length > 0) {
-    const retiredOrgIds = initialOrgs.filter(orgId => {
-      const currentOrgIds = currentAssignments.map(org => org.organization);
-      return !currentOrgIds.includes(orgId);
+  for (const retiredOrdId of initialOrgs.filter(orgId => !selectedOrgs.includes(orgId))) {
+    payload.push({
+      fromDate: startDate,
+      jurisdiction: selectedJurisdiction.id,
+      organization: retiredOrdId,
+      plan: selectedPlan.identifier,
+      toDate: moment(now.subtract(1, 'day')).format(),
     });
-
-    if (retiredOrgIds.length > 0) {
-      retiredAssignments = retiredOrgIds.map(orgId => {
-        return {
-          fromDate: moment(selectedPlan.effectivePeriod.start).format(),
-          jurisdiction: selectedJurisdiction.id,
-          organization: orgId,
-          plan: selectedPlan.identifier,
-          toDate: moment(moment().subtract(1, 'day')).format(),
-        };
-      });
-    }
   }
 
-  return currentAssignments.concat(retiredAssignments);
+  return payload;
 };
