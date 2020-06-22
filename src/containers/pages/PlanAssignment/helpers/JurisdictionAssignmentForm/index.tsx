@@ -14,6 +14,7 @@ import { getPayload } from './helpers';
 export interface AssignmentFormProps {
   cancelCallBackFunc: () => void;
   defaultValue: SelectOption[];
+  existingAssignments: Assignment[];
   jurisdiction: OpenSRPJurisdiction | null;
   options: SelectOption[];
   plan: PlanDefinition | null;
@@ -23,6 +24,7 @@ export interface AssignmentFormProps {
 export const defaultAssignmentProps: AssignmentFormProps = {
   cancelCallBackFunc: () => null,
   defaultValue: [],
+  existingAssignments: [],
   jurisdiction: null,
   options: [],
   plan: null,
@@ -37,6 +39,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
   const {
     cancelCallBackFunc,
     defaultValue,
+    existingAssignments,
     jurisdiction,
     options,
     plan,
@@ -60,7 +63,8 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
       values.organizations,
       plan,
       jurisdiction,
-      initialValues.organizations
+      initialValues.organizations,
+      existingAssignments
     );
     const OpenSrpAssignmentService = new OpenSRPService(OPENSRP_POST_ASSIGNMENTS_ENDPOINT);
     OpenSrpAssignmentService.create(payload)
