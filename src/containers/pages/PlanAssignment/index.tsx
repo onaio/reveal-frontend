@@ -151,6 +151,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     limits: hierarchyLimits,
     organizations,
     plan,
+    submitCallBackFunc: fetchAssignmentsActionCreator,
   };
 
   return <WrappedJurisdictionTable {...wrappedProps} />;
