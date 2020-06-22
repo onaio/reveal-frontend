@@ -1,9 +1,10 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import moment from 'moment';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
+import Loading from '../../../components/page/Loading';
 import { withTreeWalker } from '../../../components/TreeWalker';
 import { SimpleJurisdiction } from '../../../components/TreeWalker/types';
 import { PlanDefinition } from '../../../configs/settings';
@@ -129,7 +130,9 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   }, []);
 
   if (loading) {
-    return <Fragment>plan hierarchy loading...</Fragment>;
+    // TODO: show message of what is actually loading
+    // return <Fragment>plan hierarchy loading...</Fragment>;
+    return <Loading />;
   }
 
   let jurisdictionId = props.match.params.jurisdictionId;
@@ -142,6 +145,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
 
   const wrappedProps = {
     ...props,
+    LoadingIndicator: Loading, // TODO: indicate what is loading
     assignments,
     jurisdictionId,
     limits: hierarchyLimits,
