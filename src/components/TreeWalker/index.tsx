@@ -10,8 +10,8 @@ import {
 import { OpenSRPJurisdiction, SimpleJurisdiction } from './types';
 
 /** Type def for the TreeWalker component */
-export interface TreeWalkerProps {
-  LoadingIndicator: React.FC /** Element to show loading indicator */;
+export interface TreeWalkerProps<T = any> {
+  LoadingIndicator: React.FC<T> /** Element to show loading indicator */;
   getAncestorsFunc: typeof getAncestors /** function to get ancestors */;
   getChildrenFunc: typeof getChildren /** function to get children */;
   jurisdictionId: string /** jurisdiction id --> used to start walking the tree from a particular point/node */;
