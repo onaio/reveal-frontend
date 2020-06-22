@@ -103,6 +103,7 @@ import ConnectedAssignPractitioner from '../containers/pages/OrganizationViews/A
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
 import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
+import { ConnectedPlanAssignment } from '../containers/pages/PlanAssignment';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
 import { oAuthUserInfoGetter } from '../helpers/utils';
@@ -266,7 +267,7 @@ const App = (props: AppProps) => {
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedIRSReportingMap}
                 />
-                {/* IRS Assignment views */}
+                {/* Plan Assignment views for Plan */}
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -274,12 +275,20 @@ const App = (props: AppProps) => {
                   path={`${ASSIGN_PLAN_URL}`}
                   component={ConnectedIRSAssignmentPlansList}
                 />
+                {/* Plan assignment views for Plan & Jurisdictions */}
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${ASSIGN_PLAN_URL}/:id`}
-                  component={IrsPlan}
+                  path={`${ASSIGN_PLAN_URL}/:planId`}
+                  component={ConnectedPlanAssignment}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${ASSIGN_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedPlanAssignment}
                 />
                 {/* Focus Investigation Reporting list view */}
                 <ConnectedPrivateRoute
