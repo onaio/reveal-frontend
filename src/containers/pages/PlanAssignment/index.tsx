@@ -36,7 +36,7 @@ reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
 
 interface PlanAssignmentProps extends JurisdictionTableProps {
-  addPlan: typeof addPlanDefinition;
+  addPlanActionCreator: typeof addPlanDefinition;
   fetchOrganizationsActionCreator: typeof fetchOrganizations;
 }
 
@@ -45,7 +45,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   const [hierarchyLimits, setHierarchyLimits] = useState<SimpleJurisdiction[]>([]);
   const [assignments, setAssignments] = useState<Assignment[]>([]);
 
-  const { addPlan, fetchOrganizationsActionCreator, organizations, plan } = props;
+  const { addPlanActionCreator, fetchOrganizationsActionCreator, organizations, plan } = props;
   const planId = props.match.params.planId;
 
   if (!planId) {
@@ -106,7 +106,8 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     OpenSRPPlanService.read(planId)
       .then((response: PlanDefinition[]) => {
         if (response && response.length > 0) {
-          addPlan(response[0]);
+          // save plan to store
+          addPlanActionCreator(response[0]);
         }
         // TODO: add error if no response
       })
@@ -144,7 +145,7 @@ interface DispatchedStateProps {
 
 /** map dispatch to props */
 const mapDispatchToProps = {
-  addPlan: addPlanDefinition,
+  addPlanActionCreator: addPlanDefinition,
   fetchOrganizationsActionCreator: fetchOrganizations,
 };
 
