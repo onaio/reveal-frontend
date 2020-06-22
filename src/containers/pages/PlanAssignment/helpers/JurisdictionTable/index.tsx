@@ -109,6 +109,7 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
       <EditOrg
         defaultValue={selectedOrgs}
         jurisdiction={node}
+        existingAssignments={jurisdictionAssignments}
         key={`${node.id}-form`}
         options={orgOptions}
         plan={plan}
