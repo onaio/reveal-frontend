@@ -24,7 +24,7 @@ const AssignedOrgs = (props: AssignedOrgsProps) => {
   const orgNames: string[] = orgs.map(org => org.name);
   const orgsDisplay = orgNames.join(', ');
 
-  if (orgNames.length < displayLimit) {
+  if (orgNames.length <= displayLimit) {
     return <span id={`org-span-${id}`}>{orgsDisplay}</span>;
   }
 
