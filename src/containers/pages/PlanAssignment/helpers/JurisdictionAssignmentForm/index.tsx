@@ -12,7 +12,7 @@ import { OpenSRPService } from '../../../../../services/opensrp';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 
 export interface AssignmentFormProps {
-  callBackFunc: () => void;
+  cancelCallBackFunc: () => void;
   defaultValue: SelectOption[];
   jurisdiction: OpenSRPJurisdiction | null;
   options: SelectOption[];
@@ -20,7 +20,7 @@ export interface AssignmentFormProps {
 }
 
 export const defaultAssignmentProps: AssignmentFormProps = {
-  callBackFunc: () => null,
+  cancelCallBackFunc: () => null,
   defaultValue: [],
   jurisdiction: null,
   options: [],
@@ -54,7 +54,7 @@ const getPayload = (
 };
 
 const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
-  const { callBackFunc, defaultValue, jurisdiction, options, plan } = props;
+  const { cancelCallBackFunc, defaultValue, jurisdiction, options, plan } = props;
 
   if (!jurisdiction || !plan) {
     return <span>something bad happened</span>;
@@ -105,7 +105,12 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
             <FormGroup className="submit-group">
               <Row>
                 <Col md="6">
-                  <Button className="btn-block" size="sm" type="button" onClick={callBackFunc}>
+                  <Button
+                    className="btn-block"
+                    size="sm"
+                    type="button"
+                    onClick={cancelCallBackFunc}
+                  >
                     Close
                   </Button>
                 </Col>
