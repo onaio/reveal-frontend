@@ -1,6 +1,6 @@
 /** Assignments redux module */
 import { Dictionary } from '@onaio/utils';
-import { get } from 'lodash';
+import { get, isEqual, uniqWith } from 'lodash';
 import moment from 'moment';
 import { Store } from 'redux';
 import { AnyAction } from 'redux';
@@ -55,14 +55,37 @@ export type ImmutableAssignmentsStoreState = AssignmentsStoreState &
   SeamlessImmutable.ImmutableObject<AssignmentsStoreState>;
 
 /** initial state for Assignments records in store */
-const initialOrgsStoreState: ImmutableAssignmentsStoreState = SeamlessImmutable({
+const initialAssignmentStoreState: ImmutableAssignmentsStoreState = SeamlessImmutable({
   assignmentsByPlanId: {},
 });
 
 /** the Assignment reducer function */
-export default function reducer(state = initialOrgsStoreState, action: AssignmentActionTypes) {
+export default function reducer(
+  state = initialAssignmentStoreState,
+  action: AssignmentActionTypes
+) {
   switch (action.type) {
     case ASSIGNMENTS_FETCHED:
+      if (state.assignmentsByPlanId.asMutable() === {}) {
+        return SeamlessImmutable({
+          ...state,
+          assignmentsByPlanId: action.assignmentsByPlanId,
+        });
+      }
+
+      if (!action.overwrite) {
+        const currentState = state.assignmentsByPlanId.asMutable();
+
+        for (const [planId, assignments] of Object.entries(action.assignmentsByPlanId)) {
+          if (planId in currentState) {
+            action.assignmentsByPlanId[planId] = uniqWith(
+              (assignments as Assignment[]).concat((currentState as AssignmentsByPlanId)[planId]),
+              isEqual
+            );
+          }
+        }
+      }
+
       return SeamlessImmutable({
         ...state,
         assignmentsByPlanId: {
@@ -90,10 +113,13 @@ export const removeAssignmentsAction: RemoveAssignmentsAction = {
 
 /** creates action to add fetched assignments to store
  * @param {Assignment []} assignmentsList - array of assignments to be added to store
- *
+ * @param {boolean} overwrite - whether to overwrite assignments
  * @returns {FetchAssignmentsAction} - action with assignments payload that is added to store
  */
-export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignmentsAction => {
+export const fetchAssignments = (
+  assignmentsList: Assignment[],
+  overwrite: boolean = false
+): FetchAssignmentsAction => {
   // const assignmentsByPlanId: AssignmentsByPlanId = {};
   const defaultArrayAssignmentHandler: ProxyHandler<object> = {
     /**
@@ -128,6 +154,7 @@ export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignment
   }
   return {
     assignmentsByPlanId,
+    overwrite,
     type: ASSIGNMENTS_FETCHED,
   };
 };
@@ -141,6 +168,7 @@ export const resetPlanAssignments = (
 ): FetchAssignmentsAction => {
   return {
     assignmentsByPlanId,
+    overwrite: true,
     type: ASSIGNMENTS_FETCHED,
   };
 };
