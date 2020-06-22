@@ -7,6 +7,7 @@ import { Store } from 'redux';
 import Loading from '../../../components/page/Loading';
 import { withTreeWalker } from '../../../components/TreeWalker';
 import { SimpleJurisdiction } from '../../../components/TreeWalker/types';
+import { SUPERSET_PLAN_HIERARCHY_SLICE } from '../../../configs/env';
 import { PlanDefinition } from '../../../configs/settings';
 import {
   OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
@@ -73,7 +74,8 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   ]);
 
   useEffect(() => {
-    supersetFetch('577', supersetParams)
+    // Get Plan hierarchy
+    supersetFetch(SUPERSET_PLAN_HIERARCHY_SLICE, supersetParams)
       .then((result: SimpleJurisdiction[]) => {
         if (result) {
           setHierarchyLimits(result);
