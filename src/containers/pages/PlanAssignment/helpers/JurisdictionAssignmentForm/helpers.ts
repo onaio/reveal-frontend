@@ -41,9 +41,9 @@ export const getPayload = (
     });
   }
 
-  for (const retiredOrdId of initialOrgs.filter(orgId => !selectedOrgs.includes(orgId))) {
+  for (const retiredOrgId of initialOrgs.filter(orgId => !selectedOrgs.includes(orgId))) {
     // we should not change the fromDate, ever (the API will reject it)
-    const thisAssignment = get(assignmentsByOrgId, retiredOrdId);
+    const thisAssignment = get(assignmentsByOrgId, retiredOrgId);
     if (thisAssignment) {
       startDate = thisAssignment.fromDate;
     }
@@ -51,7 +51,7 @@ export const getPayload = (
     payload.push({
       fromDate: startDate,
       jurisdiction: selectedJurisdiction.id,
-      organization: retiredOrdId,
+      organization: retiredOrgId,
       plan: selectedPlan.identifier,
       toDate: moment(now.subtract(1, 'day')).format(),
     });
