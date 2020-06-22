@@ -39,7 +39,8 @@ reducerRegistry.register(assignmentReducerName, assignmentReducer);
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
-const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
+// TODO: Determine if this can safely be un-commented so as not to remount
+// const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
 
 interface PlanAssignmentProps extends JurisdictionTableProps {
   addPlanActionCreator: typeof addPlanDefinition;
@@ -135,6 +136,9 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   if (!jurisdictionId) {
     jurisdictionId = '';
   }
+
+  // TODO: Determine if this can safely be moved outside this component so as not to remount
+  const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
 
   const wrappedProps = {
     ...props,
