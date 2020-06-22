@@ -1,3 +1,4 @@
+import { ConnectedManifestFilesList } from '@opensrp/form-config';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -6,8 +7,16 @@ import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { HOME, MANIFEST_RELEASES } from '../../../../../configs/lang';
-import { HOME_URL, MANIFEST_RELEASE_URL } from '../../../../../constants';
+import {
+  FILE_UPLOAD_TYPE,
+  HOME_URL,
+  MANIFEST_FILE_UPLOAD,
+  MANIFEST_RELEASE_URL,
+  OPENSRP_FORMS_ENDPOINT,
+  OPENSRP_MANIFEST_FORMS_ENDPOINT,
+} from '../../../../../constants';
 import { RouteParams } from '../../../../../helpers/utils';
+import { defaultConfigProps } from '../../helpers';
 
 /** manifest files props interface */
 interface ManifestFilesProps {
@@ -19,7 +28,7 @@ const ManifestFiles = (props: ManifestFilesProps) => {
   const { formVersion } = props;
   const breadcrumbProps = {
     currentPage: {
-      label: `${MANIFEST_RELEASES}: ${formVersion}`,
+      label: formVersion,
     },
     pages: [
       {
@@ -33,6 +42,16 @@ const ManifestFiles = (props: ManifestFilesProps) => {
     ],
   };
 
+  const fileListProps = {
+    ...defaultConfigProps,
+    downloadEndPoint: OPENSRP_FORMS_ENDPOINT,
+    endpoint: OPENSRP_MANIFEST_FORMS_ENDPOINT,
+    fileUploadUrl: MANIFEST_FILE_UPLOAD,
+    formVersion,
+    isJsonValidator: false,
+    uploadTypeUrl: FILE_UPLOAD_TYPE,
+  };
+
   return (
     <div>
       <Helmet>
@@ -44,6 +63,7 @@ const ManifestFiles = (props: ManifestFilesProps) => {
           <h3 className="mt-3 mb-3 page-title">{`${MANIFEST_RELEASES}: ${formVersion}`}</h3>
         </Col>
       </Row>
+      <ConnectedManifestFilesList {...fileListProps} />
     </div>
   );
 };
