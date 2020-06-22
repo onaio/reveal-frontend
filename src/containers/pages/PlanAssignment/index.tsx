@@ -101,7 +101,6 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     OpenSRPPlanService.read(planId)
       .then((response: PlanDefinition[]) => {
         if (response && response.length > 0) {
-          // setPlan(response[0]);
           addPlan(response[0]);
         }
         // TODO: add error if no response
