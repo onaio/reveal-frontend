@@ -1,3 +1,4 @@
+import { get, keyBy } from 'lodash';
 import moment from 'moment';
 import { OpenSRPJurisdiction } from '../../../../../components/TreeWalker/types';
 import { PlanDefinition } from '../../../../../configs/settings';
@@ -12,15 +13,25 @@ export const getPayload = (
   selectedOrgs: string[],
   selectedPlan: PlanDefinition,
   selectedJurisdiction: OpenSRPJurisdiction,
-  initialOrgs: string[] = []
+  initialOrgs: string[] = [],
+  existingAssignments: Assignment[] = []
 ): Assignment[] => {
   const now = moment(new Date());
-  const planStart = moment(selectedPlan.effectivePeriod.start);
-  const startDate = planStart > now ? now.format() : planStart.format();
+  let startDate = now.format();
   const endDate = moment(selectedPlan.effectivePeriod.end).format();
+
   const payload: Assignment[] = [];
+  const assignmentsByOrgId = keyBy(existingAssignments, 'organization');
 
   for (const orgId of selectedOrgs) {
+    if (initialOrgs.includes(orgId)) {
+      // we should not change the fromDate, ever (the API will reject it)
+      const thisAssignment = get(assignmentsByOrgId, orgId);
+      if (thisAssignment) {
+        startDate = thisAssignment.fromDate;
+      }
+    }
+
     payload.push({
       fromDate: startDate,
       jurisdiction: selectedJurisdiction.id,
@@ -31,6 +42,12 @@ export const getPayload = (
   }
 
   for (const retiredOrdId of initialOrgs.filter(orgId => !selectedOrgs.includes(orgId))) {
+    // we should not change the fromDate, ever (the API will reject it)
+    const thisAssignment = get(assignmentsByOrgId, retiredOrdId);
+    if (thisAssignment) {
+      startDate = thisAssignment.fromDate;
+    }
+
     payload.push({
       fromDate: startDate,
       jurisdiction: selectedJurisdiction.id,
