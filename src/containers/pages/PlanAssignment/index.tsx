@@ -186,5 +186,5 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   };
 };
 
-/** Connected ActiveFI component */
+/** Connected PlanAssignment component */
 export const ConnectedPlanAssignment = connect(mapStateToProps, mapDispatchToProps)(PlanAssignment);
