@@ -1612,6 +1612,13 @@ export const assignment4 = {
   plan: 'alpha',
   toDate: '2019-12-31T16:00:01-08:00',
 };
+export const assignment5 = {
+  fromDate: '2019-08-31T16:00:00-08:00',
+  jurisdiction: 'blue-base',
+  organization: 'caboose',
+  plan: 'beta',
+  toDate: '2019-12-31T16:00:01-08:00',
+};
 export const assignments = [assignment1, assignment2, assignment3, assignment4];
 
 export const practitioners: Practitioner[] = [practitioner1, practitioner2, practitioner3];
