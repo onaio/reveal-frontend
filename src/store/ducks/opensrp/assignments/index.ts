@@ -1,6 +1,7 @@
 /** Assignments redux module */
 import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
+import moment from 'moment';
 import { Store } from 'redux';
 import { AnyAction } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
@@ -163,7 +164,8 @@ export function getAssignmentsByPlanId(state: Partial<Store>): { [key: string]: 
  * @return {Assignment []} - all assignments by planId in store as an array
  */
 export function getAssignmentsArrayByPlanId(state: Partial<Store>, planId: string): Assignment[] {
-  return get(getAssignmentsByPlanId(state), planId) || [];
+  const assignments = get(getAssignmentsByPlanId(state), planId) || [];
+  return assignments.filter(obj => moment(obj.toDate) >= moment());
 }
 
 /** Get all assignments by plan id and by jurisdiction id
