@@ -6,18 +6,31 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+<<<<<<< HEAD:src/containers/pages/InterventionPlan/PlanningView/IRSPlans/tests/IRS.test.tsx
 import { ConnectedOpenSRPPlansList, IRSPlans } from '..';
 import { DRAFTS_PARENTHESIS, IRS_PLANS } from '../../../../../../configs/lang';
 import { INTERVENTION_IRS_DRAFTS_URL, QUERY_PARAM_TITLE } from '../../../../../../constants';
 import store from '../../../../../../store';
 import { plansJSON } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+=======
+import { DRAFTS_PARENTHESIS, IRS_PLANS } from '../../../../../configs/lang';
+import { INTERVENTION_IRS_DRAFTS_URL, QUERY_PARAM_TITLE } from '../../../../../constants';
+import store from '../../../../../store';
+import { plansJSON } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+>>>>>>> Refactor Intervention plan directory structure:src/containers/pages/InterventionPlan/PlanningView/tests/IRS.test.tsx
 import plansReducer, {
   fetchPlanRecords,
   PlanRecordResponse,
   PlanStatus,
   reducerName as plansReducerName,
+<<<<<<< HEAD:src/containers/pages/InterventionPlan/PlanningView/IRSPlans/tests/IRS.test.tsx
 } from '../../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
+=======
+} from '../../../../../store/ducks/plans';
+import * as fixtures from '../../../../../store/ducks/tests/fixtures';
+import ConnectedIrsPlans, { IrsPlans } from '../IRS';
+>>>>>>> Refactor Intervention plan directory structure:src/containers/pages/InterventionPlan/PlanningView/tests/IRS.test.tsx
 
 reducerRegistry.register(plansReducerName, plansReducer);
 
