@@ -19,7 +19,7 @@ const EditOrg = (props: AssignmentFormProps) => {
 
   return showForm ? (
     <JurisdictionAssignmentForm
-      callBackFunc={closeForm}
+      cancelCallBackFunc={closeForm}
       defaultValue={defaultValue}
       jurisdiction={jurisdiction}
       options={options}
