@@ -20,7 +20,7 @@ import {
   HIDE_MAP_FOR_INTERVENTIONS,
   SUPERSET_JURISDICTIONS_DATA_SLICE,
   SUPERSET_MAX_RECORDS,
-} from '../../../../../configs/env';
+} from '../../../../configs/env';
 import {
   ADMIN_LEVEL,
   ASSIGN_JURISDICTIONS,
@@ -41,7 +41,21 @@ import {
   TEAM_ASSIGNMENT_SUCCESSFUL,
   TEAMS_ASSIGNMENT,
   TYPE_LABEL,
-} from '../../../../../configs/lang';
+} from '../../../../configs/lang';
+import {
+  adminLayerColors,
+  baseTilesetGeographicLevel,
+  CountriesAdmin0,
+  deselectedJurisdictionOpacity,
+  fillLayerConfig,
+  fullySelectedJurisdictionOpacity,
+  JurisdictionLevels,
+  JurisdictionsByCountry,
+  jurisdictionSelectionTooltipHint,
+  lineLayerConfig,
+  partiallySelectedJurisdictionOpacity,
+  Tileset,
+} from '../../../../configs/settings';
 import {
   ASSIGN_PLAN_URL,
   DRAFT,
@@ -61,8 +75,8 @@ import {
   OPENSRP_POST_ASSIGNMENTS_ENDPOINT,
   OPENSRP_STATUS,
   PARENTID,
-} from '../../../../../constants';
-import { displayError } from '../../../../../helpers/errors';
+} from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import {
   extractPlanPayloadFromPlanRecord,
   extractPlanRecordResponseFromPlanPayload,
@@ -74,26 +88,12 @@ import {
   setGisidaMapPosition,
   stopPropagation,
   stopPropagationAndPreventDefault,
-} from '../../../../../helpers/utils';
-import {
-  adminLayerColors,
-  baseTilesetGeographicLevel,
-  CountriesAdmin0,
-  deselectedJurisdictionOpacity,
-  fillLayerConfig,
-  fullySelectedJurisdictionOpacity,
-  JurisdictionLevels,
-  JurisdictionsByCountry,
-  jurisdictionSelectionTooltipHint,
-  lineLayerConfig,
-  partiallySelectedJurisdictionOpacity,
-  Tileset,
-} from './../../../../../configs/settings';
+} from '../../../../helpers/utils';
 
-import { OpenSRPService } from '../../../../../services/opensrp';
-import supersetFetch from '../../../../../services/superset';
+import { OpenSRPService } from '../../../../services/opensrp';
+import supersetFetch from '../../../../services/superset';
 
-import store from '../../../../../store';
+import store from '../../../../store';
 import jurisdictionReducer, {
   fetchAllJurisdictionIds,
   fetchJurisdictions,
@@ -103,19 +103,19 @@ import jurisdictionReducer, {
   Jurisdiction,
   JurisdictionGeoJSON,
   reducerName as jurisdictionReducerName,
-} from '../../../../../store/ducks/jurisdictions';
+} from '../../../../store/ducks/jurisdictions';
 import assignmentReducer, {
   Assignment,
   fetchAssignments,
   getAssignmentsArrayByPlanId,
   reducerName as assignmentReducerName,
-} from '../../../../../store/ducks/opensrp/assignments';
+} from '../../../../store/ducks/opensrp/assignments';
 import organizationsReducer, {
   fetchOrganizations,
   getOrganizationsById,
   Organization,
   reducerName as organizationsReducerName,
-} from '../../../../../store/ducks/opensrp/organizations';
+} from '../../../../store/ducks/opensrp/organizations';
 import plansReducer, {
   fetchPlanRecords,
   getPlanRecordById,
@@ -123,22 +123,21 @@ import plansReducer, {
   PlanRecord,
   PlanStatus,
   reducerName as plansReducerName,
-} from '../../../../../store/ducks/plans';
+} from '../../../../store/ducks/plans';
 
 import { Helmet } from 'react-helmet';
-import GisidaWrapper, { GisidaProps, Handlers } from '../../../../../components/GisidaWrapper';
+import GisidaWrapper, { GisidaProps, Handlers } from '../../../../components/GisidaWrapper';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
-} from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import Loading from '../../../../../components/page/Loading';
+} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import Loading from '../../../../components/page/Loading';
 
 import { toast } from 'react-toastify';
 import { format } from 'util';
 import AssignTeamTableCell, {
   AssignTeamCellProps,
-} from '../../../../../components/forms/AssignTeamTableCell';
-import { ADMN0_PCODE, JurisdictionTypes } from '../../../../../configs/types';
-import './../../../../../styles/css/drill-down-table.css';
+} from '../../../../components/forms/AssignTeamTableCell';
+import { ADMN0_PCODE, JurisdictionTypes } from '../../../../configs/types';
 import { loadPlan } from './serviceCalls';
 import './style.css';
 

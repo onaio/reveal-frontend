@@ -93,11 +93,11 @@ import FIJurisdiction from '../containers/pages/FocusInvestigation/jurisdiction'
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
 import ConnectedPlanCompletion from '../containers/pages/FocusInvestigation/map/planCompletion';
 import Home from '../containers/pages/Home/Home';
-import IrsPlans from '../containers/pages/InterventionPlan/IRS';
-import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
+import IrsPlan from '../containers/pages/InterventionPlan/IRSPlan';
 import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
+import IrsPlans from '../containers/pages/InterventionPlan/PlanningView/IRS';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments';
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';

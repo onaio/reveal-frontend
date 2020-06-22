@@ -6,7 +6,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import ConnectedIrsPlans, { IrsPlans } from '..';
 import { DRAFTS_PARENTHESIS, IRS_PLANS } from '../../../../../configs/lang';
 import { INTERVENTION_IRS_DRAFTS_URL, QUERY_PARAM_TITLE } from '../../../../../constants';
 import store from '../../../../../store';
@@ -18,6 +17,7 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
+import ConnectedIrsPlans, { IrsPlans } from '../IRS';
 
 reducerRegistry.register(plansReducerName, plansReducer);
 

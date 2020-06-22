@@ -1,4 +1,4 @@
-import { InterventionType, PlanRecord, PlanStatus } from '../../../../../../store/ducks/plans';
+import { InterventionType, PlanRecord, PlanStatus } from '../../../../../store/ducks/plans';
 // tslint:disable: object-literal-sort-keys
 export const locationResults = [
   {
