@@ -9,6 +9,7 @@ export const Footer = () => {
       {REVEAL_BRAND_IMG_SRC && (
         <img src={REVEAL_BRAND_IMG_SRC} alt={WEBSITE_NAME} style={{ paddingBottom: '5px' }} />
       )}
+      &nbsp;
       <small className="text-muted">{REACT_APP_VERSION}</small>
     </footer>
   );
