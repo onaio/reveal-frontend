@@ -6,22 +6,22 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { INTERVENTION_IRS_URL } from '../../../../../../constants';
-import { OpenSRPService } from '../../../../../../services/opensrp';
-import store from '../../../../../../store';
+import ConnectedIrsPlan, { IrsPlan } from '..';
+import { INTERVENTION_IRS_URL } from '../../../../../constants';
+import { OpenSRPService } from '../../../../../services/opensrp';
+import store from '../../../../../store';
 import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
-} from '../../../../../../store/ducks/jurisdictions';
-import { fetchAssignments } from '../../../../../../store/ducks/opensrp/assignments';
+} from '../../../../../store/ducks/jurisdictions';
+import { fetchAssignments } from '../../../../../store/ducks/opensrp/assignments';
 import plansReducer, {
   fetchPlanRecords,
   PlanRecordResponse,
   reducerName as plansReducerName,
-} from '../../../../../../store/ducks/plans';
-import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
-import { irsPlanRecordResponse1, jurisdictionsById } from '../../tests/fixtures';
-import ConnectedIrsPlan, { IrsPlan } from './..';
-import * as serviceCalls from './../serviceCalls';
+} from '../../../../../store/ducks/plans';
+import * as fixtures from '../../../../../store/ducks/tests/fixtures';
+import { irsPlanRecordResponse1, jurisdictionsById } from '../../PlanningView/tests/fixtures';
+import * as serviceCalls from '../serviceCalls';
 import {
   assignments,
   divDocumentCreator,
@@ -37,7 +37,7 @@ import {
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(plansReducerName, plansReducer);
 
-jest.mock('../../../../../../configs/env');
+jest.mock('../../../../../configs/env');
 const history = createBrowserHistory();
 
 /* tslint:disable-next-line no-var-requires */
