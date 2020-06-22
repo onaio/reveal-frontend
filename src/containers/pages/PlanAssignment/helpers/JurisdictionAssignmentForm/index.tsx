@@ -1,5 +1,4 @@
 import { ErrorMessage, Field, Form, Formik, FormikActions } from 'formik';
-import moment from 'moment';
 import React, { Fragment } from 'react';
 import { Button, Col, FormGroup, Row } from 'reactstrap';
 import { SelectField, SelectOption } from '../../../../../components/TreeWalker/SelectField';
@@ -10,6 +9,7 @@ import { OPENSRP_POST_ASSIGNMENTS_ENDPOINT } from '../../../../../constants';
 import { successGrowl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
+import { getPayload } from './helpers';
 
 export interface AssignmentFormProps {
   cancelCallBackFunc: () => void;
@@ -32,28 +32,6 @@ export const defaultAssignmentProps: AssignmentFormProps = {
 interface FormValues {
   organizations: string[];
 }
-
-const getPayload = (
-  selectedOrgs: string[],
-  selectedPlan: PlanDefinition,
-  selectedJurisdiction: OpenSRPJurisdiction
-): Assignment[] => {
-  if (selectedOrgs.length > 0) {
-    return selectedOrgs.map(orgId => {
-      const now = moment(new Date());
-      const planStart = moment(selectedPlan.effectivePeriod.start);
-      return {
-        fromDate: planStart > now ? now.format() : planStart.format(),
-        jurisdiction: selectedJurisdiction.id,
-        organization: orgId,
-        plan: selectedPlan.identifier,
-        toDate: moment(selectedPlan.effectivePeriod.end).format(),
-      };
-    });
-  }
-  // TODO: remove assignments for this plan and jurisdiction
-  return [];
-};
 
 const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
   const {
@@ -78,7 +56,12 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
     { setSubmitting, setFieldError }: FormikActions<FormValues>
   ) => {
     setSubmitting(true);
-    const payload = getPayload(values.organizations, plan, jurisdiction);
+    const payload = getPayload(
+      values.organizations,
+      plan,
+      jurisdiction,
+      initialValues.organizations
+    );
     const OpenSrpAssignmentService = new OpenSRPService(OPENSRP_POST_ASSIGNMENTS_ENDPOINT);
     OpenSrpAssignmentService.create(payload)
       .then(response => {
