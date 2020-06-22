@@ -9,7 +9,7 @@ import {
 
 const EditOrg = (props: AssignmentFormProps) => {
   const [showForm, setShowForm] = useState(false);
-  const { jurisdiction, options, plan, defaultValue } = props;
+  const { defaultValue, jurisdiction, options, plan, submitCallBackFunc } = props;
 
   const callBack = (_: React.MouseEvent) => {
     setShowForm(true);
@@ -24,6 +24,7 @@ const EditOrg = (props: AssignmentFormProps) => {
       jurisdiction={jurisdiction}
       options={options}
       plan={plan}
+      submitCallBackFunc={submitCallBackFunc}
     />
   ) : (
     <Button onClick={callBack} size="sm" color="primary">

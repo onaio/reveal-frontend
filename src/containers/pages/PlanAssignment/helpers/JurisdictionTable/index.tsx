@@ -17,6 +17,7 @@ interface BaseJurisdictionTablProps extends WithWalkerProps {
   assignments: Assignment[];
   organizations: Organization[];
   plan: PlanDefinition | null;
+  submitCallBackFunc: (assignments: Assignment[]) => void;
 }
 
 /** Route params interface */
@@ -36,6 +37,7 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
     limits,
     organizations,
     plan,
+    submitCallBackFunc,
   } = props;
 
   if (!plan) {
@@ -110,6 +112,7 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
         key={`${node.id}-form`}
         options={orgOptions}
         plan={plan}
+        submitCallBackFunc={submitCallBackFunc}
       />,
     ];
   });
@@ -157,6 +160,7 @@ const defaultProps: BaseJurisdictionTablProps = {
   assignments: [],
   organizations: [],
   plan: null,
+  submitCallBackFunc: () => null,
 };
 
 JurisdictionTable.defaultProps = defaultProps;
