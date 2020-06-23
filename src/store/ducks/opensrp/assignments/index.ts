@@ -95,8 +95,8 @@ export default function reducer(
             const filteredAssignments = (action.assignmentsByPlanId[planId] = uniqWith(
               allAssignments,
               (a, b) =>
-                a.fromDate + a.jurisdiction + a.organization ===
-                b.fromDate + b.jurisdiction + b.organization
+                `${a.fromDate}${a.jurisdiction}${a.organization}` ===
+                `${b.fromDate}${b.jurisdiction}${b.organization}`
             ));
             // finally, save this to the action object
             action.assignmentsByPlanId[planId] = filteredAssignments;
