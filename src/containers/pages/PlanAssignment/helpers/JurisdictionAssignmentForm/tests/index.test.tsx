@@ -1,13 +1,15 @@
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import MockDate from 'mockdate';
 import React from 'react';
 import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { JurisdictionAssignmentForm } from '../index';
-import { openSRPJurisdiction } from './fixtures';
+import { apiCall, openSRPJurisdiction, submitCallbackPayload } from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
+jest.mock('../../../../../../configs/env');
 
 describe('PlanAssignment/JurisdictionAssignmentForm', () => {
   beforeEach(() => {
@@ -52,9 +54,11 @@ describe('PlanAssignment/JurisdictionAssignmentForm', () => {
   });
 
   it('form works as expected', async () => {
-    fetch.mockResponseOnce(JSON.stringify({}));
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 200 });
+
     const cancelMock: any = jest.fn();
     const submitMock: any = jest.fn();
+    const growlMock: any = jest.fn();
 
     const props = {
       cancelCallBackFunc: cancelMock,
@@ -65,20 +69,25 @@ describe('PlanAssignment/JurisdictionAssignmentForm', () => {
         { label: 'Team Y', value: 'y' },
       ],
       plan: plans[1],
-      submitMock,
+      submitCallBackFunc: submitMock,
+      successNotifierBackFunc: growlMock,
     };
 
     const wrapper = mount(<JurisdictionAssignmentForm {...props} />);
 
     wrapper.find('button.cancel').simulate('click');
-    await new Promise<any>(resolve => setImmediate(resolve));
+    await flushPromises();
     wrapper.update();
     expect(cancelMock).toHaveBeenCalledTimes(1);
 
-    // wrapper.find('form').simulate('submit');
-    // await new Promise<any>(resolve => setImmediate(resolve));
-    // wrapper.update();
-    // expect(submitMock).toHaveBeenCalledTimes(1);
+    wrapper.find('form').simulate('submit');
+    await flushPromises();
+    wrapper.update();
+
+    expect(fetch.mock.calls).toEqual(apiCall);
+    expect(submitMock).toHaveBeenCalledTimes(1);
+    expect(submitMock.mock.calls).toEqual(submitCallbackPayload);
+    expect(growlMock.mock.calls).toEqual([['Team(s) assignment updated successfully']]);
 
     wrapper.unmount();
   });
