@@ -982,5 +982,13 @@
   "NO_OPTIONS": {
     "message": "No Options",
     "description": "prompt shown when a search yields no results"
+  },
+  "COULD_NOT_LOAD_FORM": {
+    "message": "Could not load the form.",
+    "description": "error: could not load the form"
+  },
+  "DID_NOT_SAVE_SUCCESSFULLY": {
+    "message": "Did not save successfully",
+    "description": "error: did not succeed when saving"
   }
 }
