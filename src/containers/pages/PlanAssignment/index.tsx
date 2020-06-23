@@ -89,7 +89,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
           if (hierarchyLimits.length < 1) {
             // this means that we basically have not succeeded to make this call
             // if hierarchyLimits is not populated we cannot proceed
-            handleBrokenPage('Unable to the plan jurisdiction hierarchy');
+            handleBrokenPage('Unable to load the plan jurisdiction hierarchy');
           }
         }
       })
