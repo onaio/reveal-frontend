@@ -603,3 +603,9 @@ export const CUSTOMIZE_COLUMNS_FILTER_MESSAGE = translate(
   'CUSTOMIZE_COLUMNS_FILTER_MESSAGE',
   'Select columns to be displayed'
 );
+
+export const COULD_NOT_LOAD_FORM = translate('COULD_NOT_LOAD_FORM', 'Could not load the form.');
+export const DID_NOT_SAVE_SUCCESSFULLY = translate(
+  'DID_NOT_SAVE_SUCCESSFULLY',
+  'Did not save successfully'
+);
