@@ -4,19 +4,12 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Store } from 'redux';
-import { DRAFTS_PARENTHESIS, IRS_PLANS } from '../../../../configs/lang';
-import {
-  INTERVENTION_IRS_DRAFTS_URL,
-  NEW,
-  PLAN_RECORD_BY_ID,
-  QUERY_PARAM_TITLE,
-} from '../../../../constants';
+import { PLAN_RECORD_BY_ID, QUERY_PARAM_TITLE } from '../../../../constants';
 import { loadOpenSRPPlans } from '../../../../helpers/dataLoading/plans';
 import { getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import plansReducer, {
   fetchPlanRecords,
-  InterventionType,
   makePlansArraySelector,
   PlanRecord,
   PlanStatus,
@@ -45,9 +38,6 @@ export const IRSPlans = (props: any) => {
     ...props,
     loadData: (setLoading: React.Dispatch<React.SetStateAction<boolean>>) =>
       loadOpenSRPPlans(props.service, props.fetchPlanRecordsActionCreator, setLoading),
-    newPlanUrl: `${INTERVENTION_IRS_DRAFTS_URL}/${NEW}`,
-    pageUrl: INTERVENTION_IRS_DRAFTS_URL,
-    planTitle: `${IRS_PLANS}${DRAFTS_PARENTHESIS}`,
     plansArray,
   };
 
@@ -69,7 +59,6 @@ const mapStateToProps = (
   const title = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const planStatus = [PlanStatus.DRAFT];
   const plansRecordsArray = plansArraySelector(state as Registry, {
-    interventionType: InterventionType.IRS,
     statusList: planStatus,
     title,
   });
@@ -85,6 +74,6 @@ const mapDispatchToProps: MapDispatchToProps = {
 
 IRSPlans.defaultProps = defaultProps;
 
-const ConnectedIrsPlans = connect(mapStateToProps, mapDispatchToProps)(IRSPlans);
+const ConnectedDraftPlans = connect(mapStateToProps, mapDispatchToProps)(IRSPlans);
 
-export default ConnectedIrsPlans;
+export default ConnectedDraftPlans;
