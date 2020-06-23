@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { Button, Col, FormGroup, Row } from 'reactstrap';
 import { SelectField, SelectOption } from '../../../../../components/TreeWalker/SelectField';
 import { OpenSRPJurisdiction } from '../../../../../components/TreeWalker/types';
-import { CLOSE, SAVE, SAVING, TEAM_ASSIGNEMENT_SUCCESSFUL } from '../../../../../configs/lang';
+import { CLOSE, SAVE, SAVING, TEAM_ASSIGNMENT_SUCCESSFUL } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { OPENSRP_POST_ASSIGNMENTS_ENDPOINT } from '../../../../../constants';
 import { successGrowl } from '../../../../../helpers/utils';
@@ -82,7 +82,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
     OpenSrpAssignmentService.create(payload)
       .then(response => {
         if (response) {
-          successNotifierBackFunc(TEAM_ASSIGNEMENT_SUCCESSFUL);
+          successNotifierBackFunc(TEAM_ASSIGNMENT_SUCCESSFUL);
           submitCallBackFunc(payload);
         } else {
           setFieldError('organizations', messages.fieldError);

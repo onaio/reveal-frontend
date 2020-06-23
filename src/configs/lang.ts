@@ -481,8 +481,8 @@ export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
 );
 export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
 export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');
-export const TEAM_ASSIGNEMENT_SUCCESSFUL = translate(
-  'TEAM_ASSIGNEMENT_SUCCESSFUL',
+export const TEAM_ASSIGNMENT_SUCCESSFUL = translate(
+  'TEAM_ASSIGNMENT_SUCCESSFUL',
   'Team(s) assignment updated successfully'
 );
 export const UPLOADED_STUDENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Students List');
