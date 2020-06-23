@@ -3,7 +3,19 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Col, Row } from 'reactstrap';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { HOME, JSON_VALIDATORS } from '../../../../configs/lang';
+import {
+  DOWNLOAD_LABEL,
+  EDIT_LABEL,
+  FILE_NAME_LABEL,
+  FILE_VERSION_LABEL,
+  FIND_VALIDATOR_FILES,
+  HOME,
+  IDENTIFIER_LABEL,
+  JSON_VALIDATORS,
+  MODULE_LABEL,
+  UPLOAD_EDIT_LABEL,
+  UPOL0AD_FILE_LABEL,
+} from '../../../../configs/lang';
 import {
   HOME_URL,
   JSON_VALIDATORS_URL,
@@ -31,11 +43,19 @@ export const JSONValidatorListPage = () => {
   const validatorProps = {
     ...defaultConfigProps,
     downloadEndPoint: OPENSRP_FORMS_ENDPOINT,
+    downloadLabel: DOWNLOAD_LABEL,
+    editLabel: EDIT_LABEL,
     endpoint: OPENSRP_FORM_METADATA_ENDPOINT,
+    fileNameLabel: FILE_NAME_LABEL,
     fileUploadUrl: MANIFEST_FILE_UPLOAD,
+    fileVersionLabel: FILE_VERSION_LABEL,
     formVersion: null,
+    identifierLabel: IDENTIFIER_LABEL,
     isJsonValidator: true,
-    placeholder: 'Find Validator File',
+    moduleLabel: MODULE_LABEL,
+    placeholder: FIND_VALIDATOR_FILES,
+    uploadEditLabel: UPLOAD_EDIT_LABEL,
+    uploadFileLabel: UPOL0AD_FILE_LABEL,
     uploadTypeUrl: VALIDATOR_UPLOAD_TYPE,
   };
 

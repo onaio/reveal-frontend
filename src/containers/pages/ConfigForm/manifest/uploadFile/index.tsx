@@ -8,9 +8,15 @@ import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
   EDIT_FORM,
+  FILE_NAME_LABEL,
+  FILE_UPLOAD_LABEL,
+  FORM_NAME_REQUIRED_LABEL,
+  FORM_REQUIRED_LABEL,
   HOME,
   JSON_VALIDATORS,
   MANIFEST_RELEASES,
+  MODULE_LABEL,
+  RELATED_TO_LABEL,
   UPLOAD_FORM,
 } from '../../../../../configs/lang';
 import {
@@ -55,8 +61,14 @@ const UploadConfigFilePage = (props: Pageprops) => {
     ...defaultConfigProps,
     draftFilesUrl: VIEW_DRAFT_FILES_URL,
     endpoint: OPENSRP_FORMS_ENDPOINT,
+    fileNameLabel: FILE_NAME_LABEL,
+    fileUploadLabel: FILE_UPLOAD_LABEL,
     formId,
+    formNameRequiredLable: FORM_NAME_REQUIRED_LABEL,
+    formRequiredLabel: FORM_REQUIRED_LABEL,
     isJsonValidator,
+    moduleLabel: MODULE_LABEL,
+    relatedToLabel: RELATED_TO_LABEL,
     validatorsUrl: JSON_VALIDATORS_URL,
   };
 

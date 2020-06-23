@@ -3,7 +3,17 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Col, Row } from 'reactstrap';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { FORM_DRAFT_FILES, HOME } from '../../../../../configs/lang';
+import {
+  DOWNLOAD_LABEL,
+  FILE_NAME_LABEL,
+  FILE_VERSION_LABEL,
+  FIND_DRAFT_FILE_LABEL,
+  FORM_DRAFT_FILES,
+  HOME,
+  IDENTIFIER_LABEL,
+  MAKE_RELEASE_LABEL,
+  MODULE_LABEL,
+} from '../../../../../configs/lang';
 import {
   HOME_URL,
   MANIFEST_FILE_UPLOAD,
@@ -33,9 +43,16 @@ export const ManifestDraftFiles = () => {
   const draftProps = {
     ...defaultConfigProps,
     downloadEndPoint: OPENSRP_FORMS_ENDPOINT,
+    downloadLabel: DOWNLOAD_LABEL,
     endpoint: OPENSRP_FORM_METADATA_ENDPOINT,
+    fileNameLabel: FILE_NAME_LABEL,
     fileUploadUrl: MANIFEST_FILE_UPLOAD,
+    fileVersionLabel: FILE_VERSION_LABEL,
+    identifierLabel: IDENTIFIER_LABEL,
+    makeReleaseLabel: MAKE_RELEASE_LABEL,
     manifestEndPoint: OPENSRP_MANIFEST_ENDPOINT,
+    moduleLabel: MODULE_LABEL,
+    placeholder: FIND_DRAFT_FILE_LABEL,
     releasesUrl: MANIFEST_RELEASE_URL,
   };
 

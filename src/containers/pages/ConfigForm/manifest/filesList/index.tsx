@@ -6,7 +6,19 @@ import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { HOME, MANIFEST_RELEASES } from '../../../../../configs/lang';
+import {
+  DOWNLOAD_LABEL,
+  EDIT_LABEL,
+  FILE_NAME_LABEL,
+  FILE_VERSION_LABEL,
+  FIND_RELEASE_FILES,
+  HOME,
+  IDENTIFIER_LABEL,
+  MANIFEST_RELEASES,
+  MODULE_LABEL,
+  UPLOAD_EDIT_LABEL,
+  UPOL0AD_FILE_LABEL,
+} from '../../../../../configs/lang';
 import {
   FILE_UPLOAD_TYPE,
   HOME_URL,
@@ -45,10 +57,19 @@ const ManifestFiles = (props: ManifestFilesProps) => {
   const fileListProps = {
     ...defaultConfigProps,
     downloadEndPoint: OPENSRP_FORMS_ENDPOINT,
+    downloadLabel: DOWNLOAD_LABEL,
+    editLabel: EDIT_LABEL,
     endpoint: OPENSRP_MANIFEST_FORMS_ENDPOINT,
+    fileNameLabel: FILE_NAME_LABEL,
     fileUploadUrl: MANIFEST_FILE_UPLOAD,
+    fileVersionLabel: FILE_VERSION_LABEL,
     formVersion,
+    identifierLabel: IDENTIFIER_LABEL,
     isJsonValidator: false,
+    moduleLabel: MODULE_LABEL,
+    placeholder: FIND_RELEASE_FILES,
+    uploadEditLabel: UPLOAD_EDIT_LABEL,
+    uploadFileLabel: UPOL0AD_FILE_LABEL,
     uploadTypeUrl: FILE_UPLOAD_TYPE,
   };
 
