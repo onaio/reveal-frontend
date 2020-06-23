@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PlanAssignment/JurisdictionAssignmentForm form errors as expected: Form error 1`] = `
+<p
+  className="form-text text-danger assignments-error"
+>
+  OpenSRPService create on organization/assignLocationsAndPlans failed, HTTP status 400
+</p>
+`;
+
 exports[`PlanAssignment/JurisdictionAssignmentForm renders without crashing 1`] = `
 Object {
   "children": undefined,

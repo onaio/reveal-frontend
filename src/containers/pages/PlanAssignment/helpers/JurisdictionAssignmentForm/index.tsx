@@ -108,7 +108,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
               <ErrorMessage
                 name="organizations"
                 component="p"
-                className="form-text text-danger name-error"
+                className="form-text text-danger assignments-error"
               />
             </FormGroup>
             <FormGroup className="submit-group" id="submit-group">
