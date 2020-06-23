@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
-import { SessionState } from '@onaio/session-reducer';
+import { getUser, SessionState } from '@onaio/session-reducer';
 import { Dictionary, percentage } from '@onaio/utils';
 import { Color } from 'csstype';
 import { GisidaMap } from 'gisida';
@@ -11,7 +12,7 @@ import querystring from 'querystring';
 import { MouseEvent } from 'react';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { CellInfo, Column } from 'react-table';
+import { Cell } from 'react-table';
 import { toast, ToastOptions } from 'react-toastify';
 import SeamlessImmutable from 'seamless-immutable';
 import uuidv4 from 'uuid/v4';
@@ -25,6 +26,9 @@ import {
   ACTION,
   FAILED_TO_EXTRACT_PLAN_RECORD,
   FOCUS_AREA_HEADER,
+  JURISDICTION_ID,
+  JURISDICTION_METADATA,
+  JURISDICTION_NAME,
   NAME,
   NO_OPTIONS,
 } from '../configs/lang';
@@ -54,7 +58,9 @@ import {
   MAP_ID,
   MOSQUITO_COLLECTION_CODE,
   RACD_REGISTER_FAMILY_CODE,
+  SETTINGS_CONFIGURATION,
 } from '../constants';
+import store from '../store';
 import {
   InterventionType,
   Plan,
@@ -95,7 +101,7 @@ export interface GeoJSON {
 export function getLocationColumns(
   locations: LocationItem[] = locationHierarchy,
   padHeader: boolean = false
-): Column[] {
+): Array<DrillDownColumn<Dictionary>> {
   // sort locations using the level field and then remove duplicates
   const locationSet = uniq(locations.sort((a, b) => (a.level > b.level ? 1 : -1)));
 
@@ -483,14 +489,14 @@ export function wrapFeatureCollection<T>(objFeatureCollection: T[]): FeatureColl
     type: FEATURE_COLLECTION,
   };
 }
-export function toggleLayer(allLayers: Dictionary, currentGoal: string, store: any, Actions: any) {
+export function toggleLayer(allLayers: Dictionary, currentGoal: string, stores: any, Actions: any) {
   let layer;
   let eachLayer: string;
   for (eachLayer of Object.keys(allLayers)) {
     layer = allLayers[eachLayer];
     /** Toggle layers to show on the map */
     if (layer.visible && (layer.id.includes(currentGoal) || layer.id.includes('main-plan-layer'))) {
-      store.dispatch(Actions.toggleLayer(MAP_ID, layer.id, true));
+      stores.dispatch(Actions.toggleLayer(MAP_ID, layer.id, true));
     }
   }
 }
@@ -554,24 +560,25 @@ export function getFilteredFIPlansURL(jurisdictionPath: string, planId: string):
   return `${FI_FILTER_URL}/${jurisdictionPath}/${planId}`;
 }
 
-/** Returns Table columns Which require external dependencies (Cell, Link, CellInfo)
+/** Returns Table columns Which require external dependencies (Cell, Link, Cell)
  * the columns being built include focusarea, name and action
  * @param {colType} accessor column
  */
-export const jsxColumns = (colType: string): Column[] | [] => {
+export const jsxColumns = (colType: string): Array<DrillDownColumn<Dictionary>> | [] => {
   if (colType === 'focusarea') {
     return [
       {
         Header: FOCUS_AREA_HEADER,
         columns: [
           {
-            Cell: (cell: CellInfo) => {
+            Cell: (cell: Cell) => {
+              const original: Dictionary = cell.row.original;
               return (
                 <div>
-                  {cell.original.focusArea.trim() && cell.value}
+                  {original.focusArea.trim() && cell.value}
                   &nbsp;&nbsp;
-                  {cell.original.focusArea.trim() && (
-                    <Link to={`${FI_SINGLE_URL}/${cell.original.jurisdiction_id}`}>
+                  {original.focusArea.trim() && (
+                    <Link to={`${FI_SINGLE_URL}/${original.jurisdiction_id}`}>
                       <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
                     </Link>
                   )}
@@ -591,14 +598,15 @@ export const jsxColumns = (colType: string): Column[] | [] => {
         Header: NAME,
         columns: [
           {
-            Cell: (cell: CellInfo) => {
+            Cell: (cell: Cell) => {
+              const original: Dictionary = cell.row.original;
               return (
                 <div>
-                  {cell.original.focusArea.trim() && (
-                    <Link to={`${FI_SINGLE_MAP_URL}/${cell.original.id}`}>{cell.value}</Link>
+                  {original.focusArea.trim() && (
+                    <Link to={`${FI_SINGLE_MAP_URL}/${original.id}`}>{cell.value}</Link>
                   )}
                   &nbsp;
-                  <NewRecordBadge recordDate={cell.original.plan_date} />
+                  <NewRecordBadge recordDate={original.plan_date} />
                 </div>
               );
             },
@@ -631,19 +639,30 @@ export const jsxColumns = (colType: string): Column[] | [] => {
   }
 };
 
+export type TablePropsType = Pick<
+  DrillDownTableProps<Dictionary>,
+  | 'CellComponent'
+  | 'columns'
+  | 'data'
+  | 'identifierField'
+  | 'linkerField'
+  | 'paginate'
+  | 'parentIdentifierField'
+  | 'rootParentId'
+  | 'useDrillDown'
+>;
+
 /** Default table props config */
-export const defaultTableProps = {
+export const defaultTableProps: TablePropsType = {
   CellComponent: DrillDownTableLinkedCell,
   columns: [],
   data: [],
   identifierField: 'id',
   linkerField: 'id',
-  minRows: 0,
+  paginate: false,
   parentIdentifierField: 'parent',
   rootParentId: null,
-  showPageSizeOptions: false,
-  showPagination: false,
-  useDrillDownTrProps: false,
+  useDrillDown: false,
 };
 
 /**
@@ -882,4 +901,76 @@ export const reactSelectNoOptionsText = () => NO_OPTIONS;
  */
 export const getQueryParams = (location: Location) => {
   return querystring.parse(trimStart(location.search, '?'));
+};
+
+export interface PapaResult {
+  data: JurisdictionMetadata[];
+  errors?: any;
+  meta?: any;
+}
+
+export interface JurisdictionMetadata {
+  jurisdiction_id: string;
+  [property: string]: string;
+}
+
+export interface Setting {
+  description: string;
+  label: string;
+  value: string | unknown;
+  key: string;
+}
+
+export interface SettingConfiguration {
+  type: string;
+  identifier: string;
+  providerId: string;
+  locationId: string;
+  settings: Setting[];
+  teamId: string;
+}
+
+/**
+ * Create payload for sending settings to OpenSRP v1 Settings endpoint
+ */
+export const creatSettingsPayloads = (result: PapaResult): SettingConfiguration[] => {
+  const payloads: SettingConfiguration[] = [];
+  const { data } = result;
+  // check if jurisdiction_id exists
+  if (data.length > 0 && data[0].jurisdiction_id) {
+    // get the metadata items
+    const headers = Object.keys(data[0]);
+    const filteredHeaders = headers.filter(f => ![JURISDICTION_ID, JURISDICTION_NAME].includes(f));
+    for (const header of filteredHeaders) {
+      const settings: Setting[] = [];
+      // add the metadata values with jurisdiction as the key
+      for (const item of data) {
+        const entries = Object.entries(item);
+        for (const [key, value] of entries) {
+          if (key === header) {
+            const setting: Setting = {
+              description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
+              key: item.jurisdiction_id,
+              label: `${
+                item.jurisdiction_name ? item.jurisdiction_name : item.jurisdiction_id
+              } metadata`,
+              value,
+            };
+            settings.push(setting);
+          }
+        }
+      }
+      const username = getUser(store.getState()).username;
+      const payload: SettingConfiguration = {
+        identifier: `jurisdiction_metadata-${header}`,
+        locationId: '',
+        providerId: username,
+        settings,
+        teamId: '',
+        type: SETTINGS_CONFIGURATION,
+      };
+      payloads.push(payload);
+    }
+  }
+  return payloads;
 };

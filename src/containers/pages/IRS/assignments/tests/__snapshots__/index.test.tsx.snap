@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 0 1`] = `"TitleInterventionStart DateEnd DatePlan Status"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 1 1`] = `"IRS 2019-09-05 TESTIRS2019-09-052019-09-25retired"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 2 1`] = `"IRS 2019-08-30mIRS2019-08-302019-09-14active"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 3 1`] = `"Berg Namibia 2019IRS2019-08-292019-09-18active"`;
+
 exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: breadcrumbs 1`] = `
 Array [
   <li
@@ -33,167 +41,4 @@ exports[`components/IRS Reports/IRSPlansList renders plan definition list correc
 >
   Assign Plans
 </h3>
-`;
-
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table headers 1`] = `
-Array [
-  <th
-    className="listview-td"
-    key="0"
-  >
-    Title
-  </th>,
-  <th
-    className="listview-td"
-    key="1"
-  >
-    Intervention
-  </th>,
-  <th
-    className="listview-td"
-    key="2"
-  >
-    Start Date
-  </th>,
-  <th
-    className="listview-td"
-    key="3"
-  >
-    End Date
-  </th>,
-  <th
-    className="listview-td"
-    key="4"
-  >
-    Plan Status
-  </th>,
-]
-`;
-
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table rows 1`] = `
-Array [
-  <td
-    className="listview-th"
-    key="0"
-  >
-    <Link
-      key="727c3d40-e118-564a-b231-aac633e6abce"
-      replace={false}
-      to="/assign/727c3d40-e118-564a-b231-aac633e6abce"
-    >
-      <a
-        href="/assign/727c3d40-e118-564a-b231-aac633e6abce"
-        onClick={[Function]}
-      >
-        IRS 2019-09-05 TEST
-      </a>
-    </Link>
-  </td>,
-  <td
-    className="listview-th"
-    key="1"
-  >
-    IRS
-  </td>,
-  <td
-    className="listview-th"
-    key="2"
-  >
-    2019-09-05
-  </td>,
-  <td
-    className="listview-th"
-    key="3"
-  >
-    2019-09-25
-  </td>,
-  <td
-    className="listview-th"
-    key="4"
-  >
-    retired
-  </td>,
-  <td
-    className="listview-th"
-    key="0"
-  >
-    <Link
-      key="02e358ed-87fe-5720-8782-0afe28cb7e8c"
-      replace={false}
-      to="/assign/02e358ed-87fe-5720-8782-0afe28cb7e8c"
-    >
-      <a
-        href="/assign/02e358ed-87fe-5720-8782-0afe28cb7e8c"
-        onClick={[Function]}
-      >
-        IRS 2019-08-30m
-      </a>
-    </Link>
-  </td>,
-  <td
-    className="listview-th"
-    key="1"
-  >
-    IRS
-  </td>,
-  <td
-    className="listview-th"
-    key="2"
-  >
-    2019-08-30
-  </td>,
-  <td
-    className="listview-th"
-    key="3"
-  >
-    2019-09-14
-  </td>,
-  <td
-    className="listview-th"
-    key="4"
-  >
-    active
-  </td>,
-  <td
-    className="listview-th"
-    key="0"
-  >
-    <Link
-      key="c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
-      replace={false}
-      to="/assign/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
-    >
-      <a
-        href="/assign/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
-        onClick={[Function]}
-      >
-        Berg Namibia 2019
-      </a>
-    </Link>
-  </td>,
-  <td
-    className="listview-th"
-    key="1"
-  >
-    IRS
-  </td>,
-  <td
-    className="listview-th"
-    key="2"
-  >
-    2019-08-29
-  </td>,
-  <td
-    className="listview-th"
-    key="3"
-  >
-    2019-09-18
-  </td>,
-  <td
-    className="listview-th"
-    key="4"
-  >
-    active
-  </td>,
-]
 `;

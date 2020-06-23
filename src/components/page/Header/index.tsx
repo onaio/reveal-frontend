@@ -22,6 +22,7 @@ import {
   ENABLE_CONFIG_FORM,
   ENABLE_FI,
   ENABLE_IRS,
+  ENABLE_JURISDICTION_METADATA_UPLOAD,
   ENABLE_MDA_POINT,
   ENABLE_PRACTITIONERS,
   ENABLE_TEAMS,
@@ -40,6 +41,7 @@ import {
   IRS_REPORTING_TITLE,
   IRS_TITLE,
   JSON_VALIDATORS,
+  JURISDICTION_METADATA,
   LOGIN,
   MANIFEST_RELEASES,
   MDA_POINT_REPORTING_TITLE,
@@ -68,6 +70,7 @@ import {
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
+  UPLOAD_JURISDICTION_METADATA_URL,
   VIEW_DRAFT_FILES_URL,
 } from '../../../constants';
 import './Header.css';
@@ -296,6 +299,17 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           activeClassName="active"
                         >
                           {FORM_DRAFT_FILES}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_JURISDICTION_METADATA_UPLOAD && (
+                      <DropdownItem>
+                        <NavLink
+                          to={UPLOAD_JURISDICTION_METADATA_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {JURISDICTION_METADATA}
                         </NavLink>
                       </DropdownItem>
                     )}

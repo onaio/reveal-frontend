@@ -51,6 +51,15 @@ export const TWO_HUNDRED_PX = '200px';
 export const PLAN_RECORD_BY_ID = 'planRecordsById';
 export const MAPBOXGL_POPUP = '.mapboxgl-popup';
 export const TABLE_BORDERED_CLASS = 'table table-bordered';
+export const ACTION_CODE = 'action_code';
+export const CASE_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
+export const MOSQUITO_COLLECTION_ID = 'Mosquito_Collection';
+export const LARVAL_DIPPING_ID = 'Larval_Dipping';
+export const RACD_REGISTER_FAMILY_ID = 'RACD_register_families';
+export const STRUCTURES_LINE = 'structures-line';
+export const STRUCTURES_FILL = 'structures-fill';
+export const HISTORICAL_INDEX_CASES = 'historical-index-cases';
+export const CURRENT_INDEX_CASES = 'current-index-cases';
 export const FILE_UPLOAD_TYPE = 'file-upload';
 export const VALIDATOR_UPLOAD_TYPE = 'validator_upload';
 
@@ -93,6 +102,7 @@ export const BACKEND_CALLBACK_PATH = '/fe/oauth/callback/:id';
 export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
 export const CLIENTS_LIST_URL = '/clients';
 export const UPLOAD_CLIENT_CSV_URL = '/clients/upload';
+export const UPLOAD_JURISDICTION_METADATA_URL = '/jurisdiction-metadata/upload';
 export const GO_BACK_TEXT = 'Go Back';
 export const MANIFEST_RELEASE_URL = '/manifest/releases';
 export const VIEW_DRAFT_FILES_URL = '/files/draft';
@@ -129,6 +139,7 @@ export const LOCATION_ID_PARAM = 'location_id';
 export const TEAM_ID_PARAM = 'team_id';
 export const OPENSRP_TEMPLATE_ENDPOINT = 'template';
 export const OPENSRP_PLANS_BY_USER_FILTER = 'plans/user';
+export const OPENSRP_V1_SETTINGS_ENDPOINT = 'settings/sync';
 export const OPENSRP_ACTIVE = 'Active';
 export const OPENSRP_STATUS = 'status';
 export const OPENSRP_MANIFEST_ENDPOINT = 'manifest';
@@ -153,6 +164,7 @@ export const LARVAL_DIPPING_CODE = 'Larval Dipping';
 export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
 export const MDA_POINT_DISPENSE_CODE = 'MDA Dispense';
 export const MDA_POINT_ADVERSE_EFFECTS_CODE = 'MDA Adverse Event(s)';
+export const GOAL_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
 
 export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',
@@ -163,3 +175,8 @@ export const SORT_BY_EFFECTIVE_PERIOD_START_FIELD = 'plan_effective_period_start
 /** Query Params */
 export const QUERY_PARAM_TITLE = 'title';
 export const QUERY_PARAM_USER = 'user';
+export const REACTIVE_QUERY_PARAM = 'reactive_plans';
+export const ROUTINE_QUERY_PARAM = 'routine_plans';
+
+/** Settings Configuration */
+export const SETTINGS_CONFIGURATION = 'SettingConfiguration';

@@ -105,34 +105,20 @@ Object {
   "columns": Array [
     Object {
       "Header": [Function],
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": [Function],
-          "id": "jurisdiction_selection",
-          "maxWidth": 24,
-        },
-      ],
+      "accessor": [Function],
+      "disableSortBy": true,
+      "id": "jurisdiction_selection",
+      "maxWidth": 24,
     },
     Object {
       "Header": "Name",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": [Function],
-          "id": "name",
-        },
-      ],
+      "accessor": [Function],
+      "id": "name",
     },
     Object {
       "Header": "Type",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": [Function],
-          "id": "jurisdiction-type",
-        },
-      ],
+      "accessor": [Function],
+      "id": "jurisdiction-type",
     },
   ],
   "data": Array [
@@ -151,15 +137,15 @@ Object {
   "hasChildren": [Function],
   "identifierField": "jurisdiction_id",
   "linkerField": "name",
-  "minRows": 0,
-  "nextText": "Next",
+  "loading": false,
+  "loadingComponent": [Function],
+  "paginate": false,
   "parentIdentifierField": "parent_id",
-  "previousText": "Previous",
+  "renderNullDataComponent": [Function],
+  "resize": true,
   "rootParentId": "2942",
-  "shouldUseEffect": false,
-  "showPageSizeOptions": false,
   "showPagination": false,
-  "useDrillDownTrProps": true,
+  "useDrillDown": true,
 }
 `;
 

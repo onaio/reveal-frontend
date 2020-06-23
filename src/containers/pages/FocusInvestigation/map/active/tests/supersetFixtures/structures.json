@@ -1,0 +1,1172 @@
+{
+  "cache_key": null,
+  "cached_dttm": null,
+  "cache_timeout": 300,
+  "error": null,
+  "form_data": {
+    "datasource": "45__table",
+    "viz_type": "table",
+    "granularity_sqla": null,
+    "time_grain_sqla": "P1D",
+    "time_range": "100 years ago : ",
+    "groupby": [],
+    "metrics": [],
+    "percent_metrics": [],
+    "timeseries_limit_metric": null,
+    "row_limit": 10000,
+    "include_time": false,
+    "order_desc": true,
+    "all_columns": ["id", "jurisdiction_id", "geojson"],
+    "order_by_cols": [],
+    "adhoc_filters": [
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": "3951",
+        "operator": "==",
+        "subject": "jurisdiction_id"
+      }
+    ],
+    "table_timestamp_format": "%Y-%m-%d %H:%M:%S",
+    "page_length": 0,
+    "include_search": false,
+    "table_filter": false,
+    "align_pn": false,
+    "color_pn": true,
+    "slice_id": 468,
+    "where": "",
+    "having": "",
+    "having_filters": [],
+    "filters": [{ "col": "jurisdiction_id", "op": "==", "val": "3951" }]
+  },
+  "is_cached": false,
+  "query": "SELECT id AS id,\n       jurisdiction_id AS jurisdiction_id,\n       geojson AS geojson\nFROM\n  (SELECT id,\n          jurisdiction_id,\n          jsonb_build_object('type', 'Feature', 'id', id, 'geometry', ST_AsGeoJSON(geometry)::jsonb, 'properties', to_jsonb(row) - 'id' - 'geometry') AS geojson\n   FROM structures row) AS expr_qry\nWHERE jurisdiction_id = '3951'\nLIMIT 10000;",
+  "status": "success",
+  "stacktrace": null,
+  "rowcount": 224,
+  "data": {
+    "records": [
+      {
+        "id": "d1d77089-34c2-4b38-b701-a38feaa79fe0",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"d1d77089-34c2-4b38-b701-a38feaa79fe0\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3508851817761, -15.4188378365588]}, \"properties\": {\"uid\": \"c4b6b8f2-46c4-42c6-8c9d-632fd451efe9\", \"code\": \"d1d77089-34c2-4b38-b701-a38feaa79fe0\", \"name\": \"d1d77089-34c2-4b38-b701-a38feaa79fe0\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1592211217103, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "5ea09bbd-7fcd-4d59-843b-71202403418d",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"5ea09bbd-7fcd-4d59-843b-71202403418d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.353591417221, -15.4188956311291]}, \"properties\": {\"uid\": \"4a29dba8-e716-4a13-9178-bb83474b8a4a\", \"code\": \"5ea09bbd-7fcd-4d59-843b-71202403418d\", \"name\": \"event sync2\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1591965784195, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "61345543-9558-4d75-b425-b9f59debc438",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"61345543-9558-4d75-b425-b9f59debc438\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3539782475885, -15.4190967811662]}, \"properties\": {\"uid\": \"c5ff2287-09d3-4d41-979b-6667c74d56f8\", \"code\": \"61345543-9558-4d75-b425-b9f59debc438\", \"name\": \"Event Sync\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1591955320256, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "1006419d-edbc-4fa0-955b-4a9d12bd6c15",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"1006419d-edbc-4fa0-955b-4a9d12bd6c15\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.351679089421, -15.4184494032729]}, \"properties\": {\"uid\": \"97010f61-3fad-4b0c-92e6-8f9c9845a4b1\", \"code\": \"1006419d-edbc-4fa0-955b-4a9d12bd6c15\", \"name\": \"1006419d-edbc-4fa0-955b-4a9d12bd6c15\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1591778203360, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "5933f2e2-92e0-40bf-8d09-e31b651c203d",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"5933f2e2-92e0-40bf-8d09-e31b651c203d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499992, -15.4189372541774]}, \"properties\": {\"uid\": \"7dc473f1-ffed-48d1-8e94-a9f4d7bc3d5c\", \"code\": \"5933f2e2-92e0-40bf-8d09-e31b651c203d\", \"name\": \"Test\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1590755891271, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "eedc1f46-0702-40ec-9fe8-739db6a19ddf",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"eedc1f46-0702-40ec-9fe8-739db6a19ddf\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.352209221236, -15.4188163643126]}, \"properties\": {\"uid\": \"22715318-a929-4da5-b4c7-3863cf1f687c\", \"code\": \"eedc1f46-0702-40ec-9fe8-739db6a19ddf\", \"name\": \"eedc1f46-0702-40ec-9fe8-739db6a19ddf\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590735509415, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "ea724e5a-d94d-42f4-a582-7f7d30eb6413",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"ea724e5a-d94d-42f4-a582-7f7d30eb6413\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3523700576955, -15.4229228944586]}, \"properties\": {\"uid\": \"c76d18ec-f57f-43e2-9e40-53cf9011e855\", \"code\": \"ea724e5a-d94d-42f4-a582-7f7d30eb6413\", \"name\": \"ea724e5a-d94d-42f4-a582-7f7d30eb6413\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590735388691, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "ada2b60b-6f90-41d7-9a19-678fa3cc9d4b",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"ada2b60b-6f90-41d7-9a19-678fa3cc9d4b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494500177, -15.4189372541765]}, \"properties\": {\"uid\": \"7d8c238c-444f-4095-8687-c332ce51317d\", \"code\": \"ada2b60b-6f90-41d7-9a19-678fa3cc9d4b\", \"name\": \"PAT\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590697926911, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "0c351eaf-7548-4cb2-90a7-fd2ff970c448",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"0c351eaf-7548-4cb2-90a7-fd2ff970c448\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.350527386255, -15.4182734681446]}, \"properties\": {\"uid\": \"83babd0e-5c23-452c-95bd-3609aef2f4e1\", \"code\": \"0c351eaf-7548-4cb2-90a7-fd2ff970c448\", \"name\": \"Th Apk\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590675473378, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "aa336bde-a463-4a0f-b4fd-c17eb0cf51b4",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"aa336bde-a463-4a0f-b4fd-c17eb0cf51b4\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494500177, -15.4189372541765]}, \"properties\": {\"uid\": \"bc981338-5e45-49ee-9f07-ee4a58f5a223\", \"code\": \"aa336bde-a463-4a0f-b4fd-c17eb0cf51b4\", \"name\": \"new\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590651482306, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "8d499a86-c26f-4a64-8c6b-f9c8212cd639",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"8d499a86-c26f-4a64-8c6b-f9c8212cd639\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3524831858483, -15.4190972493006]}, \"properties\": {\"uid\": \"2424a502-2457-48c9-a50b-91a56ca60b29\", \"code\": \"8d499a86-c26f-4a64-8c6b-f9c8212cd639\", \"name\": \"8d499a86-c26f-4a64-8c6b-f9c8212cd639\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590597688593, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "d9d7b65f-76d7-432f-8ea6-bf103a804a73",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"d9d7b65f-76d7-432f-8ea6-bf103a804a73\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3523571737826, -15.4189693291941]}, \"properties\": {\"uid\": \"99385200-19cc-4d88-baf2-478df8dfbf0e\", \"code\": \"d9d7b65f-76d7-432f-8ea6-bf103a804a73\", \"name\": \"d9d7b65f-76d7-432f-8ea6-bf103a804a73\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590563603823, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "dc962ba0-c174-45e8-8eb5-5189044a5e08",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"dc962ba0-c174-45e8-8eb5-5189044a5e08\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3522665740074, -15.418945141685]}, \"properties\": {\"uid\": \"859385ef-02bb-40c8-924a-12d50a9d1560\", \"code\": \"dc962ba0-c174-45e8-8eb5-5189044a5e08\", \"name\": \"dc962ba0-c174-45e8-8eb5-5189044a5e08\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590563603822, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "0c7413cb-6804-4783-be87-1b9d19de4e11",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"0c7413cb-6804-4783-be87-1b9d19de4e11\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3525489870376, -15.4200277023319]}, \"properties\": {\"uid\": \"4e1c698f-2d35-4800-9b24-22f9fd8e94ec\", \"code\": \"0c7413cb-6804-4783-be87-1b9d19de4e11\", \"name\": \"0c7413cb-6804-4783-be87-1b9d19de4e11\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590501165873, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "1fd8ee18-a0c6-4b91-8a14-e99b1177e10b",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"1fd8ee18-a0c6-4b91-8a14-e99b1177e10b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3504044835787, -15.4185994194552]}, \"properties\": {\"uid\": \"13e45140-2f5e-4165-b5eb-10abd4cc892b\", \"code\": \"1fd8ee18-a0c6-4b91-8a14-e99b1177e10b\", \"name\": \"Lewis\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590495042323, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "39e61d2a-1b30-4820-b27c-9ad46d493049",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"39e61d2a-1b30-4820-b27c-9ad46d493049\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.351094919202, -15.4196170446055]}, \"properties\": {\"uid\": \"8d8420b7-ab2c-483a-8f50-cdbe9aa39aa5\", \"code\": \"39e61d2a-1b30-4820-b27c-9ad46d493049\", \"name\": \"39e61d2a-1b30-4820-b27c-9ad46d493049\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590491800434, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "53a6a8c8-a04e-4383-842b-e6c99abbff15",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"53a6a8c8-a04e-4383-842b-e6c99abbff15\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3512595250589, -15.4196875302547]}, \"properties\": {\"uid\": \"0cbad2f8-0ff6-456d-9392-b530d0e5b923\", \"code\": \"53a6a8c8-a04e-4383-842b-e6c99abbff15\", \"name\": \"53a6a8c8-a04e-4383-842b-e6c99abbff15\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590491800433, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "87976741-cf31-4c9a-8136-c63998980326",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"87976741-cf31-4c9a-8136-c63998980326\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494500177, -15.4189372541765]}, \"properties\": {\"uid\": \"bc2bac47-1378-4413-a034-892581b5029e\", \"code\": \"87976741-cf31-4c9a-8136-c63998980326\", \"name\": \"larva\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590484116517, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "2f00a97e-133c-424b-a2b9-9150b6418132",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"2f00a97e-133c-424b-a2b9-9150b6418132\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494500177, -15.4189372541765]}, \"properties\": {\"uid\": \"cc4b0a4e-14e7-4858-97cf-bd9a0f87d924\", \"code\": \"2f00a97e-133c-424b-a2b9-9150b6418132\", \"name\": \"syntest\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590483995663, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "59580a92-fab2-42de-97a2-248f019e57c7",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"59580a92-fab2-42de-97a2-248f019e57c7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494500177, -15.4189372541765]}, \"properties\": {\"uid\": \"23f9b0d0-8c83-4d88-8be3-12a6f9dc77ea\", \"code\": \"59580a92-fab2-42de-97a2-248f019e57c7\", \"name\": \"test\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590479792443, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "fdee2235-266b-4e02-acf3-723a9717f2b5",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"fdee2235-266b-4e02-acf3-723a9717f2b5\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3527113991383, -15.4188786549155]}, \"properties\": {\"uid\": \"f9789f53-ee11-40be-b1d9-5525d53577a0\", \"code\": \"fdee2235-266b-4e02-acf3-723a9717f2b5\", \"name\": \"Halima\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590300650964, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "7f084dc9-bad9-408a-bd6b-0252c011eef7",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"7f084dc9-bad9-408a-bd6b-0252c011eef7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494500177, -15.4189372541765]}, \"properties\": {\"uid\": \"8bcd37e2-d754-48bc-a12f-64b437621ad3\", \"code\": \"7f084dc9-bad9-408a-bd6b-0252c011eef7\", \"name\": \"Test\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1590143266450, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "7df3c76e-7ee6-4e2a-b357-484ac418e3e4",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"7df3c76e-7ee6-4e2a-b357-484ac418e3e4\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3533798526838, -15.4212106028397]}, \"properties\": {\"uid\": \"2574aa26-db46-48da-8c75-17494a731c0c\", \"code\": \"7df3c76e-7ee6-4e2a-b357-484ac418e3e4\", \"name\": \"Denver\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1589812123614, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "7c0f05f8-64af-4e0b-85a0-b8bad3315da2",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"7c0f05f8-64af-4e0b-85a0-b8bad3315da2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3537410528192, -15.4176675176808]}, \"properties\": {\"uid\": \"f1301faf-86d1-48e0-a07f-bf26029ab009\", \"code\": \"7c0f05f8-64af-4e0b-85a0-b8bad3315da2\", \"name\": \"House Of AYAN\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1589804199142, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f0abbc93-5266-4bba-bb6f-67a4340fa68a",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f0abbc93-5266-4bba-bb6f-67a4340fa68a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3538264324428, -15.421258036049]}, \"properties\": {\"uid\": \"52b96a0f-41cd-406b-bbc9-e5beb0969f71\", \"code\": \"f0abbc93-5266-4bba-bb6f-67a4340fa68a\", \"name\": \"f0abbc93-5266-4bba-bb6f-67a4340fa68a\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588771250688, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "1951c66d-5c65-48ff-bba4-5702d2987c4e",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"1951c66d-5c65-48ff-bba4-5702d2987c4e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [36.783622088072, -1.29527195552907]}, \"properties\": {\"uid\": \"8a544ebf-6b97-41ed-b4c9-a4e57ccdaeb5\", \"code\": \"1951c66d-5c65-48ff-bba4-5702d2987c4e\", \"name\": \"Naimw\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588753726541, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "292eb410-a410-41b8-a656-fe7bb04297d3",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"292eb410-a410-41b8-a656-fe7bb04297d3\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [36.7837162941453, -1.29553622883979]}, \"properties\": {\"uid\": \"4b60e6e8-fbd7-4a1e-9b7d-bb36afbe9a57\", \"code\": \"292eb410-a410-41b8-a656-fe7bb04297d3\", \"name\": \"Naima\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588753246350, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "2f38c8d3-d2c1-40dd-b6bc-ede5de47f2b8",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"2f38c8d3-d2c1-40dd-b6bc-ede5de47f2b8\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [36.7837652908076, -1.29545206903575]}, \"properties\": {\"uid\": \"168e4feb-7d5e-43e9-a670-404c43a7e8f3\", \"code\": \"2f38c8d3-d2c1-40dd-b6bc-ede5de47f2b8\", \"name\": \"Far\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588753246349, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "e3ff1ab5-c17a-47e1-8f8b-65751aca0380",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"e3ff1ab5-c17a-47e1-8f8b-65751aca0380\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3511490960489, -15.419258753274]}, \"properties\": {\"uid\": \"dca06c05-ed68-4296-a4dd-bec0af273fb7\", \"code\": \"e3ff1ab5-c17a-47e1-8f8b-65751aca0380\", \"name\": \"Test2\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588752284531, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "82be4e6d-56c1-4e04-9b7f-26ac546e9fd4",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"82be4e6d-56c1-4e04-9b7f-26ac546e9fd4\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3522501378559, -15.419243325918]}, \"properties\": {\"uid\": \"c9448c31-1201-4318-8ba0-ca4890fe7179\", \"code\": \"82be4e6d-56c1-4e04-9b7f-26ac546e9fd4\", \"name\": \"Today Test\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588752284530, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "7c3a7e99-e53a-461c-a120-98ce9368474d",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"7c3a7e99-e53a-461c-a120-98ce9368474d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3522436548723, -15.4185229906025]}, \"properties\": {\"uid\": \"3b1fbbbe-793a-4673-82fc-53eb07f3e779\", \"code\": \"7c3a7e99-e53a-461c-a120-98ce9368474d\", \"name\": \"NAIMS\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588751444238, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f8539e54-c939-4c97-a011-0091c42b030c",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f8539e54-c939-4c97-a011-0091c42b030c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3511569240891, -15.4184983866108]}, \"properties\": {\"uid\": \"c7a36db5-2b96-44a0-bd92-4dba66a4c138\", \"code\": \"f8539e54-c939-4c97-a011-0091c42b030c\", \"name\": \"Larval Test\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588751444237, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "ed29940c-d659-4646-8f65-008100d045ea",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"ed29940c-d659-4646-8f65-008100d045ea\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3522005309482, -15.4199259095658]}, \"properties\": {\"uid\": \"d8b236e0-63d8-4f6f-af2e-f256be29c86e\", \"code\": \"ed29940c-d659-4646-8f65-008100d045ea\", \"name\": \"TEST TRANSMISSION\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588751444236, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "e81f52d8-4b3a-4bb7-b197-d63b4cbc1e45",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"e81f52d8-4b3a-4bb7-b197-d63b4cbc1e45\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499989, -15.4189372541767]}, \"properties\": {\"uid\": \"dff45c54-86fa-41e8-b1a0-5ad12a39a8a8\", \"code\": \"e81f52d8-4b3a-4bb7-b197-d63b4cbc1e45\", \"name\": \"Test Family\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588750963982, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "6de75681-08cc-4546-a17c-1ba2dc9e5e97",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"6de75681-08cc-4546-a17c-1ba2dc9e5e97\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3511897730577, -15.4182705282641]}, \"properties\": {\"uid\": \"61980dfa-c14b-41c1-911e-d4d264f0a8bd\", \"code\": \"6de75681-08cc-4546-a17c-1ba2dc9e5e97\", \"name\": \"QA\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588750483192, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "d0cb6832-1c49-41c5-a712-edfeed70eac4",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"d0cb6832-1c49-41c5-a712-edfeed70eac4\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.353226986504, -15.419154339938]}, \"properties\": {\"uid\": \"3c47637f-84ac-4836-b82d-403a1e8ef1a5\", \"code\": \"d0cb6832-1c49-41c5-a712-edfeed70eac4\", \"name\": \"Martin\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588664663838, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "5c07de8c-e128-4e16-982c-a95dc43b618b",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"5c07de8c-e128-4e16-982c-a95dc43b618b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3527776518679, -15.419227904628]}, \"properties\": {\"uid\": \"9a4e17c8-3fbd-4b3d-8cfc-8063152d81d5\", \"code\": \"5c07de8c-e128-4e16-982c-a95dc43b618b\", \"name\": \"Gloria\", \"type\": \"Feature\", \"status\": \"Inactive\", \"version\": 0, \"server_version\": 1588664663837, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "e41a69c7-7d2e-4d7d-9db9-dbcaf0ae0cd7",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"e41a69c7-7d2e-4d7d-9db9-dbcaf0ae0cd7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.351484156247, -15.4201905366337]}, \"properties\": {\"uid\": \"a3ece2fd-d303-4052-a94c-d4dd4bd7d597\", \"code\": \"e41a69c7-7d2e-4d7d-9db9-dbcaf0ae0cd7\", \"name\": \"e41a69c7-7d2e-4d7d-9db9-dbcaf0ae0cd7\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588578603725, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "4fcba934-41d2-423c-a081-6ccfd38ca144",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"4fcba934-41d2-423c-a081-6ccfd38ca144\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3543058697784, -15.4183534756034]}, \"properties\": {\"uid\": \"7d61a076-03a9-4d52-aa9a-2891fa3f1e21\", \"code\": \"4fcba934-41d2-423c-a081-6ccfd38ca144\", \"name\": \"4fcba934-41d2-423c-a081-6ccfd38ca144\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588255283319, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c317e803-f41f-4d6d-93cc-1e80c0550d98",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c317e803-f41f-4d6d-93cc-1e80c0550d98\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3544155722945, -15.4182797601097]}, \"properties\": {\"uid\": \"bbbcb9f6-30e0-4a7a-8c54-f0d753581c53\", \"code\": \"c317e803-f41f-4d6d-93cc-1e80c0550d98\", \"name\": \"c317e803-f41f-4d6d-93cc-1e80c0550d98\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588255283318, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "0a02c7ae-0a56-4874-a67f-38056d30ea17",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"0a02c7ae-0a56-4874-a67f-38056d30ea17\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3543293201216, -15.4181849199747]}, \"properties\": {\"uid\": \"ddce63b2-8a00-43f6-9f22-33d8d17fe282\", \"code\": \"0a02c7ae-0a56-4874-a67f-38056d30ea17\", \"name\": \"0a02c7ae-0a56-4874-a67f-38056d30ea17\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588255283317, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f0718e94-0c30-4f5a-9d8c-b82f0409f098",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f0718e94-0c30-4f5a-9d8c-b82f0409f098\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3506690161062, -15.4189742541602]}, \"properties\": {\"uid\": \"5c713b5b-f290-4ea4-a66c-6e20a96daca5\", \"code\": \"f0718e94-0c30-4f5a-9d8c-b82f0409f098\", \"name\": \"f0718e94-0c30-4f5a-9d8c-b82f0409f098\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588249282593, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "fcc3f9c2-7391-43f9-8ce3-aca3f51fd9d1",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"fcc3f9c2-7391-43f9-8ce3-aca3f51fd9d1\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3503982772507, -15.4192846425234]}, \"properties\": {\"uid\": \"adeea207-1933-4f7a-a87b-d15fbb2b3454\", \"code\": \"fcc3f9c2-7391-43f9-8ce3-aca3f51fd9d1\", \"name\": \"fcc3f9c2-7391-43f9-8ce3-aca3f51fd9d1\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588249282592, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "800be9f7-33d2-487d-8367-7b128c10af3d",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"800be9f7-33d2-487d-8367-7b128c10af3d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3505922712156, -15.4196690301457]}, \"properties\": {\"uid\": \"de1512b2-3d16-48e5-948a-f4eb68ee19d9\", \"code\": \"800be9f7-33d2-487d-8367-7b128c10af3d\", \"name\": \"800be9f7-33d2-487d-8367-7b128c10af3d\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588249282591, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "29b19fad-7a77-402b-98ce-0c2d4d406f1d",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"29b19fad-7a77-402b-98ce-0c2d4d406f1d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3506349073731, -15.4191654207142]}, \"properties\": {\"uid\": \"f1596c1a-c39f-4a1c-b70b-2aaa8ab33972\", \"code\": \"29b19fad-7a77-402b-98ce-0c2d4d406f1d\", \"name\": \"29b19fad-7a77-402b-98ce-0c2d4d406f1d\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588249282590, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "5f83e47a-f929-4e61-b5cd-3509eadfa951",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"5f83e47a-f929-4e61-b5cd-3509eadfa951\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3504537042048, -15.4188056986553]}, \"properties\": {\"uid\": \"69cff71d-2dce-4964-beb1-91c7a4add9e0\", \"code\": \"5f83e47a-f929-4e61-b5cd-3509eadfa951\", \"name\": \"5f83e47a-f929-4e61-b5cd-3509eadfa951\", \"type\": \"Feature\", \"status\": \"Inactive\", \"version\": 0, \"server_version\": 1588249282589, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f9cb155f-8880-4314-a23d-554cadef269b",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f9cb155f-8880-4314-a23d-554cadef269b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3517461062648, -15.4185119195332]}, \"properties\": {\"uid\": \"c61cbc1a-c649-4552-b039-948a78a4aeee\", \"code\": \"f9cb155f-8880-4314-a23d-554cadef269b\", \"name\": \"f9cb155f-8880-4314-a23d-554cadef269b\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1588243642024, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "ed8717c2-c01c-4c6e-b5f6-cdac9a65f91d",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"ed8717c2-c01c-4c6e-b5f6-cdac9a65f91d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3517573362516, -15.4208049043704]}, \"properties\": {\"uid\": \"bbddc552-2d16-4fd6-8e0b-7ec58ad556c1\", \"code\": \"ed8717c2-c01c-4c6e-b5f6-cdac9a65f91d\", \"name\": \"ed8717c2-c01c-4c6e-b5f6-cdac9a65f91d\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1587720424950, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "08d92ea9-e1ca-4b4e-a091-7bb940be469c",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"08d92ea9-e1ca-4b4e-a091-7bb940be469c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3523171034383, -15.4206524531194]}, \"properties\": {\"uid\": \"019faa64-57f4-4f6b-8db5-23648443f746\", \"code\": \"08d92ea9-e1ca-4b4e-a091-7bb940be469c\", \"name\": \"08d92ea9-e1ca-4b4e-a091-7bb940be469c\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1587709743898, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "a9999032-76a3-439e-87a9-b97cd907335d",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"a9999032-76a3-439e-87a9-b97cd907335d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3525637357704, -15.4207462220621]}, \"properties\": {\"uid\": \"89ddcb1d-6923-4875-8297-b04b4aeea9e5\", \"code\": \"a9999032-76a3-439e-87a9-b97cd907335d\", \"name\": \"a9999032-76a3-439e-87a9-b97cd907335d\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1587657058696, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "bea49b84-1ac4-461e-a23a-3d85827c0b24",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"bea49b84-1ac4-461e-a23a-3d85827c0b24\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3510236803916, -15.4189284848292]}, \"properties\": {\"uid\": \"b7e06b0d-591c-4d70-aa6e-53053ab72a00\", \"code\": \"bea49b84-1ac4-461e-a23a-3d85827c0b24\", \"name\": \"bea49b84-1ac4-461e-a23a-3d85827c0b24\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1587127808539, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "11ce35a1-7912-4ee5-a7fe-073233bc6709",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"11ce35a1-7912-4ee5-a7fe-073233bc6709\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [36.7838516, -1.29560669999997]}, \"properties\": {\"uid\": \"c9c84b5c-60b2-4a47-aead-0859e88b7fdd\", \"code\": \"11ce35a1-7912-4ee5-a7fe-073233bc6709\", \"name\": \"Testtt\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1587128048569, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "a3ddabdb-3685-45b0-afbf-ea2e32c3c4f2",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"a3ddabdb-3685-45b0-afbf-ea2e32c3c4f2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3516541299303, -15.4189544171368]}, \"properties\": {\"uid\": \"82edd38e-94b8-4016-af99-03fac6c84ae3\", \"code\": \"a3ddabdb-3685-45b0-afbf-ea2e32c3c4f2\", \"name\": \"Mosquitoes\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1587126248403, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "bf37867c-2a7d-4929-80cf-f19cd65d20cf",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"bf37867c-2a7d-4929-80cf-f19cd65d20cf\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515857902363, -15.4188086087839]}, \"properties\": {\"uid\": \"32c97424-2e75-454d-ba65-4d39298eb249\", \"code\": \"bf37867c-2a7d-4929-80cf-f19cd65d20cf\", \"name\": \"NAIMA TEST\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1587123728143, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c5f977d0-bff6-438f-a6b5-1eca324b3f59",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c5f977d0-bff6-438f-a6b5-1eca324b3f59\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3528185254854, -15.4199229829013]}, \"properties\": {\"uid\": \"724ea8a1-9024-4583-a383-a803f924671a\", \"code\": \"c5f977d0-bff6-438f-a6b5-1eca324b3f59\", \"name\": \"c5f977d0-bff6-438f-a6b5-1eca324b3f59\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1587043547861, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "d2366a46-2a7b-4ad2-870e-04664796eaec",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"d2366a46-2a7b-4ad2-870e-04664796eaec\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3521058494687, -15.4199507443594]}, \"properties\": {\"uid\": \"e4635dc8-1d86-477b-a002-9d99800715ca\", \"code\": \"d2366a46-2a7b-4ad2-870e-04664796eaec\", \"name\": \"Umlilo structure\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1586962156679, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "51f78772-847c-4ad0-870d-ef93983d0bcd",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"51f78772-847c-4ad0-870d-ef93983d0bcd\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3520545223966, -15.418966005529]}, \"properties\": {\"uid\": \"d3c1a98f-cbba-4dd7-8246-5160559da3f0\", \"code\": \"51f78772-847c-4ad0-870d-ef93983d0bcd\", \"name\": \"Risa\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1585926808546, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "7d94f2ad-4660-4487-b86c-e9111687528b",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"7d94f2ad-4660-4487-b86c-e9111687528b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3502210836105, -15.4196218915532]}, \"properties\": {\"uid\": \"206d058a-923a-4859-b482-babf7dd33327\", \"code\": \"7d94f2ad-4660-4487-b86c-e9111687528b\", \"name\": \"ddd\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1585792385774, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154153",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154153\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3514562, -15.4188425], [28.351554, -15.4188332], [28.3515559, -15.4188513], [28.351581, -15.4188489], [28.3515877, -15.4189136], [28.3514508, -15.4189267], [28.3514442, -15.4188619], [28.3514581, -15.4188606], [28.3514562, -15.4188425]]]}, \"properties\": {\"uid\": \"154153\", \"code\": \"154153\", \"name\": \"154153\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1545204913911, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "35dfef77-1237-4421-8a7f-cdd9148d7c73",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"35dfef77-1237-4421-8a7f-cdd9148d7c73\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3508079468883, -15.422095694718]}, \"properties\": {\"uid\": \"f3c919f7-0add-40f5-92d2-81cc6d2e517e\", \"code\": \"35dfef77-1237-4421-8a7f-cdd9148d7c73\", \"name\": \"35dfef77-1237-4421-8a7f-cdd9148d7c73\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1580397843734, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "df1f0efa-f637-4ddf-934b-6ab344cc4742",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"df1f0efa-f637-4ddf-934b-6ab344cc4742\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3519283111802, -15.41952471398]}, \"properties\": {\"uid\": \"8ea29bc0-e255-43e6-b21d-ca1dca1c1ab9\", \"code\": \"df1f0efa-f637-4ddf-934b-6ab344cc4742\", \"name\": \"df1f0efa-f637-4ddf-934b-6ab344cc4742\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221191, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154155",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154155\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3511247, -15.4188732], [28.3513973, -15.4188472], [28.3514075, -15.4189459], [28.3513047, -15.4189557], [28.3513075, -15.4189833], [28.3512116, -15.4189925], [28.3512086, -15.4189637], [28.3511347, -15.4189707], [28.3511247, -15.4188732]]]}, \"properties\": {\"uid\": \"154155\", \"code\": \"154155\", \"name\": \"154155\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1545204913912, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "40ca4567-418e-4fd4-9992-1f1aba34e469",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"40ca4567-418e-4fd4-9992-1f1aba34e469\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3513797877528, -15.4193956945878]}, \"properties\": {\"uid\": \"1c761567-ffcf-4d58-aa05-a41f6bfdcb47\", \"code\": \"40ca4567-418e-4fd4-9992-1f1aba34e469\", \"name\": \"40ca4567-418e-4fd4-9992-1f1aba34e469\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583929077894, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154145",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154145\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3519952, -15.4193537], [28.3519977, -15.4193777], [28.3518113, -15.4193954], [28.3517981, -15.4192658], [28.3519819, -15.4192484], [28.3519826, -15.4192548], [28.3520881, -15.4192448], [28.3520976, -15.4193378], [28.3520981, -15.4193378], [28.352103, -15.4193856], [28.3520527, -15.4193904], [28.3520485, -15.4193486], [28.3519952, -15.4193537]]]}, \"properties\": {\"uid\": \"154145\", \"code\": \"154145\", \"name\": \"154145\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1545204913913, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154149",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154149\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3514374, -15.4193609], [28.3516475, -15.4194092], [28.3516207, -15.4195178], [28.3514106, -15.4194695], [28.3514374, -15.4193609]]]}, \"properties\": {\"uid\": \"154149\", \"code\": \"154149\", \"name\": \"154149\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1545204913896, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154151",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154151\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3514415, -15.4185956], [28.3515055, -15.4185904], [28.3515122, -15.4186666], [28.3514482, -15.4186719], [28.3514415, -15.4185956]]]}, \"properties\": {\"uid\": \"154151\", \"code\": \"154151\", \"name\": \"154151\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1545204913898, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154142",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154142\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3512898, -15.4182898], [28.3513309, -15.4182819], [28.3513454, -15.4183521], [28.3510395, -15.4184111], [28.3510239, -15.4183359], [28.3511749, -15.4183068], [28.35116, -15.418235], [28.3512739, -15.4182131], [28.3512898, -15.4182898]]]}, \"properties\": {\"uid\": \"154142\", \"code\": \"154142\", \"name\": \"154142\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1545204913899, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154143",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154143\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3522153, -15.4190714], [28.3523197, -15.4190534], [28.3523331, -15.4191258], [28.3522287, -15.4191438], [28.3522153, -15.4190714]]]}, \"properties\": {\"uid\": \"154143\", \"code\": \"154143\", \"name\": \"154143\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1545204913900, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154157",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154157\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3520416, -15.4187708], [28.3520678, -15.4187941], [28.3520048, -15.4188601], [28.3519752, -15.4188339], [28.3519116, -15.4189005], [28.3518284, -15.4188268], [28.3519961, -15.4186511], [28.3520826, -15.4187278], [28.3520416, -15.4187708]]]}, \"properties\": {\"uid\": \"154157\", \"code\": \"154157\", \"name\": \"154157\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1545204913908, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154165",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154165\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3520869, -15.4180991], [28.3521195, -15.4180918], [28.3521375, -15.4181663], [28.3521081, -15.4181728], [28.3521435, -15.41832], [28.3520384, -15.4183435], [28.3520054, -15.4182066], [28.3519774, -15.4182129], [28.3519579, -15.4181321], [28.3519793, -15.4181273], [28.3519488, -15.4180006], [28.3520573, -15.4179763], [28.3520869, -15.4180991]]]}, \"properties\": {\"uid\": \"154165\", \"code\": \"154165\", \"name\": \"154165\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1545204913914, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "3c35325e-4a34-4730-b67d-c824d6e783ba",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"3c35325e-4a34-4730-b67d-c824d6e783ba\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3513229517115, -15.4196072991561]}, \"properties\": {\"uid\": \"f8e27dee-81d7-4a5e-997c-b9d670a676f7\", \"code\": \"3c35325e-4a34-4730-b67d-c824d6e783ba\", \"name\": \"3c35325e-4a34-4730-b67d-c824d6e783ba\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1560245526899, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f924cee7-0637-4c21-97fd-4c6bfd7fec1c",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f924cee7-0637-4c21-97fd-4c6bfd7fec1c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3528712431793, -15.4184414171359]}, \"properties\": {\"uid\": \"9cd4c4a6-2309-4fd0-a608-ff5c0fdf84d4\", \"code\": \"f924cee7-0637-4c21-97fd-4c6bfd7fec1c\", \"name\": \"f924cee7-0637-4c21-97fd-4c6bfd7fec1c\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1574301440888, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "e4ab096c-bec9-4743-8ee3-6715aa9ecd4c",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"e4ab096c-bec9-4743-8ee3-6715aa9ecd4c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3535982695657, -15.4194769049777]}, \"properties\": {\"uid\": \"8fde287a-1225-4499-a8c6-65f9e200c806\", \"code\": \"e4ab096c-bec9-4743-8ee3-6715aa9ecd4c\", \"name\": \"RVl-370-2\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1574417841096, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "a56f131b-5e6e-4fb1-b3a2-d582206ea767",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"a56f131b-5e6e-4fb1-b3a2-d582206ea767\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3498442439883, -15.4188168306635]}, \"properties\": {\"uid\": \"0f3b3f7c-f911-4a68-8560-5761b7fab429\", \"code\": \"a56f131b-5e6e-4fb1-b3a2-d582206ea767\", \"name\": \"a56f131b-5e6e-4fb1-b3a2-d582206ea767\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1575258978026, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "daf5a215-41ab-4d47-bb21-8fc3e33d7029",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"daf5a215-41ab-4d47-bb21-8fc3e33d7029\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.352310503435, -15.4195868082294]}, \"properties\": {\"uid\": \"f9307ff9-bcea-42ed-bedc-a0776677c524\", \"code\": \"daf5a215-41ab-4d47-bb21-8fc3e33d7029\", \"name\": \"daf5a215-41ab-4d47-bb21-8fc3e33d7029\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1575480833701, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "4c6fee78-831a-41fa-b872-e02733beac5f",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"4c6fee78-831a-41fa-b872-e02733beac5f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3517775020507, -15.4172406579972]}, \"properties\": {\"uid\": \"43245bac-c633-4edc-84a8-23230e7be86b\", \"code\": \"4c6fee78-831a-41fa-b872-e02733beac5f\", \"name\": \"4c6fee78-831a-41fa-b872-e02733beac5f\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1575557724409, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f3ba6b45-c65e-479f-93b0-1a091d4d4bc4",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f3ba6b45-c65e-479f-93b0-1a091d4d4bc4\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.352527668707, -15.4171017939891]}, \"properties\": {\"uid\": \"a55e36ae-7f96-4f26-a9a8-a96c3a9823c2\", \"code\": \"f3ba6b45-c65e-479f-93b0-1a091d4d4bc4\", \"name\": \"Trevorn House\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1575623381552, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "0d234441-5221-4af5-bacf-06367a367f95",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"0d234441-5221-4af5-bacf-06367a367f95\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3547366677329, -15.4209635944217]}, \"properties\": {\"uid\": \"54eae018-2e9a-43be-907f-7cc7f81e6e1e\", \"code\": \"0d234441-5221-4af5-bacf-06367a367f95\", \"name\": \"0d234441-5221-4af5-bacf-06367a367f95\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1575644612195, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "19f0b606-c6a4-4840-85e0-5879935953c9",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"19f0b606-c6a4-4840-85e0-5879935953c9\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.351352948592, -15.4195529750807]}, \"properties\": {\"uid\": \"cc9d7376-ebd6-49b4-807e-983c582ea205\", \"code\": \"19f0b606-c6a4-4840-85e0-5879935953c9\", \"name\": \"Dumping Site\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1576658392429, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "ba776773-0833-481b-b5c7-dd994d2dc741",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"ba776773-0833-481b-b5c7-dd994d2dc741\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3497718393414, -15.4186671732006]}, \"properties\": {\"uid\": \"c0638cf9-74e2-4214-885d-675731d9ea2f\", \"code\": \"ba776773-0833-481b-b5c7-dd994d2dc741\", \"name\": \"ba776773-0833-481b-b5c7-dd994d2dc741\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1576842863543, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "5feaf65b-b4f8-45ef-bd36-0818220b2fb9",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"5feaf65b-b4f8-45ef-bd36-0818220b2fb9\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3499392102254, -15.4208986347296]}, \"properties\": {\"uid\": \"56a451f6-e7ad-46e3-a94f-f1396d0b4fe0\", \"code\": \"5feaf65b-b4f8-45ef-bd36-0818220b2fb9\", \"name\": \"5feaf65b-b4f8-45ef-bd36-0818220b2fb9\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1579694051500, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "80527451-8da6-410e-9919-84aa4c7e354f",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"80527451-8da6-410e-9919-84aa4c7e354f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3516489045442, -15.4197558489258]}, \"properties\": {\"uid\": \"c26d8b4a-656d-4c74-9445-db63b304b5bb\", \"code\": \"80527451-8da6-410e-9919-84aa4c7e354f\", \"name\": \"80527451-8da6-410e-9919-84aa4c7e354f\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1580112857431, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "664a57fc-4069-4865-b08f-e699f9d650cf",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"664a57fc-4069-4865-b08f-e699f9d650cf\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3496130201571, -15.4170167260575]}, \"properties\": {\"uid\": \"d5e1460c-a5a7-4111-a48c-97ee27d24da1\", \"code\": \"664a57fc-4069-4865-b08f-e699f9d650cf\", \"name\": \"664a57fc-4069-4865-b08f-e699f9d650cf\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1580371318357, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "6b4de29d-091d-43ed-b13d-bbe843c642f5",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"6b4de29d-091d-43ed-b13d-bbe843c642f5\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515184717787, -15.416560292869]}, \"properties\": {\"uid\": \"eb12012c-9386-4113-8507-0ce2978274e0\", \"code\": \"6b4de29d-091d-43ed-b13d-bbe843c642f5\", \"name\": \"6b4de29d-091d-43ed-b13d-bbe843c642f5\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1580373118673, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "ae224c6f-975b-427d-991a-f2646f991abf",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"ae224c6f-975b-427d-991a-f2646f991abf\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3495754979556, -15.4178032083286]}, \"properties\": {\"uid\": \"ec7aaf25-e05c-46c2-b388-19f609c3c087\", \"code\": \"ae224c6f-975b-427d-991a-f2646f991abf\", \"name\": \"Arch 9\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1580375399049, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "a76e5f2c-959e-4019-99de-6bdb1443a9c5",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"a76e5f2c-959e-4019-99de-6bdb1443a9c5\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3516623803301, -15.4228174606251]}, \"properties\": {\"uid\": \"6b302785-c397-4e75-8ec8-c34b428ce1e9\", \"code\": \"a76e5f2c-959e-4019-99de-6bdb1443a9c5\", \"name\": \"a76e5f2c-959e-4019-99de-6bdb1443a9c5\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1580394483118, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "ec26d329-5372-4d3e-94be-603fe39de3f6",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"ec26d329-5372-4d3e-94be-603fe39de3f6\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3436032620064, -15.4186727437553]}, \"properties\": {\"uid\": \"f9b575c9-61c9-4e6b-8c46-3e275b049b97\", \"code\": \"ec26d329-5372-4d3e-94be-603fe39de3f6\", \"name\": \"ec26d329-5372-4d3e-94be-603fe39de3f6\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1580399283980, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "243b115c-af0e-4933-8902-c0e482e58048",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"243b115c-af0e-4933-8902-c0e482e58048\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3497555686082, -15.4202027654885]}, \"properties\": {\"uid\": \"c886da23-f723-4f49-b59b-bb561bc29809\", \"code\": \"243b115c-af0e-4933-8902-c0e482e58048\", \"name\": \"243b115c-af0e-4933-8902-c0e482e58048\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1580723812723, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f986c58d-f1e1-4ec7-abc0-d688f4e1973e",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f986c58d-f1e1-4ec7-abc0-d688f4e1973e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3513168209827, -15.4185996772702]}, \"properties\": {\"uid\": \"82440dc0-ca74-456e-8849-f68760bb2894\", \"code\": \"f986c58d-f1e1-4ec7-abc0-d688f4e1973e\", \"name\": \"f986c58d-f1e1-4ec7-abc0-d688f4e1973e\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1580878518464, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "0aa3cc96-234b-4e85-88eb-a25ee4f57164",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"0aa3cc96-234b-4e85-88eb-a25ee4f57164\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3517603988066, -15.4193296444058]}, \"properties\": {\"uid\": \"538f1e20-73fa-4b3c-9b8b-753d2c7f0dcf\", \"code\": \"0aa3cc96-234b-4e85-88eb-a25ee4f57164\", \"name\": \"0aa3cc96-234b-4e85-88eb-a25ee4f57164\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1580878518465, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f2c71219-b8e7-45d6-a94b-3b99e7330adf",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f2c71219-b8e7-45d6-a94b-3b99e7330adf\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3511961488046, -15.4179646502108]}, \"properties\": {\"uid\": \"16beffba-b160-4a53-b567-a48c8a1ce92f\", \"code\": \"f2c71219-b8e7-45d6-a94b-3b99e7330adf\", \"name\": \"f2c71219-b8e7-45d6-a94b-3b99e7330adf\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582018004961, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "4a8f5583-e010-406f-8ed9-afe25a11b692",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"4a8f5583-e010-406f-8ed9-afe25a11b692\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3513347989153, -15.4179616475589]}, \"properties\": {\"uid\": \"8764feab-0fb1-4508-b121-6f3ab49b6e88\", \"code\": \"4a8f5583-e010-406f-8ed9-afe25a11b692\", \"name\": \"4a8f5583-e010-406f-8ed9-afe25a11b692\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582020525509, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f8836fe4-45a7-4f31-94a8-ae637e374db5",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f8836fe4-45a7-4f31-94a8-ae637e374db5\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.350977717407, -15.4186890033668]}, \"properties\": {\"uid\": \"fb85d149-26f1-4f2a-b10d-5864fb8720b6\", \"code\": \"f8836fe4-45a7-4f31-94a8-ae637e374db5\", \"name\": \"f8836fe4-45a7-4f31-94a8-ae637e374db5\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582032287395, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "75cce701-0e62-4697-b352-287a41ca1182",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"75cce701-0e62-4697-b352-287a41ca1182\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3508660669404, -15.4181976229589]}, \"properties\": {\"uid\": \"79fffc13-9dbd-414f-87dd-7527c7fc51ae\", \"code\": \"75cce701-0e62-4697-b352-287a41ca1182\", \"name\": \"75cce701-0e62-4697-b352-287a41ca1182\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582034927839, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "3d727ce3-5541-4405-982b-3ba2b870fcb0",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"3d727ce3-5541-4405-982b-3ba2b870fcb0\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3510087624145, -15.418041909507]}, \"properties\": {\"uid\": \"9fb05010-83ce-4365-ad2a-e730b1c95d75\", \"code\": \"3d727ce3-5541-4405-982b-3ba2b870fcb0\", \"name\": \"3d727ce3-5541-4405-982b-3ba2b870fcb0\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582035888012, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "6f8978ba-a6ee-4d53-9d52-55dee63d84fe",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"6f8978ba-a6ee-4d53-9d52-55dee63d84fe\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3509470795651, -15.4184605522735]}, \"properties\": {\"uid\": \"9f092644-5344-42d1-97b2-51753322c0ba\", \"code\": \"6f8978ba-a6ee-4d53-9d52-55dee63d84fe\", \"name\": \"6f8978ba-a6ee-4d53-9d52-55dee63d84fe\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582098418124, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "a324fd79-ed06-4811-adec-9144881f9751",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"a324fd79-ed06-4811-adec-9144881f9751\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3522617270506, -15.4154237578271]}, \"properties\": {\"uid\": \"625d1e17-5e97-46a2-8af1-31fbbb05891e\", \"code\": \"a324fd79-ed06-4811-adec-9144881f9751\", \"name\": \"a324fd79-ed06-4811-adec-9144881f9751\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582098658181, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "0f4321af-e247-405f-979d-319455cda8a7",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"0f4321af-e247-405f-979d-319455cda8a7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.352242610655, -15.4156166197699]}, \"properties\": {\"uid\": \"aee16f80-70dd-46d0-9cd2-d5a710afe194\", \"code\": \"0f4321af-e247-405f-979d-319455cda8a7\", \"name\": \"0f4321af-e247-405f-979d-319455cda8a7\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582098658182, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "7025101f-ac39-4f24-a048-eb2847d1f694",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"7025101f-ac39-4f24-a048-eb2847d1f694\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3523525901132, -15.415971264198]}, \"properties\": {\"uid\": \"0a5808ee-6a95-4093-91df-4bb6ef7e708c\", \"code\": \"7025101f-ac39-4f24-a048-eb2847d1f694\", \"name\": \"7025101f-ac39-4f24-a048-eb2847d1f694\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582098658183, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "50927fea-bca2-4e2b-b7b3-ac354cb93ded",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"50927fea-bca2-4e2b-b7b3-ac354cb93ded\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.352098769593, -15.4159869081397]}, \"properties\": {\"uid\": \"2835114b-2151-4821-9b5a-827d809d7975\", \"code\": \"50927fea-bca2-4e2b-b7b3-ac354cb93ded\", \"name\": \"50927fea-bca2-4e2b-b7b3-ac354cb93ded\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582098658184, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "a5d541d9-f161-4718-a7ad-2d2cdc36f2b4",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"a5d541d9-f161-4718-a7ad-2d2cdc36f2b4\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3524871328967, -15.4159732917974]}, \"properties\": {\"uid\": \"af0c014e-3314-435b-a112-1077b121c256\", \"code\": \"a5d541d9-f161-4718-a7ad-2d2cdc36f2b4\", \"name\": \"a5d541d9-f161-4718-a7ad-2d2cdc36f2b4\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582099618395, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "db7796f1-eb9a-4b7c-adc8-15f2e3b56d1e",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"db7796f1-eb9a-4b7c-adc8-15f2e3b56d1e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3518605181348, -15.4159348821724]}, \"properties\": {\"uid\": \"32847a82-10a4-4927-a21f-e1b34f4933ae\", \"code\": \"db7796f1-eb9a-4b7c-adc8-15f2e3b56d1e\", \"name\": \"db7796f1-eb9a-4b7c-adc8-15f2e3b56d1e\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582105259307, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "663b4e31-0383-4706-81b7-24080bc34a17",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"663b4e31-0383-4706-81b7-24080bc34a17\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3518877156012, -15.4186225675338]}, \"properties\": {\"uid\": \"0b668dba-cadd-4342-8032-2bfe8c8a0e6d\", \"code\": \"663b4e31-0383-4706-81b7-24080bc34a17\", \"name\": \"Test\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582529411161, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "4229d83e-ed6f-476c-8c80-2465eca555ae",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"4229d83e-ed6f-476c-8c80-2465eca555ae\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3517602003315, -15.4190046694138]}, \"properties\": {\"uid\": \"efafc076-cbab-4fbd-8798-ef4de7b8aead\", \"code\": \"4229d83e-ed6f-476c-8c80-2465eca555ae\", \"name\": \"4229d83e-ed6f-476c-8c80-2465eca555ae\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1582700678931, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "52b13138-b84d-40f4-8d42-f26d9279922a",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"52b13138-b84d-40f4-8d42-f26d9279922a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3520227539416, -15.4190848807245]}, \"properties\": {\"uid\": \"7128e581-7728-4ec4-a69f-e03aa5bf2378\", \"code\": \"52b13138-b84d-40f4-8d42-f26d9279922a\", \"name\": \"52b13138-b84d-40f4-8d42-f26d9279922a\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583238408156, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "bc54d26d-39ce-427d-95ac-2b930a0a35be",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"bc54d26d-39ce-427d-95ac-2b930a0a35be\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3514124896263, -15.4181922213473]}, \"properties\": {\"uid\": \"2b4cf366-6cdd-4700-bcca-c360a4ab62be\", \"code\": \"bc54d26d-39ce-427d-95ac-2b930a0a35be\", \"name\": \"bc54d26d-39ce-427d-95ac-2b930a0a35be\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583246689500, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "01e90452-68d2-4d85-a630-70935ff79fa1",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"01e90452-68d2-4d85-a630-70935ff79fa1\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3516309002724, -15.4185834103477]}, \"properties\": {\"uid\": \"3343d8b3-5b17-41e3-abf9-1960d2450ec2\", \"code\": \"01e90452-68d2-4d85-a630-70935ff79fa1\", \"name\": \"01e90452-68d2-4d85-a630-70935ff79fa1\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583247049575, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "2af8bc2b-c898-45eb-9c59-0f05c05f8c4a",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"2af8bc2b-c898-45eb-9c59-0f05c05f8c4a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3518828397832, -15.418472524573]}, \"properties\": {\"uid\": \"bf402f3c-7495-4e64-a13a-9618f9d3c624\", \"code\": \"2af8bc2b-c898-45eb-9c59-0f05c05f8c4a\", \"name\": \"2af8bc2b-c898-45eb-9c59-0f05c05f8c4a\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583247049576, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "eb34d0b6-9ca2-442b-8bf7-15d45e605134",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"eb34d0b6-9ca2-442b-8bf7-15d45e605134\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3517629710386, -15.419682653651]}, \"properties\": {\"uid\": \"24c2fcd6-07f0-49c4-942e-2b28b78fcde9\", \"code\": \"eb34d0b6-9ca2-442b-8bf7-15d45e605134\", \"name\": \"eb34d0b6-9ca2-442b-8bf7-15d45e605134\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583247049577, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "4bd6b1ec-a401-49f6-bfef-26e255b2d674",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"4bd6b1ec-a401-49f6-bfef-26e255b2d674\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3513558690479, -15.4191370540814]}, \"properties\": {\"uid\": \"be5ed318-0865-463c-a872-acfa8a915168\", \"code\": \"4bd6b1ec-a401-49f6-bfef-26e255b2d674\", \"name\": \"4bd6b1ec-a401-49f6-bfef-26e255b2d674\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583247529702, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "d554e34a-1047-4cd4-8726-529d929b6b8c",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"d554e34a-1047-4cd4-8726-529d929b6b8c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3511739341641, -15.4187989881704]}, \"properties\": {\"uid\": \"4522d59a-2049-459e-ba1c-4f77b277bbc2\", \"code\": \"d554e34a-1047-4cd4-8726-529d929b6b8c\", \"name\": \"d554e34a-1047-4cd4-8726-529d929b6b8c\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583247529703, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "001531b3-e296-4efb-9fc2-114db008be12",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"001531b3-e296-4efb-9fc2-114db008be12\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515170805274, -15.4196420301367]}, \"properties\": {\"uid\": \"895f8dfd-6f9f-467f-bb98-cb888dfaac6f\", \"code\": \"001531b3-e296-4efb-9fc2-114db008be12\", \"name\": \"001531b3-e296-4efb-9fc2-114db008be12\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583247529704, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "6eb36ed2-b9d6-40a7-8d30-a56919a1c180",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"6eb36ed2-b9d6-40a7-8d30-a56919a1c180\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3518614400829, -15.4199124576467]}, \"properties\": {\"uid\": \"848afdc7-0d81-471f-b409-e34c4d5b4ceb\", \"code\": \"6eb36ed2-b9d6-40a7-8d30-a56919a1c180\", \"name\": \"6eb36ed2-b9d6-40a7-8d30-a56919a1c180\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583247529705, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "ff5529ef-0887-4904-a5af-d4e96e519ba1",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"ff5529ef-0887-4904-a5af-d4e96e519ba1\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3514953022058, -15.4184701187713]}, \"properties\": {\"uid\": \"8d8e258c-1326-41b3-9101-56af87013a11\", \"code\": \"ff5529ef-0887-4904-a5af-d4e96e519ba1\", \"name\": \"ff5529ef-0887-4904-a5af-d4e96e519ba1\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583247529706, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "86888b8e-a8a9-4f49-88fe-f9d7c05e384c",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"86888b8e-a8a9-4f49-88fe-f9d7c05e384c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3518725301586, -15.4182604436275]}, \"properties\": {\"uid\": \"8ce00a2f-ea51-4e25-bee0-acfd37b93430\", \"code\": \"86888b8e-a8a9-4f49-88fe-f9d7c05e384c\", \"name\": \"86888b8e-a8a9-4f49-88fe-f9d7c05e384c\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583247529707, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f85e4315-fb75-48d5-a611-f2aeeb24e05d",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f85e4315-fb75-48d5-a611-f2aeeb24e05d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3508520774629, -15.4180981402653]}, \"properties\": {\"uid\": \"0a46370e-21a1-4230-b86a-42240619d576\", \"code\": \"f85e4315-fb75-48d5-a611-f2aeeb24e05d\", \"name\": \"f85e4315-fb75-48d5-a611-f2aeeb24e05d\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583247529708, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "cf59bac1-be21-4bae-b2c3-a2785ad7e149",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"cf59bac1-be21-4bae-b2c3-a2785ad7e149\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3522667408654, -15.4194088045487]}, \"properties\": {\"uid\": \"a6940d28-862d-4ebf-82bd-910fd5b12e5a\", \"code\": \"cf59bac1-be21-4bae-b2c3-a2785ad7e149\", \"name\": \"cf59bac1-be21-4bae-b2c3-a2785ad7e149\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583247529709, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f13d475e-ce06-48c7-95a2-fbed88e1a8ad",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f13d475e-ce06-48c7-95a2-fbed88e1a8ad\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515260367546, -15.4180019095428]}, \"properties\": {\"uid\": \"db7861f8-a92d-4df8-b752-5c2d66784885\", \"code\": \"f13d475e-ce06-48c7-95a2-fbed88e1a8ad\", \"name\": \"f13d475e-ce06-48c7-95a2-fbed88e1a8ad\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583247529710, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "9fea6469-02ed-4cfb-b414-dc3bff8c0c14",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"9fea6469-02ed-4cfb-b414-dc3bff8c0c14\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3521126789642, -15.4199022124194]}, \"properties\": {\"uid\": \"5cb00233-afc7-4560-b8ba-0355eb6876d7\", \"code\": \"9fea6469-02ed-4cfb-b414-dc3bff8c0c14\", \"name\": \"9fea6469-02ed-4cfb-b414-dc3bff8c0c14\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221179, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "e800f1ec-895b-4a70-8d5f-4fecb74b3bd7",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"e800f1ec-895b-4a70-8d5f-4fecb74b3bd7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3520688246261, -15.419563098145]}, \"properties\": {\"uid\": \"ae5a544f-fdf4-40ce-88b1-b7b91c9bf07e\", \"code\": \"e800f1ec-895b-4a70-8d5f-4fecb74b3bd7\", \"name\": \"e800f1ec-895b-4a70-8d5f-4fecb74b3bd7\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221180, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "4351a48b-d997-4214-bed7-35e7a92fae99",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"4351a48b-d997-4214-bed7-35e7a92fae99\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.352058224478, -15.4197464058416]}, \"properties\": {\"uid\": \"4787f729-58be-495b-9be8-70931e0f95cb\", \"code\": \"4351a48b-d997-4214-bed7-35e7a92fae99\", \"name\": \"4351a48b-d997-4214-bed7-35e7a92fae99\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221181, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f14273c8-c467-4ea3-9387-dd09ea3b302b",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f14273c8-c467-4ea3-9387-dd09ea3b302b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515438184468, -15.419863437224]}, \"properties\": {\"uid\": \"a1b3a592-22d7-47f8-8eb7-cac89e338eed\", \"code\": \"f14273c8-c467-4ea3-9387-dd09ea3b302b\", \"name\": \"f14273c8-c467-4ea3-9387-dd09ea3b302b\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221182, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "1155dcce-014f-4199-be24-39e03dc51b51",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"1155dcce-014f-4199-be24-39e03dc51b51\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3521234929869, -15.4189459050425]}, \"properties\": {\"uid\": \"ad9d9d9f-66f7-457e-a4c6-573307ab39fb\", \"code\": \"1155dcce-014f-4199-be24-39e03dc51b51\", \"name\": \"1155dcce-014f-4199-be24-39e03dc51b51\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221183, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "e6f77497-72b7-4f49-adb8-059586b70b3f",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"e6f77497-72b7-4f49-adb8-059586b70b3f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3511446722974, -15.4186704437507]}, \"properties\": {\"uid\": \"ad99267f-98f1-46f1-836f-ce42f51c3ace\", \"code\": \"e6f77497-72b7-4f49-adb8-059586b70b3f\", \"name\": \"e6f77497-72b7-4f49-adb8-059586b70b3f\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221184, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "9118a271-e7b8-4ed4-a88a-ec1becefc56a",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"9118a271-e7b8-4ed4-a88a-ec1becefc56a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3518409562623, -15.4191318933395]}, \"properties\": {\"uid\": \"f66004e4-6507-4d86-aab8-1452b57e02a4\", \"code\": \"9118a271-e7b8-4ed4-a88a-ec1becefc56a\", \"name\": \"9118a271-e7b8-4ed4-a88a-ec1becefc56a\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221185, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "14881564-f670-4b44-8f25-797a2227a188",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"14881564-f670-4b44-8f25-797a2227a188\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3521930066646, -15.4195103583539]}, \"properties\": {\"uid\": \"dda22298-01af-46be-860a-c1f87d14dbaa\", \"code\": \"14881564-f670-4b44-8f25-797a2227a188\", \"name\": \"14881564-f670-4b44-8f25-797a2227a188\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221186, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "18fcffc4-e886-4666-b79f-0ee03c4df962",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"18fcffc4-e886-4666-b79f-0ee03c4df962\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3511475995829, -15.4191275682007]}, \"properties\": {\"uid\": \"881560cb-b80c-449c-9263-ccc21a19b01d\", \"code\": \"18fcffc4-e886-4666-b79f-0ee03c4df962\", \"name\": \"18fcffc4-e886-4666-b79f-0ee03c4df962\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221187, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "764a4715-c20f-46b8-856b-f407caeb8452",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"764a4715-c20f-46b8-856b-f407caeb8452\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3517875477742, -15.4195923059762]}, \"properties\": {\"uid\": \"d3bc50e8-7e3f-4e47-ae76-f26cea2c05cd\", \"code\": \"764a4715-c20f-46b8-856b-f407caeb8452\", \"name\": \"764a4715-c20f-46b8-856b-f407caeb8452\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221188, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "dfb48b11-f991-418f-a311-30ddc44a8a1e",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"dfb48b11-f991-418f-a311-30ddc44a8a1e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3522391167612, -15.4197758147979]}, \"properties\": {\"uid\": \"2968a8b4-bd79-4b7e-9951-823ac4c0fb4f\", \"code\": \"dfb48b11-f991-418f-a311-30ddc44a8a1e\", \"name\": \"dfb48b11-f991-418f-a311-30ddc44a8a1e\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221189, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "bf2b014e-de3d-4580-8dd9-d31db0f43591",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"bf2b014e-de3d-4580-8dd9-d31db0f43591\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.351431739474, -15.4197898752594]}, \"properties\": {\"uid\": \"18180472-aa6e-4a8d-987f-4e23c778e278\", \"code\": \"bf2b014e-de3d-4580-8dd9-d31db0f43591\", \"name\": \"bf2b014e-de3d-4580-8dd9-d31db0f43591\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583318221190, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "2a34ec10-40ac-44c9-8643-20c465d4ae35",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"2a34ec10-40ac-44c9-8643-20c465d4ae35\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515043414307, -15.418367421934]}, \"properties\": {\"uid\": \"06048026-e5d9-4371-adaf-7ae43169d798\", \"code\": \"2a34ec10-40ac-44c9-8643-20c465d4ae35\", \"name\": \"2a34ec10-40ac-44c9-8643-20c465d4ae35\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583929077892, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "5797ed9b-a0d9-4131-bb3e-8b2fb0ca5e2a",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"5797ed9b-a0d9-4131-bb3e-8b2fb0ca5e2a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3517429117081, -15.4187706590131]}, \"properties\": {\"uid\": \"91cc0003-7b34-4ec4-86bb-4bf413d7ff8e\", \"code\": \"5797ed9b-a0d9-4131-bb3e-8b2fb0ca5e2a\", \"name\": \"5797ed9b-a0d9-4131-bb3e-8b2fb0ca5e2a\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583929077893, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c664c166-91a0-40cf-afc9-958e9150c003",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c664c166-91a0-40cf-afc9-958e9150c003\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3520965849149, -15.4186517827332]}, \"properties\": {\"uid\": \"c3661510-e7ff-4872-bec4-6f7d2ca59b03\", \"code\": \"c664c166-91a0-40cf-afc9-958e9150c003\", \"name\": \"c664c166-91a0-40cf-afc9-958e9150c003\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583932198026, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c0879dd5-bb6c-4e6f-bddc-627648517d5e",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c0879dd5-bb6c-4e6f-bddc-627648517d5e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3516693015602, -15.4236976550794]}, \"properties\": {\"uid\": \"e4d6f668-3590-41ff-89fb-2ede9bec048f\", \"code\": \"c0879dd5-bb6c-4e6f-bddc-627648517d5e\", \"name\": \"Majorie House\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1583942758288, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "5f619e1c-0236-4826-9662-15637ec1ff8b",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"5f619e1c-0236-4826-9662-15637ec1ff8b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3521895133838, -15.4175553301523]}, \"properties\": {\"uid\": \"7aa329bb-b521-44d4-8033-c32f8f213060\", \"code\": \"5f619e1c-0236-4826-9662-15637ec1ff8b\", \"name\": \"Naima\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1584110403624, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "d7a9a884-5d45-46eb-85cf-581981605ddd",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"d7a9a884-5d45-46eb-85cf-581981605ddd\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3526347521444, -15.4204773996185]}, \"properties\": {\"uid\": \"72d9f053-d00b-4f2f-951a-6fe28306da0f\", \"code\": \"d7a9a884-5d45-46eb-85cf-581981605ddd\", \"name\": \"Mwasi\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1584541336487, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "0ea10c35-23e6-45b6-b395-a3288fbbf955",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"0ea10c35-23e6-45b6-b395-a3288fbbf955\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3526697177999, -15.417881053256]}, \"properties\": {\"uid\": \"7b31bc06-2903-404f-8ff4-a3016b586b81\", \"code\": \"0ea10c35-23e6-45b6-b395-a3288fbbf955\", \"name\": \"0ea10c35-23e6-45b6-b395-a3288fbbf955\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1584558856932, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "86623ff5-4537-4cce-9d0a-9f4d9a3632cb",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"86623ff5-4537-4cce-9d0a-9f4d9a3632cb\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499817, -15.4189372541523]}, \"properties\": {\"uid\": \"d7df08c3-8d92-4279-87b5-24b54759bbeb\", \"code\": \"86623ff5-4537-4cce-9d0a-9f4d9a3632cb\", \"name\": \"86623ff5-4537-4cce-9d0a-9f4d9a3632cb\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1584941119748, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "3c1a4c80-680c-4bcc-a1e5-fd27ddbc2419",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"3c1a4c80-680c-4bcc-a1e5-fd27ddbc2419\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3554750264733, -15.4182112515533]}, \"properties\": {\"uid\": \"06466d74-d301-493f-b399-59d10cdc033e\", \"code\": \"3c1a4c80-680c-4bcc-a1e5-fd27ddbc2419\", \"name\": \"3c1a4c80-680c-4bcc-a1e5-fd27ddbc2419\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1585647384427, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "99df80ae-2cc2-4821-8127-0dbb0fd3a236",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"99df80ae-2cc2-4821-8127-0dbb0fd3a236\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3559174165808, -15.4181794165998]}, \"properties\": {\"uid\": \"17dfbe7a-cae8-44c1-9bd1-788ff6d767e6\", \"code\": \"99df80ae-2cc2-4821-8127-0dbb0fd3a236\", \"name\": \"99df80ae-2cc2-4821-8127-0dbb0fd3a236\", \"type\": \"Feature\", \"status\": \"Inactive\", \"version\": 0, \"server_version\": 1585647384428, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "d549417d-e3fc-421e-b764-031b4bb185db",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"d549417d-e3fc-421e-b764-031b4bb185db\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3557305443361, -15.4176911448062]}, \"properties\": {\"uid\": \"f5e1801e-a5ec-4cd5-8ff6-987cbc82a237\", \"code\": \"d549417d-e3fc-421e-b764-031b4bb185db\", \"name\": \"d549417d-e3fc-421e-b764-031b4bb185db\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1585647384429, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "9d49a2f4-bdfb-49fd-bc20-caf34cc3feb1",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"9d49a2f4-bdfb-49fd-bc20-caf34cc3feb1\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3297115553176, -15.4888702867517]}, \"properties\": {\"uid\": \"b2eadf98-3671-4dff-bb1e-5f32e329f9c1\", \"code\": \"9d49a2f4-bdfb-49fd-bc20-caf34cc3feb1\", \"name\": \"9d49a2f4-bdfb-49fd-bc20-caf34cc3feb1\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1585656987884, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "7e1e4a2d-a1b0-4a66-baa9-c7f02a118360",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"7e1e4a2d-a1b0-4a66-baa9-c7f02a118360\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499817, -15.4189372541523]}, \"properties\": {\"uid\": \"607b28ff-46f0-45d7-904f-210d7cc2bc1a\", \"code\": \"7e1e4a2d-a1b0-4a66-baa9-c7f02a118360\", \"name\": \"Dam\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1585732248089, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "4bfa6b2e-31a1-47ce-81cf-8e060c45a46d",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"4bfa6b2e-31a1-47ce-81cf-8e060c45a46d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499817, -15.4189372541523]}, \"properties\": {\"uid\": \"43d3dfeb-2e6b-415a-8821-ade6436893a0\", \"code\": \"4bfa6b2e-31a1-47ce-81cf-8e060c45a46d\", \"name\": \"4bfa6b2e-31a1-47ce-81cf-8e060c45a46d\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1585732248090, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c0f7f7b3-b2fa-487f-a8de-55c00988695a",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c0f7f7b3-b2fa-487f-a8de-55c00988695a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499817, -15.4189372541523]}, \"properties\": {\"uid\": \"ed06e8cd-2028-4daf-84b7-d22d4754f48b\", \"code\": \"c0f7f7b3-b2fa-487f-a8de-55c00988695a\", \"name\": \"Quarry\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1585735729614, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "0bade371-4df6-4cf4-8979-1d186e2b9e91",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"0bade371-4df6-4cf4-8979-1d186e2b9e91\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3568915079788, -15.4145481070794]}, \"properties\": {\"uid\": \"ec10b909-6e9e-4169-a066-2abf14a323de\", \"code\": \"0bade371-4df6-4cf4-8979-1d186e2b9e91\", \"name\": \"0bade371-4df6-4cf4-8979-1d186e2b9e91\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1562067114721, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "411874f4-cccf-434a-b7d9-3ccb99242c0e",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"411874f4-cccf-434a-b7d9-3ccb99242c0e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499887, -15.4189372541917]}, \"properties\": {\"uid\": \"df682694-dd31-4329-ae67-bd3160e58b73\", \"code\": \"411874f4-cccf-434a-b7d9-3ccb99242c0e\", \"name\": \"411874f4-cccf-434a-b7d9-3ccb99242c0e\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1562067114722, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "d4665d91-9e94-469f-ad1b-63b80a5195ba",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"d4665d91-9e94-469f-ad1b-63b80a5195ba\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3571107131568, -15.4139174309559]}, \"properties\": {\"uid\": \"6e27e80c-16af-4715-9af7-a6f9aea64c4f\", \"code\": \"d4665d91-9e94-469f-ad1b-63b80a5195ba\", \"name\": \"d4665d91-9e94-469f-ad1b-63b80a5195ba\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1562067114723, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "b3436b36-aa38-43c8-8baf-cdb78c6075d1",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"b3436b36-aa38-43c8-8baf-cdb78c6075d1\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3510878196079, -15.4182540234164]}, \"properties\": {\"uid\": \"6e748992-395f-4b27-b6b9-58fc6acbaeec\", \"code\": \"b3436b36-aa38-43c8-8baf-cdb78c6075d1\", \"name\": \"b3436b36-aa38-43c8-8baf-cdb78c6075d1\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1562067114724, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "6ffac95b-1295-4d29-bc0e-21cf1045eb54",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"6ffac95b-1295-4d29-bc0e-21cf1045eb54\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494500034, -15.4189372541715]}, \"properties\": {\"uid\": \"15ce1b60-e1a6-4ccf-a3d4-574ce0408def\", \"code\": \"6ffac95b-1295-4d29-bc0e-21cf1045eb54\", \"name\": \"6ffac95b-1295-4d29-bc0e-21cf1045eb54\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567062571820, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "3b55202b-db14-4de4-b859-d8cb4f1a2ecd",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"3b55202b-db14-4de4-b859-d8cb4f1a2ecd\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515730158732, -15.4192778642592]}, \"properties\": {\"uid\": \"37bbb950-8e34-4f13-8060-99b6fdad0b33\", \"code\": \"3b55202b-db14-4de4-b859-d8cb4f1a2ecd\", \"name\": \"3b55202b-db14-4de4-b859-d8cb4f1a2ecd\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1566901103042, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "0032bb38-8228-47ef-839a-cdc87360f8ab",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"0032bb38-8228-47ef-839a-cdc87360f8ab\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"8d9ea5c8-7cce-4041-b877-46d1adc9f1de\", \"code\": \"0032bb38-8228-47ef-839a-cdc87360f8ab\", \"name\": \"0032bb38-8228-47ef-839a-cdc87360f8ab\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567003031617, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "8b82c79e-47c3-4270-8b7b-6f5a7385febc",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"8b82c79e-47c3-4270-8b7b-6f5a7385febc\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3523215474646, -15.4158351041931]}, \"properties\": {\"uid\": \"fc1798ad-b93d-464e-bc65-0d16edfd487b\", \"code\": \"8b82c79e-47c3-4270-8b7b-6f5a7385febc\", \"name\": \"8b82c79e-47c3-4270-8b7b-6f5a7385febc\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567003031618, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "14c1ded1-9335-4729-91d9-3362232374a2",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"14c1ded1-9335-4729-91d9-3362232374a2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"f3e319c8-147d-4eab-b796-8544680bfb94\", \"code\": \"14c1ded1-9335-4729-91d9-3362232374a2\", \"name\": \"14c1ded1-9335-4729-91d9-3362232374a2\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567003031619, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "1f99794a-711b-4e51-8c06-1152df4876fa",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"1f99794a-711b-4e51-8c06-1152df4876fa\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3522099146961, -15.4157709327924]}, \"properties\": {\"uid\": \"9dc6dc1e-57d8-4bf8-b715-40bd85cbe6c2\", \"code\": \"1f99794a-711b-4e51-8c06-1152df4876fa\", \"name\": \"1f99794a-711b-4e51-8c06-1152df4876fa\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567003157820, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "4d62d1bc-b702-4931-b843-bfba4bdc3ca5",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"4d62d1bc-b702-4931-b843-bfba4bdc3ca5\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"0b632ec7-a7d2-4dff-9556-886c3e735bc7\", \"code\": \"4d62d1bc-b702-4931-b843-bfba4bdc3ca5\", \"name\": \"4d62d1bc-b702-4931-b843-bfba4bdc3ca5\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567003157821, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "ce37ba0b-7930-4fc3-8c70-767012cf7251",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"ce37ba0b-7930-4fc3-8c70-767012cf7251\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494500034, -15.4189372541715]}, \"properties\": {\"uid\": \"1c67964f-f2c2-4643-859a-870900ca9710\", \"code\": \"ce37ba0b-7930-4fc3-8c70-767012cf7251\", \"name\": \"ce37ba0b-7930-4fc3-8c70-767012cf7251\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567005709209, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "2d2c8b41-aa68-4e06-9838-7181a5acfe59",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"2d2c8b41-aa68-4e06-9838-7181a5acfe59\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"5e4b6de1-9f6d-4d9d-950e-b7d507ee34e7\", \"code\": \"2d2c8b41-aa68-4e06-9838-7181a5acfe59\", \"name\": \"2d2c8b41-aa68-4e06-9838-7181a5acfe59\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567005709210, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "1a937e2c-8872-411b-9668-4a780453f603",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"1a937e2c-8872-411b-9668-4a780453f603\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"086d7fcc-e8af-45c5-b901-9b8712545c57\", \"code\": \"1a937e2c-8872-411b-9668-4a780453f603\", \"name\": \"1a937e2c-8872-411b-9668-4a780453f603\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567005709211, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "7a389759-152f-4720-9e2f-39509a1d5be2",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"7a389759-152f-4720-9e2f-39509a1d5be2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494500034, -15.4189372541715]}, \"properties\": {\"uid\": \"6b521055-676d-42b2-af4d-2c07a87b25b1\", \"code\": \"7a389759-152f-4720-9e2f-39509a1d5be2\", \"name\": \"7a389759-152f-4720-9e2f-39509a1d5be2\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567005709212, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "6db0cd31-b209-412a-b520-ec3326b7849f",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"6db0cd31-b209-412a-b520-ec3326b7849f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"efa8b9f2-7f3c-4b7f-bcce-37c7bef961e1\", \"code\": \"6db0cd31-b209-412a-b520-ec3326b7849f\", \"name\": \"6db0cd31-b209-412a-b520-ec3326b7849f\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567019561683, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "5b4d7502-a9c9-4e7b-b4cb-8c8e5df2d96c",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"5b4d7502-a9c9-4e7b-b4cb-8c8e5df2d96c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3425738765346, -15.3721291953136]}, \"properties\": {\"uid\": \"1cea9819-5dca-40eb-9df0-90cf19fd65fc\", \"code\": \"5b4d7502-a9c9-4e7b-b4cb-8c8e5df2d96c\", \"name\": \"5b4d7502-a9c9-4e7b-b4cb-8c8e5df2d96c\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567019561684, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "263da958-5f36-4cde-b81f-5b2950f94ec7",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"263da958-5f36-4cde-b81f-5b2950f94ec7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3425855702972, -15.3719450009688]}, \"properties\": {\"uid\": \"3cf3f9c8-4e49-4ab7-822e-a591ed7d9289\", \"code\": \"263da958-5f36-4cde-b81f-5b2950f94ec7\", \"name\": \"263da958-5f36-4cde-b81f-5b2950f94ec7\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567019561685, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c07ef22c-4ba8-4429-8c7d-9c15e355cdf7",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c07ef22c-4ba8-4429-8c7d-9c15e355cdf7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"ace59b2e-d192-4c9f-8084-5723273af608\", \"code\": \"c07ef22c-4ba8-4429-8c7d-9c15e355cdf7\", \"name\": \"c07ef22c-4ba8-4429-8c7d-9c15e355cdf7\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567062571821, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "2fed4135-7164-42b4-b216-c528bc8d0578",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"2fed4135-7164-42b4-b216-c528bc8d0578\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499862, -15.4189372541786]}, \"properties\": {\"uid\": \"ebbf37b4-cda0-4696-a4bc-e872bde67d90\", \"code\": \"2fed4135-7164-42b4-b216-c528bc8d0578\", \"name\": \"2fed4135-7164-42b4-b216-c528bc8d0578\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567064765947, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "b8c569b8-06ca-471c-aee1-6c1de80a3a63",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"b8c569b8-06ca-471c-aee1-6c1de80a3a63\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"02d012a4-01f5-43d1-b835-4229e5b84c45\", \"code\": \"b8c569b8-06ca-471c-aee1-6c1de80a3a63\", \"name\": \"b8c569b8-06ca-471c-aee1-6c1de80a3a63\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567064765948, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c1c23f08-b0e5-4992-a437-418ee9e1fcf9",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c1c23f08-b0e5-4992-a437-418ee9e1fcf9\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"c9e9248f-e2e5-4f74-a007-a27e9aca7fb6\", \"code\": \"c1c23f08-b0e5-4992-a437-418ee9e1fcf9\", \"name\": \"c1c23f08-b0e5-4992-a437-418ee9e1fcf9\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567064765949, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "035b4a31-bcf1-499f-9967-e351f8d3fea7",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"035b4a31-bcf1-499f-9967-e351f8d3fea7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3522932111835, -15.4157803321797]}, \"properties\": {\"uid\": \"0340da7d-70ac-4947-9d3b-620f5df6ebb2\", \"code\": \"035b4a31-bcf1-499f-9967-e351f8d3fea7\", \"name\": \"035b4a31-bcf1-499f-9967-e351f8d3fea7\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567064765950, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "b38ccf68-45e3-43ee-8fe7-98fe03cd6941",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"b38ccf68-45e3-43ee-8fe7-98fe03cd6941\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"29a19d28-b277-4828-a2af-3c034618af44\", \"code\": \"b38ccf68-45e3-43ee-8fe7-98fe03cd6941\", \"name\": \"b38ccf68-45e3-43ee-8fe7-98fe03cd6941\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567065622977, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "a4fda142-6ddd-4e6f-b0b7-820ba680850c",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"a4fda142-6ddd-4e6f-b0b7-820ba680850c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499862, -15.4189372541786]}, \"properties\": {\"uid\": \"3aa08c39-bb02-4578-b945-5cdced5a7d5f\", \"code\": \"a4fda142-6ddd-4e6f-b0b7-820ba680850c\", \"name\": \"a4fda142-6ddd-4e6f-b0b7-820ba680850c\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567065622978, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "a60e1f55-529a-4636-84c8-40e66e8a461c",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"a60e1f55-529a-4636-84c8-40e66e8a461c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499862, -15.4189372541786]}, \"properties\": {\"uid\": \"0bb2524e-e876-49b0-9576-3e7d7000b126\", \"code\": \"a60e1f55-529a-4636-84c8-40e66e8a461c\", \"name\": \"a60e1f55-529a-4636-84c8-40e66e8a461c\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567065622979, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "527a1e1f-504b-4080-9975-51c02432a01f",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"527a1e1f-504b-4080-9975-51c02432a01f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"d5da6e9c-bbd4-4a18-b502-74bcea815c72\", \"code\": \"527a1e1f-504b-4080-9975-51c02432a01f\", \"name\": \"527a1e1f-504b-4080-9975-51c02432a01f\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567067453910, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "4c54ecd9-1f0d-4598-a725-1973f656a492",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"4c54ecd9-1f0d-4598-a725-1973f656a492\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3520378118801, -15.4199774074499]}, \"properties\": {\"uid\": \"e5f76055-2d59-4302-86ae-405e549a3a1f\", \"code\": \"4c54ecd9-1f0d-4598-a725-1973f656a492\", \"name\": \"4c54ecd9-1f0d-4598-a725-1973f656a492\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567067453911, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "99d81cee-f5f9-4799-9cea-283c1c3cb950",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"99d81cee-f5f9-4799-9cea-283c1c3cb950\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499862, -15.4189372541786]}, \"properties\": {\"uid\": \"6cc21c32-bea6-44f2-ba9f-ad90dd8cfb7a\", \"code\": \"99d81cee-f5f9-4799-9cea-283c1c3cb950\", \"name\": \"99d81cee-f5f9-4799-9cea-283c1c3cb950\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567067698092, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "785eba79-bf8b-469a-8c3f-7c59832ae59a",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"785eba79-bf8b-469a-8c3f-7c59832ae59a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499862, -15.4189372541786]}, \"properties\": {\"uid\": \"cfc0c27e-cc22-4df7-b91a-10e385dd8c00\", \"code\": \"785eba79-bf8b-469a-8c3f-7c59832ae59a\", \"name\": \"785eba79-bf8b-469a-8c3f-7c59832ae59a\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567067698093, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "79a8a785-2f56-477d-a9eb-9a90f35b32c4",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"79a8a785-2f56-477d-a9eb-9a90f35b32c4\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"bb8ab1eb-f780-4ac4-9555-902f2bcb40ed\", \"code\": \"79a8a785-2f56-477d-a9eb-9a90f35b32c4\", \"name\": \"79a8a785-2f56-477d-a9eb-9a90f35b32c4\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567067698094, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c86bf01d-513c-4afe-a1a9-fa7f368694c5",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c86bf01d-513c-4afe-a1a9-fa7f368694c5\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"9953921b-53fb-4041-abdc-b278ba449b57\", \"code\": \"c86bf01d-513c-4afe-a1a9-fa7f368694c5\", \"name\": \"c86bf01d-513c-4afe-a1a9-fa7f368694c5\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567067698095, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c0e29b1a-4d5f-427b-8576-b341818a792f",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c0e29b1a-4d5f-427b-8576-b341818a792f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"72b97e28-f5fc-49fc-b54a-a19cdbef54d6\", \"code\": \"c0e29b1a-4d5f-427b-8576-b341818a792f\", \"name\": \"c0e29b1a-4d5f-427b-8576-b341818a792f\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567069284730, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "fb62892d-78f4-49b5-9a3a-eda61cf7fef6",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"fb62892d-78f4-49b5-9a3a-eda61cf7fef6\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.352179, -15.4156392]}, \"properties\": {\"uid\": \"08f79e6a-820b-4297-a0de-31aa05408d16\", \"code\": \"fb62892d-78f4-49b5-9a3a-eda61cf7fef6\", \"name\": \"fb62892d-78f4-49b5-9a3a-eda61cf7fef6\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567069284731, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "daca4bbf-1705-4beb-8ece-1b4ef7303434",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"daca4bbf-1705-4beb-8ece-1b4ef7303434\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3521938760282, -15.4157271982247]}, \"properties\": {\"uid\": \"e649eeeb-9bc1-413c-9f77-b21f73a2ed27\", \"code\": \"daca4bbf-1705-4beb-8ece-1b4ef7303434\", \"name\": \"daca4bbf-1705-4beb-8ece-1b4ef7303434\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567070633334, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "9f027fbb-cc55-45d1-9667-a2ecdac80fa1",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"9f027fbb-cc55-45d1-9667-a2ecdac80fa1\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3521056877908, -15.4154317428129]}, \"properties\": {\"uid\": \"ccb73270-f679-42d4-8cbd-2cb5b93ad5ee\", \"code\": \"9f027fbb-cc55-45d1-9667-a2ecdac80fa1\", \"name\": \"9f027fbb-cc55-45d1-9667-a2ecdac80fa1\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567070755738, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "8c47b38e-f4d9-4799-95c5-9e49bedc5535",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"8c47b38e-f4d9-4799-95c5-9e49bedc5535\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [0, 0]}, \"properties\": {\"uid\": \"218e23a5-2de7-4f5b-b69d-6015e60b24fb\", \"code\": \"8c47b38e-f4d9-4799-95c5-9e49bedc5535\", \"name\": \"8c47b38e-f4d9-4799-95c5-9e49bedc5535\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567510822485, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "dc94d8d6-139b-4652-aae3-40a6683a42ad",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"dc94d8d6-139b-4652-aae3-40a6683a42ad\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3519246182558, -15.4154263222232]}, \"properties\": {\"uid\": \"60b72b62-ef16-40b1-8fcc-a37387bbbc4e\", \"code\": \"dc94d8d6-139b-4652-aae3-40a6683a42ad\", \"name\": \"dc94d8d6-139b-4652-aae3-40a6683a42ad\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567510822486, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "214c97e4-26d2-4eb4-9510-2040e0268616",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"214c97e4-26d2-4eb4-9510-2040e0268616\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3518901717173, -15.4197218212151]}, \"properties\": {\"uid\": \"4a2a5165-b6e3-4628-999e-bb4bf27af5cb\", \"code\": \"214c97e4-26d2-4eb4-9510-2040e0268616\", \"name\": \"214c97e4-26d2-4eb4-9510-2040e0268616\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1567672579329, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "0db6900f-1039-40de-aea4-456889155e7d",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"0db6900f-1039-40de-aea4-456889155e7d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.4859811, -15.5371486]}, \"properties\": {\"uid\": \"7375fbf6-cb35-4956-8822-1db27749af48\", \"code\": \"0db6900f-1039-40de-aea4-456889155e7d\", \"name\": \"0db6900f-1039-40de-aea4-456889155e7d\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1568161616420, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154163",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154163\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3515376, -15.4180586], [28.3516786, -15.4180382], [28.3516786, -15.4180379], [28.3517459, -15.4180282], [28.3517585, -15.4181092], [28.3516932, -15.4181186], [28.3517012, -15.4181702], [28.351636, -15.4181796], [28.3516298, -15.41814], [28.351552, -15.4181512], [28.3515376, -15.4180586]]]}, \"properties\": {\"uid\": \"154163\", \"code\": \"154163\", \"name\": \"154163\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1568201271581, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154159",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154159\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3518253, -15.4178531], [28.3518816, -15.4178513], [28.3518837, -15.4179121], [28.3518274, -15.4179139], [28.3518253, -15.4178531]]]}, \"properties\": {\"uid\": \"154159\", \"code\": \"154159\", \"name\": \"154159\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1568201271584, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154147",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154147\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3513007, -15.4193403], [28.3513167, -15.4194644], [28.3510929, -15.4194913], [28.3510768, -15.4193672], [28.3513007, -15.4193403]]]}, \"properties\": {\"uid\": \"154147\", \"code\": \"154147\", \"name\": \"154147\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1568201271590, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "154161",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"154161\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3517624, -15.4179958], [28.3518622, -15.4179848], [28.3518709, -15.4180577], [28.3517711, -15.4180687], [28.3517624, -15.4179958]]]}, \"properties\": {\"uid\": \"154161\", \"code\": \"154161\", \"name\": \"154161\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1568201271599, \"jurisdiction_id\": \"3951\", \"geographic_level\": 4, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "e0a303c2-1141-43ce-8e28-60d4856d49b8",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"e0a303c2-1141-43ce-8e28-60d4856d49b8\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3517233741172, -15.4183702975015]}, \"properties\": {\"uid\": \"0775bf6f-e587-4615-ab8c-f59e0255afe7\", \"code\": \"e0a303c2-1141-43ce-8e28-60d4856d49b8\", \"name\": \"e0a303c2-1141-43ce-8e28-60d4856d49b8\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1568369459369, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "49978b70-a3b4-4cef-bbca-c2d76e81b34c",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"49978b70-a3b4-4cef-bbca-c2d76e81b34c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3537341876619, -15.4156363115783]}, \"properties\": {\"uid\": \"2b76cbe4-1cb5-4b90-adb7-db126a034a01\", \"code\": \"49978b70-a3b4-4cef-bbca-c2d76e81b34c\", \"name\": \"49978b70-a3b4-4cef-bbca-c2d76e81b34c\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1568892169817, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "58e96174-8c89-44d5-b173-54e92fbd9501",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"58e96174-8c89-44d5-b173-54e92fbd9501\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3512960829026, -15.4198220704347]}, \"properties\": {\"uid\": \"1dabef87-5e30-4af4-b2da-089a8025ddc3\", \"code\": \"58e96174-8c89-44d5-b173-54e92fbd9501\", \"name\": \"58e96174-8c89-44d5-b173-54e92fbd9501\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1568904168647, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f3b0a597-6d35-40d4-a342-1fce938ef517",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f3b0a597-6d35-40d4-a342-1fce938ef517\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3517041814393, -15.4191251286028]}, \"properties\": {\"uid\": \"840b4742-fcdf-4406-a18a-72793bffbc3e\", \"code\": \"f3b0a597-6d35-40d4-a342-1fce938ef517\", \"name\": \"f3b0a597-6d35-40d4-a342-1fce938ef517\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1569246337895, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "afc51b04-3ee4-49d3-8309-d2c8599227f2",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"afc51b04-3ee4-49d3-8309-d2c8599227f2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499944, -15.418937254176]}, \"properties\": {\"uid\": \"53c38c18-ed0e-4de9-8c10-078247f6c3d0\", \"code\": \"afc51b04-3ee4-49d3-8309-d2c8599227f2\", \"name\": \"Annieb\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1569317819437, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "b14afa16-b218-4915-8e14-374ae9eb7eed",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"b14afa16-b218-4915-8e14-374ae9eb7eed\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3496273533096, -15.4197857369074]}, \"properties\": {\"uid\": \"821055f4-75b8-4b91-802a-7e8c9988d093\", \"code\": \"b14afa16-b218-4915-8e14-374ae9eb7eed\", \"name\": \"P2ptest\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1569608757662, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "ebe84dca-6de3-4086-b842-e82e795ebf79",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"ebe84dca-6de3-4086-b842-e82e795ebf79\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.351681505516, -15.4209712808751]}, \"properties\": {\"uid\": \"850268f2-484c-4395-81af-af1ed1d42eb0\", \"code\": \"ebe84dca-6de3-4086-b842-e82e795ebf79\", \"name\": \"Martian Hse\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1575388145233, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "8b2ab1fa-fbf6-4b1c-9cbf-45be57b3a6e2",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"8b2ab1fa-fbf6-4b1c-9cbf-45be57b3a6e2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3507153874052, -15.41791101276]}, \"properties\": {\"uid\": \"7dfb86ae-bfc1-4f78-ba66-5456ae31b8e8\", \"code\": \"8b2ab1fa-fbf6-4b1c-9cbf-45be57b3a6e2\", \"name\": \"Test sync\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1574757985918, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "d2f67cb7-47ab-48e1-ae4b-fbe19f73f42f",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"d2f67cb7-47ab-48e1-ae4b-fbe19f73f42f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3544875975106, -15.4208153593459]}, \"properties\": {\"uid\": \"d9a3aef7-d962-4ebc-a6f3-ba3fcc4162b6\", \"code\": \"d2f67cb7-47ab-48e1-ae4b-fbe19f73f42f\", \"name\": \"d2f67cb7-47ab-48e1-ae4b-fbe19f73f42f\", \"type\": \"Feature\", \"status\": \"Inactive\", \"version\": 0, \"server_version\": 1575644612194, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "7d2bca92-e759-4a4e-8ee4-0c7d7c2a005f",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"7d2bca92-e759-4a4e-8ee4-0c7d7c2a005f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3521293292205, -15.4184579222932]}, \"properties\": {\"uid\": \"52e7808e-4e55-4f70-b925-2370f906cb9b\", \"code\": \"7d2bca92-e759-4a4e-8ee4-0c7d7c2a005f\", \"name\": \"7d2bca92-e759-4a4e-8ee4-0c7d7c2a005f\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1574444514722, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "1aebd599-049d-47df-982b-6a110c097680",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"1aebd599-049d-47df-982b-6a110c097680\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3505483794832, -15.41711873204]}, \"properties\": {\"uid\": \"d8628908-44bb-4749-81ca-04c2d5a1cba1\", \"code\": \"1aebd599-049d-47df-982b-6a110c097680\", \"name\": \"Fam Update\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1578321681694, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "3fd7c024-bf29-4fed-9a9e-3ac8e69e31e0",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"3fd7c024-bf29-4fed-9a9e-3ac8e69e31e0\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3540810226906, -15.4196130719437]}, \"properties\": {\"uid\": \"f60c6e57-810b-4a4a-9c1b-00e1b4999480\", \"code\": \"3fd7c024-bf29-4fed-9a9e-3ac8e69e31e0\", \"name\": \"RVL-370_2\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1574410234195, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f20f3ec5-7c7e-4836-984f-43c42cce7e30",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f20f3ec5-7c7e-4836-984f-43c42cce7e30\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3539022875958, -15.4206118448123]}, \"properties\": {\"uid\": \"aad47fd5-3312-4206-832e-131287ad32ae\", \"code\": \"f20f3ec5-7c7e-4836-984f-43c42cce7e30\", \"name\": \"Andati Hse\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1574348786500, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c45f612a-8b27-4874-84d8-40e1418e67e1",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c45f612a-8b27-4874-84d8-40e1418e67e1\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3493081080491, -15.4191419661533]}, \"properties\": {\"uid\": \"a5fc984d-d91b-4c17-96e0-1656f4beb6f8\", \"code\": \"c45f612a-8b27-4874-84d8-40e1418e67e1\", \"name\": \"c45f612a-8b27-4874-84d8-40e1418e67e1\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1575628689545, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "673c950f-f45a-4284-baac-0ce9789c9a7e",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"673c950f-f45a-4284-baac-0ce9789c9a7e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3504172995798, -15.4181366975363]}, \"properties\": {\"uid\": \"4b6362a4-97f2-4f9c-a384-43fc798d4e03\", \"code\": \"673c950f-f45a-4284-baac-0ce9789c9a7e\", \"name\": \"673c950f-f45a-4284-baac-0ce9789c9a7e\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1575555673023, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "2732a699-0c4f-4a76-b61d-8c887d82ec91",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"2732a699-0c4f-4a76-b61d-8c887d82ec91\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3541887340369, -15.420713087053]}, \"properties\": {\"uid\": \"5cc7ffde-b3b4-43c0-9621-73bb159d3d84\", \"code\": \"2732a699-0c4f-4a76-b61d-8c887d82ec91\", \"name\": \"Flintstone House\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1575644612193, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "e5ea4658-1454-4aa7-9053-136de6a5ccfb",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"e5ea4658-1454-4aa7-9053-136de6a5ccfb\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3489941245865, -15.4175363459137]}, \"properties\": {\"uid\": \"cadd0904-f7e9-47e7-a7a2-7628010e64ec\", \"code\": \"e5ea4658-1454-4aa7-9053-136de6a5ccfb\", \"name\": \"e5ea4658-1454-4aa7-9053-136de6a5ccfb\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1579694051499, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "40930448-ea84-4ba7-8780-2a98dd8e902e",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"40930448-ea84-4ba7-8780-2a98dd8e902e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3530696781604, -15.4187636448744]}, \"properties\": {\"uid\": \"7cea2e83-96a9-4c1f-92aa-c4a4714c575d\", \"code\": \"40930448-ea84-4ba7-8780-2a98dd8e902e\", \"name\": \"RVL370\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1574351924128, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c13a62d8-d63d-4aa9-aa54-ed08ffca4977",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c13a62d8-d63d-4aa9-aa54-ed08ffca4977\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3507244427328, -15.419329864899]}, \"properties\": {\"uid\": \"60966ddd-1804-4ce4-ac50-e933b86a5149\", \"code\": \"c13a62d8-d63d-4aa9-aa54-ed08ffca4977\", \"name\": \"c13a62d8-d63d-4aa9-aa54-ed08ffca4977\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1575481799036, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "8d719baa-8410-4f17-9ef8-d4f38435e1be",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"8d719baa-8410-4f17-9ef8-d4f38435e1be\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3522816243596, -15.4188518120384]}, \"properties\": {\"uid\": \"323d17e8-2018-4add-bd8d-c13685c716d6\", \"code\": \"8d719baa-8410-4f17-9ef8-d4f38435e1be\", \"name\": \"Richard\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1574348786501, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "54b86a5f-20c6-459f-9d75-769e778b6ea3",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"54b86a5f-20c6-459f-9d75-769e778b6ea3\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3515494499944, -15.418937254176]}, \"properties\": {\"uid\": \"13425338-3151-496f-9527-01f71d78e001\", \"code\": \"54b86a5f-20c6-459f-9d75-769e778b6ea3\", \"name\": \"54b86a5f-20c6-459f-9d75-769e778b6ea3\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1568904168646, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "e525d733-a5e6-4e2e-877d-4c56d424348e",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"e525d733-a5e6-4e2e-877d-4c56d424348e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3502387296987, -15.4169671262337]}, \"properties\": {\"uid\": \"b3cadc5e-ac18-43ca-b7e4-ef3076bbb145\", \"code\": \"e525d733-a5e6-4e2e-877d-4c56d424348e\", \"name\": \"e525d733-a5e6-4e2e-877d-4c56d424348e\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1578468585868, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "f56334f2-c486-4550-9812-680d1eaef39b",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"f56334f2-c486-4550-9812-680d1eaef39b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3489216456276, -15.4179815373782]}, \"properties\": {\"uid\": \"6476aba5-69a3-4fa2-bd52-3efc907e033d\", \"code\": \"f56334f2-c486-4550-9812-680d1eaef39b\", \"name\": \"Hulo1\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1580724292821, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "160bd6d6-8d81-4b15-8541-c0cb9ceffb58",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"160bd6d6-8d81-4b15-8541-c0cb9ceffb58\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3495303278028, -15.4155173018875]}, \"properties\": {\"uid\": \"8e04b4bb-9a40-480d-adbe-49093b384579\", \"code\": \"160bd6d6-8d81-4b15-8541-c0cb9ceffb58\", \"name\": \"160bd6d6-8d81-4b15-8541-c0cb9ceffb58\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1580290136320, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c69692d0-5cb5-4b7a-afc5-5b7cb66da715",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c69692d0-5cb5-4b7a-afc5-5b7cb66da715\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.350933227246, -15.4191551224368]}, \"properties\": {\"uid\": \"fdbe12a9-0fdd-40d2-af8d-144ff3307ae4\", \"code\": \"c69692d0-5cb5-4b7a-afc5-5b7cb66da715\", \"name\": \"c69692d0-5cb5-4b7a-afc5-5b7cb66da715\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1573110583003, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "aecebd73-6644-463a-9234-d8ea0bb7d30e",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"aecebd73-6644-463a-9234-d8ea0bb7d30e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3521684871465, -15.4202921460546]}, \"properties\": {\"uid\": \"c69fb1eb-c352-4c10-8847-a620618141b5\", \"code\": \"aecebd73-6644-463a-9234-d8ea0bb7d30e\", \"name\": \"Case Detect Tes\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1572604559862, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "5e772264-d6bf-4e14-a9c4-9601fb779a9e",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"5e772264-d6bf-4e14-a9c4-9601fb779a9e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3509897462097, -15.4200910260222]}, \"properties\": {\"uid\": \"3c688613-8193-4968-880e-ad3c8048032f\", \"code\": \"5e772264-d6bf-4e14-a9c4-9601fb779a9e\", \"name\": \"Reub House\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1573653969878, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "26b57c03-2885-445b-9ff9-f4ce018da755",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"26b57c03-2885-445b-9ff9-f4ce018da755\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3500203639342, -15.4192670319376]}, \"properties\": {\"uid\": \"a423f422-0a34-410a-ab82-47e8e109fad1\", \"code\": \"26b57c03-2885-445b-9ff9-f4ce018da755\", \"name\": \"26b57c03-2885-445b-9ff9-f4ce018da755\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1573774274065, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "8beb725c-b72a-4b55-8618-32bfaf709556",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"8beb725c-b72a-4b55-8618-32bfaf709556\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3500362159806, -15.4190565354608]}, \"properties\": {\"uid\": \"bb18afa4-7a80-4d4a-97ab-07fc80f7bfb4\", \"code\": \"8beb725c-b72a-4b55-8618-32bfaf709556\", \"name\": \"8beb725c-b72a-4b55-8618-32bfaf709556\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1573774274066, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "599fc79c-faf8-41b0-bb31-82ad44836874",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"599fc79c-faf8-41b0-bb31-82ad44836874\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3501666883048, -15.4192062219321]}, \"properties\": {\"uid\": \"f1b28ff2-06e7-4432-a39c-e276fe273b85\", \"code\": \"599fc79c-faf8-41b0-bb31-82ad44836874\", \"name\": \"599fc79c-faf8-41b0-bb31-82ad44836874\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1573774274067, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "254c5919-44c7-408a-a7a5-79047ccbe94c",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"254c5919-44c7-408a-a7a5-79047ccbe94c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3501746427925, -15.4190707220988]}, \"properties\": {\"uid\": \"d1f4c654-6f45-4aab-8f02-be8e29f2d163\", \"code\": \"254c5919-44c7-408a-a7a5-79047ccbe94c\", \"name\": \"254c5919-44c7-408a-a7a5-79047ccbe94c\", \"type\": \"Feature\", \"status\": \"Active\", \"version\": 0, \"server_version\": 1573774394289, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "d9227aad-3f31-4227-8ab3-01b009483357",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"d9227aad-3f31-4227-8ab3-01b009483357\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3508581082082, -15.4195395853581]}, \"properties\": {\"uid\": \"ff902988-45bb-4b63-8542-196d73e7bd07\", \"code\": \"d9227aad-3f31-4227-8ab3-01b009483357\", \"name\": \"Kdksks\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1573829967639, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "5549e0d0-3c9f-4a7d-97c7-56b612a32dfe",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"5549e0d0-3c9f-4a7d-97c7-56b612a32dfe\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3523926521113, -15.4211094680079]}, \"properties\": {\"uid\": \"f061b108-cd04-4d17-9bf9-9d0a6307d985\", \"code\": \"5549e0d0-3c9f-4a7d-97c7-56b612a32dfe\", \"name\": \"Peter Residence\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1574061023971, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "c55430a3-1915-41dc-8d78-2c5d0d583771",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"c55430a3-1915-41dc-8d78-2c5d0d583771\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3531628920521, -15.4208503126741]}, \"properties\": {\"uid\": \"c111da07-7a12-4d80-b92a-a06abfe4d4df\", \"code\": \"c55430a3-1915-41dc-8d78-2c5d0d583771\", \"name\": \"Magda Residence\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1574061384049, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      },
+      {
+        "id": "93d3869a-ef6c-4f0a-b1c4-d0fe17ea5de0",
+        "jurisdiction_id": "3951",
+        "geojson": "{\"id\": \"93d3869a-ef6c-4f0a-b1c4-d0fe17ea5de0\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3543021758987, -15.4219582893169]}, \"properties\": {\"uid\": \"0d339257-900a-41ae-b231-25cfc02970e3\", \"code\": \"93d3869a-ef6c-4f0a-b1c4-d0fe17ea5de0\", \"name\": \"Fred Residence\", \"type\": \"Feature\", \"status\": \"Pending Review\", \"version\": 0, \"server_version\": 1574062584243, \"jurisdiction_id\": \"3951\", \"geographic_level\": 0, \"effective_end_date\": null, \"effective_start_date\": null}}"
+      }
+    ],
+    "columns": ["id", "jurisdiction_id", "geojson"]
+  }
+}

@@ -50,6 +50,7 @@ import {
   CASE_NOTIF_DATE_HEADER,
   CASE_TRIGGERED_TITLE,
   DATE_COMPLETED,
+  DEFAULT,
   DISTRICT,
   END_DATE,
   FI_STATUS,
@@ -91,8 +92,10 @@ import {
   REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
   REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE,
   ROUTINE_TITLE,
+  SHORT,
   START_DATE,
   STATUS_HEADER,
+  TALL,
   VILLAGE,
 } from '../configs/lang';
 import {
@@ -1276,247 +1279,155 @@ export const CountriesAdmin0 = {
 export const emptyCompleteReactivePlans = [
   {
     Header: NAME,
-    columns: [{}],
   },
   {
     Header: DATE_COMPLETED,
-    columns: [{}],
   },
   {
     Header: CASE_NOTIF_DATE_HEADER,
-    columns: [{}],
   },
   {
     Header: CASE_CLASSIFICATION_HEADER,
-    columns: [{}],
   },
 ];
 /** complete routine columns with no data */
 export const emptyCompleteRoutinePlans = [
   {
     Header: NAME,
-    columns: [{}],
   },
   {
     Header: START_DATE,
-    columns: [{}],
   },
   {
     Header: END_DATE,
-    columns: [{}],
   },
   {
     Header: DATE_COMPLETED,
-    columns: [{}],
   },
 ];
 /** current reactive columns with no data */
-export const emptyCurrentReactivePlans = [
-  {
-    Header: NAME,
-    columns: [{}],
-  },
-  {
-    Header: FI_STATUS,
-    columns: [{}],
-  },
-  {
-    Header: CASE_NOTIF_DATE_HEADER,
-    columns: [{}],
-  },
-  {
-    Header: CASE_CLASSIFICATION_HEADER,
-    columns: [{}],
-  },
-];
+export const emptyCurrentReactivePlans: any = [{}, {}, {}, {}];
 /** current routine columns with no data */
 export const emptyCurrentRoutinePlans = [
   {
     Header: NAME,
-    columns: [{}],
   },
   {
     Header: FI_STATUS,
-    columns: [{}],
   },
   {
     Header: PROVINCE,
-    columns: [{}],
   },
   {
     Header: DISTRICT,
-    columns: [{}],
   },
   {
     Header: CANTON,
-    columns: [{}],
   },
   {
     Header: VILLAGE,
-    columns: [{}],
   },
   {
     Header: FOCUS_AREA_HEADER,
-    columns: [{}],
   },
   {
     Header: STATUS_HEADER,
-    columns: [{}],
   },
   {
     Header: START_DATE,
-    columns: [{}],
   },
   {
     Header: END_DATE,
-    columns: [{}],
   },
 ];
 /** current reactive columns with data */
 export const currentReactivePlansColumns = [
   {
     Header: CASE_NOTIF_DATE_HEADER,
-    columns: [
-      {
-        Header: '',
-        accessor: 'caseNotificationDate',
-        minWidth: 90,
-      },
-    ],
+    accessor: 'caseNotificationDate',
+    minWidth: 90,
   },
   {
     Header: CASE_CLASSIFICATION_HEADER,
-    columns: [
-      {
-        Header: '',
-        accessor: 'caseClassification',
-      },
-    ],
+    accessor: 'caseClassification',
   },
 ];
 /** current routine columns with data */
 export const currentRoutinePlansColumn = [
   {
     Header: STATUS_HEADER,
-    columns: [
-      {
-        Header: '',
-        accessor: 'status',
-        maxWidth: 60,
-      },
-    ],
+    accessor: 'status',
+    maxWidth: 60,
   },
   {
     Header: START_DATE,
-    columns: [
-      {
-        Header: '',
-        accessor: 'plan_effective_period_start',
-        minWidth: 80,
-      },
-    ],
+    accessor: 'plan_effective_period_start',
+    minWidth: 80,
   },
   {
     Header: END_DATE,
-    columns: [
-      {
-        Header: '',
-        accessor: 'plan_effective_period_end',
-      },
-    ],
+    accessor: 'plan_effective_period_end',
   },
 ];
 /** complete reactive columns with data */
 export const completeReactivePlansColumn = [
   {
     Header: END_DATE,
-    columns: [
-      {
-        Header: '',
-        accessor: 'plan_effective_period_end',
-      },
-    ],
+    accessor: 'plan_effective_period_end',
   },
   {
     Header: CASE_NOTIF_DATE_HEADER,
-    columns: [
-      {
-        Header: '',
-        accessor: 'caseNotificationDate',
-        minWidth: 90,
-      },
-    ],
+    accessor: 'caseNotificationDate',
+    minWidth: 90,
   },
   {
     Header: CASE_CLASSIFICATION_HEADER,
-    columns: [
-      {
-        Header: '',
-        accessor: 'caseClassification',
-      },
-    ],
+    accessor: 'caseClassification',
   },
 ];
 /** complete routine columns with data */
 export const completeRoutinePlansColumn = [
   {
     Header: START_DATE,
-    columns: [
-      {
-        Header: '',
-        accessor: 'plan_effective_period_start',
-        minWidth: 80,
-      },
-    ],
+    accessor: 'plan_effective_period_start',
+    minWidth: 80,
   },
   {
     Header: END_DATE,
-    columns: [
-      {
-        Header: '',
-        accessor: 'plan_effective_period_end',
-      },
-    ],
+    accessor: 'plan_effective_period_end',
+    id: END_DATE,
   },
   {
     Header: DATE_COMPLETED,
-    columns: [
-      {
-        Header: '',
-        accessor: 'plan_effective_period_end',
-      },
-    ],
+    accessor: 'plan_effective_period_end',
+    id: DATE_COMPLETED,
   },
 ];
 /** Date completed field not there in the current plan  */
 export const dateCompletedColumn = [
   {
     Header: DATE_COMPLETED,
-    columns: [
-      {
-        Header: '',
-        accessor: 'date_completed',
-        minWidth: 80,
-      },
-    ],
+    accessor: 'date_completed',
+    minWidth: 80,
   },
 ];
 // status column
 export const statusColumn = [
   {
     Header: FI_STATUS,
-    columns: [
-      {
-        Header: '',
-        accessor: 'plan_status',
-        minWidth: 80,
-      },
-    ],
+    accessor: 'plan_status',
+    id: FI_STATUS,
+    minWidth: 80,
   },
 ];
 
 // icons to add to map
 export const imgArr = [
+  {
+    id: 'current-case-confirmation',
+    imageUrl:
+      'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/current-case-confirmation.png',
+  },
   {
     id: 'case-confirmation',
     imageUrl:
@@ -1533,3 +1444,18 @@ export const imgArr = [
       'https://raw.githubusercontent.com/onaio/reveal-frontend/master/src/assets/images/mosquito.png',
   },
 ];
+/** row height possible values */
+export const rowHeights = {
+  DEFAULT: {
+    label: DEFAULT,
+    value: '2em',
+  },
+  SHORT: {
+    label: SHORT,
+    value: '1em',
+  },
+  TALL: {
+    label: TALL,
+    value: '3em',
+  },
+};

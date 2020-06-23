@@ -1,3 +1,4 @@
+import superset from '@onaio/superset-connector';
 import * as globalFixtures from '../../../../../../store/ducks/tests/fixtures';
 
 /** the existing state for the test case: selectors get called with correct arguments
@@ -47,10 +48,19 @@ export const existingState = {
   },
 };
 
-export const buildHandlers = [
-  {
-    method: jest.fn(),
-    name: 'pointClick',
-    type: 'click',
-  },
-];
+// tslint:disable: no-var-requires
+export const planJSON = require('./supersetFixtures/plans.json');
+export const jurisdictionJSON = require('./supersetFixtures/jurisdictions.json');
+export const structuresJSON = require('./supersetFixtures/structures.json');
+export const goalsJSON = require('./supersetFixtures/goals.json');
+/** this includes all tasks for this plan */
+export const plansTasksJSON = require('./supersetFixtures/planTasks.json');
+/** this are case confirmation tasks within the jurisdiction area that this plan is part of */
+export const caseConfirmationJSON = require('./supersetFixtures/caseConfirmationTasks.json');
+
+export const processedPlansJSON = superset.processData(planJSON) || [];
+export const processedJurisdictionJSON = superset.processData(jurisdictionJSON) || [];
+export const processedStructuresJSON = superset.processData(structuresJSON) || [];
+export const processedGoalsJSON = superset.processData(goalsJSON) || [];
+export const processedPlansTasksJson = superset.processData(plansTasksJSON) || [];
+export const processedCaseConfirmationTasksJSON = superset.processData(caseConfirmationJSON) || [];

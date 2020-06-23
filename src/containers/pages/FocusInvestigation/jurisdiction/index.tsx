@@ -1,12 +1,10 @@
-import DrillDownTable from '@onaio/drill-down-table';
+import { DrillDownColumn, DrillDownTable } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
-import { Column } from 'react-table';
-import 'react-table/react-table.css';
 import { Col, Row } from 'reactstrap';
 import { format } from 'util';
 import HeaderBreadcrumbs, {
@@ -56,6 +54,7 @@ import {
   getLocationColumns,
   jsxColumns,
   removeNullJurisdictionPlans,
+  TablePropsType,
 } from '../../../../helpers/utils';
 
 import supersetFetch from '../../../../services/superset';
@@ -233,7 +232,10 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
         const thePlans = jurisdictionValidPlans.map((item: Plan) => {
           return extractPlan(item);
         });
-        const locationColumns: Column[] = getLocationColumns(locationHierarchy, true);
+        const locationColumns: Array<DrillDownColumn<Dictionary>> = getLocationColumns(
+          locationHierarchy,
+          true
+        );
         /**  Handle Columns Unique for Routine and Reactive Tables */
         const columnsBasedOnReason = [];
         /** If plan_fi_reason is Case Triggered then add currentReactivePlansColumns from settings */
@@ -250,13 +252,9 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
           );
         }
         /** Handle all Columns i.e columns unique for reactive and routine (once handled above) plus columns common on both (name)  */
-        const allColumns: Column[] = [
-          ...jsxColumns('name'),
-          ...statusColumn,
-          ...columnsBasedOnReason,
-        ];
+        const allColumns = [...jsxColumns('name'), ...statusColumn, ...columnsBasedOnReason];
         /** Contains columns and data that will build the table */
-        const tableProps = {
+        const tableProps: TablePropsType = {
           ...defaultTableProps,
           columns: allColumns,
           data: thePlans,
@@ -273,7 +271,7 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
   }
   /** if current reactive plans array is empty build table with no data  */
   if (!currentReactivePlans || !currentReactivePlans.length) {
-    const tableProps = {
+    const tableProps: TablePropsType = {
       ...defaultTableProps,
       columns: emptyCurrentReactivePlans,
     };
@@ -319,13 +317,13 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
           ? columnsBasedOnReason.push(...completeReactivePlansColumn)
           : columnsBasedOnReason.push(...completeRoutinePlansColumn);
         /** Handle all Columns i.e columns unique for reactive and routine (once handled above) plus columns common on both (name)  */
-        const allColumns: Column[] = [
+        const allColumns: Array<DrillDownColumn<Dictionary>> = [
           ...jsxColumns('name'),
           ...dateCompletedColumn,
           ...columnsBasedOnReason,
         ];
         /** Contains columns and data that will build the table */
-        const tableProps = {
+        const tableProps: TablePropsType = {
           ...defaultTableProps,
           columns: allColumns,
           data: thePlans,

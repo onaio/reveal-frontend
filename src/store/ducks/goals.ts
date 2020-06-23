@@ -37,19 +37,19 @@ export const SET_CURRENT_GOAL = 'reveal/reducer/goals/SET_CURRENT_GOAL';
 export const REMOVE_GOALS = 'reveal/reducer/goals/REMOVE_GOALS';
 
 /** interface for authorize action */
-interface FetchGoalsAction extends AnyAction {
+export interface FetchGoalsAction extends AnyAction {
   goalsById: { [key: string]: Goal };
   type: typeof GOALS_FETCHED;
 }
 
 /** interface for setting current goal action */
-interface SetCurrentGoalAction extends AnyAction {
+export interface SetCurrentGoalAction extends AnyAction {
   currentGoal: string | null;
   type: typeof SET_CURRENT_GOAL;
 }
 
 /** Interface for remove goals action */
-interface RemoveGoalsAction extends AnyAction {
+export interface RemoveGoalsAction extends AnyAction {
   type: typeof REMOVE_GOALS;
   goalsById: {};
 }

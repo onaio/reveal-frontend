@@ -1,5 +1,4 @@
 import { mount, shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import React from 'react';
 import NullDataTable from '..';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
@@ -22,7 +21,7 @@ describe('components/Table/NullDateTable', () => {
       tableProps: fixtures.CurrentRoutineTableProps,
     };
     const wrapper = mount(<NullDataTable {...props} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.text()).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -32,7 +31,7 @@ describe('components/Table/NullDateTable', () => {
       tableProps: fixtures.CurrentReactiveTableProps,
     };
     const wrapper = mount(<NullDataTable {...props} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.text()).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -42,7 +41,7 @@ describe('components/Table/NullDateTable', () => {
       tableProps: fixtures.CompleteRoutineTableProps,
     };
     const wrapper = mount(<NullDataTable {...props} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.text()).toMatchSnapshot();
     wrapper.unmount();
   });
 
@@ -52,7 +51,7 @@ describe('components/Table/NullDateTable', () => {
       tableProps: fixtures.CompleteReactiveTableProps,
     };
     const wrapper = mount(<NullDataTable {...props} />);
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.text()).toMatchSnapshot();
     wrapper.unmount();
   });
 });

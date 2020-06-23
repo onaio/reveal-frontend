@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/forms/JurisdictionMetadata renders Jurisdiction Metadata form correctly: JurisdictionMetadata file 1`] = `null`;
+
+exports[`components/forms/JurisdictionMetadata renders correctly: JurisdictionMetadata file 1`] = `
+<input
+  accept=".csv"
+  className="form-control"
+  data-testid="file"
+  disabled={false}
+  id="file"
+  name="csv file"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="file"
+/>
+`;

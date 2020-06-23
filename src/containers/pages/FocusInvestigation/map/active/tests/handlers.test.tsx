@@ -1,9 +1,11 @@
 import { Popup } from 'mapbox-gl';
-import { popupHandler } from '../index';
+import { buildOnClickHandler } from '../helpers/utils';
+
+const popupHandler = buildOnClickHandler('');
 
 window.URL.createObjectURL = jest.fn();
 
-describe('helpers/handlers', () => {
+describe('activeFIMap/helpers/utils.popup', () => {
   it('calls queryRenderedFeatures', () => {
     const event = {
       lngLat: {
@@ -77,8 +79,10 @@ describe('helpers/handlers', () => {
       Popup: mockedPopup,
     };
 
-    popupHandler(event as any);
+    const mockMap: any = {};
 
-    expect(addToMock).toHaveBeenCalledWith({ _container: { id: 'map-1' }, isStyleLoaded: true });
+    popupHandler(mockMap, event as any);
+
+    expect(addToMock).toHaveBeenCalledWith({});
   });
 });

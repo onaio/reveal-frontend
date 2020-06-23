@@ -1,3 +1,4 @@
+import { renderTable } from '@onaio/drill-down-table';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -46,7 +47,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     );
   });
 
-  it('renders plan definition list correctly', () => {
+  it('renders plan definition list correctly', async () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const props = {
       history,
@@ -69,12 +70,15 @@ describe('components/IRS Reports/IRSPlansList', () => {
         <IRSPlansList {...props} />
       </Router>
     );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
-    expect(toJson(wrapper.find('thead tr th'))).toMatchSnapshot('table headers');
-    expect(toJson(wrapper.find('tbody tr td'))).toMatchSnapshot('table rows');
+    expect(toJson(wrapper.find('.thead .tr .th'))).toMatchSnapshot('table headers');
+    expect(toJson(wrapper.find('.tbody .tr .td'))).toMatchSnapshot('table rows');
     expect(wrapper.find('GenericPlansList').length).toBe(1);
     expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('GenericPlansList props');
+    renderTable(wrapper, 'the full rendered rows');
     wrapper.unmount();
   });
 
@@ -103,6 +107,9 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
     expect((wrapper.find('GenericPlansList').props() as any).plans).toMatchSnapshot(
       'search results props'
     );
@@ -140,13 +147,12 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
-    expect(
-      wrapper
-        .find('tbody tr td')
-        .find('Link')
-        .at(0)
-        .text()
-    ).toEqual('Berg Namibia 2019');
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    expect((wrapper.find('GenericPlansList').props() as any).plans).toMatchSnapshot(
+      'search results props'
+    );
   });
 
   it('renders empty table if no search matches', async () => {
@@ -174,6 +180,10 @@ describe('components/IRS Reports/IRSPlansList', () => {
         </Router>
       </Provider>
     );
-    expect(toJson(wrapper.find('tbody tr'))).toEqual(null);
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+    expect((wrapper.find('GenericPlansList').props() as any).plans).toMatchSnapshot(
+      'search results props'
+    );
   });
 });

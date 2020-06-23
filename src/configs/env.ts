@@ -24,6 +24,11 @@ export type GA_ENV = typeof GA_ENV;
 export const ENABLE_ASSIGN = process.env.REACT_APP_ENABLE_ASSIGN === 'true';
 export type ENABLE_ASSIGN = typeof ENABLE_ASSIGN;
 
+/** Do you want to enable Jurisdiction Metadata Upload */
+export const ENABLE_JURISDICTION_METADATA_UPLOAD =
+  process.env.REACT_APP_ENABLE_JURISDICTION_METADATA_UPLOAD === 'true';
+export type ENABLE_JURISDICTION_METADATA_UPLOAD = typeof ENABLE_JURISDICTION_METADATA_UPLOAD;
+
 /** Do you want to enable the IRS features? */
 export const ENABLE_IRS = process.env.REACT_APP_ENABLE_IRS === 'true';
 export type ENABLE_IRS = typeof ENABLE_IRS;
@@ -302,7 +307,7 @@ export type REACT_APP_NAME = typeof REACT_APP_NAME;
 
 /** list of plan types to be added to intervention type field when adding plans */
 export const ENABLED_PLAN_TYPES = String(
-  process.env.REACT_APP_ENABLED_PLAN_TYPES || 'MDA,MDA-Point,FI,IRS'
+  process.env.REACT_APP_ENABLED_PLAN_TYPES || 'FI,IRS,MDA,MDA-Point'
 ).split(',');
 export type ENABLED_PLAN_TYPES = typeof ENABLED_PLAN_TYPES;
 

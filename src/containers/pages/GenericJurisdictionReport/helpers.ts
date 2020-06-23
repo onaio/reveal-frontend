@@ -1,106 +1,75 @@
-import { CellInfo, Column } from 'react-table';
+import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
+import { Dictionary } from '@onaio/utils';
+import { Cell } from 'react-table';
 import { getIRSThresholdAdherenceIndicator } from '../../../helpers/indicators';
 
 /** columns for Namibia IRS jurisdictions */
 export const NamibiaColumns = [
   {
     Header: 'Name',
-    columns: [
-      {
-        Header: '',
-        accessor: 'jurisdiction_name',
-        minWidth: 180,
-      },
-    ],
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
   },
   {
     Header: 'Structures Targeted',
-    columns: [
-      {
-        Header: '',
-        accessor: 'target_2019',
-      },
-    ],
+    accessor: 'target_2019',
   },
   {
     Header: 'Structures Found',
-    columns: [
-      {
-        Header: '',
-        accessor: 'structuresfound',
-      },
-    ],
+    accessor: 'structuresfound',
   },
   {
     Header: 'Structures Sprayed',
-    columns: [
-      {
-        Header: '',
-        accessor: 'structuressprayed',
-      },
-    ],
+    accessor: 'structuressprayed',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Target Coverage',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'targetcoverage',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'targetcoverage',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'foundcoverage',
-        className: 'indicator centered',
-      },
-    ],
+
+    accessor: 'foundcoverage',
   },
   {
     Header: 'Refusals',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell, null),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following first visit',
         accessor: 'refusalsfirst',
-        className: 'indicator centered',
+
         id: 'refusalsfirst',
       },
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell, null),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following mop-up',
         accessor: 'refusalsmopup',
-        className: 'indicator centered',
+
         id: 'refusalsmopup',
       },
     ],
-    headerClassName: 'centered',
   },
   {
     Header: 'Locked',
     columns: [
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell, null),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following first visit',
         accessor: 'lockedfirst',
-        className: 'indicator centered',
+
         id: 'lockedfirst',
       },
       {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell, null),
+        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following mop-up',
         accessor: 'lockedmopup',
-        className: 'indicator centered',
+
         id: 'lockedmopup',
       },
     ],
-    headerClassName: 'centered',
   },
 ];
 
@@ -108,91 +77,43 @@ export const NamibiaColumns = [
 export const ZambiaJurisdictionsColumns = [
   {
     Header: 'Name',
-    columns: [
-      {
-        Header: '',
-        accessor: 'jurisdiction_name',
-        minWidth: 180,
-      },
-    ],
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
   },
   {
     Header: 'Total Spray Areas',
-    columns: [
-      {
-        Header: '',
-        accessor: 'totareas',
-      },
-    ],
+    accessor: 'totareas',
   },
   {
     Header: 'Targeted Spray Areas',
-    columns: [
-      {
-        Header: '',
-        accessor: 'targareas',
-      },
-    ],
+    accessor: 'targareas',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: '% visited Spray Areas Effectively sprayed',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'perctvisareaseffect',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'perctvisareaseffect',
   },
   {
     Header: 'Total Structures',
-    columns: [
-      {
-        Header: '',
-        accessor: 'totstruct',
-      },
-    ],
+    accessor: 'totstruct',
   },
   {
     Header: 'Targeted Structures',
-    columns: [
-      {
-        Header: '',
-        accessor: 'targstruct',
-      },
-    ],
+    accessor: 'targstruct',
   },
   {
     Header: 'Sprayed Structures',
-    columns: [
-      {
-        Header: '',
-        accessor: 'sprayedstruct',
-      },
-    ],
+    accessor: 'sprayedstruct',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray coverage of targeted (Progress)',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'spraycovtarg',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'spraycovtarg',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Room coverage of structures sprayed',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'roomcov',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'roomcov',
   },
 ];
 
@@ -200,88 +121,43 @@ export const ZambiaJurisdictionsColumns = [
 export const mdaJurisdictionsColumns = [
   {
     Header: 'Name',
-    columns: [
-      {
-        Header: '',
-        accessor: 'jurisdiction_name',
-        minWidth: 180,
-      },
-    ],
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
   },
   {
     Header: 'Total SACs Registered',
-    columns: [
-      {
-        Header: '',
-        accessor: 'sacregistered',
-      },
-    ],
+    accessor: 'sacregistered',
   },
   {
     Header: 'MMA Coverage',
-    columns: [
-      {
-        Header: '',
-        accessor: 'mmacov',
-      },
-    ],
+    accessor: 'mmacov',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'MMA Coverage (%)',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'mmacovper',
-      },
-    ],
+    accessor: 'mmacovper',
   },
   {
     Header: 'SACs Refused',
-    columns: [
-      {
-        Header: '',
-        accessor: 'sacrefused',
-      },
-    ],
+    accessor: 'sacrefused',
   },
   {
     Header: 'SACs Sick/Pregnant/Contraindicated',
-    columns: [
-      {
-        Header: '',
-        accessor: 'sacrefmedreason',
-      },
-    ],
+    accessor: 'sacrefmedreason',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'ADR Reported (%)',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'mmaadr',
-      },
-    ],
+    accessor: 'mmaadr',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'ADR Severe (%)',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'mmaadrsev',
-      },
-    ],
+    accessor: 'mmaadrsev',
   },
   {
     Header: 'Alb Tablets Distributed',
-    columns: [
-      {
-        Header: '',
-        accessor: 'albdist',
-      },
-    ],
+    accessor: 'albdist',
   },
 ];
 
@@ -289,93 +165,66 @@ export const mdaJurisdictionsColumns = [
 export const ZambiaFocusAreasColumns = [
   {
     Header: 'Name',
-    columns: [
-      {
-        Header: '',
-        accessor: 'jurisdiction_name',
-        minWidth: 180,
-      },
-    ],
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
   },
   {
     Header: 'Structures on the ground',
-    columns: [
-      {
-        Header: '',
-        accessor: 'totstruct',
-      },
-    ],
+    accessor: 'totstruct',
   },
   {
     Header: 'Found',
-    columns: [
-      {
-        Header: '',
-        accessor: 'foundstruct',
-      },
-    ],
+    accessor: 'foundstruct',
   },
   {
     Header: 'Sprayed',
-    columns: [
-      {
-        Header: '',
-        accessor: 'sprayedstruct',
-      },
-    ],
+    accessor: 'sprayedstruct',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray Coverage (Effectiveness)',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'spraycov',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'spraycov',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'spraytarg',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'spraytarg',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray Success Rate (PMI SC)',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'spraysuccess',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'spraysuccess',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Room coverage of structures sprayed',
-    columns: [
-      {
-        Cell: (cell: CellInfo) => getIRSThresholdAdherenceIndicator(cell),
-        Header: '',
-        accessor: 'roomcov',
-        className: 'indicator centered',
-      },
-    ],
+    accessor: 'roomcov',
   },
 ];
 
 /** IRS Table Columns
  * These are all the table columns for IRS that we know about.
  */
-export const plansTableColumns: { [key: string]: Column[] } = {
+export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionary>> } = {
   mdaJurisdictionsColumns,
   namibia2019: NamibiaColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
   zambiaJurisdictions2019: ZambiaJurisdictionsColumns,
 };
+
+export type TableProps = Pick<
+  DrillDownTableProps<Dictionary>,
+  | 'columns'
+  | 'CellComponent'
+  | 'data'
+  | 'extraCellProps'
+  | 'getTdProps'
+  | 'identifierField'
+  | 'linkerField'
+  | 'paginate'
+  | 'parentIdentifierField'
+  | 'resize'
+  | 'rootParentId'
+  | 'useDrillDown'
+  | 'renderNullDataComponent'
+>;

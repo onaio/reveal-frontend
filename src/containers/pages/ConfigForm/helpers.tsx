@@ -7,6 +7,6 @@ import { getPayloadOptions } from '../../../services/opensrp';
 export const defaultConfigProps = {
   LoadingComponent: <Loading />,
   baseURL: OPENSRP_API_BASE_URL,
+  customAlert: growl,
   getPayload: getPayloadOptions,
-  growl,
 };
