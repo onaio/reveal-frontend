@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { Button, Col, FormGroup, Row } from 'reactstrap';
 import { SelectField, SelectOption } from '../../../../../components/TreeWalker/SelectField';
 import { OpenSRPJurisdiction } from '../../../../../components/TreeWalker/types';
-import { SAVE, SAVING, TEAM_ASSIGNEMENT_SUCCESSFUL } from '../../../../../configs/lang';
+import { CLOSE, SAVE, SAVING, TEAM_ASSIGNEMENT_SUCCESSFUL } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { OPENSRP_POST_ASSIGNMENTS_ENDPOINT } from '../../../../../constants';
 import { successGrowl } from '../../../../../helpers/utils';
@@ -16,6 +16,10 @@ export interface AssignmentFormProps {
   defaultValue: SelectOption[];
   existingAssignments: Assignment[];
   jurisdiction: OpenSRPJurisdiction | null;
+  messages: {
+    fieldError: string;
+    loadFormError: string;
+  };
   options: SelectOption[];
   plan: PlanDefinition | null;
   submitCallBackFunc: (assignments: Assignment[]) => void;
@@ -27,6 +31,10 @@ export const defaultAssignmentProps: AssignmentFormProps = {
   defaultValue: [],
   existingAssignments: [],
   jurisdiction: null,
+  messages: {
+    fieldError: 'Did not save successfully',
+    loadFormError: 'Could not load the form.',
+  },
   options: [],
   plan: null,
   submitCallBackFunc: () => null,
@@ -43,6 +51,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
     defaultValue,
     existingAssignments,
     jurisdiction,
+    messages,
     options,
     plan,
     submitCallBackFunc,
@@ -50,7 +59,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
   } = props;
 
   if (!jurisdiction || !plan) {
-    return <span>Could not load the form.</span>;
+    return <span>{messages.loadFormError}</span>;
   }
 
   const initialValues: FormValues = {
@@ -76,7 +85,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
           successNotifierBackFunc(TEAM_ASSIGNEMENT_SUCCESSFUL);
           submitCallBackFunc(payload);
         } else {
-          setFieldError('organizations', "Didn't save successfully");
+          setFieldError('organizations', messages.fieldError);
         }
       })
       .finally(() => setSubmitting(false))
@@ -111,7 +120,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
                     type="button"
                     onClick={cancelCallBackFunc}
                   >
-                    Close
+                    {CLOSE}
                   </Button>
                 </Col>
                 <Col md="6">
