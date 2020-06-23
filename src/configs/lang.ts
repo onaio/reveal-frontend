@@ -35,6 +35,7 @@ export const ON_REROUTE_WITH_UNSAVED_CHANGES = translate(
 );
 export const HOME_TITLE = translate('HOME_TITLE', 'Home page');
 export const IRS_TITLE = translate('IRS_TITLE', 'IRS');
+export const PLANNING_PAGE_TITLE = translate('PLANNING_PAGE_TITLE', 'Planning tool');
 export const IRS_REPORTING_TITLE = translate('IRS_REPORTING_TITLE', 'IRS Reporting');
 export const CONDITIONAL_FORMATTING_RULES = translate(
   'CONDITIONAL_FORMATTING_RULES',
@@ -602,3 +603,5 @@ export const CUSTOMIZE_COLUMNS_FILTER_MESSAGE = translate(
   'CUSTOMIZE_COLUMNS_FILTER_MESSAGE',
   'Select columns to be displayed'
 );
+
+export const DRAFT_PLANS = translate('DRAFT PLANS', 'Draft plans');
