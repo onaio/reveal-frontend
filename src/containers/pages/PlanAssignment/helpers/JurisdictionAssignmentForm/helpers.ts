@@ -19,37 +19,42 @@ export const getPayload = (
   const assignmentsByOrgId = keyBy(existingAssignments, 'organization');
 
   for (const orgId of selectedOrgs) {
-    if (initialOrgs.includes(orgId)) {
+    if (!payload.map(obj => obj.organization).includes(orgId)) {
+      if (initialOrgs.includes(orgId)) {
+        // we should not change the fromDate, ever (the API will reject it)
+        const thisAssignment = get(assignmentsByOrgId, orgId);
+        if (thisAssignment) {
+          startDate = thisAssignment.fromDate;
+        }
+      }
+      payload.push({
+        fromDate: startDate,
+        jurisdiction: selectedJurisdiction.id,
+        organization: orgId,
+        plan: selectedPlan.identifier,
+        toDate: endDate,
+      });
+    }
+  }
+
+  // turns out if you put it in the loop it keeps subtracting a day for every iteration
+  const retireDate = now.subtract(1, 'day').format();
+
+  for (const retiredOrgId of initialOrgs.filter(orgId => !selectedOrgs.includes(orgId))) {
+    if (!payload.map(obj => obj.organization).includes(retiredOrgId)) {
       // we should not change the fromDate, ever (the API will reject it)
-      const thisAssignment = get(assignmentsByOrgId, orgId);
+      const thisAssignment = get(assignmentsByOrgId, retiredOrgId);
       if (thisAssignment) {
         startDate = thisAssignment.fromDate;
       }
+      payload.push({
+        fromDate: startDate,
+        jurisdiction: selectedJurisdiction.id,
+        organization: retiredOrgId,
+        plan: selectedPlan.identifier,
+        toDate: retireDate,
+      });
     }
-
-    payload.push({
-      fromDate: startDate,
-      jurisdiction: selectedJurisdiction.id,
-      organization: orgId,
-      plan: selectedPlan.identifier,
-      toDate: endDate,
-    });
-  }
-
-  for (const retiredOrgId of initialOrgs.filter(orgId => !selectedOrgs.includes(orgId))) {
-    // we should not change the fromDate, ever (the API will reject it)
-    const thisAssignment = get(assignmentsByOrgId, retiredOrgId);
-    if (thisAssignment) {
-      startDate = thisAssignment.fromDate;
-    }
-
-    payload.push({
-      fromDate: startDate,
-      jurisdiction: selectedJurisdiction.id,
-      organization: retiredOrgId,
-      plan: selectedPlan.identifier,
-      toDate: moment(now.subtract(1, 'day')).format(),
-    });
   }
 
   return payload;
