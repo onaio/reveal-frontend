@@ -102,6 +102,7 @@ export const CLIENTS_LIST_URL = '/clients';
 export const UPLOAD_CLIENT_CSV_URL = '/clients/upload';
 export const UPLOAD_JURISDICTION_METADATA_URL = '/jurisdiction-metadata/upload';
 export const GO_BACK_TEXT = 'Go Back';
+export const PLANNING_VIEW_URL = '/plans/planning';
 /** how long after opening a logout window should we wait before redirecting to express' server logout
  * I am not sure the optimum value for this, mozilla firefox seems to take some
  * time loading up the logoutWindow and actually making the request.
