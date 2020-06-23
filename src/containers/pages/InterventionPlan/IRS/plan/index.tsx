@@ -38,7 +38,7 @@ import {
   SAVE_PLAN_NO_JURISDICTIONS_ERROR,
   SELECT_JURISDICTIONS,
   SPRAY_AREA_HEADER,
-  TEAM_ASSIGNEMENT_SUCCESSFUL,
+  TEAM_ASSIGNMENT_SUCCESSFUL,
   TEAMS_ASSIGNMENT,
   TYPE_LABEL,
 } from '../../../../../configs/lang';
@@ -2198,7 +2198,7 @@ class IrsPlan extends React.Component<
               );
 
               const successGrowl = () =>
-                growl(TEAM_ASSIGNEMENT_SUCCESSFUL, {
+                growl(TEAM_ASSIGNMENT_SUCCESSFUL, {
                   type: toast.TYPE.SUCCESS,
                 });
 
