@@ -3,7 +3,7 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import NewIRSPlan from '../index';
+import NewDraftPlan from '../index';
 import { planFormProps } from './fixtures';
 
 const history = createBrowserHistory();
@@ -14,13 +14,13 @@ describe('containers/pages/NewIRSPlan', () => {
   });
 
   it('renders without crashing', () => {
-    shallow(<NewIRSPlan />);
+    shallow(<NewDraftPlan />);
   });
 
   it('renders correctly', () => {
     const wrapper = mount(
       <Router history={history}>
-        <NewIRSPlan />
+        <NewDraftPlan />
       </Router>
     );
 
