@@ -1,10 +1,12 @@
 import { ActionCreator, AnyAction } from 'redux';
 import { USER_HAS_NO_PLAN_ASSIGNMENTS } from '../../configs/lang';
-import { OPENSRP_PLANS_BY_USER_FILTER } from '../../constants';
+import { OPENSRP_PLANS, OPENSRP_PLANS_BY_USER_FILTER } from '../../constants';
 import { OpenSRPService } from '../../services/opensrp';
 import store from '../../store';
 import { fetchPlansByUser, FetchPlansByUserAction } from '../../store/ducks/opensrp/planIdsByUser';
+import { FetchPlanRecordsAction, PlanPayload, PlanRecordResponse } from '../../store/ducks/plans';
 import { displayError } from '../errors';
+import { extractPlanRecordResponseFromPlanPayload } from '../utils';
 
 /** find plans that the given user has access to
  * @param {string} userName - username
@@ -34,3 +36,28 @@ export async function loadPlansByUserFilter<T>(
       displayError(err);
     });
 }
+
+/** fetch plans payload from the opensrp api
+ * @param {OpenSRPService} service - openSRPService
+ * @param {ActionCreator<FetchPlanRecordsAction>} actionCreator - action creator for fetchPlanRecords
+ * @param {Dispatch<SetStateAction<boolean>>} - setState function
+ */
+export const loadOpenSRPPlans = (
+  service: typeof OpenSRPService,
+  actionCreator: ActionCreator<FetchPlanRecordsAction>,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
+) => {
+  const OpenSrpPlanService = new service(OPENSRP_PLANS);
+  OpenSrpPlanService.list()
+    .then((plans: PlanPayload[]) => {
+      const extractedPlanRecords = plans
+        .map(plan => extractPlanRecordResponseFromPlanPayload(plan))
+        .filter(plan => !!plan);
+      actionCreator(extractedPlanRecords as PlanRecordResponse[]);
+      setLoading(false);
+    })
+    .catch(err => {
+      setLoading(false);
+      displayError(err);
+    });
+};
