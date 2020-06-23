@@ -3,7 +3,14 @@ import React, { Fragment } from 'react';
 import { Button, Col, FormGroup, Row } from 'reactstrap';
 import { SelectField, SelectOption } from '../../../../../components/TreeWalker/SelectField';
 import { OpenSRPJurisdiction } from '../../../../../components/TreeWalker/types';
-import { CLOSE, SAVE, SAVING, TEAM_ASSIGNMENT_SUCCESSFUL } from '../../../../../configs/lang';
+import {
+  CLOSE,
+  COULD_NOT_LOAD_FORM,
+  DID_NOT_SAVE_SUCCESSFULLY,
+  SAVE,
+  SAVING,
+  TEAM_ASSIGNMENT_SUCCESSFUL,
+} from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { OPENSRP_POST_ASSIGNMENTS_ENDPOINT } from '../../../../../constants';
 import { successGrowl } from '../../../../../helpers/utils';
@@ -32,8 +39,8 @@ export const defaultAssignmentProps: AssignmentFormProps = {
   existingAssignments: [],
   jurisdiction: null,
   messages: {
-    fieldError: 'Did not save successfully',
-    loadFormError: 'Could not load the form.',
+    fieldError: DID_NOT_SAVE_SUCCESSFULLY,
+    loadFormError: COULD_NOT_LOAD_FORM,
   },
   options: [],
   plan: null,
