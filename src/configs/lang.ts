@@ -176,6 +176,7 @@ export const ADMIN = translate('ADMIN', 'Admin');
 export const DRAFTS_PARENTHESIS = translate('DRAFTS_PARENTHESIS', '(drafts)');
 export const CONFIRM = translate('CONFIRM', 'Confirm');
 export const CANCEL = translate('CANCEL', 'Cancel');
+export const CLOSE = translate('CLOSE', 'Close');
 export const JURISDICTION = translate('JURISDICTION', 'Jurisdiction');
 export const ADMIN_LEVEL = translate('ADMIN_LEVEL', 'Admin Level');
 export const DISTRICT = translate('DISTRICT', 'District');
