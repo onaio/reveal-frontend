@@ -19,6 +19,7 @@ export interface AssignmentFormProps {
   options: SelectOption[];
   plan: PlanDefinition | null;
   submitCallBackFunc: (assignments: Assignment[]) => void;
+  successNotifierBackFunc: (message: string) => void;
 }
 
 export const defaultAssignmentProps: AssignmentFormProps = {
@@ -29,6 +30,7 @@ export const defaultAssignmentProps: AssignmentFormProps = {
   options: [],
   plan: null,
   submitCallBackFunc: () => null,
+  successNotifierBackFunc: successGrowl,
 };
 
 interface FormValues {
@@ -44,6 +46,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
     options,
     plan,
     submitCallBackFunc,
+    successNotifierBackFunc,
   } = props;
 
   if (!jurisdiction || !plan) {
@@ -70,7 +73,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
     OpenSrpAssignmentService.create(payload)
       .then(response => {
         if (response) {
-          successGrowl(TEAM_ASSIGNEMENT_SUCCESSFUL);
+          successNotifierBackFunc(TEAM_ASSIGNEMENT_SUCCESSFUL);
           submitCallBackFunc(payload);
         } else {
           setFieldError('organizations', "Didn't save successfully");
