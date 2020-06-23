@@ -36,7 +36,7 @@ exports[`PlanAssignment/JurisdictionAssignmentForm renders without crashing: Sub
 Array [
   <button
     aria-label={null}
-    className="btn-block btn btn-secondary btn-sm"
+    className="btn-block cancel btn btn-secondary btn-sm"
     onClick={[Function]}
     type="button"
   >
@@ -44,7 +44,7 @@ Array [
   </button>,
   <button
     aria-label={null}
-    className="btn-block btn btn-primary btn-sm"
+    className="btn-block submit btn btn-primary btn-sm"
     disabled={false}
     onClick={[Function]}
     type="submit"

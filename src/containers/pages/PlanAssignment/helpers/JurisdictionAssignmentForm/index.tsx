@@ -103,7 +103,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
               <Row>
                 <Col md="6">
                   <Button
-                    className="btn-block"
+                    className="btn-block cancel"
                     size="sm"
                     type="button"
                     onClick={cancelCallBackFunc}
@@ -113,7 +113,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
                 </Col>
                 <Col md="6">
                   <Button
-                    className="btn-block"
+                    className="btn-block submit"
                     color="primary"
                     size="sm"
                     type="submit"
