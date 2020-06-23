@@ -4,11 +4,6 @@ import { OpenSRPJurisdiction } from '../../../../../components/TreeWalker/types'
 import { PlanDefinition } from '../../../../../configs/settings';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 
-export interface Payload {
-  toCreate: Assignment[];
-  toUpdate: Assignment[];
-}
-
 export const getPayload = (
   selectedOrgs: string[],
   selectedPlan: PlanDefinition,
