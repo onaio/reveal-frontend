@@ -35,6 +35,7 @@ export const ON_REROUTE_WITH_UNSAVED_CHANGES = translate(
 );
 export const HOME_TITLE = translate('HOME_TITLE', 'Home page');
 export const IRS_TITLE = translate('IRS_TITLE', 'IRS');
+export const PLANNING_PAGE_TITLE = translate('PLANNING_PAGE_TITLE', 'Planning tool');
 export const IRS_REPORTING_TITLE = translate('IRS_REPORTING_TITLE', 'IRS Reporting');
 export const CONDITIONAL_FORMATTING_RULES = translate(
   'CONDITIONAL_FORMATTING_RULES',
@@ -658,3 +659,4 @@ export const AN_ERROR_OCURRED = translate(
   'An error ocurred. Please try and refresh the page.'
 );
 export const THE_SPECIFIC_ERROR_IS = translate('THE_SPECIFIC_ERROR_IS', 'The specific error is');
+export const DRAFT_PLANS = translate('DRAFT PLANS', 'Draft plans');
