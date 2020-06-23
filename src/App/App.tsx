@@ -69,6 +69,7 @@ import {
   MDA_POINT_LOCATION_REPORT_URL,
   NEW_IRS_PLAN_URL,
   NEW_PLAN_URL,
+  NEW_PLANNING_PLAN_URL,
   ORGANIZATIONS_LIST_URL,
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
@@ -96,7 +97,7 @@ import ConnectedPlanCompletion from '../containers/pages/FocusInvestigation/map/
 import Home from '../containers/pages/Home/Home';
 import IrsPlan from '../containers/pages/InterventionPlan/IRSPlan';
 import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
-import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
+import { NewPlanningDraftPlan } from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import ConnectedDraftPlans from '../containers/pages/InterventionPlan/PlanningView/DraftPlans';
 import IrsPlans from '../containers/pages/InterventionPlan/PlanningView/IRS';
@@ -201,7 +202,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={NEW_IRS_PLAN_URL}
-                  component={NewIRSPlan}
+                  component={NewPlan}
                 />
                 {/* Draft IRS Plan Jurisdiction Selection view */}
                 <ConnectedPrivateRoute
@@ -509,6 +510,13 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={PLANNING_VIEW_URL}
                   component={ConnectedDraftPlans}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={NEW_PLANNING_PLAN_URL}
+                  component={NewPlanningDraftPlan}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
