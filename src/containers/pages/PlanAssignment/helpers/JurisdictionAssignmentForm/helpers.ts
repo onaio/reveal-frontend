@@ -4,6 +4,18 @@ import { OpenSRPJurisdiction } from '../../../../../components/TreeWalker/types'
 import { PlanDefinition } from '../../../../../configs/settings';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 
+/**
+ * Get assignments payload
+ *
+ * Takes values from the JurisdictionAssignmentForm component and generates a payload
+ * of assignments ready to be sent to the OpenSRP API.
+ *
+ * @param selectedOrgs - an array of the selected organization ids
+ * @param selectedPlan - the selected plan definition object
+ * @param selectedJurisdiction - the selected OpenSRP jurisdiction
+ * @param initialOrgs - an array of initial (existing) organization ids
+ * @param existingAssignments - an array of Assignment objects that exist for this plan/jurisdiction
+ */
 export const getPayload = (
   selectedOrgs: string[],
   selectedPlan: PlanDefinition,
