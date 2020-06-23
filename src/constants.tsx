@@ -108,6 +108,7 @@ export const MANIFEST_RELEASE_URL = '/manifest/releases';
 export const VIEW_DRAFT_FILES_URL = '/files/draft';
 export const JSON_VALIDATORS_URL = '/json-validators';
 export const MANIFEST_FILE_UPLOAD = '/manifest';
+export const PLANNING_VIEW_URL = '/plans/planning';
 /** how long after opening a logout window should we wait before redirecting to express' server logout
  * I am not sure the optimum value for this, mozilla firefox seems to take some
  * time loading up the logoutWindow and actually making the request.

@@ -73,6 +73,7 @@ import {
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
+  PLANNING_VIEW_URL,
   PRACTITIONERS_LIST_URL,
   REACT_CALLBACK_PATH,
   REACT_LOGIN_URL,
@@ -97,6 +98,7 @@ import IrsPlan from '../containers/pages/InterventionPlan/IRSPlan';
 import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
+import ConnectedDraftPlans from '../containers/pages/InterventionPlan/PlanningView/DraftPlans';
 import IrsPlans from '../containers/pages/InterventionPlan/PlanningView/IRS';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments';
@@ -500,6 +502,13 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={UPLOAD_JURISDICTION_METADATA_URL}
                   component={JurisdictionMetadata}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={PLANNING_VIEW_URL}
+                  component={ConnectedDraftPlans}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
