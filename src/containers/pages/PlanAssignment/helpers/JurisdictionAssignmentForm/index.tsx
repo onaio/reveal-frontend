@@ -18,21 +18,25 @@ import { OpenSRPService } from '../../../../../services/opensrp';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 import { getPayload } from './helpers';
 
+/** Props for JurisdictionAssignmentForm */
 export interface AssignmentFormProps {
-  cancelCallBackFunc: () => void;
-  defaultValue: SelectOption[];
+  cancelCallBackFunc: () => void /** callback for when the cancel button is clicked */;
+  defaultValue: SelectOption[] /** array of the currently selected (or default value) organization identifiers */;
   existingAssignments: Assignment[];
   jurisdiction: OpenSRPJurisdiction | null;
   messages: {
     fieldError: string;
     loadFormError: string;
-  };
-  options: SelectOption[];
+  } /** Messages to be displayed in the form */;
+  options: SelectOption[] /** array of organization identifiers to be selected */;
   plan: PlanDefinition | null;
-  submitCallBackFunc: (assignments: Assignment[]) => void;
-  successNotifierBackFunc: (message: string) => void;
+  submitCallBackFunc: (
+    assignments: Assignment[]
+  ) => void /** callback after form is successfully submitted */;
+  successNotifierBackFunc: (message: string) => void /** callback for form success message */;
 }
 
+/** Default props for JurisdictionAssignmentForm */
 export const defaultAssignmentProps: AssignmentFormProps = {
   cancelCallBackFunc: () => null,
   defaultValue: [],
@@ -48,10 +52,18 @@ export const defaultAssignmentProps: AssignmentFormProps = {
   successNotifierBackFunc: successGrowl,
 };
 
+/** Form values for JurisdictionAssignmentForm */
 interface FormValues {
   organizations: string[];
 }
 
+/**
+ * JurisdictionAssignmentForm
+ *
+ * This form is used to assign organizations to plans and jurisdictions
+ *
+ * @param props - the props
+ */
 const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
   const {
     cancelCallBackFunc,
