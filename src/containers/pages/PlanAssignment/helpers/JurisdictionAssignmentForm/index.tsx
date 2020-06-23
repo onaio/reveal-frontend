@@ -47,7 +47,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
   } = props;
 
   if (!jurisdiction || !plan) {
-    return <span>something bad happened</span>;
+    return <span>Could not load the form.</span>;
   }
 
   const initialValues: FormValues = {
@@ -99,7 +99,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
                 className="form-text text-danger name-error"
               />
             </FormGroup>
-            <FormGroup className="submit-group">
+            <FormGroup className="submit-group" id="submit-group">
               <Row>
                 <Col md="6">
                   <Button
