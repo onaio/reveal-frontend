@@ -91,4 +91,32 @@ describe('PlanAssignment/JurisdictionAssignmentForm', () => {
 
     wrapper.unmount();
   });
+
+  it('form errors as expected', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 400 });
+
+    const submitMock: any = jest.fn();
+
+    const props = {
+      defaultValue: [{ label: 'Team X', value: 'x' }],
+      jurisdiction: openSRPJurisdiction,
+      options: [
+        { label: 'Team X', value: 'x' },
+        { label: 'Team Y', value: 'y' },
+      ],
+      plan: plans[1],
+      submitCallBackFunc: submitMock,
+    };
+
+    const wrapper = mount(<JurisdictionAssignmentForm {...props} />);
+
+    wrapper.find('form').simulate('submit');
+    await flushPromises();
+    wrapper.update();
+
+    expect(submitMock).toHaveBeenCalledTimes(0);
+    expect(toJson(wrapper.find('p.assignments-error'))).toMatchSnapshot('Form error');
+
+    wrapper.unmount();
+  });
 });
