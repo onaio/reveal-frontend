@@ -204,7 +204,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={NEW_IRS_PLAN_URL}
-                  component={NewIRSPlan}
+                  component={NewPlan}
                 />
                 {/* Draft IRS Plan Jurisdiction Selection view */}
                 <ConnectedPrivateRoute
@@ -523,6 +523,13 @@ const App = (props: AppProps) => {
 =======
                   component={ConnectedDraftPlans}
 >>>>>>> Attach route to handle planning url
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={NEW_PLANNING_PLAN_URL}
+                  component={NewPlanningDraftPlan}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
