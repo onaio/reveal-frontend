@@ -66,13 +66,6 @@ export default function reducer(
 ) {
   switch (action.type) {
     case ASSIGNMENTS_FETCHED:
-      if (state.assignmentsByPlanId.asMutable() === {}) {
-        return SeamlessImmutable({
-          ...state,
-          assignmentsByPlanId: action.assignmentsByPlanId,
-        });
-      }
-
       if (!action.overwrite) {
         // so what we want to do is to ensure all action.assignmentsByPlanId arrays of the
         // same plan are merged.  But while merging we want to that the array elements are
