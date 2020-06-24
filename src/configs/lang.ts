@@ -592,16 +592,16 @@ export const VIEW_FILES_LABEL = translate('VIEW_FILES_LABEL', 'View Files');
 export const APP_ID_LABEL = translate('APP_ID_LABEL', 'APP Id');
 export const APP_VERSION_LABEL = translate('APP_VERSION_LABEL', 'App Version');
 export const RELATED_TO_LABEL = translate('RELATED_TO_LABEL', 'Related to');
-export const FILE_UPLOAD_LABEL = translate('FILE_UPLOAD_LABEL', 'Upload file');
+export const FILE_UPLOAD_LABEL = translate('FILE_UPLOAD_LABEL', 'Upload files');
 export const FORM_REQUIRED_LABEL = translate('FORM_REQUIRED_LABEL', 'Form is required');
 export const FORM_NAME_REQUIRED_LABEL = translate(
   'FORM_NAME_REQUIRED_LABEL',
   'Form name is required'
 );
 export const FIND_RELEASE_LABEL = translate('FIND_RELEASE_LABEL', 'Find Releases');
-export const FIND_DRAFT_FILE_LABEL = translate('FIND_DRAFT_FILE_LABEL', 'Find Draft File');
-export const FIND_RELEASE_FILES = translate('FIND_RELEASE_FILES', 'Find Release File');
-export const FIND_VALIDATOR_FILES = translate('FIND_VALIDATOR_FILES', 'Find Validator File');
+export const FIND_DRAFT_FILE_LABEL = translate('FIND_DRAFT_FILE_LABEL', 'Find Draft Files');
+export const FIND_RELEASE_FILES = translate('FIND_RELEASE_FILES', 'Find Release Files');
+export const FIND_VALIDATOR_FILES = translate('FIND_VALIDATOR_FILES', 'Find Validator Files');
 
 export const FILE = translate('FILE', 'File');
 export const FILE_FORMAT = translate('FILE_FORMAT', 'fileFormat');
