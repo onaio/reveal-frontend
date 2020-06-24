@@ -18,7 +18,6 @@ describe('PlanAssignment/EditOrgs', () => {
     const growlMock: any = jest.fn();
 
     const props = {
-      // cancelCallBackFunc: cancelMock,
       defaultValue: [{ label: 'Team X', value: 'x' }],
       existingAssignments: [assignment4],
       jurisdiction: openSRPJurisdiction,
