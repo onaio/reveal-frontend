@@ -1,10 +1,8 @@
 import { ConnectedManifestFilesList } from '@opensrp/form-config';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
-import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
   DOWNLOAD_LABEL,
@@ -30,14 +28,9 @@ import {
 import { RouteParams } from '../../../../../helpers/utils';
 import { defaultConfigProps } from '../../helpers';
 
-/** manifest files props interface */
-interface ManifestFilesProps {
-  formVersion: string;
-}
-
 /** simple wrapper for manifest file lists component */
-const ManifestFiles = (props: ManifestFilesProps) => {
-  const { formVersion } = props;
+const ManifestFiles = (props: RouteComponentProps<RouteParams>) => {
+  const formVersion = props.match.params.id || '';
   const breadcrumbProps = {
     currentPage: {
       label: formVersion,
@@ -89,20 +82,4 @@ const ManifestFiles = (props: ManifestFilesProps) => {
   );
 };
 
-/** Map props to state
- * @param {Partial<Store>} -  the  redux store
- */
-const mapStateToProps = (
-  _: Partial<Store>,
-  ownProps: RouteComponentProps<RouteParams>
-): ManifestFilesProps => {
-  const formVersion = ownProps.match.params.id || '';
-  return {
-    formVersion,
-  };
-};
-
-/** Connected ManifestFiles component */
-const ConnectedManifestFiles = connect(mapStateToProps)(ManifestFiles);
-
-export default ConnectedManifestFiles;
+export default ManifestFiles;

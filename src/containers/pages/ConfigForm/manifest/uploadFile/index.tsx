@@ -1,10 +1,8 @@
 import { ConnectedUploadConfigFile } from '@opensrp/form-config';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
-import { Store } from 'redux';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
   EDIT_FORM,
@@ -30,15 +28,10 @@ import {
 import { RouteParams } from '../../../../../helpers/utils';
 import { defaultConfigProps } from '../../helpers';
 
-/** UploadConfigFilePage interface */
-interface Pageprops {
-  formId: string | null;
-  isJsonValidator: boolean;
-}
-
 /** openSrp form config upload wrapper */
-const UploadConfigFilePage = (props: Pageprops) => {
-  const { formId, isJsonValidator } = props;
+const UploadConfigFilePage = (props: RouteComponentProps<RouteParams>) => {
+  const formId = props.match.params.id || null;
+  const isJsonValidator = props.match.params.type === VALIDATOR_UPLOAD_TYPE;
 
   const releasesPage = { label: MANIFEST_RELEASES, url: MANIFEST_RELEASE_URL };
   const validatorPage = { label: JSON_VALIDATORS, url: JSON_VALIDATORS_URL };
@@ -90,22 +83,4 @@ const UploadConfigFilePage = (props: Pageprops) => {
   );
 };
 
-/** Map props to state
- * @param {Partial<Store>} -  the  redux store
- */
-const mapStateToProps = (
-  _: Partial<Store>,
-  ownProps: RouteComponentProps<RouteParams>
-): Pageprops => {
-  const formId = ownProps.match.params.id || null;
-  const isJsonValidator = ownProps.match.params.type === VALIDATOR_UPLOAD_TYPE;
-  return {
-    formId,
-    isJsonValidator,
-  };
-};
-
-/** Connected UploadConfigFilePage component */
-const ConnectedUploadConfigFilePage = connect(mapStateToProps)(UploadConfigFilePage);
-
-export default ConnectedUploadConfigFilePage;
+export default UploadConfigFilePage;
