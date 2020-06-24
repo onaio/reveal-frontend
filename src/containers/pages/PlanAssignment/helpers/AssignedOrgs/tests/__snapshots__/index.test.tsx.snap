@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanAssignment/AssignedOrgs renders when no orgs: Org names 1`] = `null`;
+
+exports[`PlanAssignment/AssignedOrgs renders when no orgs: Tooltip 1`] = `null`;
