@@ -43,7 +43,7 @@ describe('containers/pages/ConfigForm/JSONValidator', () => {
     expect(wrapper.find('ManifestFilesList').props()).toMatchSnapshot();
 
     expect(wrapper.find('DrillDownTable').length).toEqual(1);
-    // tabe renders two rows - equal to data
+    // table renders two rows - equal to data
     expect(wrapper.find('.tbody .tr').length).toEqual(2);
 
     expect(wrapper.find('SearchBar').length).toEqual(1);
