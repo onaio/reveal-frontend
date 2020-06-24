@@ -78,17 +78,21 @@ export const getAncestors = async (
  * @param params - URL params to send with the request to the API
  * @param jurisdiction - the jurisdiction in question
  * @param limitTree - an array that limits the children we try and get from the API
+ * @param chunkSize - the number of children to try and get at the same time
  * @param apiEndpoints - the API endpoints to use
- * @param serviceClass - the API helper class
+ * @param serviceClass - the API helper class  Result<OpenSRPJurisdiction[]
  */
 export const getChildren = async (
   params: URLParams,
   jurisdiction: OpenSRPJurisdiction | string | null,
   limitTree: SimpleJurisdiction[] = [],
+  chunkSize: number = 20,
   apiEndpoints: APIEndpoints = locationListAPIEndpoints,
   serviceClass: typeof OpenSRPService = OpenSRPService
 ): Promise<Result<OpenSRPJurisdiction[]>> => {
   let service = new serviceClass(apiEndpoints.findByProperties);
+
+  const promises = [];
 
   if (limitTree && limitTree.length > 0) {
     // Basically if limitTree has any elements, then we need to ensure that when
@@ -121,29 +125,22 @@ export const getChildren = async (
     }
     if (jurisdictionIds.length > 0) {
       service = new serviceClass(apiEndpoints.findByJurisdictionIds);
-      params.jurisdiction_ids = jurisdictionIds.join(',');
+      // jurisdictionIds may have a huge number of elements and so we need to chunk
+      // it so that our URL doesn't get too long
+      for (let index = 0, size = jurisdictionIds.length; index < size; index += chunkSize) {
+        params.jurisdiction_ids = jurisdictionIds.slice(index, index + chunkSize).join(',');
+        promises.push(service.list(params));
+      }
     }
+  } else {
+    promises.push(service.list(params));
   }
 
-  const result = await service
-    .list(params)
-    .then((response: OpenSRPJurisdiction[]) => {
-      if (response) {
-        return { error: null, value: response };
-      }
+  return Promise.all(promises)
+    .then(results => {
+      return { error: null, value: [].concat.apply([], results) };
     })
     .catch((error: Error) => {
       return { error, value: null };
     });
-
-  if (result && result.value !== null) {
-    return result;
-  }
-
-  return result === undefined
-    ? {
-        error: Error('Could get load children'),
-        value: null,
-      }
-    : result;
 };
