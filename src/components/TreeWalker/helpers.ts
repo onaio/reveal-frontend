@@ -62,7 +62,7 @@ export const getAncestors = async (
 
   if (!result) {
     return {
-      error: Error('Could get load parents'),
+      error: Error('Could not load parents'),
       value: null,
     };
   } else {
@@ -86,7 +86,7 @@ export const getChildren = async (
   params: URLParams,
   jurisdiction: OpenSRPJurisdiction | string | null,
   limitTree: SimpleJurisdiction[] = [],
-  chunkSize: number = 20,
+  chunkSize: number = 25,
   apiEndpoints: APIEndpoints = locationListAPIEndpoints,
   serviceClass: typeof OpenSRPService = OpenSRPService
 ): Promise<Result<OpenSRPJurisdiction[]>> => {
@@ -138,6 +138,7 @@ export const getChildren = async (
 
   return Promise.all(promises)
     .then(results => {
+      // We are concatenating all the resulting array so that we return all nodes in one array
       return { error: null, value: [].concat.apply([], results) };
     })
     .catch((error: Error) => {
