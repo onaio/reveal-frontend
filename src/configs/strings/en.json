@@ -1071,6 +1071,10 @@
     "message": "Find Draft Files",
     "description": "search bar place holder"
   },
+  "FIND_RELEASE_FILES": {
+    "message": "Find Release Files",
+    "description": "search bar place holder"
+  },
   "FIND_VALIDATOR_FILES": {
     "message": "Find Validator Files",
     "description": "search bar place holder"
