@@ -1090,5 +1090,13 @@
   "DID_NOT_SAVE_SUCCESSFULLY": {
     "message": "Did not save successfully",
     "description": "error: did not succeed when saving"
+  },
+  "AND": {
+    "message": "and",
+    "description": "the word 'and'"
+  },
+  "MORE": {
+    "message": "more",
+    "description": "the word 'more'"
   }
 }
