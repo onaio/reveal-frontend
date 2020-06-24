@@ -104,7 +104,12 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
     });
 
     return [
-      <JurisdictionCell key={`${node.id}-jurisdiction`} node={node} plan={plan} limits={limits} />,
+      <JurisdictionCell
+        key={`${node.id}-jurisdiction`}
+        node={node}
+        jurisdictionTree={limits}
+        url={`${ASSIGN_PLAN_URL}/${plan.identifier}/${node.id}`}
+      />,
       <AssignedOrgs key={`${node.id}-txt`} id={node.id} orgs={jurisdictionOrgs} />,
       <EditOrg
         defaultValue={selectedOrgs}
