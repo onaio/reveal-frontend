@@ -21,7 +21,7 @@ describe('containers/pages/ConfigForm/manifest/draftFiles', () => {
     shallow(<ManifestDraftFiles />);
   });
 
-  it('renders correctly', async () => {
+  it('renders draft files table correctly', async () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>

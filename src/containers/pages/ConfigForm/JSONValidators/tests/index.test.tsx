@@ -21,7 +21,7 @@ describe('containers/pages/ConfigForm/JSONValidator', () => {
     shallow(<JSONValidatorListPage />);
   });
 
-  it('renders correctly', async () => {
+  it('renders validators list correctly', async () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>

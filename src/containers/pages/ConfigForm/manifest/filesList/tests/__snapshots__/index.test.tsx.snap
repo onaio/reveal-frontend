@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`containers/pages/ConfigForm/manifest/ManifestFiles renders correctly 1`] = `
+exports[`containers/pages/ConfigForm/manifest/ManifestFiles renders release file table correctly 1`] = `
 Object {
   "LoadingComponent": <Ripple
     borderColor="#ff5d00"

@@ -41,7 +41,7 @@ describe('containers/pages/ConfigForm/manifest/ManifestFiles', () => {
     shallow(<ManifestFiles {...props} />);
   });
 
-  it('renders correctly', async () => {
+  it('renders release file table correctly', async () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>

@@ -21,7 +21,7 @@ describe('containers/pages/ConfigForm/manifest/releases', () => {
     shallow(<ManifestReleasesPage />);
   });
 
-  it('renders correctly', async () => {
+  it('renders manifest releases table correctly', async () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
