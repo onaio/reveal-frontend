@@ -27,12 +27,14 @@ const EditOrgs = (props: EditOrgsProps) => {
     setShowForm(true);
   };
 
-  const closeForm = () => setShowForm(false);
+  const closeForm = () => {
+    setShowForm(false);
+  };
 
   return showForm ? (
     <JurisdictionAssignmentForm {...props} cancelCallBackFunc={closeForm} />
   ) : (
-    <Button onClick={callBack} size="sm" color="primary">
+    <Button onClick={callBack} size="sm" color="primary" className="show-form">
       {assignTeamsLabel}
     </Button>
   );
