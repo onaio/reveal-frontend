@@ -609,3 +609,5 @@ export const DID_NOT_SAVE_SUCCESSFULLY = translate(
   'DID_NOT_SAVE_SUCCESSFULLY',
   'Did not save successfully'
 );
+export const AND = translate('AND', 'and');
+export const MORE = translate('MORE', 'more');
