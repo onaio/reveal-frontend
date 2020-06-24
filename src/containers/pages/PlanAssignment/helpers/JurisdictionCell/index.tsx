@@ -4,28 +4,36 @@ import {
   OpenSRPJurisdiction,
   SimpleJurisdiction,
 } from '../../../../../components/TreeWalker/types';
-import { PlanDefinition } from '../../../../../configs/settings';
-import { ASSIGN_PLAN_URL } from '../../../../../constants';
 
-interface JurisdictionCellProps {
-  limits: SimpleJurisdiction[];
-  node: OpenSRPJurisdiction;
-  plan: PlanDefinition;
+/**
+ * Props for JurisdictionCell
+ */
+export interface JurisdictionCellProps {
+  jurisdictionTree: SimpleJurisdiction[] /** the jurisdiction tree, structured as in the adjacency list model */;
+  node: OpenSRPJurisdiction /** the current jurisdiction */;
+  url: string /** the URL to use for display of nodes that do have children */;
 }
 
+/**
+ * JurisdictionCell
+ *
+ * Displays the jurisdiction.  If the jurisdiction is not a leaf node, then it is
+ * displayed as a link, so that one can traverse down the tree.
+ *
+ * @param props - the props
+ */
 const JurisdictionCell = (props: JurisdictionCellProps) => {
-  const { limits, node, plan } = props;
+  const { jurisdictionTree, node, url } = props;
 
-  const focusAreas = plan.jurisdiction.map(item => item.code);
-  const knownParentIds = limits.map(item => item.jurisdiction_parent_id);
-  const isLeafNode: boolean = !knownParentIds.includes(node.id) || focusAreas.includes(node.id);
+  const knownParentIds = jurisdictionTree.map(item => item.jurisdiction_parent_id);
+  const isLeafNode: boolean = !knownParentIds.includes(node.id);
 
   if (isLeafNode) {
     return <span key={`${node.id}-span`}>{node.properties.name}</span>;
   }
 
   return (
-    <Link key={`${node.id}-link`} to={`${ASSIGN_PLAN_URL}/${plan.identifier}/${node.id}`}>
+    <Link key={`${node.id}-link`} to={url}>
       {node.properties.name}
     </Link>
   );
