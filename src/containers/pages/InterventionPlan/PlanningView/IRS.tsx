@@ -22,12 +22,13 @@ import plansReducer, {
   PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-import { OpenSRPPlansList } from './DumbTableView';
+import { OpenSRPPlansList, OpenSRPPlansListProps } from './OpenSRPPlansList';
+import { irsDraftPageColumns } from './utils';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
-interface IRSPlans {
+interface IRSPlansProps {
   fetchPlanRecordsActionCreator: typeof fetchPlanRecords;
   service: typeof OpenSRPService;
   plansArray: PlanRecord[];
@@ -39,27 +40,26 @@ const defaultProps = {
   service: OpenSRPService,
 };
 
-export const IRSPlans = (props: any) => {
+export const IRSPlans = (props: IRSPlansProps & RouteComponentProps) => {
   const { plansArray } = props;
-  const draftPlansProps = {
+  const draftPlansProps: Partial<OpenSRPPlansListProps> & RouteComponentProps = {
     ...props,
     loadData: (setLoading: React.Dispatch<React.SetStateAction<boolean>>) =>
       loadOpenSRPPlans(props.service, props.fetchPlanRecordsActionCreator, setLoading),
     newPlanUrl: `${INTERVENTION_IRS_DRAFTS_URL}/${NEW}`,
+    pageTitle: `${IRS_PLANS}${DRAFTS_PARENTHESIS}`,
     pageUrl: INTERVENTION_IRS_DRAFTS_URL,
-    planTitle: `${IRS_PLANS}${DRAFTS_PARENTHESIS}`,
     plansArray,
+    tableColumns: irsDraftPageColumns,
   };
 
   return <OpenSRPPlansList {...draftPlansProps} />;
 };
 
-/** IrsPlansProps - interface for IRS Plans page */
-
 /** describes props returned by mapStateToProps */
-type DispatchedStateProps = Pick<IRSPlans, 'plansArray'>;
+type DispatchedStateProps = Pick<IRSPlansProps, 'plansArray'>;
 /** describe mapDispatchToProps object */
-type MapDispatchToProps = Pick<IRSPlans, 'fetchPlanRecordsActionCreator'>;
+type MapDispatchToProps = Pick<IRSPlansProps, 'fetchPlanRecordsActionCreator'>;
 
 const mapStateToProps = (
   state: Partial<Store>,

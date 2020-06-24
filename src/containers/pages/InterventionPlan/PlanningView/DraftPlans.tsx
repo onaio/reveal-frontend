@@ -1,4 +1,4 @@
-// this is the IRS LIST view page component
+// container/view that lists draft plans. part of planning tool.
 import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
 import * as React from 'react';
 import { connect } from 'react-redux';
@@ -15,26 +15,27 @@ import plansReducer, {
   PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-import { OpenSRPPlansList } from './DumbTableView';
+import { OpenSRPPlansList, OpenSRPPlansListProps } from './OpenSRPPlansList';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
-interface IRSPlans {
+interface DraftPlanProps {
   fetchPlanRecordsActionCreator: typeof fetchPlanRecords;
   service: typeof OpenSRPService;
   plansArray: PlanRecord[];
 }
 
-const defaultProps = {
+const defaultProps: DraftPlanProps = {
   fetchPlanRecordsActionCreator: fetchPlanRecords,
   plansArray: [],
   service: OpenSRPService,
 };
 
-export const IRSPlans = (props: any) => {
+/** list draft plans */
+export const DraftPlans = (props: DraftPlanProps & RouteComponentProps) => {
   const { plansArray } = props;
-  const draftPlansProps = {
+  const draftPlansProps: Partial<OpenSRPPlansListProps> & RouteComponentProps = {
     ...props,
     loadData: (setLoading: React.Dispatch<React.SetStateAction<boolean>>) =>
       loadOpenSRPPlans(props.service, props.fetchPlanRecordsActionCreator, setLoading),
@@ -44,12 +45,10 @@ export const IRSPlans = (props: any) => {
   return <OpenSRPPlansList {...draftPlansProps} />;
 };
 
-/** IrsPlansProps - interface for IRS Plans page */
-
 /** describes props returned by mapStateToProps */
-type DispatchedStateProps = Pick<IRSPlans, 'plansArray'>;
+type DispatchedStateProps = Pick<DraftPlanProps, 'plansArray'>;
 /** describe mapDispatchToProps object */
-type MapDispatchToProps = Pick<IRSPlans, 'fetchPlanRecordsActionCreator'>;
+type MapDispatchToProps = Pick<DraftPlanProps, 'fetchPlanRecordsActionCreator'>;
 
 const mapStateToProps = (
   state: Partial<Store>,
@@ -72,8 +71,8 @@ const mapDispatchToProps: MapDispatchToProps = {
   fetchPlanRecordsActionCreator: fetchPlanRecords,
 };
 
-IRSPlans.defaultProps = defaultProps;
+DraftPlans.defaultProps = defaultProps;
 
-const ConnectedDraftPlans = connect(mapStateToProps, mapDispatchToProps)(IRSPlans);
+const ConnectedDraftPlans = connect(mapStateToProps, mapDispatchToProps)(DraftPlans);
 
 export default ConnectedDraftPlans;
