@@ -7,8 +7,21 @@ import {
   JurisdictionAssignmentForm,
 } from '../JurisdictionAssignmentForm';
 
-const EditOrg = (props: AssignmentFormProps) => {
+/** Props for EditOrgs  */
+interface EditOrgsProps extends AssignmentFormProps {
+  assignTeamsLabel: string;
+}
+
+/**
+ * EditOrgs
+ *
+ * Renders the table column that contains the jurisdiction assignment form
+ *
+ * @param props - the props
+ */
+const EditOrgs = (props: EditOrgsProps) => {
   const [showForm, setShowForm] = useState(false);
+  const { assignTeamsLabel } = props;
 
   const callBack = (_: React.MouseEvent) => {
     setShowForm(true);
@@ -20,11 +33,17 @@ const EditOrg = (props: AssignmentFormProps) => {
     <JurisdictionAssignmentForm {...props} cancelCallBackFunc={closeForm} />
   ) : (
     <Button onClick={callBack} size="sm" color="primary">
-      {ASSIGN_TEAMS}
+      {assignTeamsLabel}
     </Button>
   );
 };
 
-EditOrg.defaultProps = defaultAssignmentProps;
+/** default props */
+const defaultEditOrgsProps: EditOrgsProps = {
+  ...defaultAssignmentProps,
+  assignTeamsLabel: ASSIGN_TEAMS,
+};
 
-export { EditOrg };
+EditOrgs.defaultProps = defaultEditOrgsProps;
+
+export { EditOrgs };
