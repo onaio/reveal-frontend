@@ -16,7 +16,7 @@ import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
 import { CREATE_NEW_PLAN, DRAFT_PLANS, HOME } from '../../../../configs/lang';
 import { HOME_URL, NEW, PLANNING_VIEW_URL, QUERY_PARAM_TITLE } from '../../../../constants';
 import { PlanRecord } from '../../../../store/ducks/plans';
-import { columns } from './utils';
+import { draftPageColumns } from './utils';
 
 /** propTypes for presentation component */
 export interface OpenSRPPlansListProps {
@@ -25,21 +25,22 @@ export interface OpenSRPPlansListProps {
   tableColumns: Array<DrillDownColumn<PlanRecord>>;
   pageTitle: string;
   pageUrl: string;
-  newPlanRoute: string;
+  newPlanUrl: string;
 }
 
-/** defaultIrsPlansProps - default props for IRS Plans page */
+/** default Props for the presentational component */
 export const defaultProps: OpenSRPPlansListProps = {
-  newPlanRoute: `${PLANNING_VIEW_URL}/${NEW}`,
+  newPlanUrl: `${PLANNING_VIEW_URL}/${NEW}`,
   pageTitle: DRAFT_PLANS,
   pageUrl: PLANNING_VIEW_URL,
   plansArray: [],
-  tableColumns: columns,
+  tableColumns: draftPageColumns,
 };
 
-/** IrsPlans presentation component */
+/** presentational view component that renders opensrp plans */
 const OpenSRPPlansList = (props: OpenSRPPlansListProps & RouteComponentProps) => {
   const [loading, setLoading] = React.useState<boolean>(props.plansArray.length === 0);
+
   React.useEffect(() => {
     if (!props.loadData) {
       setLoading(false);
@@ -48,7 +49,7 @@ const OpenSRPPlansList = (props: OpenSRPPlansListProps & RouteComponentProps) =>
     }
   }, []);
 
-  const { pageTitle, pageUrl } = props;
+  const { pageTitle, pageUrl, plansArray } = props;
   const homePage = {
     label: HOME,
     url: HOME_URL,
@@ -60,8 +61,6 @@ const OpenSRPPlansList = (props: OpenSRPPlansListProps & RouteComponentProps) =>
     },
     pages: [homePage],
   };
-
-  const { plansArray } = props;
 
   /** tableProps - props for DrillDownTable component */
   const tableProps: Pick<
@@ -105,7 +104,7 @@ const OpenSRPPlansList = (props: OpenSRPPlansListProps & RouteComponentProps) =>
       <h2 className="page-title">{pageTitle}</h2>
       <DrillDownTable {...tableProps} />
       <br />
-      <Button className="create-plan" color="primary" tag={Link} to={props.newPlanRoute}>
+      <Button className="create-plan" color="primary" tag={Link} to={props.newPlanUrl}>
         {CREATE_NEW_PLAN}
       </Button>
     </div>
