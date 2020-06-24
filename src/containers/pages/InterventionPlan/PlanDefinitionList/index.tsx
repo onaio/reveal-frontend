@@ -36,6 +36,7 @@ import plansByUserReducer, {
   makePlansByUserNamesSelector,
   reducerName as plansByUserReducerName,
 } from '../../../../store/ducks/opensrp/planIdsByUser';
+import './index.css';
 import { TableColumns } from './utils';
 
 /** register the plan definitions reducer */

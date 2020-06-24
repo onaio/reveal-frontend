@@ -64,11 +64,11 @@ describe('App', () => {
     );
     // before resolving get oauth state request, the user is logged out
     expect(wrapper.text()).toMatchInlineSnapshot(
-      `"HomePlanManage PlansIRSAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingAdminTeamsPractitionersUsersClientsAboutLoginv0.4.2"`
+      `"HomePlanManage PlansIRSAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingAdminTeamsPractitionersUsersClientsAboutLogin v0.4.2"`
     );
     expect(toJson(wrapper.find('footer'))).toMatchSnapshot('footer');
     expect(wrapper.text()).toMatchInlineSnapshot(
-      `"HomePlanManage PlansIRSAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingAdminTeamsPractitionersUsersClientsAboutLoginv0.4.2"`
+      `"HomePlanManage PlansIRSAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingAdminTeamsPractitionersUsersClientsAboutLogin v0.4.2"`
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
     wrapper.update();

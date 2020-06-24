@@ -7,7 +7,10 @@ export const Footer = () => {
     <footer className="footer">
       <hr className="p-0 m-0" />
       {REVEAL_BRAND_IMG_SRC && (
-        <img src={REVEAL_BRAND_IMG_SRC} alt={WEBSITE_NAME} style={{ paddingBottom: '5px' }} />
+        <>
+          <img src={REVEAL_BRAND_IMG_SRC} alt={WEBSITE_NAME} style={{ paddingBottom: '5px' }} />
+          &nbsp;
+        </>
       )}
       <small className="text-muted">{REACT_APP_VERSION}</small>
     </footer>
