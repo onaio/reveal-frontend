@@ -335,6 +335,10 @@
     "message": "Cancel",
     "description": "button text: discard unsaved changes"
   },
+  "CLOSE": {
+    "message": "Close",
+    "description": "button text: close page or form"
+  },
   "CONFIRM": {
     "message": "Confirm",
     "description": "button text: save unsaved changes made"
@@ -1074,5 +1078,13 @@
   "FIND_VALIDATOR_FILES": {
     "message": "Find Validator Files",
     "description": "search bar place holder"
+  },
+  "COULD_NOT_LOAD_FORM": {
+    "message": "Could not load the form.",
+    "description": "error: could not load the form"
+  },
+  "DID_NOT_SAVE_SUCCESSFULLY": {
+    "message": "Did not save successfully",
+    "description": "error: did not succeed when saving"
   }
 }

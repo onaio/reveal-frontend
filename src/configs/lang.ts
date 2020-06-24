@@ -176,6 +176,7 @@ export const ADMIN = translate('ADMIN', 'Admin');
 export const DRAFTS_PARENTHESIS = translate('DRAFTS_PARENTHESIS', '(drafts)');
 export const CONFIRM = translate('CONFIRM', 'Confirm');
 export const CANCEL = translate('CANCEL', 'Cancel');
+export const CLOSE = translate('CLOSE', 'Close');
 export const JURISDICTION = translate('JURISDICTION', 'Jurisdiction');
 export const ADMIN_LEVEL = translate('ADMIN_LEVEL', 'Admin Level');
 export const DISTRICT = translate('DISTRICT', 'District');
@@ -480,8 +481,8 @@ export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
 );
 export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
 export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');
-export const TEAM_ASSIGNEMENT_SUCCESSFUL = translate(
-  'TEAM_ASSIGNEMENT_SUCCESSFUL',
+export const TEAM_ASSIGNMENT_SUCCESSFUL = translate(
+  'TEAM_ASSIGNMENT_SUCCESSFUL',
   'Team(s) assignment updated successfully'
 );
 export const UPLOADED_STUDENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Students List');
@@ -631,4 +632,10 @@ export const CUSTOMIZE_COLUMNS = translate('CUSTOMIZE_COLUMNS', 'Customize Colum
 export const CUSTOMIZE_COLUMNS_FILTER_MESSAGE = translate(
   'CUSTOMIZE_COLUMNS_FILTER_MESSAGE',
   'Select columns to be displayed'
+);
+
+export const COULD_NOT_LOAD_FORM = translate('COULD_NOT_LOAD_FORM', 'Could not load the form.');
+export const DID_NOT_SAVE_SUCCESSFULLY = translate(
+  'DID_NOT_SAVE_SUCCESSFULLY',
+  'Did not save successfully'
 );
