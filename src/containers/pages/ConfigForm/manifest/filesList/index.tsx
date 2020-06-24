@@ -29,7 +29,7 @@ import { RouteParams } from '../../../../../helpers/utils';
 import { defaultConfigProps } from '../../helpers';
 
 /** simple wrapper for manifest file lists component */
-const ManifestFiles = (props: RouteComponentProps<RouteParams>) => {
+export const ManifestFiles = (props: RouteComponentProps<RouteParams>) => {
   const formVersion = props.match.params.id || '';
   const breadcrumbProps = {
     currentPage: {
@@ -81,5 +81,3 @@ const ManifestFiles = (props: RouteComponentProps<RouteParams>) => {
     </div>
   );
 };
-
-export default ManifestFiles;

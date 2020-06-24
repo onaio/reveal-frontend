@@ -85,7 +85,7 @@ import {
 import ConnectedHeader from '../containers/ConnectedHeader';
 import { JSONValidatorListPage } from '../containers/pages/ConfigForm/JSONValidators';
 import { ManifestDraftFiles } from '../containers/pages/ConfigForm/manifest/draftFiles';
-import ConnectedManifestFiles from '../containers/pages/ConfigForm/manifest/filesList';
+import { ManifestFiles } from '../containers/pages/ConfigForm/manifest/filesList';
 import { ManifestReleasesPage } from '../containers/pages/ConfigForm/manifest/releases';
 import ConnectedUploadConfigFilePage from '../containers/pages/ConfigForm/manifest/uploadFile';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -454,7 +454,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${MANIFEST_RELEASE_URL}/:id`}
-                  component={ConnectedManifestFiles}
+                  component={ManifestFiles}
                 />
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
