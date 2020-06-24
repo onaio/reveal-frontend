@@ -978,5 +978,105 @@
   "NO_OPTIONS": {
     "message": "No Options",
     "description": "prompt shown when a search yields no results"
+  },
+  "MANIFEST_RELEASES": {
+    "message": "Manifest Releases",
+    "description": "manifest releases page title"
+  },
+  "FORM_DRAFT_FILES": {
+    "message": "Draft Files",
+    "description": "draft files page title"
+  },
+  "JSON_VALIDATORS": {
+    "message": "JSON Validators",
+    "description": "JSON validators page title"
+  },
+  "UPLOAD_FORM": {
+    "message": "Upload Form",
+    "description": "form upload page title"
+  },
+  "EDIT_FORM": {
+    "message": "Edit Form",
+    "description": "form Edit page title"
+  },
+  "MAKE_RELEASE_LABEL": {
+    "message": "Make Release",
+    "description": "button text: to make manifest releases"
+  },
+  "FILE_NAME_LABEL": {
+    "message": "File Name",
+    "description": "table label header - file name"
+  },
+  "FILE_VERSION_LABEL": {
+    "message": "File Version",
+    "description": "table header label - file version"
+  },
+  "IDENTIFIER_LABEL": {
+    "message": "Identifier",
+    "description": "table header label - identifier"
+  },
+  "MODULE_LABEL": {
+    "message": "Module",
+    "description": "table header label - module"
+  },
+  "EDIT_LABEL": {
+    "message": "Edit",
+    "description": "table header label - edit"
+  },
+  "DOWNLOAD_LABEL": {
+    "message": "Download",
+    "description": "table cell text - download"
+  },
+  "UPLOAD_EDIT_LABEL": {
+    "message": "Upload edit",
+    "description": "table cell text - upload edit"
+  },
+  "UPOL0AD_FILE_LABEL": {
+    "message": "Upload New File",
+    "description": "button text: upload new file"
+  },
+  "VIEW_FILES_LABEL": {
+    "message": "View Files",
+    "description": "table cell text - view files"
+  },
+  "APP_ID_LABEL": {
+    "message": "APP Id",
+    "description": "table header label - application identifier"
+  },
+  "APP_VERSION_LABEL": {
+    "message": "App Version",
+    "description": "table header label - application version"
+  },
+  "RELATED_TO_LABEL": {
+    "message": "Related to",
+    "description": "form label: file related to?"
+  },
+  "FILE_UPLOAD_LABEL": {
+    "message": "Upload files",
+    "description": "button text: to upload file"
+  },
+  "FORM_REQUIRED_LABEL": {
+    "message": "Form is required",
+    "description": "form error message"
+  },
+  "FORM_NAME_REQUIRED_LABEL": {
+    "message": "Form name is required",
+    "description": "form error message"
+  },
+  "FIND_RELEASE_LABEL": {
+    "message": "Find Releases",
+    "description": "search bar place holder"
+  },
+  "FIND_DRAFT_FILE_LABEL": {
+    "message": "Find Draft Files",
+    "description": "search bar place holder"
+  },
+  "FIND_RELEASE_FILES": {
+    "messsage": "Find Release Files",
+    "description": "search bar place holder"
+  },
+  "FIND_VALIDATOR_FILES": {
+    "message": "Find Validator Files",
+    "description": "search bar place holder"
   }
 }

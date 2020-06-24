@@ -30,11 +30,13 @@ import {
 import { RouteParams } from '../../../../../helpers/utils';
 import { defaultConfigProps } from '../../helpers';
 
+/** UploadConfigFilePage interface */
 interface Pageprops {
   formId: string | null;
   isJsonValidator: boolean;
 }
 
+/** openSrp form config upload wrapper */
 const UploadConfigFilePage = (props: Pageprops) => {
   const { formId, isJsonValidator } = props;
 

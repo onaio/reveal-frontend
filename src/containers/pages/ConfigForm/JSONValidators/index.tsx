@@ -26,6 +26,7 @@ import {
 } from '../../../../constants';
 import { defaultConfigProps } from '../helpers';
 
+/** openSrp form config JSON validator wrapper */
 export const JSONValidatorListPage = () => {
   const breadcrumbProps = {
     currentPage: {

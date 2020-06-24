@@ -22,6 +22,7 @@ import {
 } from '../../../../../constants';
 import { defaultConfigProps } from '../../helpers';
 
+/** openSrp form config manifest releases wrapper */
 export const ManifestReleasesPage = () => {
   const breadcrumbProps = {
     currentPage: {
