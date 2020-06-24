@@ -10,7 +10,7 @@ import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../../constants';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 import { Organization } from '../../../../../store/ducks/opensrp/organizations';
 import { AssignedOrgs } from '../AssignedOrgs';
-import { EditOrg } from '../EditOrg';
+import { EditOrgs } from '../EditOrgs';
 import { JurisdictionCell } from '../JurisdictionCell';
 
 interface BaseJurisdictionTablProps extends WithWalkerProps {
@@ -111,7 +111,7 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
         url={`${ASSIGN_PLAN_URL}/${plan.identifier}/${node.id}`}
       />,
       <AssignedOrgs key={`${node.id}-txt`} id={node.id} orgs={jurisdictionOrgs} />,
-      <EditOrg
+      <EditOrgs
         defaultValue={selectedOrgs}
         jurisdiction={node}
         existingAssignments={jurisdictionAssignments}
