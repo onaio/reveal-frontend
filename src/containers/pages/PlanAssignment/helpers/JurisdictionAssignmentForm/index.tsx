@@ -24,9 +24,13 @@ export interface AssignmentFormProps {
   defaultValue: SelectOption[] /** array of the currently selected (or default value) organization identifiers */;
   existingAssignments: Assignment[];
   jurisdiction: OpenSRPJurisdiction | null;
-  messages: {
+  labels: {
+    assignmentSuccess: string;
+    close: string;
     fieldError: string;
     loadFormError: string;
+    save: string;
+    saving: string;
   } /** Messages to be displayed in the form */;
   options: SelectOption[] /** array of organization identifiers to be selected */;
   plan: PlanDefinition | null;
@@ -42,9 +46,13 @@ export const defaultAssignmentProps: AssignmentFormProps = {
   defaultValue: [],
   existingAssignments: [],
   jurisdiction: null,
-  messages: {
+  labels: {
+    assignmentSuccess: TEAM_ASSIGNMENT_SUCCESSFUL,
+    close: CLOSE,
     fieldError: DID_NOT_SAVE_SUCCESSFULLY,
     loadFormError: COULD_NOT_LOAD_FORM,
+    save: SAVE,
+    saving: SAVING,
   },
   options: [],
   plan: null,
@@ -70,7 +78,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
     defaultValue,
     existingAssignments,
     jurisdiction,
-    messages,
+    labels,
     options,
     plan,
     submitCallBackFunc,
@@ -78,7 +86,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
   } = props;
 
   if (!jurisdiction || !plan) {
-    return <span>{messages.loadFormError}</span>;
+    return <span>{labels.loadFormError}</span>;
   }
 
   const initialValues: FormValues = {
@@ -101,10 +109,10 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
     OpenSrpAssignmentService.create(payload)
       .then(response => {
         if (response) {
-          successNotifierBackFunc(TEAM_ASSIGNMENT_SUCCESSFUL);
+          successNotifierBackFunc(labels.assignmentSuccess);
           submitCallBackFunc(payload);
         } else {
-          setFieldError('organizations', messages.fieldError);
+          setFieldError('organizations', labels.fieldError);
         }
       })
       .finally(() => setSubmitting(false))
@@ -139,7 +147,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
                     type="button"
                     onClick={cancelCallBackFunc}
                   >
-                    {CLOSE}
+                    {labels.close}
                   </Button>
                 </Col>
                 <Col md="6">
@@ -150,7 +158,7 @@ const JurisdictionAssignmentForm = (props: AssignmentFormProps) => {
                     type="submit"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? SAVING : SAVE}
+                    {isSubmitting ? labels.saving : labels.save}
                   </Button>
                 </Col>
               </Row>
