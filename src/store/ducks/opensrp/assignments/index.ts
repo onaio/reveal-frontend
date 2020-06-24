@@ -29,6 +29,7 @@ export const REMOVE_ASSIGNMENTS = 'src/store/ducks/assignments/reducer/REMOVE_AS
 /** interface for Assignments fetched action */
 interface FetchAssignmentsAction extends AnyAction {
   assignmentsByPlanId: { [key: string]: Assignment[] };
+  overwrite: boolean;
   type: typeof ASSIGNMENTS_FETCHED;
 }
 
