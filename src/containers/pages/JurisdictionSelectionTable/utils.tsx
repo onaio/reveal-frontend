@@ -1,4 +1,5 @@
 /** utils for the jurisdiction selection table  */
+import { Dictionary } from '@onaio/utils';
 import { cloneDeep } from 'lodash';
 import TreeModel from 'tree-model';
 
@@ -38,3 +39,30 @@ const parseHierarchy = (locationsTree: any) => {
   parseChildren(rootJurisdiction);
   return parentJurisdiction;
 };
+
+export interface HierarchySingleNodeAttributes extends Dictionary<string | number | undefined> {
+  geographicLevel: number;
+  structureCount?: number;
+}
+
+export interface RawHierarchySingleNode {
+  [id: string]: {
+    id: string;
+    label: string;
+    node: {
+      locationId: string;
+      name: string;
+      attributes: HierarchySingleNodeAttributes;
+      voided: boolean;
+    };
+    children: RawHierarchySingleNode;
+    parent?: string;
+  };
+}
+
+export interface RawOpenSRPHierarchy {
+  locationsHierarchy: {
+    map: RawHierarchySingleNode;
+    parentChildren: Dictionary<string[]>;
+  };
+}
