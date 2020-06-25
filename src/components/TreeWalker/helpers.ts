@@ -1,6 +1,7 @@
 import { Result } from '@onaio/utils';
 import { uniqBy } from 'lodash';
 import { OpenSRPService, URLParams } from '../../services/opensrp';
+import { ACTIVE, FIND_BY_ID, FIND_BY_PROPERTIES, LOCATION } from './constants';
 import { APIEndpoints, OpenSRPJurisdiction, SimpleJurisdiction } from './types';
 
 /** Default params to be used when fetching locations from OpenSRP */
@@ -11,13 +12,13 @@ export const defaultLocationParams = {
 
 /** Default property to be used when fetching locations from OpenSRP */
 export const defaultLocationPropertyFilters = {
-  status: 'Active',
+  status: ACTIVE,
 };
 
 export const locationListAPIEndpoints: APIEndpoints = {
-  findByJurisdictionIds: 'location/findByJurisdictionIds',
-  findByProperties: 'location/findByProperties',
-  location: 'location',
+  findByJurisdictionIds: FIND_BY_ID,
+  findByProperties: FIND_BY_PROPERTIES,
+  location: LOCATION,
 };
 
 /** Get ancestors of a jurisdiction from OpenSRP

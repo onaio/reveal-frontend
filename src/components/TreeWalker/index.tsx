@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { displayError } from '../../helpers/errors';
 import { getFilterParams, OpenSRPService, URLParams } from '../../services/opensrp';
+import { LOCATION } from './constants';
 import {
   defaultLocationParams,
   defaultLocationPropertyFilters,
@@ -31,7 +32,7 @@ export const defaultTreeWalkerProps: TreeWalkerProps = {
   limits: [],
   params: defaultLocationParams,
   propertyFilters: defaultLocationPropertyFilters,
-  readAPIEndpoint: 'location',
+  readAPIEndpoint: LOCATION,
   serviceClass: OpenSRPService,
 };
 
