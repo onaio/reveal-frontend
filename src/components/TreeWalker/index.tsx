@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { displayError } from '../../helpers/errors';
 import { getFilterParams, OpenSRPService, URLParams } from '../../services/opensrp';
-import { LOCATION } from './constants';
+import { COULDNT_LOAD_PARENTS, LOCATION } from './constants';
 import {
   defaultLocationParams,
   defaultLocationPropertyFilters,
@@ -16,6 +16,9 @@ export interface TreeWalkerProps<T = any> {
   getAncestorsFunc: typeof getAncestors /** function to get ancestors */;
   getChildrenFunc: typeof getChildren /** function to get children */;
   jurisdictionId: string /** jurisdiction id --> used to start walking the tree from a particular point/node */;
+  labels: {
+    loadAncestorsError: string;
+  } /** Objects that holds strings to be displayed in the component */;
   limits: SimpleJurisdiction[] /** If set, tree-walking will be limited to these jurisdictions */;
   params: URLParams /** URL params to send with the request to the API */;
   propertyFilters: URLParams /** property filters to send with the request to the API */;
@@ -29,6 +32,9 @@ export const defaultTreeWalkerProps: TreeWalkerProps = {
   getAncestorsFunc: getAncestors,
   getChildrenFunc: getChildren,
   jurisdictionId: '',
+  labels: {
+    loadAncestorsError: COULDNT_LOAD_PARENTS,
+  },
   limits: [],
   params: defaultLocationParams,
   propertyFilters: defaultLocationPropertyFilters,
@@ -78,6 +84,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
       getAncestorsFunc,
       getChildrenFunc,
       jurisdictionId,
+      labels,
       limits,
       params,
       propertyFilters,
@@ -118,7 +125,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
           .then((response: OpenSRPJurisdiction) => {
             if (response) {
               setCurrentNode(response);
-              getAncestorsFunc(response)
+              getAncestorsFunc(response, [], labels.loadAncestorsError)
                 .then(result => {
                   if (result.value !== null) {
                     setHierarchy(result.value);

@@ -35,16 +35,16 @@ export const locationListAPIEndpoints: APIEndpoints = {
  *
  * @param jurisdiction - the jurisdiction in question
  * @param path - array of ancestors
+ * @param errorMessage - message to show when an error happens
  * @param apiEndpoint - the API endpoint
  * @param serviceClass - the API helper class
- * @param errorMessage - message to show when an error happens
  */
 export const getAncestors = async (
   jurisdiction: OpenSRPJurisdiction,
   path: OpenSRPJurisdiction[] = [],
+  errorMessage: string = COULDNT_LOAD_PARENTS,
   apiEndpoint: string = locationListAPIEndpoints.location,
-  serviceClass: typeof OpenSRPService = OpenSRPService,
-  errorMessage: string = COULDNT_LOAD_PARENTS
+  serviceClass: typeof OpenSRPService = OpenSRPService
 ): Promise<Result<OpenSRPJurisdiction[]>> => {
   // Add the jurisdiction to the beginning of the array
   if (!path.map(e => e.id).includes(jurisdiction.id)) {
