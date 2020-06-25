@@ -32,7 +32,6 @@ describe('TreeWalker/helpers', () => {
 
   it('getAncestors works for non-root jurisdictions', async () => {
     fetch.mockResponses(
-      [JSON.stringify(raNchelenge), { status: 200 }],
       [JSON.stringify(raLuapula), { status: 200 }],
       [JSON.stringify(raZambia), { status: 200 }]
     );
@@ -40,10 +39,6 @@ describe('TreeWalker/helpers', () => {
     const result = await getAncestors(raNchelenge);
     await flushPromises();
     expect(fetch.mock.calls).toEqual([
-      [
-        'https://reveal-stage.smartregister.org/opensrp/rest/location/cec79f21-33c3-43f5-a8af-59a47aa61b84?is_jurisdiction=true&return_geometry=false',
-        partOfResult,
-      ],
       [
         'https://reveal-stage.smartregister.org/opensrp/rest/location/cec79f21-33c3-43f5-a8af-59a47aa61b84?is_jurisdiction=true&return_geometry=false',
         partOfResult,
