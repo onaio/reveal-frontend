@@ -15,7 +15,7 @@ export async function LoadOpenSRPHierarchy<T = RawOpenSRPHierarchy>(
   service: typeof OpenSRPService = OpenSRPService
 ) {
   const serve = new service(OPENSRP_HIERARCHY_ENDPOINT);
-  serve
+  return await serve
     .read(jurisdictionId)
     .then((response: T) => {
       return success<T>(response);
