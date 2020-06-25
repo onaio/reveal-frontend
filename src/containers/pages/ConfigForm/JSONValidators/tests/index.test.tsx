@@ -1,10 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import {
-  fetchManifestFiles,
-  filesReducerName,
-  manifestFilesReducer,
-  ManifestFilesTypes,
-} from '@opensrp/form-config';
+import { fetchManifestFiles, filesReducerName, manifestFilesReducer } from '@opensrp/form-config';
+import { OpenSRPService } from '@opensrp/server-service';
 import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
@@ -31,6 +27,11 @@ describe('containers/pages/ConfigForm/JSONValidator', () => {
   });
 
   it('renders validators list correctly', async () => {
+    store.dispatch(fetchManifestFiles(fixManifestFiles));
+    const mockList = jest.fn();
+    OpenSRPService.prototype.list = mockList;
+    mockList.mockReturnValueOnce(Promise.resolve(fixManifestFiles));
+
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
@@ -40,10 +41,6 @@ describe('containers/pages/ConfigForm/JSONValidator', () => {
     );
     await flushPromises();
     wrapper.update();
-    // dispatch manifest files after store is initialized
-    store.dispatch(fetchManifestFiles(fixManifestFiles as ManifestFilesTypes[]));
-    wrapper.update();
-
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual('JSON Validators');
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
@@ -52,6 +49,8 @@ describe('containers/pages/ConfigForm/JSONValidator', () => {
     expect(wrapper.find('ManifestFilesList').props()).toMatchSnapshot();
 
     expect(wrapper.find('DrillDownTable').length).toEqual(1);
+    await flushPromises();
+    wrapper.update();
     // table renders two rows - equal to data
     expect(wrapper.find('.tbody .tr').length).toEqual(2);
 

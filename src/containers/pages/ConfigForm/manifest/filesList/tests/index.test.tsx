@@ -1,10 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import {
-  fetchManifestFiles,
-  filesReducerName,
-  manifestFilesReducer,
-  ManifestFilesTypes,
-} from '@opensrp/form-config';
+import { fetchManifestFiles, filesReducerName, manifestFilesReducer } from '@opensrp/form-config';
+import { OpenSRPService } from '@opensrp/server-service';
 import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
@@ -16,7 +12,7 @@ import { ManifestFiles } from '..';
 import { MANIFEST_RELEASES } from '../../../../../../configs/lang';
 import { MANIFEST_RELEASE_URL } from '../../../../../../constants';
 import store from '../../../../../../store';
-import { FixManifestReleaseFiles } from './fixtures';
+import { FixManifestFiles } from './fixtures';
 
 /** register the reducers */
 reducerRegistry.register(filesReducerName, manifestFilesReducer);
@@ -51,6 +47,10 @@ describe('containers/pages/ConfigForm/manifest/ManifestFiles', () => {
   });
 
   it('renders release file table correctly', async () => {
+    store.dispatch(fetchManifestFiles(FixManifestFiles));
+    const mockList = jest.fn();
+    OpenSRPService.prototype.list = mockList;
+    mockList.mockReturnValueOnce(Promise.resolve(FixManifestFiles));
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
@@ -60,10 +60,6 @@ describe('containers/pages/ConfigForm/manifest/ManifestFiles', () => {
     );
     await flushPromises();
     wrapper.update();
-    // dispatch manifest files after store is initialized
-    store.dispatch(fetchManifestFiles(FixManifestReleaseFiles as ManifestFilesTypes[]));
-    wrapper.update();
-
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual('Manifest Releases: 1.0.1');
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
@@ -72,6 +68,8 @@ describe('containers/pages/ConfigForm/manifest/ManifestFiles', () => {
     expect(wrapper.find('ManifestFilesList').props()).toMatchSnapshot();
 
     expect(wrapper.find('DrillDownTable').length).toEqual(1);
+    await flushPromises();
+    wrapper.update();
     // table renders two rows - equal to data
     expect(wrapper.find('.tbody .tr').length).toEqual(2);
 

@@ -1,12 +1,12 @@
-import { fixManifestFiles } from '../../../JSONValidators/tests/fixtures';
+import { fixManifestFiles as files } from '../../../JSONValidators/tests/fixtures';
 
-export const FixManifestReleaseFiles = [
+export const FixManifestFiles = [
   {
-    ...fixManifestFiles[0],
+    ...files[0],
     isJsonValidator: false,
   },
   {
-    ...fixManifestFiles[1],
+    ...files[1],
     isJsonValidator: false,
   },
 ];

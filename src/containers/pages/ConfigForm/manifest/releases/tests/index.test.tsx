@@ -31,6 +31,8 @@ describe('containers/pages/ConfigForm/manifest/releases', () => {
   });
 
   it('renders manifest releases table correctly', async () => {
+    store.dispatch(fetchManifestReleases(fixManifestReleases as ManifestReleasesTypes[]));
+
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
@@ -39,9 +41,6 @@ describe('containers/pages/ConfigForm/manifest/releases', () => {
       </Provider>
     );
     await flushPromises();
-    wrapper.update();
-    // dispatch manifest files after store is initialized
-    store.dispatch(fetchManifestReleases(fixManifestReleases as ManifestReleasesTypes[]));
     wrapper.update();
 
     const helmet = Helmet.peek();
