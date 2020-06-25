@@ -80,6 +80,17 @@ export const raNchelenge: OpenSRPJurisdiction = {
   },
 };
 
+export const raKashikishiHAHC: OpenSRPJurisdiction = {
+  ...raZambia,
+  id: limitTree[1].jurisdiction_id,
+  properties: {
+    ...raZambia.properties,
+    geographicLevel: limitTree[1].jurisdiction_geographic_level,
+    name: limitTree[1].jurisdiction_name,
+    parentId: limitTree[1].jurisdiction_parent_id,
+  },
+};
+
 export const raKsh2: OpenSRPJurisdiction = {
   ...raZambia,
   id: limitTree[3].jurisdiction_id,
