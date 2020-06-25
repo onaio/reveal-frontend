@@ -56,28 +56,6 @@ const JurisdictionTableSelector = (props: FinalPropTypes) => {
     setErrorMessage(message);
     setBroken(true);
   };
-
-  useEffect(() => {
-    // Get Plan hierarchy
-    const supersetParams = superset.getFormData(15000, [
-      { comparator: planId, operator: '==', subject: 'plan_id' },
-    ]);
-    const planHierarchyPromise = supersetFetch('577')
-      .then((result: SimpleJurisdiction[]) => {
-        if (result) {
-          setHierarchyLimits(result);
-        } else {
-          if (hierarchyLimits.length < 1) {
-            // this means that we basically have not succeeded to make this call
-            // if hierarchyLimits is not populated we cannot proceed
-            handleBrokenPage('Unable to load the plan jurisdiction hierarchy');
-          }
-        }
-      })
-      .catch(e => {
-        handleBrokenPage(e.message);
-      });
-
     const OpenSRPPlanService = new OpenSRPService(OPENSRP_PLANS);
     const planIdInUrl = props.match.params.planId;
     const plansPromise = OpenSRPPlanService.read(planIdInUrl)
