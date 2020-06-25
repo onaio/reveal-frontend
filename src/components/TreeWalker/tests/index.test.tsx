@@ -74,6 +74,9 @@ describe('PlanAssignment/withTreeWalker', () => {
       getChildrenFunc: getChildren,
       hierarchy: [],
       jurisdictionId: raNchelenge.id,
+      labels: {
+        loadAncestorsError: 'Could not load parents',
+      },
       limits: limitTree,
       loadChildren: expect.any(Function),
       params: defaultLocationParams,
