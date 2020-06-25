@@ -1768,8 +1768,10 @@
   resolved "https://registry.yarnpkg.com/@onaio/utils/-/utils-0.0.1.tgz#c4b6b0afb3b7ad6e2b6135a160d3d79e53e286af"
   integrity sha512-JybtApO1LqxidE+avNdu6Qq+EOvywn92/h++HIMvA5DIKMZ6e1OGdG2ZMbFkylmx8JpvVcFypSIomPzKUYvL7w==
 
-"@opensrp/form-config@file:/home/ona/projects/opensrp/opensrp-web/packages/opensrp-form-config/":
-  version "0.0.3"
+"@opensrp/form-config@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@opensrp/form-config/-/form-config-0.0.4.tgz#1b92215b08a22139726c7f5f40d889352cc03733"
+  integrity sha512-P0qIgcpYLd1ylznyMdS5DPV0/mYoyblgrtRmrgSvHumwC1a634+M7pqod19t/sqQRpZoXpJ/quaJVXh5Ift6pQ==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.20"
     "@fortawesome/free-brands-svg-icons" "^5.10.0"
