@@ -69,14 +69,7 @@ describe('TreeWalker/helpers', () => {
     expect(fetch.mock.calls).toEqual([
       [
         'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive%2CgeographicLevel%3A0&return_geometry=false&jurisdiction_ids=0ddd9ad1-452b-4825-a92a-49cb9fc82d18',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
+        partOfResult,
       ],
     ]);
     expect(result).toEqual({ error: null, value: [raZambia] });
@@ -95,14 +88,7 @@ describe('TreeWalker/helpers', () => {
     expect(fetch.mock.calls).toEqual([
       [
         'https://reveal-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status%3AActive%2CgeographicLevel%3A0&return_geometry=false',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
+        partOfResult,
       ],
     ]);
     expect(result).toEqual({ error: null, value: [raZambia] });
@@ -134,14 +120,7 @@ describe('TreeWalker/helpers', () => {
     expect(fetch.mock.calls).toEqual([
       [
         'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive%2CparentId%3A8d44d54e-8b4c-465c-9e93-364a25739a6d&return_geometry=false&jurisdiction_ids=fca0d71d-0410-45d3-8305-a9f092a150b8%2Cxyz0d71d-0410-45d3-8305-a9f092a150b8',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
+        partOfResult,
       ],
     ]);
     expect(result).toEqual({ error: null, value: [raKsh2, raKsh3] });
@@ -160,25 +139,11 @@ describe('TreeWalker/helpers', () => {
     expect(fetch.mock.calls).toEqual([
       [
         'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive%2CparentId%3A8d44d54e-8b4c-465c-9e93-364a25739a6d&return_geometry=false&jurisdiction_ids=fca0d71d-0410-45d3-8305-a9f092a150b8',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
+        partOfResult,
       ],
       [
         'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive%2CparentId%3A8d44d54e-8b4c-465c-9e93-364a25739a6d&return_geometry=false&jurisdiction_ids=xyz0d71d-0410-45d3-8305-a9f092a150b8',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
+        partOfResult,
       ],
     ]);
     expect(result2).toEqual({ error: null, value: [raKsh2, raKsh3] });
@@ -197,14 +162,7 @@ describe('TreeWalker/helpers', () => {
     expect(fetch.mock.calls).toEqual([
       [
         'https://reveal-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status%3AActive%2CparentId%3A8d44d54e-8b4c-465c-9e93-364a25739a6d&return_geometry=false',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
+        partOfResult,
       ],
     ]);
     expect(result).toEqual({ error: null, value: [raKsh2, raKsh3] });
