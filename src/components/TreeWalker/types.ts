@@ -2,10 +2,11 @@
 export interface OpenSRPJurisdiction {
   id: string;
   properties: {
-    status: string;
-    name: string;
+    code?: string;
     geographicLevel: number;
+    name: string;
     parentId?: string;
+    status: string;
     version: string | number;
   };
   serverVersion: number;
