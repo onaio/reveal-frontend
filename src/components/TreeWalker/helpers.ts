@@ -86,7 +86,7 @@ export const getChildren = async (
   params: URLParams,
   jurisdiction: OpenSRPJurisdiction | string | null,
   limitTree: SimpleJurisdiction[] = [],
-  chunkSize: number = 25,
+  chunkSize: number = 20,
   apiEndpoints: APIEndpoints = locationListAPIEndpoints,
   serviceClass: typeof OpenSRPService = OpenSRPService
 ): Promise<Result<OpenSRPJurisdiction[]>> => {
