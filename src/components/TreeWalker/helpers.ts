@@ -1,7 +1,13 @@
 import { Result } from '@onaio/utils';
 import { uniqBy } from 'lodash';
 import { OpenSRPService, URLParams } from '../../services/opensrp';
-import { ACTIVE, FIND_BY_ID, FIND_BY_PROPERTIES, LOCATION } from './constants';
+import {
+  ACTIVE,
+  COULDNT_LOAD_PARENTS,
+  FIND_BY_ID,
+  FIND_BY_PROPERTIES,
+  LOCATION,
+} from './constants';
 import { APIEndpoints, OpenSRPJurisdiction, SimpleJurisdiction } from './types';
 
 /** Default params to be used when fetching locations from OpenSRP */
@@ -28,15 +34,17 @@ export const locationListAPIEndpoints: APIEndpoints = {
  * of the supplied jurisdiction, including the jurisdiction
  *
  * @param jurisdiction - the jurisdiction in question
+ * @param path - array of ancestors
  * @param apiEndpoint - the API endpoint
  * @param serviceClass - the API helper class
- * @param path - array of ancestors
+ * @param errorMessage - message to show when an error happens
  */
 export const getAncestors = async (
   jurisdiction: OpenSRPJurisdiction,
   path: OpenSRPJurisdiction[] = [],
   apiEndpoint: string = locationListAPIEndpoints.location,
-  serviceClass: typeof OpenSRPService = OpenSRPService
+  serviceClass: typeof OpenSRPService = OpenSRPService,
+  errorMessage: string = COULDNT_LOAD_PARENTS
 ): Promise<Result<OpenSRPJurisdiction[]>> => {
   // Add the jurisdiction to the beginning of the array
   if (!path.map(e => e.id).includes(jurisdiction.id)) {
@@ -64,7 +72,7 @@ export const getAncestors = async (
 
   if (!result) {
     return {
-      error: Error('Could not load parents'),
+      error: Error(errorMessage),
       value: null,
     };
   } else {
