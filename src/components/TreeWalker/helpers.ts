@@ -1,4 +1,5 @@
 import { Result } from '@onaio/utils';
+import { uniqBy } from 'lodash';
 import { OpenSRPService, URLParams } from '../../services/opensrp';
 import { APIEndpoints, OpenSRPJurisdiction, SimpleJurisdiction } from './types';
 
@@ -123,6 +124,7 @@ export const getChildren = async (
         .filter(elem => elem.jurisdiction_parent_id === '' || !elem.jurisdiction_parent_id)
         .map(elem => elem.jurisdiction_id);
     }
+
     if (jurisdictionIds.length > 0) {
       service = new serviceClass(apiEndpoints.findByJurisdictionIds);
       // jurisdictionIds may have a huge number of elements and so we need to chunk
@@ -138,8 +140,10 @@ export const getChildren = async (
 
   return Promise.all(promises)
     .then(results => {
-      // We are concatenating all the resulting array so that we return all nodes in one array
-      return { error: null, value: [].concat.apply([], results) };
+      // We are concatenating all the resulting arrays so that we return all nodes in one array
+      const children = [].concat.apply([], results);
+      // then we remove duplicates and return the children
+      return { error: null, value: uniqBy(children, 'id') };
     })
     .catch((error: Error) => {
       return { error, value: null };
