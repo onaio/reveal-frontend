@@ -1,4 +1,10 @@
-import { fetchManifestDraftFiles, ManifestFilesTypes } from '@opensrp/form-config';
+import reducerRegistry from '@onaio/redux-reducer-registry';
+import {
+  draftFilesReducer,
+  draftReducerName,
+  fetchManifestDraftFiles,
+  ManifestFilesTypes,
+} from '@opensrp/form-config';
 import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
@@ -12,6 +18,9 @@ import { FixManifestDraftFiles } from './fixtures';
 
 const history = createBrowserHistory();
 
+/** register the reducers */
+reducerRegistry.register(draftReducerName, draftFilesReducer);
+
 describe('containers/pages/ConfigForm/manifest/draftFiles', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -22,6 +31,8 @@ describe('containers/pages/ConfigForm/manifest/draftFiles', () => {
   });
 
   it('renders draft files table correctly', async () => {
+    store.dispatch(fetchManifestDraftFiles(FixManifestDraftFiles as ManifestFilesTypes[]));
+
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
@@ -30,9 +41,6 @@ describe('containers/pages/ConfigForm/manifest/draftFiles', () => {
       </Provider>
     );
     await flushPromises();
-    wrapper.update();
-    // dispatch manifest files after store is initialized
-    store.dispatch(fetchManifestDraftFiles(FixManifestDraftFiles as ManifestFilesTypes[]));
     wrapper.update();
 
     const helmet = Helmet.peek();

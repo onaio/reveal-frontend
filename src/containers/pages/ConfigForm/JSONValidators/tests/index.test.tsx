@@ -1,4 +1,10 @@
-import { fetchManifestFiles, ManifestFilesTypes } from '@opensrp/form-config';
+import reducerRegistry from '@onaio/redux-reducer-registry';
+import {
+  fetchManifestFiles,
+  filesReducerName,
+  manifestFilesReducer,
+  ManifestFilesTypes,
+} from '@opensrp/form-config';
 import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
@@ -9,6 +15,9 @@ import { Router } from 'react-router';
 import { JSONValidatorListPage } from '..';
 import store from '../../../../../store';
 import { fixManifestFiles } from './fixtures';
+
+/** register the reducers */
+reducerRegistry.register(filesReducerName, manifestFilesReducer);
 
 const history = createBrowserHistory();
 

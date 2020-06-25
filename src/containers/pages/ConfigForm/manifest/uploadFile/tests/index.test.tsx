@@ -1,3 +1,10 @@
+import reducerRegistry from '@onaio/redux-reducer-registry';
+import {
+  fetchManifestFiles,
+  filesReducerName,
+  manifestFilesReducer,
+  ManifestFilesTypes,
+} from '@opensrp/form-config';
 import { mount, shallow } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
@@ -8,6 +15,10 @@ import UploadConfigFilePage from '..';
 import { MANIFEST_RELEASES } from '../../../../../../configs/lang';
 import { MANIFEST_RELEASE_URL } from '../../../../../../constants';
 import store from '../../../../../../store';
+import { fixManifestFiles } from '../../../JSONValidators/tests/fixtures';
+
+/** register the reducers */
+reducerRegistry.register(filesReducerName, manifestFilesReducer);
 
 const history = createBrowserHistory();
 
@@ -58,6 +69,7 @@ describe('containers/pages/ConfigForm/manifest/uploadFile', () => {
   });
 
   it('renders form edit correctly', async () => {
+    store.dispatch(fetchManifestFiles(fixManifestFiles as ManifestFilesTypes[]));
     const editValidatorProps = {
       history,
       location: {
@@ -69,7 +81,7 @@ describe('containers/pages/ConfigForm/manifest/uploadFile', () => {
       match: {
         isExact: true,
         params: {
-          id: '01',
+          id: '52',
           type: 'validator-upload',
         },
         path: `${MANIFEST_RELEASES}`,
@@ -96,5 +108,12 @@ describe('containers/pages/ConfigForm/manifest/uploadFile', () => {
     expect(wrapper.find('input[name="form"]')).toBeTruthy();
     // 3 of inputs should be disabled
     expect(wrapper.find('input[disabled=true]').length).toEqual(3);
+    // field name to be present  and populated
+    expect(
+      wrapper
+        .find('input')
+        .at(0)
+        .props().value
+    ).toEqual('test form');
   });
 });
