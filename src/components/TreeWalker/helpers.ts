@@ -37,7 +37,8 @@ export const getAncestors = async (
   apiEndpoint: string = locationListAPIEndpoints.location,
   serviceClass: typeof OpenSRPService = OpenSRPService
 ): Promise<Result<OpenSRPJurisdiction[]>> => {
-  if (!path.includes(jurisdiction)) {
+  // Add the jurisdiction to the beginning of the array
+  if (!path.map(e => e.id).includes(jurisdiction.id)) {
     path.unshift(jurisdiction);
   }
 
@@ -49,7 +50,6 @@ export const getAncestors = async (
   }
 
   const service = new serviceClass(apiEndpoint);
-
   const result = await service
     .read(jurisdiction.properties.parentId, defaultLocationParams)
     .then((response: OpenSRPJurisdiction) => {
