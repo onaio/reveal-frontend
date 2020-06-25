@@ -1,3 +1,5 @@
+import { OpenSRPJurisdiction } from '../types';
+
 export const limitTree = [
   {
     jurisdiction_geographic_level: 1,
@@ -43,7 +45,7 @@ export const limitTree = [
   },
 ];
 
-export const raZambia = {
+export const raZambia: OpenSRPJurisdiction = {
   id: '0ddd9ad1-452b-4825-a92a-49cb9fc82d18',
   properties: {
     code: '22bc44dd-752d-4c20-8761-617361b4f1e7',
@@ -56,7 +58,29 @@ export const raZambia = {
   type: 'Feature',
 };
 
-export const raKsh2 = {
+export const raLuapula: OpenSRPJurisdiction = {
+  ...raZambia,
+  id: limitTree[0].jurisdiction_id,
+  properties: {
+    ...raZambia.properties,
+    geographicLevel: limitTree[0].jurisdiction_geographic_level,
+    name: limitTree[0].jurisdiction_name,
+    parentId: limitTree[0].jurisdiction_parent_id,
+  },
+};
+
+export const raNchelenge: OpenSRPJurisdiction = {
+  ...raZambia,
+  id: limitTree[2].jurisdiction_id,
+  properties: {
+    ...raZambia.properties,
+    geographicLevel: limitTree[2].jurisdiction_geographic_level,
+    name: limitTree[2].jurisdiction_name,
+    parentId: limitTree[2].jurisdiction_parent_id,
+  },
+};
+
+export const raKsh2: OpenSRPJurisdiction = {
   ...raZambia,
   id: limitTree[3].jurisdiction_id,
   properties: {
@@ -67,7 +91,7 @@ export const raKsh2 = {
   },
 };
 
-export const raKsh3 = {
+export const raKsh3: OpenSRPJurisdiction = {
   ...raZambia,
   id: limitTree[4].jurisdiction_id,
   properties: {
