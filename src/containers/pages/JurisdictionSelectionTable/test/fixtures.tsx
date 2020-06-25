@@ -1,4 +1,8 @@
-export const sampleHierarchy = {
+// tslint:disable: object-literal-sort-keys
+
+import { RawOpenSRPHierarchy } from '../utils';
+
+export const sampleHierarchy: RawOpenSRPHierarchy = {
   locationsHierarchy: {
     map: {
       '2942': {
