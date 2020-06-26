@@ -51,6 +51,10 @@ type TableProps = Pick<
   | 'renderNullDataComponent'
 >;
 
+/** TODO - investigate an appropriate strategy of making a presentational view like this configurable
+ * - maybe keep the rendered components and hoist all their props to the component's props level.
+ */
+
 /** presentational view component that renders opensrp plans */
 const OpenSRPPlansList = (props: OpenSRPPlansListProps & RouteComponentProps) => {
   const [loading, setLoading] = React.useState<boolean>(props.plansArray.length === 0);
