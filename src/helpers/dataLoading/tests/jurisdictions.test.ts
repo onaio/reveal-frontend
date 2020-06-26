@@ -1,5 +1,5 @@
 import flushPromises from 'flush-promises';
-import { OPENSRP_HIERARCHY_ENDPOINT } from '../../../constants';
+import { OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT } from '../../../constants';
 import { LoadOpenSRPHierarchy } from '../jurisdictions';
 import { failure, success } from '../utils';
 
@@ -24,7 +24,7 @@ describe('helpers/dataLoading.jurisdictions', () => {
     await flushPromises();
 
     // calls the correct endpoint
-    expect(mockClass).toHaveBeenCalledWith(OPENSRP_HIERARCHY_ENDPOINT);
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT);
 
     // Uses the correct service method
     expect(mockRead).toHaveBeenCalledTimes(1);
@@ -47,7 +47,7 @@ describe('helpers/dataLoading.jurisdictions', () => {
     await flushPromises();
 
     // calls the correct endpoint
-    expect(mockClass).toHaveBeenCalledWith(OPENSRP_HIERARCHY_ENDPOINT);
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT);
 
     // Uses the correct service method
     expect(mockRead).toHaveBeenCalledTimes(1);
