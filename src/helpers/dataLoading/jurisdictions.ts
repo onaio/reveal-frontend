@@ -1,22 +1,22 @@
-import { OPENSRP_HIERARCHY_ENDPOINT } from '../../constants';
+import { URLParams } from '@opensrp/server-service';
+import { OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT } from '../../constants';
 import { RawOpenSRPHierarchy } from '../../containers/pages/JurisdictionSelectionTable/utils';
 import { OpenSRPService } from '../../services/opensrp';
-import { UUID } from '../../store/ducks/opensrp/events/utils';
 import { failure, success } from './utils';
 
 /** find plans that the given user has access to
- * @param {UUID} jurisdictionId - username
- * @param {ActionCreator<FetchPlansByUserAction>} actionCreator - action creator for adding practitioners to store
+ * @param {string} jurisdictionId - username
  * @param {typeof OpenSRPService} service -  the OpenSRP service
- * @param {ActionCreator<AnyAction>} responseActionCreator - optionalActionCreator to dispatch the planData in response
+ * @param {URLParams | null} params - search params filters
  */
 export async function LoadOpenSRPHierarchy<T = RawOpenSRPHierarchy>(
-  jurisdictionId: UUID,
-  service: typeof OpenSRPService = OpenSRPService
+  jurisdictionId: string,
+  service: typeof OpenSRPService = OpenSRPService,
+  params: URLParams | null = null
 ) {
-  const serve = new service(OPENSRP_HIERARCHY_ENDPOINT);
+  const serve = new service(OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT);
   return await serve
-    .read(jurisdictionId)
+    .read(jurisdictionId, params)
     .then((response: T) => {
       return success<T>(response);
     })
