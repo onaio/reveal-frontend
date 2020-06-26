@@ -1,3 +1,4 @@
+/** presentational component that renders a list of plan definitions( plans fetched from the opensrp api ) */
 import { DrillDownColumn, DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -37,6 +38,19 @@ export const defaultProps: OpenSRPPlansListProps = {
   tableColumns: draftPageColumns,
 };
 
+/** table prop type */
+type TableProps = Pick<
+  DrillDownTableProps<PlanRecord>,
+  | 'columns'
+  | 'data'
+  | 'loading'
+  | 'loadingComponent'
+  | 'renderInBottomFilterBar'
+  | 'renderInTopFilterBar'
+  | 'useDrillDown'
+  | 'renderNullDataComponent'
+>;
+
 /** presentational view component that renders opensrp plans */
 const OpenSRPPlansList = (props: OpenSRPPlansListProps & RouteComponentProps) => {
   const [loading, setLoading] = React.useState<boolean>(props.plansArray.length === 0);
@@ -63,17 +77,7 @@ const OpenSRPPlansList = (props: OpenSRPPlansListProps & RouteComponentProps) =>
   };
 
   /** tableProps - props for DrillDownTable component */
-  const tableProps: Pick<
-    DrillDownTableProps<PlanRecord>,
-    | 'columns'
-    | 'data'
-    | 'loading'
-    | 'loadingComponent'
-    | 'renderInBottomFilterBar'
-    | 'renderInTopFilterBar'
-    | 'useDrillDown'
-    | 'renderNullDataComponent'
-  > = {
+  const tableProps: TableProps = {
     columns: props.tableColumns,
     data: plansArray,
     loading,
