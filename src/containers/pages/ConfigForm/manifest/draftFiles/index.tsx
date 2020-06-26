@@ -15,6 +15,7 @@ import {
   MODULE_LABEL,
 } from '../../../../../configs/lang';
 import {
+  FILE_UPLOAD_TYPE,
   HOME_URL,
   MANIFEST_FILE_UPLOAD,
   MANIFEST_RELEASE_URL,
@@ -46,14 +47,15 @@ export const ManifestDraftFiles = () => {
     downloadLabel: DOWNLOAD_LABEL,
     endpoint: OPENSRP_FORM_METADATA_ENDPOINT,
     fileNameLabel: FILE_NAME_LABEL,
-    fileUploadUrl: MANIFEST_FILE_UPLOAD,
     fileVersionLabel: FILE_VERSION_LABEL,
+    formUploadUrl: MANIFEST_FILE_UPLOAD,
     identifierLabel: IDENTIFIER_LABEL,
     makeReleaseLabel: MAKE_RELEASE_LABEL,
     manifestEndPoint: OPENSRP_MANIFEST_ENDPOINT,
     moduleLabel: MODULE_LABEL,
     placeholder: FIND_DRAFT_FILE_LABEL,
     releasesUrl: MANIFEST_RELEASE_URL,
+    uploadTypeUrl: FILE_UPLOAD_TYPE,
   };
 
   return (
