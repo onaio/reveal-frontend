@@ -24,7 +24,7 @@ import {
   OPENSRP_FORMS_ENDPOINT,
   VALIDATOR_UPLOAD_TYPE,
 } from '../../../../constants';
-import { defaultConfigProps } from '../helpers';
+import { defaultConfigProps, drillDownProps } from '../helpers';
 
 /** openSrp form config JSON validator wrapper */
 export const JSONValidatorListPage = () => {
@@ -45,6 +45,7 @@ export const JSONValidatorListPage = () => {
     ...defaultConfigProps,
     downloadEndPoint: OPENSRP_FORMS_ENDPOINT,
     downloadLabel: DOWNLOAD_LABEL,
+    drillDownProps,
     editLabel: EDIT_LABEL,
     endpoint: OPENSRP_FORM_METADATA_ENDPOINT,
     fileNameLabel: FILE_NAME_LABEL,

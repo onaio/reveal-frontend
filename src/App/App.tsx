@@ -84,7 +84,7 @@ import {
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import { JSONValidatorListPage } from '../containers/pages/ConfigForm/JSONValidators';
-import { ManifestDraftFiles } from '../containers/pages/ConfigForm/manifest/draftFiles';
+import { ManifestDraftFilesPage } from '../containers/pages/ConfigForm/manifest/draftFiles';
 import { ManifestFiles } from '../containers/pages/ConfigForm/manifest/filesList';
 import { ManifestReleasesPage } from '../containers/pages/ConfigForm/manifest/releases';
 import ConnectedUploadConfigFilePage from '../containers/pages/ConfigForm/manifest/uploadFile';
@@ -482,7 +482,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={VIEW_DRAFT_FILES_URL}
-                  component={ManifestDraftFiles}
+                  component={ManifestDraftFilesPage}
                 />
                 {/* Upload Jurisdiction Metadata view */}
                 <ConnectedPrivateRoute

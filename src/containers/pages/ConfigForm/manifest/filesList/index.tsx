@@ -26,7 +26,7 @@ import {
   OPENSRP_MANIFEST_FORMS_ENDPOINT,
 } from '../../../../../constants';
 import { RouteParams } from '../../../../../helpers/utils';
-import { defaultConfigProps } from '../../helpers';
+import { defaultConfigProps, drillDownProps } from '../../helpers';
 
 /** simple wrapper for manifest file lists component */
 export const ManifestFiles = (props: RouteComponentProps<RouteParams>) => {
@@ -51,6 +51,7 @@ export const ManifestFiles = (props: RouteComponentProps<RouteParams>) => {
     ...defaultConfigProps,
     downloadEndPoint: OPENSRP_FORMS_ENDPOINT,
     downloadLabel: DOWNLOAD_LABEL,
+    drillDownProps,
     editLabel: EDIT_LABEL,
     endpoint: OPENSRP_MANIFEST_FORMS_ENDPOINT,
     fileNameLabel: FILE_NAME_LABEL,

@@ -20,7 +20,7 @@ import {
   MANIFEST_RELEASE_URL,
   OPENSRP_MANIFEST_ENDPOINT,
 } from '../../../../../constants';
-import { defaultConfigProps } from '../../helpers';
+import { defaultConfigProps, drillDownProps } from '../../helpers';
 
 /** openSrp form config manifest releases wrapper */
 export const ManifestReleasesPage = () => {
@@ -42,6 +42,7 @@ export const ManifestReleasesPage = () => {
     appIdLabel: APP_ID_LABEL,
     appVersionLabel: APP_VERSION_LABEL,
     currentUrl: MANIFEST_RELEASE_URL,
+    drillDownProps,
     endpoint: OPENSRP_MANIFEST_ENDPOINT,
     formUploadUrl: MANIFEST_FILE_UPLOAD,
     identifierLabel: IDENTIFIER_LABEL,

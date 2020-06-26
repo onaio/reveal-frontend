@@ -11,6 +11,7 @@ Object {
     width="64px"
   />,
   "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
+  "createdAt": "Created at",
   "customAlert": [Function],
   "data": Array [
     Object {
@@ -41,6 +42,10 @@ Object {
   "debounceTime": 1000,
   "downloadEndPoint": "clientForm",
   "downloadLabel": "Download",
+  "drillDownProps": Object {
+    "paginate": false,
+    "renderNullDataComponent": [Function],
+  },
   "editLabel": "Edit",
   "endpoint": "clientForm/metadata",
   "fetchFiles": [Function],

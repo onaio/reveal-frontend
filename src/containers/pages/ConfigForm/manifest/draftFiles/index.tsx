@@ -24,10 +24,10 @@ import {
   OPENSRP_MANIFEST_ENDPOINT,
   VIEW_DRAFT_FILES_URL,
 } from '../../../../../constants';
-import { defaultConfigProps } from '../../helpers';
+import { defaultConfigProps, drillDownProps } from '../../helpers';
 
 /** simple wrapper for manifest draft file lists component */
-export const ManifestDraftFiles = () => {
+export const ManifestDraftFilesPage = () => {
   const breadcrumbProps = {
     currentPage: {
       label: FORM_DRAFT_FILES,
@@ -45,6 +45,7 @@ export const ManifestDraftFiles = () => {
     ...defaultConfigProps,
     downloadEndPoint: OPENSRP_FORMS_ENDPOINT,
     downloadLabel: DOWNLOAD_LABEL,
+    drillDownProps,
     endpoint: OPENSRP_FORM_METADATA_ENDPOINT,
     fileNameLabel: FILE_NAME_LABEL,
     fileVersionLabel: FILE_VERSION_LABEL,
