@@ -10,7 +10,7 @@ import { OpenSRPService } from '../../../services/opensrp';
 import { generateJurisdictionTree, ParsedHierarchySingleNode, RawOpenSRPHierarchy } from './utils';
 
 // need some re-activeness
-export function useJurisdictionReducer(rootJurisdictionId: string) {
+export function useJurisdictionTreeReducer(rootJurisdictionId: string) {
   // TODO - make tree immutable;
   const [tree, setTree] = React.useState<TreeModel.Node<ParsedHierarchySingleNode> | undefined>(
     undefined
@@ -48,6 +48,9 @@ export function useJurisdictionReducer(rootJurisdictionId: string) {
     // reactive when currentParent changes
     if (currentParentNode) {
       setCurrentChildren(currentParentNode.children);
+    }
+    if (!currentParentNode && tree) {
+      setCurrentChildren([tree]);
     }
   }, [currentParentNode]);
 
