@@ -56,6 +56,8 @@ export const generateJurisdictionTree = (apiResponse: RawOpenSRPHierarchy) => {
   return root;
 };
 
+// TODO - we will probably use this property as a store for any data we need to
+// attach to a single node in the hierarchy, so will probably have to make this generic
 /** describes a node's attribute field */
 export interface HierarchySingleNodeAttributes extends Dictionary<string | number | undefined> {
   geographicLevel: number;
@@ -73,7 +75,7 @@ export interface HierarchySingleNode<T> {
     attributes: HierarchySingleNodeAttributes;
     voided: boolean;
   };
-  children: T;
+  children?: T;
   parent?: string;
 }
 
