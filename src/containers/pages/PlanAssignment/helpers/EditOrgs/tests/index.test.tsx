@@ -13,7 +13,6 @@ describe('PlanAssignment/EditOrgs', () => {
   });
 
   it('works as expected', async () => {
-    // const cancelMock: any = jest.fn();
     const submitMock: any = jest.fn();
     const growlMock: any = jest.fn();
 
