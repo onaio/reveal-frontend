@@ -1,22 +1,14 @@
 import ListView from '@onaio/list-view';
 import React, { Fragment } from 'react';
-import { Helmet } from 'react-helmet';
-import HeaderBreadcrumb from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { ASSIGN_PLANS, HOME, NO_ROWS_FOUND } from '../../../configs/lang';
-import { ASSIGN_PLAN_URL, HOME_URL } from '../../../constants';
-import { LoadOpenSRPHierarchy } from '../../../helpers/dataLoading/jurisdictions';
+import HeaderBreadcrumb, { Page } from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { NO_ROWS_FOUND } from '../../../configs/lang';
 import { OpenSRPService } from '../../../services/opensrp';
-import { generateJurisdictionTree } from './utils';
+import { useJurisdictionTreeReducer } from './jurisdictionReducer';
+import { JurisdictionCell } from './JurisdictionSelectCell';
 
-interface JurisdictionSelectorTableProps {
+export interface JurisdictionSelectorTableProps {
   rootJurisdictionId: string;
   serviceClass: typeof OpenSRPService;
-}
-
-/** Route params interface */
-export interface RouteParams {
-  jurisdictionId: string;
-  planId: string;
 }
 
 // TODO - use url to store state of currentParentId
@@ -28,116 +20,128 @@ export interface RouteParams {
  * 2). drilling down
  */
 const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
-  // const { currentChildren, currentNode, hierarchy, limits, plan } = props;
-  const [tree, setTree] = React.useState<any>(undefined);
-  const [currentParentNode, setCurrentParent] = React.useState<any>(undefined);
-  const [currentChildren, setCurrentChildren] = React.useState<any>(undefined);
-
-  // this would be the rootJurisdiction id
   const { rootJurisdictionId } = props;
 
-  React.useEffect(() => {
-    // fetch jurisdiction hierarchy
-    // TODO - define this data fetcher function : LoadOpenSRPHierarchy
-    LoadOpenSRPHierarchy(rootJurisdictionId)
-      .then((apiResponse: any) => {
-        // create parseable tree
-        const theTree = generateJurisdictionTree(apiResponse);
-        setTree(theTree);
-      })
-      .catch(err => {
-        // TODO - set page broken here.
-      });
+  const {
+    applySelectToNode,
+    currentParentNode,
+    setCurrentParent,
+    currentChildren,
+  } = useJurisdictionTreeReducer(rootJurisdictionId);
 
-    // if currentParentNode is undefined we will set the currentChildren array to be the the root node
-    if (!currentParentNode) {
-      setCurrentChildren(tree.model);
-    }
-    // if currentParentNode is defined we will set the currentChildren array to be the currentParentNodes children
-    if (currentParentNode) {
-      setCurrentChildren(currentParentNode.children);
-    }
-  }, []);
-
-  // do we really need the plan here
-  // if (!plan) {
-  //   return null;
-  // }
-
-  // TODO - fill this in
-  const pageTitle = 'Jurisdictioning';
-  const baseUrl = `${ASSIGN_PLAN_URL}/${'No plan survives enemy contact'}`;
-
-  const breadcrumbProps = {
-    currentPage: {
-      // TODO - what should this be
-      label: false ? 'loading...' : pageTitle,
-      url: baseUrl,
+  let currentPage: Page = {
+    clickHandler: () => {
+      setCurrentParent(undefined);
     },
-    pages: [
-      {
-        label: HOME,
-        url: HOME_URL,
-      },
-      {
-        label: ASSIGN_PLANS,
-        url: ASSIGN_PLAN_URL,
-      },
-    ],
+    label: '....',
+  };
+  const pages: Page[] = [];
+
+  if (currentParentNode) {
+    const path = currentParentNode.getPath();
+    const lastNode = path.pop();
+
+    pages.push(currentPage);
+
+    path.forEach(nd => {
+      pages.push({
+        clickHandler: (_: React.MouseEvent) => {
+          setCurrentParent(nd);
+        },
+        label: nd.model.label,
+      });
+    });
+
+    currentPage = {
+      label: lastNode!.model.label,
+    };
+  }
+
+  const breadCrumbProps = {
+    currentPage,
+    pages,
   };
 
-  // if (currentNode) {
-  //   breadcrumbProps.pages.push({
-  //     label: pageTitle,
-  //     url: baseUrl,
-  //   });
-  // }
-
-  // for (let index = 0; index < hierarchy.length; index++) {
-  //   const element = hierarchy[index];
-  //   if (index < hierarchy.length - 1) {
-  //     breadcrumbProps.pages.push({
-  //       label: element.properties.name,
-  //       url: `${baseUrl}/${element.id}`,
-  //     });
-  //   } else {
-  //     breadcrumbProps.currentPage = {
-  //       label: element.properties.name,
-  //       url: `${baseUrl}/${element.id}`,
-  //     };
-  //   }
-  // }
-
-  const data = currentChildren.map((node: any) => {
+  const data = currentChildren.map(node => {
     return [
-      <p
-        key={`${node.id}-jurisdiction`}
-        // node={node}
-        // url={`${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${node.id}`}
+      <input
+        key={`${node.id}-check-jurisdiction`}
+        type="checkbox"
+        checked={!!node.model.node.attributes.selected}
         // tslint:disable-next-line: jsx-no-lambda
-        onClick={e => setCurrentParent(node)}
-      >
-        {' '}
-        {node.model.label}
-      </p>,
+        onChange={e => {
+          const newSelectedValue = e.target.checked;
+          applySelectToNode(node, newSelectedValue);
+        }}
+      />,
+      <JurisdictionCell
+        key={`${node.id}-jurisdiction`}
+        node={node}
+        // tslint:disable-next-line: jsx-no-lambda
+        onClickCallback={_ => setCurrentParent(node)}
+      />,
+      node.model.node.attributes.structureCount,
     ];
   });
-  const headerItems = ['Name'];
+  const headerItems = ['', 'Name', 'Structures count'];
   const tableClass = 'table table-bordered';
+
+  const parentNodeIsChecked = () => {
+    let selected = true;
+    if (currentParentNode) {
+      selected = selected && !!currentParentNode.model.node.attributes.selected;
+    } else {
+      // this is to be used during the top level
+      if (currentChildren.length > 0) {
+        currentChildren.forEach(node => {
+          selected = selected && node.model.node.attributes.selected;
+        });
+      } else {
+        selected = false;
+      }
+    }
+    return selected;
+  };
+
+  const renderHeaders = () => {
+    return (
+      <thead className="thead-plan-orgs">
+        <tr>
+          <th style={{ width: '25%' }}>
+            <input
+              type="checkbox"
+              // checked if either currentParentNode is checked or all currentChildren are checked
+              checked={parentNodeIsChecked()}
+              // tslint:disable-next-line: jsx-no-lambda
+              onChange={e => {
+                const newSelectedValue = e.target.checked;
+                if (currentParentNode) {
+                  applySelectToNode(currentParentNode, newSelectedValue);
+                } else {
+                  currentChildren.forEach(child => {
+                    applySelectToNode(child, newSelectedValue);
+                  });
+                }
+              }}
+            />
+          </th>
+          <th style={{ width: '25%' }}>{headerItems[1]}</th>
+          <th>{headerItems[2]}</th>
+        </tr>
+      </thead>
+    );
+  };
 
   const listViewProps = {
     data,
     headerItems,
+    renderHeaders,
     tableClass,
   };
 
   return (
     <Fragment>
-      <Helmet>
-        <title>{pageTitle}</title>
-      </Helmet>
-      <HeaderBreadcrumb {...breadcrumbProps} />
-      <h3 className="mb-3 page-title">{pageTitle}</h3>
+      <HeaderBreadcrumb {...breadCrumbProps} />
       <ListView {...listViewProps} />
       {!data.length && (
         <div style={{ textAlign: 'center' }}>
