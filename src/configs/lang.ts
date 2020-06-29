@@ -169,6 +169,7 @@ export const REACTIVE_INVESTIGATION = translate('REACTIVE_INVESTIGATION', 'React
 export const REQUIRED = translate('REQUIRED', 'Required');
 export const SAVING = translate('SAVING', 'Saving');
 export const UPLOADING = translate('UPLOADING', 'Uploading');
+export const DOWNLOADING = translate('DOWNLOADING', 'Downloading');
 export const PLANS = translate('PLANS', 'Manage Plans');
 export const PLANNING = translate('PLANNING', 'Planning');
 export const MONITOR = translate('MONITOR', 'Monitor');
@@ -276,6 +277,10 @@ export const ORGANIZATION_EDITED_SUCCESSFULLY = translate(
 export const FILE_UPLOADED_SUCCESSFULLY = translate(
   'FILE_UPLOADED_SUCCESSFULLY',
   `File uploaded successfully.`
+);
+export const FILE_DOWNLOADED_SUCCESSFULLY = translate(
+  'FILE_DOWNLOADED_SUCCESSFULLY',
+  `File downloaded successfully.`
 );
 export const FILE_UPLOAD_FAILED = translate(
   'FILE_UPLOAD_FAILED',
@@ -505,6 +510,7 @@ export const FILE_NAME = translate('FILE_NAME', 'File Name');
 export const OWNER = translate('OWNER', 'Owner');
 export const UPLOAD_DATE = translate('UPLOAD_DATE', 'Upload Date');
 export const UPLOAD_FILE = translate('UPLOAD_FILE', 'Upload File');
+export const DOWNLOAD_FILE = translate('DOWNLOAD_FILE', 'Download File');
 export const MODAL_BUTTON_CLASS = translate(
   'MODAL_BUTTON_CLASS',
   'focus-investigation btn btn-primary float-right mt-0'
