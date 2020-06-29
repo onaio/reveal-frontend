@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/TreeWalker';
-import { ASSIGN_PLANS, HOME, NO_ROWS_FOUND } from '../../../../../configs/lang';
+import { ASSIGN_PLANS, HOME, LOADING, NO_ROWS_FOUND } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../../constants';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
@@ -13,6 +13,7 @@ import { AssignedOrgs } from '../AssignedOrgs';
 import { EditOrgs } from '../EditOrgs';
 import { JurisdictionCell } from '../JurisdictionCell';
 
+/** base props for JurisdictionTable */
 interface BaseJurisdictionTablProps extends WithWalkerProps {
   assignments: Assignment[];
   organizations: Organization[];
@@ -26,8 +27,18 @@ export interface RouteParams {
   planId: string;
 }
 
+/** Props for JurisdictionTable */
 export type JurisdictionTableProps = RouteComponentProps<RouteParams> & BaseJurisdictionTablProps;
 
+/**
+ * JurisdictionTable
+ *
+ * This component renders the table of jurisdictions on the plan assignment page.
+ * The expectation is that to use this component, one will need to "enhance" it by
+ * having it wrapped by the `withTreeWalker` higher order component.
+ *
+ * @param props - the props that JurisdictionTable expects
+ */
 const JurisdictionTable = (props: JurisdictionTableProps) => {
   const {
     assignments,
@@ -49,7 +60,7 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
 
   const breadcrumbProps = {
     currentPage: {
-      label: currentNode ? 'loading...' : pageTitle,
+      label: currentNode ? LOADING : pageTitle,
       url: baseUrl,
     },
     pages: [
@@ -161,6 +172,7 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
   );
 };
 
+/** default props for JurisdictionTable */
 const defaultProps: BaseJurisdictionTablProps = {
   ...defaultWalkerProps,
   assignments: [],
