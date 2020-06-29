@@ -38,7 +38,7 @@ interface RemovePlanDefinitionsAction extends AnyAction {
 }
 
 /** interface for adding a single PlanDefinitions action */
-interface AddPlanDefinitionAction extends AnyAction {
+export interface AddPlanDefinitionAction extends AnyAction {
   planObj: PlanDefinition;
   type: typeof ADD_PLAN_DEFINITION;
 }
