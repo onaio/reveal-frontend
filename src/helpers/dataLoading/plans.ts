@@ -3,6 +3,7 @@ import { USER_HAS_NO_PLAN_ASSIGNMENTS } from '../../configs/lang';
 import { OPENSRP_PLANS, OPENSRP_PLANS_BY_USER_FILTER } from '../../constants';
 import { OpenSRPService } from '../../services/opensrp';
 import store from '../../store';
+import { AddPlanDefinitionAction } from '../../store/ducks/opensrp/PlanDefinition';
 import { fetchPlansByUser, FetchPlansByUserAction } from '../../store/ducks/opensrp/planIdsByUser';
 import { FetchPlanRecordsAction, PlanPayload, PlanRecordResponse } from '../../store/ducks/plans';
 import { displayError } from '../errors';
@@ -58,6 +59,28 @@ export const loadOpenSRPPlans = (
     })
     .catch(err => {
       setLoading(false);
+      displayError(err);
+    });
+};
+
+/** fetch single plan payload from the opensrp api
+ * @param {string} planId - the plan's id
+ * @param {OpenSRPService} service - openSRPService
+ * @param {ActionCreator<AddPlanDefinitionAction>} actionCreator - action creator for addPlanDefinition
+ */
+export const loadOpenSRPPlan = (
+  planId: string,
+  service: typeof OpenSRPService,
+  actionCreator: ActionCreator<AddPlanDefinitionAction>
+) => {
+  const server = new service(OPENSRP_PLANS);
+  return server
+    .read(planId)
+    .then(planFromAPI => {
+      const currentPlan = Array.isArray(planFromAPI) ? planFromAPI[0] : planFromAPI;
+      actionCreator(currentPlan);
+    })
+    .catch(err => {
       displayError(err);
     });
 };
