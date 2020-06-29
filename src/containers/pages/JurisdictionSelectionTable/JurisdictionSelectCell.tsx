@@ -2,17 +2,17 @@
  * 1) as a link if the node has children
  * 2) as plain text if the node does not have children.
  */
+import { Dictionary } from '@onaio/utils';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { OpenSRPJurisdiction, SimpleJurisdiction } from '../../../components/TreeWalker/types';
+import TreeModel from 'tree-model/types';
+import { ParsedHierarchySingleNode } from './utils';
 
 /**
  * Props for JurisdictionCell
  */
 export interface JurisdictionCellProps {
-  // TODO - remove any here
-  node: any /** the current jurisdiction */;
-  url: string /** the URL to use for display of nodes that do have children */;
+  node: TreeModel.Node<ParsedHierarchySingleNode> /** the current jurisdiction */;
+  onClickCallback: (event: React.MouseEvent) => void;
 }
 
 /**
@@ -24,22 +24,25 @@ export interface JurisdictionCellProps {
  * @param props - the props
  */
 const JurisdictionCell = (props: JurisdictionCellProps) => {
-  const { node, url } = props;
+  const { node, onClickCallback } = props;
 
   // isLeafNode if node does not have children
-  const nodeHasChildren = !!node.children;
-  const isLeafNode: boolean = !nodeHasChildren;
+  const nodeHasChildren = node.children.length > 0;
 
-  const nodeLabel = node.model.label;
+  const className = nodeHasChildren ? 'btn btn-link' : '';
 
-  if (isLeafNode) {
-    return <span key={`${node.id}-span`}>{nodeLabel}</span>;
+  let spanProps: Dictionary = {};
+  if (nodeHasChildren) {
+    spanProps = {
+      className,
+      onClick: onClickCallback,
+    };
   }
 
   return (
-    <Link key={`${node.id}-link`} to={url}>
-      {nodeLabel}
-    </Link>
+    <span {...spanProps} key={`${node.id}-span`}>
+      {node.model.label}
+    </span>
   );
 };
 
