@@ -575,6 +575,7 @@ export const ALB_TABLETS_DISTRIBUTED = translate(
 );
 
 export const MANIFEST_RELEASES = translate('MANIFEST_RELEASES', 'Manifest Releases');
+export const RELEASES_LABEL = translate('RELEASES_LABEL', 'Releases');
 export const FORM_DRAFT_FILES = translate('FORM_DRAFT_FILES', 'Draft Files');
 export const JSON_VALIDATORS = translate('JSON_VALIDATORS', 'JSON Validators');
 export const UPLOAD_FORM = translate('UPLOAD_FORM', 'Upload Form');

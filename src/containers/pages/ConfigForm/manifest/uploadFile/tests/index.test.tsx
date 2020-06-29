@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import UploadConfigFilePage from '..';
-import { MANIFEST_RELEASES } from '../../../../../../configs/lang';
+import { RELEASES_LABEL } from '../../../../../../configs/lang';
 import { MANIFEST_RELEASE_URL } from '../../../../../../constants';
 import store from '../../../../../../store';
 import { fixManifestFiles } from '../../../JSONValidators/tests/fixtures';
@@ -33,7 +33,7 @@ const props = {
   match: {
     isExact: true,
     params: {},
-    path: `${MANIFEST_RELEASES}`,
+    path: `${RELEASES_LABEL}`,
     url: `${MANIFEST_RELEASE_URL}`,
   },
 };
@@ -84,7 +84,7 @@ describe('containers/pages/ConfigForm/manifest/uploadFile', () => {
           id: '52',
           type: 'validator-upload',
         },
-        path: `${MANIFEST_RELEASES}`,
+        path: `${RELEASES_LABEL}`,
         url: `${MANIFEST_RELEASE_URL}`,
       },
     };

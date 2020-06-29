@@ -983,6 +983,10 @@
     "message": "Manifest Releases",
     "description": "manifest releases page title"
   },
+  "RELEASES_LABEL": {
+    "message": "Releases",
+    "description": "manifest releases page title"
+  },
   "FORM_DRAFT_FILES": {
     "message": "Draft Files",
     "description": "draft files page title"
