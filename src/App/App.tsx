@@ -43,6 +43,7 @@ import '@onaio/drill-down-table/dist/table.css';
 import { Footer } from '../components/page/Footer';
 import {
   ACTIVE_IRS_PLAN_URL,
+  ASSIGN_JURISDICTIONS_URL,
   ASSIGN_PLAN_URL,
   ASSIGN_PRACTITIONERS_URL,
   BACKEND_CALLBACK_PATH,
@@ -109,6 +110,7 @@ import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsRe
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
+import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionSelectionTable';
 import ConnectedClientListView from '../containers/pages/MDAPoint/ClientListView';
 import ConnectedMdaPointJurisdictionReport from '../containers/pages/MDAPoint/jurisdictionsReport';
 import ConnectedSchoolReports from '../containers/pages/MDAPoint/LocationReports';
@@ -530,6 +532,13 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={NEW_PLANNING_PLAN_URL}
                   component={NewPlanningDraftPlan}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${ASSIGN_JURISDICTIONS_URL}/:planId`}
+                  component={ConnectedJurisdictionAssignmentView}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
