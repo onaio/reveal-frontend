@@ -1,4 +1,4 @@
-import { fireEvent, render, waitFor } from '@testing-library/react';
+import { fireEvent, queryByText, render, waitFor } from '@testing-library/react';
 import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
@@ -38,8 +38,19 @@ describe('components/forms/JurisdictionMetadata', () => {
     });
   });
 
+  it('form validation works', async () => {
+    const { container, getByText, getByTestId } = render(<JurisdictionMetadataForm />);
+    fireEvent.submit(getByTestId('form'));
+    /** Assert Validation Response and Button disable */
+    await waitFor(() => {
+      expect(queryByText(container, 'CSV Files Only')).not.toBeNull();
+      expect(getByText('Upload File')).toBeDisabled();
+    });
+  });
+
   it('submitForm uploads CSV file', async () => {
-    const file = new File([''], 'jurisdiction.csv', { type: 'text/csv' });
+    const fileContents = 'jurisdiction_id, jurisdiction_name';
+    const file = new File([fileContents], 'jurisdiction.csv', { type: 'text/csv' });
     const setSubmitting = jest.fn();
     const setGlobalError = jest.fn();
     const setIfDoneHere = jest.fn();

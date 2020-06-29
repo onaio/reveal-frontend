@@ -148,9 +148,9 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
               <Label>{CSV_FILE}</Label>
               <Field
                 type="file"
-                name="csv file"
+                name="csv"
                 id="file"
-                accept=".csv"
+                accept=""
                 disabled={disabledFields.includes('file')}
                 // tslint:disable-next-line: jsx-no-lambda
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -164,9 +164,9 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
                 data-testid="file"
               />
               <ErrorMessage
-                name="csvFile"
+                name="csv"
                 component="small"
-                className="form-text text-danger name-error"
+                className="form-text text-danger csv-error"
               />
             </FormGroup>
             <hr className="mb-2" />
