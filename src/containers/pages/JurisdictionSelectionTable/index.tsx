@@ -6,10 +6,14 @@
  */
 
 import React from 'react';
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { ActionCreator, Store } from 'redux';
+import HeaderBreadcrumb from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { ASSIGN_JURISDICTIONS, HOME } from '../../../configs/lang';
 import { PlanDefinition } from '../../../configs/settings';
+import { ASSIGN_JURISDICTIONS_URL, HOME_URL } from '../../../constants';
 import { loadOpenSRPPlan } from '../../../helpers/dataLoading/plans';
 import { OpenSRPService } from '../../../services/opensrp';
 import {
@@ -57,7 +61,32 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     serviceClass,
   };
 
-  return <JurisdictionTable {...JurisdictionTableProps} />;
+  const breadcrumbProps = {
+    currentPage: {
+      // TODO - what should this be
+      label: plan.title,
+      url: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+    },
+    pages: [
+      {
+        label: HOME,
+        url: HOME_URL,
+      },
+    ],
+  };
+
+  const pageTitle = ASSIGN_JURISDICTIONS;
+  return (
+    <>
+      <Helmet>
+        <title>{pageTitle}</title>
+      </Helmet>
+      <HeaderBreadcrumb {...breadcrumbProps} />
+      <h3 className="mb-3 page-title">{pageTitle}</h3>
+
+      <JurisdictionTable {...JurisdictionTableProps} />
+    </>
+  );
 };
 
 JurisdictionAssignmentView.defaultProps = defaultProps;
