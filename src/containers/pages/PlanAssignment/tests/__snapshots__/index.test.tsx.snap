@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanAssignment requires plan id to work: no plan id 1`] = `null`;

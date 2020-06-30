@@ -1,5 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
@@ -187,5 +188,36 @@ describe('PlanAssignment', () => {
       supersetService: supersetServiceMock,
     });
     wrapper.unmount();
+  });
+
+  it('requires plan id to work', async () => {
+    const props = {
+      ...baseProps,
+      location: {
+        hash: '',
+        pathname: `/assign`,
+        search: '',
+        state: {},
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: '/assign',
+        url: `/assign`,
+      },
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanAssignment {...(props as any)} />
+      </MemoryRouter>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    expect(toJson(wrapper.find('PlanAssignment').children())).toMatchSnapshot('no plan id');
   });
 });
