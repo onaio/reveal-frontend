@@ -7,33 +7,34 @@ import Button from 'reactstrap/lib/Button';
 import { Store } from 'redux';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
-} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+} from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
   CREATE_NEW_PLAN,
   DRAFT_PLANS,
   DRAFTS_PARENTHESIS,
   HOME,
   IRS_PLANS,
-} from '../../../../configs/lang';
+} from '../../../../../configs/lang';
 import {
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
+  INTERVENTION_IRS_URL,
   NEW,
   PLAN_RECORD_BY_ID,
   QUERY_PARAM_TITLE,
-} from '../../../../constants';
-import { getQueryParams } from '../../../../helpers/utils';
+} from '../../../../../constants';
+import { getQueryParams } from '../../../../../helpers/utils';
 import {
   InterventionType,
   makePlansArraySelector,
   PlanStatus,
-} from '../../../../store/ducks/plans';
+} from '../../../../../store/ducks/plans';
 import {
   createConnectedOpenSRPPlansList,
   OpenSRPPlanListViewProps,
   RenderProp,
-} from './helpers/OpenSRPPlansList';
-import { irsDraftPageColumns } from './utils';
+} from '../helpers/OpenSRPPlansList';
+import { irsDraftPageColumns } from '../helpers/utils';
 
 const mapStateToProps = (state: Partial<Store>, ownProps: RouteComponentProps): any => {
   const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
@@ -49,7 +50,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: RouteComponentProps): 
   };
   return props;
 };
-const ConnectedOpenSRPPlansList = createConnectedOpenSRPPlansList(mapStateToProps);
+
+export const ConnectedOpenSRPPlansList = createConnectedOpenSRPPlansList(mapStateToProps);
 
 /** list IRS plans */
 export const IRSPlans = (props: RouteComponentProps) => {
@@ -80,7 +82,7 @@ export const IRSPlans = (props: RouteComponentProps) => {
           className="create-plan"
           color="primary"
           tag={Link}
-          to={`${INTERVENTION_IRS_DRAFTS_URL}/${NEW}`}
+          to={`${INTERVENTION_IRS_URL}/${NEW}`}
         >
           {CREATE_NEW_PLAN}
         </Button>

@@ -1,27 +1,27 @@
 import { renderTable } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { DRAFTS_PARENTHESIS, IRS_PLANS } from '../../../../../configs/lang';
-import { INTERVENTION_IRS_DRAFTS_URL, QUERY_PARAM_TITLE } from '../../../../../constants';
-import store from '../../../../../store';
-import { plansJSON } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { ConnectedOpenSRPPlansList, IRSPlans } from '..';
+import { DRAFTS_PARENTHESIS, IRS_PLANS } from '../../../../../../configs/lang';
+import { INTERVENTION_IRS_DRAFTS_URL, QUERY_PARAM_TITLE } from '../../../../../../constants';
+import store from '../../../../../../store';
+import { plansJSON } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import plansReducer, {
   fetchPlanRecords,
   PlanRecordResponse,
   PlanStatus,
   reducerName as plansReducerName,
-} from '../../../../../store/ducks/plans';
-import * as fixtures from '../../../../../store/ducks/tests/fixtures';
-import ConnectedIrsPlans, { IrsPlans } from '../IRS';
+} from '../../../../../../store/ducks/plans';
+import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 
 reducerRegistry.register(plansReducerName, plansReducer);
 
-jest.mock('../../../../../configs/env');
+jest.mock('../../../../../../configs/env');
 
 const history = createBrowserHistory();
 
@@ -32,28 +32,6 @@ describe('containers/pages/IRS', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.clearAllMocks();
-  });
-
-  it('renders without crashing', async () => {
-    const mock: any = jest.fn();
-    fetch.once(JSON.stringify([]));
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: {},
-        path: INTERVENTION_IRS_DRAFTS_URL,
-        url: INTERVENTION_IRS_DRAFTS_URL,
-      },
-      plansArray: [],
-    };
-    shallow(
-      <Router history={history}>
-        <IrsPlans {...props} />
-      </Router>
-    );
-    await new Promise(resolve => setImmediate(resolve));
   });
 
   it('renders plans list correctly', async () => {
@@ -72,13 +50,16 @@ describe('containers/pages/IRS', () => {
     };
 
     const wrapper = mount(
-      <Router history={history}>
-        <IrsPlans {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <IRSPlans {...props} />
+        </Router>
+      </Provider>
     );
 
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
+
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual(`${IRS_PLANS}${DRAFTS_PARENTHESIS}`);
     expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot('drill down table props');
@@ -104,7 +85,7 @@ describe('containers/pages/IRS', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedIrsPlans {...props} />
+          <ConnectedOpenSRPPlansList {...props} />
         </Router>
       </Provider>
     );
@@ -112,7 +93,7 @@ describe('containers/pages/IRS', () => {
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
-    const dumbComponent = wrapper.find('IrsPlans');
+    const dumbComponent = wrapper.find('OpenSRPPlansList');
     const dumbComponentProps = dumbComponent.props() as any;
     expect(dumbComponentProps.plansArray).toEqual([]);
 
@@ -121,7 +102,7 @@ describe('containers/pages/IRS', () => {
     store.dispatch(fetchPlanRecords([samplePlanRecord] as PlanRecordResponse[]));
     wrapper.update();
 
-    expect((wrapper.find('IrsPlans').props() as any).plansArray.length).toEqual(1);
+    expect((wrapper.find('OpenSRPPlansList').props() as any).plansArray.length).toEqual(1);
     wrapper.unmount();
   });
 
@@ -146,7 +127,7 @@ describe('containers/pages/IRS', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedIrsPlans {...props} />
+          <ConnectedOpenSRPPlansList {...props} />
         </Router>
       </Provider>
     );
@@ -179,7 +160,7 @@ describe('containers/pages/IRS', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedIrsPlans {...props} />
+          <ConnectedOpenSRPPlansList {...props} />
         </Router>
       </Provider>
     );
