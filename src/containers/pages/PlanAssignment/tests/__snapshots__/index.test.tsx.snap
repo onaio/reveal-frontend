@@ -1,0 +1,1042 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanAssignment works as expected: xxxxxxxxxxxx 1`] = `
+<MemoryRouter
+  initialEntries={
+    Array [
+      Object {
+        "pathname": "/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/8d44d54e-8b4c-465c-9e93-364a25739a6d",
+        "search": "",
+        "state": Object {},
+      },
+    ]
+  }
+>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "canGo": [Function],
+        "createHref": [Function],
+        "entries": Array [
+          Object {
+            "hash": "",
+            "key": "fyto7v",
+            "pathname": "/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/8d44d54e-8b4c-465c-9e93-364a25739a6d",
+            "search": "",
+            "state": Object {},
+          },
+        ],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "index": 0,
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "key": "fyto7v",
+          "pathname": "/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/8d44d54e-8b4c-465c-9e93-364a25739a6d",
+          "search": "",
+          "state": Object {},
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <PlanAssignment
+      LoadingIndicator={[Function]}
+      OpenSRPServiceClass={[Function]}
+      addPlanActionCreator={[Function]}
+      assignments={
+        Array [
+          Object {
+            "fromDate": "2019-12-30T00:00:00+00:00",
+            "jurisdiction": "3091",
+            "organization": "1",
+            "plan": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+            "toDate": "2019-08-30T00:00:00+00:00",
+          },
+          Object {
+            "fromDate": "2019-12-30T00:00:00+00:00",
+            "jurisdiction": "3091",
+            "organization": "2",
+            "plan": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+            "toDate": "2019-08-30T00:00:00+00:00",
+          },
+          Object {
+            "fromDate": "2019-12-30T00:00:00+00:00",
+            "jurisdiction": "3091",
+            "organization": "3",
+            "plan": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+            "toDate": "2019-08-30T00:00:00+00:00",
+          },
+        ]
+      }
+      currentChildren={Array []}
+      currentNode={null}
+      fetchAssignmentsActionCreator={[Function]}
+      fetchOrganizationsActionCreator={[Function]}
+      getAncestorsFunc={[Function]}
+      getChildrenFunc={[Function]}
+      hierarchy={Array []}
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+      jurisdictionId=""
+      labels={
+        Object {
+          "loadAncestorsError": "Could not load parents",
+        }
+      }
+      limits={Array []}
+      loadChildren={[Function]}
+      location={
+        Object {
+          "hash": "",
+          "pathname": "/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/8d44d54e-8b4c-465c-9e93-364a25739a6d",
+          "search": "",
+          "state": Object {},
+        }
+      }
+      match={
+        Object {
+          "isExact": true,
+          "params": Object {
+            "jurisdictionId": "8d44d54e-8b4c-465c-9e93-364a25739a6d",
+            "planId": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+          },
+          "path": "/assign/:planId/:jurisdictionId",
+          "url": "/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/8d44d54e-8b4c-465c-9e93-364a25739a6d",
+        }
+      }
+      organizations={
+        Array [
+          Object {
+            "active": true,
+            "id": 1,
+            "identifier": "fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
+            "name": "The Luang",
+            "type": Object {
+              "coding": Array [
+                Object {
+                  "code": "team",
+                  "display": "Team",
+                  "system": "http://terminology.hl7.org/CodeSystem/organization-type",
+                },
+              ],
+            },
+          },
+          Object {
+            "active": true,
+            "id": 3,
+            "identifier": "4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4",
+            "name": "Demo Team",
+          },
+          Object {
+            "active": true,
+            "id": 2,
+            "identifier": "d23f7350-d406-11e9-bb65-2a2ae2dbcce4",
+            "name": "Takang 1",
+            "partOf": 1,
+            "type": Object {
+              "coding": Array [
+                Object {
+                  "code": "team",
+                  "display": "Team",
+                  "system": "http://terminology.hl7.org/CodeSystem/organization-type",
+                },
+              ],
+            },
+          },
+        ]
+      }
+      params={
+        Object {
+          "is_jurisdiction": true,
+          "return_geometry": false,
+        }
+      }
+      plan={
+        Object {
+          "action": Array [
+            Object {
+              "code": "Case Confirmation",
+              "description": "Confirm the index case",
+              "goalId": "Case_Confirmation",
+              "identifier": "c711ae51-6432-4b68-84c3-d2b5b1fd1948",
+              "prefix": 1,
+              "reason": "Investigation",
+              "subjectCodableConcept": Object {
+                "text": "Person",
+              },
+              "taskTemplate": "Case_Confirmation",
+              "timingPeriod": Object {
+                "end": "2019-05-24",
+                "start": "2019-05-21",
+              },
+              "title": "Case Confirmation",
+            },
+            Object {
+              "code": "RACD Register Family",
+              "description": "Register all families & famiy members in all residential structures enumerated (100%) within the operational area",
+              "goalId": "RACD_register_all_families",
+              "identifier": "402b8c13-6774-4515-929f-48e71a61a379",
+              "prefix": 2,
+              "reason": "Investigation",
+              "subjectCodableConcept": Object {
+                "text": "Residential_Structure",
+              },
+              "taskTemplate": "RACD_register_families",
+              "timingPeriod": Object {
+                "end": "2019-08-30",
+                "start": "2019-05-21",
+              },
+              "title": "Family Registration",
+            },
+            Object {
+              "code": "Bednet Distribution",
+              "description": "Visit 100% of residential structures in the operational area and provide nets",
+              "goalId": "RACD_bednet_dist_1km_radius",
+              "identifier": "1bd830ea-50e3-44dc-b855-9d5e9339e2be",
+              "prefix": 3,
+              "reason": "Routine",
+              "subjectCodableConcept": Object {
+                "text": "Residential_Structure",
+              },
+              "taskTemplate": "ITN_Visit_Structures",
+              "timingPeriod": Object {
+                "end": "2019-08-30",
+                "start": "2019-05-21",
+              },
+              "title": "Bednet Distribution",
+            },
+            Object {
+              "code": "Blood Screening",
+              "description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+              "goalId": "RACD_blood_screening_1km_radius",
+              "identifier": "2303a70e-4e3f-4fb9-a430-f0476010bfb5",
+              "prefix": 4,
+              "reason": "Investigation",
+              "subjectCodableConcept": Object {
+                "text": "Person",
+              },
+              "taskTemplate": "RACD_Blood_Screening",
+              "timingPeriod": Object {
+                "end": "2019-05-28",
+                "start": "2019-05-21",
+              },
+              "title": "RACD Blood screening",
+            },
+            Object {
+              "code": "Larval Dipping",
+              "description": "Perform a minimum of three larval dipping activities in the operational area",
+              "goalId": "Larval_Dipping_Min_3_Sites",
+              "identifier": "2482dfd7-8284-43c6-bea1-a03dcda71ff4",
+              "prefix": 5,
+              "reason": "Investigation",
+              "subjectCodableConcept": Object {
+                "text": "Breeding_Site",
+              },
+              "taskTemplate": "Larval_Dipping",
+              "timingPeriod": Object {
+                "end": "2019-05-28",
+                "start": "2019-05-21",
+              },
+              "title": "Larval Dipping",
+            },
+            Object {
+              "code": "Mosquito Collection",
+              "description": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+              "goalId": "Mosquito_Collection_Min_3_Traps",
+              "identifier": "423f6665-5367-40be-855e-7c5e6941a0c3",
+              "prefix": 6,
+              "reason": "Investigation",
+              "subjectCodableConcept": Object {
+                "text": "Mosquito_Collection_Point",
+              },
+              "taskTemplate": "Mosquito_Collection_Point",
+              "timingPeriod": Object {
+                "end": "2019-05-28",
+                "start": "2019-05-21",
+              },
+              "title": "Mosquito Collection",
+            },
+            Object {
+              "code": "BCC",
+              "description": "Conduct BCC activity",
+              "goalId": "BCC_Focus",
+              "identifier": "c8fc89a9-cdd2-4746-8272-650883ae380e",
+              "prefix": 7,
+              "reason": "Investigation",
+              "subjectCodableConcept": Object {
+                "text": "Operational_Area",
+              },
+              "taskTemplate": "BCC_Focus",
+              "timingPeriod": Object {
+                "end": "2019-06-21",
+                "start": "2019-05-21",
+              },
+              "title": "Behaviour Change Communication",
+            },
+          ],
+          "date": "2019-05-19",
+          "effectivePeriod": Object {
+            "end": "2019-08-30",
+            "start": "2019-05-20",
+          },
+          "goal": Array [
+            Object {
+              "description": "Confirm the index case",
+              "id": "Case_Confirmation",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "form(s)",
+                      "value": 1,
+                    },
+                  },
+                  "due": "2019-05-21",
+                  "measure": "Number of case confirmation forms complete",
+                },
+              ],
+            },
+            Object {
+              "description": "Register all families and family members in all residential structures enumerated or added (100%) within operational area",
+              "id": "RACD_register_all_families",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "Percent",
+                      "value": 100,
+                    },
+                  },
+                  "due": "2019-08-30",
+                  "measure": "Percent of residential structures with full family registration",
+                },
+              ],
+            },
+            Object {
+              "description": "Visit 100% of residential structures in the operational area and provide nets",
+              "id": "RACD_bednet_dist_1km_radius",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "Percent",
+                      "value": 100,
+                    },
+                  },
+                  "due": "2019-08-30",
+                  "measure": "Percent of residential structures received nets",
+                },
+              ],
+            },
+            Object {
+              "description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+              "id": "RACD_blood_screening_1km_radius",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "Percent",
+                      "value": 100,
+                    },
+                  },
+                  "due": "2019-05-28",
+                  "measure": "Percent of registered people tested",
+                },
+              ],
+            },
+            Object {
+              "description": "Perform a minimum of three larval dipping activities in the operational area",
+              "id": "Larval_Dipping_Min_3_Sites",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "form(s)",
+                      "value": 3,
+                    },
+                  },
+                  "due": "2019-05-28",
+                  "measure": "Number of larval dipping forms submitted",
+                },
+              ],
+            },
+            Object {
+              "description": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+              "id": "Mosquito_Collection_Min_3_Traps",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "form(s)",
+                      "value": 3,
+                    },
+                  },
+                  "due": "2019-05-28",
+                  "measure": "Number of mosquito collection forms submitted",
+                },
+              ],
+            },
+            Object {
+              "description": "Complete at least 1 BCC activity for the operational area",
+              "id": "BCC_Focus",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "form(s)",
+                      "value": 1,
+                    },
+                  },
+                  "due": "2019-06-21",
+                  "measure": "Number of BCC forms submitted",
+                },
+              ],
+            },
+          ],
+          "identifier": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+          "jurisdiction": Array [
+            Object {
+              "code": "3952",
+            },
+          ],
+          "name": "A2-Lusaka_Akros_Focus_2",
+          "serverVersion": 1563303150422,
+          "status": "active",
+          "title": "A2-Lusaka Akros Test Focus 2",
+          "useContext": Array [
+            Object {
+              "code": "interventionType",
+              "valueCodableConcept": "FI",
+            },
+            Object {
+              "code": "fiStatus",
+              "valueCodableConcept": "A2",
+            },
+            Object {
+              "code": "fiReason",
+              "valueCodableConcept": "Routine",
+            },
+          ],
+          "version": "1",
+        }
+      }
+      propertyFilters={
+        Object {
+          "status": "Active",
+        }
+      }
+      readAPIEndpoint="location"
+      serviceClass={[Function]}
+      submitCallBackFunc={[MockFunction]}
+      supersetService={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              "577",
+              Object {
+                "adhoc_filters": Array [
+                  Object {
+                    "clause": "WHERE",
+                    "comparator": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+                    "expressionType": "SIMPLE",
+                    "operator": "==",
+                    "subject": "plan_id",
+                  },
+                ],
+                "row_limit": 15000,
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "type": "return",
+              "value": Promise {},
+            },
+          ],
+        }
+      }
+    >
+      <TreeWalker
+        LoadingIndicator={[Function]}
+        OpenSRPServiceClass={[Function]}
+        addPlanActionCreator={[Function]}
+        assignments={
+          Array [
+            Object {
+              "fromDate": "2019-12-30T00:00:00+00:00",
+              "jurisdiction": "3091",
+              "organization": "1",
+              "plan": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+              "toDate": "2019-08-30T00:00:00+00:00",
+            },
+            Object {
+              "fromDate": "2019-12-30T00:00:00+00:00",
+              "jurisdiction": "3091",
+              "organization": "2",
+              "plan": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+              "toDate": "2019-08-30T00:00:00+00:00",
+            },
+            Object {
+              "fromDate": "2019-12-30T00:00:00+00:00",
+              "jurisdiction": "3091",
+              "organization": "3",
+              "plan": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+              "toDate": "2019-08-30T00:00:00+00:00",
+            },
+          ]
+        }
+        currentChildren={Array []}
+        currentNode={null}
+        fetchAssignmentsActionCreator={[Function]}
+        fetchOrganizationsActionCreator={[Function]}
+        getAncestorsFunc={[Function]}
+        getChildrenFunc={[Function]}
+        hierarchy={Array []}
+        history={
+          Object {
+            "action": "POP",
+            "block": [Function],
+            "createHref": [Function],
+            "go": [Function],
+            "goBack": [Function],
+            "goForward": [Function],
+            "length": 1,
+            "listen": [Function],
+            "location": Object {
+              "hash": "",
+              "pathname": "/",
+              "search": "",
+              "state": undefined,
+            },
+            "push": [Function],
+            "replace": [Function],
+          }
+        }
+        jurisdictionId="8d44d54e-8b4c-465c-9e93-364a25739a6d"
+        labels={
+          Object {
+            "loadAncestorsError": "Could not load parents",
+          }
+        }
+        limits={
+          Array [
+            Object {
+              "jurisdiction_geographic_level": 1,
+              "jurisdiction_id": "cec79f21-33c3-43f5-a8af-59a47aa61b84",
+              "jurisdiction_name": "ra Luapula",
+              "jurisdiction_parent_id": "0ddd9ad1-452b-4825-a92a-49cb9fc82d18",
+              "plan_id": "aadc1c80-23f7-509e-9ca2-1172265c06b9",
+            },
+            Object {
+              "jurisdiction_geographic_level": 3,
+              "jurisdiction_id": "8d44d54e-8b4c-465c-9e93-364a25739a6d",
+              "jurisdiction_name": "ra Kashikishi HAHC",
+              "jurisdiction_parent_id": "dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63",
+              "plan_id": "aadc1c80-23f7-509e-9ca2-1172265c06b9",
+            },
+            Object {
+              "jurisdiction_geographic_level": 2,
+              "jurisdiction_id": "dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63",
+              "jurisdiction_name": "ra Nchelenge",
+              "jurisdiction_parent_id": "cec79f21-33c3-43f5-a8af-59a47aa61b84",
+              "plan_id": "aadc1c80-23f7-509e-9ca2-1172265c06b9",
+            },
+            Object {
+              "jurisdiction_geographic_level": 4,
+              "jurisdiction_id": "fca0d71d-0410-45d3-8305-a9f092a150b8",
+              "jurisdiction_name": "ra_ksh_2",
+              "jurisdiction_parent_id": "8d44d54e-8b4c-465c-9e93-364a25739a6d",
+              "plan_id": "aadc1c80-23f7-509e-9ca2-1172265c06b9",
+            },
+            Object {
+              "jurisdiction_geographic_level": 4,
+              "jurisdiction_id": "xyz0d71d-0410-45d3-8305-a9f092a150b8",
+              "jurisdiction_name": "ra_ksh_3",
+              "jurisdiction_parent_id": "8d44d54e-8b4c-465c-9e93-364a25739a6d",
+              "plan_id": "aadc1c80-23f7-509e-9ca2-1172265c06b9",
+            },
+            Object {
+              "jurisdiction_geographic_level": 0,
+              "jurisdiction_id": "0ddd9ad1-452b-4825-a92a-49cb9fc82d18",
+              "jurisdiction_name": "ra Zambia",
+              "jurisdiction_parent_id": "",
+              "plan_id": "aadc1c80-23f7-509e-9ca2-1172265c06b9",
+            },
+          ]
+        }
+        loadChildren={[Function]}
+        location={
+          Object {
+            "hash": "",
+            "pathname": "/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/8d44d54e-8b4c-465c-9e93-364a25739a6d",
+            "search": "",
+            "state": Object {},
+          }
+        }
+        match={
+          Object {
+            "isExact": true,
+            "params": Object {
+              "jurisdictionId": "8d44d54e-8b4c-465c-9e93-364a25739a6d",
+              "planId": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+            },
+            "path": "/assign/:planId/:jurisdictionId",
+            "url": "/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/8d44d54e-8b4c-465c-9e93-364a25739a6d",
+          }
+        }
+        organizations={
+          Array [
+            Object {
+              "active": true,
+              "id": 1,
+              "identifier": "fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
+              "name": "The Luang",
+              "type": Object {
+                "coding": Array [
+                  Object {
+                    "code": "team",
+                    "display": "Team",
+                    "system": "http://terminology.hl7.org/CodeSystem/organization-type",
+                  },
+                ],
+              },
+            },
+            Object {
+              "active": true,
+              "id": 3,
+              "identifier": "4c506c98-d3a9-11e9-bb65-2a2ae2dbcce4",
+              "name": "Demo Team",
+            },
+            Object {
+              "active": true,
+              "id": 2,
+              "identifier": "d23f7350-d406-11e9-bb65-2a2ae2dbcce4",
+              "name": "Takang 1",
+              "partOf": 1,
+              "type": Object {
+                "coding": Array [
+                  Object {
+                    "code": "team",
+                    "display": "Team",
+                    "system": "http://terminology.hl7.org/CodeSystem/organization-type",
+                  },
+                ],
+              },
+            },
+          ]
+        }
+        params={
+          Object {
+            "is_jurisdiction": true,
+            "return_geometry": false,
+          }
+        }
+        plan={
+          Object {
+            "action": Array [
+              Object {
+                "code": "Case Confirmation",
+                "description": "Confirm the index case",
+                "goalId": "Case_Confirmation",
+                "identifier": "c711ae51-6432-4b68-84c3-d2b5b1fd1948",
+                "prefix": 1,
+                "reason": "Investigation",
+                "subjectCodableConcept": Object {
+                  "text": "Person",
+                },
+                "taskTemplate": "Case_Confirmation",
+                "timingPeriod": Object {
+                  "end": "2019-05-24",
+                  "start": "2019-05-21",
+                },
+                "title": "Case Confirmation",
+              },
+              Object {
+                "code": "RACD Register Family",
+                "description": "Register all families & famiy members in all residential structures enumerated (100%) within the operational area",
+                "goalId": "RACD_register_all_families",
+                "identifier": "402b8c13-6774-4515-929f-48e71a61a379",
+                "prefix": 2,
+                "reason": "Investigation",
+                "subjectCodableConcept": Object {
+                  "text": "Residential_Structure",
+                },
+                "taskTemplate": "RACD_register_families",
+                "timingPeriod": Object {
+                  "end": "2019-08-30",
+                  "start": "2019-05-21",
+                },
+                "title": "Family Registration",
+              },
+              Object {
+                "code": "Bednet Distribution",
+                "description": "Visit 100% of residential structures in the operational area and provide nets",
+                "goalId": "RACD_bednet_dist_1km_radius",
+                "identifier": "1bd830ea-50e3-44dc-b855-9d5e9339e2be",
+                "prefix": 3,
+                "reason": "Routine",
+                "subjectCodableConcept": Object {
+                  "text": "Residential_Structure",
+                },
+                "taskTemplate": "ITN_Visit_Structures",
+                "timingPeriod": Object {
+                  "end": "2019-08-30",
+                  "start": "2019-05-21",
+                },
+                "title": "Bednet Distribution",
+              },
+              Object {
+                "code": "Blood Screening",
+                "description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+                "goalId": "RACD_blood_screening_1km_radius",
+                "identifier": "2303a70e-4e3f-4fb9-a430-f0476010bfb5",
+                "prefix": 4,
+                "reason": "Investigation",
+                "subjectCodableConcept": Object {
+                  "text": "Person",
+                },
+                "taskTemplate": "RACD_Blood_Screening",
+                "timingPeriod": Object {
+                  "end": "2019-05-28",
+                  "start": "2019-05-21",
+                },
+                "title": "RACD Blood screening",
+              },
+              Object {
+                "code": "Larval Dipping",
+                "description": "Perform a minimum of three larval dipping activities in the operational area",
+                "goalId": "Larval_Dipping_Min_3_Sites",
+                "identifier": "2482dfd7-8284-43c6-bea1-a03dcda71ff4",
+                "prefix": 5,
+                "reason": "Investigation",
+                "subjectCodableConcept": Object {
+                  "text": "Breeding_Site",
+                },
+                "taskTemplate": "Larval_Dipping",
+                "timingPeriod": Object {
+                  "end": "2019-05-28",
+                  "start": "2019-05-21",
+                },
+                "title": "Larval Dipping",
+              },
+              Object {
+                "code": "Mosquito Collection",
+                "description": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+                "goalId": "Mosquito_Collection_Min_3_Traps",
+                "identifier": "423f6665-5367-40be-855e-7c5e6941a0c3",
+                "prefix": 6,
+                "reason": "Investigation",
+                "subjectCodableConcept": Object {
+                  "text": "Mosquito_Collection_Point",
+                },
+                "taskTemplate": "Mosquito_Collection_Point",
+                "timingPeriod": Object {
+                  "end": "2019-05-28",
+                  "start": "2019-05-21",
+                },
+                "title": "Mosquito Collection",
+              },
+              Object {
+                "code": "BCC",
+                "description": "Conduct BCC activity",
+                "goalId": "BCC_Focus",
+                "identifier": "c8fc89a9-cdd2-4746-8272-650883ae380e",
+                "prefix": 7,
+                "reason": "Investigation",
+                "subjectCodableConcept": Object {
+                  "text": "Operational_Area",
+                },
+                "taskTemplate": "BCC_Focus",
+                "timingPeriod": Object {
+                  "end": "2019-06-21",
+                  "start": "2019-05-21",
+                },
+                "title": "Behaviour Change Communication",
+              },
+            ],
+            "date": "2019-05-19",
+            "effectivePeriod": Object {
+              "end": "2019-08-30",
+              "start": "2019-05-20",
+            },
+            "goal": Array [
+              Object {
+                "description": "Confirm the index case",
+                "id": "Case_Confirmation",
+                "priority": "medium-priority",
+                "target": Array [
+                  Object {
+                    "detail": Object {
+                      "detailQuantity": Object {
+                        "comparator": ">=",
+                        "unit": "form(s)",
+                        "value": 1,
+                      },
+                    },
+                    "due": "2019-05-21",
+                    "measure": "Number of case confirmation forms complete",
+                  },
+                ],
+              },
+              Object {
+                "description": "Register all families and family members in all residential structures enumerated or added (100%) within operational area",
+                "id": "RACD_register_all_families",
+                "priority": "medium-priority",
+                "target": Array [
+                  Object {
+                    "detail": Object {
+                      "detailQuantity": Object {
+                        "comparator": ">=",
+                        "unit": "Percent",
+                        "value": 100,
+                      },
+                    },
+                    "due": "2019-08-30",
+                    "measure": "Percent of residential structures with full family registration",
+                  },
+                ],
+              },
+              Object {
+                "description": "Visit 100% of residential structures in the operational area and provide nets",
+                "id": "RACD_bednet_dist_1km_radius",
+                "priority": "medium-priority",
+                "target": Array [
+                  Object {
+                    "detail": Object {
+                      "detailQuantity": Object {
+                        "comparator": ">=",
+                        "unit": "Percent",
+                        "value": 100,
+                      },
+                    },
+                    "due": "2019-08-30",
+                    "measure": "Percent of residential structures received nets",
+                  },
+                ],
+              },
+              Object {
+                "description": "Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person",
+                "id": "RACD_blood_screening_1km_radius",
+                "priority": "medium-priority",
+                "target": Array [
+                  Object {
+                    "detail": Object {
+                      "detailQuantity": Object {
+                        "comparator": ">=",
+                        "unit": "Percent",
+                        "value": 100,
+                      },
+                    },
+                    "due": "2019-05-28",
+                    "measure": "Percent of registered people tested",
+                  },
+                ],
+              },
+              Object {
+                "description": "Perform a minimum of three larval dipping activities in the operational area",
+                "id": "Larval_Dipping_Min_3_Sites",
+                "priority": "medium-priority",
+                "target": Array [
+                  Object {
+                    "detail": Object {
+                      "detailQuantity": Object {
+                        "comparator": ">=",
+                        "unit": "form(s)",
+                        "value": 3,
+                      },
+                    },
+                    "due": "2019-05-28",
+                    "measure": "Number of larval dipping forms submitted",
+                  },
+                ],
+              },
+              Object {
+                "description": "Set a minimum of three mosquito collection traps and complete the mosquito collection process",
+                "id": "Mosquito_Collection_Min_3_Traps",
+                "priority": "medium-priority",
+                "target": Array [
+                  Object {
+                    "detail": Object {
+                      "detailQuantity": Object {
+                        "comparator": ">=",
+                        "unit": "form(s)",
+                        "value": 3,
+                      },
+                    },
+                    "due": "2019-05-28",
+                    "measure": "Number of mosquito collection forms submitted",
+                  },
+                ],
+              },
+              Object {
+                "description": "Complete at least 1 BCC activity for the operational area",
+                "id": "BCC_Focus",
+                "priority": "medium-priority",
+                "target": Array [
+                  Object {
+                    "detail": Object {
+                      "detailQuantity": Object {
+                        "comparator": ">=",
+                        "unit": "form(s)",
+                        "value": 1,
+                      },
+                    },
+                    "due": "2019-06-21",
+                    "measure": "Number of BCC forms submitted",
+                  },
+                ],
+              },
+            ],
+            "identifier": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+            "jurisdiction": Array [
+              Object {
+                "code": "3952",
+              },
+            ],
+            "name": "A2-Lusaka_Akros_Focus_2",
+            "serverVersion": 1563303150422,
+            "status": "active",
+            "title": "A2-Lusaka Akros Test Focus 2",
+            "useContext": Array [
+              Object {
+                "code": "interventionType",
+                "valueCodableConcept": "FI",
+              },
+              Object {
+                "code": "fiStatus",
+                "valueCodableConcept": "A2",
+              },
+              Object {
+                "code": "fiReason",
+                "valueCodableConcept": "Routine",
+              },
+            ],
+            "version": "1",
+          }
+        }
+        propertyFilters={
+          Object {
+            "status": "Active",
+          }
+        }
+        readAPIEndpoint="location"
+        serviceClass={[Function]}
+        submitCallBackFunc={[Function]}
+        supersetService={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                "577",
+                Object {
+                  "adhoc_filters": Array [
+                    Object {
+                      "clause": "WHERE",
+                      "comparator": "356b6b84-fc36-4389-a44a-2b038ed2f38d",
+                      "expressionType": "SIMPLE",
+                      "operator": "==",
+                      "subject": "plan_id",
+                    },
+                  ],
+                  "row_limit": 15000,
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "type": "return",
+                "value": Promise {},
+              },
+            ],
+          }
+        }
+      >
+        <Ripple
+          borderColor="#ff5d00"
+          borderStyle="solid"
+          borderWidth="4px"
+          height="64px"
+          minHeight="80vh"
+          width="64px"
+        >
+          <div
+            className="lds-ripple-parent"
+            style={
+              Object {
+                "minHeight": "80vh",
+              }
+            }
+          >
+            <div
+              className="lds-ripple"
+              style={
+                Object {
+                  "height": "64px",
+                  "width": "64px",
+                }
+              }
+            >
+              <div
+                style={
+                  Object {
+                    "borderColor": "#ff5d00",
+                    "borderStyle": "solid",
+                    "borderWidth": "4px",
+                  }
+                }
+              />
+              <div
+                style={
+                  Object {
+                    "borderColor": "#ff5d00",
+                    "borderStyle": "solid",
+                    "borderWidth": "4px",
+                  }
+                }
+              />
+            </div>
+          </div>
+        </Ripple>
+      </TreeWalker>
+    </PlanAssignment>
+  </Router>
+</MemoryRouter>
+`;
