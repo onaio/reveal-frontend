@@ -57,6 +57,7 @@ import {
   FI_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
+  JURISDICTION_METADATA_URL,
   LOGOUT_URL,
   ORGANIZATIONS_LIST_URL,
   PLAN_LIST_URL,
@@ -64,7 +65,6 @@ import {
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
-  UPLOAD_JURISDICTION_METADATA_URL,
 } from '../../../constants';
 import './Header.css';
 
@@ -265,7 +265,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     {ENABLE_JURISDICTION_METADATA_UPLOAD && (
                       <DropdownItem>
                         <NavLink
-                          to={UPLOAD_JURISDICTION_METADATA_URL}
+                          to={JURISDICTION_METADATA_URL}
                           className="nav-link"
                           activeClassName="active"
                         >

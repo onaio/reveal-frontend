@@ -26,9 +26,9 @@ import {
 } from '../../../configs/lang';
 import {
   HOME_URL,
+  JURISDICTION_METADATA_URL,
   OPENSRP_V1_SETTINGS_ENDPOINT,
   OPENSRP_V2_SETTINGS,
-  UPLOAD_JURISDICTION_METADATA_URL,
 } from '../../../constants';
 import { RouteParams } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
@@ -41,8 +41,8 @@ const JurisdictionMetadataImportView = () => {
   //  props for breadcrumbs
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: UPLOAD_JURISDICTION_METADATA,
-      url: UPLOAD_JURISDICTION_METADATA_URL,
+      label: JURISDICTION_METADATA,
+      url: JURISDICTION_METADATA_URL,
     },
     pages: [],
   };

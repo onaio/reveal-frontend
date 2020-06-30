@@ -5,8 +5,8 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { UPLOAD_JURISDICTION_METADATA } from '../../../../configs/lang';
-import { UPLOAD_JURISDICTION_METADATA_URL } from '../../../../constants';
+import { JURISDICTION_METADATA } from '../../../../configs/lang';
+import { JURISDICTION_METADATA_URL } from '../../../../constants';
 import store from '../../../../store';
 import * as orgDucks from '../../../../store/ducks/opensrp/organizations';
 import JurisdictionMetadataImportView from '../index';
@@ -30,8 +30,8 @@ describe('src/containers/pages/JurisdictionMetadata', () => {
       match: {
         isExact: true,
         params: {},
-        path: `${UPLOAD_JURISDICTION_METADATA_URL}`,
-        url: `${UPLOAD_JURISDICTION_METADATA_URL}`,
+        path: `${JURISDICTION_METADATA_URL}`,
+        url: `${JURISDICTION_METADATA_URL}`,
       },
     };
     const wrapper = mount(
@@ -44,11 +44,11 @@ describe('src/containers/pages/JurisdictionMetadata', () => {
     // look for crucial components or pages that should be displayed
 
     // expect a form
-    expect(wrapper.find('form').length).toEqual(1);
+    expect(wrapper.find('form').length).toEqual(2);
 
     // page title
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual(UPLOAD_JURISDICTION_METADATA);
+    expect(helmet.title).toEqual(JURISDICTION_METADATA);
 
     // breadcrumb
     const breadcrumbWrapper = wrapper.find('Breadcrumb');

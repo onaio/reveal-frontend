@@ -61,6 +61,7 @@ import {
   GA_ENV_TEST,
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
+  JURISDICTION_METADATA_URL,
   LOGOUT_URL,
   MAP,
   MDA_POINT_LOCATION_REPORT_URL,
@@ -76,7 +77,6 @@ import {
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
   SINGLE_ORGANIZATION_URL,
-  UPLOAD_JURISDICTION_METADATA_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
@@ -437,7 +437,7 @@ const App = (props: AppProps) => {
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={UPLOAD_JURISDICTION_METADATA_URL}
+                  path={JURISDICTION_METADATA_URL}
                   component={JurisdictionMetadata}
                 />
                 {/* tslint:disable jsx-no-lambda */}
