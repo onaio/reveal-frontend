@@ -583,6 +583,36 @@ export const ALB_TABLETS_DISTRIBUTED = translate(
   'ALB_TABLETS_DISTRIBUTED',
   'Alb Tablets Distributed'
 );
+
+export const MANIFEST_RELEASES = translate('MANIFEST_RELEASES', 'Manifest Releases');
+export const FORM_DRAFT_FILES = translate('FORM_DRAFT_FILES', 'Draft Files');
+export const JSON_VALIDATORS = translate('JSON_VALIDATORS', 'JSON Validators');
+export const UPLOAD_FORM = translate('UPLOAD_FORM', 'Upload Form');
+export const EDIT_FORM = translate('EDIT_FORM', 'Edit Form');
+export const MAKE_RELEASE_LABEL = translate('MAKE_RELEASE_LABEL', 'Make Release');
+export const FILE_NAME_LABEL = translate('FILE_NAME_LABEL', 'File Name');
+export const FILE_VERSION_LABEL = translate('FILE_VERSION_LABEL', 'File Version');
+export const IDENTIFIER_LABEL = translate('IDENTIFIER_LABEL', 'Identifier');
+export const MODULE_LABEL = translate('MODULE_LABEL', 'Module');
+export const EDIT_LABEL = translate('EDIT_LABEL', 'Edit');
+export const DOWNLOAD_LABEL = translate('DOWNLOAD_LABEL', 'Download');
+export const UPLOAD_EDIT_LABEL = translate('UPLOAD_EDIT_LABEL', 'Upload edit');
+export const UPOL0AD_FILE_LABEL = translate('UPOL0AD_FILE_LABEL', 'Upload New File');
+export const VIEW_FILES_LABEL = translate('VIEW_FILES_LABEL', 'View Files');
+export const APP_ID_LABEL = translate('APP_ID_LABEL', 'APP Id');
+export const APP_VERSION_LABEL = translate('APP_VERSION_LABEL', 'App Version');
+export const RELATED_TO_LABEL = translate('RELATED_TO_LABEL', 'Related to');
+export const FILE_UPLOAD_LABEL = translate('FILE_UPLOAD_LABEL', 'Upload files');
+export const FORM_REQUIRED_LABEL = translate('FORM_REQUIRED_LABEL', 'Form is required');
+export const FORM_NAME_REQUIRED_LABEL = translate(
+  'FORM_NAME_REQUIRED_LABEL',
+  'Form name is required'
+);
+export const FIND_RELEASE_LABEL = translate('FIND_RELEASE_LABEL', 'Find Releases');
+export const FIND_DRAFT_FILE_LABEL = translate('FIND_DRAFT_FILE_LABEL', 'Find Draft Files');
+export const FIND_RELEASE_FILES = translate('FIND_RELEASE_FILES', 'Find Release Files');
+export const FIND_VALIDATOR_FILES = translate('FIND_VALIDATOR_FILES', 'Find Validator Files');
+
 export const FILE = translate('FILE', 'File');
 export const FILE_FORMAT = translate('FILE_FORMAT', 'fileFormat');
 export const CSV_FILE = translate('CSV_FILE', 'CSV File');

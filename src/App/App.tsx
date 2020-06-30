@@ -62,7 +62,10 @@ import {
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   JURISDICTION_METADATA_URL,
+  JSON_VALIDATORS_URL,
   LOGOUT_URL,
+  MANIFEST_FILE_UPLOAD,
+  MANIFEST_RELEASE_URL,
   MAP,
   MDA_POINT_LOCATION_REPORT_URL,
   NEW_IRS_PLAN_URL,
@@ -77,8 +80,15 @@ import {
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
   SINGLE_ORGANIZATION_URL,
+  UPLOAD_JURISDICTION_METADATA_URL,
+  VIEW_DRAFT_FILES_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
+import { JSONValidatorListPage } from '../containers/pages/ConfigForm/JSONValidators';
+import { ManifestDraftFiles } from '../containers/pages/ConfigForm/manifest/draftFiles';
+import { ManifestFiles } from '../containers/pages/ConfigForm/manifest/filesList';
+import { ManifestReleasesPage } from '../containers/pages/ConfigForm/manifest/releases';
+import ConnectedUploadConfigFilePage from '../containers/pages/ConfigForm/manifest/uploadFile';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
 import FIJurisdiction from '../containers/pages/FocusInvestigation/jurisdiction';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
@@ -431,6 +441,49 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={`${ASSIGN_PRACTITIONERS_URL}/:id`}
                   component={ConnectedAssignPractitioner}
+                />
+                {/** form config views */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={MANIFEST_RELEASE_URL}
+                  component={ManifestReleasesPage}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${MANIFEST_RELEASE_URL}/:id`}
+                  component={ManifestFiles}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={JSON_VALIDATORS_URL}
+                  component={JSONValidatorListPage}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${MANIFEST_FILE_UPLOAD}/:type`}
+                  component={ConnectedUploadConfigFilePage}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${MANIFEST_FILE_UPLOAD}/:type/:id`}
+                  component={ConnectedUploadConfigFilePage}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={VIEW_DRAFT_FILES_URL}
+                  component={ManifestDraftFiles}
                 />
                 {/* Upload Jurisdiction Metadata view */}
                 <ConnectedPrivateRoute

@@ -60,6 +60,8 @@ export const STRUCTURES_LINE = 'structures-line';
 export const STRUCTURES_FILL = 'structures-fill';
 export const HISTORICAL_INDEX_CASES = 'historical-index-cases';
 export const CURRENT_INDEX_CASES = 'current-index-cases';
+export const FILE_UPLOAD_TYPE = 'file-upload';
+export const VALIDATOR_UPLOAD_TYPE = 'validator-upload';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
@@ -102,6 +104,10 @@ export const CLIENTS_LIST_URL = '/clients';
 export const UPLOAD_CLIENT_CSV_URL = '/clients/upload';
 export const JURISDICTION_METADATA_URL = '/jurisdiction-metadata';
 export const GO_BACK_TEXT = 'Go Back';
+export const MANIFEST_RELEASE_URL = '/manifest/releases';
+export const VIEW_DRAFT_FILES_URL = '/files/draft';
+export const JSON_VALIDATORS_URL = '/json-validators';
+export const MANIFEST_FILE_UPLOAD = '/manifest';
 /** how long after opening a logout window should we wait before redirecting to express' server logout
  * I am not sure the optimum value for this, mozilla firefox seems to take some
  * time loading up the logoutWindow and actually making the request.
@@ -137,6 +143,10 @@ export const OPENSRP_V1_SETTINGS_ENDPOINT = 'settings/sync';
 export const OPENSRP_V2_SETTINGS = 'v2/settings';
 export const OPENSRP_ACTIVE = 'Active';
 export const OPENSRP_STATUS = 'status';
+export const OPENSRP_MANIFEST_ENDPOINT = 'manifest';
+export const OPENSRP_FORMS_ENDPOINT = 'clientForm';
+export const OPENSRP_MANIFEST_FORMS_ENDPOINT = 'clientForm/release-related-files';
+export const OPENSRP_FORM_METADATA_ENDPOINT = 'clientForm/metadata';
 
 // colors
 export const GREEN = 'Green';
