@@ -23,8 +23,8 @@ import plansReducer, {
   PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../../../store/ducks/plans';
-import { draftPageColumns } from '../../utils';
 import { BaseListComponent, BaseListComponentProps, BaseListTableProps } from '../BaseListing';
+import { draftPageColumns } from '../utils';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);

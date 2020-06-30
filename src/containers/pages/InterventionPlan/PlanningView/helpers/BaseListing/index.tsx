@@ -5,7 +5,7 @@ import { DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table';
 import React from 'react';
 import { NoDataComponent } from '../../../../../../components/Table/NoDataComponent';
 import { PlanRecord } from '../../../../../../store/ducks/plans';
-import { draftPageColumns } from '../../utils';
+import { draftPageColumns } from '../utils';
 
 /** table prop type */
 export type BaseListTableProps = Pick<

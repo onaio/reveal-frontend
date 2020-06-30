@@ -101,7 +101,7 @@ import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import { NewPlanningDraftPlan } from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import { DraftPlans } from '../containers/pages/InterventionPlan/PlanningView/DraftPlans';
-import { IRSPlans } from '../containers/pages/InterventionPlan/PlanningView/IRS';
+import { IRSPlans } from '../containers/pages/InterventionPlan/PlanningView/IRSPlans';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments';
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
