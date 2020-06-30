@@ -13,7 +13,7 @@ import {
   createConnectedOpenSRPPlansList,
   OpenSRPPlanListViewProps,
   RenderProp,
-} from './OpenSRPPlansList';
+} from './helpers/OpenSRPPlansList';
 
 const ConnectedOpenSRPPlansList = createConnectedOpenSRPPlansList();
 

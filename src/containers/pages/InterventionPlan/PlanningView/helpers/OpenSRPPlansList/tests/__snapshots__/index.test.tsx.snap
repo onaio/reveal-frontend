@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/../PlanningView/OpenSRPPlansList Search works correctly: find single row for entry with Khlong  tr index 0 1`] = `"NameDate CreatedStatus"`;
+
+exports[`src/../PlanningView/OpenSRPPlansList Search works correctly: find single row for entry with Khlong  tr index 1 1`] = `"A1 - Khlong Nam Sai - IRS 012019-05-24draft"`;
+
+exports[`src/../PlanningView/OpenSRPPlansList does not show loader for no data: find No Data Found text tr index 0 1`] = `"NameDate CreatedStatus"`;
