@@ -44,12 +44,23 @@ reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 // TODO: Determine if this can safely be un-commented so as not to remount
 // const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
 
+/** PlanAssignment props */
 interface PlanAssignmentProps extends JurisdictionTableProps {
+  OpenSRPServiceClass: typeof OpenSRPService;
   addPlanActionCreator: typeof addPlanDefinition;
   fetchAssignmentsActionCreator: typeof fetchAssignments;
   fetchOrganizationsActionCreator: typeof fetchOrganizations;
+  supersetService: typeof supersetFetch;
 }
 
+/**
+ * PlanAssignment
+ *
+ * This component handles the plan assignment pages i.e. the pages where a user is
+ * able to assign organizations to the plan's jurisdictions.
+ *
+ * @param props - the expected props
+ */
 const PlanAssignment = (props: PlanAssignmentProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [broken, setBroken] = useState<boolean>(false);
@@ -57,19 +68,23 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   const [hierarchyLimits, setHierarchyLimits] = useState<SimpleJurisdiction[]>([]);
 
   const {
+    OpenSRPServiceClass,
     addPlanActionCreator,
     assignments,
     fetchAssignmentsActionCreator,
     fetchOrganizationsActionCreator,
     organizations,
     plan,
+    supersetService,
   } = props;
   const planId = props.match.params.planId;
 
+  /** We should not proceed without a plan id */
   if (!planId) {
     return null;
   }
 
+  /** Convenience function to handle cases where we must abort and tell the user we have done so */
   const handleBrokenPage = (message: string) => {
     displayError(Error(message));
     setErrorMessage(message);
@@ -81,7 +96,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     const supersetParams = superset.getFormData(15000, [
       { comparator: planId, operator: '==', subject: 'plan_id' },
     ]);
-    const planHierarchyPromise = supersetFetch(SUPERSET_PLAN_HIERARCHY_SLICE, supersetParams)
+    const planHierarchyPromise = supersetService(SUPERSET_PLAN_HIERARCHY_SLICE, supersetParams)
       .then((result: SimpleJurisdiction[]) => {
         if (result) {
           setHierarchyLimits(result);
@@ -98,7 +113,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
       });
 
     // get all assignments
-    const OpenSrpAssignedService = new OpenSRPService(OPENSRP_GET_ASSIGNMENTS_ENDPOINT);
+    const OpenSrpAssignedService = new OpenSRPServiceClass(OPENSRP_GET_ASSIGNMENTS_ENDPOINT);
     const assignmentsPromise = OpenSrpAssignedService.list({ plan: planId })
       .then((response: any[]) => {
         // TODO: remove any
@@ -121,7 +136,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
       .catch(e => displayError(e));
 
     // fetch all organizations
-    const OpenSRPOrganizationService = new OpenSRPService(OPENSRP_ORGANIZATION_ENDPOINT);
+    const OpenSRPOrganizationService = new OpenSRPServiceClass(OPENSRP_ORGANIZATION_ENDPOINT);
     const organizationsPromise = OpenSRPOrganizationService.list()
       .then((response: Organization[]) => {
         if (response) {
@@ -140,7 +155,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
       });
 
     // fetch current plan
-    const OpenSRPPlanService = new OpenSRPService(OPENSRP_PLANS);
+    const OpenSRPPlanService = new OpenSRPServiceClass(OPENSRP_PLANS);
     const plansPromise = OpenSRPPlanService.read(planId)
       .then((response: PlanDefinition[]) => {
         if (response && response.length > 0) {
@@ -192,6 +207,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   // TODO: Determine if this can safely be moved outside this component so as not to remount
   const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
 
+  /** Props to be passed to the wrapped component */
   const wrappedProps = {
     ...props,
     LoadingIndicator: Loading, // TODO: indicate what is loading
@@ -205,6 +221,17 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
 
   return <WrappedJurisdictionTable {...wrappedProps} />;
 };
+
+/** Default props for PlanAssignment */
+const defaultPlanAssignmentProps: Partial<PlanAssignmentProps> = {
+  OpenSRPServiceClass: OpenSRPService,
+  addPlanActionCreator: addPlanDefinition,
+  fetchAssignmentsActionCreator: fetchAssignments,
+  fetchOrganizationsActionCreator: fetchOrganizations,
+  supersetService: supersetFetch,
+};
+
+PlanAssignment.defaultProps = defaultPlanAssignmentProps;
 
 export { PlanAssignment };
 
