@@ -2,10 +2,10 @@ import { DrillDownColumn } from '@onaio/drill-down-table/dist/types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Cell } from 'react-table';
-import { DATE_CREATED, NAME, STATUS_HEADER } from '../../../../configs/lang';
-import { planStatusDisplay } from '../../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL, DRAFT_IRS_PLAN_URL } from '../../../../constants';
-import { PlanRecord } from '../../../../store/ducks/plans';
+import { DATE_CREATED, NAME, STATUS_HEADER } from '../../../../../configs/lang';
+import { planStatusDisplay } from '../../../../../configs/settings';
+import { ASSIGN_JURISDICTIONS_URL, DRAFT_IRS_PLAN_URL } from '../../../../../constants';
+import { PlanRecord } from '../../../../../store/ducks/plans';
 
 /** Columns definition for IRS drafts page table */
 export const commonColumns: Array<DrillDownColumn<PlanRecord>> = [
