@@ -1044,7 +1044,7 @@
     "description": "table cell text - view files"
   },
   "APP_ID_LABEL": {
-    "message": "APP Id",
+    "message": "App Id",
     "description": "table header label - application identifier"
   },
   "APP_VERSION_LABEL": {
