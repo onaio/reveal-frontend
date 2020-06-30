@@ -8,13 +8,13 @@ import { Button, Label } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
 import {
+  DOWNLOAD,
+  DOWNLOAD_FILE,
+  DOWNLOADING,
   FILE,
   FILE_DOWNLOADED_SUCCESSFULLY,
   IDENTIFIER,
   REQUIRED,
-  UPLOAD,
-  UPLOAD_FILE,
-  UPLOADING,
 } from '../../../configs/lang';
 import {
   HOME_URL,
@@ -35,25 +35,25 @@ export interface Option {
   value: string;
 }
 
-export interface JurisdictionMetadataUploadFormFields {
+export interface JurisdictionMetadataDownloadFormFields {
   identifier: Option;
 }
 
-export interface JurisdictionMetadataUploadFormProps {
+export interface JurisdictionMetadataDownloadFormProps {
   disabledFields: string[];
   serviceClass: OpenSRPService;
   submitForm: (
     setSubmitting: (isSubmitting: boolean) => void,
     setGlobalError: (errorMessage: string) => void,
     setIfDoneHere: (closeSubmissionCycle: boolean) => void,
-    props: JurisdictionMetadataUploadFormProps,
-    values: JurisdictionMetadataUploadFormFields
+    props: JurisdictionMetadataDownloadFormProps,
+    values: JurisdictionMetadataDownloadFormFields
   ) => void;
-  initialValues: JurisdictionMetadataUploadFormFields;
+  initialValues: JurisdictionMetadataDownloadFormFields;
   redirectAfterAction: string;
 }
 
-export const defaultInitialValues: JurisdictionMetadataUploadFormFields = {
+export const defaultInitialValues: JurisdictionMetadataDownloadFormFields = {
   identifier: { label: '', value: '' },
 };
 
@@ -70,8 +70,8 @@ export const submitForm = (
   setSubmitting: (isSubmitting: boolean) => void,
   setGlobalError: (errorMessage: string) => void,
   setIfDoneHere: (closeSubmissionCycle: boolean) => void,
-  props: JurisdictionMetadataUploadFormProps,
-  values: JurisdictionMetadataUploadFormFields
+  props: JurisdictionMetadataDownloadFormProps,
+  values: JurisdictionMetadataDownloadFormFields
 ) => {
   const { serviceClass } = props;
   const params = {
@@ -93,7 +93,7 @@ export const submitForm = (
     });
 };
 
-const JurisdictionMetadataUploadForm = (props: JurisdictionMetadataUploadFormProps) => {
+const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFormProps) => {
   const [ifDoneHere, setIfDoneHere] = useState<boolean>(false);
   const { initialValues, redirectAfterAction } = props;
   const [globalError, setGlobalError] = useState<string>('');
@@ -144,10 +144,10 @@ const JurisdictionMetadataUploadForm = (props: JurisdictionMetadataUploadFormPro
               type="submit"
               id="jurisdiction-metadata-form-submit-button"
               className="btn btn-block btn btn-primary"
-              aria-label={UPLOAD_FILE}
+              aria-label={DOWNLOAD_FILE}
               disabled={isSubmitting || Object.keys(errors).length > 0}
             >
-              {isSubmitting ? UPLOADING : `${UPLOAD} ${FILE}`}
+              {isSubmitting ? DOWNLOADING : `${DOWNLOAD} ${FILE}`}
             </Button>
           </Form>
         )}
@@ -156,7 +156,7 @@ const JurisdictionMetadataUploadForm = (props: JurisdictionMetadataUploadFormPro
   );
 };
 
-const defaultProps: JurisdictionMetadataUploadFormProps = {
+const defaultProps: JurisdictionMetadataDownloadFormProps = {
   disabledFields: [],
   initialValues: defaultInitialValues,
   redirectAfterAction: HOME_URL,
@@ -164,5 +164,5 @@ const defaultProps: JurisdictionMetadataUploadFormProps = {
   submitForm,
 };
 
-JurisdictionMetadataUploadForm.defaultProps = defaultProps;
-export default JurisdictionMetadataUploadForm;
+JurisdictionMetadataDownloadForm.defaultProps = defaultProps;
+export default JurisdictionMetadataDownloadForm;

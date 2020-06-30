@@ -10,15 +10,20 @@ import JurisdictionMetadata, {
   JurisdictionMetadataFormProps,
   submitForm,
 } from '../../../components/forms/JurisdictionMetadata';
-import JurisdictionMetadataUpload, {
+import JurisdictionMetadataDownload, {
   defaultInitialValues as initialValues,
-  JurisdictionMetadataUploadFormProps,
+  JurisdictionMetadataDownloadFormProps,
   submitForm as formSubmit,
-} from '../../../components/forms/JurisdictionMetadataUpload';
+} from '../../../components/forms/JurisdictionMetadataDownload';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { HOME, UPLOAD_JURISDICTION_METADATA } from '../../../configs/lang';
+import {
+  DOWNLOAD_JURISDICTION_METADATA,
+  HOME,
+  JURISDICTION_METADATA,
+  UPLOAD_JURISDICTION_METADATA,
+} from '../../../configs/lang';
 import {
   HOME_URL,
   OPENSRP_V1_SETTINGS_ENDPOINT,
@@ -57,7 +62,7 @@ const JurisdictionMetadataImportView = () => {
   };
 
   /** props for the Jurisdiction Metadata form */
-  const jurisdictionMetadataUploadFormProps: JurisdictionMetadataUploadFormProps = {
+  const jurisdictionMetadataDownloadFormProps: JurisdictionMetadataDownloadFormProps = {
     disabledFields: [],
     initialValues,
     redirectAfterAction: HOME_URL,
@@ -68,13 +73,20 @@ const JurisdictionMetadataImportView = () => {
   return (
     <div>
       <Helmet>
-        <title>{UPLOAD_JURISDICTION_METADATA}</title>
+        <title>{JURISDICTION_METADATA}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
+      <h3 className="mb-3 mt-5 page-title">{UPLOAD_JURISDICTION_METADATA}</h3>
       <Row>
         <Col md={8}>
           <JurisdictionMetadata {...jurisdictionMetadataFormProps} />
-          <JurisdictionMetadataUpload {...jurisdictionMetadataUploadFormProps} />
+        </Col>
+      </Row>
+      <hr />
+      <h3 className="mb-3 mt-5 page-title">{DOWNLOAD_JURISDICTION_METADATA}</h3>
+      <Row>
+        <Col md={8}>
+          <JurisdictionMetadataDownload {...jurisdictionMetadataDownloadFormProps} />
         </Col>
       </Row>
     </div>

@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import JurisdictionMetadataUploadForm from '..';
+import JurisdictionMetadataDownloadForm from '..';
 
 describe('components/forms/JurisdictionMetadata', () => {
   beforeEach(() => {
@@ -8,6 +8,6 @@ describe('components/forms/JurisdictionMetadata', () => {
   });
 
   it('renders without crashing', () => {
-    render(<JurisdictionMetadataUploadForm />);
+    render(<JurisdictionMetadataDownloadForm />);
   });
 });
