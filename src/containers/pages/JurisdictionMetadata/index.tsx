@@ -10,6 +10,11 @@ import JurisdictionMetadata, {
   JurisdictionMetadataFormProps,
   submitForm,
 } from '../../../components/forms/JurisdictionMetadata';
+import JurisdictionMetadataUpload, {
+  defaultInitialValues as initialValues,
+  JurisdictionMetadataUploadFormProps,
+  submitForm as formSubmit,
+} from '../../../components/forms/JurisdictionMetadataUpload';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -17,6 +22,7 @@ import { HOME, UPLOAD_JURISDICTION_METADATA } from '../../../configs/lang';
 import {
   HOME_URL,
   OPENSRP_V1_SETTINGS_ENDPOINT,
+  OPENSRP_V2_SETTINGS,
   UPLOAD_JURISDICTION_METADATA_URL,
 } from '../../../constants';
 import { RouteParams } from '../../../helpers/utils';
@@ -50,6 +56,15 @@ const JurisdictionMetadataImportView = () => {
     submitForm,
   };
 
+  /** props for the Jurisdiction Metadata form */
+  const jurisdictionMetadataUploadFormProps: JurisdictionMetadataUploadFormProps = {
+    disabledFields: [],
+    initialValues,
+    redirectAfterAction: HOME_URL,
+    serviceClass: new OpenSRPService(OPENSRP_V2_SETTINGS),
+    submitForm: formSubmit,
+  };
+
   return (
     <div>
       <Helmet>
@@ -59,6 +74,7 @@ const JurisdictionMetadataImportView = () => {
       <Row>
         <Col md={8}>
           <JurisdictionMetadata {...jurisdictionMetadataFormProps} />
+          <JurisdictionMetadataUpload {...jurisdictionMetadataUploadFormProps} />
         </Col>
       </Row>
     </div>

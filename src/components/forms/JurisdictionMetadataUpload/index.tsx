@@ -1,18 +1,20 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Form, Formik } from 'formik';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
+import Select from 'react-select';
+import { ValueType } from 'react-select/src/types';
 import { toast } from 'react-toastify';
 import { Button, Label } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
 import {
-  DOWNLOAD,
-  DOWNLOAD_FILE,
-  DOWNLOADING,
   FILE,
   FILE_DOWNLOADED_SUCCESSFULLY,
   IDENTIFIER,
   REQUIRED,
+  UPLOAD,
+  UPLOAD_FILE,
+  UPLOADING,
 } from '../../../configs/lang';
 import {
   HOME_URL,
@@ -27,9 +29,14 @@ import { OpenSRPService } from '../../../services/opensrp';
 export const JurisdictionSchema = Yup.object().shape({
   identifier: Yup.string().required(REQUIRED),
 });
+/** interface for each select dropdown option */
+export interface Option {
+  label: string;
+  value: string;
+}
 
 export interface JurisdictionMetadataUploadFormFields {
-  identifier: string;
+  identifier: Option;
 }
 
 export interface JurisdictionMetadataUploadFormProps {
@@ -47,7 +54,7 @@ export interface JurisdictionMetadataUploadFormProps {
 }
 
 export const defaultInitialValues: JurisdictionMetadataUploadFormFields = {
-  identifier: '',
+  identifier: { label: '', value: '' },
 };
 
 const createCsv = (data: string) => {
@@ -68,7 +75,7 @@ export const submitForm = (
 ) => {
   const { serviceClass } = props;
   const params = {
-    identifier: values.identifier,
+    identifier: values.identifier.value,
     serverVersion: 0,
   };
   serviceClass
@@ -90,6 +97,10 @@ const JurisdictionMetadataUploadForm = (props: JurisdictionMetadataUploadFormPro
   const [ifDoneHere, setIfDoneHere] = useState<boolean>(false);
   const { initialValues, redirectAfterAction } = props;
   const [globalError, setGlobalError] = useState<string>('');
+  const identifierOptions = [
+    { value: JURISDICTION_METADATA_RISK, label: 'Risk' },
+    { value: JURISDICTION_METADATA_COVERAGE, label: 'Coverage' },
+  ];
 
   return (
     <div className="form-container">
@@ -102,17 +113,26 @@ const JurisdictionMetadataUploadForm = (props: JurisdictionMetadataUploadFormPro
           props.submitForm(setSubmitting, setGlobalError, setIfDoneHere, props, values);
         }}
       >
-        {({ errors, isSubmitting }) => (
+        {({ errors, isSubmitting, setFieldValue }) => (
           <Form className="mb-5" data-testid="form">
             <FormGroup className="non-field-errors">
               {globalError !== '' && <p className="form-text text-danger">{globalError}</p>}
             </FormGroup>
             <FormGroup>
               <Label>{IDENTIFIER}</Label>
-              <Field as="select" name={IDENTIFIER}>
-                <option value={JURISDICTION_METADATA_COVERAGE}>Risk</option>
-                <option value={JURISDICTION_METADATA_RISK}>Coverage</option>
-              </Field>
+              <Select
+                defaultOptions={true}
+                options={identifierOptions}
+                // tslint:disable-next-line: jsx-no-lambda
+                onChange={(value: ValueType<{ value: string; label: string }>) =>
+                  setFieldValue('identifier', value)
+                }
+                className={errors.identifier ? `invalid` : ``}
+                isSearchable={true}
+                isClearable={true}
+                placeholder={IDENTIFIER}
+                data-testid="identifier"
+              />
               <ErrorMessage
                 name={IDENTIFIER}
                 component="small"
@@ -124,10 +144,10 @@ const JurisdictionMetadataUploadForm = (props: JurisdictionMetadataUploadFormPro
               type="submit"
               id="jurisdiction-metadata-form-submit-button"
               className="btn btn-block btn btn-primary"
-              aria-label={DOWNLOAD_FILE}
+              aria-label={UPLOAD_FILE}
               disabled={isSubmitting || Object.keys(errors).length > 0}
             >
-              {isSubmitting ? DOWNLOADING : `${DOWNLOAD} ${FILE}`}
+              {isSubmitting ? UPLOADING : `${UPLOAD} ${FILE}`}
             </Button>
           </Form>
         )}
