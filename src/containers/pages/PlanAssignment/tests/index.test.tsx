@@ -251,4 +251,33 @@ describe('PlanAssignment', () => {
       'no plan jurisdiction hierarchy'
     );
   });
+
+  it('shows an error message if no organizations', async () => {
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => limitTree);
+
+    fetch.mockResponses(
+      [JSON.stringify(assignments), { status: 200 }],
+      [JSON.stringify([]), { status: 400 }],
+      [JSON.stringify([plans[0]]), { status: 200 }]
+    );
+
+    const props = {
+      ...baseProps,
+      supersetService: supersetServiceMock,
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanAssignment {...props} />
+      </MemoryRouter>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    expect(toJson(wrapper.find('.global-error-container'))).toMatchSnapshot('no orgs');
+  });
 });
