@@ -20,7 +20,10 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
-import { irsPlanRecordResponse1, jurisdictionsById } from '../../PlanningView/tests/fixtures';
+import {
+  irsPlanRecordResponse1,
+  jurisdictionsById,
+} from '../../PlanningView/IRSPlans/tests/fixtures';
 import * as serviceCalls from '../serviceCalls';
 import {
   assignments,

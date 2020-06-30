@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { BaseListComponent } from '..';
 import { PlanRecord } from '../../../../../../../store/ducks/plans';
-import { irsDraftPageColumns } from '../../../utils';
+import { irsDraftPageColumns } from '../../utils';
 
 describe('src/../pages/InterventionPlan/PlanningView/helpers', () => {
   it('base list is renders correctly', () => {

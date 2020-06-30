@@ -13,7 +13,7 @@ import {
 } from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE, PLAN_UUID_NAMESPACE } from '../../configs/env';
 import { SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../constants';
-import { irsPlanDefinition1 } from '../../containers/pages/InterventionPlan/PlanningView/tests/fixtures';
+import { irsPlanDefinition1 } from '../../containers/pages/InterventionPlan/PlanningView/IRSPlans/tests/fixtures';
 import * as planDefinitionFixtures from '../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType, Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
