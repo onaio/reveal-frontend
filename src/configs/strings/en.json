@@ -1098,5 +1098,29 @@
   "MORE": {
     "message": "more",
     "description": "the word 'more'"
+  },
+  "COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY": {
+    "message": "Could not load the plan jurisdiction hierarchy",
+    "description": "error: did not succeed when loading plan jurisdiction hierarchy"
+  },
+  "COULD_NOT_LOAD_ASSIGNMENTS": {
+    "message": "Could not load assignments",
+    "description": "error: did not succeed when loading assignments"
+  },
+  "COULD_NOT_LOAD_TEAMS": {
+    "message": "Unable to load teams",
+    "description": "error: did not succeed when loading teams"
+  },
+  "COULD_NOT_LOAD_PLAN": {
+    "message": "Unable to load plan",
+    "description": "error: did not succeed when loading the plan"
+  },
+  "THE_SPECIFIC_ERROR_IS": {
+    "message": "The specific error is",
+    "description": "notice: points out the error"
+  },
+  "AN_ERROR_OCURRED": {
+    "message": "An error ocurred. Please try and refresh the page.",
+    "description": "Generic error message"
   }
 }

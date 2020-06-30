@@ -641,3 +641,19 @@ export const DID_NOT_SAVE_SUCCESSFULLY = translate(
 );
 export const AND = translate('AND', 'and');
 export const MORE = translate('MORE', 'more');
+
+export const COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY = translate(
+  'COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY',
+  'Could not load the plan jurisdiction hierarchy'
+);
+export const COULD_NOT_LOAD_ASSIGNMENTS = translate(
+  'COULD_NOT_LOAD_ASSIGNMENTS',
+  'Could not load assignments'
+);
+export const COULD_NOT_LOAD_TEAMS = translate('COULD_NOT_LOAD_TEAMS', 'Unable to load teams');
+export const COULD_NOT_LOAD_PLAN = translate('COULD_NOT_LOAD_PLAN', 'Unable to load plan');
+export const AN_ERROR_OCURRED = translate(
+  'AN_ERROR_OCURRED',
+  'An error ocurred. Please try and refresh the page.'
+);
+export const THE_SPECIFIC_ERROR_IS = translate('THE_SPECIFIC_ERROR_IS', 'The specific error is');
