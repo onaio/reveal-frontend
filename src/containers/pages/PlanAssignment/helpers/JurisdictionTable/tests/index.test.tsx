@@ -25,12 +25,9 @@ const history = createBrowserHistory();
 describe('PlanAssignment/JurisdictionTable', () => {
   beforeEach(() => {
     jest.resetAllMocks();
-    fetchMock.mockClear();
-    fetchMock.resetMocks();
   });
 
   it('works as expected', async () => {
-    // const cancelMock: any = jest.fn();
     const callBack: any = jest.fn();
     const orgs = [organization1, organization2, organization3];
     const props = {
@@ -41,13 +38,13 @@ describe('PlanAssignment/JurisdictionTable', () => {
       history,
       location: {
         hash: '',
-        pathname: `/assign/${plans[0].identifier}/3051`,
+        pathname: `/assign/${plans[0].identifier}/${raKashikishiHAHC.id}`,
         search: '',
         state: {},
       },
       match: {
         isExact: true,
-        params: { jurisdictionId: raKashikishiHAHC.id, planId: 'plans[0].identifier' },
+        params: { jurisdictionId: raKashikishiHAHC.id, planId: plans[0].identifier },
         path: '/assign/:planId/:jurisdictionId',
         url: `/assign/${plans[0].identifier}/${raKashikishiHAHC.id}`,
       },
