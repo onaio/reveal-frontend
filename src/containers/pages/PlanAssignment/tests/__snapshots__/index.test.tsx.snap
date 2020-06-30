@@ -39,3 +39,22 @@ exports[`PlanAssignment shows an error message if no plan jurisdiction hierarchy
   </p>
 </div>
 `;
+
+exports[`PlanAssignment shows an error message if no plan: no orgs 1`] = `
+<div
+  className="global-error-container"
+>
+  <p>
+    An error ocurred. Please try and refresh the page.
+  </p>
+  <p>
+    The specific error is
+    : 
+    <span
+      className="text-danger"
+    >
+      OpenSRPService read on plans failed, HTTP status 400
+    </span>
+  </p>
+</div>
+`;

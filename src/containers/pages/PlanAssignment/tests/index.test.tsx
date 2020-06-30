@@ -280,4 +280,33 @@ describe('PlanAssignment', () => {
 
     expect(toJson(wrapper.find('.global-error-container'))).toMatchSnapshot('no orgs');
   });
+
+  it('shows an error message if no plan', async () => {
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => limitTree);
+
+    fetch.mockResponses(
+      [JSON.stringify(assignments), { status: 200 }],
+      [JSON.stringify([]), { status: 200 }],
+      [JSON.stringify([]), { status: 400 }]
+    );
+
+    const props = {
+      ...baseProps,
+      supersetService: supersetServiceMock,
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanAssignment {...props} />
+      </MemoryRouter>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    expect(toJson(wrapper.find('.global-error-container'))).toMatchSnapshot('no orgs');
+  });
 });
