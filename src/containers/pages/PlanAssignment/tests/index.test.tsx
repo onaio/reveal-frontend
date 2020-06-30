@@ -3,10 +3,19 @@ import { mount } from 'enzyme';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import Loading from '../../../../components/page/Loading';
 import { defaultWalkerProps } from '../../../../components/TreeWalker';
-import { limitTree, raKashikishiHAHC } from '../../../../components/TreeWalker/tests/fixtures';
+import {
+  limitTree,
+  raKashikishiHAHC,
+  raKsh2,
+  raKsh3,
+  raLuapula,
+  raNchelenge,
+  raZambia,
+} from '../../../../components/TreeWalker/tests/fixtures';
 import { OpenSRPService } from '../../../../services/opensrp';
 import assignmentReducer, {
   fetchAssignments,
@@ -40,6 +49,31 @@ reducerRegistry.register(organizationsReducerName, organizationsReducer);
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
 const history = createBrowserHistory();
+const callBack: any = jest.fn();
+const orgs = [organization1, organization2, organization3];
+const baseProps = {
+  ...defaultWalkerProps,
+  addPlanActionCreator: addPlanDefinition,
+  assignments,
+  fetchAssignmentsActionCreator: fetchAssignments,
+  fetchOrganizationsActionCreator: fetchOrganizations,
+  history,
+  location: {
+    hash: '',
+    pathname: `/assign/${plans[0].identifier}/${raKashikishiHAHC.id}`,
+    search: '',
+    state: {},
+  },
+  match: {
+    isExact: true,
+    params: { jurisdictionId: raKashikishiHAHC.id, planId: plans[0].identifier },
+    path: '/assign/:planId/:jurisdictionId',
+    url: `/assign/${plans[0].identifier}/${raKashikishiHAHC.id}`,
+  },
+  organizations: orgs,
+  plan: plans[0],
+  submitCallBackFunc: callBack,
+};
 
 describe('PlanAssignment', () => {
   beforeEach(() => {
@@ -53,35 +87,20 @@ describe('PlanAssignment', () => {
     supersetServiceMock.mockImplementation(async () => limitTree);
 
     fetch.mockResponses(
+      /** These calls are made by PlanAssignment */
       [JSON.stringify(assignments), { status: 200 }],
       [JSON.stringify([organization1, organization2, organization3]), { status: 200 }],
-      [JSON.stringify([plans[0]]), { status: 200 }]
+      [JSON.stringify([plans[0]]), { status: 200 }],
+      /** These next calls represent TreeWalker building the location hierarchy */
+      [JSON.stringify(raKashikishiHAHC), { status: 200 }],
+      [JSON.stringify([raKsh2, raKsh3]), { status: 200 }],
+      [JSON.stringify(raNchelenge), { status: 200 }],
+      [JSON.stringify(raLuapula), { status: 200 }],
+      [JSON.stringify(raZambia), { status: 200 }]
     );
 
-    const callBack: any = jest.fn();
-    const orgs = [organization1, organization2, organization3];
     const props = {
-      ...defaultWalkerProps,
-      addPlanActionCreator: addPlanDefinition,
-      assignments,
-      fetchAssignmentsActionCreator: fetchAssignments,
-      fetchOrganizationsActionCreator: fetchOrganizations,
-      history,
-      location: {
-        hash: '',
-        pathname: `/assign/${plans[0].identifier}/${raKashikishiHAHC.id}`,
-        search: '',
-        state: {},
-      },
-      match: {
-        isExact: true,
-        params: { jurisdictionId: raKashikishiHAHC.id, planId: plans[0].identifier },
-        path: '/assign/:planId/:jurisdictionId',
-        url: `/assign/${plans[0].identifier}/${raKashikishiHAHC.id}`,
-      },
-      organizations: orgs,
-      plan: plans[0],
-      submitCallBackFunc: callBack,
+      ...baseProps,
       supersetService: supersetServiceMock,
     };
 
@@ -99,8 +118,11 @@ describe('PlanAssignment', () => {
       </MemoryRouter>
     );
 
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
     expect(fetch.mock.calls[0][0]).toEqual(
       'https://test.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?plan=356b6b84-fc36-4389-a44a-2b038ed2f38d'
     );

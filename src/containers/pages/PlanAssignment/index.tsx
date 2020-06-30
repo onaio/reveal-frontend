@@ -196,7 +196,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
 
   if (broken) {
     return (
-      <div>
+      <div className="global-error-container">
         <p>{AN_ERROR_OCURRED}</p>
         {errorMessage && (
           <p>
