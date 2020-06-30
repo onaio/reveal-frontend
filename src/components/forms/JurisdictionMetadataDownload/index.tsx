@@ -1,4 +1,5 @@
 import { ErrorMessage, Form, Formik } from 'formik';
+import Papaparse from 'papaparse';
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
 import Select from 'react-select';
@@ -14,6 +15,7 @@ import {
   FILE,
   FILE_DOWNLOADED_SUCCESSFULLY,
   IDENTIFIER,
+  JURISDICTION_METADATA,
   REQUIRED,
 } from '../../../configs/lang';
 import {
@@ -29,6 +31,34 @@ import { OpenSRPService } from '../../../services/opensrp';
 export const JurisdictionSchema = Yup.object().shape({
   identifier: Yup.string().required(REQUIRED),
 });
+
+/** interface for Jurisdiction metadata file */
+export interface JurisdictionMetadataFile {
+  jurisdiction_id: string;
+  jurisdiction_name: string;
+  [property: string]: string;
+}
+
+/** interface for Jurisdiction metadata response */
+export interface JurisdictionMetadataResponse {
+  key: string;
+  value: string;
+  label: string;
+  description?: string;
+  uuid: string;
+  settingsId: string;
+  settingIdentifier: string;
+  settingMetadataId: string;
+  teamId?: string;
+  providerId?: string;
+  locationId?: string;
+  v1Settings: boolean;
+  resolveSettings: boolean;
+  documentId: string;
+  serverVersion: number;
+  type: string;
+}
+
 /** interface for each select dropdown option */
 export interface Option {
   label: string;
@@ -57,13 +87,47 @@ export const defaultInitialValues: JurisdictionMetadataDownloadFormFields = {
   identifier: { label: '', value: '' },
 };
 
-const createCsv = (data: string) => {
-  return data;
+// Function to download data to a file
+function download(data: string, filename: string, type: string) {
+  const file = new Blob([data], { type });
+  if (window.navigator.msSaveOrOpenBlob) {
+    // IE10+
+    window.navigator.msSaveOrOpenBlob(file, filename);
+  } else {
+    // Others
+    const docElement = document.createElement('a');
+    const url = URL.createObjectURL(file);
+    docElement.href = url;
+    docElement.download = filename;
+    document.body.appendChild(docElement);
+    docElement.click();
+    setTimeout(() => {
+      document.body.removeChild(docElement);
+      window.URL.revokeObjectURL(url);
+    }, 0);
+  }
+}
+
+const createCsv = (entries: JurisdictionMetadataFile[]): void => {
+  const csv: string = Papaparse.unparse(entries, {
+    header: true,
+  });
+  // download file
+  download(csv, JURISDICTION_METADATA, 'csv');
 };
 
-const downloadFile = (response: any) => {
-  const data: string = response.data;
-  createCsv(data);
+const downloadFile = (response: JurisdictionMetadataResponse[]) => {
+  const entries: JurisdictionMetadataFile[] = [];
+  response.forEach(item => {
+    const metaType = item.settingIdentifier.replace('jurisdiction_metadata-', '');
+    const entry: JurisdictionMetadataFile = {
+      jurisdiction_id: item.key,
+      jurisdiction_name: item.label,
+      [metaType]: item.value,
+    };
+    entries.push(entry);
+  });
+  createCsv(entries);
 };
 
 export const submitForm = (
