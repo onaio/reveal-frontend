@@ -220,4 +220,35 @@ describe('PlanAssignment', () => {
 
     expect(toJson(wrapper.find('PlanAssignment').children())).toMatchSnapshot('no plan id');
   });
+
+  it('shows an error message if no plan jurisdiction hierarchy', async () => {
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => undefined);
+
+    fetch.mockResponses(
+      [JSON.stringify(assignments), { status: 200 }],
+      [JSON.stringify([organization1, organization2, organization3]), { status: 200 }],
+      [JSON.stringify([plans[0]]), { status: 200 }]
+    );
+
+    const props = {
+      ...baseProps,
+      supersetService: supersetServiceMock,
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanAssignment {...props} />
+      </MemoryRouter>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    expect(toJson(wrapper.find('.global-error-container'))).toMatchSnapshot(
+      'no plan jurisdiction hierarchy'
+    );
+  });
 });

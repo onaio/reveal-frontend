@@ -1,3 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`PlanAssignment requires plan id to work: no plan id 1`] = `null`;
+
+exports[`PlanAssignment shows an error message if no plan jurisdiction hierarchy: no plan jurisdiction hierarchy 1`] = `
+<div
+  className="global-error-container"
+>
+  <p>
+    An error ocurred. Please try and refresh the page.
+  </p>
+  <p>
+    The specific error is
+    : 
+    <span
+      className="text-danger"
+    >
+      Could not load the plan jurisdiction hierarchy
+    </span>
+  </p>
+</div>
+`;
