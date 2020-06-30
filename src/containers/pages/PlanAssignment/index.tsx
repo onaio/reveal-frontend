@@ -8,6 +8,14 @@ import Loading from '../../../components/page/Loading';
 import { withTreeWalker } from '../../../components/TreeWalker';
 import { SimpleJurisdiction } from '../../../components/TreeWalker/types';
 import { SUPERSET_PLAN_HIERARCHY_SLICE } from '../../../configs/env';
+import {
+  AN_ERROR_OCURRED,
+  COULD_NOT_LOAD_ASSIGNMENTS,
+  COULD_NOT_LOAD_PLAN,
+  COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY,
+  COULD_NOT_LOAD_TEAMS,
+  THE_SPECIFIC_ERROR_IS,
+} from '../../../configs/lang';
 import { PlanDefinition } from '../../../configs/settings';
 import {
   OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
@@ -104,7 +112,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
           if (hierarchyLimits.length < 1) {
             // this means that we basically have not succeeded to make this call
             // if hierarchyLimits is not populated we cannot proceed
-            handleBrokenPage('Unable to load the plan jurisdiction hierarchy');
+            handleBrokenPage(COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY);
           }
         }
       })
@@ -130,7 +138,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
           // save assignments to store
           fetchAssignmentsActionCreator(receivedAssignments);
         } else {
-          displayError(Error('Unable to load assignments'));
+          displayError(Error(COULD_NOT_LOAD_ASSIGNMENTS));
         }
       })
       .catch(e => displayError(e));
@@ -146,7 +154,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
           if (organizations.length < 1) {
             // this means that we basically have not succeeded to make this call
             // if organizations is not populated we cannot proceed
-            handleBrokenPage('Unable to load teams');
+            handleBrokenPage(COULD_NOT_LOAD_TEAMS);
           }
         }
       })
@@ -165,7 +173,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
           if (!plan) {
             // this means that we basically have not succeeded to make this call
             // if no plan then we cannot proceed
-            handleBrokenPage('Unable to load plan');
+            handleBrokenPage(COULD_NOT_LOAD_PLAN);
           }
         }
       })
@@ -189,10 +197,10 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   if (broken) {
     return (
       <div>
-        <p>An error ocurred. Please try and refresh the page.</p>
+        <p>{AN_ERROR_OCURRED}</p>
         {errorMessage && (
           <p>
-            The specific error is: <span className="text-danger">{errorMessage}</span>
+            {THE_SPECIFIC_ERROR_IS}: <span className="text-danger">{errorMessage}</span>
           </p>
         )}
       </div>
