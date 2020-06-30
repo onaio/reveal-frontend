@@ -21,10 +21,10 @@ export type BaseListTableProps = Pick<
 >;
 
 /** gets props to be passed to drillDown Table */
-export const getDefaultTableProps = (loading: boolean) => {
+export const getDefaultTableProps = (loading: boolean, data: PlanRecord[]) => {
   return {
     columns: draftPageColumns,
-    data: [],
+    data,
     loading,
     renderNullDataComponent: () => <NoDataComponent />,
     useDrillDown: false,
@@ -39,7 +39,7 @@ export const getDefaultTableProps = (loading: boolean) => {
 export interface BaseListComponentProps<TProps = BaseListTableProps> {
   loadData?: (setLoading: React.Dispatch<React.SetStateAction<boolean>>) => void;
   plansArray: PlanRecord[];
-  getTableProps?: (loading: boolean) => TProps;
+  getTableProps?: (loading: boolean, data: PlanRecord[]) => TProps;
 }
 
 const defaultBaseListProps = {
@@ -61,7 +61,7 @@ function BaseListComponent(props: BaseListComponentProps) {
 
   const tablePropsGetter = getTableProps ? getTableProps : getDefaultTableProps;
 
-  const tableProps = tablePropsGetter(loading);
+  const tableProps = tablePropsGetter(loading, props.plansArray);
 
   return <DrillDownTable {...tableProps} />;
 }
