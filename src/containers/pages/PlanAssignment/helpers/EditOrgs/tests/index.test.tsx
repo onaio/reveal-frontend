@@ -2,6 +2,7 @@ import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { defaultAssignmentProps } from '../../JurisdictionAssignmentForm';
 import { assignment4, openSRPJurisdiction } from '../../JurisdictionAssignmentForm/tests/fixtures';
@@ -36,9 +37,13 @@ describe('PlanAssignment/EditOrgs', () => {
     expect(wrapper.find('JurisdictionAssignmentForm').length).toEqual(0);
 
     // we can click the button to show the form
-    (wrapper.find('button.show-form').props() as any).onClick();
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      (wrapper.find('button.show-form').props() as any).onClick();
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     // now there is no show form button, but there is a form
     // note that there are other buttons, from the form
@@ -52,9 +57,13 @@ describe('PlanAssignment/EditOrgs', () => {
     });
 
     // we can click the close button form to go back to before
-    (wrapper.find('button.cancel').props() as any).onClick();
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      (wrapper.find('button.cancel').props() as any).onClick();
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     // voila
     expect(wrapper.find('button.show-form').length).toEqual(1);

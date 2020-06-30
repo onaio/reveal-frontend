@@ -3,6 +3,7 @@ import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import {
   raKashikishiHAHC,
@@ -67,8 +68,10 @@ describe('PlanAssignment/JurisdictionTable', () => {
       </MemoryRouter>
     );
 
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     expect(toJson(wrapper.find('HelmetWrapper'))).toMatchSnapshot('helmet');
     expect(toJson(wrapper.find('.page-title'))).toMatchSnapshot('page-title');

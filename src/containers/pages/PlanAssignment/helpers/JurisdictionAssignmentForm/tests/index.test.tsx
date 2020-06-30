@@ -3,6 +3,7 @@ import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import MockDate from 'mockdate';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { JurisdictionAssignmentForm } from '../index';
 import { apiCall, openSRPJurisdiction, submitCallbackPayload } from './fixtures';
@@ -75,14 +76,23 @@ describe('PlanAssignment/JurisdictionAssignmentForm', () => {
 
     const wrapper = mount(<JurisdictionAssignmentForm {...props} />);
 
-    wrapper.find('button.cancel').simulate('click');
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      wrapper.find('button.cancel').simulate('click');
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
     expect(cancelMock).toHaveBeenCalledTimes(1);
 
-    wrapper.find('form').simulate('submit');
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     expect(fetch.mock.calls).toEqual(apiCall);
     expect(submitMock).toHaveBeenCalledTimes(1);
@@ -110,9 +120,13 @@ describe('PlanAssignment/JurisdictionAssignmentForm', () => {
 
     const wrapper = mount(<JurisdictionAssignmentForm {...props} />);
 
-    wrapper.find('form').simulate('submit');
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     expect(submitMock).toHaveBeenCalledTimes(0);
     expect(toJson(wrapper.find('p.assignments-error'))).toMatchSnapshot('Form error');

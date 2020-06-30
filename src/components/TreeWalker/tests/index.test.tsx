@@ -1,6 +1,7 @@
 import { mount } from 'enzyme';
 import flushPromises from 'flush-promises';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import {
   defaultLocationParams,
@@ -60,8 +61,10 @@ describe('PlanAssignment/withTreeWalker', () => {
     // initially shows loading
     expect(wrapper.find('LoadingIndicator').length).toEqual(1);
 
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     // then shows the actual content
     expect(wrapper.find('LoadingIndicator').length).toEqual(0);
@@ -122,14 +125,17 @@ describe('PlanAssignment/withTreeWalker', () => {
     ]);
 
     // now lets try and call loadChildren (to, well, load children of raKashikishiHAHC)
-    const loadChildrenFunc = (wrapper
-      .find('div')
-      .parent()
-      .props() as WithWalkerProps).loadChildren;
-    loadChildrenFunc(raKashikishiHAHC, {} as any);
-
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      const loadChildrenFunc = (wrapper
+        .find('div')
+        .parent()
+        .props() as WithWalkerProps).loadChildren;
+      loadChildrenFunc(raKashikishiHAHC, {} as any);
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     // the props change to reflect this
     expect(
