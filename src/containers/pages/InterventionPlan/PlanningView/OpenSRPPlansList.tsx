@@ -29,7 +29,7 @@ import {
 } from './helpers/BaseListing';
 import { draftPageColumns } from './utils';
 
-type RenderProp = () => React.ReactNode;
+export type RenderProp = () => React.ReactNode;
 
 /** props for opensrpPlansList view */
 export interface OpenSRPPlanListViewProps

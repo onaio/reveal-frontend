@@ -1,78 +1,63 @@
 // container/view that lists draft plans. part of planning tool.
-import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
 import * as React from 'react';
-import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
-import { Store } from 'redux';
-import { PLAN_RECORD_BY_ID, QUERY_PARAM_TITLE } from '../../../../constants';
-import { loadOpenSRPPlans } from '../../../../helpers/dataLoading/plans';
-import { getQueryParams } from '../../../../helpers/utils';
-import { OpenSRPService } from '../../../../services/opensrp';
-import plansReducer, {
-  fetchPlanRecords,
-  makePlansArraySelector,
-  PlanRecord,
-  PlanStatus,
-  reducerName as plansReducerName,
-} from '../../../../store/ducks/plans';
-import { OpenSRPPlansList, OpenSRPPlansListProps } from './OpenSRPPlansList';
+import { Link } from 'react-router-dom';
+import Button from 'reactstrap/lib/Button';
+import HeaderBreadcrumbs, {
+  BreadCrumbProps,
+} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { CREATE_NEW_PLAN, DRAFT_PLANS, HOME } from '../../../../configs/lang';
+import { HOME_URL, NEW, PLANNING_VIEW_URL } from '../../../../constants';
+import {
+  createConnectedOpenSRPPlansList,
+  OpenSRPPlanListViewProps,
+  RenderProp,
+} from './OpenSRPPlansList';
 
-/** register the plans reducer */
-reducerRegistry.register(plansReducerName, plansReducer);
-
-interface DraftPlanProps {
-  fetchPlanRecordsActionCreator: typeof fetchPlanRecords;
-  service: typeof OpenSRPService;
-  plansArray: PlanRecord[];
-}
-
-const defaultProps: DraftPlanProps = {
-  fetchPlanRecordsActionCreator: fetchPlanRecords,
-  plansArray: [],
-  service: OpenSRPService,
-};
+const ConnectedOpenSRPPlansList = createConnectedOpenSRPPlansList();
 
 /** list draft plans */
-export const DraftPlans = (props: DraftPlanProps & RouteComponentProps) => {
-  const { plansArray } = props;
-  const draftPlansProps: Partial<OpenSRPPlansListProps> & RouteComponentProps = {
+export const DraftPlans = (props: RouteComponentProps) => {
+  const pageTitle = DRAFT_PLANS;
+  const homePage = {
+    label: HOME,
+    url: HOME_URL,
+  };
+  const breadCrumbProps: BreadCrumbProps = {
+    currentPage: {
+      label: DRAFT_PLANS,
+      url: PLANNING_VIEW_URL,
+    },
+    pages: [homePage],
+  };
+
+  const renderBody = (renderProp: RenderProp) => {
+    return (
+      <div className="mb-5">
+        <Helmet>
+          <title>{pageTitle}</title>
+        </Helmet>
+        <HeaderBreadcrumbs {...breadCrumbProps} />
+        <h2 className="page-title">{pageTitle}</h2>
+        {renderProp()}
+        <br />
+        <Button
+          className="create-plan"
+          color="primary"
+          tag={Link}
+          to={`${PLANNING_VIEW_URL}/${NEW}`}
+        >
+          {CREATE_NEW_PLAN}
+        </Button>
+      </div>
+    );
+  };
+
+  const opensrpListProps: Partial<OpenSRPPlanListViewProps> & RouteComponentProps = {
     ...props,
-    loadData: (setLoading: React.Dispatch<React.SetStateAction<boolean>>) =>
-      loadOpenSRPPlans(props.service, props.fetchPlanRecordsActionCreator, setLoading),
-    plansArray,
+    renderBody,
   };
 
-  return <OpenSRPPlansList {...draftPlansProps} />;
+  return <ConnectedOpenSRPPlansList {...opensrpListProps} />;
 };
-
-/** describes props returned by mapStateToProps */
-type DispatchedStateProps = Pick<DraftPlanProps, 'plansArray'>;
-/** describe mapDispatchToProps object */
-type MapDispatchToProps = Pick<DraftPlanProps, 'fetchPlanRecordsActionCreator'>;
-
-const mapStateToProps = (
-  state: Partial<Store>,
-  ownProps: RouteComponentProps
-): DispatchedStateProps => {
-  const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
-  const title = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const planStatus = [PlanStatus.DRAFT];
-  const plansRecordsArray = plansArraySelector(state as Registry, {
-    statusList: planStatus,
-    title,
-  });
-  const props = {
-    plansArray: plansRecordsArray,
-  };
-  return props;
-};
-
-const mapDispatchToProps: MapDispatchToProps = {
-  fetchPlanRecordsActionCreator: fetchPlanRecords,
-};
-
-DraftPlans.defaultProps = defaultProps;
-
-const ConnectedDraftPlans = connect(mapStateToProps, mapDispatchToProps)(DraftPlans);
-
-export default ConnectedDraftPlans;
