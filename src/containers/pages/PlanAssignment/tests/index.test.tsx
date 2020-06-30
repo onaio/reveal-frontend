@@ -32,6 +32,8 @@ import { PlanAssignment } from '../index';
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
+jest.mock('../../../../configs/env');
+
 // register reducers
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
@@ -100,32 +102,32 @@ describe('PlanAssignment', () => {
     await flushPromises();
     wrapper.update();
     expect(fetch.mock.calls[0][0]).toEqual(
-      'https://reveal-stage.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?plan=356b6b84-fc36-4389-a44a-2b038ed2f38d'
+      'https://test.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?plan=356b6b84-fc36-4389-a44a-2b038ed2f38d'
     );
     expect(fetch.mock.calls[1][0]).toEqual(
-      'https://reveal-stage.smartregister.org/opensrp/rest/organization'
+      'https://test.smartregister.org/opensrp/rest/organization'
     );
     expect(fetch.mock.calls[2][0]).toEqual(
-      'https://reveal-stage.smartregister.org/opensrp/rest/plans/356b6b84-fc36-4389-a44a-2b038ed2f38d'
+      'https://test.smartregister.org/opensrp/rest/plans/356b6b84-fc36-4389-a44a-2b038ed2f38d'
     );
 
-    // expect(supersetServiceMock.mock.calls).toEqual([
-    //   [
-    //     1 /** this comes from the envs mock */,
-    //     {
-    //       adhoc_filters: [
-    //         {
-    //           clause: 'WHERE',
-    //           comparator: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
-    //           expressionType: 'SIMPLE',
-    //           operator: '==',
-    //           subject: 'jurisdiction_id',
-    //         },
-    //       ],
-    //       row_limit: 1,
-    //     },
-    //   ],
-    // ]);
+    expect(supersetServiceMock.mock.calls).toEqual([
+      [
+        5,
+        {
+          adhoc_filters: [
+            {
+              clause: 'WHERE',
+              comparator: '356b6b84-fc36-4389-a44a-2b038ed2f38d',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
+            },
+          ],
+          row_limit: 15000,
+        },
+      ],
+    ]);
 
     expect(wrapper.find('TreeWalker').props()).toEqual({
       LoadingIndicator: Loading,
