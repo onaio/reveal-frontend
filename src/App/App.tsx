@@ -96,8 +96,7 @@ import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active
 import ConnectedPlanCompletion from '../containers/pages/FocusInvestigation/map/planCompletion';
 import Home from '../containers/pages/Home/Home';
 import IrsPlan from '../containers/pages/InterventionPlan/IRSPlan';
-import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
-import { NewPlanningDraftPlan } from '../containers/pages/InterventionPlan/NewPlan/IRS';
+import BaseNewPlan, { NewIRSPlan } from '../containers/pages/InterventionPlan/NewPlan/General';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import { DraftPlans } from '../containers/pages/InterventionPlan/PlanningView/DraftPlans';
 import { IRSPlans } from '../containers/pages/InterventionPlan/PlanningView/IRSPlans';
@@ -202,7 +201,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={NEW_IRS_PLAN_URL}
-                  component={NewPlan}
+                  component={NewIRSPlan}
                 />
                 {/* Draft IRS Plan Jurisdiction Selection view */}
                 <ConnectedPrivateRoute
@@ -355,7 +354,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={NEW_PLAN_URL}
-                  component={NewPlan}
+                  component={BaseNewPlan}
                 />
                 {/* Edit Focus Investigation Plan form view */}
                 <ConnectedPrivateRoute
@@ -516,7 +515,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={NEW_PLANNING_PLAN_URL}
-                  component={NewPlanningDraftPlan}
+                  component={BaseNewPlan}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
