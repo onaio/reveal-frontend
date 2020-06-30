@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/ConfigForm/manifest/ManifestFiles renders release file table correctly 1`] = `
+Object {
+  "LoadingComponent": <Ripple
+    borderColor="#ff5d00"
+    borderStyle="solid"
+    borderWidth="4px"
+    height="64px"
+    minHeight="80vh"
+    width="64px"
+  />,
+  "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
+  "customAlert": [Function],
+  "data": Array [
+    Object {
+      "createdAt": "Jun 19, 2020, 4:23:22 PM",
+      "form_relation": "",
+      "id": "53",
+      "identifier": "reveal-test-file.json",
+      "isDraft": false,
+      "isJsonValidator": false,
+      "jursdiction": "",
+      "label": "test publish",
+      "module": "",
+      "version": "1.0.27",
+    },
+    Object {
+      "createdAt": "Jun 19, 2020, 12:31:37 PM",
+      "form_relation": "",
+      "id": "52",
+      "identifier": "test-form-1.json",
+      "isDraft": false,
+      "isJsonValidator": false,
+      "jursdiction": "",
+      "label": "test form",
+      "module": "",
+      "version": "1.0.26",
+    },
+  ],
+  "debounceTime": 1000,
+  "downloadEndPoint": "clientForm",
+  "downloadLabel": "Download",
+  "editLabel": "Edit",
+  "endpoint": "clientForm/release-related-files",
+  "fetchFiles": [Function],
+  "fileNameLabel": "File Name",
+  "fileUploadUrl": "/manifest",
+  "fileVersionLabel": "File Version",
+  "formVersion": "1.0.1",
+  "getPayload": [Function],
+  "identifierLabel": "Identifier",
+  "isJsonValidator": false,
+  "moduleLabel": "Module",
+  "placeholder": "Find Release Files",
+  "removeFiles": [Function],
+  "uploadEditLabel": "Upload edit",
+  "uploadFileLabel": "Upload New File",
+  "uploadTypeUrl": "file-upload",
+}
+`;

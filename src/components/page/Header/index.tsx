@@ -19,6 +19,7 @@ import {
   CLIENT_LABEL,
   ENABLE_ABOUT,
   ENABLE_ASSIGN,
+  ENABLE_CONFIG_FORM,
   ENABLE_FI,
   ENABLE_IRS,
   ENABLE_JURISDICTION_METADATA_UPLOAD,
@@ -35,11 +36,14 @@ import {
   ASSIGN,
   CLIENTS_TITLE,
   FOCUS_INVESTIGATION,
+  FORM_DRAFT_FILES,
   HOME,
   IRS_REPORTING_TITLE,
   IRS_TITLE,
+  JSON_VALIDATORS,
   JURISDICTION_METADATA,
   LOGIN,
+  MANIFEST_RELEASES,
   MDA_POINT_REPORTING_TITLE,
   MONITOR,
   ORGANIZATIONS_LABEL,
@@ -57,7 +61,9 @@ import {
   FI_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
+  JSON_VALIDATORS_URL,
   LOGOUT_URL,
+  MANIFEST_RELEASE_URL,
   ORGANIZATIONS_LIST_URL,
   PLAN_LIST_URL,
   PRACTITIONERS_LIST_URL,
@@ -65,6 +71,7 @@ import {
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
   UPLOAD_JURISDICTION_METADATA_URL,
+  VIEW_DRAFT_FILES_URL,
 } from '../../../constants';
 import './Header.css';
 
@@ -261,6 +268,39 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           </NavLink>
                         </DropdownItem>
                       </div>
+                    )}
+                    {ENABLE_CONFIG_FORM && (
+                      <DropdownItem>
+                        <NavLink
+                          to={MANIFEST_RELEASE_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {MANIFEST_RELEASES}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_CONFIG_FORM && (
+                      <DropdownItem>
+                        <NavLink
+                          to={JSON_VALIDATORS_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {JSON_VALIDATORS}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_CONFIG_FORM && (
+                      <DropdownItem>
+                        <NavLink
+                          to={VIEW_DRAFT_FILES_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {FORM_DRAFT_FILES}
+                        </NavLink>
+                      </DropdownItem>
                     )}
                     {ENABLE_JURISDICTION_METADATA_UPLOAD && (
                       <DropdownItem>

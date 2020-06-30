@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/ConfigForm/manifest/uploadFile renders form edit correctly: edit form 1`] = `
+Object {
+  "LoadingComponent": <Ripple
+    borderColor="#ff5d00"
+    borderStyle="solid"
+    borderWidth="4px"
+    height="64px"
+    minHeight="80vh"
+    width="64px"
+  />,
+  "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
+  "customAlert": [Function],
+  "draftFilesUrl": "/files/draft",
+  "endpoint": "clientForm",
+  "fileNameLabel": "File Name",
+  "fileUploadLabel": "Upload files",
+  "formData": Object {
+    "createdAt": "Jun 19, 2020, 12:31:37 PM",
+    "form_relation": "",
+    "id": "52",
+    "identifier": "test-form-1.json",
+    "isDraft": false,
+    "isJsonValidator": true,
+    "jursdiction": "",
+    "label": "test form",
+    "module": "",
+    "version": "1.0.26",
+  },
+  "formId": "52",
+  "formInitialValues": Object {
+    "form": null,
+    "form_name": "test form",
+    "form_relation": "",
+    "module": "",
+  },
+  "formNameRequiredLable": "Form name is required",
+  "formRequiredLabel": "Form is required",
+  "getPayload": [Function],
+  "isJsonValidator": true,
+  "moduleLabel": "Module",
+  "relatedToLabel": "Related to",
+  "validatorsUrl": "/json-validators",
+}
+`;
+
+exports[`containers/pages/ConfigForm/manifest/uploadFile renders form upload correctly: upload form 1`] = `
+Object {
+  "LoadingComponent": <Ripple
+    borderColor="#ff5d00"
+    borderStyle="solid"
+    borderWidth="4px"
+    height="64px"
+    minHeight="80vh"
+    width="64px"
+  />,
+  "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
+  "customAlert": [Function],
+  "draftFilesUrl": "/files/draft",
+  "endpoint": "clientForm",
+  "fileNameLabel": "File Name",
+  "fileUploadLabel": "Upload files",
+  "formData": null,
+  "formId": null,
+  "formInitialValues": Object {
+    "form": null,
+    "form_name": "",
+    "form_relation": "",
+    "module": "",
+  },
+  "formNameRequiredLable": "Form name is required",
+  "formRequiredLabel": "Form is required",
+  "getPayload": [Function],
+  "isJsonValidator": false,
+  "moduleLabel": "Module",
+  "relatedToLabel": "Related to",
+  "validatorsUrl": "/json-validators",
+}
+`;
