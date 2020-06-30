@@ -24,7 +24,7 @@ import {
   JURISDICTION_METADATA_RISK,
   OPENSRP_V2_SETTINGS,
 } from '../../../constants';
-import { growl } from '../../../helpers/utils';
+import { downloadFile as download, growl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 
 /** yup validation schema for Jurisdiction Metadata Form input */
@@ -87,33 +87,12 @@ export const defaultInitialValues: JurisdictionMetadataDownloadFormFields = {
   identifier: { label: '', value: '' },
 };
 
-// Function to download data to a file
-function download(data: string, filename: string, type: string) {
-  const file = new Blob([data], { type });
-  if (window.navigator.msSaveOrOpenBlob) {
-    // IE10+
-    window.navigator.msSaveOrOpenBlob(file, filename);
-  } else {
-    // Others
-    const docElement = document.createElement('a');
-    const url = URL.createObjectURL(file);
-    docElement.href = url;
-    docElement.download = filename;
-    document.body.appendChild(docElement);
-    docElement.click();
-    setTimeout(() => {
-      document.body.removeChild(docElement);
-      window.URL.revokeObjectURL(url);
-    }, 0);
-  }
-}
-
 const createCsv = (entries: JurisdictionMetadataFile[]): void => {
   const csv: string = Papaparse.unparse(entries, {
     header: true,
   });
   // download file
-  download(csv, JURISDICTION_METADATA, 'csv');
+  download(csv, JURISDICTION_METADATA, 'text/csv');
 };
 
 const downloadFile = (response: JurisdictionMetadataResponse[]) => {
