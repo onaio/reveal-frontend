@@ -32,7 +32,7 @@ import {
   createConnectedOpenSRPPlansList,
   OpenSRPPlanListViewProps,
   RenderProp,
-} from './OpenSRPPlansList';
+} from './helpers/OpenSRPPlansList';
 import { irsDraftPageColumns } from './utils';
 
 const mapStateToProps = (state: Partial<Store>, ownProps: RouteComponentProps): any => {

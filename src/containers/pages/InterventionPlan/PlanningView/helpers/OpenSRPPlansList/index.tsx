@@ -1,33 +1,33 @@
-/** presentational component that renders a list of plan definitions( plans fetched from the opensrp api ) */
 import { DrillDownColumn } from '@onaio/drill-down-table';
-import { Registry } from '@onaio/redux-reducer-registry/dist/types';
+import reducerRegistry, { Registry } from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { ActionCreator, Store } from 'redux';
-import Loading from '../../../../components/page/Loading';
+import Loading from '../../../../../../components/page/Loading';
 import {
   defaultOptions,
   renderInFilterFactory,
-} from '../../../../components/Table/DrillDownFilters/utils';
-import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
-import { PLAN_RECORD_BY_ID, QUERY_PARAM_TITLE } from '../../../../constants';
-import { loadOpenSRPPlans } from '../../../../helpers/dataLoading/plans';
-import { getQueryParams } from '../../../../helpers/utils';
-import { OpenSRPService } from '../../../../services/opensrp';
-import {
+} from '../../../../../../components/Table/DrillDownFilters/utils';
+import { NoDataComponent } from '../../../../../../components/Table/NoDataComponent';
+import { PLAN_RECORD_BY_ID, QUERY_PARAM_TITLE } from '../../../../../../constants';
+import { loadOpenSRPPlans } from '../../../../../../helpers/dataLoading/plans';
+import { getQueryParams } from '../../../../../../helpers/utils';
+import { OpenSRPService } from '../../../../../../services/opensrp';
+
+import plansReducer, {
   fetchPlanRecords,
   FetchPlanRecordsAction,
   makePlansArraySelector,
   PlanRecord,
   PlanStatus,
-} from '../../../../store/ducks/plans';
-import {
-  BaseListComponent,
-  BaseListComponentProps,
-  BaseListTableProps,
-} from './helpers/BaseListing';
-import { draftPageColumns } from './utils';
+  reducerName as plansReducerName,
+} from '../../../../../../store/ducks/plans';
+import { draftPageColumns } from '../../utils';
+import { BaseListComponent, BaseListComponentProps, BaseListTableProps } from '../BaseListing';
+
+/** register the plans reducer */
+reducerRegistry.register(plansReducerName, plansReducer);
 
 export type RenderProp = () => React.ReactNode;
 
@@ -57,14 +57,14 @@ export const defaultProps: OpenSRPPlanListViewProps = {
  * stuff like the ui and functionality of the filters to be added to the table component
  */
 const OpenSRPPlansList = (props: OpenSRPPlanListViewProps & RouteComponentProps) => {
-  const { plansArray, fetchPlanRecordsCreator, serviceClass, tableColumns } = props;
+  const { fetchPlanRecordsCreator, serviceClass, tableColumns } = props;
   const loadData = (setLoading: React.Dispatch<React.SetStateAction<boolean>>) =>
     loadOpenSRPPlans(serviceClass, fetchPlanRecordsCreator, setLoading);
 
-  const getTableProps = (loading: boolean): BaseListTableProps => {
+  const getTableProps = (loading: boolean, data: PlanRecord[]): BaseListTableProps => {
     return {
       columns: tableColumns,
-      data: plansArray,
+      data,
       loading,
       loadingComponent: Loading,
       renderInBottomFilterBar: renderInFilterFactory({
@@ -131,7 +131,6 @@ const mapDispatchToProps: MapDispatchToProps = {
 };
 
 /** container creator that allows for configurable containers */
-// TODO - will need to explicit set types for the args here, for true flexibility
 export const createConnectedOpenSRPPlansList = (
   mapState = mapStateToProps,
   mapDispatch = mapDispatchToProps
