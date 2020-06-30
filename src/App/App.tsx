@@ -99,8 +99,8 @@ import IrsPlan from '../containers/pages/InterventionPlan/IRSPlan';
 import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
 import { NewPlanningDraftPlan } from '../containers/pages/InterventionPlan/NewPlan/IRS';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
-import ConnectedDraftPlans from '../containers/pages/InterventionPlan/PlanningView/DraftPlans';
-import IrsPlans from '../containers/pages/InterventionPlan/PlanningView/IRS';
+import { DraftPlans } from '../containers/pages/InterventionPlan/PlanningView/DraftPlans';
+import { IRSPlans } from '../containers/pages/InterventionPlan/PlanningView/IRS';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments';
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
@@ -194,7 +194,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={INTERVENTION_IRS_DRAFTS_URL}
-                  component={IrsPlans}
+                  component={IRSPlans}
                 />
                 {/* New IRS Plan form view */}
                 <ConnectedPrivateRoute
@@ -509,7 +509,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={PLANNING_VIEW_URL}
-                  component={ConnectedDraftPlans}
+                  component={DraftPlans}
                 />
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
