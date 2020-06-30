@@ -6,14 +6,14 @@ import { Link } from 'react-router-dom';
 import Button from 'reactstrap/lib/Button';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
-} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { CREATE_NEW_PLAN, DRAFT_PLANS, HOME } from '../../../../configs/lang';
-import { HOME_URL, NEW, PLANNING_VIEW_URL } from '../../../../constants';
+} from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { CREATE_NEW_PLAN, DRAFT_PLANS, HOME } from '../../../../../configs/lang';
+import { HOME_URL, NEW, PLANNING_VIEW_URL } from '../../../../../constants';
 import {
   createConnectedOpenSRPPlansList,
   OpenSRPPlanListViewProps,
   RenderProp,
-} from './helpers/OpenSRPPlansList';
+} from '../helpers/OpenSRPPlansList';
 
 const ConnectedOpenSRPPlansList = createConnectedOpenSRPPlansList();
 
