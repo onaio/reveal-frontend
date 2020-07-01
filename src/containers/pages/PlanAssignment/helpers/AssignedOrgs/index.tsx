@@ -35,7 +35,7 @@ const defaultProps: AssignedOrgsProps = {
  * @param props - the props!
  */
 const AssignedOrgs = (props: AssignedOrgsProps) => {
-  const { id, orgs, displayLimit } = props;
+  const { id, orgs, displayLimit, labels } = props;
 
   if (!orgs || orgs.length < 1 || id === '') {
     return null;
@@ -51,8 +51,8 @@ const AssignedOrgs = (props: AssignedOrgsProps) => {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
-  const displayString = `${orgNames.slice(0, displayLimit).join(', ')} and ${orgs.length -
-    displayLimit} more`;
+  const displayString = `${orgNames.slice(0, displayLimit).join(', ')} ${labels.and} ${orgs.length -
+    displayLimit} ${labels.more}`;
 
   return (
     <Fragment>

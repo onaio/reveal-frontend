@@ -4,7 +4,14 @@ import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/TreeWalker';
-import { ASSIGN_PLANS, HOME, LOADING, NO_ROWS_FOUND } from '../../../../../configs/lang';
+import {
+  ASSIGN_PLANS,
+  HOME,
+  LOADING,
+  NAME,
+  NO_ROWS_FOUND,
+  TEAMS_ASSIGNMENT,
+} from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../../constants';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
@@ -133,7 +140,7 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
       />,
     ];
   });
-  const headerItems = ['Name', 'Team Assignment', ''];
+  const headerItems = [NAME, TEAMS_ASSIGNMENT, ''];
   const tableClass = 'table table-bordered';
   const renderHeaders = () => {
     return (
