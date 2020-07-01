@@ -90,6 +90,7 @@ const JurisdictionMetadataImportView = () => {
                   respective columns.
                 </li>
                 <li>Save the updated CSV file.</li>
+                <li>Select the saved file on the upload form.</li>
                 <li>Click the "Upload File" button to complete the process.</li>
               </ol>
               <CardLink href="#">Download Templete CSV</CardLink>

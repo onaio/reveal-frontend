@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { toast } from 'react-toastify';
-import { Button, Label } from 'reactstrap';
+import { Button } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
 import {
@@ -16,6 +16,7 @@ import {
   IDENTIFIER,
   JURISDICTION_METADATA,
   REQUIRED,
+  SELECT,
 } from '../../../configs/lang';
 import {
   JURISDICTION_METADATA_COVERAGE,
@@ -156,7 +157,6 @@ const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFor
               {globalError !== '' && <p className="form-text text-danger">{globalError}</p>}
             </FormGroup>
             <FormGroup>
-              <Label>{IDENTIFIER}</Label>
               <Select
                 defaultOptions={true}
                 options={identifierOptions}
@@ -168,7 +168,7 @@ const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFor
                 className={errors.identifier ? `invalid` : ``}
                 isSearchable={true}
                 isClearable={true}
-                placeholder={IDENTIFIER}
+                placeholder={`${SELECT} ${IDENTIFIER}`}
                 data-testid="identifier"
               />
               <ErrorMessage
