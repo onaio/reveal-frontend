@@ -1,7 +1,7 @@
 /** the Jurisdiction Selection view
  * Responsibilities:
- *  load plan given a url
- *  render map.
+ *  load plan given a url with the planId
+ *  pending : render map.
  *  render table from which a user can assign jurisdictions to the active plan
  */
 
@@ -11,10 +11,11 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { ActionCreator, Store } from 'redux';
 import HeaderBreadcrumb from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { ASSIGN_JURISDICTIONS, HOME } from '../../../configs/lang';
+import { ASSIGN_JURISDICTIONS, PLANNING_PAGE_TITLE } from '../../../configs/lang';
 import { PlanDefinition } from '../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL, HOME_URL } from '../../../constants';
+import { ASSIGN_JURISDICTIONS_URL, PLANNING_VIEW_URL } from '../../../constants';
 import { loadOpenSRPPlan } from '../../../helpers/dataLoading/plans';
+import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import {
   addPlanDefinition,
@@ -23,7 +24,7 @@ import {
 } from '../../../store/ducks/opensrp/PlanDefinition';
 import { JurisdictionSelectorTableProps, JurisdictionTable } from './JurisdictionTable';
 
-export interface Props {
+export interface JurisdictionAssignmentViewProps {
   fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
   plan: PlanDefinition | null;
   serviceClass: typeof OpenSRPService;
@@ -35,25 +36,37 @@ export const defaultProps = {
   serviceClass: OpenSRPService,
 };
 
+/** view will require a planId from the url */
 interface RouteParams {
   planId: string;
 }
-export type JurisdictionAssignmentViewFullProps = Props & RouteComponentProps<RouteParams>;
 
+/** full props with route props added for JurisdictionAssignmentView */
+export type JurisdictionAssignmentViewFullProps = JurisdictionAssignmentViewProps &
+  RouteComponentProps<RouteParams>;
+
+/**
+ * Responsibilities:
+ *  1). get plan from api
+ *  2). render drillDown table where, user can select assignments
+ */
 export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFullProps) => {
   const { plan, serviceClass, fetchPlanCreator } = props;
+
   React.useEffect(() => {
     const planId = props.match.params.planId;
-    loadOpenSRPPlan(planId, serviceClass, fetchPlanCreator).catch(_ => {
-      // TODO - handle error
+    loadOpenSRPPlan(planId, serviceClass, fetchPlanCreator).catch((err: Error) => {
+      displayError(err);
     });
   }, []);
 
   if (!plan) {
-    // TODO
-    return <p>You cannot do this</p>;
+    // TODO - show error page
+    return <>Plan was not loaded</>;
   }
 
+  // TODO - is this sufficient enough to get the rootJurisdictions from the plan
+  // its dependent on either how the plan is created
   const rootJurisdictionId = plan.jurisdiction.map(jurisdictionCode => jurisdictionCode.code)[0];
 
   const JurisdictionTableProps: JurisdictionSelectorTableProps = {
@@ -63,14 +76,13 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
 
   const breadcrumbProps = {
     currentPage: {
-      // TODO - what should this be
       label: plan.title,
       url: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
     },
     pages: [
       {
-        label: HOME,
-        url: HOME_URL,
+        label: PLANNING_PAGE_TITLE,
+        url: PLANNING_VIEW_URL,
       },
     ],
   };
@@ -83,7 +95,6 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
-
       <JurisdictionTable {...JurisdictionTableProps} />
     </>
   );
@@ -91,8 +102,8 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
 
 JurisdictionAssignmentView.defaultProps = defaultProps;
 
-type MapStateToProps = Pick<Props, 'plan'>;
-type DispatchToProps = Pick<Props, 'fetchPlanCreator'>;
+type MapStateToProps = Pick<JurisdictionAssignmentViewProps, 'plan'>;
+type DispatchToProps = Pick<JurisdictionAssignmentViewProps, 'fetchPlanCreator'>;
 
 const mapStateToProps = (
   state: Partial<Store>,
