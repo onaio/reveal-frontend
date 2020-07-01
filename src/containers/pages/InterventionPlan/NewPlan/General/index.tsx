@@ -24,7 +24,7 @@ interface BaseNewPlanProps {
 
 /** the default props */
 export const defaultBasePlanProps = {
-  extraPlanFormProps: { redirectAfterAction: ASSIGN_JURISDICTIONS_URL },
+  extraPlanFormProps: { redirectAfterAction: PLAN_LIST_URL },
 };
 
 /** dynamically supply props during runtime when the interventionType changes
