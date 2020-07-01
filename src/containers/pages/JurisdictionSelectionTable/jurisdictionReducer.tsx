@@ -1,17 +1,40 @@
-/** a reducer hook to manage changes to the jurisdiction tree */
-// need some immutability
-
-import { Result } from '@onaio/utils/dist/types/types';
+/** a custom hook to manage changes to the jurisdiction tree */
+import { Failure, Result } from '@onaio/utils/dist/types/types';
 import { cloneDeep } from 'lodash';
 import React from 'react';
 import TreeModel from 'tree-model/types';
 import { LoadOpenSRPHierarchy } from '../../../helpers/dataLoading/jurisdictions';
+import { failure } from '../../../helpers/dataLoading/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import { generateJurisdictionTree, ParsedHierarchySingleNode, RawOpenSRPHierarchy } from './utils';
 
-// need some re-activeness
-export function useJurisdictionTreeReducer(rootJurisdictionId: string) {
-  // TODO - make tree immutable;
+/** string to use as key when setting value of a node as selected */
+const SELECT_KEY = 'selected';
+
+/** given an array of the childrenNodes, return true if all of them are selected
+ * @param childrenNodes - an array of nodes
+ */
+export function areAllChildrenSelected(
+  childrenNodes: Array<TreeModel.Node<ParsedHierarchySingleNode>>
+) {
+  let selected = true;
+  childrenNodes.forEach(node => {
+    selected = selected && node.model.node.attributes[SELECT_KEY];
+  });
+  return selected;
+}
+
+/** returns if node is selected
+ * @param node - The node
+ */
+export const nodeIsSelected = (node: TreeModel.Node<ParsedHierarchySingleNode>) => {
+  return !!node.model.node.attributes[SELECT_KEY];
+};
+
+/** constructs, and manages interactions that mutate the tree
+ * @param rootJurisdictionId - uses this jurisdiction id to get the opensrp hierarchy
+ */
+export function useJurisdictionTree(rootJurisdictionId: string) {
   const [tree, setTree] = React.useState<TreeModel.Node<ParsedHierarchySingleNode> | undefined>(
     undefined
   );
@@ -21,41 +44,46 @@ export function useJurisdictionTreeReducer(rootJurisdictionId: string) {
   const [currentChildren, setCurrentChildren] = React.useState<
     Array<TreeModel.Node<ParsedHierarchySingleNode>>
   >([]);
+  const [errors, setErrors] = React.useState<Failure[]>([]);
+  const addError = (fail: Failure) => {
+    setErrors([...errors, fail]);
+  };
+  const clearErrors = () => setErrors([]);
 
   React.useEffect(() => {
-    // fetch jurisdiction hierarchy
     const params = {
       return_structure_count: true,
     };
     LoadOpenSRPHierarchy(rootJurisdictionId, OpenSRPService, params)
       .then((apiResponse: Result<RawOpenSRPHierarchy>) => {
-        // create parseable tree
+        // create parseable tree using treeModel lib
         if (apiResponse.value) {
           const responseData = apiResponse.value;
           const theTree = generateJurisdictionTree(responseData);
           setTree(theTree);
           setCurrentChildren([theTree]);
         } else {
-          // TODO- handle broken page
+          addError(apiResponse);
         }
       })
-      .catch(_ => {
-        // TODO - set page broken here.
+      .catch((err: Error) => {
+        addError(failure(err));
       });
   }, []);
 
+  /** make currentChildren reactive depending on the set parent node */
   React.useEffect(() => {
-    // reactive when currentParent changes
     if (currentParentNode) {
       setCurrentChildren(currentParentNode.children);
     }
+    /** initially on mount currentParent node is undefined */
     if (!currentParentNode && tree) {
       setCurrentChildren([tree]);
     }
   }, [currentParentNode]);
 
+  /** Update parent node once the tree is changed */
   React.useEffect(() => {
-    // update currentParentNode
     if (tree && !currentParentNode) {
       setCurrentChildren([tree]);
     }
@@ -65,46 +93,62 @@ export function useJurisdictionTreeReducer(rootJurisdictionId: string) {
     }
   }, [tree]);
 
-  function setAttrsToNode(
+  /** helper that sets attributes to a node such that the tree changes causing a re-render
+   * @param aTree - the tree, usually the tree state variable
+   * @param nodeId - id of the node of interest
+   * @param attrAccessor - the key to use when assigning the value
+   * @param attrValue - the value to assign to attrAccessor
+   * @param cascadeDown - whether to do the value assignment on each of the node's descendants
+   * @param cascadeDown - whether to do the value assignment on each of the node's ancestors
+   */
+  function _setAttrsToNode(
     aTree: TreeModel.Node<ParsedHierarchySingleNode>,
     nodeId: string,
     attrAccessor: string,
     attrValue: string | number | boolean,
-    cascade: boolean
+    cascadeDown: boolean = false,
+    cascadeUp: boolean = false
   ) {
     const treeClone = cloneDeep(aTree);
     const argNode = treeClone.first(nd => nd.model.id === nodeId);
     if (!argNode) {
       return treeClone;
     }
-    if (cascade) {
+    argNode.model.node.attributes[attrAccessor] = attrValue;
+    if (cascadeDown) {
+      // argNode is part of this walk.
       argNode.walk(nd => {
         nd.model.node.attributes[attrAccessor] = attrValue;
+        // removing this return cause a type error, that's its sole purpose
         return true;
+      });
+    }
+    if (cascadeUp) {
+      const parentsPath = argNode.getPath();
+      // remove the node from path
+      parentsPath.pop();
+      parentsPath.forEach(parentNode => {
+        parentNode.model.node.attributes[attrAccessor] = attrValue;
       });
     }
     return { treeClone, argNode };
     // do not setTree here yet so that the caller can perform additional mutations
   }
 
-  function areAllChildrenSelected(childrenNodes: Array<TreeModel.Node<ParsedHierarchySingleNode>>) {
-    let selected = true;
-    childrenNodes.forEach(node => {
-      selected = selected && node.model.node.attributes.selected;
-    });
-    return selected;
-  }
-
+  /** marks a node as selected
+   * @param nodeId: id of node
+   */
   const selectNode = (nodeId: string) => {
     if (!tree) {
       return;
     }
-    const { treeClone } = setAttrsToNode(tree, nodeId, 'selected', true, true);
+    const { treeClone } = _setAttrsToNode(tree, nodeId, SELECT_KEY, true, true);
     // go up the tree look at the parent's children
     const node = treeClone.first(
       (nd: TreeModel.Node<ParsedHierarchySingleNode>) => nd.model.id === nodeId
     );
     if (!node) {
+      // if node was not found do nothing.
       setTree(treeClone);
       return;
     }
@@ -115,7 +159,7 @@ export function useJurisdictionTreeReducer(rootJurisdictionId: string) {
     for (const parentNode of reversedParentSPath) {
       const allChildrenAreSelected = areAllChildrenSelected(parentNode.children);
       if (allChildrenAreSelected) {
-        parentNode.model.node.attributes.selected = allChildrenAreSelected;
+        parentNode.model.node.attributes[SELECT_KEY] = allChildrenAreSelected;
       } else {
         break;
       }
@@ -123,21 +167,23 @@ export function useJurisdictionTreeReducer(rootJurisdictionId: string) {
     setTree(treeClone);
   };
 
+  /** will unselect a node and cascade the effect up
+   * @param nodeId - the node's id
+   */
   const unSelectNode = (nodeId: string) => {
     if (!tree) {
       return;
     }
-    const { treeClone, argNode } = setAttrsToNode(tree, nodeId, 'selected', false, true);
+    const { treeClone } = _setAttrsToNode(tree, nodeId, SELECT_KEY, false, true, true);
 
-    // set all the children to unselected.
-    const path = argNode.getPath();
-    path.forEach((nd: any) => {
-      nd.model.node.attributes.selected = false;
-    });
     setTree(treeClone);
   };
 
-  const applySelectToNode = (node: any, value: boolean) => {
+  /** decides whether to call select or unselect based on the value to be assigned to the selected key
+   * @param node - set selected value on this node
+   * @param value - the node's selected value to this
+   */
+  const applySelectToNode = (node: TreeModel.Node<ParsedHierarchySingleNode>, value: boolean) => {
     if (value) {
       selectNode(node.model.id);
     } else {
@@ -148,10 +194,11 @@ export function useJurisdictionTreeReducer(rootJurisdictionId: string) {
   // we need a way to set a current node as selected,
   return {
     applySelectToNode,
+    clearErrors,
     currentChildren,
     currentParentNode,
+    errors,
     selectNode,
-    setAttrsToNode,
     setCurrentParent,
     tree,
     unSelectNode,
