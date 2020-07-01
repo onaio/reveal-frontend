@@ -190,7 +190,6 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
 
   if (loading) {
     // TODO: show message of what is actually loading
-    // return <Fragment>plan hierarchy loading...</Fragment>;
     return <Loading />;
   }
 
