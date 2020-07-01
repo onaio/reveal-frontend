@@ -134,6 +134,7 @@ export const submitForm = (
 const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFormProps) => {
   const { initialValues } = props;
   const [globalError, setGlobalError] = useState<string>('');
+  const [disabled, setDisabled] = useState<boolean>(true);
   const identifierOptions = [
     { value: JURISDICTION_METADATA_RISK, label: 'Risk' },
     { value: JURISDICTION_METADATA_COVERAGE, label: 'Coverage' },
@@ -160,9 +161,10 @@ const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFor
                 defaultOptions={true}
                 options={identifierOptions}
                 // tslint:disable-next-line: jsx-no-lambda
-                onChange={(value: ValueType<{ value: string; label: string }>) =>
-                  setFieldValue('identifier', value)
-                }
+                onChange={(value: ValueType<{ value: string; label: string }>) => {
+                  setFieldValue('identifier', value);
+                  setDisabled(false);
+                }}
                 className={errors.identifier ? `invalid` : ``}
                 isSearchable={true}
                 isClearable={true}
@@ -178,10 +180,10 @@ const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFor
             <hr className="mb-2" />
             <Button
               type="submit"
-              id="jurisdiction-metadata-form-submit-button"
-              className="btn btn-block btn btn-primary"
+              id="jurisdiction-metadata-download-form-submit-button"
+              className="btn btn-primary"
               aria-label={DOWNLOAD_FILE}
-              disabled={isSubmitting || Object.keys(errors).length > 0}
+              disabled={isSubmitting || Object.keys(errors).length > 0 || disabled}
             >
               {isSubmitting ? DOWNLOADING : `${DOWNLOAD} ${FILE}`}
             </Button>

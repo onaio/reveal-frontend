@@ -167,6 +167,10 @@ export const UPLOAD_JURISDICTION_METADATA = translate(
   'UPLOAD_JURISDICTION_METADATA',
   'Upload Jurisdiction Metadata'
 );
+export const HOW_TO_UPDATE_JURISDICTION_METADATA = translate(
+  'HOW_TO_UPDATE_JURISDICTION_METADATA',
+  'How To Update The Jurisdiction Metadata'
+);
 
 export const REACTIVE = translate('REACTIVE', 'Reactive');
 export const REACTIVE_INVESTIGATION = translate('REACTIVE_INVESTIGATION', 'Reactive Investigation');
