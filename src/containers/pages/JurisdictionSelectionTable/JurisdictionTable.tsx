@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import HeaderBreadcrumb, { Page } from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { NO_ROWS_FOUND } from '../../../configs/lang';
 import { OpenSRPService } from '../../../services/opensrp';
-import { useJurisdictionTreeReducer } from './jurisdictionReducer';
+import { nodeIsSelected, useJurisdictionTree } from './jurisdictionReducer';
 import { JurisdictionCell } from './JurisdictionSelectCell';
 
 export interface JurisdictionSelectorTableProps {
@@ -27,7 +27,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     currentParentNode,
     setCurrentParent,
     currentChildren,
-  } = useJurisdictionTreeReducer(rootJurisdictionId);
+  } = useJurisdictionTree(rootJurisdictionId);
 
   let currentPage: Page = {
     clickHandler: () => {
@@ -67,7 +67,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       <input
         key={`${node.id}-check-jurisdiction`}
         type="checkbox"
-        checked={!!node.model.node.attributes.selected}
+        checked={nodeIsSelected(node)}
         // tslint:disable-next-line: jsx-no-lambda
         onChange={e => {
           const newSelectedValue = e.target.checked;
@@ -89,12 +89,12 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const parentNodeIsChecked = () => {
     let selected = true;
     if (currentParentNode) {
-      selected = selected && !!currentParentNode.model.node.attributes.selected;
+      selected = selected && nodeIsSelected(currentParentNode);
     } else {
       // this is to be used during the top level
       if (currentChildren.length > 0) {
         currentChildren.forEach(node => {
-          selected = selected && node.model.node.attributes.selected;
+          selected = selected && nodeIsSelected(node);
         });
       } else {
         selected = false;
