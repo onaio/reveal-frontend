@@ -91,6 +91,9 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
         <Col md={8} id="planform-col-container">
           <PlanForm {...planFormProps} key={formValues.interventionType} />
         </Col>
+        {/* ISSUE - TODO - for FI plans we cannot select the country jurisdiction when creating the plan since this component
+        below depends on having a focus area  whose value is set by using a cascade select in the jurisdiction select field
+        of planForm. it would have to be moved or changed.*/}
         <Col md={4}>
           {formValues.interventionType === InterventionType.FI &&
             formValues.jurisdictions[0].id !== '' && (
