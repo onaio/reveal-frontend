@@ -576,6 +576,7 @@ export const ALB_TABLETS_DISTRIBUTED = translate(
 );
 
 export const MANIFEST_RELEASES = translate('MANIFEST_RELEASES', 'Manifest Releases');
+export const RELEASES_LABEL = translate('RELEASES_LABEL', 'Releases');
 export const FORM_DRAFT_FILES = translate('FORM_DRAFT_FILES', 'Draft Files');
 export const JSON_VALIDATORS = translate('JSON_VALIDATORS', 'JSON Validators');
 export const UPLOAD_FORM = translate('UPLOAD_FORM', 'Upload Form');
@@ -590,7 +591,7 @@ export const DOWNLOAD_LABEL = translate('DOWNLOAD_LABEL', 'Download');
 export const UPLOAD_EDIT_LABEL = translate('UPLOAD_EDIT_LABEL', 'Upload edit');
 export const UPOL0AD_FILE_LABEL = translate('UPOL0AD_FILE_LABEL', 'Upload New File');
 export const VIEW_FILES_LABEL = translate('VIEW_FILES_LABEL', 'View Files');
-export const APP_ID_LABEL = translate('APP_ID_LABEL', 'APP Id');
+export const APP_ID_LABEL = translate('APP_ID_LABEL', 'App Id');
 export const APP_VERSION_LABEL = translate('APP_VERSION_LABEL', 'App Version');
 export const RELATED_TO_LABEL = translate('RELATED_TO_LABEL', 'Related to');
 export const FILE_UPLOAD_LABEL = translate('FILE_UPLOAD_LABEL', 'Upload files');

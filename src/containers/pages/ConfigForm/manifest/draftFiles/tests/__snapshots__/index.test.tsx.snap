@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`containers/pages/ConfigForm/manifest/ManifestFiles renders release file table correctly 1`] = `
+exports[`containers/pages/ConfigForm/manifest/draftFiles renders draft files table correctly 1`] = `
 Object {
   "LoadingComponent": <Ripple
     borderColor="#ff5d00"
@@ -11,6 +11,7 @@ Object {
     width="64px"
   />,
   "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
+  "clearDraftFiles": [Function],
   "createdAt": "Created at",
   "customAlert": [Function],
   "data": Array [
@@ -19,7 +20,7 @@ Object {
       "form_relation": "",
       "id": "53",
       "identifier": "reveal-test-file.json",
-      "isDraft": false,
+      "isDraft": true,
       "isJsonValidator": false,
       "jursdiction": "",
       "label": "test publish",
@@ -31,7 +32,7 @@ Object {
       "form_relation": "",
       "id": "52",
       "identifier": "test-form-1.json",
-      "isDraft": false,
+      "isDraft": true,
       "isJsonValidator": false,
       "jursdiction": "",
       "label": "test form",
@@ -46,20 +47,18 @@ Object {
     "paginate": false,
     "renderNullDataComponent": [Function],
   },
-  "editLabel": "Edit",
-  "endpoint": "clientForm/release-related-files",
-  "fetchFiles": [Function],
+  "endpoint": "clientForm/metadata",
+  "fetchDraftFiles": [Function],
   "fileNameLabel": "File Name",
-  "fileUploadUrl": "/manifest",
   "fileVersionLabel": "File Version",
-  "formVersion": "1.0.1",
+  "formUploadUrl": "/manifest",
   "getPayload": [Function],
   "identifierLabel": "Identifier",
-  "isJsonValidator": false,
+  "makeReleaseLabel": "Make Release",
+  "manifestEndPoint": "manifest",
   "moduleLabel": "Module",
-  "placeholder": "Find Release Files",
-  "removeFiles": [Function],
-  "uploadEditLabel": "Upload edit",
+  "placeholder": "Find Draft Files",
+  "releasesUrl": "/manifest/releases",
   "uploadFileLabel": "Upload New File",
   "uploadTypeUrl": "file-upload",
 }

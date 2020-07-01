@@ -987,6 +987,10 @@
     "message": "Manifest Releases",
     "description": "manifest releases page title"
   },
+  "RELEASES_LABEL": {
+    "message": "Releases",
+    "description": "manifest releases page title"
+  },
   "FORM_DRAFT_FILES": {
     "message": "Draft Files",
     "description": "draft files page title"
@@ -1044,7 +1048,7 @@
     "description": "table cell text - view files"
   },
   "APP_ID_LABEL": {
-    "message": "APP Id",
+    "message": "App Id",
     "description": "table header label - application identifier"
   },
   "APP_VERSION_LABEL": {
