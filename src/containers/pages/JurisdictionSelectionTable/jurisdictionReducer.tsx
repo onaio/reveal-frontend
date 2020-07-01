@@ -1,6 +1,6 @@
 /** a custom hook to manage changes to the jurisdiction tree */
 import { Failure, Result } from '@onaio/utils/dist/types/types';
-import { cloneDeep } from 'lodash';
+import { cloneDeep, uniqWith } from 'lodash';
 import React from 'react';
 import TreeModel from 'tree-model/types';
 import { LoadOpenSRPHierarchy } from '../../../helpers/dataLoading/jurisdictions';
@@ -29,6 +29,14 @@ export function areAllChildrenSelected(
  */
 export const nodeIsSelected = (node: TreeModel.Node<ParsedHierarchySingleNode>) => {
   return !!node.model.node.attributes[SELECT_KEY];
+};
+
+/** checks whether a node is a parent node or a leaf node
+ * @param node - the node
+ * @return true if node is a parent node, false if node is a leaf node
+ */
+export const nodeHasChildren = (node: TreeModel.Node<ParsedHierarchySingleNode>) => {
+  return node.children && node.children.length > 0;
 };
 
 /** constructs, and manages interactions that mutate the tree
@@ -135,6 +143,24 @@ export function useJurisdictionTree(rootJurisdictionId: string) {
     // do not setTree here yet so that the caller can perform additional mutations
   }
 
+  /** traverse up and select the parent nodes where necessary
+   * @param node a node
+   */
+  function _computeParentNodesSelection(node: TreeModel.Node<ParsedHierarchySingleNode>) {
+    const parentsPath = node.getPath();
+    parentsPath.pop();
+    const reversedParentSPath = parentsPath.reverse();
+    // now for each of the parent if all the children are selected then label the parent as selected too
+    for (const parentNode of reversedParentSPath) {
+      const allChildrenAreSelected = areAllChildrenSelected(parentNode.children);
+      if (allChildrenAreSelected) {
+        parentNode.model.node.attributes[SELECT_KEY] = allChildrenAreSelected;
+      } else {
+        break;
+      }
+    }
+  }
+
   /** marks a node as selected
    * @param nodeId: id of node
    */
@@ -152,18 +178,7 @@ export function useJurisdictionTree(rootJurisdictionId: string) {
       setTree(treeClone);
       return;
     }
-    const parentsPath = node.getPath();
-    parentsPath.pop();
-    const reversedParentSPath = parentsPath.reverse();
-    // now for each of the parent if all the children are selected then label the parent as selected too
-    for (const parentNode of reversedParentSPath) {
-      const allChildrenAreSelected = areAllChildrenSelected(parentNode.children);
-      if (allChildrenAreSelected) {
-        parentNode.model.node.attributes[SELECT_KEY] = allChildrenAreSelected;
-      } else {
-        break;
-      }
-    }
+    _computeParentNodesSelection(node);
     setTree(treeClone);
   };
 
@@ -191,13 +206,62 @@ export function useJurisdictionTree(rootJurisdictionId: string) {
     }
   };
 
+  /** any callback that will take a node and return whether we should select the node
+   * @param callback - callback is given each node in a walk and decides whether that node should be selected by returning true or false
+   */
+  const autoSelectNodes = (
+    callback: (node: TreeModel.Node<ParsedHierarchySingleNode>) => boolean
+  ) => {
+    const treeClone = cloneDeep(tree);
+    if (!treeClone) {
+      return;
+    }
+    const parentNodes: Array<TreeModel.Node<ParsedHierarchySingleNode>> = [];
+    treeClone.walk(node => {
+      if (callback(node)) {
+        node.model.node.attributes[SELECT_KEY] = true;
+        parentNodes.push(node.parent);
+      }
+      return true;
+    });
+
+    // remove duplicates
+    const parentNodesSet = uniqWith(parentNodes, node => node.model.id);
+
+    // now select parents accordingly
+    parentNodesSet.forEach(node => {
+      _computeParentNodesSelection(node);
+    });
+    setTree(treeClone);
+  };
+
+  /** returns all selected nodes
+   * @param leafNodesOnly - whether to return leaf nodes only
+   */
+  const getAllSelectedNodes = (leafNodesOnly = false) => {
+    const nodesList: Array<TreeModel.Node<ParsedHierarchySingleNode>> = [];
+    if (!tree) {
+      return [];
+    }
+    tree.walk(node => {
+      const shouldAddNode = nodeIsSelected && !(leafNodesOnly && nodeHasChildren(node));
+      if (shouldAddNode) {
+        nodesList.push(node);
+      }
+      return true;
+    });
+    return nodesList;
+  };
+
   // we need a way to set a current node as selected,
   return {
     applySelectToNode,
+    autoSelectNodes,
     clearErrors,
     currentChildren,
     currentParentNode,
     errors,
+    getAllSelectedNodes,
     selectNode,
     setCurrentParent,
     tree,
