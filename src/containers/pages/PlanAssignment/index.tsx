@@ -43,6 +43,7 @@ import planDefinitionReducer, {
   reducerName as planDefinitionReducerName,
 } from '../../../store/ducks/opensrp/PlanDefinition';
 import { JurisdictionTable, JurisdictionTableProps } from './helpers/JurisdictionTable';
+import { AssignmentResponse } from './helpers/types';
 
 // register reducers
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
@@ -123,8 +124,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     // get all assignments
     const OpenSrpAssignedService = new OpenSRPServiceClass(OPENSRP_GET_ASSIGNMENTS_ENDPOINT);
     const assignmentsPromise = OpenSrpAssignedService.list({ plan: planId })
-      .then((response: any[]) => {
-        // TODO: remove any
+      .then((response: AssignmentResponse[]) => {
         if (response) {
           const receivedAssignments: Assignment[] = response.map(assignment => {
             return {
