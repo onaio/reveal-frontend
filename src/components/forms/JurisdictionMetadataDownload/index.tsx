@@ -1,7 +1,6 @@
 import { ErrorMessage, Form, Formik } from 'formik';
 import Papaparse from 'papaparse';
 import React, { useState } from 'react';
-import { Redirect } from 'react-router';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { toast } from 'react-toastify';
@@ -19,7 +18,6 @@ import {
   REQUIRED,
 } from '../../../configs/lang';
 import {
-  HOME_URL,
   JURISDICTION_METADATA_COVERAGE,
   JURISDICTION_METADATA_RISK,
   OPENSRP_V2_SETTINGS,
@@ -75,12 +73,10 @@ export interface JurisdictionMetadataDownloadFormProps {
   submitForm: (
     setSubmitting: (isSubmitting: boolean) => void,
     setGlobalError: (errorMessage: string) => void,
-    setIfDoneHere: (closeSubmissionCycle: boolean) => void,
     props: JurisdictionMetadataDownloadFormProps,
     values: JurisdictionMetadataDownloadFormFields
   ) => void;
   initialValues: JurisdictionMetadataDownloadFormFields;
-  redirectAfterAction: string;
 }
 
 export const defaultInitialValues: JurisdictionMetadataDownloadFormFields = {
@@ -112,7 +108,6 @@ const downloadFile = (response: JurisdictionMetadataResponse[]) => {
 export const submitForm = (
   setSubmitting: (isSubmitting: boolean) => void,
   setGlobalError: (errorMessage: string) => void,
-  setIfDoneHere: (closeSubmissionCycle: boolean) => void,
   props: JurisdictionMetadataDownloadFormProps,
   values: JurisdictionMetadataDownloadFormFields
 ) => {
@@ -126,9 +121,9 @@ export const submitForm = (
     .then((response: any) => {
       downloadFile(response);
       growl(FILE_DOWNLOADED_SUCCESSFULLY, {
-        onClose: () => setIfDoneHere(true),
         type: toast.TYPE.SUCCESS,
       });
+      setSubmitting(false);
     })
     .catch((e: Error) => {
       setGlobalError(e.message);
@@ -137,8 +132,7 @@ export const submitForm = (
 };
 
 const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFormProps) => {
-  const [ifDoneHere, setIfDoneHere] = useState<boolean>(false);
-  const { initialValues, redirectAfterAction } = props;
+  const { initialValues } = props;
   const [globalError, setGlobalError] = useState<string>('');
   const identifierOptions = [
     { value: JURISDICTION_METADATA_RISK, label: 'Risk' },
@@ -147,13 +141,12 @@ const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFor
 
   return (
     <div className="form-container">
-      {ifDoneHere && <Redirect to={redirectAfterAction} />}
       <Formik
         initialValues={initialValues}
         validationSchema={JurisdictionSchema}
         // tslint:disable-next-line: jsx-no-lambda
         onSubmit={(values, { setSubmitting }) => {
-          props.submitForm(setSubmitting, setGlobalError, setIfDoneHere, props, values);
+          props.submitForm(setSubmitting, setGlobalError, props, values);
         }}
       >
         {({ errors, isSubmitting, setFieldValue }) => (
@@ -202,7 +195,6 @@ const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFor
 const defaultProps: JurisdictionMetadataDownloadFormProps = {
   disabledFields: [],
   initialValues: defaultInitialValues,
-  redirectAfterAction: HOME_URL,
   serviceClass: new OpenSRPService(OPENSRP_V2_SETTINGS),
   submitForm,
 };

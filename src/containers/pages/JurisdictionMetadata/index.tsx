@@ -65,7 +65,6 @@ const JurisdictionMetadataImportView = () => {
   const jurisdictionMetadataDownloadFormProps: JurisdictionMetadataDownloadFormProps = {
     disabledFields: [],
     initialValues,
-    redirectAfterAction: HOME_URL,
     serviceClass: new OpenSRPService(OPENSRP_V2_SETTINGS),
     submitForm: formSubmit,
   };
