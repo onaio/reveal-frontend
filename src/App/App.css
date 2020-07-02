@@ -142,5 +142,5 @@ fieldset[disabled] .gatekeeper-btn.active {
 }
 
 .cursor-pointer {
-  cursor: 'pointer';
+  cursor: pointer;
 }
