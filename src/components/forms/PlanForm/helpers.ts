@@ -57,6 +57,7 @@ export const IRSActivities = pick(planActivities, ['IRS']);
 export const MDAActivities = pick(planActivities, ['caseConfirmation']);
 export const MDAPointActivities = pick(planActivities, ['pointAdverseMDA', 'pointDispenseMDA']);
 export const DynamicFIActivities = pick(planActivities, [
+  'dynamicBCC',
   'dynamicBednetDistribution',
   'dynamicBloodScreening',
   'dynamicFamilyRegistration',
@@ -207,13 +208,19 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
   };
 }
 
+export type FormActivity =
+  | typeof FIActivities
+  | typeof IRSActivities
+  | typeof MDAPointActivities
+  | typeof DynamicFIActivities
+  | typeof DynamicIRSActivities
+  | typeof DynamicMDAActivities;
+
 /**
  * Converts a plan activities objects to a list of activities for use on PlanForm
  * @param items - plan activities
  */
-export function getFormActivities(
-  items: typeof FIActivities | typeof IRSActivities | typeof MDAPointActivities
-) {
+export function getFormActivities(items: FormActivity) {
   return Object.values(items)
     .sort((a, b) => a.action.prefix - b.action.prefix)
     .map(e => extractActivityForForm(e));
