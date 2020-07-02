@@ -239,10 +239,23 @@ export const locationHierarchy: LocationItem[] = [
 ];
 
 /** Focus investigation configs */
+
+/**
+ * You'll notice we are disabling no-useless-cast in a number of places like the next
+ * line.  This is because we want the Typescript compiler to be forced to use const contexts
+ * e.g.
+ * we want:
+ *  const FIStatuses: readonly ["A1", "A2", "B1", "B2"]
+ * instead of merely:
+ *  const FIStatuses: string[]
+ */
+
 /** Allowed FI Status values */
+/* tslint:disable-next-line no-useless-cast */
 export const FIStatuses = [A1, A2, B1, B2] as const;
 
 /** Allowed FI Status values */
+/* tslint:disable-next-line no-useless-cast */
 export const FIReasons = [ROUTINE, CASE_TRIGGERED] as const;
 export const FIReasonsDisplay: { [key: string]: string } = {
   [ROUTINE]: ROUTINE_TITLE,
@@ -263,6 +276,7 @@ export const goalUnitDisplay: { [key: string]: string } = {
 };
 
 /** Allowed goal priority values */
+/* tslint:disable-next-line no-useless-cast */
 export const goalPriorities = [LOW_PRIORITY, MEDIUM_PRIORITY, HIGH_PRIORITIY] as const;
 export const goalPrioritiesDisplay: { [key: string]: string } = {
   [LOW_PRIORITY]: LOW_PRIORITY_LABEL,
@@ -271,13 +285,16 @@ export const goalPrioritiesDisplay: { [key: string]: string } = {
 };
 
 /** Allowed action Reason values */
+/* tslint:disable-next-line no-useless-cast */
 export const actionReasons = [INVESTIGATION, ROUTINE] as const;
+
 export const actionReasonsDisplay: { [key: string]: string } = {
   [INVESTIGATION]: INVESTIGATION_TITLE,
   [ROUTINE]: ROUTINE_TITLE,
 };
 
 /** Allowed useContext Code values */
+/* tslint:disable-next-line no-useless-cast */
 export const useContextCodes = [
   INTERVENTION_TYPE_CODE,
   FI_STATUS_CODE,
@@ -288,6 +305,7 @@ export const useContextCodes = [
 ] as const;
 
 /** Plan activity code values */
+/* tslint:disable-next-line no-useless-cast */
 export const PlanActionCodes = [
   BCC_CODE,
   IRS_CODE,
@@ -302,6 +320,7 @@ export const PlanActionCodes = [
 ] as const;
 
 /** Allowed taskGenerationStatus values */
+/* tslint:disable-next-line no-useless-cast */
 export const taskGenerationStatuses = [TRUE, FALSE] as const;
 
 /** Plan Action Timing Period */
@@ -363,6 +382,7 @@ export interface PlanActivity {
 }
 
 /** Plan activity title values */
+/* tslint:disable-next-line no-useless-cast */
 export const PlanActivityTitles = [
   CASE_CONFIRMATION_ACTIVITY_CODE,
   FAMILY_REGISTRATION_ACTIVITY_CODE,
