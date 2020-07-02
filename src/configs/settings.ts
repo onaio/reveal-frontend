@@ -101,6 +101,7 @@ import {
 import {
   A1,
   A2,
+  APPLICABILITY_CONDITION_KIND,
   B1,
   B2,
   BCC_ACTIVITY_CODE,
@@ -142,7 +143,9 @@ import {
   MEDIUM_PRIORITY,
   MOSQUITO_COLLECTION_ACTIVITY_CODE,
   MOSQUITO_COLLECTION_CODE,
+  NAMED_EVENT_TRIGGER_TYPE,
   OPENSRP_EVENT_ID_CODE,
+  PLAN_ACTIVATION_TRIGGER_NAME,
   RACD_REGISTER_FAMILY_CODE,
   ROUTINE,
   TASK_GENERATION_STATUS_CODE,
@@ -473,7 +476,7 @@ export const planActivities: PlanActivities = {
   },
   IRS: {
     action: {
-      code: 'IRS',
+      code: IRS_CODE,
       description: IRS_ACTIVITY_DESCRIPTION,
       goalId: 'IRS',
       identifier: '',
@@ -510,7 +513,7 @@ export const planActivities: PlanActivities = {
   },
   bednetDistribution: {
     action: {
-      code: 'Bednet Distribution',
+      code: BEDNET_DISTRIBUTION_CODE,
       description: BEDNET_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_bednet_distribution',
       identifier: '',
@@ -547,7 +550,7 @@ export const planActivities: PlanActivities = {
   },
   bloodScreening: {
     action: {
-      code: 'Blood Screening',
+      code: BLOOD_SCREENING_CODE,
       description: BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_Blood_Screening',
       identifier: '',
@@ -584,7 +587,7 @@ export const planActivities: PlanActivities = {
   },
   caseConfirmation: {
     action: {
-      code: 'Case Confirmation',
+      code: CASE_CONFIRMATION_CODE,
       description: CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
       goalId: 'Case_Confirmation',
       identifier: '',
@@ -628,7 +631,7 @@ export const planActivities: PlanActivities = {
             description: 'Jurisdiction type location',
             expression: "Location.physicalType.text = 'jdn",
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
       ],
       definitionUri: 'behaviour_change_communication.json',
@@ -647,8 +650,8 @@ export const planActivities: PlanActivities = {
       title: BCC_ACTIVITY,
       trigger: [
         {
-          name: 'plan-activation',
-          type: 'named-event',
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
     },
@@ -673,7 +676,7 @@ export const planActivities: PlanActivities = {
   },
   dynamicBednetDistribution: {
     action: {
-      code: 'Bednet Distribution',
+      code: BEDNET_DISTRIBUTION_CODE,
       condition: [
         {
           expression: {
@@ -681,7 +684,7 @@ export const planActivities: PlanActivities = {
             expression:
               "Location.type.where(id='locationType').exists().not() or Location.type.where(id='locationType').text = 'Residential Structure'",
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
         {
           expression: {
@@ -689,7 +692,7 @@ export const planActivities: PlanActivities = {
             expression:
               "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Residential Structure'",
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
       ],
       definitionUri: 'bednet_distribution.json',
@@ -708,15 +711,15 @@ export const planActivities: PlanActivities = {
       title: BEDNET_ACTIVITY,
       trigger: [
         {
-          name: 'plan-activation',
-          type: 'named-event',
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
         {
           expression: {
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
-          type: 'named-event',
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
     },
@@ -741,7 +744,7 @@ export const planActivities: PlanActivities = {
   },
   dynamicBloodScreening: {
     action: {
-      code: 'Blood Screening',
+      code: BLOOD_SCREENING_CODE,
       condition: [
         {
           expression: {
@@ -753,7 +756,7 @@ export const planActivities: PlanActivities = {
               text: 'Person',
             },
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
       ],
       definitionUri: 'blood_screening.json',
@@ -772,8 +775,8 @@ export const planActivities: PlanActivities = {
       title: BLOOD_SCREENING_ACTIVITY,
       trigger: [
         {
-          name: 'plan-activation',
-          type: 'named-event',
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
         {
           expression: {
@@ -781,7 +784,7 @@ export const planActivities: PlanActivities = {
               "questionnaire = 'Family Registration' or questionnaire = 'Family Member Registration'",
           },
           name: 'event-submission',
-          type: 'named-event',
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
     },
@@ -806,14 +809,14 @@ export const planActivities: PlanActivities = {
   },
   dynamicCommunityAdherenceMDA: {
     action: {
-      code: 'MDA Adherence',
+      code: MDA_ADHERENCE_CODE,
       condition: [
         {
           expression: {
             description: 'The person fully received the dispense activity',
             expression: "$this.item.where(linkId='business_status').value = 'Fully Received'",
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
       ],
       definitionUri: 'mda_adherence.json',
@@ -837,7 +840,7 @@ export const planActivities: PlanActivities = {
             expression: "questionnaire = 'mda_dispense'",
           },
           name: 'event-submission',
-          type: 'named-event',
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
     },
@@ -863,7 +866,7 @@ export const planActivities: PlanActivities = {
   },
   dynamicCommunityDispenseMDA: {
     action: {
-      code: 'MDA Dispense',
+      code: MDA_POINT_DISPENSE_CODE,
       condition: [
         {
           expression: {
@@ -875,7 +878,7 @@ export const planActivities: PlanActivities = {
               text: 'Person',
             },
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
       ],
       definitionUri: 'mda_dispense.json',
@@ -895,8 +898,8 @@ export const planActivities: PlanActivities = {
       title: '',
       trigger: [
         {
-          name: 'plan-activation',
-          type: 'named-event',
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
         {
           expression: {
@@ -904,7 +907,7 @@ export const planActivities: PlanActivities = {
               "questionnaire = 'Family Registration' or questionnaire = 'Family Member Registration'",
           },
           name: 'event-submission',
-          type: 'named-event',
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
     },
@@ -930,7 +933,7 @@ export const planActivities: PlanActivities = {
   },
   dynamicFamilyRegistration: {
     action: {
-      code: 'RACD Register Family',
+      code: RACD_REGISTER_FAMILY_CODE,
       condition: [
         {
           expression: {
@@ -938,7 +941,7 @@ export const planActivities: PlanActivities = {
             expression:
               "Location.type.where(id='locationType').exists().not() or Location.type.where(id='locationType').text = 'Residential Structure'",
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
         {
           expression: {
@@ -948,7 +951,7 @@ export const planActivities: PlanActivities = {
               text: 'Family',
             },
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
         {
           expression: {
@@ -956,7 +959,7 @@ export const planActivities: PlanActivities = {
             expression:
               "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Residential Structure'",
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
       ],
       definitionUri: 'family_register.json',
@@ -975,15 +978,15 @@ export const planActivities: PlanActivities = {
       title: REGISTER_FAMILY_ACTIVITY,
       trigger: [
         {
-          name: 'plan-activation',
-          type: 'named-event',
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
         {
           expression: {
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
-          type: 'named-event',
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
     },
@@ -1008,7 +1011,7 @@ export const planActivities: PlanActivities = {
   },
   dynamicIRS: {
     action: {
-      code: 'IRS',
+      code: IRS_CODE,
       condition: [
         {
           expression: {
@@ -1016,7 +1019,7 @@ export const planActivities: PlanActivities = {
             expression:
               "Location.type.where(id='locationType').exists().not() or Location.type.where(id='locationType').text = 'Residential Structure'",
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
         {
           expression: {
@@ -1024,7 +1027,7 @@ export const planActivities: PlanActivities = {
             expression:
               "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Residential Structure'",
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
       ],
       definitionUri: 'spray_form.json',
@@ -1043,15 +1046,15 @@ export const planActivities: PlanActivities = {
       title: IRS_ACTIVITY,
       trigger: [
         {
-          name: 'plan-activation',
-          type: 'named-event',
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
         {
           expression: {
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
-          type: 'named-event',
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
     },
@@ -1076,14 +1079,14 @@ export const planActivities: PlanActivities = {
   },
   dynamicLarvalDipping: {
     action: {
-      code: 'Larval Dipping',
+      code: LARVAL_DIPPING_CODE,
       condition: [
         {
           expression: {
             description: 'Structure is a larval breeding site',
             expression: "Location.type.where(id='locationType').text = 'Larval Breeding Site'",
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
         {
           expression: {
@@ -1091,7 +1094,7 @@ export const planActivities: PlanActivities = {
             expression:
               "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Larval Breeding Site'",
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
       ],
       definitionUri: 'larval_dipping_form.json',
@@ -1110,15 +1113,15 @@ export const planActivities: PlanActivities = {
       title: LARVAL_DIPPING_ACTIVITY,
       trigger: [
         {
-          name: 'plan-activation',
-          type: 'named-event',
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
         {
           expression: {
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
-          type: 'named-event',
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
     },
@@ -1143,14 +1146,14 @@ export const planActivities: PlanActivities = {
   },
   dynamicMosquitoCollection: {
     action: {
-      code: 'Mosquito Collection',
+      code: MOSQUITO_COLLECTION_CODE,
       condition: [
         {
           expression: {
             description: 'Structure is a mosquito collection point',
             expression: "Location.type.where(id='locationType').text = 'Mosquito Collection Point'",
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
         {
           expression: {
@@ -1158,7 +1161,7 @@ export const planActivities: PlanActivities = {
             expression:
               "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Mosquito Collection Point'",
           },
-          kind: 'applicability',
+          kind: APPLICABILITY_CONDITION_KIND,
         },
       ],
       definitionUri: 'mosquito_collection_form.json',
@@ -1177,15 +1180,15 @@ export const planActivities: PlanActivities = {
       title: MOSQUITO_COLLECTION_ACTIVITY,
       trigger: [
         {
-          name: 'plan-activation',
-          type: 'named-event',
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
         {
           expression: {
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
-          type: 'named-event',
+          type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
     },
@@ -1208,10 +1211,9 @@ export const planActivities: PlanActivities = {
       ],
     },
   },
-  ///////////////////////////////////
   familyRegistration: {
     action: {
-      code: 'RACD Register Family',
+      code: RACD_REGISTER_FAMILY_CODE,
       description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_register_families',
       identifier: '',
@@ -1248,7 +1250,7 @@ export const planActivities: PlanActivities = {
   },
   larvalDipping: {
     action: {
-      code: 'Larval Dipping',
+      code: LARVAL_DIPPING_CODE,
       description: LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
       goalId: 'Larval_Dipping',
       identifier: '',
@@ -1285,7 +1287,7 @@ export const planActivities: PlanActivities = {
   },
   mosquitoCollection: {
     action: {
-      code: 'Mosquito Collection',
+      code: MOSQUITO_COLLECTION_CODE,
       description: MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
       goalId: 'Mosquito_Collection',
       identifier: '',
@@ -1322,7 +1324,7 @@ export const planActivities: PlanActivities = {
   },
   pointAdverseMDA: {
     action: {
-      code: 'MDA Adverse Event(s)',
+      code: MDA_POINT_ADVERSE_EFFECTS_CODE,
       description: MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION,
       goalId: 'Point_adverse_effect_MDA',
       identifier: '',
@@ -1359,7 +1361,7 @@ export const planActivities: PlanActivities = {
   },
   pointDispenseMDA: {
     action: {
-      code: 'MDA Dispense',
+      code: MDA_POINT_DISPENSE_CODE,
       description: MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION,
       goalId: 'Point_dispense_MDA',
       identifier: '',

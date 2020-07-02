@@ -190,6 +190,11 @@ export const MDA_POINT_ADVERSE_EFFECTS_CODE = 'MDA Adverse Event(s)';
 export const MDA_ADHERENCE_CODE = 'MDA Adherence';
 export const GOAL_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
 
+// dynamic plan activities
+export const NAMED_EVENT_TRIGGER_TYPE = 'named-event';
+export const PLAN_ACTIVATION_TRIGGER_NAME = 'plan-activation';
+export const APPLICABILITY_CONDITION_KIND = 'applicability';
+
 export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',
 };
