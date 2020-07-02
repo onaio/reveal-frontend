@@ -54,7 +54,21 @@ export const FIActivities = pick(planActivities, [
   'mosquitoCollection',
 ]);
 export const IRSActivities = pick(planActivities, ['IRS']);
+export const MDAActivities = pick(planActivities, ['caseConfirmation']);
 export const MDAPointActivities = pick(planActivities, ['pointAdverseMDA', 'pointDispenseMDA']);
+export const DynamicFIActivities = pick(planActivities, [
+  'dynamicBednetDistribution',
+  'dynamicBloodScreening',
+  'dynamicFamilyRegistration',
+  'dynamicLarvalDipping',
+  'dynamicMosquitoCollection',
+]);
+export const DynamicMDAActivities = pick(planActivities, [
+  'dynamicCommunityAdherenceMDA',
+  'dynamicCommunityDispenseMDA',
+  'dynamicFamilyRegistration',
+]);
+export const DynamicIRSActivities = pick(planActivities, ['dynamicBCC', 'dynamicIRS']);
 
 /** Array of FI Statuses */
 export const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStatusType);
