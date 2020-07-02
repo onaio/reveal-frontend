@@ -4,7 +4,7 @@ exports[`src/containers/../PlanningView/DraftPlans renders plans list correctly:
 Object {
   "aria-label": null,
   "children": "Create New Plan",
-  "className": "create-plan btn btn-primary",
+  "className": "create-plan float-right btn btn-primary",
   "href": "/plans/planning/new",
   "onClick": [Function],
   "type": undefined,
