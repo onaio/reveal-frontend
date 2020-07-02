@@ -1,0 +1,66 @@
+import { fireEvent, render, waitFor } from '@testing-library/react';
+import { mount } from 'enzyme';
+import toJson from 'enzyme-to-json';
+import React from 'react';
+import JurisdictionMetadataDownloadForm, { Option, submitForm } from '..';
+import { JURISDICTION_METADATA_RISK } from '../../../../constants';
+import * as helperUtils from '../../../../helpers/utils';
+
+describe('components/forms/JurisdictionMetadata', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
+  it('renders without crashing', () => {
+    render(<JurisdictionMetadataDownloadForm />);
+  });
+
+  it('renders correctly', () => {
+    // emphasizes on fields showing up
+    const wrapper = mount(<JurisdictionMetadataDownloadForm />);
+    expect(toJson(wrapper.find('select#identifier'))).toMatchSnapshot(
+      'JurisdictionMetadataDownload file'
+    );
+  });
+
+  it('renders Jurisdiction Metadata form correctly', () => {
+    /** emphasizes on fields showing up  */
+    const { container } = render(<JurisdictionMetadataDownloadForm />);
+    expect(container.querySelector('select[name="identifier"]')).toMatchSnapshot(
+      'JurisdictionMetadataDownload file'
+    );
+  });
+
+  it('Download disabled', async () => {
+    const { getByText, getByTestId } = render(<JurisdictionMetadataDownloadForm />);
+    fireEvent.submit(getByTestId('form'));
+    await waitFor(() => {
+      expect(getByText('Download File')).toBeDisabled();
+    });
+  });
+
+  it('submitForm downloads CSV file', async () => {
+    const identifier: Option = { value: JURISDICTION_METADATA_RISK, label: 'Risk' };
+    const setSubmitting = jest.fn();
+    const setGlobalError = jest.fn();
+    const mockGrowl: any = jest.fn().mockName('onClose');
+    (helperUtils as any).growl = mockGrowl;
+    const mockedOpenSRPservice = jest.fn().mockImplementation(() => {
+      return {
+        list: () => {
+          return Promise.resolve({});
+        },
+      };
+    });
+    const props = {
+      initialValues: {
+        identifier,
+      },
+      serviceClass: new mockedOpenSRPservice(),
+    };
+    submitForm(setSubmitting, setGlobalError, props as any, { identifier });
+    await waitFor(() => {
+      expect(mockedOpenSRPservice).toHaveBeenCalledTimes(1);
+    });
+  });
+});

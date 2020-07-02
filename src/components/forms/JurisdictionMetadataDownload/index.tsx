@@ -119,12 +119,12 @@ export const submitForm = (
   };
   serviceClass
     .list(params)
-    .then((response: any) => {
+    .then((response: JurisdictionMetadataResponse[]) => {
       downloadFile(response);
       growl(FILE_DOWNLOADED_SUCCESSFULLY, {
+        onClose: () => setSubmitting(false),
         type: toast.TYPE.SUCCESS,
       });
-      setSubmitting(false);
     })
     .catch((e: Error) => {
       setGlobalError(e.message);
