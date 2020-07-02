@@ -10,6 +10,7 @@ import {
   DEFAULT_ACTIVITY_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
   DEFAULT_TIME,
+  ENABLED_PLAN_TYPES,
   PLAN_UUID_NAMESPACE,
 } from '../../../configs/env';
 import { DATE_IS_REQUIRED, NAME_IS_REQUIRED, REQUIRED } from '../../../configs/lang';
@@ -644,3 +645,10 @@ export function getGoalUnitFromActionCode(actionCode: PlanActionCodesType): Goal
   }
   return GoalUnit.UNKNOWN;
 }
+
+/**
+ * Check if a plan type should be visible
+ * @param {InterventionType} planType - plan type
+ */
+export const isPlanTypeEnabled = (planType: InterventionType): boolean =>
+  ENABLED_PLAN_TYPES.includes(planType);

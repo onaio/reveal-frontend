@@ -21,7 +21,6 @@ import {
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
   ENABLED_FI_REASONS,
-  ENABLED_PLAN_TYPES,
 } from '../../../configs/env';
 import {
   ACTION,
@@ -85,6 +84,7 @@ import {
   getGoalUnitFromActionCode,
   getNameTitle,
   IRSActivities,
+  isPlanTypeEnabled,
   MDAPointActivities,
   PlanActivityFormFields,
   PlanFormFields,
@@ -235,13 +235,6 @@ const PlanForm = (props: PlanFormProps) => {
       ).length === 0
     );
   }
-
-  /**
-   * Check if a plan type should be visible
-   * @param {InterventionType} planType - plan type
-   */
-  const isPlanTypeEnabled = (planType: InterventionType): boolean =>
-    ENABLED_PLAN_TYPES.includes(planType);
 
   /** if plan is updated or saved redirect to plans page */
   if (areWeDoneHere) {
