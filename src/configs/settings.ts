@@ -686,14 +686,13 @@ export const planActivities: PlanActivities = {
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
-		{
+        {
           expression: {
             description: 'Family exists for structure',
-            expression:
-              "$this.contained.exists()",
-			subjectCodableConcept: {
-				text: 'Family'
-			}
+            expression: '$this.contained.exists()',
+            subjectCodableConcept: {
+              text: 'Family',
+            },
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -825,7 +824,8 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description: 'The person fully received the dispense activity',
-            expression: "$this.item.where(linkId='business_status').answer.value = 'Fully Received'",
+            expression:
+              "$this.item.where(linkId='business_status').answer.value = 'Fully Received'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
