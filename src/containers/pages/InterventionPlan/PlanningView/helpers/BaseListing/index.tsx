@@ -34,7 +34,7 @@ export const getDefaultTableProps = (loading: boolean, data: PlanRecord[]) => {
 /** props for base list component
  * responsibilities for this is to fetch data and render it in the table
  * it should receive a data loading function that tells it how to send the
- * data to the store after being saved.
+ * data to the store after being received.
  */
 export interface BaseListComponentProps<TProps = BaseListTableProps> {
   loadData?: (setLoading: React.Dispatch<React.SetStateAction<boolean>>) => void;

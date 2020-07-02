@@ -41,7 +41,10 @@ export interface OpenSRPPlanListViewProps
   renderBody: (renderProp: RenderProp) => React.ReactNode;
 }
 
-/** default body render */
+/** default body render - allows to receive a JSX(as a render prop) from controlling component
+ * that dictates how OpenSRPPlansList or its connected variation will sit
+ * on the page that the controlling component is rendering.
+ */
 const defaultBodyRenderer = (componentRender: RenderProp) => {
   return <>{componentRender()}</>;
 };
