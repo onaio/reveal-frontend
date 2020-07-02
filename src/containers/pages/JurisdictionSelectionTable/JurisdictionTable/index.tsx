@@ -43,7 +43,7 @@ import hierarchyReducer, {
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
-import { JurisdictionCell } from '../JurisdictionSelectCell';
+import { NodeCell } from '../JurisdictionCell';
 
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
@@ -204,7 +204,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           applySelectedToNode(node.model.id, newSelectedValue);
         }}
       />,
-      <JurisdictionCell
+      <NodeCell
         key={`${node.id}-jurisdiction`}
         node={node}
         // tslint:disable-next-line: jsx-no-lambda
