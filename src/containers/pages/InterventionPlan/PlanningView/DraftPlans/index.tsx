@@ -1,19 +1,14 @@
 // container/view that lists draft plans. part of planning tool.
 import * as React from 'react';
-import Helmet from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
-import { Link } from 'react-router-dom';
-import Button from 'reactstrap/lib/Button';
-import HeaderBreadcrumbs, {
-  BreadCrumbProps,
-} from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { CREATE_NEW_PLAN, DRAFT_PLANS, HOME } from '../../../../../configs/lang';
+import { BreadCrumbProps } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { DRAFT_PLANS, HOME } from '../../../../../configs/lang';
 import { HOME_URL, NEW, PLANNING_VIEW_URL } from '../../../../../constants';
 import {
   createConnectedOpenSRPPlansList,
   OpenSRPPlanListViewProps,
-  RenderProp,
 } from '../helpers/OpenSRPPlansList';
+import { draftPlansPageBodyFactory } from '../helpers/utils';
 
 const ConnectedOpenSRPPlansList = createConnectedOpenSRPPlansList();
 
@@ -32,27 +27,11 @@ export const DraftPlans = (props: RouteComponentProps) => {
     pages: [homePage],
   };
 
-  const renderBody = (renderProp: RenderProp) => {
-    return (
-      <div className="mb-5">
-        <Helmet>
-          <title>{pageTitle}</title>
-        </Helmet>
-        <HeaderBreadcrumbs {...breadCrumbProps} />
-        <h2 className="page-title">{pageTitle}</h2>
-        {renderProp()}
-        <br />
-        <Button
-          className="create-plan"
-          color="primary"
-          tag={Link}
-          to={`${PLANNING_VIEW_URL}/${NEW}`}
-        >
-          {CREATE_NEW_PLAN}
-        </Button>
-      </div>
-    );
-  };
+  const renderBody = draftPlansPageBodyFactory({
+    breadCrumbProps,
+    newPlanUrl: `${PLANNING_VIEW_URL}/${NEW}`,
+    pageTitle,
+  });
 
   const opensrpListProps: Partial<OpenSRPPlanListViewProps> & RouteComponentProps = {
     ...props,
