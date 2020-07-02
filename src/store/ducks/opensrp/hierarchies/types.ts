@@ -26,7 +26,7 @@ export interface HierarchySingleNode<TChild> {
  * this field will be added to each node during parsing the raw data from the api
  */
 export interface MetaField {
-  meta: Dictionary<string | number | boolean>;
+  meta: { selected: boolean };
 }
 
 /** single node description after coming in from the api */
@@ -55,3 +55,5 @@ export interface RawOpenSRPHierarchy {
 
 /** helper type, shortened form */
 export type TreeNode = TreeModel.Node<ParsedHierarchySingleNode>;
+
+export type AutoSelectCallback = (node: TreeNode) => boolean;

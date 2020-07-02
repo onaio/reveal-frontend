@@ -6,6 +6,9 @@ import reducer, {
   getCurrentParentNode,
   reducerName,
   setCurrentParentId,
+  deforest,
+  selectNode,
+  getNodeById,
 } from '..';
 import store from '../../../../index';
 import { fetchTasks } from '../../../tasks';
@@ -16,11 +19,13 @@ import {
   removeOrganizationsAction,
 } from '../../organizations';
 import { sampleHierarchy } from './fixtures';
+import { nodeIsSelected } from '../utils';
 
 reducerRegistry.register(reducerName, reducer);
 
 const childrenSelector = getCurrentChildren();
 const parentNodeSelector = getCurrentParentNode();
+const nodeSelector = getNodeById();
 
 describe('reducers/opensrp/hierarchies', () => {
   let flushThunks;
@@ -28,6 +33,7 @@ describe('reducers/opensrp/hierarchies', () => {
   beforeEach(() => {
     flushThunks = FlushThunks.createMiddleware();
     jest.resetAllMocks();
+    store.dispatch(deforest());
   });
 
   it('should have initial state', () => {
@@ -49,5 +55,18 @@ describe('reducers/opensrp/hierarchies', () => {
 
     expect(childrenSelector(store.getState(), filters).length).toEqual(1);
     expect(parentNodeSelector(store.getState(), filters)!.model.label).toEqual('Lusaka');
+  });
+  
+  it('selecting & unselecting a node works', () => {
+    // checking that dispatching actions has desired effect
+    const rootJurisdictionId = '2942'
+    const filters = {
+      rootJurisdictionId,
+    };
+    store.dispatch(fetchTree(sampleHierarchy));
+    store.dispatch(selectNode(rootJurisdictionId, '2942'))
+    const node = nodeSelector(store.getState(), {...filters, nodeId: '2942'})
+    
+    expect(nodeIsSelected(node!)).toBeTruthy();
   });
 });
