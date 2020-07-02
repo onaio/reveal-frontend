@@ -10,24 +10,30 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { ActionCreator, Store } from 'redux';
-import HeaderBreadcrumb from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { ASSIGN_JURISDICTIONS, PLANNING_PAGE_TITLE } from '../../../configs/lang';
-import { PlanDefinition } from '../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL, PLANNING_VIEW_URL } from '../../../constants';
-import { loadOpenSRPPlan } from '../../../helpers/dataLoading/plans';
-import { displayError } from '../../../helpers/errors';
-import { OpenSRPService } from '../../../services/opensrp';
+import { ErrorPage } from '../../../../components/page/ErrorPage';
+import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import Ripple from '../../../../components/page/Loading';
+import { getAncestors } from '../../../../components/TreeWalker/helpers';
+import {
+  ASSIGN_JURISDICTIONS,
+  COULD_NOT_LOAD_JURISDICTION,
+  COULD_NOT_LOAD_PLAN,
+  PLANNING_PAGE_TITLE,
+} from '../../../../configs/lang';
+import { PlanDefinition } from '../../../../configs/settings';
+import { ASSIGN_JURISDICTIONS_URL, PLANNING_VIEW_URL } from '../../../../constants';
+import { loadJurisdiction } from '../../../../helpers/dataLoading/jurisdictions';
+import { loadOpenSRPPlan } from '../../../../helpers/dataLoading/plans';
+import { OpenSRPService } from '../../../../services/opensrp';
 import {
   addPlanDefinition,
   AddPlanDefinitionAction,
   getPlanDefinitionById,
-} from '../../../store/ducks/opensrp/PlanDefinition';
-import { JurisdictionSelectorTableProps, JurisdictionTable } from './JurisdictionTable';
-import { getAncestors } from '../../../components/TreeWalker/helpers';
-import { loadJurisdiction } from '../../../helpers/dataLoading/jurisdictions';
-import { selectorState } from '../OrganizationViews/SingleOrganizationView/tests/fixtures';
-import { getAccessToken } from '../../../store/selectors';
+} from '../../../../store/ducks/opensrp/PlanDefinition';
+import { useHandleBrokenPage } from '../helpers/utils';
+import { ConnectedJurisdictionTable } from '../JurisdictionTable';
 
+/** this component's props */
 export interface JurisdictionAssignmentViewProps {
   fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
   plan: PlanDefinition | null;
@@ -59,11 +65,19 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
   const [rootJurisdictionId, setRootJurisdictionId] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(true);
 
+  const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
+
   React.useEffect(() => {
     const planId = props.match.params.planId;
-    loadOpenSRPPlan(planId, serviceClass, fetchPlanCreator).catch((err: Error) => {
-      displayError(err);
-    });
+    setLoading(true);
+    loadOpenSRPPlan(planId, serviceClass, fetchPlanCreator)
+      .then(() => {
+        setLoading(false);
+      })
+      .catch(() => {
+        handleBrokenPage(COULD_NOT_LOAD_PLAN);
+        setLoading(false);
+      });
   }, []);
 
   React.useEffect(() => {
@@ -72,34 +86,52 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       const oneOfJurisdictions = plan.jurisdiction.map(
         jurisdictionCode => jurisdictionCode.code
       )[0];
+      setLoading(true);
       loadJurisdiction(oneOfJurisdictions, OpenSRPService)
         .then(result => {
-          if (result && !result.error) {
+          if (!result || result.error) {
+            setLoading(false);
+            throw new Error(COULD_NOT_LOAD_JURISDICTION);
+          }
+          if (result.value) {
             getAncestors(result.value)
               .then(ancestors => {
                 if (ancestors.value) {
                   // get the first ancestor
                   const rootJurisdiction = ancestors.value[0];
                   setRootJurisdictionId(rootJurisdiction.id);
-                  console.log('Root Jurisdiction', rootJurisdictionId);
+                  setLoading(false);
+                } else {
+                  throw new Error(COULD_NOT_LOAD_JURISDICTION);
                 }
               })
-              .catch(_ => {});
+              .catch(_ => {
+                setLoading(false);
+                throw new Error(COULD_NOT_LOAD_JURISDICTION);
+              });
           }
         })
-        .catch(_ => {});
+        .catch(error => {
+          handleBrokenPage(error.message);
+        });
     }
   }, [plan]);
 
-  if(!plan){
-    return <>Failed to load the plan</>
+  if (loading) {
+    return <Ripple />;
+  }
+  if (!plan) {
+    return <ErrorPage errorMessage={COULD_NOT_LOAD_PLAN} />;
   }
 
   if (!rootJurisdictionId) {
-    // TODO - show error page
-    return <>Failed to load rootJurisdiction</>;
+    return <ErrorPage errorMessage={COULD_NOT_LOAD_JURISDICTION} />;
   }
-  const JurisdictionTableProps: JurisdictionSelectorTableProps = {
+  if (broken) {
+    return <ErrorPage errorMessage={errorMessage} />;
+  }
+
+  const JurisdictionTableProps = {
     plan,
     rootJurisdictionId,
     serviceClass,
@@ -126,7 +158,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
-      <JurisdictionTable {...JurisdictionTableProps} />
+      <ConnectedJurisdictionTable {...JurisdictionTableProps} />
     </>
   );
 };
