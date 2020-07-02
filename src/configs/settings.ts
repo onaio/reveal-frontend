@@ -737,6 +737,577 @@ export const planActivities: PlanActivities = {
       ],
     },
   },
+  dynamicFamilyRegistration: {
+    action: {
+      code: 'RACD Register Family',
+      description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
+      goalId: 'RACD_register_families',
+      identifier: '',
+      prefix: 2,
+      reason: ROUTINE,
+	  trigger: [
+		{
+          type: "named-event",
+          name: "plan-activation"
+        },
+        {
+          type: "named-event",
+          name: "event-submission",
+          condition: {
+            expression: "questionnaire = 'Register_Structure'"
+          }
+        }
+	  ],
+	  condition: [
+        {
+          kind: "applicability",
+          expression: {
+            description: "Structure is residential or type does not exist",
+            expression: "Location.type.where(id='locationType').exists().not() or Location.type.where(id='locationType').text = 'Residential Structure'"
+          }
+        },
+        {
+          kind: "applicability",
+          expression: {
+            description: "Family does not exist for structure",
+            expression: "$this.contained.exists()",
+            subjectCodableConcept: {
+              text: "Family"
+            }
+          }
+        },
+        {
+          kind: "applicability",
+          expression: {
+			description: "Apply to residential structures in Register_Structure questionnaires",
+            expression: "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Residential Structure'"
+          }
+        }
+      ],
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      definitionURI: 'family_register.json',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: REGISTER_FAMILY_ACTIVITY,
+    },
+    goal: {
+      description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
+      id: 'RACD_register_families',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicBloodScreening: {
+    action: {
+      code: 'Blood Screening',
+      description: BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
+      goalId: 'RACD_Blood_Screening',
+      identifier: '',
+      prefix: 3,
+      reason: INVESTIGATION,
+	  trigger: [
+		{
+          type: "named-event",
+          name: "plan-activation"
+        },
+        {
+          type: "named-event",
+          name: "event-submission",
+          condition: {
+            expression: "questionnaire = 'Family Registration' or questionnaire = 'Family Member Registration'"
+          }
+        }
+	  ],
+	  condition: [
+        {
+          kind: "applicability",
+          expression: {
+            description: "Person is older than 5 years or person associated with questionaire response if older than 5 years",
+            expression: "($this.is(FHIR.Patient) and $this.birthDate <= today() - 5 'years') or ($this.contained.where(Patient.birthDate <= today() - 5 'years').exists())",
+            subjectCodableConcept: {
+              text: "Person"
+            }
+          }
+        }
+      ],
+      subjectCodableConcept: {
+        text: 'Person',
+      },
+      definitionURI: 'blood_screening.json',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: BLOOD_SCREENING_ACTIVITY,
+    },
+    goal: {
+      description: BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
+      id: 'RACD_Blood_Screening',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERSON,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: BLOOD_SCREENING_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicBednetDistribution: {
+    action: {
+      code: 'Bednet Distribution',
+      description: BEDNET_ACTIVITY_DESCRIPTION,
+      goalId: 'RACD_bednet_distribution',
+      identifier: '',
+      prefix: 4,
+      reason: ROUTINE,
+	  trigger: [
+		{
+          type: "named-event",
+          name: "plan-activation"
+        },
+        {
+          type: "named-event",
+          name: "event-submission",
+          condition: {
+            expression: "questionnaire = 'Register_Structure'"
+          }
+        }
+	  ],
+	  condition: [
+        {
+          kind: "applicability",
+          expression: {
+            description: "Structure is residential or type does not exist",
+            expression: "Location.type.where(id='locationType').exists().not() or Location.type.where(id='locationType').text = 'Residential Structure'"
+          }
+        },
+        {
+          kind: "applicability",
+          expression: {
+			description: "Apply to residential structures in Register_Structure questionnaires",
+            expression: "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Residential Structure'"
+          }
+        }
+      ],
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      definitionUri: "bednet_distribution.json",
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: BEDNET_ACTIVITY,
+    },
+    goal: {
+      description: BEDNET_ACTIVITY_DESCRIPTION,
+      id: 'RACD_bednet_distribution',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: BEDNET_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicLarvalDipping: {
+    action: {
+      code: 'Larval Dipping',
+      description: LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
+      goalId: 'Larval_Dipping',
+      identifier: '',
+      prefix: 5,
+      reason: INVESTIGATION,
+	  trigger: [
+		{
+          type: "named-event",
+          name: "plan-activation"
+        },
+        {
+          type: "named-event",
+          name: "event-submission",
+          condition: {
+            expression: "questionnaire = 'Register_Structure'"
+          }
+        }
+	  ],
+	  condition: [
+        {
+          kind: "applicability",
+          expression: {
+            description: "Structure is a larval breeding site",
+            expression: "Location.type.where(id='locationType').text = 'Larval Breeding Site'"
+          }
+        },
+        {
+          kind: "applicability",
+          expression: {
+			description: "Apply to larval breeding sites in Register_Structure questionnaires",
+            expression: "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Larval Breeding Site'"
+          }
+        }
+      ],
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      definitionUri: "larval_dipping_form.json",
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: LARVAL_DIPPING_ACTIVITY,
+    },
+    goal: {
+      description: LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
+      id: 'Larval_Dipping',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.ACTIVITY,
+              value: 3,
+            },
+          },
+          due: '',
+          measure: LARVAL_DIPPING_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicMosquitoCollection: {
+    action: {
+      code: 'Mosquito Collection',
+      description: MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
+      goalId: 'Mosquito_Collection',
+      identifier: '',
+      prefix: 6,
+      reason: INVESTIGATION,
+	  trigger: [
+		{
+          type: "named-event",
+          name: "plan-activation"
+        },
+        {
+          type: "named-event",
+          name: "event-submission",
+          condition: {
+            expression: "questionnaire = 'Register_Structure'"
+          }
+        }
+	  ],
+	  condition: [
+        {
+          kind: "applicability",
+          expression: {
+            description: "Structure is a mosquito collection point",
+            expression: "Location.type.where(id='locationType').text = 'Mosquito Collection Point'"
+          }
+        },
+        {
+          kind: "applicability",
+          expression: {
+			description: "Apply to mosquito collection point in Register_Structure questionnaires",
+            expression: "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Mosquito Collection Point'"
+          }
+        }
+      ],
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      definitionUri: "mosquito_collection_form.json",
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: MOSQUITO_COLLECTION_ACTIVITY,
+    },
+    goal: {
+      description: MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
+      id: 'Mosquito_Collection',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.ACTIVITY,
+              value: 3,
+            },
+          },
+          due: '',
+          measure: MOSQUITO_COLLECTION_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicBCC: {
+    action: {
+      code: BCC_CODE,
+      description: BCC_ACTIVITY_DESCRIPTION,
+      goalId: 'BCC_Focus',
+      identifier: '',
+      prefix: 99,
+      reason: ROUTINE,
+	  trigger: [
+		{
+          type: "named-event",
+          name: "plan-activation"
+        }
+	  ],
+	  condition: [
+        {
+          kind: "applicability",
+          expression: {
+            description: "Jurisdiction type location",
+            expression: "Location.physicalType.text = 'jdn"
+          }
+        }
+      ],
+      subjectCodableConcept: {
+        text: 'Operational_Area',
+      },
+      definitionUri: "behaviour_change_communication.json",
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: BCC_ACTIVITY,
+    },
+    goal: {
+      description: BCC_GOAL_DESCRIPTION,
+      id: 'BCC_Focus',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.ACTIVITY,
+              value: 1,
+            },
+          },
+          due: '',
+          measure: BCC_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicIRS: {
+    action: {
+      code: 'IRS',
+      description: IRS_ACTIVITY_DESCRIPTION,
+      goalId: 'IRS',
+      identifier: '',
+      prefix: 7,
+      reason: ROUTINE,
+	  trigger: [
+		{
+          type: "named-event",
+          name: "plan-activation"
+        },
+        {
+          type: "named-event",
+          name: "event-submission",
+          condition: {
+            expression: "questionnaire = 'Register_Structure'"
+          }
+        }
+	  ],
+	  condition: [
+        {
+          kind: "applicability",
+          expression: {
+            description: "Structure is residential or type does not exist",
+            expression: "Location.type.where(id='locationType').exists().not() or Location.type.where(id='locationType').text = 'Residential Structure'"
+          }
+        },
+        {
+          kind: "applicability",
+          expression: {
+			description: "Apply to residential structures in Register_Structure questionnaires",
+            expression: "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Residential Structure'"
+          }
+        }
+      ],
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      definitionUri: "spray_form.json",
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: IRS_ACTIVITY,
+    },
+    goal: {
+      description: IRS_GOAL_DESCRIPTION,
+      id: 'IRS',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 90,
+            },
+          },
+          due: '',
+          measure: IRS_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicCommunityDispenseMDA: {
+    action: {
+      code: 'MDA Dispense',
+      description: "Visit all residential structures (100%) and dispense prophylaxis to each registered person",
+      goalId: 'MDA_Dispense',
+      identifier: '',
+      prefix: 0,
+      reason: ROUTINE,
+	  trigger: [
+		{
+          type: "named-event",
+          name: "plan-activation"
+        },
+        {
+          type: "named-event",
+          name: "event-submission",
+          condition: {
+            expression: "questionnaire = 'Family Registration' or questionnaire = 'Family Member Registration'"
+          }
+        }
+	  ],
+	  condition: [
+        {
+          kind: "applicability",
+          expression: {
+            description: "Person is older than 5 years or person associated with questionaire response if older than 5 years",
+            expression: "($this.is(FHIR.Patient) and $this.birthDate <= today() - 5 'years') or ($this.contained.where(Patient.birthDate <= today() - 5 'years').exists())",
+            subjectCodableConcept: {
+              text: "Person"
+            }
+          }
+        }
+      ],
+      subjectCodableConcept: {
+        text: 'Person',
+      },
+      definitionUri: "mda_dispense.json"
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: "",
+    },
+    goal: {
+      description: "Visit all residential structures (100%) dispense prophylaxis to each registered person",
+      id: 'MDA_Dispense',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: "Percent of Registered person(s)",
+        },
+      ],
+    },
+  },
+  dynamicCommunityAdherenceMDA: {
+    action: {
+      code: 'MDA Adherence',
+      description: "Visit all residential structures (100%) and confirm adherence of each registered person",
+      goalId: 'MDA_Adherence',
+      identifier: '',
+      prefix: 0,
+      reason: ROUTINE,
+	  trigger: [
+        {
+          type: "named-event",
+          name: "event-submission",
+          condition: {
+            expression: "questionnaire = 'mda_dispense'"
+          }
+        }
+	  ],
+	  condition: [
+        {
+          kind: "applicability",
+          expression: {
+            description: "The person fully received the dispense activity",
+            expression: "$this.item.where(linkId='business_status').value = 'Fully Received'"
+          }
+        }
+      ],
+      subjectCodableConcept: {
+        text: 'Person',
+      },
+      definitionUri: "mda_adherence.json"
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: "",
+    },
+    goal: {
+      description: "Visit all residential structures (100%) and confirm adherence of each registered person",
+      id: 'MDA_Adherence',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: "Percent of dispense recipients",
+        },
+      ],
+    },
+  },
 };
 
 /** UseContext - interface for PlanPayload.useContext[] items */
