@@ -55,7 +55,7 @@ export async function putJurisdictionsToPlan(
     });
 }
 
-const locationParams = {
+export const defaultLocationParams = {
   is_jurisdiction: true,
   return_geometry: false,
 };
@@ -64,17 +64,17 @@ const locationParams = {
 export async function loadJurisdiction(
   jurisdictionId: string,
   serviceClass: typeof OpenSRPService,
-  params: URLParams = locationParams
+  params: URLParams = defaultLocationParams
 ) {
   const service = new serviceClass(OPENSRP_LOCATION);
   return await service
     .read(jurisdictionId, params)
     .then((response: OpenSRPJurisdiction) => {
       if (response) {
-        return { error: null, value: response };
+        return success(response);
       }
     })
     .catch((error: Error) => {
-      return { error, value: null };
+      return failure(error);
     });
 }
