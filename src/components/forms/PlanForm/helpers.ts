@@ -1,6 +1,6 @@
 import { parseISO } from 'date-fns';
 import { FormikErrors } from 'formik';
-import { findKey, omit, pick } from 'lodash';
+import { findKey, pick } from 'lodash';
 import moment from 'moment';
 import { FormEvent } from 'react';
 import * as Yup from 'yup';
@@ -43,8 +43,16 @@ import {
   taskGenerationStatusType,
 } from './types';
 
-/** separate FI, IRS and MDA point activities */
-export const FIActivities = omit(planActivities, ['IRS', 'pointAdverseMDA', 'pointDispenseMDA']);
+/** group plan activities */
+export const FIActivities = pick(planActivities, [
+  'BCC',
+  'bednetDistribution',
+  'bloodScreening',
+  'caseConfirmation',
+  'familyRegistration',
+  'larvalDipping',
+  'mosquitoCollection',
+]);
 export const IRSActivities = pick(planActivities, ['IRS']);
 export const MDAPointActivities = pick(planActivities, ['pointAdverseMDA', 'pointDispenseMDA']);
 
