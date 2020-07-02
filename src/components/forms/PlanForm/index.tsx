@@ -219,6 +219,15 @@ const PlanForm = (props: PlanFormProps) => {
     if (values.interventionType === InterventionType.MDAPoint) {
       return mdaPointActivities;
     }
+    if (values.interventionType === InterventionType.DynamicFI) {
+      return dynamicFIActivities;
+    }
+    if (values.interventionType === InterventionType.DynamicIRS) {
+      return dynamicIRSActivities;
+    }
+    if (values.interventionType === InterventionType.DynamicMDA) {
+      return dynamicMDAActivities;
+    }
 
     return allFormActivities;
   }
