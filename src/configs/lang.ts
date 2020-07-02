@@ -671,3 +671,12 @@ export const COULD_NOT_LOAD_JURISDICTION_HIERARCHY = translate(
   'COULD_NOT_LOAD_JURISDICTION_HIERARCHY',
   'Failed to load Jurisdiction hierarchy'
 );
+
+export const STRUCTURES_COUNT = translate('STRUCTURES_COUNT', 'Structures Count');
+
+export const COULD_NOT_LOAD_PLAN = translate('COULD_NOT_LOAD_PLAN', 'Could not load the plan');
+
+export const COULD_NOT_LOAD_JURISDICTION = translate(
+  'COULD_NOT_LOAD_JURISDICTION',
+  'Could not load jurisdiction'
+);
