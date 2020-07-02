@@ -68,11 +68,11 @@ export const loadOpenSRPPlans = (
  * @param {OpenSRPService} service - openSRPService
  * @param {ActionCreator<AddPlanDefinitionAction>} actionCreator - action creator for addPlanDefinition
  */
-export const loadOpenSRPPlan = (
+export async function loadOpenSRPPlan(
   planId: string,
   service: typeof OpenSRPService,
   actionCreator: ActionCreator<AddPlanDefinitionAction>
-) => {
+) {
   const server = new service(OPENSRP_PLANS);
   return server
     .read(planId)
@@ -83,4 +83,4 @@ export const loadOpenSRPPlan = (
     .catch(err => {
       displayError(err);
     });
-};
+}
