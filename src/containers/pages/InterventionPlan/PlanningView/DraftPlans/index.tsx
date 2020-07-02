@@ -3,7 +3,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { BreadCrumbProps } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { DRAFT_PLANS, HOME } from '../../../../../configs/lang';
-import { HOME_URL, NEW, PLANNING_VIEW_URL } from '../../../../../constants';
+import { HOME_URL, NEW_PLANNING_PLAN_URL, PLANNING_VIEW_URL } from '../../../../../constants';
 import {
   createConnectedOpenSRPPlansList,
   OpenSRPPlanListViewProps,
@@ -29,7 +29,7 @@ export const DraftPlans = (props: RouteComponentProps) => {
 
   const renderBody = draftPlansPageBodyFactory({
     breadCrumbProps,
-    newPlanUrl: `${PLANNING_VIEW_URL}/${NEW}`,
+    newPlanUrl: NEW_PLANNING_PLAN_URL,
     pageTitle,
   });
 
