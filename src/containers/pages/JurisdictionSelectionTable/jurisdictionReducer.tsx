@@ -42,7 +42,7 @@ export const nodeHasChildren = (node: TreeModel.Node<ParsedHierarchySingleNode>)
 /** constructs, and manages interactions that mutate the tree
  * @param rootJurisdictionId - uses this jurisdiction id to get the opensrp hierarchy
  */
-export function useJurisdictionTree(rootJurisdictionId: string) {
+export function useJurisdictionTree(rootJurisdictionId: string, callback: any) {
   const [tree, setTree] = React.useState<TreeModel.Node<ParsedHierarchySingleNode> | undefined>(
     undefined
   );
@@ -53,6 +53,8 @@ export function useJurisdictionTree(rootJurisdictionId: string) {
     Array<TreeModel.Node<ParsedHierarchySingleNode>>
   >([]);
   const [errors, setErrors] = React.useState<Failure[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(true);
+
   const addError = (fail: Failure) => {
     setErrors([...errors, fail]);
   };
@@ -62,14 +64,16 @@ export function useJurisdictionTree(rootJurisdictionId: string) {
     const params = {
       return_structure_count: true,
     };
-    LoadOpenSRPHierarchy(rootJurisdictionId, OpenSRPService, params)
+    LoadOpenSRPHierarchy(rootJurisdictionId, OpenSRPService, params, setLoading)
       .then((apiResponse: Result<RawOpenSRPHierarchy>) => {
         // create parseable tree using treeModel lib
         if (apiResponse.value) {
           const responseData = apiResponse.value;
           const theTree = generateJurisdictionTree(responseData);
-          setTree(theTree);
-          setCurrentChildren([theTree]);
+          const treeWithSelections = autoSelectNodes(theTree, callback);
+          console.log(treeWithSelections);
+          setTree(treeWithSelections);
+          setCurrentChildren([treeWithSelections!]);
         } else {
           addError(apiResponse);
         }
@@ -148,7 +152,6 @@ export function useJurisdictionTree(rootJurisdictionId: string) {
    */
   function _computeParentNodesSelection(node: TreeModel.Node<ParsedHierarchySingleNode>) {
     const parentsPath = node.getPath();
-    parentsPath.pop();
     const reversedParentSPath = parentsPath.reverse();
     // now for each of the parent if all the children are selected then label the parent as selected too
     for (const parentNode of reversedParentSPath) {
@@ -210,6 +213,7 @@ export function useJurisdictionTree(rootJurisdictionId: string) {
    * @param callback - callback is given each node in a walk and decides whether that node should be selected by returning true or false
    */
   const autoSelectNodes = (
+    tree: TreeModel.Node<ParsedHierarchySingleNode>,
     callback: (node: TreeModel.Node<ParsedHierarchySingleNode>) => boolean
   ) => {
     const treeClone = cloneDeep(tree);
@@ -220,19 +224,22 @@ export function useJurisdictionTree(rootJurisdictionId: string) {
     treeClone.walk(node => {
       if (callback(node)) {
         node.model.node.attributes[SELECT_KEY] = true;
-        parentNodes.push(node.parent);
+        parentNodes.push(node);
       }
       return true;
     });
 
     // remove duplicates
-    const parentNodesSet = uniqWith(parentNodes, node => node.model.id);
+    const parentNodesSet = uniqWith(
+      parentNodes,
+      (nodeA, nodeB) => nodeA.model.id === nodeB.model.id
+    );
 
     // now select parents accordingly
     parentNodesSet.forEach(node => {
       _computeParentNodesSelection(node);
     });
-    setTree(treeClone);
+    return treeClone;
   };
 
   /** returns all selected nodes
@@ -255,6 +262,7 @@ export function useJurisdictionTree(rootJurisdictionId: string) {
 
   // we need a way to set a current node as selected,
   return {
+    setCurrentChildren,
     applySelectToNode,
     autoSelectNodes,
     clearErrors,
@@ -262,6 +270,7 @@ export function useJurisdictionTree(rootJurisdictionId: string) {
     currentParentNode,
     errors,
     getAllSelectedNodes,
+    loading,
     selectNode,
     setCurrentParent,
     tree,

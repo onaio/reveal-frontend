@@ -29,13 +29,14 @@ const JurisdictionCell = (props: JurisdictionCellProps) => {
   // isLeafNode if node does not have children
   const nodeHasChildren = node.children.length > 0;
 
-  const className = nodeHasChildren ? 'btn btn-link' : '';
+  const className = nodeHasChildren ? 'btn-link' : '';
 
   let spanProps: Dictionary = {};
   if (nodeHasChildren) {
     spanProps = {
       className,
       onClick: onClickCallback,
+      style: { cursor: 'pointer' },
     };
   }
 

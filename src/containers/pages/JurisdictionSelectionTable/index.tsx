@@ -23,6 +23,10 @@ import {
   getPlanDefinitionById,
 } from '../../../store/ducks/opensrp/PlanDefinition';
 import { JurisdictionSelectorTableProps, JurisdictionTable } from './JurisdictionTable';
+import { getAncestors } from '../../../components/TreeWalker/helpers';
+import { loadJurisdiction } from '../../../helpers/dataLoading/jurisdictions';
+import { selectorState } from '../OrganizationViews/SingleOrganizationView/tests/fixtures';
+import { getAccessToken } from '../../../store/selectors';
 
 export interface JurisdictionAssignmentViewProps {
   fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
@@ -52,6 +56,8 @@ export type JurisdictionAssignmentViewFullProps = JurisdictionAssignmentViewProp
  */
 export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFullProps) => {
   const { plan, serviceClass, fetchPlanCreator } = props;
+  const [rootJurisdictionId, setRootJurisdictionId] = React.useState<string>('');
+  const [loading, setLoading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     const planId = props.match.params.planId;
@@ -60,16 +66,41 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     });
   }, []);
 
-  if (!plan) {
-    // TODO - show error page
-    return <>Plan was not loaded</>;
+  React.useEffect(() => {
+    // getRoot jurisdiction of plan
+    if (plan) {
+      const oneOfJurisdictions = plan.jurisdiction.map(
+        jurisdictionCode => jurisdictionCode.code
+      )[0];
+      loadJurisdiction(oneOfJurisdictions, OpenSRPService)
+        .then(result => {
+          if (result && !result.error) {
+            getAncestors(result.value)
+              .then(ancestors => {
+                if (ancestors.value) {
+                  // get the first ancestor
+                  const rootJurisdiction = ancestors.value[0];
+                  setRootJurisdictionId(rootJurisdiction.id);
+                  console.log('Root Jurisdiction', rootJurisdictionId);
+                }
+              })
+              .catch(_ => {});
+          }
+        })
+        .catch(_ => {});
+    }
+  }, [plan]);
+
+  if(!plan){
+    return <>Failed to load the plan</>
   }
 
-  // TODO - is this sufficient enough to get the rootJurisdictions from the plan
-  // its dependent on either how the plan is created
-  const rootJurisdictionId = plan.jurisdiction.map(jurisdictionCode => jurisdictionCode.code)[0];
-
+  if (!rootJurisdictionId) {
+    // TODO - show error page
+    return <>Failed to load rootJurisdiction</>;
+  }
   const JurisdictionTableProps: JurisdictionSelectorTableProps = {
+    plan,
     rootJurisdictionId,
     serviceClass,
   };
