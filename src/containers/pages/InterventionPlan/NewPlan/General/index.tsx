@@ -6,13 +6,25 @@ import PlanForm, {
   PlanFormProps,
 } from '../../../../../components/forms/PlanForm';
 import { getFormActivities, IRSActivities } from '../../../../../components/forms/PlanForm/helpers';
-import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { COUNTRY, CREATE_NEW_PLAN, HOME, PLANS } from '../../../../../configs/lang';
+import HeaderBreadcrumb, {
+  Page,
+} from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import {
+  COUNTRY,
+  CREATE_NEW_PLAN,
+  DRAFT_PLANS,
+  DRAFTS_PARENTHESIS,
+  HOME,
+  IRS_PLANS,
+  PLANS,
+} from '../../../../../configs/lang';
 import {
   ASSIGN_JURISDICTIONS_URL,
   HOME_URL,
+  INTERVENTION_IRS_URL,
   NEW_PLAN_URL,
   PLAN_LIST_URL,
+  PLANNING_VIEW_URL,
 } from '../../../../../constants';
 import { InterventionType } from '../../../../../store/ducks/plans';
 import { JurisdictionDetails } from './JurisdictionDetails';
@@ -20,10 +32,15 @@ import { JurisdictionDetails } from './JurisdictionDetails';
 /** expose props that would enable one to customize the underlying planForm props */
 interface BaseNewPlanProps {
   extraPlanFormProps: Partial<PlanFormProps>;
+  breadCrumbParentPage: Page;
 }
 
 /** the default props */
 export const defaultBasePlanProps = {
+  breadCrumbParentPage: {
+    label: PLANS,
+    url: PLAN_LIST_URL,
+  },
   extraPlanFormProps: { redirectAfterAction: PLAN_LIST_URL },
 };
 
@@ -66,10 +83,7 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
         label: HOME,
         url: HOME_URL,
       },
-      {
-        label: PLANS,
-        url: PLAN_LIST_URL,
-      },
+      props.breadCrumbParentPage,
     ],
   };
 
@@ -108,8 +122,29 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
 BaseNewPlan.defaultProps = defaultBasePlanProps;
 
 /** IRS-specific form for  creating a plan */
+export const NewPlanForPlanning = () => {
+  const baseNewPlanProps = {
+    breadCrumbParentPage: {
+      label: DRAFT_PLANS,
+      url: PLANNING_VIEW_URL,
+    },
+    extraPlanFormProps: {
+      allowMoreJurisdictions: false,
+      cascadingSelect: false,
+      jurisdictionLabel: COUNTRY,
+      redirectAfterAction: PLAN_LIST_URL,
+    },
+  };
+  return <BaseNewPlan {...baseNewPlanProps} />;
+};
+
+/** form used in the planning tool */
 export const NewIRSPlan = () => {
   const baseNewPlanProps = {
+    breadCrumbParentPage: {
+      label: `${IRS_PLANS} ${DRAFTS_PARENTHESIS}`,
+      url: INTERVENTION_IRS_URL,
+    },
     extraPlanFormProps: {
       allowMoreJurisdictions: false,
       cascadingSelect: false,
@@ -120,7 +155,7 @@ export const NewIRSPlan = () => {
         interventionType: InterventionType.IRS,
       },
       jurisdictionLabel: COUNTRY,
-      redirectAfterAction: ASSIGN_JURISDICTIONS_URL,
+      redirectAfterAction: PLAN_LIST_URL,
     },
   };
   return <BaseNewPlan {...baseNewPlanProps} />;
