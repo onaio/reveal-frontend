@@ -682,15 +682,26 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Structure is residential or type does not exist',
             expression:
-              "Location.type.where(id='locationType').exists().not() or Location.type.where(id='locationType').text = 'Residential Structure'",
+              "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+		{
+          expression: {
+            description: 'Family exists for structure',
+            expression:
+              "$this.contained.exists()",
+			subjectCodableConcept: {
+				text: 'Family'
+			}
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
         {
           expression: {
-            description: 'Apply to residential structures in Register_Structure questionnaires',
+            description: 'Register stucture Event submitted for a residential structure',
             expression:
-              "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Residential Structure'",
+              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -716,7 +727,7 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-            expression: "questionnaire = 'Register_Structure'",
+            expression: "questionnaire = 'Family Registration'",
           },
           name: 'event-submission',
           type: NAMED_EVENT_TRIGGER_TYPE,
@@ -814,7 +825,7 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description: 'The person fully received the dispense activity',
-            expression: "$this.item.where(linkId='business_status').value = 'Fully Received'",
+            expression: "$this.item.where(linkId='business_status').answer.value = 'Fully Received'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -939,14 +950,14 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Structure is residential or type does not exist',
             expression:
-              "Location.type.where(id='locationType').exists().not() or Location.type.where(id='locationType').text = 'Residential Structure'",
+              "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
         {
           expression: {
             description: 'Family does not exist for structure',
-            expression: '$this.contained.exists()',
+            expression: '$this.contained.exists().not()',
             subjectCodableConcept: {
               text: 'Family',
             },
@@ -957,7 +968,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Apply to residential structures in Register_Structure questionnaires',
             expression:
-              "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Residential Structure'",
+              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1017,7 +1028,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Structure is residential or type does not exist',
             expression:
-              "Location.type.where(id='locationType').exists().not() or Location.type.where(id='locationType').text = 'Residential Structure'",
+              "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1025,7 +1036,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Apply to residential structures in Register_Structure questionnaires',
             expression:
-              "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Residential Structure'",
+              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1084,7 +1095,7 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description: 'Structure is a larval breeding site',
-            expression: "Location.type.where(id='locationType').text = 'Larval Breeding Site'",
+            expression: "$this.type.where(id='locationType').text = 'Larval Breeding Site'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1092,7 +1103,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Apply to larval breeding sites in Register_Structure questionnaires',
             expression:
-              "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Larval Breeding Site'",
+              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Larval Breeding Site'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1151,7 +1162,7 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description: 'Structure is a mosquito collection point',
-            expression: "Location.type.where(id='locationType').text = 'Mosquito Collection Point'",
+            expression: "$this.type.where(id='locationType').text = 'Mosquito Collection Point'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1159,7 +1170,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Apply to mosquito collection point in Register_Structure questionnaires',
             expression:
-              "questionnaire = 'Register_Structure' AND item.where(linkId='structureType').answer.value ='Mosquito Collection Point'",
+              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Mosquito Collection Point'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
