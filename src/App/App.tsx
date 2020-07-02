@@ -109,8 +109,8 @@ import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/JurisdictionAssignmentView';
 import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
-import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionSelectionTable/JurisdictionAssignmentView';
 import ConnectedClientListView from '../containers/pages/MDAPoint/ClientListView';
 import ConnectedMdaPointJurisdictionReport from '../containers/pages/MDAPoint/jurisdictionsReport';
 import ConnectedSchoolReports from '../containers/pages/MDAPoint/LocationReports';
