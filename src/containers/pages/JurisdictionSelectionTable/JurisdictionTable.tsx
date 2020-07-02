@@ -1,12 +1,19 @@
 import ListView from '@onaio/list-view';
 import React, { Fragment } from 'react';
+import Button from 'reactstrap/lib/Button';
+import TreeModel from 'tree-model/types';
 import HeaderBreadcrumb, { Page } from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { NO_ROWS_FOUND } from '../../../configs/lang';
+import { NO_ROWS_FOUND, SAVE } from '../../../configs/lang';
+import { PlanDefinition } from '../../../configs/settings';
+import { putJurisdictionsToPlan } from '../../../helpers/dataLoading/jurisdictions';
 import { OpenSRPService } from '../../../services/opensrp';
 import { nodeIsSelected, useJurisdictionTree } from './jurisdictionReducer';
 import { JurisdictionCell } from './JurisdictionSelectCell';
+import { ParsedHierarchySingleNode } from './utils';
 
 export interface JurisdictionSelectorTableProps {
+  plan: PlanDefinition;
+
   rootJurisdictionId: string;
   serviceClass: typeof OpenSRPService;
 }
@@ -15,19 +22,31 @@ export interface JurisdictionSelectorTableProps {
 // export type JurisdictionTableProps = RouteComponentProps<RouteParams> & BaseJurisdictionTableProps;
 
 /** JurisdictionTable responsibilities,
- * 1). get location hierarchy from api
+ * 1). get location hierarchy from api for the rootJurisdiction
  *    - for this we only need the root jurisdiction
- * 2). drilling down
+ * 2). also gets the locations that are already assigned to plan
+ * 3). render the drill down table.
  */
 const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const { rootJurisdictionId } = props;
+
+  const callback = (node: TreeModel.Node<ParsedHierarchySingleNode>) => {
+    const existingAssignments = props.plan.jurisdiction.map(jurisdiction => jurisdiction.code);
+    return existingAssignments.includes(node.model.id);
+  };
 
   const {
     applySelectToNode,
     currentParentNode,
     setCurrentParent,
     currentChildren,
-  } = useJurisdictionTree(rootJurisdictionId);
+    getAllSelectedNodes,
+    autoSelectNodes,
+    loading,
+    errors,
+    tree,
+    setCurrentChildren,
+  } = useJurisdictionTree(rootJurisdictionId, callback);
 
   let currentPage: Page = {
     clickHandler: () => {
@@ -139,8 +158,16 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     tableClass,
   };
 
+  const commitJurisdictions = () => {
+    const jurisdictionIds = getAllSelectedNodes(true).map(node => node.model.id);
+    putJurisdictionsToPlan(props.plan, jurisdictionIds, props.serviceClass);
+  };
+
   return (
     <Fragment>
+      <Button color="primary" onClick={commitJurisdictions} size="xs">
+        {SAVE}
+      </Button>
       <HeaderBreadcrumb {...breadCrumbProps} />
       <ListView {...listViewProps} />
       {!data.length && (
@@ -153,7 +180,8 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   );
 };
 
-const defaultProps: JurisdictionSelectorTableProps = {
+const defaultProps = {
+  assignedJurisdictions: [],
   rootJurisdictionId: '',
   serviceClass: OpenSRPService,
 };
