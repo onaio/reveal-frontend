@@ -336,7 +336,7 @@ export interface PlanActionTimingPeriod {
 
 /** Plan Action subjectCodableConcept */
 export interface PlanActionsubjectCodableConcept {
-  text: string;
+  text: 'Family' | 'Person' | 'Location' | 'Jurisdiction';
 }
 
 /** Plan Expression */
@@ -446,7 +446,7 @@ export const planActivities: PlanActivities = {
       prefix: 99,
       reason: INVESTIGATION,
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Jurisdiction',
       },
       taskTemplate: 'BCC_Focus',
       timingPeriod: {
@@ -483,7 +483,7 @@ export const planActivities: PlanActivities = {
       prefix: 7,
       reason: ROUTINE,
       subjectCodableConcept: {
-        text: 'Residential_Structure',
+        text: 'Location',
       },
       taskTemplate: 'Spray_Structures',
       timingPeriod: {
@@ -520,7 +520,7 @@ export const planActivities: PlanActivities = {
       prefix: 4,
       reason: INVESTIGATION,
       subjectCodableConcept: {
-        text: 'Residential_Structure',
+        text: 'Location',
       },
       taskTemplate: 'Bednet_Distribution',
       timingPeriod: {
@@ -594,7 +594,7 @@ export const planActivities: PlanActivities = {
       prefix: 1,
       reason: INVESTIGATION,
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Jurisdiction',
       },
       taskTemplate: 'Case_Confirmation',
       timingPeriod: {
@@ -641,7 +641,7 @@ export const planActivities: PlanActivities = {
       prefix: 99,
       reason: ROUTINE,
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Jurisdiction',
       },
       timingPeriod: {
         end: '',
@@ -1220,7 +1220,7 @@ export const planActivities: PlanActivities = {
       prefix: 2,
       reason: INVESTIGATION,
       subjectCodableConcept: {
-        text: 'Residential_Structure',
+        text: 'Location',
       },
       taskTemplate: 'RACD_register_families',
       timingPeriod: {
@@ -1257,7 +1257,7 @@ export const planActivities: PlanActivities = {
       prefix: 5,
       reason: INVESTIGATION,
       subjectCodableConcept: {
-        text: 'Breeding_Site',
+        text: 'Location',
       },
       taskTemplate: 'Larval_Dipping',
       timingPeriod: {
@@ -1294,7 +1294,7 @@ export const planActivities: PlanActivities = {
       prefix: 6,
       reason: INVESTIGATION,
       subjectCodableConcept: {
-        text: 'Mosquito_Collection_Point',
+        text: 'Location',
       },
       taskTemplate: 'Mosquito_Collection_Point',
       timingPeriod: {
@@ -1331,7 +1331,7 @@ export const planActivities: PlanActivities = {
       prefix: 9,
       reason: ROUTINE,
       subjectCodableConcept: {
-        text: 'MDA_Point_Adverse_Event',
+        text: 'Location',
       },
       taskTemplate: 'MDA_Point_Adverse_Event',
       timingPeriod: {
@@ -1368,7 +1368,7 @@ export const planActivities: PlanActivities = {
       prefix: 8,
       reason: ROUTINE,
       subjectCodableConcept: {
-        text: 'MDA_Point_Dispense',
+        text: 'Location',
       },
       taskTemplate: 'MDA_Point_Dispense',
       timingPeriod: {
