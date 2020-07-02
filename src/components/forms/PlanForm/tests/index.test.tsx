@@ -4,6 +4,7 @@ import { mount, ReactWrapper, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { cloneDeep } from 'lodash';
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import PlanForm, { propsForUpdatingPlans } from '..';
 import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
@@ -23,12 +24,20 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders without crashing', () => {
-    shallow(<PlanForm />);
+    shallow(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
   });
 
   it('renders correctly', () => {
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
     expect(toJson(wrapper.find('#interventionType select'))).toMatchSnapshot(
       'interventionType field'
     );
@@ -81,7 +90,11 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders activity fields correctly', () => {
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
 
     function checkActivities(num: number, name: string = 'FI') {
       // FI activities by default
@@ -180,7 +193,11 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders jurisdictions fields correctly', () => {
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
 
     function checkJurisdtictions(num: number) {
       // FI activities by default
@@ -439,7 +456,11 @@ describe('containers/forms/PlanForm - Edit', () => {
 
 describe('containers/forms/PlanForm - Submission', () => {
   it('Form validation works', async () => {
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
 
     // no errors are initially shown
     expect(
@@ -590,7 +611,11 @@ describe('containers/forms/PlanForm - Submission', () => {
   });
 
   it('Form validation works for activity fields', async () => {
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
 
     // no errors are initially present
     expect(
@@ -674,7 +699,11 @@ describe('containers/forms/PlanForm - Submission', () => {
   });
 
   it('Auto-setting name and title field values works', async () => {
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
     // Set IRS for interventionType
     wrapper
       .find('select[name="interventionType"]')
@@ -736,7 +765,11 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
 
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
 
     // Set FI for interventionType
     wrapper

@@ -185,6 +185,7 @@ export const ADMIN = translate('ADMIN', 'Admin');
 export const DRAFTS_PARENTHESIS = translate('DRAFTS_PARENTHESIS', '(drafts)');
 export const CONFIRM = translate('CONFIRM', 'Confirm');
 export const CANCEL = translate('CANCEL', 'Cancel');
+export const CLOSE = translate('CLOSE', 'Close');
 export const JURISDICTION = translate('JURISDICTION', 'Jurisdiction');
 export const ADMIN_LEVEL = translate('ADMIN_LEVEL', 'Admin Level');
 export const DISTRICT = translate('DISTRICT', 'District');
@@ -493,8 +494,8 @@ export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
 );
 export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
 export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');
-export const TEAM_ASSIGNEMENT_SUCCESSFUL = translate(
-  'TEAM_ASSIGNEMENT_SUCCESSFUL',
+export const TEAM_ASSIGNMENT_SUCCESSFUL = translate(
+  'TEAM_ASSIGNMENT_SUCCESSFUL',
   'Team(s) assignment updated successfully'
 );
 export const UPLOADED_STUDENT_LISTS = translate('UPLOADED_STUDENT_LISTS', 'Uploaded Students List');
@@ -589,6 +590,7 @@ export const ALB_TABLETS_DISTRIBUTED = translate(
 );
 
 export const MANIFEST_RELEASES = translate('MANIFEST_RELEASES', 'Manifest Releases');
+export const RELEASES_LABEL = translate('RELEASES_LABEL', 'Releases');
 export const FORM_DRAFT_FILES = translate('FORM_DRAFT_FILES', 'Draft Files');
 export const JSON_VALIDATORS = translate('JSON_VALIDATORS', 'JSON Validators');
 export const UPLOAD_FORM = translate('UPLOAD_FORM', 'Upload Form');
@@ -603,7 +605,7 @@ export const DOWNLOAD_LABEL = translate('DOWNLOAD_LABEL', 'Download');
 export const UPLOAD_EDIT_LABEL = translate('UPLOAD_EDIT_LABEL', 'Upload edit');
 export const UPOL0AD_FILE_LABEL = translate('UPOL0AD_FILE_LABEL', 'Upload New File');
 export const VIEW_FILES_LABEL = translate('VIEW_FILES_LABEL', 'View Files');
-export const APP_ID_LABEL = translate('APP_ID_LABEL', 'APP Id');
+export const APP_ID_LABEL = translate('APP_ID_LABEL', 'App Id');
 export const APP_VERSION_LABEL = translate('APP_VERSION_LABEL', 'App Version');
 export const RELATED_TO_LABEL = translate('RELATED_TO_LABEL', 'Related to');
 export const FILE_UPLOAD_LABEL = translate('FILE_UPLOAD_LABEL', 'Upload files');
@@ -646,3 +648,27 @@ export const CUSTOMIZE_COLUMNS_FILTER_MESSAGE = translate(
   'CUSTOMIZE_COLUMNS_FILTER_MESSAGE',
   'Select columns to be displayed'
 );
+
+export const COULD_NOT_LOAD_FORM = translate('COULD_NOT_LOAD_FORM', 'Could not load the form.');
+export const DID_NOT_SAVE_SUCCESSFULLY = translate(
+  'DID_NOT_SAVE_SUCCESSFULLY',
+  'Did not save successfully'
+);
+export const AND = translate('AND', 'and');
+export const MORE = translate('MORE', 'more');
+
+export const COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY = translate(
+  'COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY',
+  'Could not load the plan jurisdiction hierarchy'
+);
+export const COULD_NOT_LOAD_ASSIGNMENTS = translate(
+  'COULD_NOT_LOAD_ASSIGNMENTS',
+  'Could not load assignments'
+);
+export const COULD_NOT_LOAD_TEAMS = translate('COULD_NOT_LOAD_TEAMS', 'Unable to load teams');
+export const COULD_NOT_LOAD_PLAN = translate('COULD_NOT_LOAD_PLAN', 'Unable to load plan');
+export const AN_ERROR_OCURRED = translate(
+  'AN_ERROR_OCURRED',
+  'An error ocurred. Please try and refresh the page.'
+);
+export const THE_SPECIFIC_ERROR_IS = translate('THE_SPECIFIC_ERROR_IS', 'The specific error is');

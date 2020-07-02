@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanAssignment/EditOrgs works as expected: Show form button 1`] = `
+<button
+  aria-label={null}
+  className="show-form btn btn-primary btn-sm"
+  onClick={[Function]}
+  type="button"
+>
+  Assign Teams
+</button>
+`;
