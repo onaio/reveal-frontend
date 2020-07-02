@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/pages/JurisdictionAssignment/JurisdictionCell renders correctly by default: should have classNames link 1`] = `
+<span
+  className="btn-link cursor-pointer"
+  key="undefined-span"
+  onClick={[MockFunction]}
+>
+  Gaz
+</span>
+`;
+
+exports[`src/pages/JurisdictionAssignment/JurisdictionCell renders correctly when node does not have children: should have classNames link 1`] = `
+<span
+  key="undefined-span"
+>
+  Gaz
+</span>
+`;

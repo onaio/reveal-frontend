@@ -4,39 +4,37 @@
  */
 import { Dictionary } from '@onaio/utils';
 import React from 'react';
-import TreeModel from 'tree-model/types';
-import { ParsedHierarchySingleNode } from './utils';
+import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
+import { nodeHasChildren } from '../../../../store/ducks/opensrp/hierarchies/utils';
 
 /**
- * Props for JurisdictionCell
+ * Props for NodeCell
  */
-export interface JurisdictionCellProps {
-  node: TreeModel.Node<ParsedHierarchySingleNode> /** the current jurisdiction */;
+export interface NodeCellProps {
+  node: TreeNode /** the current jurisdiction */;
   onClickCallback: (event: React.MouseEvent) => void;
 }
 
 /**
- * JurisdictionCell
+ * NodeCell
  *
  * Displays the jurisdiction.  If the jurisdiction is not a leaf node, then it is
  * displayed as a link, so that one can traverse down the tree.
  *
  * @param props - the props
  */
-const JurisdictionCell = (props: JurisdictionCellProps) => {
+const NodeCell = (props: NodeCellProps) => {
   const { node, onClickCallback } = props;
 
   // isLeafNode if node does not have children
-  const nodeHasChildren = node.children.length > 0;
-
-  const className = nodeHasChildren ? 'btn-link' : '';
+  const isLeafNode = !nodeHasChildren(node);
+  const className = isLeafNode ? '' : 'btn-link cursor-pointer';
 
   let spanProps: Dictionary = {};
-  if (nodeHasChildren) {
+  if (!isLeafNode) {
     spanProps = {
       className,
       onClick: onClickCallback,
-      style: { cursor: 'pointer' },
     };
   }
 
@@ -47,4 +45,4 @@ const JurisdictionCell = (props: JurisdictionCellProps) => {
   );
 };
 
-export { JurisdictionCell };
+export { NodeCell };
