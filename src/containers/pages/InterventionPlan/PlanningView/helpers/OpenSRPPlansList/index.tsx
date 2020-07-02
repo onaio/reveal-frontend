@@ -29,6 +29,7 @@ import { draftPageColumns } from '../utils';
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
 
+/** minimal type for a renderProp */
 export type RenderProp = () => React.ReactNode;
 
 /** props for opensrpPlansList view */
@@ -103,15 +104,12 @@ OpenSRPPlansList.defaultProps = defaultProps;
 export { OpenSRPPlansList };
 
 /** describes props returned by mapStateToProps */
-type DispatchedStateProps = Pick<BaseListComponentProps, 'plansArray'>;
+export type MapStateToProps = Pick<BaseListComponentProps, 'plansArray'>;
 /** describe mapDispatchToProps object */
-type MapDispatchToProps = Pick<OpenSRPPlanListViewProps, 'fetchPlanRecordsCreator'>;
+export type MapDispatchToProps = Pick<OpenSRPPlanListViewProps, 'fetchPlanRecordsCreator'>;
 
 /** maps props  to state */
-const mapStateToProps = (
-  state: Partial<Store>,
-  ownProps: RouteComponentProps
-): DispatchedStateProps => {
+const mapStateToProps = (state: Partial<Store>, ownProps: RouteComponentProps): MapStateToProps => {
   const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
   const title = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const planStatus = [PlanStatus.DRAFT];
@@ -130,7 +128,9 @@ const mapDispatchToProps: MapDispatchToProps = {
   fetchPlanRecordsCreator: fetchPlanRecords,
 };
 
-/** container creator that allows for configurable containers */
+/** container creator that allows for configurable containers
+ * the arguments passed here should respect the props that OpenSRPPlans list component take
+ */
 export const createConnectedOpenSRPPlansList = (
   mapState = mapStateToProps,
   mapDispatch = mapDispatchToProps
