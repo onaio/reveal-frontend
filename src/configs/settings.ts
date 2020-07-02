@@ -824,7 +824,7 @@ export const planActivities: PlanActivities = {
         'Visit all residential structures (100%) and confirm adherence of each registered person',
       goalId: 'MDA_Adherence',
       identifier: '',
-      prefix: 0,
+      prefix: 11,
       reason: ROUTINE,
       subjectCodableConcept: {
         text: 'Person',
@@ -886,7 +886,7 @@ export const planActivities: PlanActivities = {
         'Visit all residential structures (100%) and dispense prophylaxis to each registered person',
       goalId: 'MDA_Dispense',
       identifier: '',
-      prefix: 0,
+      prefix: 10,
       reason: ROUTINE,
       subjectCodableConcept: {
         text: 'Person',
@@ -1328,7 +1328,7 @@ export const planActivities: PlanActivities = {
       description: MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION,
       goalId: 'Point_adverse_effect_MDA',
       identifier: '',
-      prefix: 0,
+      prefix: 9,
       reason: ROUTINE,
       subjectCodableConcept: {
         text: 'MDA_Point_Adverse_Event',
@@ -1365,7 +1365,7 @@ export const planActivities: PlanActivities = {
       description: MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION,
       goalId: 'Point_dispense_MDA',
       identifier: '',
-      prefix: 0,
+      prefix: 8,
       reason: ROUTINE,
       subjectCodableConcept: {
         text: 'MDA_Point_Dispense',
