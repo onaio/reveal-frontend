@@ -52,7 +52,12 @@ describe('reducers/opensrp/hierarchies', () => {
     store.dispatch(setCurrentParentId('2942', '2942'));
 
     expect(childrenSelector(store.getState(), filters).length).toEqual(1);
-    expect(parentNodeSelector(store.getState(), filters)!.model.label).toEqual('Lusaka');
+
+    const node = parentNodeSelector(store.getState(), filters);
+    if (!node) {
+      fail();
+    }
+    expect(node.model.label).toEqual('Lusaka');
   });
 
   it('selecting & unselecting a node works', () => {
@@ -64,12 +69,17 @@ describe('reducers/opensrp/hierarchies', () => {
     store.dispatch(fetchTree(sampleHierarchy));
     store.dispatch(selectNode(rootJurisdictionId, '2942'));
     let node = nodeSelector(store.getState(), { ...filters, nodeId: '2942' });
-
-    expect(nodeIsSelected(node!)).toBeTruthy();
+    if (!node) {
+      fail();
+    }
+    expect(nodeIsSelected(node)).toBeTruthy();
 
     store.dispatch(deselectNode(rootJurisdictionId, '2942'));
     node = nodeSelector(store.getState(), { ...filters, nodeId: '2942' });
-    expect(nodeIsSelected(node!)).toBeFalsy();
+    if (!node) {
+      fail();
+    }
+    expect(nodeIsSelected(node)).toBeFalsy();
   });
 
   it('auto selecting nodes works', () => {
@@ -87,8 +97,10 @@ describe('reducers/opensrp/hierarchies', () => {
     // child is selected
 
     const tree = nodeSelector(store.getState(), { ...filters, nodeId: rootJurisdictionId });
-
-    tree!.walk(node => {
+    if (!tree) {
+      fail();
+    }
+    tree.walk(node => {
       expect(nodeIsSelected(node)).toBeTruthy();
       // this is a matter of formality has nothing to do with the test
       return true;
