@@ -1,5 +1,6 @@
 import { parseISO } from 'date-fns';
 import { COUNTRY } from '../../../../../../configs/lang';
+import { INTERVENTION_IRS_DRAFTS_URL, PLANNING_VIEW_URL } from '../../../../../../constants';
 import { InterventionType } from '../../../../../../store/ducks/plans';
 
 export const planFormProps = {
@@ -283,6 +284,7 @@ export const planningFormProps = {
   allowMoreJurisdictions: false,
   cascadingSelect: false,
   jurisdictionLabel: COUNTRY,
+  redirectAfterAction: PLANNING_VIEW_URL,
 };
 
 export const IRSPlanFormProps = {
@@ -310,4 +312,5 @@ export const IRSPlanFormProps = {
     interventionType: InterventionType.IRS,
   },
   jurisdictionLabel: COUNTRY,
+  redirectAfterAction: INTERVENTION_IRS_DRAFTS_URL,
 };

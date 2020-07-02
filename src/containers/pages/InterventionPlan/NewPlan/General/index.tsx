@@ -21,6 +21,7 @@ import {
 import {
   ASSIGN_JURISDICTIONS_URL,
   HOME_URL,
+  INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
   NEW_PLAN_URL,
   PLAN_LIST_URL,
@@ -129,7 +130,7 @@ export const NewPlanForPlanning = () => {
       allowMoreJurisdictions: false,
       cascadingSelect: false,
       jurisdictionLabel: COUNTRY,
-      redirectAfterAction: PLAN_LIST_URL,
+      redirectAfterAction: PLANNING_VIEW_URL,
     },
   };
   return <BaseNewPlan {...baseNewPlanProps} />;
@@ -152,7 +153,7 @@ export const NewIRSPlan = () => {
         interventionType: InterventionType.IRS,
       },
       jurisdictionLabel: COUNTRY,
-      redirectAfterAction: PLAN_LIST_URL,
+      redirectAfterAction: INTERVENTION_IRS_DRAFTS_URL,
     },
   };
   return <BaseNewPlan {...baseNewPlanProps} />;
