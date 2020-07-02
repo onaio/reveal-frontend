@@ -12,9 +12,11 @@ import HeaderBreadcrumb, {
 import Ripple from '../../../../components/page/Loading';
 import {
   COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
+  NAME,
   NO_DATA_FOUND,
   NO_ROWS_FOUND,
   SAVE,
+  STRUCTURES_COUNT,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import {
@@ -183,7 +185,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     });
 
     currentPage = {
-      label: lastNode!.model.label,
+      label: (lastNode as TreeNode).model.label,
     };
   }
 
@@ -213,7 +215,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       node.model.node.attributes.structureCount,
     ];
   });
-  const headerItems = ['', 'Name', 'Structures count'];
+  const headerItems = ['', NAME, STRUCTURES_COUNT];
   const tableClass = 'table table-bordered';
 
   /** on change handler attached to the parent checkbox
