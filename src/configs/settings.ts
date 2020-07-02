@@ -638,7 +638,7 @@ export const planActivities: PlanActivities = {
       description: BCC_ACTIVITY_DESCRIPTION,
       goalId: 'BCC_Focus',
       identifier: '',
-      prefix: 99,
+      prefix: 101,
       reason: ROUTINE,
       subjectCodableConcept: {
         text: 'Jurisdiction',
@@ -844,7 +844,7 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: '',
+      title: MDA_ADHERENCE_CODE,
       trigger: [
         {
           expression: {
@@ -906,7 +906,7 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: '',
+      title: MDA_POINT_DISPENSE_CODE,
       trigger: [
         {
           name: PLAN_ACTIVATION_TRIGGER_NAME,
