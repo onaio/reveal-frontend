@@ -660,3 +660,14 @@ export const AN_ERROR_OCURRED = translate(
 );
 export const THE_SPECIFIC_ERROR_IS = translate('THE_SPECIFIC_ERROR_IS', 'The specific error is');
 export const DRAFT_PLANS = translate('DRAFT PLANS', 'Draft plans');
+
+export const AN_ERROR_OCURRED = translate(
+  'AN_ERROR_OCURRED',
+  'An error ocurred. Please try and refresh the page.'
+);
+export const THE_SPECIFIC_ERROR_IS = translate('THE_SPECIFIC_ERROR_IS', 'The specific error is');
+
+export const COULD_NOT_LOAD_JURISDICTION_HIERARCHY = translate(
+  'COULD_NOT_LOAD_JURISDICTION_HIERARCHY',
+  'Failed to load Jurisdiction hierarchy'
+);
