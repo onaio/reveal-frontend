@@ -2,6 +2,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import {
   faCog,
+  faDownload,
   faExternalLinkSquareAlt,
   faMap,
   faSearch,
@@ -119,7 +120,16 @@ import store from '../store';
 import { getOauthProviderState } from '../store/selectors';
 import './App.css';
 
-library.add(faExternalLinkSquareAlt, faSearch, faSlidersH, faCog, faMap, faUser, faTextHeight);
+library.add(
+  faDownload,
+  faExternalLinkSquareAlt,
+  faSearch,
+  faSlidersH,
+  faCog,
+  faMap,
+  faUser,
+  faTextHeight
+);
 
 toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,

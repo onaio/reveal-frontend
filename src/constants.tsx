@@ -185,3 +185,5 @@ export const SETTINGS_CONFIGURATION = 'SettingConfiguration';
 /** Jurisdiction Metadata */
 export const JURISDICTION_METADATA_RISK = 'jurisdiction_metadata-risk';
 export const JURISDICTION_METADATA_COVERAGE = 'jurisdiction_metadata-coverage';
+export const JURISDICTION_CSV_TEMPLATE = 'jurisdiction_id,jurisdiction_name,risk,coverage';
+export const JURISDICTION_CSV_FILE_NAME = 'jurisdiction-metadata';

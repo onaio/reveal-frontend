@@ -1,10 +1,11 @@
 /** Jurisdiction Metadata page
  * Displays Jurisdiction Metadata import form
  */
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
-import { Card, CardBody, CardLink, Col, Row } from 'reactstrap';
+import { Button, Card, CardBody, Col, Row } from 'reactstrap';
 import JurisdictionMetadata, {
   defaultInitialValues,
   JurisdictionMetadataFormProps,
@@ -27,11 +28,13 @@ import {
 } from '../../../configs/lang';
 import {
   HOME_URL,
+  JURISDICTION_CSV_FILE_NAME,
+  JURISDICTION_CSV_TEMPLATE,
   JURISDICTION_METADATA_URL,
   OPENSRP_V1_SETTINGS_ENDPOINT,
   OPENSRP_V2_SETTINGS,
 } from '../../../constants';
-import { RouteParams } from '../../../helpers/utils';
+import { downloadFile, RouteParams } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import './index.css';
 
@@ -93,7 +96,16 @@ const JurisdictionMetadataImportView = () => {
                 <li>Select the saved file on the upload form.</li>
                 <li>Click the "Upload File" button to complete the process.</li>
               </ol>
-              <CardLink href="#">Download Templete CSV</CardLink>
+              <Button
+                color="link"
+                // tslint:disable-next-line: jsx-no-lambda
+                onClick={() =>
+                  downloadFile(JURISDICTION_CSV_TEMPLATE, JURISDICTION_CSV_FILE_NAME, 'text/csv')
+                }
+              >
+                <FontAwesomeIcon icon="download" />
+                &nbsp;Download Templete CSV
+              </Button>
             </CardBody>
           </Card>
         </Col>
