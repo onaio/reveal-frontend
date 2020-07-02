@@ -1,5 +1,6 @@
 /** if you are a fan of properly typed code, whose types just fall in place,
- *  this file might not be for you. */
+ * this file might not be for you.
+ */
 import { Dictionary } from '@onaio/utils';
 import { cloneDeep, uniqWith } from 'lodash';
 import TreeModel from 'tree-model';
@@ -112,9 +113,7 @@ export function setAttrsToNode(
 /** given an array of the childrenNodes, return true if all of them are selected
  * @param childrenNodes - an array of nodes
  */
-export function areAllChildrenSelected(
-  childrenNodes: Array<TreeNode>
-) {
+export function areAllChildrenSelected(childrenNodes: TreeNode[]) {
   let selected = true;
   childrenNodes.forEach(node => {
     selected = selected && node.model.meta[SELECT_KEY];
@@ -161,17 +160,14 @@ export const autoSelectNodesAndCascade = (
   tree: TreeNode,
   callback: (node: TreeNode) => boolean
 ) => {
-  console.log('**************************', tree, callback);
-  debugger;
   let treeClone = cloneDeep(tree);
   if (!treeClone) {
     return;
   }
   // deselect all
   treeClone = setAttrsToNode(tree, tree.model.id, SELECT_KEY, false, true).treeClone;
-  const parentNodes: Array<TreeNode> = [];
+  const parentNodes: TreeNode[] = [];
   treeClone.walk(node => {
-    console.log('????????????????',node, callback(node));
     if (callback(node)) {
       node.model[META_FIELD_NAME][SELECT_KEY] = true;
       parentNodes.push(node);
