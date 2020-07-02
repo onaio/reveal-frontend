@@ -2,19 +2,21 @@ import { ConnectedUploadConfigFile } from '@opensrp/form-config';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
+// import { useHistory } from "react-router-dom";
 import { Col, Row } from 'reactstrap';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
   EDIT_FORM,
   FILE_NAME_LABEL,
   FILE_UPLOAD_LABEL,
+  FORM_DRAFT_FILES,
   FORM_NAME_REQUIRED_LABEL,
   FORM_REQUIRED_LABEL,
   HOME,
   JSON_VALIDATORS,
-  MANIFEST_RELEASES,
   MODULE_LABEL,
   RELATED_TO_LABEL,
+  RELEASES_LABEL,
   UPLOAD_FORM,
 } from '../../../../../configs/lang';
 import {
@@ -30,13 +32,21 @@ import { defaultConfigProps } from '../../helpers';
 
 /** openSrp form config upload wrapper */
 const UploadConfigFilePage = (props: RouteComponentProps<RouteParams>) => {
+  // check if previous link is drafts
+  const { location } = props;
+  const fromDRaft: boolean = (location.state && (location.state as any).fromDrafts) || false;
+
   const formId = props.match.params.id || null;
   const isJsonValidator = props.match.params.type === VALIDATOR_UPLOAD_TYPE;
 
-  const releasesPage = { label: MANIFEST_RELEASES, url: MANIFEST_RELEASE_URL };
-  const validatorPage = { label: JSON_VALIDATORS, url: JSON_VALIDATORS_URL };
-  const prevPage = isJsonValidator ? validatorPage : releasesPage;
+  // differentiate between draft and releases page
+  const prevPageLabel = fromDRaft ? FORM_DRAFT_FILES : RELEASES_LABEL;
+  const prevPageUrl = fromDRaft ? VIEW_DRAFT_FILES_URL : MANIFEST_RELEASE_URL;
+  const releasesOrDraftPage = { label: prevPageLabel, url: prevPageUrl };
 
+  const validatorPage = { label: JSON_VALIDATORS, url: JSON_VALIDATORS_URL };
+
+  const prevPage = isJsonValidator ? validatorPage : releasesOrDraftPage;
   const pageTitle = formId ? EDIT_FORM : UPLOAD_FORM;
 
   const breadcrumbProps = {

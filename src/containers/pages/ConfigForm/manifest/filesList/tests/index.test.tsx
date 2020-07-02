@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { ManifestFiles } from '..';
-import { MANIFEST_RELEASES } from '../../../../../../configs/lang';
+import { RELEASES_LABEL } from '../../../../../../configs/lang';
 import { MANIFEST_RELEASE_URL } from '../../../../../../constants';
 import store from '../../../../../../store';
 import { FixManifestFiles } from './fixtures';
@@ -32,7 +32,7 @@ const props = {
     params: {
       id: '1.0.1',
     },
-    path: `${MANIFEST_RELEASES}`,
+    path: `${RELEASES_LABEL}`,
     url: `${MANIFEST_RELEASE_URL}`,
   },
 };
@@ -61,9 +61,9 @@ describe('containers/pages/ConfigForm/manifest/ManifestFiles', () => {
     await flushPromises();
     wrapper.update();
     const helmet = Helmet.peek();
-    expect(helmet.title).toEqual('Manifest Releases: 1.0.1');
+    expect(helmet.title).toEqual('Releases: 1.0.1');
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
-    expect(wrapper.find('.page-title').text()).toEqual('Manifest Releases: 1.0.1');
+    expect(wrapper.find('.page-title').text()).toEqual('Releases: 1.0.1');
 
     expect(wrapper.find('ManifestFilesList').props()).toMatchSnapshot();
 

@@ -5,6 +5,7 @@ import {
   fetchManifestDraftFiles,
   ManifestFilesTypes,
 } from '@opensrp/form-config';
+import { OpenSRPService } from '@opensrp/server-service';
 import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
@@ -12,7 +13,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { ManifestDraftFiles } from '..';
+import { ManifestDraftFilesPage } from '..';
 import store from '../../../../../../store';
 import { FixManifestDraftFiles } from './fixtures';
 
@@ -27,16 +28,19 @@ describe('containers/pages/ConfigForm/manifest/draftFiles', () => {
   });
 
   it('renders without crashing', () => {
-    shallow(<ManifestDraftFiles />);
+    shallow(<ManifestDraftFilesPage />);
   });
 
   it('renders draft files table correctly', async () => {
     store.dispatch(fetchManifestDraftFiles(FixManifestDraftFiles as ManifestFilesTypes[]));
+    const mockList = jest.fn();
+    OpenSRPService.prototype.list = mockList;
+    mockList.mockReturnValueOnce(Promise.resolve(FixManifestDraftFiles));
 
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ManifestDraftFiles />
+          <ManifestDraftFilesPage />
         </Router>
       </Provider>
     );
@@ -49,6 +53,8 @@ describe('containers/pages/ConfigForm/manifest/draftFiles', () => {
     expect(wrapper.find('.page-title').text()).toEqual('Draft Files');
 
     expect(wrapper.find('DrillDownTable').length).toEqual(1);
+    expect(wrapper.find('ManifestDraftFiles').props()).toMatchSnapshot();
+
     // table renders two rows - equal to data
     expect(wrapper.find('.tbody .tr').length).toEqual(2);
 

@@ -10,7 +10,7 @@ Object {
     minHeight="80vh"
     width="64px"
   />,
-  "appIdLabel": "APP Id",
+  "appIdLabel": "App Id",
   "appVersionLabel": "App Version",
   "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
   "currentUrl": "/manifest/releases",
@@ -34,12 +34,17 @@ Object {
     },
   ],
   "debounceTime": 1000,
+  "drillDownProps": Object {
+    "paginate": false,
+    "renderNullDataComponent": [Function],
+  },
   "endpoint": "manifest",
   "fetchReleases": [Function],
   "formUploadUrl": "/manifest",
   "getPayload": [Function],
   "identifierLabel": "Identifier",
   "placeholder": "Find Releases",
+  "updatedAt": "Updated at",
   "uploadFileLabel": "Upload New File",
   "uploadTypeUrl": "file-upload",
   "viewFilesLabel": "View Files",

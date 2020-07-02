@@ -52,6 +52,8 @@ export type SUPERSET_GOALS_SLICE = typeof SUPERSET_GOALS_SLICE;
 export const SUPERSET_TASKS_SLICE = 4;
 export type SUPERSET_TASKS_SLICE = typeof SUPERSET_TASKS_SLICE;
 
+export const SUPERSET_PLAN_HIERARCHY_SLICE = 5;
+
 /** Do you want to enable team assignment? */
 export const ENABLE_ASSIGN = true;
 

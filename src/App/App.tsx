@@ -84,7 +84,7 @@ import {
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
 import { JSONValidatorListPage } from '../containers/pages/ConfigForm/JSONValidators';
-import { ManifestDraftFiles } from '../containers/pages/ConfigForm/manifest/draftFiles';
+import { ManifestDraftFilesPage } from '../containers/pages/ConfigForm/manifest/draftFiles';
 import { ManifestFiles } from '../containers/pages/ConfigForm/manifest/filesList';
 import { ManifestReleasesPage } from '../containers/pages/ConfigForm/manifest/releases';
 import ConnectedUploadConfigFilePage from '../containers/pages/ConfigForm/manifest/uploadFile';
@@ -112,6 +112,7 @@ import ConnectedAssignPractitioner from '../containers/pages/OrganizationViews/A
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
 import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
+import { ConnectedPlanAssignment } from '../containers/pages/PlanAssignment';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
 import { oAuthUserInfoGetter } from '../helpers/utils';
@@ -275,7 +276,7 @@ const App = (props: AppProps) => {
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedIRSReportingMap}
                 />
-                {/* IRS Assignment views */}
+                {/* Plan Assignment views for Plan */}
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -283,12 +284,20 @@ const App = (props: AppProps) => {
                   path={`${ASSIGN_PLAN_URL}`}
                   component={ConnectedIRSAssignmentPlansList}
                 />
+                {/* Plan assignment views for Plan & Jurisdictions */}
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${ASSIGN_PLAN_URL}/:id`}
-                  component={IrsPlan}
+                  path={`${ASSIGN_PLAN_URL}/:planId`}
+                  component={ConnectedPlanAssignment}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${ASSIGN_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedPlanAssignment}
                 />
                 {/* Focus Investigation Reporting list view */}
                 <ConnectedPrivateRoute
@@ -482,7 +491,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={VIEW_DRAFT_FILES_URL}
-                  component={ManifestDraftFiles}
+                  component={ManifestDraftFilesPage}
                 />
                 {/* Upload Jurisdiction Metadata view */}
                 <ConnectedPrivateRoute

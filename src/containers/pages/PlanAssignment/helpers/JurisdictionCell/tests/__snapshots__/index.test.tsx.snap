@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanAssignment/JurisdictionCell renders leaf nodes: Leaf node 1`] = `
+<span
+  key="3091-span"
+>
+  Rural
+</span>
+`;
+
+exports[`PlanAssignment/JurisdictionCell renders leaf non-leaf nodes: Non-Leaf node 1`] = `
+<Link
+  key="3091-link"
+  replace={false}
+  to="/3091"
+>
+  <a
+    href="/3091"
+    onClick={[Function]}
+  >
+    Rural
+  </a>
+</Link>
+`;

@@ -1,6 +1,7 @@
 /** Assignments redux module */
 import { Dictionary } from '@onaio/utils';
-import { get } from 'lodash';
+import { get, uniqWith } from 'lodash';
+import moment from 'moment';
 import { Store } from 'redux';
 import { AnyAction } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
@@ -28,6 +29,7 @@ export const REMOVE_ASSIGNMENTS = 'src/store/ducks/assignments/reducer/REMOVE_AS
 /** interface for Assignments fetched action */
 interface FetchAssignmentsAction extends AnyAction {
   assignmentsByPlanId: { [key: string]: Assignment[] };
+  overwrite: boolean;
   type: typeof ASSIGNMENTS_FETCHED;
 }
 
@@ -54,14 +56,48 @@ export type ImmutableAssignmentsStoreState = AssignmentsStoreState &
   SeamlessImmutable.ImmutableObject<AssignmentsStoreState>;
 
 /** initial state for Assignments records in store */
-const initialOrgsStoreState: ImmutableAssignmentsStoreState = SeamlessImmutable({
+const initialAssignmentStoreState: ImmutableAssignmentsStoreState = SeamlessImmutable({
   assignmentsByPlanId: {},
 });
 
 /** the Assignment reducer function */
-export default function reducer(state = initialOrgsStoreState, action: AssignmentActionTypes) {
+export default function reducer(
+  state = initialAssignmentStoreState,
+  action: AssignmentActionTypes
+) {
   switch (action.type) {
     case ASSIGNMENTS_FETCHED:
+      if (!action.overwrite) {
+        // so what we want to do is to ensure all action.assignmentsByPlanId arrays of the
+        // same plan are merged.  But while merging we want to that the array elements are
+        // unique based on fromDate, jurisdiction and organization
+        const currentState = state.assignmentsByPlanId.asMutable();
+        // loop through each plan in the action object
+        for (const [planId, assignments] of Object.entries(action.assignmentsByPlanId)) {
+          // check if the plan is already in current state
+          if (planId in currentState) {
+            // merge the two assignment arrays
+            const allAssignments = (assignments as Assignment[]).concat(
+              (currentState as AssignmentsByPlanId)[planId]
+            );
+            // sort by whether an element was NOT in the current state i.e. elements NOT in
+            // current state will be ordered first.  We do this because we want to remove elements
+            // that were in current state.  We assume that they are being overwritten
+            allAssignments.sort((_, b) => ((assignments as Assignment[]).includes(b) ? 1 : -1));
+            // remove the elements in the current state.  This works because we hard already ordered
+            // the elements.  uniqWith keeps the first found item
+            const filteredAssignments = (action.assignmentsByPlanId[planId] = uniqWith(
+              allAssignments,
+              (a, b) =>
+                `${a.fromDate}${a.jurisdiction}${a.organization}` ===
+                `${b.fromDate}${b.jurisdiction}${b.organization}`
+            ));
+            // finally, save this to the action object
+            action.assignmentsByPlanId[planId] = filteredAssignments;
+          }
+        }
+      }
+
       return SeamlessImmutable({
         ...state,
         assignmentsByPlanId: {
@@ -89,10 +125,13 @@ export const removeAssignmentsAction: RemoveAssignmentsAction = {
 
 /** creates action to add fetched assignments to store
  * @param {Assignment []} assignmentsList - array of assignments to be added to store
- *
+ * @param {boolean} overwrite - whether to overwrite assignments
  * @returns {FetchAssignmentsAction} - action with assignments payload that is added to store
  */
-export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignmentsAction => {
+export const fetchAssignments = (
+  assignmentsList: Assignment[],
+  overwrite: boolean = false
+): FetchAssignmentsAction => {
   // const assignmentsByPlanId: AssignmentsByPlanId = {};
   const defaultArrayAssignmentHandler: ProxyHandler<object> = {
     /**
@@ -127,6 +166,7 @@ export const fetchAssignments = (assignmentsList: Assignment[]): FetchAssignment
   }
   return {
     assignmentsByPlanId,
+    overwrite,
     type: ASSIGNMENTS_FETCHED,
   };
 };
@@ -140,6 +180,7 @@ export const resetPlanAssignments = (
 ): FetchAssignmentsAction => {
   return {
     assignmentsByPlanId,
+    overwrite: true,
     type: ASSIGNMENTS_FETCHED,
   };
 };
@@ -163,7 +204,8 @@ export function getAssignmentsByPlanId(state: Partial<Store>): { [key: string]: 
  * @return {Assignment []} - all assignments by planId in store as an array
  */
 export function getAssignmentsArrayByPlanId(state: Partial<Store>, planId: string): Assignment[] {
-  return get(getAssignmentsByPlanId(state), planId) || [];
+  const assignments = get(getAssignmentsByPlanId(state), planId) || [];
+  return assignments.filter(obj => moment(obj.toDate) >= moment());
 }
 
 /** Get all assignments by plan id and by jurisdiction id

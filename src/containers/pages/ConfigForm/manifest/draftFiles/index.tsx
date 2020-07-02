@@ -15,6 +15,7 @@ import {
   MODULE_LABEL,
 } from '../../../../../configs/lang';
 import {
+  FILE_UPLOAD_TYPE,
   HOME_URL,
   MANIFEST_FILE_UPLOAD,
   MANIFEST_RELEASE_URL,
@@ -23,10 +24,10 @@ import {
   OPENSRP_MANIFEST_ENDPOINT,
   VIEW_DRAFT_FILES_URL,
 } from '../../../../../constants';
-import { defaultConfigProps } from '../../helpers';
+import { defaultConfigProps, drillDownProps } from '../../helpers';
 
 /** simple wrapper for manifest draft file lists component */
-export const ManifestDraftFiles = () => {
+export const ManifestDraftFilesPage = () => {
   const breadcrumbProps = {
     currentPage: {
       label: FORM_DRAFT_FILES,
@@ -44,16 +45,18 @@ export const ManifestDraftFiles = () => {
     ...defaultConfigProps,
     downloadEndPoint: OPENSRP_FORMS_ENDPOINT,
     downloadLabel: DOWNLOAD_LABEL,
+    drillDownProps,
     endpoint: OPENSRP_FORM_METADATA_ENDPOINT,
     fileNameLabel: FILE_NAME_LABEL,
-    fileUploadUrl: MANIFEST_FILE_UPLOAD,
     fileVersionLabel: FILE_VERSION_LABEL,
+    formUploadUrl: MANIFEST_FILE_UPLOAD,
     identifierLabel: IDENTIFIER_LABEL,
     makeReleaseLabel: MAKE_RELEASE_LABEL,
     manifestEndPoint: OPENSRP_MANIFEST_ENDPOINT,
     moduleLabel: MODULE_LABEL,
     placeholder: FIND_DRAFT_FILE_LABEL,
     releasesUrl: MANIFEST_RELEASE_URL,
+    uploadTypeUrl: FILE_UPLOAD_TYPE,
   };
 
   return (

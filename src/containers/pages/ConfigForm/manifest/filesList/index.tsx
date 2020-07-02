@@ -12,8 +12,8 @@ import {
   FIND_RELEASE_FILES,
   HOME,
   IDENTIFIER_LABEL,
-  MANIFEST_RELEASES,
   MODULE_LABEL,
+  RELEASES_LABEL,
   UPLOAD_EDIT_LABEL,
   UPOL0AD_FILE_LABEL,
 } from '../../../../../configs/lang';
@@ -26,7 +26,7 @@ import {
   OPENSRP_MANIFEST_FORMS_ENDPOINT,
 } from '../../../../../constants';
 import { RouteParams } from '../../../../../helpers/utils';
-import { defaultConfigProps } from '../../helpers';
+import { defaultConfigProps, drillDownProps } from '../../helpers';
 
 /** simple wrapper for manifest file lists component */
 export const ManifestFiles = (props: RouteComponentProps<RouteParams>) => {
@@ -41,7 +41,7 @@ export const ManifestFiles = (props: RouteComponentProps<RouteParams>) => {
         url: HOME_URL,
       },
       {
-        label: MANIFEST_RELEASES,
+        label: RELEASES_LABEL,
         url: MANIFEST_RELEASE_URL,
       },
     ],
@@ -51,6 +51,7 @@ export const ManifestFiles = (props: RouteComponentProps<RouteParams>) => {
     ...defaultConfigProps,
     downloadEndPoint: OPENSRP_FORMS_ENDPOINT,
     downloadLabel: DOWNLOAD_LABEL,
+    drillDownProps,
     editLabel: EDIT_LABEL,
     endpoint: OPENSRP_MANIFEST_FORMS_ENDPOINT,
     fileNameLabel: FILE_NAME_LABEL,
@@ -69,12 +70,12 @@ export const ManifestFiles = (props: RouteComponentProps<RouteParams>) => {
   return (
     <div>
       <Helmet>
-        <title>{`${MANIFEST_RELEASES}: ${formVersion}`}</title>
+        <title>{`${RELEASES_LABEL}: ${formVersion}`}</title>
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <Row>
         <Col md={8}>
-          <h3 className="mt-3 mb-3 page-title">{`${MANIFEST_RELEASES}: ${formVersion}`}</h3>
+          <h3 className="mt-3 mb-3 page-title">{`${RELEASES_LABEL}: ${formVersion}`}</h3>
         </Col>
       </Row>
       <ConnectedManifestFilesList {...fileListProps} />
