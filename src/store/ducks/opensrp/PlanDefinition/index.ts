@@ -26,13 +26,13 @@ export const REMOVE_PLAN_DEFINITIONS =
 export const ADD_PLAN_DEFINITION = 'reveal/reducer/opensrp/PlanDefinition/ADD_PLAN_DEFINITION';
 
 /** interface for fetch PlanDefinitions action */
-interface FetchPlanDefinitionsAction extends AnyAction {
+export interface FetchPlanDefinitionsAction extends AnyAction {
   planDefinitionsById: { [key: string]: PlanDefinition };
   type: typeof PLAN_DEFINITIONS_FETCHED;
 }
 
 /** interface for removing PlanDefinitions action */
-interface RemovePlanDefinitionsAction extends AnyAction {
+export interface RemovePlanDefinitionsAction extends AnyAction {
   planDefinitionsById: { [key: string]: PlanDefinition };
   type: typeof REMOVE_PLAN_DEFINITIONS;
 }
