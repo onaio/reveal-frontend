@@ -2628,7 +2628,7 @@ export const expectedExtractActivityFromPlanformResult = {
       prefix: 5,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Breeding_Site',
+        text: 'Location',
       },
       taskTemplate: 'Larval_Dipping',
       timingPeriod: {
@@ -2646,7 +2646,7 @@ export const expectedExtractActivityFromPlanformResult = {
       prefix: 6,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Mosquito_Collection_Point',
+        text: 'Location',
       },
       taskTemplate: 'Mosquito_Collection_Point',
       timingPeriod: {

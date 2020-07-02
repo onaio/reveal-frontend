@@ -307,7 +307,7 @@ export const planDefinition1: PlanDefinition = {
       reason: 'Investigation',
       goalId: 'Mosquito_Collection',
       subjectCodableConcept: {
-        text: 'Mosquito_Collection_Point',
+        text: 'Location',
       },
       taskTemplate: 'Mosquito_Collection_Point',
     },
@@ -370,7 +370,7 @@ export const planDefinition2: PlanDefinition = {
       reason: 'Investigation',
       goalId: 'BCC_Focus',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Jurisdiction',
       },
       taskTemplate: 'BCC_Focus',
     },
