@@ -32,6 +32,9 @@ import {
   AN_ERROR_OCCURRED,
   CASE_NUMBER,
   DESCRIPTION_LABEL,
+  DYNAMIC_FI_TITLE,
+  DYNAMIC_IRS_TITLE,
+  DYNAMIC_MDA_TITLE,
   END_DATE,
   FOCUS_AREA_HEADER,
   FOCUS_CLASSIFICATION_LABEL,
@@ -73,6 +76,9 @@ import DatePickerWrapper from '../../DatePickerWrapper';
 import JurisdictionSelect from '../JurisdictionSelect';
 import {
   doesFieldHaveErrors,
+  DynamicFIActivities,
+  DynamicIRSActivities,
+  DynamicMDAActivities,
   FIActivities,
   generatePlanDefinition,
   getFormActivities,
@@ -164,9 +170,13 @@ const PlanForm = (props: PlanFormProps) => {
   } = props;
 
   const editMode: boolean = initialValues.identifier !== '';
+
   const irsActivities = getFormActivities(IRSActivities);
   const fiActivities = getFormActivities(FIActivities);
   const mdaPointActivities = getFormActivities(MDAPointActivities);
+  const dynamicFIActivities = getFormActivities(DynamicFIActivities);
+  const dynamicIRSActivities = getFormActivities(DynamicIRSActivities);
+  const dynamicMDAActivities = getFormActivities(DynamicMDAActivities);
 
   let filteredFIReasons: FIReasonType[] = [...FIReasons];
   if (ENABLED_FI_REASONS.length) {
@@ -328,6 +338,15 @@ const PlanForm = (props: PlanFormProps) => {
                   if (target.value === InterventionType.MDAPoint) {
                     setFieldValue('activities', mdaPointActivities);
                   }
+                  if (target.value === InterventionType.DynamicFI) {
+                    setFieldValue('activities', dynamicFIActivities);
+                  }
+                  if (target.value === InterventionType.DynamicIRS) {
+                    setFieldValue('activities', dynamicIRSActivities);
+                  }
+                  if (target.value === InterventionType.DynamicMDA) {
+                    setFieldValue('activities', dynamicMDAActivities);
+                  }
                   setFieldValue('jurisdictions', [initialJurisdictionValues]);
                   handleChange(e);
                 }}
@@ -341,6 +360,15 @@ const PlanForm = (props: PlanFormProps) => {
                 )}
                 {isPlanTypeEnabled(InterventionType.MDAPoint) && (
                   <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>
+                )}
+                {isPlanTypeEnabled(InterventionType.DynamicFI) && (
+                  <option value={InterventionType.DynamicFI}>{DYNAMIC_FI_TITLE}</option>
+                )}
+                {isPlanTypeEnabled(InterventionType.DynamicIRS) && (
+                  <option value={InterventionType.DynamicIRS}>{DYNAMIC_IRS_TITLE}</option>
+                )}
+                {isPlanTypeEnabled(InterventionType.DynamicMDA) && (
+                  <option value={InterventionType.DynamicMDA}>{DYNAMIC_MDA_TITLE}</option>
                 )}
               </Field>
               <ErrorMessage
