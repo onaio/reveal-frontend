@@ -6,7 +6,6 @@ import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 export interface Page {
   url?: string;
   label: string;
-  clickHandler?: (evt: React.MouseEvent) => void;
 }
 
 /** interface for breadcrumb items */
@@ -27,13 +26,7 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
     const linkList = pages.map((page, key) => {
       // render breadcrumb items with urls as links or without urls as text nodes
       let breadCrumbItem: string | JSX.Element;
-      if (page.clickHandler) {
-        breadCrumbItem = (
-          <a href="#" onClick={page.clickHandler}>
-            {page.label}
-          </a>
-        );
-      } else if (page.url && page.url.trim()) {
+      if (page.url && page.url.trim()) {
         breadCrumbItem = (
           <Link to={page.url} key={key}>
             {page.label}
