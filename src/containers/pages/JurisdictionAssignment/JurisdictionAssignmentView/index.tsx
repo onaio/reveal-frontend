@@ -51,8 +51,10 @@ export const defaultProps = {
 };
 
 /** view will require a planId from the url */
-interface RouteParams {
+export interface RouteParams {
   planId: string;
+  rootId: string;
+  parentId: string;
 }
 
 /** full props with route props added for JurisdictionAssignmentView */
@@ -135,6 +137,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
   }
 
   const JurisdictionTableProps = {
+    currentParentId: props.match.params.parentId,
     plan,
     rootJurisdictionId,
     serviceClass,
