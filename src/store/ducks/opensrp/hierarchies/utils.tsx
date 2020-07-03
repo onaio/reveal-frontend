@@ -139,7 +139,7 @@ export const nodeHasChildren = (node: TreeNode) => {
 /** traverse up and select the parent nodes where necessary
  * @param node a node
  */
-function _computeParentNodesSelection(node: TreeNode) {
+export function computeParentNodesSelection(node: TreeNode) {
   const parentsPath = node.getPath();
   const reversedParentSPath = parentsPath.reverse();
   // now for each of the parent if all the children are selected then label the parent as selected too
@@ -180,7 +180,7 @@ export const autoSelectNodesAndCascade = (
 
   // now select parents accordingly
   parentNodesSet.forEach(node => {
-    _computeParentNodesSelection(node);
+    computeParentNodesSelection(node);
   });
   return treeClone;
 };

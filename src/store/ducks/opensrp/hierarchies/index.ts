@@ -10,6 +10,7 @@ import { createSelector } from 'reselect';
 import { AutoSelectCallback, RawOpenSRPHierarchy, TreeNode } from './types';
 import {
   autoSelectNodesAndCascade,
+  computeParentNodesSelection,
   generateJurisdictionTree,
   nodeHasChildren,
   nodeIsSelected,
@@ -214,10 +215,17 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
       if (!treeOfInterest) {
         return state;
       }
-      const { treeClone } = setAttrsToNode(treeOfInterest, action.nodeId, SELECT_KEY, true, true);
+      const { treeClone: alteredTree, argNode } = setAttrsToNode(
+        treeOfInterest,
+        action.nodeId,
+        SELECT_KEY,
+        true,
+        true
+      );
+      computeParentNodesSelection(argNode);
       return {
         ...state,
-        treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: treeClone },
+        treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: alteredTree },
       };
 
     case DESELECT_NODE:
