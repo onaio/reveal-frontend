@@ -4,8 +4,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import HeaderBreadcrumb from '../../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import BaseNewPlan, NewPlan, { NewIRSPlan, NewPlanForPlanning } from '../index';
-import { IRSPlanFormProps, planFormProps, planningFormProps } from './fixtures';
+import BaseNewPlan, { NewIRSPlan, NewPlanForPlanning } from '../index';
 
 const history = createBrowserHistory();
 
@@ -77,8 +76,7 @@ describe('containers/pages/NewPlan', () => {
     );
 
     // check that PlanForm receives the correct props
-    expect(wrapper.find('PlanForm').props()).toEqual({
-      ...planningFormProps,
+    expect(wrapper.find('PlanForm').props()).toMatchSnapshot({
       formHandler: expect.any(Function),
     });
 
@@ -99,8 +97,7 @@ describe('containers/pages/NewPlan', () => {
     );
 
     // check that PlanForm receives the correct props
-    expect(wrapper.find('PlanForm').props()).toEqual({
-      ...IRSPlanFormProps,
+    expect(wrapper.find('PlanForm').props()).toMatchSnapshot({
       formHandler: expect.any(Function),
     });
 
