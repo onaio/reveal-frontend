@@ -1,19 +1,52 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`src/pages/JurisdictionAssignment/JurisdictionCell renders correctly by default: should have classNames link 1`] = `
-<span
-  className="btn-link cursor-pointer"
-  key="undefined-span"
-  onClick={[MockFunction]}
+<NodeCell
+  baseUrl="/example"
+  node={
+    Object {
+      "children": Object {
+        "length": 1,
+      },
+      "model": Object {
+        "label": "Gaz",
+      },
+    }
+  }
 >
-  Gaz
-</span>
+  <Link
+    key="undefined-span"
+    replace={false}
+    to="/example/undefined"
+  >
+    <a
+      href="/example/undefined"
+      onClick={[Function]}
+    >
+      Gaz
+    </a>
+  </Link>
+</NodeCell>
 `;
 
 exports[`src/pages/JurisdictionAssignment/JurisdictionCell renders correctly when node does not have children: should have classNames link 1`] = `
-<span
-  key="undefined-span"
+<NodeCell
+  baseUrl="/example"
+  node={
+    Object {
+      "children": Object {
+        "length": 0,
+      },
+      "model": Object {
+        "label": "Gaz",
+      },
+    }
+  }
 >
-  Gaz
-</span>
+  <span
+    key="undefined-span"
+  >
+    Gaz
+  </span>
+</NodeCell>
 `;
