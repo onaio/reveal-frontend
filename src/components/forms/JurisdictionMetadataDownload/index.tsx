@@ -202,6 +202,7 @@ const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFor
 
 /**
  * JurisdictionMetadataDownload - allows a user to download jurisdiction metadata by identifier
+ * NOTE: The downloaded data contains Jurisdiction name and Id originally downloaded with the csv
  */
 const defaultProps: JurisdictionMetadataDownloadFormProps = {
   disabledFields: [],

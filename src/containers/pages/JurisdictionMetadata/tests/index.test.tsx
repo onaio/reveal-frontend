@@ -74,7 +74,7 @@ describe('src/containers/pages/JurisdictionMetadata', () => {
         },
       };
     });
-    downloadCsvTemplate(mockedOpenSRPservice());
+    downloadCsvTemplate(mockedOpenSRPservice);
     await waitFor(() => {
       expect(mockedOpenSRPservice).toHaveBeenCalledTimes(1);
       expect(mockDownload).toBeCalled();
