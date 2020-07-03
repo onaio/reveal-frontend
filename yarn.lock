@@ -1788,8 +1788,10 @@
     reactstrap "^8.0.1"
     yup "^0.29.1"
 
-"@opensrp/population-characteristics@file:/home/ona/projects/opensrp/opensrp-web/packages/populationCharacteristics/":
-  version "0.0.0"
+"@opensrp/population-characteristics@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@opensrp/population-characteristics/-/population-characteristics-0.0.1.tgz#e56d471fd05c91f175923be876c6aa3c7d8f40cd"
+  integrity sha512-Qdbkb1gGt8wIYKczoTFc4jP3a35PhbpoT47OVN+5hrbSprIrzjUYL/I6EYjY8Adi2qW6Z8qB3H6JbspxdNl6Rg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.20"
     "@fortawesome/free-brands-svg-icons" "^5.10.0"
