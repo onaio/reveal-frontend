@@ -131,6 +131,39 @@ export const expectedActivity = {
     timingPeriodEnd,
     timingPeriodStart,
   },
+  dynamicIRS: {
+    actionCode: 'IRS',
+    actionDescription: 'Visit each structure in the operational area and attempt to spray',
+    actionIdentifier: '',
+    actionReason: 'Routine',
+    actionTitle: 'Spray Structures',
+    condition: [
+      {
+        description: 'Structure is residential or type does not exist',
+        expression:
+          "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
+      },
+      {
+        description: 'Apply to residential structures in Register_Structure questionnaires',
+        expression:
+          "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
+      },
+    ],
+    goalDescription: 'Spray structures in the operational area',
+    goalDue,
+    goalPriority: 'medium-priority',
+    goalValue: 90,
+    timingPeriodEnd,
+    timingPeriodStart,
+    trigger: [
+      { name: 'plan-activation' },
+      {
+        description: '',
+        expression: "questionnaire = 'Register_Structure'",
+        name: 'event-submission',
+      },
+    ],
+  },
   familyRegistration: {
     actionCode: 'RACD Register Family',
     actionDescription:
