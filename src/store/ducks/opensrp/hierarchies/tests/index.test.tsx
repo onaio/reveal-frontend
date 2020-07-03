@@ -88,7 +88,7 @@ describe('reducers/opensrp/hierarchies', () => {
   it('auto selecting nodes works', () => {
     // checking that dispatching actions has desired effect
     const rootJurisdictionId = '2942';
-    const nodeIdToAutoSelect = '3951';
+    const nodeIdToAutoSelect = '2942';
     const callback = (node: TreeNode) => node.model.id === nodeIdToAutoSelect;
     const filters = {
       rootJurisdictionId,
