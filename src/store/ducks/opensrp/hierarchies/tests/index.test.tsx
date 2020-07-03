@@ -5,13 +5,13 @@ import reducer, {
   deforest,
   deselectNode,
   fetchTree,
+  Filters,
   getAllSelectedNodes,
   getCurrentChildren,
   getCurrentParentNode,
   getNodeById,
   reducerName,
   selectNode,
-  setCurrentParentId,
 } from '..';
 import store from '../../../../index';
 import { TreeNode } from '../types';
@@ -41,7 +41,7 @@ describe('reducers/opensrp/hierarchies', () => {
 
   it('should fetch tree', () => {
     // checking that dispatching actions has desired effect
-    const filters = {
+    let filters: Filters = {
       rootJurisdictionId: '2942',
     };
     store.dispatch(fetchTree(sampleHierarchy));
@@ -49,7 +49,10 @@ describe('reducers/opensrp/hierarchies', () => {
     expect(childrenSelector(store.getState(), filters).length).toEqual(1);
     expect(parentNodeSelector(store.getState(), filters)).toBeUndefined();
 
-    store.dispatch(setCurrentParentId('2942', '2942'));
+    filters = {
+      ...filters,
+      currentParentId: '2942',
+    };
 
     expect(childrenSelector(store.getState(), filters).length).toEqual(1);
 
