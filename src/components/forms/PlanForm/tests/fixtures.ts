@@ -21,8 +21,11 @@ timingPeriodEnd.setMilliseconds(0);
 const timingPeriodStart = moment().toDate();
 timingPeriodStart.setMilliseconds(0);
 
-const expectedActivityOriginal: any = {};
+const expectedActivityOriginal: Dictionary = {};
+export const planActivityWithEmptyfields: Dictionary = {};
+
 for (const [key, activityObj] of Object.entries(planActivitiesFromConfig)) {
+  // build expectedActivityOriginal
   expectedActivityOriginal[key] = {
     ...(activityObj.action.condition && {
       condition: activityObj.action.condition.map(item => {
@@ -53,6 +56,20 @@ for (const [key, activityObj] of Object.entries(planActivitiesFromConfig)) {
     goalPriority: 'medium-priority',
     timingPeriodEnd,
     timingPeriodStart,
+  };
+
+  // build planActivityWithEmptyfields
+  planActivityWithEmptyfields[key] = {
+    ...activityObj,
+    action: {
+      ...activityObj.action,
+      description: '',
+      identifier: '',
+    },
+    goal: {
+      ...activityObj.goal,
+      description: '',
+    },
   };
 }
 
@@ -142,22 +159,6 @@ for (const [key, activityObj] of Object.entries(expectedActivity)) {
     actionDescription: '',
     actionIdentifier: '',
     goalDescription: '',
-  };
-}
-
-export const planActivityWithEmptyfields: Dictionary = {};
-for (const [key, activityObj] of Object.entries(planActivitiesFromConfig)) {
-  planActivityWithEmptyfields[key] = {
-    ...activityObj,
-    action: {
-      ...activityObj.action,
-      description: '',
-      identifier: '',
-    },
-    goal: {
-      ...activityObj.goal,
-      description: '',
-    },
   };
 }
 
