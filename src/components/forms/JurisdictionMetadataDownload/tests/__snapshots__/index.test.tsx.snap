@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/forms/JurisdictionMetadata renders Jurisdiction Metadata form correctly: JurisdictionMetadataDownload file 1`] = `null`;
+
+exports[`components/forms/JurisdictionMetadata renders correctly: JurisdictionMetadataDownload file 1`] = `null`;

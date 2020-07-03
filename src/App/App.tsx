@@ -2,6 +2,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import {
   faCog,
+  faDownload,
   faExternalLinkSquareAlt,
   faMap,
   faSearch,
@@ -63,6 +64,7 @@ import {
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   JSON_VALIDATORS_URL,
+  JURISDICTION_METADATA_URL,
   LOGOUT_URL,
   MANIFEST_FILE_UPLOAD,
   MANIFEST_RELEASE_URL,
@@ -80,7 +82,6 @@ import {
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
   SINGLE_ORGANIZATION_URL,
-  UPLOAD_JURISDICTION_METADATA_URL,
   VIEW_DRAFT_FILES_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
@@ -122,7 +123,16 @@ import store from '../store';
 import { getOauthProviderState } from '../store/selectors';
 import './App.css';
 
-library.add(faExternalLinkSquareAlt, faSearch, faSlidersH, faCog, faMap, faUser, faTextHeight);
+library.add(
+  faDownload,
+  faExternalLinkSquareAlt,
+  faSearch,
+  faSlidersH,
+  faCog,
+  faMap,
+  faUser,
+  faTextHeight
+);
 
 toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
@@ -500,7 +510,7 @@ const App = (props: AppProps) => {
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={UPLOAD_JURISDICTION_METADATA_URL}
+                  path={JURISDICTION_METADATA_URL}
                   component={JurisdictionMetadata}
                 />
                 {/* server settings - Editing population characteristics */}

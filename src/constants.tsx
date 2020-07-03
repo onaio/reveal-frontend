@@ -102,7 +102,7 @@ export const BACKEND_CALLBACK_PATH = '/fe/oauth/callback/:id';
 export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
 export const CLIENTS_LIST_URL = '/clients';
 export const UPLOAD_CLIENT_CSV_URL = '/clients/upload';
-export const UPLOAD_JURISDICTION_METADATA_URL = '/jurisdiction-metadata/upload';
+export const JURISDICTION_METADATA_URL = '/jurisdiction-metadata';
 export const GO_BACK_TEXT = 'Go Back';
 export const MANIFEST_RELEASE_URL = '/manifest/releases';
 export const VIEW_DRAFT_FILES_URL = '/files/draft';
@@ -141,6 +141,7 @@ export const TEAM_ID_PARAM = 'team_id';
 export const OPENSRP_TEMPLATE_ENDPOINT = 'template';
 export const OPENSRP_PLANS_BY_USER_FILTER = 'plans/user';
 export const OPENSRP_V1_SETTINGS_ENDPOINT = 'settings/sync';
+export const OPENSRP_V2_SETTINGS = 'v2/settings/';
 export const OPENSRP_ACTIVE = 'Active';
 export const OPENSRP_STATUS = 'status';
 export const OPENSRP_MANIFEST_ENDPOINT = 'manifest';
@@ -184,3 +185,21 @@ export const ROUTINE_QUERY_PARAM = 'routine_plans';
 
 /** Settings Configuration */
 export const SETTINGS_CONFIGURATION = 'SettingConfiguration';
+
+/** Jurisdiction Metadata */
+export const JURISDICTION_METADATA_RISK = 'jurisdiction_metadata-risk';
+export const JURISDICTION_METADATA_COVERAGE = 'jurisdiction_metadata-coverage';
+export const JURISDICTION_CSV_TEMPLATE = 'jurisdiction_id,jurisdiction_name,risk,coverage';
+export const JURISDICTION_CSV_FILE_NAME = 'jurisdiction-metadata';
+export const GET_ALL = 'getAll';
+
+/** CSV File MIME Types */
+export const TEXT_CSV = 'text/csv';
+export const APPLICATION_CSV = 'application/csv';
+export const TEXT_PLAIN = 'text/plain';
+export const TEXT_X_CSV = 'text/x-csv';
+export const APPLICATION_VND_EXCEL = 'application/vnd.ms-excel';
+export const APPLICATION_X_CSV = 'application/x-csv';
+export const TEXT_COMMA_SEPARATED_VALUES = 'text/comma-separated-values';
+export const TEXT_X_COMMA_SEPARATED_VALUES = 'text/x-comma-separated-values';
+export const TEXT_TAB_SEPARATED_VALUES = 'text/tab-separated-values';
