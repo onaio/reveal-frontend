@@ -1,5 +1,8 @@
 import MockDate from 'mockdate';
-import { PlanActionCodes } from '../../../../configs/settings';
+import {
+  PlanActionCodes,
+  planActivities as planActivitiesFromConfig,
+} from '../../../../configs/settings';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import {
   doesFieldHaveErrors,
@@ -12,7 +15,7 @@ import {
   getPlanFormValues,
   PlanFormFields,
 } from '../helpers';
-import { GoalUnit, PlanActionCodesType } from '../types';
+import { GoalUnit, PlanActionCodesType, PlanActivities } from '../types';
 import {
   activities,
   event,
@@ -34,92 +37,20 @@ import {
 } from './fixtures';
 
 describe('containers/forms/PlanForm/helpers', () => {
-  it('check extractActivityForForm returns the correct value for BCC', () => {
-    expect(extractActivityForForm(planActivities.BCC)).toEqual(expectedActivity.BCC);
-    expect(extractActivityForForm(planActivityWithEmptyfields.BCC)).toEqual(
-      expectedActivityEmptyField.BCC
-    );
-    expect(extractActivityForForm(planActivityWithoutTargets.BCC)).toEqual(expectedActivity.BCC);
-  });
-
-  it('check extractActivityForForm returns the correct value for bednetDistribution', () => {
-    expect(extractActivityForForm(planActivities.bednetDistribution)).toEqual(
-      expectedActivity.bednetDistribution
-    );
-    expect(extractActivityForForm(planActivityWithEmptyfields.bednetDistribution)).toEqual(
-      expectedActivityEmptyField.bednetDistribution
-    );
-    expect(extractActivityForForm(planActivityWithoutTargets.bednetDistribution)).toEqual(
-      expectedActivity.bednetDistribution
-    );
-  });
-  it('check extractActivityForForm returns the correct value for IRS', () => {
-    expect(extractActivityForForm(planActivities.IRS)).toEqual(expectedActivity.IRS);
-    expect(extractActivityForForm(planActivityWithEmptyfields.IRS)).toEqual(
-      expectedActivityEmptyField.IRS
-    );
-    expect(extractActivityForForm(planActivityWithoutTargets.IRS)).toEqual(expectedActivity.IRS);
-  });
-
-  it('check extractActivityForForm returns the correct value for bloodScreening', () => {
-    expect(extractActivityForForm(planActivities.bloodScreening)).toEqual(
-      expectedActivity.bloodScreening
-    );
-    expect(extractActivityForForm(planActivityWithEmptyfields.bloodScreening)).toEqual(
-      expectedActivityEmptyField.bloodScreening
-    );
-    expect(extractActivityForForm(planActivityWithoutTargets.bloodScreening)).toEqual(
-      expectedActivity.bloodScreening
-    );
-  });
-
-  it('check extractActivityForForm returns the correct value for caseConfirmation', () => {
-    expect(extractActivityForForm(planActivities.caseConfirmation)).toEqual(
-      expectedActivity.caseConfirmation
-    );
-    expect(extractActivityForForm(planActivityWithEmptyfields.caseConfirmation)).toEqual(
-      expectedActivityEmptyField.caseConfirmation
-    );
-    expect(extractActivityForForm(planActivityWithoutTargets.caseConfirmation)).toEqual(
-      expectedActivity.caseConfirmation
-    );
-  });
-
-  it('check extractActivityForForm returns the correct value for larvalDipping', () => {
-    expect(extractActivityForForm(planActivities.larvalDipping)).toEqual(
-      expectedActivity.larvalDipping
-    );
-    expect(extractActivityForForm(planActivityWithEmptyfields.larvalDipping)).toEqual(
-      expectedActivityEmptyField.larvalDipping
-    );
-    expect(extractActivityForForm(planActivityWithoutTargets.larvalDipping)).toEqual(
-      expectedActivity.larvalDipping
-    );
-  });
-
-  it('check extractActivityForForm returns the correct value for familyRegistration', () => {
-    expect(extractActivityForForm(planActivities.familyRegistration)).toEqual(
-      expectedActivity.familyRegistration
-    );
-    expect(extractActivityForForm(planActivityWithoutTargets.familyRegistration)).toEqual(
-      expectedActivity.familyRegistration
-    );
-  });
-
-  it('check extractActivityForForm returns the correct value for mosquitoCollection', () => {
-    expect(extractActivityForForm(planActivities.mosquitoCollection)).toEqual(
-      expectedActivity.mosquitoCollection
-    );
-    expect(extractActivityForForm(planActivityWithEmptyfields.mosquitoCollection)).toEqual(
-      expectedActivityEmptyField.mosquitoCollection
-    );
-    expect(extractActivityForForm(planActivityWithoutTargets.mosquitoCollection)).toEqual(
-      expectedActivity.mosquitoCollection
-    );
+  it('extractActivityForForm works for all activities', () => {
+    for (const [key, activityObj] of Object.entries(planActivitiesFromConfig)) {
+      expect(extractActivityForForm(activityObj)).toEqual((expectedActivity as any)[key]);
+    }
+    for (const [key, activityObj] of Object.entries(planActivityWithEmptyfields)) {
+      expect(extractActivityForForm(activityObj)).toEqual((expectedActivityEmptyField as any)[key]);
+    }
+    for (const [key, obj] of Object.entries(planActivityWithoutTargets)) {
+      expect(extractActivityForForm(obj)).toEqual((expectedActivity as any)[key]);
+    }
   });
 
   it('check getFormActivities returns the correct value', () => {
-    expect(JSON.stringify(getFormActivities(planActivities))).toEqual(
+    expect(JSON.stringify(getFormActivities(planActivities as PlanActivities))).toEqual(
       JSON.stringify(extractedActivitiesFromForms)
     );
   });
