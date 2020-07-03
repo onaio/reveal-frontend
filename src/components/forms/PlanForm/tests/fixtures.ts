@@ -3,7 +3,10 @@ import { parseISO } from 'date-fns';
 import moment from 'moment';
 import { FormEvent } from 'react';
 import { DEFAULT_ACTIVITY_DURATION_DAYS, DEFAULT_TIME } from '../../../../configs/env';
-import { planActivities as planActivitiesFromConfig } from '../../../../configs/settings';
+import {
+  planActivities as planActivitiesFromConfig,
+  PlanActivity,
+} from '../../../../configs/settings';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
 import { PlanActivityFormFields, PlanFormFields } from '../helpers';
 import { GoalUnit } from '../types';
@@ -21,12 +24,11 @@ timingPeriodEnd.setMilliseconds(0);
 const timingPeriodStart = moment().toDate();
 timingPeriodStart.setMilliseconds(0);
 
-const expectedActivityOriginal: Dictionary = {};
+export const expectedActivity: Dictionary = {};
 export const planActivityWithEmptyfields: Dictionary = {};
 
-for (const [key, activityObj] of Object.entries(planActivitiesFromConfig)) {
-  // build expectedActivityOriginal
-  expectedActivityOriginal[key] = {
+const processActivity = (activityObj: PlanActivity) => {
+  return {
     ...(activityObj.action.condition && {
       condition: activityObj.action.condition.map(item => {
         return {
@@ -54,9 +56,15 @@ for (const [key, activityObj] of Object.entries(planActivitiesFromConfig)) {
     goalDescription: activityObj.goal.description || '',
     goalDue,
     goalPriority: 'medium-priority',
+    goalValue: activityObj.goal.target[0].detail.detailQuantity.value,
     timingPeriodEnd,
     timingPeriodStart,
   };
+};
+
+for (const [key, activityObj] of Object.entries(planActivitiesFromConfig)) {
+  // build expectedActivity
+  expectedActivity[key] = processActivity(activityObj);
 
   // build planActivityWithEmptyfields
   planActivityWithEmptyfields[key] = {
@@ -73,85 +81,6 @@ for (const [key, activityObj] of Object.entries(planActivitiesFromConfig)) {
   };
 }
 
-export const expectedActivity = {
-  BCC: {
-    ...expectedActivityOriginal.BCC,
-    goalValue: 1,
-  },
-  IRS: {
-    ...expectedActivityOriginal.IRS,
-    goalValue: 90,
-  },
-  bednetDistribution: {
-    ...expectedActivityOriginal.bednetDistribution,
-    goalValue: 100,
-  },
-  bloodScreening: {
-    ...expectedActivityOriginal.bloodScreening,
-    goalValue: 100,
-  },
-  caseConfirmation: {
-    ...expectedActivityOriginal.caseConfirmation,
-    goalValue: 1,
-  },
-  dynamicBCC: {
-    ...expectedActivityOriginal.dynamicBCC,
-    goalValue: 1,
-  },
-  dynamicBednetDistribution: {
-    ...expectedActivityOriginal.dynamicBednetDistribution,
-    goalValue: 100,
-  },
-  dynamicBloodScreening: {
-    ...expectedActivityOriginal.dynamicBloodScreening,
-    goalValue: 100,
-  },
-  dynamicCommunityAdherenceMDA: {
-    ...expectedActivityOriginal.dynamicCommunityAdherenceMDA,
-    goalValue: 100,
-  },
-  dynamicCommunityDispenseMDA: {
-    ...expectedActivityOriginal.dynamicCommunityDispenseMDA,
-    goalValue: 100,
-  },
-  dynamicFamilyRegistration: {
-    ...expectedActivityOriginal.dynamicFamilyRegistration,
-    goalValue: 100,
-  },
-  dynamicIRS: {
-    ...expectedActivityOriginal.dynamicIRS,
-    goalValue: 90,
-  },
-  dynamicLarvalDipping: {
-    ...expectedActivityOriginal.dynamicLarvalDipping,
-    goalValue: 3,
-  },
-  dynamicMosquitoCollection: {
-    ...expectedActivityOriginal.dynamicMosquitoCollection,
-    goalValue: 3,
-  },
-  familyRegistration: {
-    ...expectedActivityOriginal.familyRegistration,
-    goalValue: 100,
-  },
-  larvalDipping: {
-    ...expectedActivityOriginal.larvalDipping,
-    goalValue: 3,
-  },
-  mosquitoCollection: {
-    ...expectedActivityOriginal.mosquitoCollection,
-    goalValue: 3,
-  },
-  pointAdverseMDA: {
-    ...expectedActivityOriginal.pointAdverseMDA,
-    goalValue: 2,
-  },
-  pointDispenseMDA: {
-    ...expectedActivityOriginal.pointDispenseMDA,
-    goalValue: 100,
-  },
-};
-
 export const expectedActivityEmptyField: Dictionary = {};
 for (const [key, activityObj] of Object.entries(expectedActivity)) {
   expectedActivityEmptyField[key] = {
@@ -162,147 +91,11 @@ for (const [key, activityObj] of Object.entries(expectedActivity)) {
   };
 }
 
-export const extractedActivitiesFromForms = [
-  {
-    actionCode: 'Case Confirmation',
-    actionDescription: 'Confirm the index case',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Case Confirmation',
-    goalDescription: 'Confirm the index case',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 1,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  {
-    actionCode: 'RACD Register Family',
-    actionDescription:
-      'Register all families & family members in all residential structures enumerated (100%) within the operational area',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Family Registration',
-    goalDescription:
-      'Register all families & family members in all residential structures enumerated (100%) within the operational area',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 100,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'Blood Screening',
-    actionDescription:
-      'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Blood screening',
-    goalDescription:
-      'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 100,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'Bednet Distribution',
-    actionDescription:
-      'Visit 100% of residential structures in the operational area and provide nets',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Bednet Distribution',
-    goalDescription:
-      'Visit 100% of residential structures in the operational area and provide nets',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 100,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'Larval Dipping',
-    actionDescription:
-      'Perform a minimum of three larval dipping activities in the operational area',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Larval Dipping',
-    goalDescription: 'Perform a minimum of three larval dipping activities in the operational area',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 3,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'Mosquito Collection',
-    actionDescription:
-      'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Mosquito Collection',
-    goalDescription:
-      'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 3,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'MDA Adverse Event(s)',
-    actionDescription: 'Report any adverse events from medication',
-    actionIdentifier: '',
-    actionReason: 'Routine',
-    actionTitle: 'MDA Adverse Event(s)',
-    goalDescription: 'Report any adverse events from medication',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 2,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'MDA Dispense',
-    actionDescription: 'Dispense medication to each eligible person',
-    actionIdentifier: '',
-    actionReason: 'Routine',
-    actionTitle: 'MDA Dispense',
-    goalDescription: 'Dispense medication to each eligible person',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 2,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'IRS',
-    actionDescription: 'Visit each structure in the operational area and attempt to spray',
-    actionIdentifier: '',
-    actionReason: 'Routine',
-    actionTitle: 'Spray Structures',
-    goalDescription: 'Spray structures in the operational area',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 90,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'BCC',
-    actionDescription: 'Conduct BCC activity',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Behaviour Change Communication',
-    goalDescription: 'Complete at least 1 BCC activity for the operational area',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 1,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-];
+export const extractedActivitiesFromForms = Object.values(planActivitiesFromConfig)
+  .sort((a, b) => a.action.prefix - b.action.prefix)
+  .map(e => {
+    return processActivity(e);
+  });
 
 export const planActivities: Dictionary = {};
 for (const [key, activityObj] of Object.entries(planActivitiesFromConfig)) {
