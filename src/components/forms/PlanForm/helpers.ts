@@ -124,6 +124,17 @@ export const PlanSchema = Yup.object().shape({
   version: Yup.string(),
 });
 
+interface PlanActivityExpression {
+  description: string;
+  expression: string;
+}
+
+interface PlanActivityTrigger {
+  description?: string;
+  expression?: string;
+  name: string;
+}
+
 /** Plan activity form fields interface */
 export interface PlanActivityFormFields {
   actionCode: string;
@@ -131,6 +142,7 @@ export interface PlanActivityFormFields {
   actionIdentifier: string;
   actionReason: string;
   actionTitle: string;
+  condition?: PlanActivityExpression[];
   goalDescription: string;
   goalDue: Date;
   goalPriority: string;
@@ -173,7 +185,33 @@ export interface PlanFormFields {
 export function extractActivityForForm(activityObj: PlanActivity): PlanActivityFormFields {
   const planActivityKey: string =
     findKey(planActivities, (a: PlanActivity) => a.action.code === activityObj.action.code) || '';
+
+  const condition: PlanActivityExpression[] = [];
+  if (activityObj.action.condition) {
+    for (const iterator of activityObj.action.condition) {
+      condition.push({
+        description: iterator.expression.description || '',
+        expression: iterator.expression.expression || '',
+      });
+    }
+  }
+
+  const trigger: PlanActivityTrigger[] = [];
+  if (activityObj.action.trigger) {
+    for (const iterator of activityObj.action.trigger) {
+      trigger.push({
+        ...(iterator.expression && {
+          description: iterator.expression.description || '',
+          expression: iterator.expression.expression,
+        }),
+        name: iterator.name,
+      });
+    }
+  }
+
   return {
+    ...(condition.length > 0 && { condition }),
+    ...(trigger.length > 0 && { trigger }),
     actionCode: activityObj.action.code,
     actionDescription: activityObj.action.description || '',
     actionIdentifier: activityObj.action.identifier || '',
