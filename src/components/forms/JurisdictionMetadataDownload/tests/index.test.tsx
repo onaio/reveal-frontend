@@ -5,6 +5,7 @@ import React from 'react';
 import JurisdictionMetadataDownloadForm, { Option, submitForm } from '..';
 import { JURISDICTION_METADATA_RISK } from '../../../../constants';
 import * as helperUtils from '../../../../helpers/utils';
+import * as fixtures from '../../../../store/ducks/tests/fixtures';
 
 describe('components/forms/JurisdictionMetadata', () => {
   beforeEach(() => {
@@ -44,11 +45,13 @@ describe('components/forms/JurisdictionMetadata', () => {
     const setSubmitting = jest.fn();
     const setGlobalError = jest.fn();
     const mockGrowl: any = jest.fn();
+    const mockDownload: any = jest.fn();
     (helperUtils as any).successGrowl = mockGrowl;
+    (helperUtils as any).downloadFile = mockDownload;
     const mockedOpenSRPservice = jest.fn().mockImplementation(() => {
       return {
         list: () => {
-          return Promise.resolve({});
+          return Promise.resolve(fixtures.JurisdictionMetadata);
         },
       };
     });
@@ -61,6 +64,8 @@ describe('components/forms/JurisdictionMetadata', () => {
     submitForm(setSubmitting, setGlobalError, props as any, { identifier });
     await waitFor(() => {
       expect(mockedOpenSRPservice).toHaveBeenCalledTimes(1);
+      expect(mockGrowl).toBeCalled();
+      expect(mockDownload).toBeCalled();
     });
   });
 });

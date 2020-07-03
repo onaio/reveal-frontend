@@ -23,7 +23,7 @@ import {
   OPENSRP_V2_SETTINGS,
   TEXT_CSV,
 } from '../../../constants';
-import { downloadFile as download, successGrowl } from '../../../helpers/utils';
+import { downloadFile, successGrowl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 
 /** yup validation schema for Jurisdiction Metadata Form input */
@@ -76,13 +76,13 @@ const createCsv = (entries: JurisdictionMetadataFile[]): void => {
     header: true,
   });
   // download file
-  download(csv, JURISDICTION_METADATA, TEXT_CSV);
+  downloadFile(csv, JURISDICTION_METADATA, TEXT_CSV);
 };
 
 /**
  * Download CSV file from obtained data
  */
-export const downloadFile = (response: JurisdictionMetadataResponse[]) => {
+export const download = (response: JurisdictionMetadataResponse[]) => {
   const entries: JurisdictionMetadataFile[] = [];
   response.forEach(item => {
     const metaType = item.settingIdentifier.replace('jurisdiction_metadata-', '');
@@ -129,7 +129,7 @@ export const submitForm = (
   serviceClass
     .list(params)
     .then((response: JurisdictionMetadataResponse[]) => {
-      downloadFile(response);
+      download(response);
       successGrowl(FILE_DOWNLOADED_SUCCESSFULLY);
       setSubmitting(false);
     })

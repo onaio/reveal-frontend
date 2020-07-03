@@ -1693,3 +1693,40 @@ export const sortedPlansArray = [
 ];
 
 export const Item = 0.6;
+
+export const JurisdictionMetadata = [
+  {
+    key: '79b139c-3a20-4656-b684-d2d9ed83c94e',
+    value: '80',
+    label: 'test1 metadata',
+    description: 'Jurisdiction Metadata for test1 id 79b139c-3a20-4656-b684-d2d9ed83c94e',
+    uuid: 'e56ce640-38ee-444a-9f06-a53d64a96116',
+    settingsId: '33',
+    settingIdentifier: 'jurisdiction_metadata-risk',
+    settingMetadataId: '92',
+    teamId: '',
+    providerId: 'onatest',
+    locationId: '',
+    v1Settings: false,
+    resolveSettings: false,
+    documentId: 'bc15c480-0319-4711-8bfe-6e0a64b297e3',
+    serverVersion: 1592833111093,
+  },
+  {
+    key: '02ebbc84-5e29-4cd5-9b79-c594058923e9',
+    value: '70',
+    label: 'test2 metadata',
+    description: 'Jurisdiction Metadata for test2 id 02ebbc84-5e29-4cd5-9b79-c594058923e9',
+    uuid: 'fd8dfc3e-7202-4ceb-97ce-13c0b7966e61',
+    settingsId: '33',
+    settingIdentifier: 'jurisdiction_metadata-risk',
+    settingMetadataId: '93',
+    teamId: '',
+    providerId: 'onatest',
+    locationId: '',
+    v1Settings: false,
+    resolveSettings: false,
+    documentId: 'bc15c480-0319-4711-8bfe-6e0a64b297e3',
+    serverVersion: 1592833111093,
+  },
+];
