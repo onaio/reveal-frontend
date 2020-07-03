@@ -114,6 +114,7 @@ import {
   CASE_CONFIRMATION_CODE,
   CASE_NUMBER_CODE,
   CASE_TRIGGERED,
+  DISABLED,
   DYNAMIC_BCC_ACTIVITY_CODE,
   DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
   DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
@@ -326,7 +327,7 @@ export const PlanActionCodes = [
 
 /** Allowed taskGenerationStatus values */
 /* tslint:disable-next-line no-useless-cast */
-export const taskGenerationStatuses = [TRUE, FALSE] as const;
+export const taskGenerationStatuses = [TRUE, FALSE, DISABLED] as const;
 
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {
