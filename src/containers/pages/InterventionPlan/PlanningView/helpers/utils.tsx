@@ -3,7 +3,9 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Cell } from 'react-table';
-import Button from 'reactstrap/lib/Button';
+import Col from 'reactstrap/lib/Col';
+import Row from 'reactstrap/lib/Row';
+import LinkAsButton from '../../../../../components/LinkAsButton';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -30,6 +32,7 @@ export const commonColumns: Array<DrillDownColumn<PlanRecord>> = [
   },
 ];
 
+/** columns for the irs draft plan page */
 export const irsDraftPageColumns: Array<DrillDownColumn<PlanRecord>> = [
   {
     Cell: (cell: Cell<PlanRecord>) => {
@@ -47,6 +50,7 @@ export const irsDraftPageColumns: Array<DrillDownColumn<PlanRecord>> = [
   ...commonColumns,
 ];
 
+/** columns for the draft plan page */
 export const draftPageColumns: Array<DrillDownColumn<PlanRecord>> = [
   {
     Cell: (cell: Cell<PlanRecord>) => {
@@ -84,10 +88,18 @@ export const draftPlansPageBodyFactory = (options: Options) => {
           <title>{pageTitle}</title>
         </Helmet>
         <HeaderBreadcrumbs {...breadCrumbProps} />
-        <h2 className="page-title">{pageTitle}</h2>
-        <Button className="create-plan float-right" color="primary" tag={Link} to={`${newPlanUrl}`}>
-          {CREATE_NEW_PLAN}
-        </Button>
+        <Row>
+          <Col md={8}>
+            <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
+          </Col>
+          <Col md={4}>
+            <LinkAsButton
+              to={newPlanUrl}
+              classNameProp="create-plan btn btn-primary float-right mt-3 mb-3"
+              text={CREATE_NEW_PLAN}
+            />
+          </Col>
+        </Row>
         {renderConnectedTable()}
         <br />
       </div>
