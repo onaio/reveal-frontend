@@ -11,7 +11,6 @@ Object {
     width="64px"
   />,
   "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
-  "createdAt": "Created at",
   "customAlert": [Function],
   "data": Array [
     Object {

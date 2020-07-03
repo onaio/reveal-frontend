@@ -44,7 +44,6 @@ Object {
   "getPayload": [Function],
   "identifierLabel": "Identifier",
   "placeholder": "Find Releases",
-  "updatedAt": "Updated at",
   "uploadFileLabel": "Upload New File",
   "uploadTypeUrl": "file-upload",
   "viewFilesLabel": "View Files",

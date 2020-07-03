@@ -3,7 +3,6 @@ import Papaparse from 'papaparse';
 import React, { useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
-import { toast } from 'react-toastify';
 import { Button } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
@@ -22,8 +21,9 @@ import {
   JURISDICTION_METADATA_COVERAGE,
   JURISDICTION_METADATA_RISK,
   OPENSRP_V2_SETTINGS,
+  TEXT_CSV,
 } from '../../../constants';
-import { downloadFile as download, growl } from '../../../helpers/utils';
+import { downloadFile as download, successGrowl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 
 /** yup validation schema for Jurisdiction Metadata Form input */
@@ -64,10 +64,41 @@ export interface Option {
   value: string;
 }
 
+/**
+ * interface for the Jurisdiction metadata download form fields
+ */
 export interface JurisdictionMetadataDownloadFormFields {
   identifier: Option;
 }
 
+const createCsv = (entries: JurisdictionMetadataFile[]): void => {
+  const csv: string = Papaparse.unparse(entries, {
+    header: true,
+  });
+  // download file
+  download(csv, JURISDICTION_METADATA, TEXT_CSV);
+};
+
+/**
+ * Download CSV file from obtained data
+ */
+export const downloadFile = (response: JurisdictionMetadataResponse[]) => {
+  const entries: JurisdictionMetadataFile[] = [];
+  response.forEach(item => {
+    const metaType = item.settingIdentifier.replace('jurisdiction_metadata-', '');
+    const entry: JurisdictionMetadataFile = {
+      jurisdiction_id: item.key,
+      jurisdiction_name: item.label,
+      [metaType]: item.value,
+    };
+    entries.push(entry);
+  });
+  createCsv(entries);
+};
+
+/**
+ * interface for the Jurisdiction metadata download form props
+ */
 export interface JurisdictionMetadataDownloadFormProps {
   disabledFields: string[];
   serviceClass: OpenSRPService;
@@ -82,28 +113,6 @@ export interface JurisdictionMetadataDownloadFormProps {
 
 export const defaultInitialValues: JurisdictionMetadataDownloadFormFields = {
   identifier: { label: '', value: '' },
-};
-
-const createCsv = (entries: JurisdictionMetadataFile[]): void => {
-  const csv: string = Papaparse.unparse(entries, {
-    header: true,
-  });
-  // download file
-  download(csv, JURISDICTION_METADATA, 'text/csv');
-};
-
-const downloadFile = (response: JurisdictionMetadataResponse[]) => {
-  const entries: JurisdictionMetadataFile[] = [];
-  response.forEach(item => {
-    const metaType = item.settingIdentifier.replace('jurisdiction_metadata-', '');
-    const entry: JurisdictionMetadataFile = {
-      jurisdiction_id: item.key,
-      jurisdiction_name: item.label,
-      [metaType]: item.value,
-    };
-    entries.push(entry);
-  });
-  createCsv(entries);
 };
 
 export const submitForm = (
@@ -121,10 +130,8 @@ export const submitForm = (
     .list(params)
     .then((response: JurisdictionMetadataResponse[]) => {
       downloadFile(response);
-      growl(FILE_DOWNLOADED_SUCCESSFULLY, {
-        onClose: () => setSubmitting(false),
-        type: toast.TYPE.SUCCESS,
-      });
+      successGrowl(FILE_DOWNLOADED_SUCCESSFULLY);
+      setSubmitting(false);
     })
     .catch((e: Error) => {
       setGlobalError(e.message);
@@ -194,6 +201,9 @@ const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFor
   );
 };
 
+/**
+ * JurisdictionMetadataDownload - allows a user to download jurisdiction metadata by identifier
+ */
 const defaultProps: JurisdictionMetadataDownloadFormProps = {
   disabledFields: [],
   initialValues: defaultInitialValues,

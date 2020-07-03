@@ -43,8 +43,8 @@ describe('components/forms/JurisdictionMetadata', () => {
     const identifier: Option = { value: JURISDICTION_METADATA_RISK, label: 'Risk' };
     const setSubmitting = jest.fn();
     const setGlobalError = jest.fn();
-    const mockGrowl: any = jest.fn().mockName('onClose');
-    (helperUtils as any).growl = mockGrowl;
+    const mockGrowl: any = jest.fn();
+    (helperUtils as any).successGrowl = mockGrowl;
     const mockedOpenSRPservice = jest.fn().mockImplementation(() => {
       return {
         list: () => {

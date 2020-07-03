@@ -33,6 +33,7 @@ import {
   JURISDICTION_METADATA_URL,
   OPENSRP_V1_SETTINGS_ENDPOINT,
   OPENSRP_V2_SETTINGS,
+  TEXT_CSV,
 } from '../../../constants';
 import { downloadFile, RouteParams } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
@@ -100,11 +101,11 @@ const JurisdictionMetadataImportView = () => {
                 color="link"
                 // tslint:disable-next-line: jsx-no-lambda
                 onClick={() =>
-                  downloadFile(JURISDICTION_CSV_TEMPLATE, JURISDICTION_CSV_FILE_NAME, 'text/csv')
+                  downloadFile(JURISDICTION_CSV_TEMPLATE, JURISDICTION_CSV_FILE_NAME, TEXT_CSV)
                 }
               >
                 <FontAwesomeIcon icon="download" />
-                &nbsp;Download Templete CSV
+                &nbsp;Download Template CSV
               </Button>
             </CardBody>
           </Card>

@@ -12,7 +12,6 @@ Object {
   />,
   "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
   "clearDraftFiles": [Function],
-  "createdAt": "Created at",
   "customAlert": [Function],
   "data": Array [
     Object {
@@ -59,7 +58,6 @@ Object {
   "moduleLabel": "Module",
   "placeholder": "Find Draft Files",
   "releasesUrl": "/manifest/releases",
-  "uploadFileLabel": "Upload New File",
   "uploadTypeUrl": "file-upload",
 }
 `;
