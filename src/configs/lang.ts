@@ -672,3 +672,7 @@ export const COULD_NOT_LOAD_JURISDICTION = translate(
   'COULD_NOT_LOAD_JURISDICTION',
   'Could not load jurisdiction'
 );
+export const JURISDICTION_ASSIGNMENT_SUCCESSFUL = translate(
+  'JURISDICTION_ASSIGNMENT_SUCCESSFUL',
+  'Location(s) assigned to plan successfully'
+);
