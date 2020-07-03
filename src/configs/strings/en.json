@@ -1126,5 +1126,33 @@
   "AN_ERROR_OCURRED": {
     "message": "An error ocurred. Please try and refresh the page.",
     "description": "Generic error message"
+  },
+  "SERVER_SETTINGS": {
+    "message": "Server Settings",
+    "description": "label: server settings"
+  },
+  "SEARCH_SETTINGS_LABEL": {
+    "message": "Search Settings",
+    "description": "settings search bar place holder"
+  },
+  "PAGE_TITLE_LABEL": {
+    "message": "Server Settings",
+    "description": ""
+  },
+  "INHERITED_FROM_LABEL": {
+    "message": "Inherited from?",
+    "description": "table header label: settings inherited from?"
+  },
+  "SET_TO_YES_LABEL": {
+    "message": "Set to 'Yes'",
+    "description": "set population characteristics settings to true"
+  },
+  "SET_TO_NO_LABEL": {
+    "message": "Set to 'No'",
+    "description": "set population characteristics settings to false"
+  },
+  "INHERIT_SETTING_LABEL": {
+    "message": "Inherit setting",
+    "description": "settings inherited from"
   }
 }

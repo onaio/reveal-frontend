@@ -54,6 +54,7 @@ import {
   DRAFT_IRS_PLAN_URL,
   EDIT_ORGANIZATION_URL,
   EDIT_PRACTITIONER_URL,
+  EDIT_SERVER_SETTINGS_URL,
   FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -115,6 +116,7 @@ import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/Single
 import { ConnectedPlanAssignment } from '../containers/pages/PlanAssignment';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
+import { EditServerSettings } from '../containers/pages/ServerSettings/EditSettings';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 import store from '../store';
 import { getOauthProviderState } from '../store/selectors';
@@ -500,6 +502,14 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={UPLOAD_JURISDICTION_METADATA_URL}
                   component={JurisdictionMetadata}
+                />
+                {/* server settings - Editing population characteristics */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={EDIT_SERVER_SETTINGS_URL}
+                  component={EditServerSettings}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route

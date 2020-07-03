@@ -330,3 +330,8 @@ export type REVEAL_BRAND_IMG_SRC = typeof REVEAL_BRAND_IMG_SRC;
 export const SHOW_MDA_SCHOOL_REPORT_LABEL =
   process.env.REACT_APP_SHOW_MDA_SCHOOL_REPORT_LABEL === 'true';
 export type SHOW_MDA_SCHOOL_REPORT_LABEL = typeof SHOW_MDA_SCHOOL_REPORT_LABEL;
+
+/** list of plan types to be added to intervention type field when adding plans */
+export const ENABLE_POPULATION_SERVER_SETTINGS =
+  process.env.REACT_APP_ENABLE_POPULATION_SERVER_SETTINGS === 'true';
+export type ENABLE_POPULATION_SERVER_SETTINGS = typeof ENABLE_POPULATION_SERVER_SETTINGS;

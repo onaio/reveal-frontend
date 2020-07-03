@@ -658,3 +658,13 @@ export const AN_ERROR_OCURRED = translate(
   'An error ocurred. Please try and refresh the page.'
 );
 export const THE_SPECIFIC_ERROR_IS = translate('THE_SPECIFIC_ERROR_IS', 'The specific error is');
+
+export const SERVER_SETTINGS = translate('SERVER_SETTINGS', 'Server Settings');
+export const SEARCH_LABEL = translate('SEARCH_LABEL', 'Search');
+export const SEARCH_SETTINGS_LABEL = translate('SEARCH_SETTINGS_LABEL', 'Search Settings');
+export const PAGE_TITLE_LABEL = translate('PAGE_TITLE_LABEL', 'Server Settings');
+export const SETTINGS_LABEL = translate('SETTINGS_LABEL', 'Settings');
+export const INHERITED_FROM_LABEL = translate('INHERITED_FROM_LABEL', 'Inherited from');
+export const SET_TO_YES_LABEL = translate('SET_TO_YES_LABEL', `Set to 'Yes'`);
+export const SET_TO_NO_LABEL = translate('SET_TO_NO_LABEL', `Set to 'No'`);
+export const INHERIT_SETTING_LABEL = translate('INHERIT_SETTING_LABEL', 'Inherit setting');
