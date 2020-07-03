@@ -573,6 +573,17 @@ export function generatePlanDefinition(
 }
 
 /**
+ * Check if the plan is a dynamic plan
+ * @param planObject - the plan
+ */
+export const isDynamicPlan = (planObject: PlanDefinition) =>
+  planObject.action
+    .map(action => {
+      return Object.keys(action).includes('condition') || Object.keys(action).includes('trigger');
+    })
+    .includes(true);
+
+/**
  * Get plan form field values from plan definition object
  * @param planObject - the plan definition object
  * @returns {PlanFormFields} - the plan form field values
@@ -640,6 +651,18 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     if (interventionType === InterventionType.MDAPoint) {
       activities = getFormActivities(MDAPointActivities);
     }
+    // TODO: add the new plan types
+  }
+
+  let taskGenerationStatus: taskGenerationStatusType;
+
+  if (isDynamicPlan(planObject)) {
+    taskGenerationStatus = taskGenerationStatuses[2]; // Disabled
+  } else {
+    taskGenerationStatus =
+      taskGenerationStatusContext.length > 0
+        ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
+        : taskGenerationStatuses[1];
   }
 
   return {
@@ -666,10 +689,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
       eventIdUseContext.length > 0 ? eventIdUseContext[0].valueCodableConcept : undefined,
     start: parseISO(`${planObject.effectivePeriod.start}${DEFAULT_TIME}`),
     status: planObject.status as PlanStatus,
-    taskGenerationStatus:
-      taskGenerationStatusContext.length > 0
-        ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
-        : taskGenerationStatuses[1],
+    taskGenerationStatus,
     title: planObject.title,
     version: planObject.version,
   };
