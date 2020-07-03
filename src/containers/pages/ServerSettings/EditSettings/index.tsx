@@ -11,7 +11,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { OPENSRP_API_BASE_URL } from '../../../../configs/env';
+import { OPENSRP_API_BASE_URL, OPENSRP_API_V2_BASE_URL } from '../../../../configs/env';
 import {
   DESCRIPTION_LABEL,
   EDIT_LABEL,
@@ -80,6 +80,7 @@ export const EditServerSettings = () => {
     restBaseURL: OPENSRP_API_BASE_URL,
     secAuthEndpoint: SECURITY_AUTHENTICATE_ENDPOINT,
     settingsEndpoint: SETTINGS_ENDPOINT,
+    v2BaseUrl: OPENSRP_API_V2_BASE_URL,
   };
 
   return (

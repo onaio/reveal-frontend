@@ -148,7 +148,7 @@ export const OPENSRP_MANIFEST_ENDPOINT = 'manifest';
 export const OPENSRP_FORMS_ENDPOINT = 'clientForm';
 export const OPENSRP_MANIFEST_FORMS_ENDPOINT = 'clientForm/release-related-files';
 export const OPENSRP_FORM_METADATA_ENDPOINT = 'clientForm/metadata';
-export const SETTINGS_ENDPOINT = 'v2/settings/';
+export const SETTINGS_ENDPOINT = 'settings/';
 export const LOCATIONS_ENDPOINT = 'location/location-tree';
 export const SECURITY_AUTHENTICATE_ENDPOINT = 'security/authenticate';
 
