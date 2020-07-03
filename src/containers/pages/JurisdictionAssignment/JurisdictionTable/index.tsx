@@ -116,7 +116,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const { broken, errorMessage, handleBrokenPage } = useHandleBrokenPage();
 
   /** callback used to do initial autoSelection ; auto selects all jurisdictions that are already assigned to a plan
-   * @param node - takes a node and returns true if noe should be autoselected
+   * @param node - takes a node and returns true if node should be auto-selected
    */
   const callback = (node: TreeNode) => {
     const existingAssignments = props.plan.jurisdiction.map(jurisdiction => jurisdiction.code);
@@ -136,11 +136,12 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           setLoading(false);
         }
         if (apiResponse.error) {
-          handleBrokenPage(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
+          throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
         }
       })
       .catch(() => {
         handleBrokenPage(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
+        setLoading(false);
       });
   }, []);
 
@@ -149,10 +150,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   }
 
   if (broken) {
-    const brokenPageProps = {
-      errorMessage,
-    };
-    return <ErrorPage {...brokenPageProps} />;
+    return <ErrorPage errorMessage={errorMessage} />;
   }
 
   if (currentChildren.length === 0) {
@@ -197,7 +195,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const data = currentChildren.map(node => {
     return [
       <input
-        key={`${node.id}-check-jurisdiction`}
+        key={`${node.model.id}-check-jurisdiction`}
         type="checkbox"
         checked={nodeIsSelected(node)}
         // tslint:disable-next-line: jsx-no-lambda
@@ -207,7 +205,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         }}
       />,
       <NodeCell
-        key={`${node.id}-jurisdiction`}
+        key={`${node.model.id}-jurisdiction`}
         node={node}
         // tslint:disable-next-line: jsx-no-lambda
         onClickCallback={_ => setParentIdCreator(rootJurisdictionId, node.model.id)}
