@@ -526,6 +526,13 @@ const App = (props: AppProps) => {
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
+                  path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
+                  component={ConnectedJurisdictionAssignmentView}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
                   path={`${ASSIGN_JURISDICTIONS_URL}/:planId`}
                   component={ConnectedJurisdictionAssignmentView}
                 />
