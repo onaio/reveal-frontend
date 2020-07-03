@@ -288,6 +288,6 @@ describe('src/containers/JurisdictionView', () => {
     });
 
     // check renderer error message
-    expect(wrapper.text()).toMatchSnapshot('should be also be jurisdiction error page');
+    expect(wrapper.text()).toMatchSnapshot('should also be jurisdiction error page');
   });
 });
