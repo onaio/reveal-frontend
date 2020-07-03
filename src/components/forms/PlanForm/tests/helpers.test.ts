@@ -92,8 +92,8 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(extractActivityForForm(planActivityWithEmptyfields.larvalDipping)).toEqual(
       expectedActivityEmptyField.larvalDipping
     );
-    expect(extractActivityForForm(planActivityWithoutTargets.familyRegistration)).toEqual(
-      expectedActivity.familyRegistration
+    expect(extractActivityForForm(planActivityWithoutTargets.larvalDipping)).toEqual(
+      expectedActivity.larvalDipping
     );
   });
 
@@ -101,8 +101,8 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(extractActivityForForm(planActivities.familyRegistration)).toEqual(
       expectedActivity.familyRegistration
     );
-    expect(extractActivityForForm(planActivityWithoutTargets.larvalDipping)).toEqual(
-      expectedActivity.larvalDipping
+    expect(extractActivityForForm(planActivityWithoutTargets.familyRegistration)).toEqual(
+      expectedActivity.familyRegistration
     );
   });
 
@@ -234,6 +234,7 @@ describe('containers/forms/PlanForm/helpers', () => {
       GoalUnit.PERCENT,
       GoalUnit.ACTIVITY,
       GoalUnit.ACTIVITY,
+      GoalUnit.PERCENT,
       GoalUnit.PERCENT,
       GoalUnit.PERCENT,
     ];
