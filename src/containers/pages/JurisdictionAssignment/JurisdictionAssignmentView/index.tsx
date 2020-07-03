@@ -5,6 +5,7 @@
  *  render table from which a user can assign jurisdictions to the active plan
  */
 
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -25,13 +26,16 @@ import { ASSIGN_JURISDICTIONS_URL, PLANNING_VIEW_URL } from '../../../../constan
 import { loadJurisdiction } from '../../../../helpers/dataLoading/jurisdictions';
 import { loadOpenSRPPlan } from '../../../../helpers/dataLoading/plans';
 import { OpenSRPService } from '../../../../services/opensrp';
-import {
+import plansReducer, {
   addPlanDefinition,
   AddPlanDefinitionAction,
   getPlanDefinitionById,
+  reducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
+
+reducerRegistry.register(reducerName, plansReducer);
 
 /** this component's props */
 export interface JurisdictionAssignmentViewProps {
@@ -63,7 +67,7 @@ export type JurisdictionAssignmentViewFullProps = JurisdictionAssignmentViewProp
 export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFullProps) => {
   const { plan, serviceClass, fetchPlanCreator } = props;
   const [rootJurisdictionId, setRootJurisdictionId] = React.useState<string>('');
-  const [loading, setLoading] = React.useState<boolean>(true);
+  const [loading, setLoading] = React.useState<boolean>(!plan);
 
   const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
 
@@ -74,7 +78,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       .then(() => {
         setLoading(false);
       })
-      .catch(() => {
+      .catch(_ => {
         handleBrokenPage(COULD_NOT_LOAD_PLAN);
         setLoading(false);
       });
@@ -105,9 +109,8 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
                   throw new Error(COULD_NOT_LOAD_JURISDICTION);
                 }
               })
-              .catch(_ => {
-                setLoading(false);
-                throw new Error(COULD_NOT_LOAD_JURISDICTION);
+              .catch(e => {
+                return e;
               });
           }
         })
