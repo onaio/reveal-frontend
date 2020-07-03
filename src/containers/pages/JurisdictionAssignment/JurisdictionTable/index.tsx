@@ -19,6 +19,7 @@ import {
   STRUCTURES_COUNT,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
+import { ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
 import {
   LoadOpenSRPHierarchy,
   putJurisdictionsToPlan,
@@ -39,8 +40,6 @@ import hierarchyReducer, {
   reducerName as hierarchyReducerName,
   selectNode,
   SelectNodeAction,
-  setCurrentParentId,
-  SetCurrentParentIdAction,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
@@ -53,9 +52,9 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 export interface JurisdictionSelectorTableProps {
   plan: PlanDefinition;
   rootJurisdictionId: string;
+  currentParentId: string | undefined;
   serviceClass: typeof OpenSRPService;
   treeFetchedCreator: ActionCreator<FetchedTreeAction>;
-  setParentIdCreator: ActionCreator<SetCurrentParentIdAction>;
   currentParentNode: TreeNode | undefined;
   currentChildren: TreeNode[];
   selectNodeCreator: ActionCreator<SelectNodeAction>;
@@ -67,13 +66,13 @@ export interface JurisdictionSelectorTableProps {
 const defaultProps = {
   autoSelectNodesCreator: autoSelectNodes,
   currentChildren: [],
+  currentParentId: undefined,
   currentParentNode: undefined,
   deselectNodeCreator: deselectNode,
   rootJurisdictionId: '',
   selectNodeCreator: selectNode,
   selectedLeafNodes: [],
   serviceClass: OpenSRPService,
-  setParentIdCreator: setCurrentParentId,
   treeFetchedCreator: fetchTree,
 };
 
@@ -88,7 +87,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const {
     rootJurisdictionId,
     treeFetchedCreator,
-    setParentIdCreator,
     currentParentNode,
     currentChildren,
     selectNodeCreator,
@@ -114,6 +112,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
 
   const [loading, setLoading] = React.useState<boolean>(true);
   const { broken, errorMessage, handleBrokenPage } = useHandleBrokenPage();
+  const baseUrl = `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
 
   /** callback used to do initial autoSelection ; auto selects all jurisdictions that are already assigned to a plan
    * @param node - takes a node and returns true if node should be auto-selected
@@ -160,10 +159,8 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   /** creating breadCrumb props */
 
   let currentPage: Page = {
-    clickHandler: () => {
-      setParentIdCreator(rootJurisdictionId, undefined);
-    },
     label: '....',
+    url: baseUrl,
   };
   const pages: Page[] = [];
 
@@ -175,10 +172,8 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
 
     path.forEach(nd => {
       pages.push({
-        clickHandler: (_: React.MouseEvent) => {
-          setParentIdCreator(rootJurisdictionId, nd.model.id);
-        },
         label: nd.model.label,
+        url: `${baseUrl}/${nd.model.id}`,
       });
     });
 
@@ -204,12 +199,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           applySelectedToNode(node.model.id, newSelectedValue);
         }}
       />,
-      <NodeCell
-        key={`${node.model.id}-jurisdiction`}
-        node={node}
-        // tslint:disable-next-line: jsx-no-lambda
-        onClickCallback={_ => setParentIdCreator(rootJurisdictionId, node.model.id)}
-      />,
+      <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
       node.model.node.attributes.structureCount,
     ];
   });
@@ -291,11 +281,7 @@ type MapStateToProps = Pick<
 /** map action creators interface */
 type DispatchToProps = Pick<
   JurisdictionSelectorTableProps,
-  | 'treeFetchedCreator'
-  | 'setParentIdCreator'
-  | 'selectNodeCreator'
-  | 'deselectNodeCreator'
-  | 'autoSelectNodesCreator'
+  'treeFetchedCreator' | 'selectNodeCreator' | 'deselectNodeCreator' | 'autoSelectNodesCreator'
 >;
 
 /** maps props to store state */
@@ -304,6 +290,7 @@ const mapStateToProps = (
   ownProps: JurisdictionSelectorTableProps
 ): MapStateToProps => {
   const filters: Filters = {
+    currentParentId: ownProps.currentParentId,
     leafNodesOnly: true,
     rootJurisdictionId: ownProps.rootJurisdictionId,
   };
@@ -319,7 +306,6 @@ const mapDispatchToProps: DispatchToProps = {
   autoSelectNodesCreator: autoSelectNodes,
   deselectNodeCreator: deselectNode,
   selectNodeCreator: selectNode,
-  setParentIdCreator: setCurrentParentId,
   treeFetchedCreator: fetchTree,
 };
 

@@ -3,7 +3,7 @@
 exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and deselect nodes: should be now checked 1`] = `
 <input
   checked={true}
-  key="3951-check-jurisdiction"
+  key="2942-check-jurisdiction"
   onChange={[Function]}
   type="checkbox"
 />
@@ -12,7 +12,7 @@ exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and des
 exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and deselect nodes: should be now deselected 1`] = `
 <input
   checked={false}
-  key="3951-check-jurisdiction"
+  key="2942-check-jurisdiction"
   onChange={[Function]}
   type="checkbox"
 />
@@ -21,7 +21,7 @@ exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and des
 exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and deselect nodes: should be unchecked 1`] = `
 <input
   checked={false}
-  key="3951-check-jurisdiction"
+  key="2942-check-jurisdiction"
   onChange={[Function]}
   type="checkbox"
 />
