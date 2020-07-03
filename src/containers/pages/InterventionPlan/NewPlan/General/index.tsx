@@ -22,7 +22,6 @@ import {
   ASSIGN_JURISDICTIONS_URL,
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
-  INTERVENTION_IRS_URL,
   NEW_PLAN_URL,
   PLAN_LIST_URL,
   PLANNING_VIEW_URL,
@@ -154,7 +153,7 @@ export const NewIRSPlan = () => {
   const baseNewPlanProps = {
     breadCrumbParentPage: {
       label: `${IRS_PLANS} ${DRAFTS_PARENTHESIS}`,
-      url: INTERVENTION_IRS_URL,
+      url: INTERVENTION_IRS_DRAFTS_URL,
     },
     extraPlanFormProps: {
       allowMoreJurisdictions: false,
