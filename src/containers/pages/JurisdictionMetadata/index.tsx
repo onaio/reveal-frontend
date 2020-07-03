@@ -89,7 +89,7 @@ export const downloadCsvTemplate = (service: typeof OpenSRPService = OpenSRPServ
     })
     .catch((err: Error) => {
       growl(err.message, {
-        type: toast.TYPE.SUCCESS,
+        type: toast.TYPE.ERROR,
       });
       downloadFile(JURISDICTION_CSV_TEMPLATE, JURISDICTION_CSV_FILE_NAME, TEXT_CSV);
     });
