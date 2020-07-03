@@ -39,7 +39,7 @@ const NodeCell = (props: NodeCellProps) => {
   }
 
   return (
-    <span {...spanProps} key={`${node.id}-span`}>
+    <span {...spanProps} key={`${node.model.id}-span`}>
       {node.model.label}
     </span>
   );
