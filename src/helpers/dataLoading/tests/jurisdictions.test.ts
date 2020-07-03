@@ -1,7 +1,7 @@
 import flushPromises from 'flush-promises';
 import {
+  OPENSRP_FIND_LOCATION_BY_JURISDICTION_IDS,
   OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT,
-  OPENSRP_LOCATION,
   OPENSRP_PLANS,
 } from '../../../constants';
 import { loadJurisdiction, LoadOpenSRPHierarchy, putJurisdictionsToPlan } from '../jurisdictions';
@@ -95,11 +95,11 @@ describe('helpers/dataLoading.jurisdictions', () => {
   });
 
   it('loads jurisdiction correctly', async () => {
-    const mockJurisdictionResponse = {};
-    const mockRead = jest.fn(async () => mockJurisdictionResponse);
+    const mockJurisdictionResponse = [{}];
+    const mockList = jest.fn(async () => mockJurisdictionResponse);
     const mockClass: any = jest.fn().mockImplementation(() => {
       return {
-        read: mockRead,
+        list: mockList,
       };
     });
 
@@ -109,10 +109,54 @@ describe('helpers/dataLoading.jurisdictions', () => {
     await flushPromises();
 
     // calls the correct endpoint
-    expect(mockClass).toHaveBeenCalledWith(OPENSRP_LOCATION);
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_FIND_LOCATION_BY_JURISDICTION_IDS);
 
     // Uses the correct service method
-    expect(mockRead).toHaveBeenCalledTimes(1);
+    expect(mockList).toHaveBeenCalledTimes(1);
     expect(res).toEqual(success({}));
+  });
+
+  it('loads jurisdiction bad response', async () => {
+    const mockJurisdictionResponse: any = [];
+    const mockList = jest.fn(async () => mockJurisdictionResponse);
+    const mockClass: any = jest.fn().mockImplementation(() => {
+      return {
+        list: mockList,
+      };
+    });
+
+    const res = await loadJurisdiction('jurisdictionId', mockClass).catch(e => {
+      throw e;
+    });
+    await flushPromises();
+
+    // calls the correct endpoint
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_FIND_LOCATION_BY_JURISDICTION_IDS);
+
+    // Uses the correct service method
+    expect(mockList).toHaveBeenCalledTimes(1);
+    expect(res && res.error).toBeDefined();
+  });
+
+  it('error when loading jurisdiction', async () => {
+    const err = new Error('Bazinga');
+    const mockList = jest.fn(async () => Promise.reject(err));
+    const mockClass: any = jest.fn().mockImplementation(() => {
+      return {
+        list: mockList,
+      };
+    });
+
+    const res = await loadJurisdiction('jurisdictionId', mockClass).catch(e => {
+      throw e;
+    });
+    await flushPromises();
+
+    // calls the correct endpoint
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_FIND_LOCATION_BY_JURISDICTION_IDS);
+
+    // Uses the correct service method
+    expect(mockList).toHaveBeenCalledTimes(1);
+    expect(res).toEqual(failure(err));
   });
 });
