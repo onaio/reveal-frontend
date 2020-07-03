@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { waitFor } from '@testing-library/react';
 import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
@@ -7,9 +8,11 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { JURISDICTION_METADATA } from '../../../../configs/lang';
 import { JURISDICTION_METADATA_URL } from '../../../../constants';
+import * as helperUtils from '../../../../helpers/utils';
 import store from '../../../../store';
 import * as orgDucks from '../../../../store/ducks/opensrp/organizations';
-import JurisdictionMetadataImportView from '../index';
+import * as fixtures from '../../../../store/ducks/tests/fixtures';
+import JurisdictionMetadataImportView, { downloadCsvTemplate } from '../index';
 
 reducerRegistry.register(orgDucks.reducerName, orgDucks.default);
 
@@ -59,5 +62,22 @@ describe('src/containers/pages/JurisdictionMetadata', () => {
     expect(form.length).toEqual(1);
 
     wrapper.unmount();
+  });
+
+  it('downloads CSV template', async () => {
+    const mockDownload: any = jest.fn();
+    (helperUtils as any).downloadFile = mockDownload;
+    const mockedOpenSRPservice = jest.fn().mockImplementation(() => {
+      return {
+        list: () => {
+          return Promise.resolve(fixtures.jurisdictionsResponse);
+        },
+      };
+    });
+    downloadCsvTemplate(mockedOpenSRPservice());
+    await waitFor(() => {
+      expect(mockedOpenSRPservice).toHaveBeenCalledTimes(1);
+      expect(mockDownload).toBeCalled();
+    });
   });
 });

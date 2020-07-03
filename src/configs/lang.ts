@@ -672,3 +672,24 @@ export const AN_ERROR_OCURRED = translate(
   'An error ocurred. Please try and refresh the page.'
 );
 export const THE_SPECIFIC_ERROR_IS = translate('THE_SPECIFIC_ERROR_IS', 'The specific error is');
+
+export const JURISDICTION_UPLOAD_STEP_1 = translate(
+  'JURISDICTION_UPLOAD_STEP_1',
+  'Click on the download template CSV button below.'
+);
+export const JURISDICTION_UPLOAD_STEP_2 = translate(
+  'JURISDICTION_UPLOAD_STEP_2',
+  'Open the downloaded file and complete the risk and target details on therespective columns.'
+);
+export const JURISDICTION_UPLOAD_STEP_3 = translate(
+  'JURISDICTION_UPLOAD_STEP_3',
+  'Save the updated CSV file.'
+);
+export const JURISDICTION_UPLOAD_STEP_4 = translate(
+  'JURISDICTION_UPLOAD_STEP_4',
+  'Select the saved file on the upload form.'
+);
+export const JURISDICTION_UPLOAD_STEP_5 = translate(
+  'JURISDICTION_UPLOAD_STEP_5',
+  'Click the "Upload File" button to complete the process.'
+);

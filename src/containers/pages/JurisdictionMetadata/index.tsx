@@ -24,16 +24,24 @@ import {
   HOME,
   HOW_TO_UPDATE_JURISDICTION_METADATA,
   JURISDICTION_METADATA,
+  JURISDICTION_UPLOAD_STEP_1,
+  JURISDICTION_UPLOAD_STEP_2,
+  JURISDICTION_UPLOAD_STEP_3,
+  JURISDICTION_UPLOAD_STEP_4,
+  JURISDICTION_UPLOAD_STEP_5,
   UPLOAD_JURISDICTION_METADATA,
 } from '../../../configs/lang';
 import {
+  GET_ALL,
   HOME_URL,
   JURISDICTION_CSV_FILE_NAME,
   JURISDICTION_CSV_TEMPLATE,
   JURISDICTION_METADATA_URL,
+  OPENSRP_LOCATION,
   OPENSRP_V1_SETTINGS_ENDPOINT,
   OPENSRP_V2_SETTINGS,
   TEXT_CSV,
+  TEXT_PLAIN,
 } from '../../../constants';
 import { downloadFile, RouteParams } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
@@ -41,6 +49,48 @@ import './index.css';
 
 /** type intersection for all types that pertain to the props */
 export type JurisdictionMetadataImportViewTypes = RouteComponentProps<RouteParams>;
+
+/** interface for Jurisdiction metadata file */
+export interface JurisdictionProperties {
+  status: string;
+  parentId: string;
+  name: string;
+  geographicLevel: number;
+  version: number;
+}
+
+/** interface for Jurisdiction metadata file */
+export interface JurisdictionResponse {
+  type: string;
+  id: string;
+  properties: JurisdictionProperties;
+  serverVersion: number;
+}
+
+/** get Jurisdictions for csv template
+ * @param {typeof OpenSRPService} service -  the OpenSRP service
+ */
+export const downloadCsvTemplate = (service: typeof OpenSRPService = OpenSRPService) => {
+  const serve = new service(`${OPENSRP_LOCATION}/${GET_ALL}`);
+  const params = {
+    is_jurisdiction: true,
+    return_geometry: false,
+    serverVersion: 0,
+  };
+  serve
+    .list(params)
+    .then((response: JurisdictionResponse[]) => {
+      const header = JURISDICTION_CSV_TEMPLATE;
+      let content = '';
+      response.forEach(item => {
+        content += `${item.id},${item.properties.name}\r\n`;
+      });
+      downloadFile(`${header}\r\n${content}`, JURISDICTION_CSV_FILE_NAME, TEXT_CSV);
+    })
+    .catch((err: Error) => {
+      downloadFile(err.message, JURISDICTION_CSV_FILE_NAME, TEXT_PLAIN);
+    });
+};
 
 /** JurisdictionMetadataImportView component */
 const JurisdictionMetadataImportView = () => {
@@ -88,21 +138,16 @@ const JurisdictionMetadataImportView = () => {
             <CardBody>
               <h5 className="mb-3 mt-5 page-title">{HOW_TO_UPDATE_JURISDICTION_METADATA}</h5>
               <ol>
-                <li>Click on the download template CSV button below.</li>
-                <li>
-                  Open the downloaded file and complete the risk and target details on the
-                  respective columns.
-                </li>
-                <li>Save the updated CSV file.</li>
-                <li>Select the saved file on the upload form.</li>
-                <li>Click the "Upload File" button to complete the process.</li>
+                <li>{JURISDICTION_UPLOAD_STEP_1}</li>
+                <li>{JURISDICTION_UPLOAD_STEP_2}</li>
+                <li>{JURISDICTION_UPLOAD_STEP_3}</li>
+                <li>{JURISDICTION_UPLOAD_STEP_4}</li>
+                <li>{JURISDICTION_UPLOAD_STEP_5}</li>
               </ol>
               <Button
                 color="link"
                 // tslint:disable-next-line: jsx-no-lambda
-                onClick={() =>
-                  downloadFile(JURISDICTION_CSV_TEMPLATE, JURISDICTION_CSV_FILE_NAME, TEXT_CSV)
-                }
+                onClick={() => downloadCsvTemplate()}
               >
                 <FontAwesomeIcon icon="download" />
                 &nbsp;Download Template CSV

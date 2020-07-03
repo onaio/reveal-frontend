@@ -13,7 +13,6 @@ import {
   FILE,
   FILE_DOWNLOADED_SUCCESSFULLY,
   IDENTIFIER,
-  JURISDICTION_METADATA,
   REQUIRED,
   SELECT,
 } from '../../../configs/lang';
@@ -71,12 +70,12 @@ export interface JurisdictionMetadataDownloadFormFields {
   identifier: Option;
 }
 
-const createCsv = (entries: JurisdictionMetadataFile[]): void => {
+const createCsv = (entries: JurisdictionMetadataFile[], fileName: string): void => {
   const csv: string = Papaparse.unparse(entries, {
     header: true,
   });
   // download file
-  downloadFile(csv, JURISDICTION_METADATA, TEXT_CSV);
+  downloadFile(csv, fileName, TEXT_CSV);
 };
 
 /**
@@ -93,7 +92,7 @@ export const download = (response: JurisdictionMetadataResponse[]) => {
     };
     entries.push(entry);
   });
-  createCsv(entries);
+  createCsv(entries, response[0].settingIdentifier);
 };
 
 /**

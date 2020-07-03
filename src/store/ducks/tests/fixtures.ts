@@ -1730,3 +1730,30 @@ export const JurisdictionMetadata = [
     serverVersion: 1592833111093,
   },
 ];
+
+export const jurisdictionsResponse = [
+  {
+    type: 'Feature',
+    id: '2980',
+    properties: {
+      status: 'Active',
+      parentId: '2941',
+      name: 'Nyaluwiro',
+      geographicLevel: 1,
+      version: 0,
+    },
+    serverVersion: 1542961567681,
+  },
+  {
+    type: 'Feature',
+    id: '3087',
+    properties: {
+      status: 'Active',
+      parentId: '2967',
+      name: 'KSB_25',
+      geographicLevel: 2,
+      version: 0,
+    },
+    serverVersion: 1542961695762,
+  },
+];
