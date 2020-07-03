@@ -695,3 +695,19 @@ export const JURISDICTION_UPLOAD_STEP_5 = translate(
   'Click the "Upload File" button to complete the process.'
 );
 export const DRAFT_PLANS = translate('DRAFT PLANS', 'Draft plans');
+
+export const COULD_NOT_LOAD_JURISDICTION_HIERARCHY = translate(
+  'COULD_NOT_LOAD_JURISDICTION_HIERARCHY',
+  'Failed to load Jurisdiction hierarchy'
+);
+
+export const STRUCTURES_COUNT = translate('STRUCTURES_COUNT', 'Structures Count');
+
+export const COULD_NOT_LOAD_JURISDICTION = translate(
+  'COULD_NOT_LOAD_JURISDICTION',
+  'Could not load jurisdiction'
+);
+export const JURISDICTION_ASSIGNMENT_SUCCESSFUL = translate(
+  'JURISDICTION_ASSIGNMENT_SUCCESSFUL',
+  'Jurisdiction(s) assigned to plan successfully'
+);
