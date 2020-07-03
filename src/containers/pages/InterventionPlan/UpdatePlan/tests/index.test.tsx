@@ -9,7 +9,7 @@ import { PlanDefinition } from '../../../../../configs/settings';
 import { PLAN_UPDATE_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
-import { planDefinition1, planDefinition2, updatePlanFormProps } from './fixtures';
+import { planDefinition1, planDefinition2 } from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -63,8 +63,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     );
     expect(toJson(wrapper.find('Breadcrumb'))).toMatchSnapshot('Breadcrumb');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('Page title');
-    expect(wrapper.find('PlanForm').props()).toEqual({
-      ...updatePlanFormProps,
+    expect(wrapper.find('PlanForm').props()).toMatchSnapshot({
       formHandler: expect.any(Function),
       renderLocationNames: expect.any(Function),
     });

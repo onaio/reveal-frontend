@@ -4,7 +4,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import HeaderBreadcrumb from '../../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import BaseNewPlan, { NewIRSPlan, NewPlanForPlanning } from '../index';
+import BaseNewPlan, NewPlan, { NewIRSPlan, NewPlanForPlanning } from '../index';
 import { IRSPlanFormProps, planFormProps, planningFormProps } from './fixtures';
 
 const history = createBrowserHistory();
@@ -29,8 +29,7 @@ describe('containers/pages/NewPlan', () => {
     expect(toJson(wrapper.find('h3.mb-3.page-title'))).toMatchSnapshot('page title');
 
     // check that PlanForm receives the correct props
-    expect(wrapper.find('PlanForm').props()).toEqual({
-      ...planFormProps,
+    expect(wrapper.find('PlanForm').props()).toMatchSnapshot({
       formHandler: expect.any(Function),
     });
     // check that there's a Row that nests a Col that nests a PlanForm

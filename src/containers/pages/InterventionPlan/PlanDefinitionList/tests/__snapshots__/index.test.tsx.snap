@@ -109,15 +109,17 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
 
 exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 0 1`] = `"TitleIntervention TypeStatusLast Modified"`;
 
-exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 1 1`] = `"A Test By MoshFIdraft2019-05-19"`;
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 1 1`] = `"IRS 2020-06-24 Dynamic Task Test Planactive2020-06-24"`;
 
-exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 2 1`] = `"A1 - TwoTwoTwo_03 - 2019-07-18FIactive2019-07-18"`;
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 2 1`] = `"A Test By MoshFIdraft2019-05-19"`;
 
-exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 3 1`] = `"A2-Lusaka Akros Test Focus 2FIactive2019-05-19"`;
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 3 1`] = `"A1 - TwoTwoTwo_03 - 2019-07-18FIactive2019-07-18"`;
 
-exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 4 1`] = `"TwoTwoOne_01 IRS 2019-07-10IRSactive2019-07-10"`;
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 4 1`] = `"A2-Lusaka Akros Test Focus 2FIactive2019-05-19"`;
 
-exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 5 1`] = `"Macepa MDA CampaignMDAactive2019-10-18"`;
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 5 1`] = `"TwoTwoOne_01 IRS 2019-07-10IRSactive2019-07-10"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: after sorting by the intervention type tr index 6 1`] = `"Macepa MDA CampaignMDAactive2019-10-18"`;
 
 exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: before clicking on sort tr index 0 1`] = `"TitleIntervention TypeStatusLast Modified"`;
 
@@ -130,3 +132,5 @@ exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for
 exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: before clicking on sort tr index 4 1`] = `"A Test By MoshFIdraft2019-05-19"`;
 
 exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: before clicking on sort tr index 5 1`] = `"Macepa MDA CampaignMDAactive2019-10-18"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList sort works correctly for intervention type column: before clicking on sort tr index 6 1`] = `"IRS 2020-06-24 Dynamic Task Test Planactive2020-06-24"`;
