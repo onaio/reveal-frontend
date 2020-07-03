@@ -109,6 +109,9 @@ export const VIEW_DRAFT_FILES_URL = '/files/draft';
 export const JSON_VALIDATORS_URL = '/json-validators';
 export const MANIFEST_FILE_UPLOAD = '/manifest';
 export const EDIT_SERVER_SETTINGS_URL = '/server-settings';
+export const PLANNING_VIEW_URL = '/plans/planning';
+export const NEW_PLANNING_PLAN_URL = `${PLANNING_VIEW_URL}/${NEW}`;
+export const ASSIGN_JURISDICTIONS_URL = '/assignJurisdictions';
 /** how long after opening a logout window should we wait before redirecting to express' server logout
  * I am not sure the optimum value for this, mozilla firefox seems to take some
  * time loading up the logoutWindow and actually making the request.
@@ -142,6 +145,8 @@ export const OPENSRP_TEMPLATE_ENDPOINT = 'template';
 export const OPENSRP_PLANS_BY_USER_FILTER = 'plans/user';
 export const OPENSRP_V1_SETTINGS_ENDPOINT = 'settings/sync';
 export const OPENSRP_V2_SETTINGS = 'v2/settings/';
+export const OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT = 'location/getHierarchy';
+export const OPENSRP_FIND_LOCATION_BY_JURISDICTION_IDS = `location/findByJurisdictionIds`;
 export const OPENSRP_ACTIVE = 'Active';
 export const OPENSRP_STATUS = 'status';
 export const OPENSRP_MANIFEST_ENDPOINT = 'manifest';

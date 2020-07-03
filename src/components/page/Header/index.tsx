@@ -24,6 +24,7 @@ import {
   ENABLE_IRS,
   ENABLE_JURISDICTION_METADATA_UPLOAD,
   ENABLE_MDA_POINT,
+  ENABLE_PLANNING,
   ENABLE_POPULATION_SERVER_SETTINGS,
   ENABLE_PRACTITIONERS,
   ENABLE_TEAMS,
@@ -49,6 +50,7 @@ import {
   MONITOR,
   ORGANIZATIONS_LABEL,
   PLAN_TITLE,
+  PLANNING_PAGE_TITLE,
   PLANS,
   PRACTITIONERS,
   SERVER_SETTINGS,
@@ -70,6 +72,7 @@ import {
   MANIFEST_RELEASE_URL,
   ORGANIZATIONS_LIST_URL,
   PLAN_LIST_URL,
+  PLANNING_VIEW_URL,
   PRACTITIONERS_LIST_URL,
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
@@ -160,6 +163,17 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           activeClassName="active"
                         >
                           {IRS_TITLE}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_PLANNING && (
+                      <DropdownItem>
+                        <NavLink
+                          to={PLANNING_VIEW_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {PLANNING_PAGE_TITLE}
                         </NavLink>
                       </DropdownItem>
                     )}

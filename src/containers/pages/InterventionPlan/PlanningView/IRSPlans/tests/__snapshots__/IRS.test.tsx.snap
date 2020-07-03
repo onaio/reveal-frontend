@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/IRS Search works correctly: find single row for entry with Khlong  tr index 0 1`] = `"NameDate CreatedStatus"`;
+
+exports[`containers/pages/IRS Search works correctly: find single row for entry with Khlong  tr index 1 1`] = `"A1 - Khlong Nam Sai - IRS 012019-05-24draft"`;
+
+exports[`containers/pages/IRS does not show loader for no data: find No Data Found text tr index 0 1`] = `"NameDate CreatedStatus"`;
+
+exports[`containers/pages/IRS renders plans list correctly: button props 1`] = `
+Object {
+  "children": "Create New Plan",
+  "className": "create-plan btn btn-primary float-right mt-3 mb-3",
+  "href": "/intervention/irs/new",
+  "onClick": [Function],
+}
+`;
+
+exports[`containers/pages/IRS renders plans list correctly: drill down table props 1`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Array [
+    Object {
+      "Cell": [Function],
+      "Header": "Name",
+      "accessor": "plan_title",
+      "minWidth": 200,
+    },
+    Object {
+      "Header": "Date Created",
+      "accessor": "plan_date",
+      "maxWidth": 50,
+      "minWidth": 20,
+    },
+    Object {
+      "Header": "Status",
+      "accessor": [Function],
+      "id": "plan_status",
+      "maxWidth": 50,
+      "minWidth": 20,
+    },
+  ],
+  "data": Array [],
+  "hasChildren": [Function],
+  "identifierField": "id",
+  "linkerField": "id",
+  "loading": false,
+  "loadingComponent": [Function],
+  "paginate": true,
+  "parentIdentifierField": "parent_id",
+  "renderInBottomFilterBar": [Function],
+  "renderInTopFilterBar": [Function],
+  "renderNullDataComponent": [Function],
+  "resize": true,
+  "rootParentId": null,
+  "useDrillDown": false,
+}
+`;

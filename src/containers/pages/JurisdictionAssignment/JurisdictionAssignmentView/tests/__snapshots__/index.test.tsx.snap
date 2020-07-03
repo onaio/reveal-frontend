@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/containers/JurisdictionView getting root jurisdiction error Message: should also be jurisdiction error page 1`] = `"An error ocurred. Please try and refresh the page.The specific error is: Could not load jurisdiction"`;
+
+exports[`src/containers/JurisdictionView plan error Message: should be plan error page 1`] = `"An error ocurred. Please try and refresh the page.The specific error is: Unable to load plan"`;
+
+exports[`src/containers/JurisdictionView renders correctly: should be about oov 1`] = `"Planning toolA2-Lusaka Akros Test Focus 2Assign JurisdictionsI love oov"`;
+
+exports[`src/containers/JurisdictionView single jurisdiction error Message: should be jurisdiction error page 1`] = `"An error ocurred. Please try and refresh the page.The specific error is: Could not load jurisdiction"`;
+
+exports[`src/containers/JurisdictionView works correctly with store: should be about oov 1`] = `"Planning toolA2-Lusaka Akros Test Focus 2Assign JurisdictionsI love oov"`;

@@ -3,8 +3,9 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import NewPlan from '../index';
-import { planFormProps } from './fixtures';
+import HeaderBreadcrumb from '../../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import BaseNewPlan, { NewIRSPlan, NewPlanForPlanning } from '../index';
+import { IRSPlanFormProps, planFormProps, planningFormProps } from './fixtures';
 
 const history = createBrowserHistory();
 
@@ -14,13 +15,13 @@ describe('containers/pages/NewPlan', () => {
   });
 
   it('renders without crashing', () => {
-    shallow(<NewPlan />);
+    shallow(<BaseNewPlan />);
   });
 
   it('renders correctly', () => {
     const wrapper = mount(
       <Router history={history}>
-        <NewPlan />
+        <BaseNewPlan />
       </Router>
     );
 
@@ -64,6 +65,51 @@ describe('containers/pages/NewPlan', () => {
       .find('select[name="interventionType"]')
       .simulate('change', { target: { name: 'interventionType', value: 'IRS' } });
     wrapper.update();
+    expect(wrapper.find('JurisdictionDetails').length).toEqual(0);
+
+    wrapper.unmount();
+  });
+
+  it('renders text correctly for New Plan in planning tool ', () => {
+    const wrapper = mount(
+      <Router history={history}>
+        <NewPlanForPlanning />
+      </Router>
+    );
+
+    // check that PlanForm receives the correct props
+    expect(wrapper.find('PlanForm').props()).toEqual({
+      ...planningFormProps,
+      formHandler: expect.any(Function),
+    });
+
+    expect(wrapper.find(HeaderBreadcrumb).text()).toMatchInlineSnapshot(
+      `"HomeDraft plansCreate New Plan"`
+    );
+
+    // does not show Jurisdiction Details
+    expect(wrapper.find('JurisdictionDetails').length).toEqual(0);
+
+    wrapper.unmount();
+  });
+  it('render correctly for New IRS plan', () => {
+    const wrapper = mount(
+      <Router history={history}>
+        <NewIRSPlan />
+      </Router>
+    );
+
+    // check that PlanForm receives the correct props
+    expect(wrapper.find('PlanForm').props()).toEqual({
+      ...IRSPlanFormProps,
+      formHandler: expect.any(Function),
+    });
+
+    expect(wrapper.find(HeaderBreadcrumb).text()).toMatchInlineSnapshot(
+      `"HomeIRS Plans (drafts)Create New Plan"`
+    );
+
+    // does not show Jurisdiction Details
     expect(wrapper.find('JurisdictionDetails').length).toEqual(0);
 
     wrapper.unmount();
