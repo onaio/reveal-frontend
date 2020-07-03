@@ -87,6 +87,9 @@ describe('containers/pages/NewPlan', () => {
       `"HomeDraft plansCreate New Plan"`
     );
 
+    // does not show Jurisdiction Details
+    expect(wrapper.find('JurisdictionDetails').length).toEqual(0);
+
     wrapper.unmount();
   });
   it('render correctly for New IRS plan', () => {
@@ -105,6 +108,9 @@ describe('containers/pages/NewPlan', () => {
     expect(wrapper.find(HeaderBreadcrumb).text()).toMatchInlineSnapshot(
       `"HomeIRS Plans (drafts)Create New Plan"`
     );
+
+    // does not show Jurisdiction Details
+    expect(wrapper.find('JurisdictionDetails').length).toEqual(0);
 
     wrapper.unmount();
   });

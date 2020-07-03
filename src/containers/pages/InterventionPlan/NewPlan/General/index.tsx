@@ -34,6 +34,7 @@ import { JurisdictionDetails } from './JurisdictionDetails';
 interface BaseNewPlanProps {
   extraPlanFormProps: Partial<PlanFormProps>;
   breadCrumbParentPage: Page;
+  showJurisdictionDetails: boolean;
 }
 
 /** the default props */
@@ -43,10 +44,15 @@ export const defaultBasePlanProps = {
     url: PLAN_LIST_URL,
   },
   extraPlanFormProps: { redirectAfterAction: PLAN_LIST_URL },
+  showJurisdictionDetails: true,
 };
 
 /** dynamically supply props during runtime when the interventionType changes
- * ps: the planFormProps passed in the components props take the highest precedence
+ * Reason: the planForm is using a key (the intervention type); once the intervention changes
+ *  the planForm does not re-render it remounts, the look up gives it a place to get the props it should
+ *  use, especially the initialValues. otherwise it will fallback to using the default initialValues set in state
+ *  which will by default reset some values like intervention type back to FI, which is sth we don't necessarily want.
+ * ps: the planFormProps passed in the components props take the higher precedence
  */
 const planFormPropsLookUp = {
   [InterventionType.IRS]: {
@@ -106,12 +112,14 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
         <Col md={8} id="planform-col-container">
           <PlanForm {...planFormProps} key={formValues.interventionType} />
         </Col>
-        <Col md={4}>
-          {formValues.interventionType === InterventionType.FI &&
-            formValues.jurisdictions[0].id !== '' && (
-              <JurisdictionDetails planFormJurisdiction={formValues.jurisdictions[0]} />
-            )}
-        </Col>
+        {props.showJurisdictionDetails && (
+          <Col md={4}>
+            {formValues.interventionType === InterventionType.FI &&
+              formValues.jurisdictions[0].id !== '' && (
+                <JurisdictionDetails planFormJurisdiction={formValues.jurisdictions[0]} />
+              )}
+          </Col>
+        )}
       </Row>
     </div>
   );
@@ -132,10 +140,15 @@ export const NewPlanForPlanning = () => {
       jurisdictionLabel: COUNTRY,
       redirectAfterAction: PLANNING_VIEW_URL,
     },
+    showJurisdictionDetails: false,
   };
   return <BaseNewPlan {...baseNewPlanProps} />;
 };
 
+/** NewIRSPlan can and will be removed once the irs planning module is removed
+ * at the moment it is retained so that the IRS planning module functionality for
+ * creating a new plan remains the same
+ */
 /** IRS-specific form for  creating a plan */
 export const NewIRSPlan = () => {
   const baseNewPlanProps = {
