@@ -357,7 +357,7 @@ export interface PlanActionTrigger {
 
 /** Plan Action Condition */
 export interface PlanActionCondition {
-  expression?: PlanExpression;
+  expression: PlanExpression;
   kind: Readonly<'applicability'>;
 }
 
