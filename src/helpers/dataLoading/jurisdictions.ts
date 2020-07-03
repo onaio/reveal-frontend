@@ -1,10 +1,11 @@
 import { Dictionary } from '@onaio/utils/dist/types/types';
 import { URLParams } from '@opensrp/server-service';
 import { OpenSRPJurisdiction } from '../../components/TreeWalker/types';
+import { COULD_NOT_LOAD_JURISDICTION } from '../../configs/lang';
 import { PlanDefinition } from '../../configs/settings';
 import {
+  OPENSRP_FIND_LOCATION_BY_JURISDICTION_IDS,
   OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT,
-  OPENSRP_LOCATION,
   OPENSRP_PLANS,
 } from '../../constants';
 import { OpenSRPService } from '../../services/opensrp';
@@ -66,12 +67,20 @@ export async function loadJurisdiction(
   serviceClass: typeof OpenSRPService,
   params: URLParams = defaultLocationParams
 ) {
-  const service = new serviceClass(OPENSRP_LOCATION);
+  const service = new serviceClass(OPENSRP_FIND_LOCATION_BY_JURISDICTION_IDS);
+  const fullParams = {
+    ...params,
+    jurisdiction_ids: jurisdictionId,
+  };
   return await service
-    .read(jurisdictionId, params)
-    .then((response: OpenSRPJurisdiction) => {
+    .list(fullParams)
+    .then((response: OpenSRPJurisdiction[]) => {
       if (response) {
-        return success(response);
+        if (response.length === 0) {
+          return failure(new Error(COULD_NOT_LOAD_JURISDICTION));
+        }
+        const jurisdiction = response[0];
+        return success(jurisdiction);
       }
     })
     .catch((error: Error) => {
