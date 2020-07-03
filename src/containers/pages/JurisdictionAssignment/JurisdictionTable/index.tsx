@@ -12,6 +12,7 @@ import HeaderBreadcrumb, {
 import Ripple from '../../../../components/page/Loading';
 import {
   COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
+  JURISDICTION_ASSIGNMENT_SUCCESSFUL,
   NAME,
   NO_DATA_FOUND,
   NO_ROWS_FOUND,
@@ -25,6 +26,7 @@ import {
   putJurisdictionsToPlan,
 } from '../../../../helpers/dataLoading/jurisdictions';
 import { displayError } from '../../../../helpers/errors';
+import { successGrowl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import hierarchyReducer, {
   autoSelectNodes,
@@ -248,7 +250,11 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   /** put payload of selected jurisdictions with the plan info to the api */
   const commitJurisdictions = () => {
     const jurisdictionIds = selectedLeafNodes.map(node => node.model.id);
-    putJurisdictionsToPlan(plan, jurisdictionIds, serviceClass).catch(error => displayError(error));
+    putJurisdictionsToPlan(plan, jurisdictionIds, serviceClass)
+      .then(() => {
+        successGrowl(`${selectedLeafNodes.length} ${JURISDICTION_ASSIGNMENT_SUCCESSFUL}`);
+      })
+      .catch(error => displayError(error));
   };
 
   return (
