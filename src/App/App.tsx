@@ -103,13 +103,8 @@ import BaseNewPlan, {
   NewPlanForPlanning,
 } from '../containers/pages/InterventionPlan/NewPlan/General';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
-<<<<<<< HEAD
 import { DraftPlans } from '../containers/pages/InterventionPlan/PlanningView/DraftPlans';
 import { IRSPlans } from '../containers/pages/InterventionPlan/PlanningView/IRSPlans';
-=======
-import ConnectedDraftPlans from '../containers/pages/InterventionPlan/PlanningView/DraftPlans';
-import IrsPlans from '../containers/pages/InterventionPlan/PlanningView/IRS';
->>>>>>> Attach route to handle planning url
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments';
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
