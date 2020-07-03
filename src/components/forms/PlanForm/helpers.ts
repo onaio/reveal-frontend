@@ -258,35 +258,38 @@ export function getActivityFromPlan(
 export function getPlanActivityFromActionCode(
   actionCode: PlanActionCodesType
 ): PlanActivity | null {
-  if (actionCode === 'BCC') {
+  if (actionCode === PlanActionCodes[0]) {
     return planActivities.BCC;
   }
-  if (actionCode === 'IRS') {
+  if (actionCode === PlanActionCodes[1]) {
     return planActivities.IRS;
   }
-  if (actionCode === 'Bednet Distribution') {
+  if (actionCode === PlanActionCodes[2]) {
     return planActivities.bednetDistribution;
   }
-  if (actionCode === 'Blood Screening') {
+  if (actionCode === PlanActionCodes[3]) {
     return planActivities.bloodScreening;
   }
-  if (actionCode === 'Case Confirmation') {
+  if (actionCode === PlanActionCodes[4]) {
     return planActivities.caseConfirmation;
   }
-  if (actionCode === 'RACD Register Family') {
+  if (actionCode === PlanActionCodes[5]) {
     return planActivities.familyRegistration;
   }
-  if (actionCode === 'Larval Dipping') {
+  if (actionCode === PlanActionCodes[6]) {
     return planActivities.larvalDipping;
   }
-  if (actionCode === 'Mosquito Collection') {
+  if (actionCode === PlanActionCodes[7]) {
     return planActivities.mosquitoCollection;
   }
-  if (actionCode === 'MDA Adverse Event(s)') {
-    return planActivities.pointAdverseMDA;
+  if (actionCode === PlanActionCodes[8]) {
+    return planActivities.dynamicCommunityAdherenceMDA;
   }
-  if (actionCode === 'MDA Dispense') {
+  if (actionCode === PlanActionCodes[9]) {
     return planActivities.pointDispenseMDA;
+  }
+  if (actionCode === PlanActionCodes[10]) {
+    return planActivities.pointAdverseMDA;
   }
 
   return null;
