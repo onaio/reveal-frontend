@@ -1,15 +1,22 @@
+import { Dictionary } from '@onaio/utils/dist/types/types';
 import { mount, ReactWrapper } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import { createBrowserHistory } from 'history';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
+import { Route, Router, Switch } from 'react-router';
+import { MemoryRouter, RouteComponentProps } from 'react-router-dom';
 import { ConnectedJurisdictionTable } from '..';
+import { ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { sampleHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
 import { plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
+
+const history = createBrowserHistory();
 
 /** will use this to render table rows */
 const renderTable = (wrapper: ReactWrapper, message: string) => {
@@ -27,15 +34,50 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
   });
 
   it('works correctly through a full render cycle', async () => {
-    fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
     const plan = plans[0];
-    const props = {
-      plan,
-      rootJurisdictionId: '2942',
+
+    /** current architecture does not use the Jurisdiction table as a view
+     * it is seen as a controlled component that is feed some data from controlling component
+     * That's why there was a need to have this custom view and a mock routing system.
+     */
+    const CustomView = (props: RouteComponentProps<Dictionary>) => {
+      const mockProps = {
+        currentParentId: props.match.params.parentId,
+        plan,
+        rootJurisdictionId: '2942',
+      };
+      return <ConnectedJurisdictionTable {...mockProps} />;
     };
+
+    const App = () => {
+      return (
+        <Switch>
+          <Route
+            exact={true}
+            path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
+            component={CustomView}
+          />
+          <Route exact={true} path={`${ASSIGN_JURISDICTIONS_URL}/:planId`} component={CustomView} />
+        </Switch>
+      );
+    };
+
+    fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
+
     const wrapper = mount(
       <Provider store={store}>
-        <ConnectedJurisdictionTable {...props} />
+        <MemoryRouter
+          initialEntries={[
+            {
+              hash: '',
+              pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+              search: '',
+              state: {},
+            },
+          ]}
+        >
+          <App />
+        </MemoryRouter>
       </Provider>
     );
 
@@ -58,8 +100,8 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     // test drilldown
     tbodyRow
       .at(0)
-      .find('NodeCell span')
-      .simulate('click');
+      .find('NodeCell Link a')
+      .simulate('click', { button: 0 });
 
     wrapper.update();
     renderTable(wrapper, 'after first click');
@@ -75,8 +117,8 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     wrapper
       .find('tbody tr')
       .at(0)
-      .find('NodeCell span')
-      .simulate('click');
+      .find('NodeCell a')
+      .simulate('click', { button: 0 });
 
     wrapper.update();
     renderTable(wrapper, 'after second click');
@@ -103,7 +145,9 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     };
     const wrapper = mount(
       <Provider store={store}>
-        <ConnectedJurisdictionTable {...props} />
+        <Router history={history}>
+          <ConnectedJurisdictionTable {...props} />
+        </Router>
       </Provider>
     );
 
@@ -157,7 +201,9 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     };
     const wrapper = mount(
       <Provider store={store}>
-        <ConnectedJurisdictionTable {...props} />
+        <Router history={history}>
+          <ConnectedJurisdictionTable {...props} />
+        </Router>
       </Provider>
     );
 
@@ -178,7 +224,9 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     };
     const wrapper = mount(
       <Provider store={store}>
-        <ConnectedJurisdictionTable {...props} />
+        <Router history={history}>
+          <ConnectedJurisdictionTable {...props} />
+        </Router>
       </Provider>
     );
 
