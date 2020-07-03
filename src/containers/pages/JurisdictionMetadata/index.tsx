@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
+import { toast } from 'react-toastify';
 import { Button, Card, CardBody, Col, Row } from 'reactstrap';
 import JurisdictionMetadata, {
   defaultInitialValues,
@@ -41,9 +42,8 @@ import {
   OPENSRP_V1_SETTINGS_ENDPOINT,
   OPENSRP_V2_SETTINGS,
   TEXT_CSV,
-  TEXT_PLAIN,
 } from '../../../constants';
-import { downloadFile, RouteParams } from '../../../helpers/utils';
+import { downloadFile, growl, RouteParams } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import './index.css';
 
@@ -88,7 +88,10 @@ export const downloadCsvTemplate = (service: typeof OpenSRPService = OpenSRPServ
       downloadFile(`${header}\r\n${content}`, JURISDICTION_CSV_FILE_NAME, TEXT_CSV);
     })
     .catch((err: Error) => {
-      downloadFile(err.message, JURISDICTION_CSV_FILE_NAME, TEXT_PLAIN);
+      growl(err.message, {
+        type: toast.TYPE.SUCCESS,
+      });
+      downloadFile(JURISDICTION_CSV_TEMPLATE, JURISDICTION_CSV_FILE_NAME, TEXT_CSV);
     });
 };
 
