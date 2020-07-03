@@ -1,9 +1,21 @@
+import reducerRegistry from '@onaio/redux-reducer-registry';
+import {
+  ConnectedEditSetings,
+  locationReducerName,
+  locationsReducer,
+  settingsReducer,
+  settingsReducerName,
+} from '@opensrp/population-characteristics';
+import '@opensrp/population-characteristics/dist/styles/index.css';
 import React from 'react';
+import Helmet from 'react-helmet';
+import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { OPENSRP_API_BASE_URL } from '../../../../configs/env';
 import {
   DESCRIPTION_LABEL,
   EDIT_LABEL,
+  HOME,
   INHERIT_SETTING_LABEL,
   INHERITED_FROM_LABEL,
   NAME,
@@ -16,14 +28,32 @@ import {
   SETTINGS_LABEL,
 } from '../../../../configs/lang';
 import {
+  HOME_URL,
   LOCATIONS_ENDPOINT,
   SECURITY_AUTHENTICATE_ENDPOINT,
   SETTINGS_ENDPOINT,
 } from '../../../../constants';
 import { growl } from '../../../../helpers/utils';
 import { getPayloadOptions } from '../../../../services/opensrp';
+import './index.css';
+
+/** register the reducers */
+reducerRegistry.register(settingsReducerName, settingsReducer);
+reducerRegistry.register(locationReducerName, locationsReducer);
 
 export const EditServerSettings = () => {
+  const breadcrumbProps = {
+    currentPage: {
+      label: SERVER_SETTINGS,
+    },
+    pages: [
+      {
+        label: HOME,
+        url: HOME_URL,
+      },
+    ],
+  };
+
   const baseURL = OPENSRP_API_BASE_URL.replace('rest/', '');
 
   const labels = {
@@ -52,5 +82,13 @@ export const EditServerSettings = () => {
     settingsEndpoint: SETTINGS_ENDPOINT,
   };
 
-  return <div>{SERVER_SETTINGS}</div>;
+  return (
+    <div>
+      <Helmet>
+        <title>{SERVER_SETTINGS}</title>
+      </Helmet>
+      <HeaderBreadcrumb {...breadcrumbProps} />
+      <ConnectedEditSetings {...settingsProps} />
+    </div>
+  );
 };
