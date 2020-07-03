@@ -3,7 +3,7 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Store } from 'redux';
 import { BreadCrumbProps } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { DRAFT_PLANS, DRAFTS_PARENTHESIS, HOME, IRS_PLANS } from '../../../../../configs/lang';
+import { DRAFTS_PARENTHESIS, HOME, IRS_PLANS } from '../../../../../configs/lang';
 import {
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
@@ -55,7 +55,7 @@ export const IRSPlans = (props: RouteComponentProps) => {
   };
   const breadCrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: DRAFT_PLANS,
+      label: pageTitle,
       url: INTERVENTION_IRS_DRAFTS_URL,
     },
     pages: [homePage],
