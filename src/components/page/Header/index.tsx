@@ -25,6 +25,7 @@ import {
   ENABLE_JURISDICTION_METADATA_UPLOAD,
   ENABLE_MDA_POINT,
   ENABLE_PLANNING,
+  ENABLE_POPULATION_SERVER_SETTINGS,
   ENABLE_PRACTITIONERS,
   ENABLE_TEAMS,
   ENABLE_USERS,
@@ -52,6 +53,7 @@ import {
   PLANNING_PAGE_TITLE,
   PLANS,
   PRACTITIONERS,
+  SERVER_SETTINGS,
   SIGN_OUT,
   STUDENTS_TITLE,
   USERS,
@@ -60,6 +62,7 @@ import {
   ASSIGN_PLAN_URL,
   BACKEND_LOGIN_URL,
   CLIENTS_LIST_URL,
+  EDIT_SERVER_SETTINGS_URL,
   FI_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
@@ -324,6 +327,17 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           activeClassName="active"
                         >
                           {JURISDICTION_METADATA}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_POPULATION_SERVER_SETTINGS && (
+                      <DropdownItem>
+                        <NavLink
+                          to={EDIT_SERVER_SETTINGS_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {SERVER_SETTINGS}
                         </NavLink>
                       </DropdownItem>
                     )}

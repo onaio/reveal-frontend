@@ -201,6 +201,11 @@ export const OPENSRP_API_BASE_URL =
   'https://reveal-stage.smartregister.org/opensrp/rest/';
 export type OPENSRP_API_BASE_URL = typeof OPENSRP_API_BASE_URL;
 
+export const OPENSRP_API_V2_BASE_URL =
+  process.env.REACT_APP_OPENSRP_API_V2_BASE_URL ||
+  'https://reveal-stage.smartregister.org/opensrp/rest/v2/';
+export type OPENSRP_API_V2_BASE_URL = typeof OPENSRP_API_V2_BASE_URL;
+
 /** Onadata oAuth2 settings */
 export const ENABLE_ONADATA_OAUTH = process.env.REACT_APP_ENABLE_ONADATA_OAUTH === 'true';
 export type ENABLE_ONADATA_OAUTH = typeof ENABLE_ONADATA_OAUTH;
@@ -331,5 +336,9 @@ export const SHOW_MDA_SCHOOL_REPORT_LABEL =
   process.env.REACT_APP_SHOW_MDA_SCHOOL_REPORT_LABEL === 'true';
 export type SHOW_MDA_SCHOOL_REPORT_LABEL = typeof SHOW_MDA_SCHOOL_REPORT_LABEL;
 
+/** list of plan types to be added to intervention type field when adding plans */
+export const ENABLE_POPULATION_SERVER_SETTINGS =
+  process.env.REACT_APP_ENABLE_POPULATION_SERVER_SETTINGS === 'true';
+export type ENABLE_POPULATION_SERVER_SETTINGS = typeof ENABLE_POPULATION_SERVER_SETTINGS;
 export const ENABLE_PLANNING = process.env.REACT_APP_ENABLE_PLANNING === 'true';
 export type ENABLE_PLANNING = typeof ENABLE_PLANNING;

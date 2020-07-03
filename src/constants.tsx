@@ -108,6 +108,7 @@ export const MANIFEST_RELEASE_URL = '/manifest/releases';
 export const VIEW_DRAFT_FILES_URL = '/files/draft';
 export const JSON_VALIDATORS_URL = '/json-validators';
 export const MANIFEST_FILE_UPLOAD = '/manifest';
+export const EDIT_SERVER_SETTINGS_URL = '/server-settings';
 export const PLANNING_VIEW_URL = '/plans/planning';
 export const NEW_PLANNING_PLAN_URL = `${PLANNING_VIEW_URL}/${NEW}`;
 export const ASSIGN_JURISDICTIONS_URL = '/assignJurisdictions';
@@ -152,6 +153,9 @@ export const OPENSRP_MANIFEST_ENDPOINT = 'manifest';
 export const OPENSRP_FORMS_ENDPOINT = 'clientForm';
 export const OPENSRP_MANIFEST_FORMS_ENDPOINT = 'clientForm/release-related-files';
 export const OPENSRP_FORM_METADATA_ENDPOINT = 'clientForm/metadata';
+export const SETTINGS_ENDPOINT = 'settings/';
+export const LOCATIONS_ENDPOINT = 'location/location-tree';
+export const SECURITY_AUTHENTICATE_ENDPOINT = 'security/authenticate';
 
 // colors
 export const GREEN = 'Green';

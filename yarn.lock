@@ -1788,6 +1788,23 @@
     reactstrap "^8.0.1"
     yup "^0.29.1"
 
+"@opensrp/population-characteristics@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@opensrp/population-characteristics/-/population-characteristics-0.0.2.tgz#a9fdaf6a3349d0e76a4272bd19768e116178b500"
+  integrity sha512-YHFjQAWtPbIdZwU/CFaZ5EXAh2Hp5EgWokh+IzvdAvuIP4dxUSJquYzReVWAg6wDzOIdE/wsPJrrR8y4RwQhWw==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.20"
+    "@fortawesome/free-brands-svg-icons" "^5.10.0"
+    "@fortawesome/free-regular-svg-icons" "^5.10.0"
+    "@fortawesome/free-solid-svg-icons" "^5.10.0"
+    "@fortawesome/react-fontawesome" "^0.1.4"
+    "@onaio/list-view" "^0.0.3"
+    "@onaio/redux-reducer-registry" "^0.0.9"
+    "@onaio/utils" "^0.0.1"
+    "@opensrp/server-service" "^0.0.2"
+    lodash "^4.17.15"
+    react-toastify "^6.0.5"
+
 "@opensrp/reducer-factory@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@opensrp/reducer-factory/-/reducer-factory-0.0.1.tgz#4a544e6ec29d97a7d8ba2d07f3a63a21ec49e723"
