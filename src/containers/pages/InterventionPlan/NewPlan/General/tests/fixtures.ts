@@ -1,4 +1,7 @@
 import { parseISO } from 'date-fns';
+import { COUNTRY } from '../../../../../../configs/lang';
+import { INTERVENTION_IRS_DRAFTS_URL, PLANNING_VIEW_URL } from '../../../../../../constants';
+import { InterventionType } from '../../../../../../store/ducks/plans';
 
 export const planFormProps = {
   allFormActivities: [
@@ -274,4 +277,40 @@ export const planFormProps = {
   },
   jurisdictionLabel: 'Focus Area',
   redirectAfterAction: '/plans/list',
+};
+
+export const planningFormProps = {
+  ...planFormProps,
+  allowMoreJurisdictions: false,
+  cascadingSelect: false,
+  jurisdictionLabel: COUNTRY,
+  redirectAfterAction: PLANNING_VIEW_URL,
+};
+
+export const IRSPlanFormProps = {
+  ...planFormProps,
+  allowMoreJurisdictions: false,
+  cascadingSelect: false,
+  disabledFields: ['interventionType', 'status'],
+  initialValues: {
+    ...planFormProps.initialValues,
+    activities: [
+      {
+        actionCode: 'IRS',
+        actionDescription: 'Visit each structure in the operational area and attempt to spray',
+        actionIdentifier: '',
+        actionReason: 'Routine',
+        actionTitle: 'Spray Structures',
+        goalDescription: 'Spray structures in the operational area',
+        goalDue: parseISO('2017-07-20T19:31:00.000Z'),
+        goalPriority: 'medium-priority',
+        goalValue: 90,
+        timingPeriodEnd: parseISO('2017-07-20T19:31:00.000Z'),
+        timingPeriodStart: parseISO('2017-07-13T19:31:00.000Z'),
+      },
+    ],
+    interventionType: InterventionType.IRS,
+  },
+  jurisdictionLabel: COUNTRY,
+  redirectAfterAction: INTERVENTION_IRS_DRAFTS_URL,
 };

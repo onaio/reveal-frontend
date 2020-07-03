@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/../pages/InterventionPlan/PlanningView/helpers base list is renders correctly: should have no data tr index 0 1`] = `"NameDate CreatedStatus"`;
+
+exports[`src/../pages/InterventionPlan/PlanningView/helpers base list with props is rendered correctly: Has no data tr index 0 1`] = `"NameDate CreatedStatus"`;
