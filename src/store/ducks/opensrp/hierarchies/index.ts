@@ -41,19 +41,10 @@ export const DESELECT_NODE = 'opensrp/locations/hierarchy/DESELECT_NODE';
 /** action to auto-append/ auto-modify the selected attribute of nodes in a tree */
 export const AUTO_SELECT_NODES = 'opensrp/locations/hierarchy/AUTO_SELECT_NODES';
 
-/** action to set the currentParent id for a certain tree */
-export const CURRENT_PARENT_SET = 'opensrp/locations/hierarchy/CURRENT_PARENT_SET';
-
 /** describes action that adds a tree to store */
 export interface FetchedTreeAction extends AnyAction {
   type: typeof TREE_FETCHED;
   treeByRootId: Dictionary<TreeNode>;
-}
-
-/** describes action that sets the current parent of a given tree */
-export interface SetCurrentParentIdAction extends AnyAction {
-  type: typeof CURRENT_PARENT_SET;
-  currentParentIdsByRootId: Dictionary<string | undefined>;
 }
 
 /** action to select a node  */
@@ -86,7 +77,6 @@ export interface AutoSelectNodesAction extends AnyAction {
 /** combined full action types | its a union */
 export type TreeActionTypes =
   | FetchedTreeAction
-  | SetCurrentParentIdAction
   | SelectNodeAction
   | DeforestAction
   | DeselectNodeAction
@@ -104,22 +94,6 @@ export function fetchTree(apiResponse: RawOpenSRPHierarchy): FetchedTreeAction {
       [tree.model.id]: tree,
     },
     type: TREE_FETCHED,
-  };
-}
-
-/** action creator for setting a parent id of a known tree
- * @param rootJurisdictionId - id of the rootNode; thus able to get the jurisdiction in question
- * @param currentParentId - id of the node you wish to set as parent
- */
-export function setCurrentParentId(
-  rootJurisdictionId: string,
-  currentParentId: string | undefined
-): SetCurrentParentIdAction {
-  return {
-    currentParentIdsByRootId: {
-      [rootJurisdictionId]: currentParentId,
-    },
-    type: CURRENT_PARENT_SET,
   };
 }
 
@@ -194,15 +168,6 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
         treeByRootId: { ...state.treeByRootId, ...action.treeByRootId },
       };
 
-    case CURRENT_PARENT_SET:
-      return {
-        ...state,
-        currentParentIdsByRootId: {
-          ...state.currentParentIdsByRootId,
-          ...action.currentParentIdsByRootId,
-        },
-      };
-
     case DEFOREST:
       return {
         ...state,
@@ -266,6 +231,7 @@ export interface Filters {
   rootJurisdictionId: string /** specify which tree to act upon */;
   nodeId?: string /** target node with this id */;
   leafNodesOnly?: boolean /** specified when requesting for selected nodes, truthy returns leaf nodes */;
+  currentParentId?: string /** to use when filtering current children */;
 }
 
 /** retrieve the rootJurisdiction value
@@ -274,6 +240,12 @@ export interface Filters {
  */
 export const getRootJurisdictionId = (_: Partial<Store>, props: Filters) =>
   props.rootJurisdictionId;
+
+/** retrieve the currentParentId value
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getCurrentParentId = (_: Partial<Store>, props: Filters) => props.currentParentId;
 
 /** retrieve the nodeId value
  * @param state - the store
@@ -330,17 +302,13 @@ export const getNodeById = () =>
  * @param props -  the filterProps
  */
 export const getCurrentParentNode = () =>
-  createSelector(
-    getTreeById(),
-    getParentIdsByRootId,
-    getRootJurisdictionId,
-    (tree, idsMap, rootId) => {
-      if (!tree) {
-        return;
-      }
-      return tree.first(node => node.model.id === idsMap[rootId]);
+  createSelector(getTreeById(), getCurrentParentId, (tree, parentId) => {
+    if (!tree) {
+      return;
     }
-  );
+    return tree.first(node => node.model.id === parentId);
+  });
+
 /** returns an array of current children
  * @param state - the store
  * @param props -  the filterProps
