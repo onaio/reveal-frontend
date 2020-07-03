@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`src/containers/JurisdictionView getting root jurisdiction error Message: should be also be jurisdiction error page 1`] = `"An error ocurred. Please try and refresh the page.The specific error is: Could not load jurisdiction"`;
+exports[`src/containers/JurisdictionView getting root jurisdiction error Message: should also be jurisdiction error page 1`] = `"An error ocurred. Please try and refresh the page.The specific error is: Could not load jurisdiction"`;
 
 exports[`src/containers/JurisdictionView plan error Message: should be plan error page 1`] = `"An error ocurred. Please try and refresh the page.The specific error is: Could not load the plan"`;
 
