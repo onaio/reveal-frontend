@@ -2,12 +2,10 @@
 
 exports[`src/containers/../PlanningView/DraftPlans renders plans list correctly: button props 1`] = `
 Object {
-  "aria-label": null,
   "children": "Create New Plan",
-  "className": "create-plan float-right btn btn-primary",
+  "className": "create-plan btn btn-primary float-right mt-3 mb-3",
   "href": "/plans/planning/new",
   "onClick": [Function],
-  "type": undefined,
 }
 `;
 
