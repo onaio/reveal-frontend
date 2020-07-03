@@ -169,7 +169,11 @@ export const autoSelectNodesAndCascade = (
   const parentNodes: TreeNode[] = [];
   treeClone.walk(node => {
     if (callback(node)) {
-      node.model[META_FIELD_NAME][SELECT_KEY] = true;
+      node.walk(nd => {
+        nd.model[META_FIELD_NAME][SELECT_KEY] = true;
+        // removing this return cause a type error, that's its sole purpose
+        return true;
+      });
       parentNodes.push(node);
     }
     return true;
