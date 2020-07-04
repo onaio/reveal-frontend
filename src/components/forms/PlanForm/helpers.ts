@@ -292,42 +292,29 @@ export function getActivityFromPlan(
 /**
  * Get plan activity object using an action code
  * @param {PlanActionCodesType} actionCode - the action code
+ * @param {boolean} isDynamic - whether we are looking for dynamic activities
  */
 export function getPlanActivityFromActionCode(
-  actionCode: PlanActionCodesType
+  actionCode: PlanActionCodesType,
+  isDynamic: boolean = false
 ): PlanActivity | null {
-  if (actionCode === PlanActionCodes[0]) {
-    return planActivities.BCC;
-  }
-  if (actionCode === PlanActionCodes[1]) {
-    return planActivities.IRS;
-  }
-  if (actionCode === PlanActionCodes[2]) {
-    return planActivities.bednetDistribution;
-  }
-  if (actionCode === PlanActionCodes[3]) {
-    return planActivities.bloodScreening;
-  }
-  if (actionCode === PlanActionCodes[4]) {
-    return planActivities.caseConfirmation;
-  }
-  if (actionCode === PlanActionCodes[5]) {
-    return planActivities.familyRegistration;
-  }
-  if (actionCode === PlanActionCodes[6]) {
-    return planActivities.larvalDipping;
-  }
-  if (actionCode === PlanActionCodes[7]) {
-    return planActivities.mosquitoCollection;
-  }
-  if (actionCode === PlanActionCodes[8]) {
-    return planActivities.dynamicCommunityAdherenceMDA;
-  }
-  if (actionCode === PlanActionCodes[9]) {
-    return planActivities.pointDispenseMDA;
-  }
-  if (actionCode === PlanActionCodes[10]) {
-    return planActivities.pointAdverseMDA;
+  const search = Object.values(planActivities).filter(item => {
+    if (isDynamic) {
+      return (
+        item.action.code === actionCode &&
+        (Object.keys(item.action).includes('condition') ||
+          Object.keys(item.action).includes('trigger'))
+      );
+    } else {
+      return (
+        item.action.code === actionCode &&
+        !Object.keys(item.action).includes('condition') &&
+        !Object.keys(item.action).includes('trigger')
+      );
+    }
+  });
+  if (search.length > 0) {
+    return search[0];
   }
 
   return null;

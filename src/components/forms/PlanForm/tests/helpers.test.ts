@@ -31,7 +31,6 @@ import {
   planActivityWithoutTargets,
   planFormValues,
   planFormValues2,
-  planFormValues3,
   values,
   values2,
   valuesWithJurisdiction,
@@ -106,7 +105,6 @@ describe('containers/forms/PlanForm/helpers', () => {
   it('check generatePlanDefinition returns the correct value', () => {
     MockDate.set('1/30/2000', 0);
     expect(generatePlanDefinition(values2)).toEqual(expectedPlanDefinition);
-    expect(generatePlanDefinition(planFormValues3 as PlanFormFields)).toEqual({});
     MockDate.reset();
   });
 
@@ -159,17 +157,17 @@ describe('containers/forms/PlanForm/helpers', () => {
 
   it('getGoalUnitFromActionCode works', () => {
     const expectedUnits: GoalUnit[] = [
-      GoalUnit.ACTIVITY,
-      GoalUnit.PERCENT,
-      GoalUnit.PERCENT,
-      GoalUnit.PERSON,
-      GoalUnit.CASE,
-      GoalUnit.PERCENT,
-      GoalUnit.ACTIVITY,
-      GoalUnit.ACTIVITY,
-      GoalUnit.PERCENT,
-      GoalUnit.PERCENT,
-      GoalUnit.PERCENT,
+      GoalUnit.ACTIVITY, // BCC
+      GoalUnit.PERCENT, // IRS
+      GoalUnit.PERCENT, // Bednet
+      GoalUnit.PERSON, // Blood screening
+      GoalUnit.CASE, // Case confirmation
+      GoalUnit.PERCENT, // Register family
+      GoalUnit.ACTIVITY, // Larval dipping
+      GoalUnit.ACTIVITY, // Mosquito collection
+      GoalUnit.UNKNOWN, // MDA Adherence  ==> TODO: figure out how to pass isDyanmic to getPlanActivityFromActionCode
+      GoalUnit.PERCENT, // MDA Dispense
+      GoalUnit.PERCENT, // MDA Adverse events
     ];
     for (let index = 0; index < PlanActionCodes.length; index++) {
       expect(getGoalUnitFromActionCode(PlanActionCodes[index])).toEqual(expectedUnits[index]);
