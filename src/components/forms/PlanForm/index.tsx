@@ -3,7 +3,7 @@ import { Dictionary } from '@onaio/utils';
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
 import { xor } from 'lodash';
 import moment from 'moment';
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import {
   Button,
@@ -74,6 +74,7 @@ import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
 import JurisdictionSelect from '../JurisdictionSelect';
+import { getConditionAndTriggers } from './components/actions';
 import {
   doesFieldHaveErrors,
   generatePlanDefinition,
@@ -152,6 +153,8 @@ const PlanForm = (props: PlanFormProps) => {
   const [globalError, setGlobalError] = useState<string>('');
   const [areWeDoneHere, setAreWeDoneHere] = useState<boolean>(false);
   const [activityModal, setActivityModal] = useState<boolean>(false);
+  const [actionConditions, setActionConditions] = useState<Dictionary>({});
+  const [actionTriggers, setActionTriggers] = useState<Dictionary>({});
 
   const {
     allFormActivities,
@@ -164,6 +167,12 @@ const PlanForm = (props: PlanFormProps) => {
     jurisdictionLabel,
     redirectAfterAction,
   } = props;
+
+  useEffect(() => {
+    const { conditions, triggers } = getConditionAndTriggers(initialValues.activities);
+    setActionConditions(conditions);
+    setActionTriggers(triggers);
+  }, []);
 
   const editMode: boolean = initialValues.identifier !== '';
 
@@ -222,97 +231,6 @@ const PlanForm = (props: PlanFormProps) => {
   /** if plan is updated or saved redirect to plans page */
   if (areWeDoneHere) {
     return <Redirect to={redirectAfterAction} />;
-  }
-
-  // This is still WIP
-  const conditionX: Dictionary = {};
-  const triggerX: Dictionary = {};
-  for (let index = 0; index < initialValues.activities.length; index++) {
-    const element = initialValues.activities[index];
-    if (element.condition) {
-      conditionX[element.actionCode] = element.condition.map((item, mapIndex) => {
-        return (
-          <React.Fragment key={`${element.actionCode}-${index}-condition-${mapIndex}`}>
-            {item.expression && (
-              <FormGroup>
-                <Label for={`activities[${index}].condition[${mapIndex}].expression`}>
-                  Condition
-                </Label>
-                <Field
-                  className="form-control"
-                  required={true}
-                  component="textarea"
-                  name={`activities[${index}].condition[${mapIndex}].expression`}
-                  id={`activities[${index}].condition[${mapIndex}].expression`}
-                />
-              </FormGroup>
-            )}
-            {item.description && (
-              <FormGroup>
-                <Label for={`activities[${index}].condition[${mapIndex}].description`}>
-                  Description
-                </Label>
-                <Field
-                  className="form-control"
-                  required={true}
-                  component="textarea"
-                  name={`activities[${index}].condition[${mapIndex}].description`}
-                  id={`activities[${index}].condition[${mapIndex}].description`}
-                />
-              </FormGroup>
-            )}
-          </React.Fragment>
-        );
-      });
-    }
-    if (element.trigger) {
-      triggerX[element.actionCode] = element.trigger.map((item, mapIndex) => {
-        return (
-          <React.Fragment key={`${element.actionCode}-${index}-trigger-${mapIndex}`}>
-            {item.name && (
-              <FormGroup>
-                <Label for={`activities[${index}].trigger[${mapIndex}].name`}>Name</Label>
-                <Field
-                  className="form-control"
-                  required={true}
-                  type="text"
-                  name={`activities[${index}].trigger[${mapIndex}].name`}
-                  id={`activities[${index}].trigger[${mapIndex}].name`}
-                />
-              </FormGroup>
-            )}
-            {item.description && (
-              <FormGroup>
-                <Label for={`activities[${index}].trigger[${mapIndex}].expression`}>
-                  Condition
-                </Label>
-                <Field
-                  className="form-control"
-                  required={true}
-                  component="textarea"
-                  name={`activities[${index}].trigger[${mapIndex}].expression`}
-                  id={`activities[${index}].trigger[${mapIndex}].expression`}
-                />
-              </FormGroup>
-            )}
-            {item.expression && (
-              <FormGroup>
-                <Label for={`activities[${index}].trigger[${mapIndex}].description`}>
-                  Description
-                </Label>
-                <Field
-                  className="form-control"
-                  required={true}
-                  component="textarea"
-                  name={`activities[${index}].trigger[${mapIndex}].description`}
-                  id={`activities[${index}].trigger[${mapIndex}].description`}
-                />
-              </FormGroup>
-            )}
-          </React.Fragment>
-        );
-      });
-    }
   }
 
   return (
@@ -399,6 +317,9 @@ const PlanForm = (props: PlanFormProps) => {
 
                   if (planActivitiesMap.hasOwnProperty(target.value)) {
                     setFieldValue('activities', planActivitiesMap[target.value]);
+                    const newStuff = getConditionAndTriggers(planActivitiesMap[target.value]);
+                    setActionConditions(newStuff.conditions);
+                    setActionTriggers(newStuff.triggers);
                   }
 
                   setFieldValue('jurisdictions', [initialJurisdictionValues]);
@@ -857,11 +778,11 @@ const PlanForm = (props: PlanFormProps) => {
                           </FormGroup>
                           <fieldset>
                             <legend>Triggers</legend>
-                            {triggerX[values.activities[index].actionCode]}
+                            {actionTriggers[values.activities[index].actionCode]}
                           </fieldset>
                           <fieldset>
                             <legend>Conditions</legend>
-                            {conditionX[values.activities[index].actionCode]}
+                            {actionConditions[values.activities[index].actionCode]}
                           </fieldset>
                           <fieldset>
                             <legend>Goal</legend>
