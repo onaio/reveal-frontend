@@ -660,6 +660,7 @@ export const expectedPlanDefinition = {
     end: '2019-08-29',
     start: '2019-08-09',
   },
+  experimental: false,
   goal: [
     {
       description: 'Spray structures in the operational area',
@@ -893,6 +894,61 @@ export const planFormValues2 = {
   status: 'active',
   taskGenerationStatus: 'False',
   title: 'A2-Lusaka Akros Test Focus 2',
+  version: '1',
+};
+
+export const planFormValues3 = {
+  activities: [
+    {
+      actionCode: 'IRS',
+      actionDescription: 'Visit each structure in the operational area and attempt to spray',
+      actionIdentifier: 'b646cfe1-7180-4494-80b5-ee20579dc343',
+      actionReason: 'Routine',
+      actionTitle: 'Spray Structures',
+      condition: [
+        {
+          description: 'Structure is residential',
+          expression:
+            "$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').text = 'Residential Structure'",
+        },
+        {
+          description: 'Register structure Event submitted for a residential structure',
+          expression:
+            "$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and item.where(linkId='structureType').answer.value ='Residential Structure')",
+        },
+      ],
+      goalDescription: 'Spray structures in the operational area',
+      goalDue: moment('2020-12-31T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 90,
+      timingPeriodEnd: moment('2020-12-31T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2020-06-24T00:00:00.000Z').toDate(),
+      trigger: [
+        { name: 'plan-activation' },
+        {
+          description: '',
+          expression: "questionnaire = 'Register_Structure'",
+          name: 'event-submission',
+        },
+      ],
+    },
+  ],
+  caseNum: '',
+  date: moment('2020-06-24T00:00:00.000Z').toDate(),
+  end: moment('2020-12-31T00:00:00.000Z').toDate(),
+  fiReason: undefined,
+  fiStatus: undefined,
+  identifier: '043fc8cb-0459-4b39-b71c-abc15f13a5dd',
+  interventionType: InterventionType.DynamicIRS,
+  jurisdictions: [
+    { id: '6fffaf7f-f16f-4713-a1ac-0cf6e2fe7f2a', name: '6fffaf7f-f16f-4713-a1ac-0cf6e2fe7f2a' },
+  ],
+  name: 'IRS-2020-06-24-Dynamic-Task-Test-Plan',
+  opensrpEventId: undefined,
+  start: moment('2020-06-24T00:00:00.000Z').toDate(),
+  status: PlanStatus.ACTIVE,
+  taskGenerationStatus: 'Disabled',
+  title: 'IRS 2020-06-24 Dynamic Task Test Plan',
   version: '1',
 };
 

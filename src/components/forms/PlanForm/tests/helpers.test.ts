@@ -31,6 +31,7 @@ import {
   planActivityWithoutTargets,
   planFormValues,
   planFormValues2,
+  planFormValues3,
   values,
   values2,
   valuesWithJurisdiction,
@@ -105,6 +106,19 @@ describe('containers/forms/PlanForm/helpers', () => {
   it('check generatePlanDefinition returns the correct value', () => {
     MockDate.set('1/30/2000', 0);
     expect(generatePlanDefinition(values2)).toEqual(expectedPlanDefinition);
+
+    // add taskGenerationStatus and increment version
+    const planCopy = {
+      ...plans[5],
+      useContext: plans[5].useContext.concat({
+        code: 'taskGenerationStatus',
+        valueCodableConcept: 'Disabled',
+      }),
+      version: 2,
+    };
+    // remove serverVersion
+    const { serverVersion, ...expectedDynamicPlan } = planCopy;
+    expect(generatePlanDefinition(planFormValues3 as PlanFormFields)).toEqual(expectedDynamicPlan);
     MockDate.reset();
   });
 
@@ -132,7 +146,7 @@ describe('containers/forms/PlanForm/helpers', () => {
     const generatedPlanForm = getPlanFormValues(plan);
     const generatedPlan = generatePlanDefinition(generatedPlanForm, plan);
 
-    expect(plan).toEqual({
+    expect({ ...plan, experimental: false }).toEqual({
       ...generatedPlan,
       serverVersion: 1563494230144,
       version: '1',
