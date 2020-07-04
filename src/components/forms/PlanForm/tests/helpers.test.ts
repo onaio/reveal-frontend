@@ -31,6 +31,7 @@ import {
   planActivityWithoutTargets,
   planFormValues,
   planFormValues2,
+  planFormValues3,
   values,
   values2,
   valuesWithJurisdiction,
@@ -105,6 +106,7 @@ describe('containers/forms/PlanForm/helpers', () => {
   it('check generatePlanDefinition returns the correct value', () => {
     MockDate.set('1/30/2000', 0);
     expect(generatePlanDefinition(values2)).toEqual(expectedPlanDefinition);
+    expect(generatePlanDefinition(planFormValues3 as PlanFormFields)).toEqual({});
     MockDate.reset();
   });
 
