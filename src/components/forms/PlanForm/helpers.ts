@@ -21,6 +21,8 @@ import {
   goalPriorities,
   PlanAction,
   PlanActionCodes,
+  PlanActionCondition,
+  PlanActionTrigger,
   planActivities,
   PlanActivity,
   PlanDefinition,
@@ -149,6 +151,7 @@ export interface PlanActivityFormFields {
   goalValue: number;
   timingPeriodEnd: Date;
   timingPeriodStart: Date;
+  trigger?: PlanActivityTrigger[];
 }
 
 /** Plan jurisdictions form fields interface */
@@ -321,6 +324,51 @@ export function getPlanActivityFromActionCode(
 }
 
 /**
+ * Get the plan definition conditions from form field values
+ * @param element - form field values for one plan activity
+ */
+const getConditionFromFormField = (
+  element: PlanActivityFormFields
+): PlanActionCondition[] | undefined => {
+  return (
+    element.condition &&
+    element.condition.map(item => {
+      return {
+        expression: {
+          ...(item.description && { description: item.description }),
+          expression: item.expression,
+        },
+        kind: 'applicability',
+      };
+    })
+  );
+};
+
+/**
+ * Get the plan definition triggers from form field values
+ * @param element - form field values for one plan activity
+ */
+const getTriggerFromFormField = (
+  element: PlanActivityFormFields
+): PlanActionTrigger[] | undefined => {
+  return (
+    element.trigger &&
+    element.trigger.map(item => {
+      return {
+        ...((item.description || item.expression) && {
+          expression: {
+            ...(item.description && { description: item.description }),
+            ...(item.expression && { expression: item.expression }),
+          },
+        }),
+        name: item.name,
+        type: 'named-event',
+      } as PlanActionTrigger;
+    })
+  );
+};
+
+/**
  * Get action and plans from PlanForm activities
  * @param {PlanActivityFormFields[]} activities - this of activities from PlanForm
  * @param {string} planIdentifier - this plan identifier
@@ -365,6 +413,9 @@ export function extractActivitiesFromPlanForm(
         };
       }
 
+      const condition = getConditionFromFormField(element);
+      const trigger = getTriggerFromFormField(element);
+
       const thisActionIdentifier =
         !element.actionIdentifier || element.actionIdentifier === ''
           ? planIdentifier === ''
@@ -380,6 +431,8 @@ export function extractActivitiesFromPlanForm(
 
       // next put in values from the form
       const actionFields: Partial<PlanAction> = {
+        ...(condition && { condition }),
+        ...(trigger && { trigger }),
         description: element.actionDescription,
         identifier: thisActionIdentifier,
         prefix,
