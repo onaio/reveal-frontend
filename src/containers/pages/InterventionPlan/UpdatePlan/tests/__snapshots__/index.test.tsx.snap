@@ -407,7 +407,7 @@ Object {
       "condition": Array [
         Object {
           "description": "Jurisdiction type location",
-          "expression": "Location.physicalType.text = 'jdn",
+          "expression": "Location.physicalType.text = 'jdn'",
         },
       ],
       "goalDescription": "Complete at least 1 BCC activity for the operational area",
