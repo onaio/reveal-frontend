@@ -699,7 +699,7 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-            description: 'Register stucture Event submitted for a residential structure',
+            description: 'Register structure Event submitted for a residential structure',
             expression:
               "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
           },
