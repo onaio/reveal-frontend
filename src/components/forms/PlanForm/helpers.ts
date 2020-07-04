@@ -736,16 +736,9 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
   );
 
   if (activities.length < 1) {
-    if (interventionType === InterventionType.IRS) {
-      activities = getFormActivities(IRSActivities);
+    if (planActivitiesMap.hasOwnProperty(interventionType)) {
+      activities = planActivitiesMap[interventionType];
     }
-    if (interventionType === InterventionType.FI) {
-      activities = getFormActivities(FIActivities);
-    }
-    if (interventionType === InterventionType.MDAPoint) {
-      activities = getFormActivities(MDAPointActivities);
-    }
-    // TODO: add the new plan types
   }
 
   let taskGenerationStatus: taskGenerationStatusType;
