@@ -34,6 +34,38 @@ import {
   taskGenerationStatuses,
   UseContext,
 } from '../../../configs/settings';
+import {
+  APPLICABILITY_CONDITION_KIND,
+  BCC_ACTIVITY_CODE,
+  BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  BLOOD_SCREENING_ACTIVITY_CODE,
+  CASE_CONFIRMATION_ACTIVITY_CODE,
+  CASE_NUMBER_CODE,
+  CONDITION,
+  DAYS,
+  DYNAMIC_BCC_ACTIVITY_CODE,
+  DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
+  DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
+  DYNAMIC_IRS_ACTIVITY_CODE,
+  DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
+  DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
+  DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
+  DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  FAMILY_REGISTRATION_ACTIVITY_CODE,
+  FI_REASON_CODE,
+  FI_STATUS_CODE,
+  INTERVENTION_TYPE_CODE,
+  IRS_ACTIVITY_CODE,
+  LARVAL_DIPPING_ACTIVITY_CODE,
+  MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
+  MDA_POINT_DISPENSE_ACTIVITY_CODE,
+  MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  NAMED_EVENT_TRIGGER_TYPE,
+  OPENSRP_EVENT_ID_CODE,
+  TASK_GENERATION_STATUS_CODE,
+  TRIGGER,
+} from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import {
@@ -200,7 +232,7 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
       activityObj.goal.target[0].due !== ''
         ? parseISO(`${activityObj.goal.target[0].due}${DEFAULT_TIME}`)
         : moment()
-            .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
+            .add(DEFAULT_ACTIVITY_DURATION_DAYS, DAYS)
             .toDate(),
     goalPriority: activityObj.goal.priority || goalPriorities[1],
     goalValue:
@@ -214,7 +246,7 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
       activityObj.action.timingPeriod.end && activityObj.action.timingPeriod.end !== ''
         ? parseISO(`${activityObj.action.timingPeriod.end}${DEFAULT_TIME}`)
         : moment()
-            .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
+            .add(DEFAULT_ACTIVITY_DURATION_DAYS, DAYS)
             .toDate(),
     timingPeriodStart:
       activityObj.action.timingPeriod.start && activityObj.action.timingPeriod.start !== ''
@@ -225,31 +257,37 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
 
 /** group plan activities */
 export const FIActivities = pick(planActivities, [
-  'BCC',
-  'bednetDistribution',
-  'bloodScreening',
-  'caseConfirmation',
-  'familyRegistration',
-  'larvalDipping',
-  'mosquitoCollection',
+  BCC_ACTIVITY_CODE,
+  BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  BLOOD_SCREENING_ACTIVITY_CODE,
+  CASE_CONFIRMATION_ACTIVITY_CODE,
+  FAMILY_REGISTRATION_ACTIVITY_CODE,
+  LARVAL_DIPPING_ACTIVITY_CODE,
+  MOSQUITO_COLLECTION_ACTIVITY_CODE,
 ]);
-export const IRSActivities = pick(planActivities, ['IRS']);
-export const MDAActivities = pick(planActivities, ['caseConfirmation']);
-export const MDAPointActivities = pick(planActivities, ['pointAdverseMDA', 'pointDispenseMDA']);
+export const IRSActivities = pick(planActivities, [IRS_ACTIVITY_CODE]);
+export const MDAActivities = pick(planActivities, [CASE_CONFIRMATION_ACTIVITY_CODE]);
+export const MDAPointActivities = pick(planActivities, [
+  MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
+  MDA_POINT_DISPENSE_ACTIVITY_CODE,
+]);
 export const DynamicFIActivities = pick(planActivities, [
-  'dynamicBCC',
-  'dynamicBednetDistribution',
-  'dynamicBloodScreening',
-  'dynamicFamilyRegistration',
-  'dynamicLarvalDipping',
-  'dynamicMosquitoCollection',
+  DYNAMIC_BCC_ACTIVITY_CODE,
+  DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
+  DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
+  DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
+  DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE,
 ]);
 export const DynamicMDAActivities = pick(planActivities, [
-  'dynamicCommunityAdherenceMDA',
-  'dynamicCommunityDispenseMDA',
-  'dynamicFamilyRegistration',
+  DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
+  DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
+  DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
 ]);
-export const DynamicIRSActivities = pick(planActivities, ['dynamicBCC', 'dynamicIRS']);
+export const DynamicIRSActivities = pick(planActivities, [
+  DYNAMIC_BCC_ACTIVITY_CODE,
+  DYNAMIC_IRS_ACTIVITY_CODE,
+]);
 
 export type FormActivity =
   | typeof FIActivities
@@ -315,14 +353,13 @@ export function getPlanActivityFromActionCode(
     if (isDynamic) {
       return (
         item.action.code === actionCode &&
-        (Object.keys(item.action).includes('condition') ||
-          Object.keys(item.action).includes('trigger'))
+        (Object.keys(item.action).includes(CONDITION) || Object.keys(item.action).includes(TRIGGER))
       );
     } else {
       return (
         item.action.code === actionCode &&
-        !Object.keys(item.action).includes('condition') &&
-        !Object.keys(item.action).includes('trigger')
+        !Object.keys(item.action).includes(CONDITION) &&
+        !Object.keys(item.action).includes(TRIGGER)
       );
     }
   });
@@ -348,7 +385,7 @@ const getConditionFromFormField = (
           ...(item.description && { description: item.description }),
           expression: item.expression,
         },
-        kind: 'applicability',
+        kind: APPLICABILITY_CONDITION_KIND,
       };
     })
   );
@@ -372,7 +409,7 @@ const getTriggerFromFormField = (
           },
         }),
         name: item.name,
-        type: 'named-event',
+        type: NAMED_EVENT_TRIGGER_TYPE,
       } as PlanActionTrigger;
     })
   );
@@ -406,7 +443,7 @@ export function extractActivitiesFromPlanForm(
 
       // lets figure out if this is a dynamic activity
       const isDynamic =
-        Object.keys(element).includes('condition') || Object.keys(element).includes('trigger');
+        Object.keys(element).includes(CONDITION) || Object.keys(element).includes(TRIGGER);
       const planActivity = getPlanActivityFromActionCode(
         element.actionCode as PlanActionCodesType,
         isDynamic
@@ -499,8 +536,8 @@ export function extractActivitiesFromPlanForm(
 export const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [string, string] => {
   const target = event.target as HTMLInputElement;
   const currentInterventionType =
-    target.name === 'interventionType' ? target.value : formValues.interventionType;
-  const currentFiStatus = target.name === 'fiStatus' ? target.value : formValues.fiStatus;
+    target.name === INTERVENTION_TYPE_CODE ? target.value : formValues.interventionType;
+  const currentFiStatus = target.name === FI_STATUS_CODE ? target.value : formValues.fiStatus;
 
   let currentJurisdiction = '';
   if (formValues.jurisdictions.length > 0) {
@@ -575,30 +612,30 @@ export function generatePlanDefinition(
 
   const useContext: UseContext[] = [
     {
-      code: 'interventionType',
+      code: INTERVENTION_TYPE_CODE,
       valueCodableConcept: formValue.interventionType,
     },
   ];
 
   if (formValue.fiStatus) {
-    useContext.push({ code: 'fiStatus', valueCodableConcept: formValue.fiStatus });
+    useContext.push({ code: FI_STATUS_CODE, valueCodableConcept: formValue.fiStatus });
   }
 
   if (formValue.fiReason) {
-    useContext.push({ code: 'fiReason', valueCodableConcept: formValue.fiReason });
+    useContext.push({ code: FI_REASON_CODE, valueCodableConcept: formValue.fiReason });
   }
 
   if (formValue.caseNum) {
-    useContext.push({ code: 'caseNum', valueCodableConcept: formValue.caseNum });
+    useContext.push({ code: CASE_NUMBER_CODE, valueCodableConcept: formValue.caseNum });
   }
 
   if (formValue.opensrpEventId) {
-    useContext.push({ code: 'opensrpEventId', valueCodableConcept: formValue.opensrpEventId });
+    useContext.push({ code: OPENSRP_EVENT_ID_CODE, valueCodableConcept: formValue.opensrpEventId });
   }
 
   if (formValue.taskGenerationStatus) {
     useContext.push({
-      code: 'taskGenerationStatus',
+      code: TASK_GENERATION_STATUS_CODE,
       valueCodableConcept: formValue.taskGenerationStatus,
     });
   }
@@ -636,7 +673,7 @@ export function generatePlanDefinition(
 export const isDynamicPlan = (planObject: PlanDefinition) =>
   planObject.action
     .map(action => {
-      return Object.keys(action).includes('condition') || Object.keys(action).includes('trigger');
+      return Object.keys(action).includes(CONDITION) || Object.keys(action).includes(TRIGGER);
     })
     .includes(true);
 
@@ -655,22 +692,22 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
 
   for (const context of planObject.useContext) {
     switch (context.code) {
-      case 'interventionType':
+      case INTERVENTION_TYPE_CODE:
         typeUseContext.push(context);
         break;
-      case 'fiReason':
+      case FI_REASON_CODE:
         reasonUseContext.push(context);
         break;
-      case 'fiStatus':
+      case FI_STATUS_CODE:
         statusUseContext.push(context);
         break;
-      case 'opensrpEventId':
+      case OPENSRP_EVENT_ID_CODE:
         eventIdUseContext.push(context);
         break;
-      case 'caseNum':
+      case CASE_NUMBER_CODE:
         caseNumUseContext.push(context);
         break;
-      case 'taskGenerationStatus':
+      case TASK_GENERATION_STATUS_CODE:
         taskGenerationStatusContext.push(context);
         break;
     }

@@ -55,6 +55,9 @@ export const HISTORICAL_INDEX_CASES = 'historical-index-cases';
 export const CURRENT_INDEX_CASES = 'current-index-cases';
 export const FILE_UPLOAD_TYPE = 'file-upload';
 export const VALIDATOR_UPLOAD_TYPE = 'validator-upload';
+export const DAYS = 'days';
+export const CONDITION = 'condition';
+export const TRIGGER = 'trigger';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
