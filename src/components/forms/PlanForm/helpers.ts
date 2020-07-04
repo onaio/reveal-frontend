@@ -346,7 +346,13 @@ export function extractActivitiesFromPlanForm(
       let thisAction: PlanAction = planActivities.BCC.action;
       let thisGoal: PlanGoal = planActivities.BCC.goal;
 
-      const planActivity = getPlanActivityFromActionCode(element.actionCode as PlanActionCodesType);
+      // lets figure out if this is a dynamic activity
+      const isDynamic =
+        Object.keys(element).includes('condition') || Object.keys(element).includes('trigger');
+      const planActivity = getPlanActivityFromActionCode(
+        element.actionCode as PlanActionCodesType,
+        isDynamic
+      );
 
       if (planActivity) {
         thisAction = {
@@ -545,6 +551,7 @@ export function generatePlanDefinition(
       end: moment(formValue.end).format(DATE_FORMAT.toUpperCase()),
       start: moment(formValue.start).format(DATE_FORMAT.toUpperCase()),
     },
+    experimental: false,
     identifier: planIdentifier,
     jurisdiction: formValue.jurisdictions
       ? formValue.jurisdictions.map(e => {
