@@ -1,3 +1,4 @@
+import { Dictionary } from '@onaio/utils';
 import { parseISO } from 'date-fns';
 import { FormikErrors } from 'formik';
 import { findKey, pick } from 'lodash';
@@ -45,34 +46,6 @@ import {
   PlanActivityTitlesType,
   taskGenerationStatusType,
 } from './types';
-
-/** group plan activities */
-export const FIActivities = pick(planActivities, [
-  'BCC',
-  'bednetDistribution',
-  'bloodScreening',
-  'caseConfirmation',
-  'familyRegistration',
-  'larvalDipping',
-  'mosquitoCollection',
-]);
-export const IRSActivities = pick(planActivities, ['IRS']);
-export const MDAActivities = pick(planActivities, ['caseConfirmation']);
-export const MDAPointActivities = pick(planActivities, ['pointAdverseMDA', 'pointDispenseMDA']);
-export const DynamicFIActivities = pick(planActivities, [
-  'dynamicBCC',
-  'dynamicBednetDistribution',
-  'dynamicBloodScreening',
-  'dynamicFamilyRegistration',
-  'dynamicLarvalDipping',
-  'dynamicMosquitoCollection',
-]);
-export const DynamicMDAActivities = pick(planActivities, [
-  'dynamicCommunityAdherenceMDA',
-  'dynamicCommunityDispenseMDA',
-  'dynamicFamilyRegistration',
-]);
-export const DynamicIRSActivities = pick(planActivities, ['dynamicBCC', 'dynamicIRS']);
 
 /** Array of FI Statuses */
 export const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStatusType);
@@ -250,6 +223,34 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
   };
 }
 
+/** group plan activities */
+export const FIActivities = pick(planActivities, [
+  'BCC',
+  'bednetDistribution',
+  'bloodScreening',
+  'caseConfirmation',
+  'familyRegistration',
+  'larvalDipping',
+  'mosquitoCollection',
+]);
+export const IRSActivities = pick(planActivities, ['IRS']);
+export const MDAActivities = pick(planActivities, ['caseConfirmation']);
+export const MDAPointActivities = pick(planActivities, ['pointAdverseMDA', 'pointDispenseMDA']);
+export const DynamicFIActivities = pick(planActivities, [
+  'dynamicBCC',
+  'dynamicBednetDistribution',
+  'dynamicBloodScreening',
+  'dynamicFamilyRegistration',
+  'dynamicLarvalDipping',
+  'dynamicMosquitoCollection',
+]);
+export const DynamicMDAActivities = pick(planActivities, [
+  'dynamicCommunityAdherenceMDA',
+  'dynamicCommunityDispenseMDA',
+  'dynamicFamilyRegistration',
+]);
+export const DynamicIRSActivities = pick(planActivities, ['dynamicBCC', 'dynamicIRS']);
+
 export type FormActivity =
   | typeof FIActivities
   | typeof IRSActivities
@@ -267,6 +268,15 @@ export function getFormActivities(items: FormActivity) {
     .sort((a, b) => a.action.prefix - b.action.prefix)
     .map(e => extractActivityForForm(e));
 }
+
+const planActivitiesMap: Dictionary<PlanActivityFormFields[]> = {};
+planActivitiesMap[InterventionType.IRS] = getFormActivities(IRSActivities);
+planActivitiesMap[InterventionType.FI] = getFormActivities(FIActivities);
+planActivitiesMap[InterventionType.MDAPoint] = getFormActivities(MDAPointActivities);
+planActivitiesMap[InterventionType.DynamicFI] = getFormActivities(DynamicFIActivities);
+planActivitiesMap[InterventionType.DynamicIRS] = getFormActivities(DynamicIRSActivities);
+planActivitiesMap[InterventionType.DynamicMDA] = getFormActivities(DynamicMDAActivities);
+export { planActivitiesMap };
 
 /**
  * Get a plan activity from a plan definition object
