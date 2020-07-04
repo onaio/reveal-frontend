@@ -68,6 +68,9 @@ const planFormPropsLookUp = {
   [InterventionType.FI]: {},
   [InterventionType.MDA]: {},
   [InterventionType.MDAPoint]: {},
+  [InterventionType.DynamicFI]: {},
+  [InterventionType.DynamicIRS]: {},
+  [InterventionType.DynamicMDA]: {},
 };
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
