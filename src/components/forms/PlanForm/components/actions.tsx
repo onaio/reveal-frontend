@@ -13,84 +13,95 @@ export const getConditionAndTriggers = (planActivities: PlanActivityFormFields[]
     if (element.condition) {
       conditions[element.actionCode] = element.condition.map((item, mapIndex) => {
         return (
-          <React.Fragment key={`${element.actionCode}-${index}-condition-${mapIndex}`}>
+          <FormGroup
+            className="condition-group"
+            row={true}
+            key={`${element.actionCode}-${index}-condition-${mapIndex}`}
+          >
             {item.expression && (
-              <FormGroup>
-                <Label for={`activities[${index}].condition[${mapIndex}].expression`}>
+              <React.Fragment>
+                <Label for={`activities[${index}].condition[${mapIndex}].expression`} sm={2}>
                   Condition
                 </Label>
                 <Field
-                  className="form-control"
+                  className="form-control col-sm-10"
                   required={true}
                   component="textarea"
                   name={`activities[${index}].condition[${mapIndex}].expression`}
                   id={`activities[${index}].condition[${mapIndex}].expression`}
                 />
-              </FormGroup>
+              </React.Fragment>
             )}
             {item.description && (
-              <FormGroup>
-                <Label for={`activities[${index}].condition[${mapIndex}].description`}>
+              <React.Fragment>
+                <Label for={`activities[${index}].condition[${mapIndex}].description`} sm={2}>
                   Description
                 </Label>
                 <Field
-                  className="form-control"
+                  className="form-control col-sm-10"
                   required={true}
                   component="textarea"
                   name={`activities[${index}].condition[${mapIndex}].description`}
                   id={`activities[${index}].condition[${mapIndex}].description`}
                 />
-              </FormGroup>
+              </React.Fragment>
             )}
-          </React.Fragment>
+          </FormGroup>
         );
       });
     }
     if (element.trigger) {
       triggers[element.actionCode] = element.trigger.map((item, mapIndex) => {
         return (
-          <React.Fragment key={`${element.actionCode}-${index}-trigger-${mapIndex}`}>
+          <FormGroup
+            className="trigger-group"
+            row={true}
+            key={`${element.actionCode}-${index}-trigger-${mapIndex}`}
+          >
             {item.name && (
-              <FormGroup>
-                <Label for={`activities[${index}].trigger[${mapIndex}].name`}>Name</Label>
+              <React.Fragment>
+                <Label for={`activities[${index}].trigger[${mapIndex}].name`} sm={2}>
+                  Name
+                </Label>
                 <Field
-                  className="form-control"
+                  className="form-control col-sm-10"
+                  sm={10}
                   required={true}
                   type="text"
                   name={`activities[${index}].trigger[${mapIndex}].name`}
                   id={`activities[${index}].trigger[${mapIndex}].name`}
                 />
-              </FormGroup>
+              </React.Fragment>
             )}
             {item.description && (
-              <FormGroup>
-                <Label for={`activities[${index}].trigger[${mapIndex}].expression`}>
+              <React.Fragment>
+                <Label for={`activities[${index}].trigger[${mapIndex}].expression`} sm={2}>
                   Condition
                 </Label>
                 <Field
-                  className="form-control"
+                  className="form-control col-sm-10"
                   required={true}
                   component="textarea"
                   name={`activities[${index}].trigger[${mapIndex}].expression`}
                   id={`activities[${index}].trigger[${mapIndex}].expression`}
                 />
-              </FormGroup>
+              </React.Fragment>
             )}
             {item.expression && (
-              <FormGroup>
-                <Label for={`activities[${index}].trigger[${mapIndex}].description`}>
+              <React.Fragment>
+                <Label for={`activities[${index}].trigger[${mapIndex}].description`} sm={2}>
                   Description
                 </Label>
                 <Field
-                  className="form-control"
-                  required={true}
+                  className="form-control col-sm-10"
+                  required={false}
                   component="textarea"
                   name={`activities[${index}].trigger[${mapIndex}].description`}
                   id={`activities[${index}].trigger[${mapIndex}].description`}
                 />
-              </FormGroup>
+              </React.Fragment>
             )}
-          </React.Fragment>
+          </FormGroup>
         );
       });
     }
