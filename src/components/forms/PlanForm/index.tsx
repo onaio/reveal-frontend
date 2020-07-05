@@ -1014,7 +1014,7 @@ const PlanForm = (props: PlanFormProps) => {
   );
 };
 
-const defaultProps: PlanFormProps = {
+export const defaultProps: PlanFormProps = {
   allFormActivities: getFormActivities(planActivities),
   allowMoreJurisdictions: true,
   cascadingSelect: true,
