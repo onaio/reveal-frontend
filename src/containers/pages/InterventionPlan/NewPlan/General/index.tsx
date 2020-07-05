@@ -5,7 +5,7 @@ import PlanForm, {
   defaultInitialValues,
   PlanFormProps,
 } from '../../../../../components/forms/PlanForm';
-import { getFormActivities, IRSActivities } from '../../../../../components/forms/PlanForm/helpers';
+import { planActivitiesMap } from '../../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb, {
   Page,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -59,7 +59,7 @@ const planFormPropsLookUp = {
     cascadingSelect: false,
     initialValues: {
       ...defaultInitialValues,
-      activities: getFormActivities(IRSActivities),
+      activities: planActivitiesMap[InterventionType.IRS],
       interventionType: InterventionType.IRS,
     },
     jurisdictionLabel: COUNTRY,
@@ -164,7 +164,7 @@ export const NewIRSPlan = () => {
       disabledFields: ['interventionType', 'status'],
       initialValues: {
         ...defaultInitialValues,
-        activities: getFormActivities(IRSActivities),
+        activities: planActivitiesMap[InterventionType.IRS],
         interventionType: InterventionType.IRS,
       },
       jurisdictionLabel: COUNTRY,
