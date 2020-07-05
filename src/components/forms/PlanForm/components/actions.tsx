@@ -4,6 +4,11 @@ import React from 'react';
 import { FormGroup, Label } from 'reactstrap';
 import { PlanActivityFormFields } from '../helpers';
 
+/**
+ * Returns form components to render triggers and conditions form fields
+ * @param planActivities - activites from the plan form field values
+ * @param disabledFields - whether to disable the fields or not
+ */
 export const getConditionAndTriggers = (
   planActivities: PlanActivityFormFields[],
   disabledFields: boolean = true
