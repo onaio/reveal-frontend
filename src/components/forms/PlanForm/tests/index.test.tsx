@@ -70,6 +70,10 @@ describe('containers/forms/PlanForm', () => {
     expect(wrapper.find('#jurisdictions-select-container').length).toEqual(1);
     expect(wrapper.find('#jurisdictions-display-container').length).toEqual(0);
 
+    // should not have triggers or conditions
+    expect(wrapper.find('.triggers-fieldset').length).toEqual(0);
+    expect(wrapper.find('.conditions-fieldset').length).toEqual(0);
+
     // if you set fiReason to case triggered then caseNum and opensrpEventId are now rendered
     wrapper
       .find('#fiReason select')
@@ -85,6 +89,36 @@ describe('containers/forms/PlanForm', () => {
       .simulate('change', { target: { value: 'Routine', name: 'fiReason' } });
     expect(wrapper.find('#caseNum').length).toEqual(0);
     expect(wrapper.find('#opensrpEventId').length).toEqual(0);
+
+    wrapper.unmount();
+  });
+
+  it('renders dynamic plans correctly', () => {
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
+    wrapper
+      .find('#interventionType select')
+      .simulate('change', { target: { value: 'Dynamic-IRS', name: 'interventionType' } });
+
+    expect(toJson(wrapper.find('.triggers-fieldset legend'))).toMatchSnapshot('triggers legends');
+    expect(toJson(wrapper.find('.trigger-group label'))).toMatchSnapshot('triggers labels');
+    expect(toJson(wrapper.find('.triggers-fieldset input'))).toMatchSnapshot('triggers inputs');
+    expect(toJson(wrapper.find('.triggers-fieldset textarea'))).toMatchSnapshot(
+      'triggers textareas'
+    );
+
+    expect(toJson(wrapper.find('.conditions-fieldset legend'))).toMatchSnapshot(
+      'conditions legends'
+    );
+    expect(toJson(wrapper.find('.condition-group label'))).toMatchSnapshot('conditions labels');
+    expect(toJson(wrapper.find('.conditions-fieldset input'))).toMatchSnapshot('conditions inputs');
+    expect(toJson(wrapper.find('.conditions-fieldset textarea'))).toMatchSnapshot(
+      'conditions textareas'
+    );
 
     wrapper.unmount();
   });
