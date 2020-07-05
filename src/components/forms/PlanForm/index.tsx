@@ -921,13 +921,13 @@ const PlanForm = (props: PlanFormProps) => {
                             </FormGroup>
                           </fieldset>
                           {actionTriggers.hasOwnProperty(values.activities[index].actionCode) && (
-                            <fieldset>
+                            <fieldset className="triggers-fieldset">
                               <legend>Triggers</legend>
                               {actionTriggers[values.activities[index].actionCode]}
                             </fieldset>
                           )}
                           {actionConditions.hasOwnProperty(values.activities[index].actionCode) && (
-                            <fieldset>
+                            <fieldset className="conditions-fieldset">
                               <legend>Conditions</legend>
                               {actionConditions[values.activities[index].actionCode]}
                             </fieldset>
