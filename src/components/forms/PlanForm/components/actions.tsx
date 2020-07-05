@@ -4,8 +4,10 @@ import React from 'react';
 import { FormGroup, Label } from 'reactstrap';
 import { PlanActivityFormFields } from '../helpers';
 
-export const getConditionAndTriggers = (planActivities: PlanActivityFormFields[]) => {
-  // This is still WIP
+export const getConditionAndTriggers = (
+  planActivities: PlanActivityFormFields[],
+  disabledFields: boolean = true
+) => {
   const conditions: Dictionary = {};
   const triggers: Dictionary = {};
   for (let index = 0; index < planActivities.length; index++) {
@@ -29,6 +31,7 @@ export const getConditionAndTriggers = (planActivities: PlanActivityFormFields[]
                   component="textarea"
                   name={`activities[${index}].condition[${mapIndex}].expression`}
                   id={`activities[${index}].condition[${mapIndex}].expression`}
+                  disabled={disabledFields}
                 />
               </React.Fragment>
             )}
@@ -43,6 +46,7 @@ export const getConditionAndTriggers = (planActivities: PlanActivityFormFields[]
                   component="textarea"
                   name={`activities[${index}].condition[${mapIndex}].description`}
                   id={`activities[${index}].condition[${mapIndex}].description`}
+                  disabled={disabledFields}
                 />
               </React.Fragment>
             )}
@@ -70,6 +74,7 @@ export const getConditionAndTriggers = (planActivities: PlanActivityFormFields[]
                   type="text"
                   name={`activities[${index}].trigger[${mapIndex}].name`}
                   id={`activities[${index}].trigger[${mapIndex}].name`}
+                  disabled={disabledFields}
                 />
               </React.Fragment>
             )}
@@ -84,6 +89,7 @@ export const getConditionAndTriggers = (planActivities: PlanActivityFormFields[]
                   component="textarea"
                   name={`activities[${index}].trigger[${mapIndex}].expression`}
                   id={`activities[${index}].trigger[${mapIndex}].expression`}
+                  disabled={disabledFields}
                 />
               </React.Fragment>
             )}
@@ -98,6 +104,7 @@ export const getConditionAndTriggers = (planActivities: PlanActivityFormFields[]
                   component="textarea"
                   name={`activities[${index}].trigger[${mapIndex}].description`}
                   id={`activities[${index}].trigger[${mapIndex}].description`}
+                  disabled={disabledFields}
                 />
               </React.Fragment>
             )}

@@ -169,7 +169,10 @@ const PlanForm = (props: PlanFormProps) => {
   } = props;
 
   useEffect(() => {
-    const { conditions, triggers } = getConditionAndTriggers(initialValues.activities);
+    const { conditions, triggers } = getConditionAndTriggers(
+      initialValues.activities,
+      disabledFields.includes('activities')
+    );
     setActionConditions(conditions);
     setActionTriggers(triggers);
   }, []);
@@ -317,7 +320,10 @@ const PlanForm = (props: PlanFormProps) => {
 
                   if (planActivitiesMap.hasOwnProperty(target.value)) {
                     setFieldValue('activities', planActivitiesMap[target.value]);
-                    const newStuff = getConditionAndTriggers(planActivitiesMap[target.value]);
+                    const newStuff = getConditionAndTriggers(
+                      planActivitiesMap[target.value],
+                      disabledFields.includes('activities')
+                    );
                     setActionConditions(newStuff.conditions);
                     setActionTriggers(newStuff.triggers);
                   }
