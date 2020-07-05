@@ -9,6 +9,7 @@ import {
   taskGenerationStatuses,
   useContextCodes,
 } from '../../../configs/settings';
+import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 
 /** FI Status type */
 export type FIStatusType = typeof FIStatuses[number];
@@ -44,4 +45,60 @@ export enum GoalUnit {
   PERCENT = 'Percent',
   PERSON = 'Person(s)',
   UNKNOWN = 'unknown',
+}
+
+/** Interface for Plan activity expression */
+export interface PlanActivityExpression {
+  description: string;
+  expression: string;
+}
+
+/** Interface for Plan activity trigger */
+export interface PlanActivityTrigger {
+  description?: string;
+  expression?: string;
+  name: string;
+}
+
+/** Plan activity form fields interface */
+export interface PlanActivityFormFields {
+  actionCode: string;
+  actionDescription: string;
+  actionIdentifier: string;
+  actionReason: string;
+  actionTitle: string;
+  condition?: PlanActivityExpression[];
+  goalDescription: string;
+  goalDue: Date;
+  goalPriority: string;
+  goalValue: number;
+  timingPeriodEnd: Date;
+  timingPeriodStart: Date;
+  trigger?: PlanActivityTrigger[];
+}
+
+/** Plan jurisdictions form fields interface */
+export interface PlanJurisdictionFormFields {
+  id: string;
+  name: string;
+}
+
+/** Plan form fields interface */
+export interface PlanFormFields {
+  activities: PlanActivityFormFields[];
+  caseNum?: string;
+  date: Date;
+  end: Date;
+  fiReason?: FIReasonType;
+  fiStatus?: FIStatusType;
+  identifier: string;
+  interventionType: InterventionType;
+  jurisdictions: PlanJurisdictionFormFields[];
+  name: string;
+  opensrpEventId?: string;
+  start: Date;
+  status: PlanStatus;
+  taskGenerationStatus: taskGenerationStatusType;
+  title: string;
+  version: string;
 }

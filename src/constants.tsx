@@ -30,20 +30,13 @@ export const MEDIUM_PRIORITY = 'medium-priority';
 export const HIGH_PRIORITIY = 'high-priority';
 export const TRUE = 'True';
 export const FALSE = 'False';
+export const DISABLED = 'Disabled';
 export const INTERVENTION_TYPE_CODE = 'interventionType';
 export const FI_STATUS_CODE = 'fiStatus';
 export const FI_REASON_CODE = 'fiReason';
 export const OPENSRP_EVENT_ID_CODE = 'opensrpEventId';
 export const CASE_NUMBER_CODE = 'caseNum';
 export const TASK_GENERATION_STATUS_CODE = 'taskGenerationStatus';
-export const CASE_CONFIRMATION_ACTIVITY_CODE = 'caseConfirmation';
-export const FAMILY_REGISTRATION_ACTIVITY_CODE = 'familyRegistration';
-export const BLOOD_SCREENING_ACTIVITY_CODE = 'bloodScreening';
-export const BEDNET_DISTRIBUTION_ACTIVITY_CODE = 'bednetDistribution';
-export const LARVAL_DIPPING_ACTIVITY_CODE = 'larvalDipping';
-export const MOSQUITO_COLLECTION_ACTIVITY_CODE = 'mosquitoCollection';
-export const MDA_POINT_DISPENSE_ACTIVITY_CODE = 'pointDispenseMDA';
-export const MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE = 'pointAdverseMDA';
 export const GA_ENV_TEST = 'test';
 export const PLAN_ID = 'plan_id';
 export const PLAN_INTERVENTION_TYPE = 'plan_intervention_type';
@@ -62,6 +55,9 @@ export const HISTORICAL_INDEX_CASES = 'historical-index-cases';
 export const CURRENT_INDEX_CASES = 'current-index-cases';
 export const FILE_UPLOAD_TYPE = 'file-upload';
 export const VALIDATOR_UPLOAD_TYPE = 'validator-upload';
+export const DAYS = 'days';
+export const CONDITION = 'condition';
+export const TRIGGER = 'trigger';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
@@ -163,6 +159,27 @@ export const YELLOW = 'Yellow';
 export const ORANGE = 'Orange';
 export const RED = 'Red';
 
+// plan activity codes
+export const CASE_CONFIRMATION_ACTIVITY_CODE = 'caseConfirmation';
+export const FAMILY_REGISTRATION_ACTIVITY_CODE = 'familyRegistration';
+export const BLOOD_SCREENING_ACTIVITY_CODE = 'bloodScreening';
+export const BEDNET_DISTRIBUTION_ACTIVITY_CODE = 'bednetDistribution';
+export const LARVAL_DIPPING_ACTIVITY_CODE = 'larvalDipping';
+export const MOSQUITO_COLLECTION_ACTIVITY_CODE = 'mosquitoCollection';
+export const BCC_ACTIVITY_CODE = 'BCC';
+export const IRS_ACTIVITY_CODE = 'IRS';
+export const MDA_POINT_DISPENSE_ACTIVITY_CODE = 'pointDispenseMDA';
+export const MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE = 'pointAdverseMDA';
+export const DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE = 'dynamicFamilyRegistration';
+export const DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE = 'dynamicBloodScreening';
+export const DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE = 'dynamicBednetDistribution';
+export const DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE = 'dynamicLarvalDipping';
+export const DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE = 'dynamicMosquitoCollection';
+export const DYNAMIC_BCC_ACTIVITY_CODE = 'dynamicBCC';
+export const DYNAMIC_IRS_ACTIVITY_CODE = 'dynamicIRS';
+export const DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE = 'dynamicCommunityDispenseMDA';
+export const DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE = 'dynamicCommunityAdherenceMDA';
+
 // task action codes
 export const BCC_CODE = 'BCC';
 export const IRS_CODE = 'IRS';
@@ -174,7 +191,13 @@ export const LARVAL_DIPPING_CODE = 'Larval Dipping';
 export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
 export const MDA_POINT_DISPENSE_CODE = 'MDA Dispense';
 export const MDA_POINT_ADVERSE_EFFECTS_CODE = 'MDA Adverse Event(s)';
+export const MDA_ADHERENCE_CODE = 'MDA Adherence';
 export const GOAL_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
+
+// dynamic plan activities
+export const NAMED_EVENT_TRIGGER_TYPE = 'named-event';
+export const PLAN_ACTIVATION_TRIGGER_NAME = 'plan-activation';
+export const APPLICABILITY_CONDITION_KIND = 'applicability';
 
 export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',

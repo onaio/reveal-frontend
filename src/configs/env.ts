@@ -316,7 +316,8 @@ export type REACT_APP_NAME = typeof REACT_APP_NAME;
 
 /** list of plan types to be added to intervention type field when adding plans */
 export const ENABLED_PLAN_TYPES = String(
-  process.env.REACT_APP_ENABLED_PLAN_TYPES || 'FI,IRS,MDA,MDA-Point'
+  process.env.REACT_APP_ENABLED_PLAN_TYPES ||
+    'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'
 ).split(',');
 export type ENABLED_PLAN_TYPES = typeof ENABLED_PLAN_TYPES;
 

@@ -3,9 +3,9 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
+import { defaultProps as defaultPlanFormProps } from '../../../../../../components/forms/PlanForm';
 import HeaderBreadcrumb from '../../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import BaseNewPlan, { NewIRSPlan, NewPlanForPlanning } from '../index';
-import { IRSPlanFormProps, planFormProps, planningFormProps } from './fixtures';
 
 const history = createBrowserHistory();
 
@@ -28,11 +28,11 @@ describe('containers/pages/NewPlan', () => {
     // check that page title is displayed
     expect(toJson(wrapper.find('h3.mb-3.page-title'))).toMatchSnapshot('page title');
 
-    // check that PlanForm receives the correct props
     expect(wrapper.find('PlanForm').props()).toEqual({
-      ...planFormProps,
+      ...defaultPlanFormProps,
       formHandler: expect.any(Function),
     });
+
     // check that there's a Row that nests a Col that nests a PlanForm
     expect(wrapper.find('Row')).toHaveLength(1);
     expect(wrapper.find('Row').find('Col')).toHaveLength(2);
@@ -77,10 +77,13 @@ describe('containers/pages/NewPlan', () => {
       </Router>
     );
 
-    // check that PlanForm receives the correct props
     expect(wrapper.find('PlanForm').props()).toEqual({
-      ...planningFormProps,
+      ...defaultPlanFormProps,
+      allowMoreJurisdictions: false,
+      cascadingSelect: false,
       formHandler: expect.any(Function),
+      jurisdictionLabel: 'Country',
+      redirectAfterAction: '/plans/planning',
     });
 
     expect(wrapper.find(HeaderBreadcrumb).text()).toMatchInlineSnapshot(
@@ -99,10 +102,21 @@ describe('containers/pages/NewPlan', () => {
       </Router>
     );
 
-    // check that PlanForm receives the correct props
     expect(wrapper.find('PlanForm').props()).toEqual({
-      ...IRSPlanFormProps,
+      ...defaultPlanFormProps,
+      allowMoreJurisdictions: false,
+      cascadingSelect: false,
+      disabledFields: ['interventionType', 'status'],
       formHandler: expect.any(Function),
+      initialValues: {
+        ...defaultPlanFormProps.initialValues,
+        activities: [
+          defaultPlanFormProps.allFormActivities[11], // IRS activities
+        ],
+        interventionType: 'IRS',
+      },
+      jurisdictionLabel: 'Country',
+      redirectAfterAction: '/intervention/irs/drafts',
     });
 
     expect(wrapper.find(HeaderBreadcrumb).text()).toMatchInlineSnapshot(

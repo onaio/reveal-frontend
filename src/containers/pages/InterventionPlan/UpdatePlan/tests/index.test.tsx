@@ -2,6 +2,7 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedUpdatePlan, { UpdatePlan } from '..';
@@ -63,9 +64,9 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     );
     expect(toJson(wrapper.find('Breadcrumb'))).toMatchSnapshot('Breadcrumb');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('Page title');
+
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...updatePlanFormProps,
-      formHandler: expect.any(Function),
       renderLocationNames: expect.any(Function),
     });
     wrapper.unmount();
@@ -89,7 +90,10 @@ describe('components/InterventionPlan/UpdatePlan', () => {
         <UpdatePlan {...getProps()} />
       </Router>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
     const FetchPlanSpy = jest.spyOn(wrapper.props().children.props, 'fetchPlan');
     expect(FetchPlanSpy).toHaveBeenCalledWith(fixtures.plans[1]);
     wrapper.unmount();
@@ -103,7 +107,9 @@ describe('components/InterventionPlan/UpdatePlan', () => {
         <UpdatePlan {...getProps()} />
       </Router>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
     const FetchPlanSpy = jest.spyOn(wrapper.props().children.props, 'fetchPlan');
     expect(FetchPlanSpy).toHaveBeenCalledWith(fixtures.plans[1]);
   });
@@ -128,7 +134,9 @@ describe('components/InterventionPlan/UpdatePlan', () => {
       </Provider>
     );
     // resolve promise to get plan into UpdatePlan state.
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
     wrapper.update();
 
     // planDefinition1 is reactive thus we expect CaseDetails is rendered
@@ -157,7 +165,9 @@ describe('components/InterventionPlan/UpdatePlan', () => {
       </Provider>
     );
     // resolve promise to get plan into UpdatePlan state.
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
     wrapper.update();
 
     // planDefinition2 is not reactive thus we don't expect CaseDetails to be rendered

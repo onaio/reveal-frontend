@@ -101,8 +101,10 @@ import {
 import {
   A1,
   A2,
+  APPLICABILITY_CONDITION_KIND,
   B1,
   B2,
+  BCC_ACTIVITY_CODE,
   BCC_CODE,
   BEDNET_DISTRIBUTION_ACTIVITY_CODE,
   BEDNET_DISTRIBUTION_CODE,
@@ -112,6 +114,16 @@ import {
   CASE_CONFIRMATION_CODE,
   CASE_NUMBER_CODE,
   CASE_TRIGGERED,
+  DISABLED,
+  DYNAMIC_BCC_ACTIVITY_CODE,
+  DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
+  DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
+  DYNAMIC_IRS_ACTIVITY_CODE,
+  DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
+  DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
+  DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
+  DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE,
   FALSE,
   FAMILY_REGISTRATION_ACTIVITY_CODE,
   FI_REASON_CODE,
@@ -119,10 +131,12 @@ import {
   HIGH_PRIORITIY,
   INTERVENTION_TYPE_CODE,
   INVESTIGATION,
+  IRS_ACTIVITY_CODE,
   IRS_CODE,
   LARVAL_DIPPING_ACTIVITY_CODE,
   LARVAL_DIPPING_CODE,
   LOW_PRIORITY,
+  MDA_ADHERENCE_CODE,
   MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
   MDA_POINT_ADVERSE_EFFECTS_CODE,
   MDA_POINT_DISPENSE_ACTIVITY_CODE,
@@ -130,7 +144,9 @@ import {
   MEDIUM_PRIORITY,
   MOSQUITO_COLLECTION_ACTIVITY_CODE,
   MOSQUITO_COLLECTION_CODE,
+  NAMED_EVENT_TRIGGER_TYPE,
   OPENSRP_EVENT_ID_CODE,
+  PLAN_ACTIVATION_TRIGGER_NAME,
   RACD_REGISTER_FAMILY_CODE,
   ROUTINE,
   TASK_GENERATION_STATUS_CODE,
@@ -228,10 +244,23 @@ export const locationHierarchy: LocationItem[] = [
 ];
 
 /** Focus investigation configs */
+
+/**
+ * You'll notice we are disabling no-useless-cast in a number of places like the next
+ * line.  This is because we want the Typescript compiler to be forced to use const contexts
+ * e.g.
+ * we want:
+ *  const FIStatuses: readonly ["A1", "A2", "B1", "B2"]
+ * instead of merely:
+ *  const FIStatuses: string[]
+ */
+
 /** Allowed FI Status values */
+/* tslint:disable-next-line no-useless-cast */
 export const FIStatuses = [A1, A2, B1, B2] as const;
 
 /** Allowed FI Status values */
+/* tslint:disable-next-line no-useless-cast */
 export const FIReasons = [ROUTINE, CASE_TRIGGERED] as const;
 export const FIReasonsDisplay: { [key: string]: string } = {
   [ROUTINE]: ROUTINE_TITLE,
@@ -252,6 +281,7 @@ export const goalUnitDisplay: { [key: string]: string } = {
 };
 
 /** Allowed goal priority values */
+/* tslint:disable-next-line no-useless-cast */
 export const goalPriorities = [LOW_PRIORITY, MEDIUM_PRIORITY, HIGH_PRIORITIY] as const;
 export const goalPrioritiesDisplay: { [key: string]: string } = {
   [LOW_PRIORITY]: LOW_PRIORITY_LABEL,
@@ -260,13 +290,16 @@ export const goalPrioritiesDisplay: { [key: string]: string } = {
 };
 
 /** Allowed action Reason values */
+/* tslint:disable-next-line no-useless-cast */
 export const actionReasons = [INVESTIGATION, ROUTINE] as const;
+
 export const actionReasonsDisplay: { [key: string]: string } = {
   [INVESTIGATION]: INVESTIGATION_TITLE,
   [ROUTINE]: ROUTINE_TITLE,
 };
 
 /** Allowed useContext Code values */
+/* tslint:disable-next-line no-useless-cast */
 export const useContextCodes = [
   INTERVENTION_TYPE_CODE,
   FI_STATUS_CODE,
@@ -277,6 +310,7 @@ export const useContextCodes = [
 ] as const;
 
 /** Plan activity code values */
+/* tslint:disable-next-line no-useless-cast */
 export const PlanActionCodes = [
   BCC_CODE,
   IRS_CODE,
@@ -286,12 +320,14 @@ export const PlanActionCodes = [
   RACD_REGISTER_FAMILY_CODE,
   LARVAL_DIPPING_CODE,
   MOSQUITO_COLLECTION_CODE,
+  MDA_ADHERENCE_CODE,
   MDA_POINT_DISPENSE_CODE,
   MDA_POINT_ADVERSE_EFFECTS_CODE,
 ] as const;
 
 /** Allowed taskGenerationStatus values */
-export const taskGenerationStatuses = [TRUE, FALSE] as const;
+/* tslint:disable-next-line no-useless-cast */
+export const taskGenerationStatuses = [TRUE, FALSE, DISABLED] as const;
 
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {
@@ -301,21 +337,46 @@ export interface PlanActionTimingPeriod {
 
 /** Plan Action subjectCodableConcept */
 export interface PlanActionsubjectCodableConcept {
-  text: string;
+  text: 'Family' | 'Person' | 'Location' | 'Jurisdiction';
+}
+
+/** Plan Expression */
+export interface PlanExpression {
+  description?: string;
+  expression: string;
+  name?: string;
+  reference?: string;
+  subjectCodableConcept?: PlanActionsubjectCodableConcept;
+}
+
+/** Plan Action Trigger */
+export interface PlanActionTrigger {
+  expression?: PlanExpression;
+  name: string;
+  type: Readonly<'named-event'>;
+}
+
+/** Plan Action Condition */
+export interface PlanActionCondition {
+  expression: PlanExpression;
+  kind: Readonly<'applicability'>;
 }
 
 /** Plan Action */
 export interface PlanAction {
   code: PlanActionCodesType;
+  condition?: PlanActionCondition[];
+  definitionUri?: string;
   description: string;
   goalId: string;
   identifier: string;
   prefix: number;
   reason: ActionReasonType;
   subjectCodableConcept: PlanActionsubjectCodableConcept;
-  taskTemplate: string;
+  taskTemplate?: string;
   timingPeriod: PlanActionTimingPeriod;
   title: string;
+  trigger?: PlanActionTrigger[];
 }
 
 /** Plan Goal detailQuantity */
@@ -352,6 +413,7 @@ export interface PlanActivity {
 }
 
 /** Plan activity title values */
+/* tslint:disable-next-line no-useless-cast */
 export const PlanActivityTitles = [
   CASE_CONFIRMATION_ACTIVITY_CODE,
   FAMILY_REGISTRATION_ACTIVITY_CODE,
@@ -359,10 +421,19 @@ export const PlanActivityTitles = [
   BEDNET_DISTRIBUTION_ACTIVITY_CODE,
   LARVAL_DIPPING_ACTIVITY_CODE,
   MOSQUITO_COLLECTION_ACTIVITY_CODE,
-  BCC_CODE,
-  IRS_CODE,
+  BCC_ACTIVITY_CODE,
+  IRS_ACTIVITY_CODE,
   MDA_POINT_DISPENSE_ACTIVITY_CODE,
   MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
+  DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
+  DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
+  DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
+  DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  DYNAMIC_BCC_ACTIVITY_CODE,
+  DYNAMIC_IRS_ACTIVITY_CODE,
+  DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
+  DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
 ] as const;
 
 /** default plan activities */
@@ -376,7 +447,7 @@ export const planActivities: PlanActivities = {
       prefix: 99,
       reason: INVESTIGATION,
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Jurisdiction',
       },
       taskTemplate: 'BCC_Focus',
       timingPeriod: {
@@ -406,14 +477,14 @@ export const planActivities: PlanActivities = {
   },
   IRS: {
     action: {
-      code: 'IRS',
+      code: IRS_CODE,
       description: IRS_ACTIVITY_DESCRIPTION,
       goalId: 'IRS',
       identifier: '',
       prefix: 7,
       reason: ROUTINE,
       subjectCodableConcept: {
-        text: 'Residential_Structure',
+        text: 'Location',
       },
       taskTemplate: 'Spray_Structures',
       timingPeriod: {
@@ -443,14 +514,14 @@ export const planActivities: PlanActivities = {
   },
   bednetDistribution: {
     action: {
-      code: 'Bednet Distribution',
+      code: BEDNET_DISTRIBUTION_CODE,
       description: BEDNET_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_bednet_distribution',
       identifier: '',
       prefix: 4,
       reason: INVESTIGATION,
       subjectCodableConcept: {
-        text: 'Residential_Structure',
+        text: 'Location',
       },
       taskTemplate: 'Bednet_Distribution',
       timingPeriod: {
@@ -480,7 +551,7 @@ export const planActivities: PlanActivities = {
   },
   bloodScreening: {
     action: {
-      code: 'Blood Screening',
+      code: BLOOD_SCREENING_CODE,
       description: BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_Blood_Screening',
       identifier: '',
@@ -517,14 +588,14 @@ export const planActivities: PlanActivities = {
   },
   caseConfirmation: {
     action: {
-      code: 'Case Confirmation',
+      code: CASE_CONFIRMATION_CODE,
       description: CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
       goalId: 'Case_Confirmation',
       identifier: '',
       prefix: 1,
       reason: INVESTIGATION,
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Jurisdiction',
       },
       taskTemplate: 'Case_Confirmation',
       timingPeriod: {
@@ -552,16 +623,616 @@ export const planActivities: PlanActivities = {
       ],
     },
   },
+  dynamicBCC: {
+    action: {
+      code: BCC_CODE,
+      condition: [
+        {
+          expression: {
+            description: 'Jurisdiction type location',
+            expression: "Location.physicalType.text = 'jdn'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+      ],
+      definitionUri: 'behaviour_change_communication.json',
+      description: BCC_ACTIVITY_DESCRIPTION,
+      goalId: 'BCC_Focus',
+      identifier: '',
+      prefix: 101,
+      reason: ROUTINE,
+      subjectCodableConcept: {
+        text: 'Jurisdiction',
+      },
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: BCC_ACTIVITY,
+      trigger: [
+        {
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+      ],
+    },
+    goal: {
+      description: BCC_GOAL_DESCRIPTION,
+      id: 'BCC_Focus',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.ACTIVITY,
+              value: 1,
+            },
+          },
+          due: '',
+          measure: BCC_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicBednetDistribution: {
+    action: {
+      code: BEDNET_DISTRIBUTION_CODE,
+      condition: [
+        {
+          expression: {
+            description: 'Structure is residential or type does not exist',
+            expression:
+              "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+        {
+          expression: {
+            description: 'Family exists for structure',
+            expression: '$this.contained.exists()',
+            subjectCodableConcept: {
+              text: 'Family',
+            },
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+        {
+          expression: {
+            description: 'Register structure Event submitted for a residential structure',
+            expression:
+              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+      ],
+      definitionUri: 'bednet_distribution.json',
+      description: BEDNET_ACTIVITY_DESCRIPTION,
+      goalId: 'RACD_bednet_distribution',
+      identifier: '',
+      prefix: 4,
+      reason: ROUTINE,
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: BEDNET_ACTIVITY,
+      trigger: [
+        {
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+        {
+          expression: {
+            expression: "questionnaire = 'Family Registration'",
+          },
+          name: 'event-submission',
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+      ],
+    },
+    goal: {
+      description: BEDNET_ACTIVITY_DESCRIPTION,
+      id: 'RACD_bednet_distribution',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: BEDNET_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicBloodScreening: {
+    action: {
+      code: BLOOD_SCREENING_CODE,
+      condition: [
+        {
+          expression: {
+            description:
+              'Person is older than 5 years or person associated with questionnaire response if older than 5 years',
+            expression:
+              "($this.is(FHIR.Patient) and $this.birthDate <= today() - 5 'years') or ($this.contained.where(Patient.birthDate <= today() - 5 'years').exists())",
+            subjectCodableConcept: {
+              text: 'Person',
+            },
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+      ],
+      definitionUri: 'blood_screening.json',
+      description: BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
+      goalId: 'RACD_Blood_Screening',
+      identifier: '',
+      prefix: 3,
+      reason: INVESTIGATION,
+      subjectCodableConcept: {
+        text: 'Person',
+      },
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: BLOOD_SCREENING_ACTIVITY,
+      trigger: [
+        {
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+        {
+          expression: {
+            expression:
+              "questionnaire = 'Family Registration' or questionnaire = 'Family Member Registration'",
+          },
+          name: 'event-submission',
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+      ],
+    },
+    goal: {
+      description: BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
+      id: 'RACD_Blood_Screening',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERSON,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: BLOOD_SCREENING_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicCommunityAdherenceMDA: {
+    action: {
+      code: MDA_ADHERENCE_CODE,
+      condition: [
+        {
+          expression: {
+            description: 'The person fully received the dispense activity',
+            expression:
+              "$this.item.where(linkId='business_status').answer.value = 'Fully Received'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+      ],
+      definitionUri: 'mda_adherence.json',
+      description:
+        'Visit all residential structures (100%) and confirm adherence of each registered person',
+      goalId: 'MDA_Adherence',
+      identifier: '',
+      prefix: 11,
+      reason: ROUTINE,
+      subjectCodableConcept: {
+        text: 'Person',
+      },
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: MDA_ADHERENCE_CODE,
+      trigger: [
+        {
+          expression: {
+            expression: "questionnaire = 'mda_dispense'",
+          },
+          name: 'event-submission',
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+      ],
+    },
+    goal: {
+      description:
+        'Visit all residential structures (100%) and confirm adherence of each registered person',
+      id: 'MDA_Adherence',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: 'Percent of dispense recipients',
+        },
+      ],
+    },
+  },
+  dynamicCommunityDispenseMDA: {
+    action: {
+      code: MDA_POINT_DISPENSE_CODE,
+      condition: [
+        {
+          expression: {
+            description:
+              'Person is older than 5 years or person associated with questionaire response if older than 5 years',
+            expression:
+              "($this.is(FHIR.Patient) and $this.birthDate <= today() - 5 'years') or ($this.contained.where(Patient.birthDate <= today() - 5 'years').exists())",
+            subjectCodableConcept: {
+              text: 'Person',
+            },
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+      ],
+      definitionUri: 'mda_dispense.json',
+      description:
+        'Visit all residential structures (100%) and dispense prophylaxis to each registered person',
+      goalId: 'MDA_Dispense',
+      identifier: '',
+      prefix: 10,
+      reason: ROUTINE,
+      subjectCodableConcept: {
+        text: 'Person',
+      },
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: MDA_POINT_DISPENSE_CODE,
+      trigger: [
+        {
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+        {
+          expression: {
+            expression:
+              "questionnaire = 'Family Registration' or questionnaire = 'Family Member Registration'",
+          },
+          name: 'event-submission',
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+      ],
+    },
+    goal: {
+      description:
+        'Visit all residential structures (100%) dispense prophylaxis to each registered person',
+      id: 'MDA_Dispense',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: 'Percent of Registered person(s)',
+        },
+      ],
+    },
+  },
+  dynamicFamilyRegistration: {
+    action: {
+      code: RACD_REGISTER_FAMILY_CODE,
+      condition: [
+        {
+          expression: {
+            description: 'Structure is residential or type does not exist',
+            expression:
+              "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+        {
+          expression: {
+            description: 'Family does not exist for structure',
+            expression: '$this.contained.exists().not()',
+            subjectCodableConcept: {
+              text: 'Family',
+            },
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+        {
+          expression: {
+            description: 'Apply to residential structures in Register_Structure questionnaires',
+            expression:
+              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+      ],
+      definitionUri: 'family_register.json',
+      description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
+      goalId: 'RACD_register_families',
+      identifier: '',
+      prefix: 2,
+      reason: ROUTINE,
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: REGISTER_FAMILY_ACTIVITY,
+      trigger: [
+        {
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+        {
+          expression: {
+            expression: "questionnaire = 'Register_Structure'",
+          },
+          name: 'event-submission',
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+      ],
+    },
+    goal: {
+      description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
+      id: 'RACD_register_families',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicIRS: {
+    action: {
+      code: IRS_CODE,
+      condition: [
+        {
+          expression: {
+            description: 'Structure is residential or type does not exist',
+            expression:
+              "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+        {
+          expression: {
+            description: 'Apply to residential structures in Register_Structure questionnaires',
+            expression:
+              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+      ],
+      definitionUri: 'spray_form.json',
+      description: IRS_ACTIVITY_DESCRIPTION,
+      goalId: 'IRS',
+      identifier: '',
+      prefix: 7,
+      reason: ROUTINE,
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: IRS_ACTIVITY,
+      trigger: [
+        {
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+        {
+          expression: {
+            expression: "questionnaire = 'Register_Structure'",
+          },
+          name: 'event-submission',
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+      ],
+    },
+    goal: {
+      description: IRS_GOAL_DESCRIPTION,
+      id: 'IRS',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 90,
+            },
+          },
+          due: '',
+          measure: IRS_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicLarvalDipping: {
+    action: {
+      code: LARVAL_DIPPING_CODE,
+      condition: [
+        {
+          expression: {
+            description: 'Structure is a larval breeding site',
+            expression: "$this.type.where(id='locationType').text = 'Larval Breeding Site'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+        {
+          expression: {
+            description: 'Apply to larval breeding sites in Register_Structure questionnaires',
+            expression:
+              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Larval Breeding Site'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+      ],
+      definitionUri: 'larval_dipping_form.json',
+      description: LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
+      goalId: 'Larval_Dipping',
+      identifier: '',
+      prefix: 5,
+      reason: INVESTIGATION,
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: LARVAL_DIPPING_ACTIVITY,
+      trigger: [
+        {
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+        {
+          expression: {
+            expression: "questionnaire = 'Register_Structure'",
+          },
+          name: 'event-submission',
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+      ],
+    },
+    goal: {
+      description: LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
+      id: 'Larval_Dipping',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.ACTIVITY,
+              value: 3,
+            },
+          },
+          due: '',
+          measure: LARVAL_DIPPING_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicMosquitoCollection: {
+    action: {
+      code: MOSQUITO_COLLECTION_CODE,
+      condition: [
+        {
+          expression: {
+            description: 'Structure is a mosquito collection point',
+            expression: "$this.type.where(id='locationType').text = 'Mosquito Collection Point'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+        {
+          expression: {
+            description: 'Apply to mosquito collection point in Register_Structure questionnaires',
+            expression:
+              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Mosquito Collection Point'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+      ],
+      definitionUri: 'mosquito_collection_form.json',
+      description: MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
+      goalId: 'Mosquito_Collection',
+      identifier: '',
+      prefix: 6,
+      reason: INVESTIGATION,
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: MOSQUITO_COLLECTION_ACTIVITY,
+      trigger: [
+        {
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+        {
+          expression: {
+            expression: "questionnaire = 'Register_Structure'",
+          },
+          name: 'event-submission',
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+      ],
+    },
+    goal: {
+      description: MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
+      id: 'Mosquito_Collection',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.ACTIVITY,
+              value: 3,
+            },
+          },
+          due: '',
+          measure: MOSQUITO_COLLECTION_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
   familyRegistration: {
     action: {
-      code: 'RACD Register Family',
+      code: RACD_REGISTER_FAMILY_CODE,
       description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
       goalId: 'RACD_register_families',
       identifier: '',
       prefix: 2,
       reason: INVESTIGATION,
       subjectCodableConcept: {
-        text: 'Residential_Structure',
+        text: 'Location',
       },
       taskTemplate: 'RACD_register_families',
       timingPeriod: {
@@ -591,14 +1262,14 @@ export const planActivities: PlanActivities = {
   },
   larvalDipping: {
     action: {
-      code: 'Larval Dipping',
+      code: LARVAL_DIPPING_CODE,
       description: LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
       goalId: 'Larval_Dipping',
       identifier: '',
       prefix: 5,
       reason: INVESTIGATION,
       subjectCodableConcept: {
-        text: 'Breeding_Site',
+        text: 'Location',
       },
       taskTemplate: 'Larval_Dipping',
       timingPeriod: {
@@ -628,14 +1299,14 @@ export const planActivities: PlanActivities = {
   },
   mosquitoCollection: {
     action: {
-      code: 'Mosquito Collection',
+      code: MOSQUITO_COLLECTION_CODE,
       description: MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
       goalId: 'Mosquito_Collection',
       identifier: '',
       prefix: 6,
       reason: INVESTIGATION,
       subjectCodableConcept: {
-        text: 'Mosquito_Collection_Point',
+        text: 'Location',
       },
       taskTemplate: 'Mosquito_Collection_Point',
       timingPeriod: {
@@ -665,14 +1336,14 @@ export const planActivities: PlanActivities = {
   },
   pointAdverseMDA: {
     action: {
-      code: 'MDA Adverse Event(s)',
+      code: MDA_POINT_ADVERSE_EFFECTS_CODE,
       description: MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION,
       goalId: 'Point_adverse_effect_MDA',
       identifier: '',
-      prefix: 0,
+      prefix: 9,
       reason: ROUTINE,
       subjectCodableConcept: {
-        text: 'MDA_Point_Adverse_Event',
+        text: 'Location',
       },
       taskTemplate: 'MDA_Point_Adverse_Event',
       timingPeriod: {
@@ -702,14 +1373,14 @@ export const planActivities: PlanActivities = {
   },
   pointDispenseMDA: {
     action: {
-      code: 'MDA Dispense',
+      code: MDA_POINT_DISPENSE_CODE,
       description: MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION,
       goalId: 'Point_dispense_MDA',
       identifier: '',
-      prefix: 0,
+      prefix: 8,
       reason: ROUTINE,
       subjectCodableConcept: {
-        text: 'MDA_Point_Dispense',
+        text: 'Location',
       },
       taskTemplate: 'MDA_Point_Dispense',
       timingPeriod: {
@@ -753,6 +1424,7 @@ export interface PlanDefinition {
     end: string;
     start: string;
   };
+  experimental?: Readonly<false>;
   goal: PlanGoal[];
   identifier: string;
   jurisdiction: Array<{
@@ -1041,6 +1713,7 @@ export interface ADMN3 extends ADMN2 {
 }
 
 export const baseTilesetGeographicLevel: number = 1; // this tells the Jurisdiction Selection map at which geographic level to start rendering administrative fill layers
+/* tslint:disable-next-line no-useless-cast */
 export const JurisdictionLevels = ['administrative', 'operational'] as const;
 export interface Tileset {
   idField: string; // the feature property corresponding with jurisdiction_id (for joining)

@@ -5,7 +5,7 @@ import PlanForm, {
   defaultInitialValues,
   PlanFormProps,
 } from '../../../../../components/forms/PlanForm';
-import { getFormActivities, IRSActivities } from '../../../../../components/forms/PlanForm/helpers';
+import { planActivitiesMap } from '../../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb, {
   Page,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -59,7 +59,7 @@ const planFormPropsLookUp = {
     cascadingSelect: false,
     initialValues: {
       ...defaultInitialValues,
-      activities: getFormActivities(IRSActivities),
+      activities: planActivitiesMap[InterventionType.IRS],
       interventionType: InterventionType.IRS,
     },
     jurisdictionLabel: COUNTRY,
@@ -68,6 +68,9 @@ const planFormPropsLookUp = {
   [InterventionType.FI]: {},
   [InterventionType.MDA]: {},
   [InterventionType.MDAPoint]: {},
+  [InterventionType.DynamicFI]: {},
+  [InterventionType.DynamicIRS]: {},
+  [InterventionType.DynamicMDA]: {},
 };
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
@@ -161,7 +164,7 @@ export const NewIRSPlan = () => {
       disabledFields: ['interventionType', 'status'],
       initialValues: {
         ...defaultInitialValues,
-        activities: getFormActivities(IRSActivities),
+        activities: planActivitiesMap[InterventionType.IRS],
         interventionType: InterventionType.IRS,
       },
       jurisdictionLabel: COUNTRY,

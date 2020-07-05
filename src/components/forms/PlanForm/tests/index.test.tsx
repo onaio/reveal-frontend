@@ -70,6 +70,10 @@ describe('containers/forms/PlanForm', () => {
     expect(wrapper.find('#jurisdictions-select-container').length).toEqual(1);
     expect(wrapper.find('#jurisdictions-display-container').length).toEqual(0);
 
+    // should not have triggers or conditions
+    expect(wrapper.find('.triggers-fieldset').length).toEqual(0);
+    expect(wrapper.find('.conditions-fieldset').length).toEqual(0);
+
     // if you set fiReason to case triggered then caseNum and opensrpEventId are now rendered
     wrapper
       .find('#fiReason select')
@@ -85,6 +89,36 @@ describe('containers/forms/PlanForm', () => {
       .simulate('change', { target: { value: 'Routine', name: 'fiReason' } });
     expect(wrapper.find('#caseNum').length).toEqual(0);
     expect(wrapper.find('#opensrpEventId').length).toEqual(0);
+
+    wrapper.unmount();
+  });
+
+  it('renders dynamic plans correctly', () => {
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
+    wrapper
+      .find('#interventionType select')
+      .simulate('change', { target: { value: 'Dynamic-IRS', name: 'interventionType' } });
+
+    expect(toJson(wrapper.find('.triggers-fieldset legend'))).toMatchSnapshot('triggers legends');
+    expect(toJson(wrapper.find('.trigger-group label'))).toMatchSnapshot('triggers labels');
+    expect(toJson(wrapper.find('.triggers-fieldset input'))).toMatchSnapshot('triggers inputs');
+    expect(toJson(wrapper.find('.triggers-fieldset textarea'))).toMatchSnapshot(
+      'triggers textareas'
+    );
+
+    expect(toJson(wrapper.find('.conditions-fieldset legend'))).toMatchSnapshot(
+      'conditions legends'
+    );
+    expect(toJson(wrapper.find('.condition-group label'))).toMatchSnapshot('conditions labels');
+    expect(toJson(wrapper.find('.conditions-fieldset input'))).toMatchSnapshot('conditions inputs');
+    expect(toJson(wrapper.find('.conditions-fieldset textarea'))).toMatchSnapshot(
+      'conditions textareas'
+    );
 
     wrapper.unmount();
   });
@@ -549,7 +583,7 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     // interventionType should be as expected
     expect(wrapper.find('small.interventionType-error').text()).toEqual(
-      'interventionType must be one of the following values: FI, IRS, MDA, MDA-Point'
+      'interventionType must be one of the following values: Dynamic-FI, Dynamic-IRS, Dynamic-MDA, FI, IRS, MDA, MDA-Point'
     );
 
     // Set FI for interventionType field value so that we can test the other fields
@@ -850,6 +884,46 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     const payload = {
       ...generatePlanDefinition(getPlanFormValues(plans[1])),
+      version: 2,
+    };
+
+    // the last request should be the one that is sent to OpenSRP
+    expect(fetch.mock.calls.pop()).toEqual([
+      'https://test.smartregister.org/opensrp/rest/plans',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        body: JSON.stringify(payload),
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer hunter2',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'PUT',
+      },
+    ]);
+  });
+
+  it('Form submission for dynamic plans works', async () => {
+    // ensure that we are logged in so that we can get the OpenSRP token from Redux
+    const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
+    store.dispatch(authenticateUser(authenticated, user, extraData));
+
+    fetch.mockResponseOnce(JSON.stringify({}));
+
+    const props = {
+      ...propsForUpdatingPlans(),
+      initialValues: getPlanFormValues(plans[5]),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+
+    wrapper.find('form').simulate('submit');
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    const payload = {
+      ...generatePlanDefinition(getPlanFormValues(plans[5])),
       version: 2,
     };
 
