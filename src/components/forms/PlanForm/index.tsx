@@ -777,14 +777,6 @@ const PlanForm = (props: PlanFormProps) => {
                             />
                           </FormGroup>
                           <fieldset>
-                            <legend>Triggers</legend>
-                            {actionTriggers[values.activities[index].actionCode]}
-                          </fieldset>
-                          <fieldset>
-                            <legend>Conditions</legend>
-                            {actionConditions[values.activities[index].actionCode]}
-                          </fieldset>
-                          <fieldset>
                             <legend>Goal</legend>
                             <FormGroup>
                               <Label for={`activities-${index}-goalValue`}>{QUANTITY_LABEL}</Label>
@@ -921,6 +913,14 @@ const PlanForm = (props: PlanFormProps) => {
                                 className="form-text text-danger"
                               />
                             </FormGroup>
+                          </fieldset>
+                          <fieldset>
+                            <legend>Triggers</legend>
+                            {actionTriggers[values.activities[index].actionCode]}
+                          </fieldset>
+                          <fieldset>
+                            <legend>Conditions</legend>
+                            {actionConditions[values.activities[index].actionCode]}
                           </fieldset>
                         </fieldset>
                       </div>
