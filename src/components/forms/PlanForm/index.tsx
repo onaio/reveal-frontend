@@ -83,13 +83,16 @@ import {
   getNameTitle,
   isPlanTypeEnabled,
   planActivitiesMap,
-  PlanActivityFormFields,
-  PlanFormFields,
-  PlanJurisdictionFormFields,
   PlanSchema,
 } from './helpers';
 import './style.css';
-import { FIReasonType, PlanActionCodesType } from './types';
+import {
+  FIReasonType,
+  PlanActionCodesType,
+  PlanActivityFormFields,
+  PlanFormFields,
+  PlanJurisdictionFormFields,
+} from './types';
 
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {

@@ -2,11 +2,11 @@ import { Dictionary } from '@onaio/utils';
 import { Field } from 'formik';
 import React from 'react';
 import { FormGroup, Label } from 'reactstrap';
-import { PlanActivityFormFields } from '../helpers';
+import { PlanActivityFormFields } from '../types';
 
 /**
  * Returns form components to render triggers and conditions form fields
- * @param planActivities - activites from the plan form field values
+ * @param planActivities - activities from the plan form field values
  * @param disabledFields - whether to disable the fields or not
  */
 export const getConditionAndTriggers = (

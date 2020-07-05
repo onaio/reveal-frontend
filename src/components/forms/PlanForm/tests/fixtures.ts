@@ -8,7 +8,7 @@ import {
   PlanActivity,
 } from '../../../../configs/settings';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
-import { PlanActivityFormFields, PlanFormFields } from '../helpers';
+import { PlanActivityFormFields, PlanFormFields } from '../types';
 import { GoalUnit } from '../types';
 
 const goalDue = moment()
