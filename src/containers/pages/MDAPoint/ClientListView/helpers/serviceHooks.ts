@@ -42,25 +42,25 @@ export const postUploadedFile = async (
   params?: string
 ) => {
   const bearer = `Bearer ${getAccessToken(store.getState())}`;
-  await fetch(`${OPENSRP_API_BASE_URL}${OPENSRP_UPLOAD_ENDPOINT}/${params}`, {
+  const response = await fetch(`${OPENSRP_API_BASE_URL}${OPENSRP_UPLOAD_ENDPOINT}/${params}`, {
     body: data,
     headers: {
       Authorization: bearer,
     },
     method: 'POST',
-  })
-    .then(response => response.json())
-    .then(async () => {
-      growl(FILE_UPLOADED_SUCCESSFULLY, {
-        onClose: () => setStateIfDone(),
-        type: toast.TYPE.SUCCESS,
-      });
-      await loadFiles();
-      setFormSubmitstate();
-    })
-    .catch(err => {
-      growl(err.message, { type: toast.TYPE.ERROR });
+  });
+  if (response.ok) {
+    growl(FILE_UPLOADED_SUCCESSFULLY, {
+      onClose: () => setStateIfDone(),
+      type: toast.TYPE.SUCCESS,
     });
+    await loadFiles();
+    setFormSubmitstate();
+  } else {
+    const err = `OpenSRPService update on ${OPENSRP_UPLOAD_ENDPOINT} failed, HTTP status ${response.status}`;
+    growl(err, { type: toast.TYPE.ERROR });
+    setFormSubmitstate();
+  }
 };
 /**
  * Handles file downloads from server
