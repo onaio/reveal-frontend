@@ -299,12 +299,12 @@ export const getNodeById = () =>
 
 /**
  * Get the root id given a node
- * @param state - the store
- * @param props -  the filterProps
  *
  * Note: If you pass in rootJurisdictionId then that is what will be returned
  * You should pass in rootJurisdictionId as '' when don't know it
  *
+ * @param state - the store
+ * @param props -  the filterProps
  */
 export const getRootByNodeId = () =>
   createSelector(
@@ -325,6 +325,26 @@ export const getRootByNodeId = () =>
       return;
     }
   );
+
+/**
+ * Get the ancestors of a given node as an array - ordered starting with the root
+ *
+ * Note that you can either pass in rootJurisdictionId or '' if you don't know the root
+ *
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getAncestors = () =>
+  createSelector([getRootByNodeId(), getTreesByIds, getNodeId], (rootId, treesByIds, nodeId) => {
+    if (rootId) {
+      const tree = treesByIds[rootId];
+      const thisNode = tree.first(node => node.model.id === nodeId);
+      if (thisNode) {
+        return thisNode.getPath();
+      }
+    }
+    return [];
+  });
 
 /** retrieve the node designated as the current Parent id
  * @param state - the store

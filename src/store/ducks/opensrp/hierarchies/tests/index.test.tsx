@@ -7,6 +7,7 @@ import reducer, {
   fetchTree,
   Filters,
   getAllSelectedNodes,
+  getAncestors,
   getCurrentChildren,
   getCurrentParentNode,
   getNodeById,
@@ -25,6 +26,7 @@ const childrenSelector = getCurrentChildren();
 const parentNodeSelector = getCurrentParentNode();
 const nodeSelector = getNodeById();
 const rootSelector = getRootByNodeId();
+const ancestorSelector = getAncestors();
 
 describe('reducers/opensrp/hierarchies', () => {
   let flushThunks;
@@ -142,5 +144,31 @@ describe('reducers/opensrp/hierarchies', () => {
     );
     expect(rootSelector(store.getState(), { ...filters, nodeId: '7331' })).toEqual('1337');
     expect(rootSelector(store.getState(), { ...filters, nodeId: '?' })).toBeUndefined();
+  });
+
+  it('getAncestors works', () => {
+    store.dispatch(fetchTree(sampleHierarchy));
+    store.dispatch(fetchTree(anotherHierarchy));
+    const filters: Filters = {
+      nodeId: '3951',
+      rootJurisdictionId: '',
+    };
+    expect(ancestorSelector(store.getState(), filters).map(n => n.model.id)).toEqual([
+      '2942',
+      '3019',
+      '3951',
+    ]);
+    expect(
+      ancestorSelector(store.getState(), { ...filters, nodeId: '7331' }).map(n => n.model.id)
+    ).toEqual(['1337', '7331']);
+    expect(
+      ancestorSelector(store.getState(), { ...filters, nodeId: '2942' }).map(n => n.model.id)
+    ).toEqual(['2942']);
+    expect(ancestorSelector(store.getState(), { ...filters, nodeId: '?' })).toEqual([]);
+    expect(
+      ancestorSelector(store.getState(), { rootJurisdictionId: '2942', nodeId: '3019' }).map(
+        n => n.model.id
+      )
+    ).toEqual(['2942', '3019']);
   });
 });
