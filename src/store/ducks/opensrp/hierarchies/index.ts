@@ -297,6 +297,35 @@ export const getNodeById = () =>
     return nodeOfInterest;
   });
 
+/**
+ * Get the root id given a node
+ * @param state - the store
+ * @param props -  the filterProps
+ *
+ * Note: If you pass in rootJurisdictionId then that is what will be returned
+ * You should pass in rootJurisdictionId as '' when don't know it
+ *
+ */
+export const getRootByNodeId = () =>
+  createSelector(
+    [getTreesByIds, getNodeId, getRootJurisdictionId],
+    (trees, nodeId, rootJurisdictionId) => {
+      if (rootJurisdictionId && rootJurisdictionId !== '') {
+        return rootJurisdictionId;
+      }
+      let nodeInTree;
+      for (const [treeId, tree] of Object.entries(trees)) {
+        nodeInTree = tree.first(node => {
+          return node.model.id === nodeId;
+        });
+        if (nodeInTree !== undefined) {
+          return treeId;
+        }
+      }
+      return;
+    }
+  );
+
 /** retrieve the node designated as the current Parent id
  * @param state - the store
  * @param props -  the filterProps
