@@ -1,16 +1,47 @@
 import React, { Fragment, useState } from 'react';
 import { Tooltip } from 'reactstrap';
 import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
+
 /** Props for SelectedJurisdictionsCount  */
 export interface SelectedJurisdictionsCountProps {
+  id: string;
   jurisdictions: TreeNode[] /** array of jurisdictions */;
+  parentNode: TreeNode | undefined;
 }
 
 /** default props for SelectedJurisdictionsCount */
 const defaultProps: SelectedJurisdictionsCountProps = {
+  id: '',
   jurisdictions: [],
+  parentNode: undefined,
 };
 
+/**
+ * getSelectedNodesUnderParentNode
+ *
+ * Disects the selected nodes to the respective children as you drill down the table
+ *
+ * @param tree - Parent node of the tree
+ * @param selectedLeafNodes - an array of all the selected leaf nodes
+ */
+const getSelectedNodesUnderParentNode = (
+  tree: TreeNode | undefined,
+  selectedLeafNodes: TreeNode[]
+): TreeNode[] => {
+  const nodesList: TreeNode[] = [];
+  if (!tree) {
+    return selectedLeafNodes;
+  }
+  tree.walk(node => {
+    selectedLeafNodes.forEach(leaf => {
+      if (leaf.model.id === node.model.id) {
+        nodesList.push(leaf);
+      }
+    });
+    return true;
+  });
+  return nodesList;
+};
 /**
  * SelectedJurisdictionsCount
  *
@@ -19,7 +50,7 @@ const defaultProps: SelectedJurisdictionsCountProps = {
  * @param props - the props!
  */
 const SelectedJurisdictionsCount = (props: SelectedJurisdictionsCountProps) => {
-  const { jurisdictions } = props;
+  const { id, jurisdictions, parentNode } = props;
 
   if (!jurisdictions || jurisdictions.length < 1) {
     return null;
@@ -27,16 +58,22 @@ const SelectedJurisdictionsCount = (props: SelectedJurisdictionsCountProps) => {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
+  const nodeJurisdictions = getSelectedNodesUnderParentNode(parentNode, jurisdictions);
+  const jurisdictionNames: string[] = nodeJurisdictions.map(
+    jurisdiction => jurisdiction.model.label
+  );
+  const toolTipDisplay = jurisdictionNames.join(', ');
+
   return (
     <Fragment>
-      <span id={`org-tooltip-${jurisdictions[0].id}`}>{jurisdictions.length}</span>
+      <span id={`jurisdiction-tooltip-${id}`}>{nodeJurisdictions.length}</span>
       <Tooltip
         placement="top"
         isOpen={tooltipOpen}
-        target={`org-tooltip-${jurisdictions[0].id}`}
+        target={`jurisdiction-tooltip-${id}`}
         toggle={toggleTooltip}
       >
-        {jurisdictions.length}
+        <span id={`jurisdiction-span-${id}`}>{toolTipDisplay}</span>;
       </Tooltip>
     </Fragment>
   );

@@ -205,7 +205,9 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
       node.model.node.attributes.structureCount,
       <SelectedJurisdictionsCount
-        key={`${selectedLeafNodes[0].id}-txt`}
+        key={`selected-jurisdictions-txt`}
+        parentNode={node}
+        id={node.model.id}
         jurisdictions={selectedLeafNodes}
       />,
     ];
