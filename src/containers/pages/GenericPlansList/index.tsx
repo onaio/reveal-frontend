@@ -6,7 +6,6 @@ import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Cell } from 'react-table';
 import { Col, Row } from 'reactstrap';
-import { createChangeHandler, SearchForm } from '../../../components/forms/Search';
 import HeaderBreadcrumb from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../components/page/Loading';
 import {
@@ -18,7 +17,6 @@ import {
   DATE_CREATED,
   END_DATE,
   HOME,
-  SEARCH,
   START_DATE,
   STATUS_HEADER,
   TITLE,
@@ -133,6 +131,7 @@ export const GenericPlansList = (props: GenericPlanListProps & RouteComponentPro
     renderInTopFilterBar: renderInFilterFactory({
       ...defaultOptions,
       componentProps: props,
+      queryParam: QUERY_PARAM_TITLE,
     }),
     renderNullDataComponent: () => <NoDataComponent />,
     useDrillDown: false,
@@ -141,8 +140,6 @@ export const GenericPlansList = (props: GenericPlanListProps & RouteComponentPro
   if (loading === true) {
     return <Loading />;
   }
-
-  const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
 
   return (
     <div>
@@ -156,8 +153,6 @@ export const GenericPlansList = (props: GenericPlanListProps & RouteComponentPro
         </Col>
       </Row>
       <hr />
-      <SearchForm placeholder={SEARCH} onChangeHandler={searchFormChangeHandler} />
-
       <Row>
         <Col>
           <DrillDownTable {...drillDownProps} />
