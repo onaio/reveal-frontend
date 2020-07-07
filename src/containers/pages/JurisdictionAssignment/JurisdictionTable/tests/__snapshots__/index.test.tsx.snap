@@ -29,15 +29,15 @@ exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and des
 
 exports[`src/containers/pages/jurisdictionView/jurisdictionTable shows errorMessage: should have jurisdiction hierarchy error message 1`] = `"An error ocurred. Please try and refresh the page.The specific error is: Failed to load Jurisdiction hierarchy"`;
 
-exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: after first click 1`] = `"NameStructures Count"`;
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: after first click 1`] = `"NameStructures CountSelected Jurisdictions"`;
 
 exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: after first click 2`] = `"Mtendere1"`;
 
-exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: after second click 1`] = `"NameStructures Count"`;
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: after second click 1`] = `"NameStructures CountSelected Jurisdictions"`;
 
 exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: after second click 2`] = `"Akros_1159"`;
 
-exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: should have single node(parent node) 1`] = `"NameStructures Count"`;
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: should have single node(parent node) 1`] = `"NameStructures CountSelected Jurisdictions"`;
 
 exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: should have single node(parent node) 2`] = `"Lusaka"`;
 
