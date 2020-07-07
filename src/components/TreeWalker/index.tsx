@@ -1,14 +1,17 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { displayError } from '../../helpers/errors';
 import { getFilterParams, OpenSRPService, URLParams } from '../../services/opensrp';
+import { TreeNode } from '../../store/ducks/opensrp/hierarchies/types';
 import { COULDNT_LOAD_PARENTS, LOCATION } from './constants';
 import {
   defaultLocationParams,
   defaultLocationPropertyFilters,
+  fffChildren,
+  formatJurisdiction,
   getAncestors,
   getChildren,
 } from './helpers';
-import { OpenSRPJurisdiction, SimpleJurisdiction } from './types';
+import { OpenSRPJurisdiction } from './types';
 
 /** Type def for the TreeWalker component */
 export interface TreeWalkerProps<T = any> {
@@ -18,12 +21,13 @@ export interface TreeWalkerProps<T = any> {
   jurisdictionId: string /** jurisdiction id --> used to start walking the tree from a particular point/node */;
   labels: {
     loadAncestorsError: string;
+    loadChildrenError: string;
   } /** Objects that holds strings to be displayed in the component */;
-  limits: SimpleJurisdiction[] /** If set, tree-walking will be limited to these jurisdictions */;
   params: URLParams /** URL params to send with the request to the API */;
   propertyFilters: URLParams /** property filters to send with the request to the API */;
   readAPIEndpoint: string /** the API endpoint to get a single object */;
   serviceClass: typeof OpenSRPService /** the API helper class */;
+  tree: TreeNode | null /** If set, tree-walking will be limited to this jurisdiction tree */;
 }
 
 /** Defaults for TreeWalker component props */
@@ -34,12 +38,13 @@ export const defaultTreeWalkerProps: TreeWalkerProps = {
   jurisdictionId: '',
   labels: {
     loadAncestorsError: COULDNT_LOAD_PARENTS,
+    loadChildrenError: 'Could not load children',
   },
-  limits: [],
   params: defaultLocationParams,
   propertyFilters: defaultLocationPropertyFilters,
   readAPIEndpoint: LOCATION,
   serviceClass: OpenSRPService,
+  tree: null,
 };
 
 /** Type definition for getChildren function */
@@ -85,11 +90,11 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
       getChildrenFunc,
       jurisdictionId,
       labels,
-      limits,
       params,
       propertyFilters,
       readAPIEndpoint,
       serviceClass,
+      tree,
     } = props;
 
     // Set the parentId to be the currentNode's id
@@ -107,6 +112,24 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
         properties_filter: getFilterParams(propertiesToFilter),
       }),
     };
+
+    /** if tree is present then we can immediately get the current node and hierarchy  */
+    useEffect(() => {
+      if (tree) {
+        setLoading(false);
+        let nodeFromTree: TreeNode | undefined;
+        if (jurisdictionId && jurisdictionId !== '') {
+          nodeFromTree = tree.first(treeNode => treeNode.model.id === jurisdictionId);
+        } else {
+          nodeFromTree = tree.isRoot() ? tree : tree.first(treeNode => treeNode.isRoot());
+        }
+        if (nodeFromTree) {
+          setCurrentNode(formatJurisdiction(nodeFromTree.model));
+          setHierarchy(nodeFromTree.getPath().map(item => formatJurisdiction(item.model)));
+          // we can also get current children here but that's handled below to keep code DRY
+        }
+      }
+    }, []);
 
     // When the component mounts we check if jurisdictionId is set, because if
     // it is set then we have a situation where we are loading the tree from a certain
@@ -142,6 +165,21 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
 
     // On component mount or whenever parentId changes, we try and get the currentNode's children
     useEffect(() => {
+      if (tree) {
+        const nodeFromTree = tree.first(treeNode => treeNode.model.id === parentId);
+
+        if (nodeFromTree) {
+          fffChildren(parentId, nodeFromTree)
+            .then(result => {
+              if (result.error === null) {
+                setCurrentChildren(result.value);
+              } else {
+                displayError(result.error);
+              }
+            })
+            .catch(error => displayError(error));
+        }
+      }
       getChildrenFunc(paramsToUse, currentNode || parentId, limits)
         .then(result => {
           if (result.value !== null) {
