@@ -1,6 +1,9 @@
+import React, { Fragment, useState } from 'react';
+import { Tooltip } from 'reactstrap';
+import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
 /** Props for SelectedJurisdictionsCount  */
 export interface SelectedJurisdictionsCountProps {
-  jurisdictions: string[] /** array of jurisdictions */;
+  jurisdictions: TreeNode[] /** array of jurisdictions */;
 }
 
 /** default props for SelectedJurisdictionsCount */
@@ -21,8 +24,22 @@ const SelectedJurisdictionsCount = (props: SelectedJurisdictionsCountProps) => {
   if (!jurisdictions || jurisdictions.length < 1) {
     return null;
   }
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
-  return 0;
+  return (
+    <Fragment>
+      <span id={`org-tooltip-${jurisdictions[0].id}`}>{jurisdictions.length}</span>
+      <Tooltip
+        placement="top"
+        isOpen={tooltipOpen}
+        target={`org-tooltip-${jurisdictions[0].id}`}
+        toggle={toggleTooltip}
+      >
+        {jurisdictions.length}
+      </Tooltip>
+    </Fragment>
+  );
 };
 
 SelectedJurisdictionsCount.defaultProps = defaultProps;

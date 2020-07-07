@@ -723,3 +723,5 @@ export const JURISDICTION_ASSIGNMENT_SUCCESSFUL = translate(
   'JURISDICTION_ASSIGNMENT_SUCCESSFUL',
   'Jurisdiction(s) assigned to plan successfully'
 );
+
+export const SELECTED_JURISDICTIONS = translate('SELECTED_JURISDICTIONS', 'Selected Jurisdictions');
