@@ -396,3 +396,19 @@ export const getAllSelectedNodes = () =>
     });
     return nodesList;
   });
+
+export const getLeafNodes = () =>
+  createSelector(getTreeById(), tree => {
+    const nodesList: TreeNode[] = [];
+    if (!tree) {
+      return [];
+    }
+    tree.walk(node => {
+      const shouldAddNode = !nodeHasChildren(node);
+      if (shouldAddNode) {
+        nodesList.push(node);
+      }
+      return true;
+    });
+    return nodesList;
+  });
