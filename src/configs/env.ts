@@ -344,3 +344,6 @@ export const HIDDEN_MAP_LEGEND_ITEMS = String(
   process.env.REACT_APP_HIDDEN_MAP_LEGEND_ITEMS || ' '
 ).split(',');
 export type HIDDEN_MAP_LEGEND_ITEMS = typeof HIDDEN_MAP_LEGEND_ITEMS;
+export const JURISDICTION_METADATA_RISK =
+  process.env.REACT_APP_JURISDICTION_METADATA_RISK || 'jurisdiction_metadata-risk';
+export type JURISDICTION_METADATA_RISK = typeof JURISDICTION_METADATA_RISK;
