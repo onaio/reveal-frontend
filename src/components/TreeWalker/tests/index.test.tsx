@@ -260,6 +260,7 @@ describe('PlanAssignment/withTreeWalker', () => {
     const props = {
       ...expectedProps,
       jurisdictionId: raNchelenge.id,
+      tree: null,
     };
 
     expect(wrapper.find('TreeWalker').props()).toEqual(props);
@@ -276,6 +277,8 @@ describe('PlanAssignment/withTreeWalker', () => {
       currentChildren: [raKashikishiHAHC],
       currentNode: raNchelenge,
       hierarchy: [raZambia, raLuapula, raNchelenge],
+      jurisdictionId: raNchelenge.id,
+      tree: null,
     });
 
     expect(fetch.mock.calls).toEqual([
@@ -284,7 +287,7 @@ describe('PlanAssignment/withTreeWalker', () => {
         partOfResult,
       ],
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=false&properties_filter=status%3AActive%2CparentId%3Adfb858b5-b3e5-4871-9d1c-ae2f3fa83b63&jurisdiction_ids=8d44d54e-8b4c-465c-9e93-364a25739a6d',
+        'https://reveal-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&return_geometry=false&properties_filter=status%3AActive%2CparentId%3Adfb858b5-b3e5-4871-9d1c-ae2f3fa83b63',
         partOfResult,
       ],
       [
@@ -321,10 +324,12 @@ describe('PlanAssignment/withTreeWalker', () => {
       currentChildren: [raKsh2, raKsh3],
       currentNode: raKashikishiHAHC,
       hierarchy: [raZambia, raLuapula, raNchelenge, raKashikishiHAHC],
+      jurisdictionId: raNchelenge.id,
+      tree: null,
     });
 
     expect(fetch.mock.calls[4]).toEqual([
-      'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=false&properties_filter=status%3AActive%2CparentId%3A8d44d54e-8b4c-465c-9e93-364a25739a6d&jurisdiction_ids=fca0d71d-0410-45d3-8305-a9f092a150b8%2Cxyz0d71d-0410-45d3-8305-a9f092a150b8',
+      'https://reveal-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&return_geometry=false&properties_filter=status%3AActive%2CparentId%3A8d44d54e-8b4c-465c-9e93-364a25739a6d',
       partOfResult,
     ]);
 
