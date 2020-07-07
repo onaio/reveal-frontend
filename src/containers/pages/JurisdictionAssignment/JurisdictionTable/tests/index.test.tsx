@@ -137,6 +137,13 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
   });
 
   it('selects and deselect nodes', async () => {
+    const div = document.createElement('div');
+    div.setAttribute('id', 'jurisdiction-tooltip-2942');
+    document.body.appendChild(div);
+
+    const div1 = document.createElement('div');
+    div1.setAttribute('id', 'jurisdiction-tooltip-3951');
+    document.body.appendChild(div1);
     fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
     const plan = plans[0];
     const props = {
@@ -161,9 +168,12 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     // create snapshot of checkbox before getting checked
     expect(toJson(parentNodeRow.find('input'))).toMatchSnapshot('should be unchecked');
 
-    // simulate click on checkbox to check
-    parentNodeRow.find('input').simulate('change', { target: { name: '', checked: true } });
-    wrapper.update();
+    await act(async () => {
+      // simulate click on checkbox to check
+      parentNodeRow.find('input').simulate('change', { target: { name: '', checked: true } });
+      wrapper.update();
+    });
+
     expect(
       toJson(
         wrapper
@@ -173,13 +183,15 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       )
     ).toMatchSnapshot('should be now checked');
 
-    // simulate click on checkbox to unchecked
-    wrapper
-      .find('tbody tr')
-      .at(0)
-      .find('input')
-      .simulate('change', { target: { name: '', checked: false } });
-    wrapper.update();
+    await act(async () => {
+      // simulate click on checkbox to unchecked
+      wrapper
+        .find('tbody tr')
+        .at(0)
+        .find('input')
+        .simulate('change', { target: { name: '', checked: false } });
+      wrapper.update();
+    });
 
     // checkbox is now deselected again
     expect(
