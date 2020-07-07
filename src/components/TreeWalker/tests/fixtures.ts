@@ -1,4 +1,10 @@
+import { generateJurisdictionTree } from '../../../store/ducks/opensrp/hierarchies/utils';
 import { OpenSRPJurisdiction } from '../types';
+
+/* tslint:disable no-var-requires */
+export const locationsHierarchy = require('./locationsHierarchy.json');
+
+export const locationTree = generateJurisdictionTree(locationsHierarchy);
 
 export const limitTree = [
   {
