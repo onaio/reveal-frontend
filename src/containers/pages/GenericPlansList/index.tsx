@@ -27,6 +27,7 @@ import { displayError } from '../../../helpers/errors';
 import supersetFetch from '../../../services/superset';
 import { fetchMDAPointPlans } from '../../../store/ducks/generic/MDAPointPlans';
 import { fetchIRSPlans, GenericPlan } from '../../../store/ducks/generic/plans';
+import './index.css';
 
 /** interface for GenericPlanList props */
 export interface GenericPlanListProps {
