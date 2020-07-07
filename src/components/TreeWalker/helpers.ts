@@ -1,6 +1,8 @@
 import { Result } from '@onaio/utils';
 import { uniqBy } from 'lodash';
+import { success } from '../../helpers/dataLoading/utils';
 import { OpenSRPService, URLParams } from '../../services/opensrp';
+import { ParsedHierarchySingleNode, TreeNode } from '../../store/ducks/opensrp/hierarchies/types';
 import {
   ACTIVE,
   COULDNT_LOAD_PARENTS,
@@ -25,6 +27,25 @@ export const locationListAPIEndpoints: APIEndpoints = {
   findByJurisdictionIds: FIND_BY_ID,
   findByProperties: FIND_BY_PROPERTIES,
   location: LOCATION,
+};
+
+/**
+ * Format a jurisdictions tree node into an OpenSRPJurisdiction object
+ * @param node - the tree node
+ */
+export const formatJurisdiction = (node: ParsedHierarchySingleNode): OpenSRPJurisdiction => {
+  return {
+    id: node.id,
+    properties: {
+      geographicLevel: node.node.attributes.geographicLevel,
+      name: node.label,
+      parentId: node.parent,
+      status: 'Active',
+      version: -1,
+    },
+    serverVersion: -1,
+    type: 'Feature',
+  };
 };
 
 /** Get ancestors of a jurisdiction from OpenSRP
@@ -157,4 +178,21 @@ export const getChildren = async (
     .catch((error: Error) => {
       return { error, value: null };
     });
+};
+
+/** stub function for loading all children */
+export const fffChildren = (
+  nodeId: string,
+  tree: TreeNode
+): Promise<Result<OpenSRPJurisdiction[]>> => {
+  let children: OpenSRPJurisdiction[] = [];
+  return new Promise(resolve => {
+    const nodeFromTree = tree.first(treeNode => treeNode.model.id === nodeId);
+    if (nodeFromTree && nodeFromTree.model.children) {
+      children = nodeFromTree.model.children.map((nodeModel: ParsedHierarchySingleNode) =>
+        formatJurisdiction(nodeModel)
+      );
+    }
+    resolve(success(children));
+  });
 };
