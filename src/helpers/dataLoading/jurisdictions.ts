@@ -1,5 +1,6 @@
 import { Dictionary } from '@onaio/utils/dist/types/types';
 import { URLParams } from '@opensrp/server-service';
+import { ActionCreator } from 'redux';
 import { OpenSRPJurisdiction } from '../../components/TreeWalker/types';
 import { COULD_NOT_LOAD_JURISDICTION } from '../../configs/lang';
 import { PlanDefinition } from '../../configs/settings';
@@ -7,9 +8,16 @@ import {
   OPENSRP_FIND_LOCATION_BY_JURISDICTION_IDS,
   OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT,
   OPENSRP_PLANS,
+  OPENSRP_V2_SETTINGS,
 } from '../../constants';
 import { OpenSRPService } from '../../services/opensrp';
+import store from '../../store';
 import { RawOpenSRPHierarchy } from '../../store/ducks/opensrp/hierarchies/types';
+import {
+  fetchJurisdictionsMetadata,
+  FetchJurisdictionsMetadataAction,
+  JurisdictionsMetadata,
+} from '../../store/ducks/opensrp/jurisdictionsMetadata';
 import { failure, success } from './utils';
 
 /** find plans that the given user has access to
@@ -61,6 +69,10 @@ export const defaultLocationParams = {
   return_geometry: false,
 };
 
+export const defaultJurisdictionSettingsParams = {
+  serverVersion: '0',
+};
+
 /** given a single jurisdiction, this will return the Jurisdiction object from opensrp */
 export async function loadJurisdiction(
   jurisdictionId: string,
@@ -81,6 +93,29 @@ export async function loadJurisdiction(
         }
         const jurisdiction = response[0];
         return success(jurisdiction);
+      }
+    })
+    .catch((error: Error) => {
+      return failure(error);
+    });
+}
+
+export async function loadJurisdictionsMetadata(
+  settingsIdentifier: string,
+  serviceClass: typeof OpenSRPService,
+  actionCreator: ActionCreator<FetchJurisdictionsMetadataAction> = fetchJurisdictionsMetadata,
+  params: URLParams = defaultJurisdictionSettingsParams
+) {
+  const service = new serviceClass(OPENSRP_V2_SETTINGS);
+  const queryParams = {
+    ...params,
+    identifier: settingsIdentifier,
+  };
+  return await service
+    .read('', queryParams)
+    .then((res: JurisdictionsMetadata[]) => {
+      if (res) {
+        store.dispatch(actionCreator(res));
       }
     })
     .catch((error: Error) => {
