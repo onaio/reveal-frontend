@@ -138,28 +138,30 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
     //  1. get the object for jurisdictionId and set it as the currentNode
     //  2. get this currentNode's ancestors and add them to the hierarchy
     useEffect(() => {
-      if (
-        (!currentNode && jurisdictionId) !== '' ||
-        (currentNode && currentNode.id !== jurisdictionId)
-      ) {
-        const singleService = new serviceClass(readAPIEndpoint);
-        singleService
-          .read(jurisdictionId, params)
-          .then((response: OpenSRPJurisdiction) => {
-            if (response) {
-              setCurrentNode(response);
-              getAncestorsFunc(response, [], labels.loadAncestorsError)
-                .then(result => {
-                  if (result.value !== null) {
-                    setHierarchy(result.value);
-                  } else {
-                    displayError(result.error);
-                  }
-                })
-                .catch((error: Error) => displayError(error));
-            }
-          })
-          .catch((error: Error) => displayError(error));
+      if (!tree) {
+        if (
+          (!currentNode && jurisdictionId) !== '' ||
+          (currentNode && currentNode.id !== jurisdictionId)
+        ) {
+          const singleService = new serviceClass(readAPIEndpoint);
+          singleService
+            .read(jurisdictionId, params)
+            .then((response: OpenSRPJurisdiction) => {
+              if (response) {
+                setCurrentNode(response);
+                getAncestorsFunc(response, [], labels.loadAncestorsError)
+                  .then(result => {
+                    if (result.value !== null) {
+                      setHierarchy(result.value);
+                    } else {
+                      displayError(result.error);
+                    }
+                  })
+                  .catch((error: Error) => displayError(error));
+              }
+            })
+            .catch((error: Error) => displayError(error));
+        }
       }
     }, [jurisdictionId]);
 
@@ -179,17 +181,18 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
             })
             .catch(error => displayError(error));
         }
+      } else {
+        getChildrenFunc(paramsToUse, currentNode || parentId)
+          .then(result => {
+            if (result.value !== null) {
+              setCurrentChildren(result.value);
+            } else {
+              displayError(result.error);
+            }
+          })
+          .finally(() => setLoading(false))
+          .catch((error: Error) => displayError(error));
       }
-      getChildrenFunc(paramsToUse, currentNode || parentId, limits)
-        .then(result => {
-          if (result.value !== null) {
-            setCurrentChildren(result.value);
-          } else {
-            displayError(result.error);
-          }
-        })
-        .finally(() => setLoading(false))
-        .catch((error: Error) => displayError(error));
     }, [parentId]);
 
     if (loading === true) {
