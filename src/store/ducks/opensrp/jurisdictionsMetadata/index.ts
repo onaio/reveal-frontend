@@ -15,14 +15,14 @@ export const JURISDICTIONS_METADATA_FETCHED =
   'src/store/ducks/jurisdictionsMetadata/reducer/JURISDICTIONS_METADATA_FETCHED';
 
 /** JURISDICTIONS_METADATA_FETCHED action interface */
-interface FetchJurisdictionsMetadata extends AnyAction {
+export interface FetchJurisdictionsMetadataAction extends AnyAction {
   jurisdictionsMetadata: JurisdictionsMetadata[];
   type: typeof JURISDICTIONS_METADATA_FETCHED;
 }
 
 /** Type for jurisdictions metadata reducer actions */
 
-type JurisdictionsMetadataActionTypes = FetchJurisdictionsMetadata | AnyAction;
+type JurisdictionsMetadataActionTypes = FetchJurisdictionsMetadataAction | AnyAction;
 
 /**  Jurisdiction metadata state interface */
 export interface JurisdictionsMetadataStoreState {
@@ -33,6 +33,17 @@ export interface JurisdictionsMetadataStoreState {
 
 export type ImmutableJurisdictionsMetadataStoreState = JurisdictionsMetadataStoreState &
   SeamlessImmutable.ImmutableObject<JurisdictionsMetadataStoreState>;
+
+/** Jurisdiction metadata action */
+
+export const fetchJurisdictionsMetadata = (
+  jurisdictionsMetadata: JurisdictionsMetadata[]
+): FetchJurisdictionsMetadataAction => {
+  return {
+    jurisdictionsMetadata,
+    type: JURISDICTIONS_METADATA_FETCHED,
+  };
+};
 
 /** define initial state for jurisdictions metadata */
 
