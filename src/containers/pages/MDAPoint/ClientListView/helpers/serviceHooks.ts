@@ -6,7 +6,7 @@ import {
   OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT,
   OPENSRP_UPLOAD_ENDPOINT,
 } from '../../../../../constants';
-import { growl } from '../../../../../helpers/utils';
+import { growl, successGrowl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import store from '../../../../../store';
 import { fetchFiles, File } from '../../../../../store/ducks/opensrp/clientfiles';
@@ -42,25 +42,23 @@ export const postUploadedFile = async (
   params?: string
 ) => {
   const bearer = `Bearer ${getAccessToken(store.getState())}`;
-  await fetch(`${OPENSRP_API_BASE_URL}${OPENSRP_UPLOAD_ENDPOINT}/${params}`, {
+  const response = await fetch(`${OPENSRP_API_BASE_URL}${OPENSRP_UPLOAD_ENDPOINT}/${params}`, {
     body: data,
     headers: {
       Authorization: bearer,
     },
     method: 'POST',
-  })
-    .then(response => response.json())
-    .then(async () => {
-      growl(FILE_UPLOADED_SUCCESSFULLY, {
-        onClose: () => setStateIfDone(),
-        type: toast.TYPE.SUCCESS,
-      });
-      await loadFiles();
-      setFormSubmitstate();
-    })
-    .catch(err => {
-      growl(err.message, { type: toast.TYPE.ERROR });
-    });
+  });
+  if (response.ok) {
+    successGrowl(FILE_UPLOADED_SUCCESSFULLY);
+    await loadFiles();
+    setFormSubmitstate();
+    setStateIfDone();
+  } else {
+    const err = `OpenSRPService update on ${OPENSRP_UPLOAD_ENDPOINT} failed, HTTP status ${response.status}`;
+    growl(err, { type: toast.TYPE.ERROR });
+    setFormSubmitstate();
+  }
 };
 /**
  * Handles file downloads from server

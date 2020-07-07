@@ -37,6 +37,7 @@ describe('src/containers/pages/ClientListView/helpers/servicehooks', () => {
     const mockJsonPromise = Promise.resolve(mockSuccessResponse);
     const mockFetchPromise = Promise.resolve({
       json: () => mockJsonPromise,
+      ok: true,
     } as any);
     jest.spyOn(global, 'fetch').mockImplementation(() => mockFetchPromise);
     const setStateIfDone = jest.fn();
