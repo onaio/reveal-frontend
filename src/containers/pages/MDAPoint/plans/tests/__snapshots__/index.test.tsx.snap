@@ -139,164 +139,237 @@ exports[`components/MDA Reports/MDAPlansList renders plan definition list correc
 `;
 
 exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: table headers 1`] = `
-Array [
-  <th
-    className="listview-td"
-    key="0"
+<div
+  className="tr"
+  key="headerGroup_0"
+  role="row"
+  style={
+    Object {
+      "display": "flex",
+      "flex": "1 0 auto",
+      "minWidth": "250px",
+    }
+  }
+>
+  <div
+    className="th"
+    colSpan={1}
+    key="thead-th-0"
+    onClick={[Function]}
+    role="columnheader"
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "cursor": "pointer",
+        "flex": "150 0 auto",
+        "minWidth": "50px",
+        "position": "relative",
+        "width": "150px",
+      }
+    }
+    title="Toggle SortBy"
   >
     Title
-  </th>,
-  <th
-    className="listview-td"
-    key="1"
+    <SortIcon
+      isSorted={false}
+    >
+      <div
+        className="icon-wrapper"
+      >
+        <div
+          className="previous-next-filled  icon"
+        />
+      </div>
+    </SortIcon>
+    <div
+      className="resizer "
+      draggable={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      role="separator"
+      style={
+        Object {
+          "cursor": "ew-resize",
+        }
+      }
+    />
+  </div>
+  <div
+    className="th"
+    colSpan={1}
+    key="thead-th-1"
+    onClick={[Function]}
+    role="columnheader"
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "cursor": "pointer",
+        "flex": "150 0 auto",
+        "minWidth": "50px",
+        "position": "relative",
+        "width": "150px",
+      }
+    }
+    title="Toggle SortBy"
   >
     Date Created
-  </th>,
-  <th
-    className="listview-td"
-    key="2"
+    <SortIcon
+      isSorted={false}
+    >
+      <div
+        className="icon-wrapper"
+      >
+        <div
+          className="previous-next-filled  icon"
+        />
+      </div>
+    </SortIcon>
+    <div
+      className="resizer "
+      draggable={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      role="separator"
+      style={
+        Object {
+          "cursor": "ew-resize",
+        }
+      }
+    />
+  </div>
+  <div
+    className="th"
+    colSpan={1}
+    key="thead-th-2"
+    onClick={[Function]}
+    role="columnheader"
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "cursor": "pointer",
+        "flex": "150 0 auto",
+        "minWidth": "50px",
+        "position": "relative",
+        "width": "150px",
+      }
+    }
+    title="Toggle SortBy"
   >
     Start Date
-  </th>,
-  <th
-    className="listview-td"
-    key="3"
+    <SortIcon
+      isSorted={false}
+    >
+      <div
+        className="icon-wrapper"
+      >
+        <div
+          className="previous-next-filled  icon"
+        />
+      </div>
+    </SortIcon>
+    <div
+      className="resizer "
+      draggable={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      role="separator"
+      style={
+        Object {
+          "cursor": "ew-resize",
+        }
+      }
+    />
+  </div>
+  <div
+    className="th"
+    colSpan={1}
+    key="thead-th-3"
+    onClick={[Function]}
+    role="columnheader"
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "cursor": "pointer",
+        "flex": "150 0 auto",
+        "minWidth": "50px",
+        "position": "relative",
+        "width": "150px",
+      }
+    }
+    title="Toggle SortBy"
   >
     End Date
-  </th>,
-  <th
-    className="listview-td"
-    key="4"
+    <SortIcon
+      isSorted={false}
+    >
+      <div
+        className="icon-wrapper"
+      >
+        <div
+          className="previous-next-filled  icon"
+        />
+      </div>
+    </SortIcon>
+    <div
+      className="resizer "
+      draggable={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      role="separator"
+      style={
+        Object {
+          "cursor": "ew-resize",
+        }
+      }
+    />
+  </div>
+  <div
+    className="th"
+    colSpan={1}
+    key="thead-th-4"
+    onClick={[Function]}
+    role="columnheader"
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "cursor": "pointer",
+        "flex": "150 0 auto",
+        "minWidth": "50px",
+        "position": "relative",
+        "width": "150px",
+      }
+    }
+    title="Toggle SortBy"
   >
     Status
-  </th>,
-]
-`;
-
-exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: table rows 1`] = `
-Array [
-  <td
-    className="listview-th"
-    key="0"
-  >
-    <Link
-      key="40357eff-81b6-4e32-bd3d-484019689f7c"
-      replace={false}
-      to="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c"
+    <SortIcon
+      isSorted={false}
     >
-      <a
-        href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c"
-        onClick={[Function]}
+      <div
+        className="icon-wrapper"
       >
-        MDA-Point-2019-09-05 TEST
-      </a>
-    </Link>
-  </td>,
-  <td
-    className="listview-th"
-    key="1"
-  >
-    2019-09-05
-  </td>,
-  <td
-    className="listview-th"
-    key="2"
-  >
-    2019-09-05
-  </td>,
-  <td
-    className="listview-th"
-    key="3"
-  >
-    2019-09-25
-  </td>,
-  <td
-    className="listview-th"
-    key="4"
-  >
-    retired
-  </td>,
-  <td
-    className="listview-th"
-    key="0"
-  >
-    <Link
-      key="9f19b77c-b9a5-5832-a4e5-4b461d18fce7"
-      replace={false}
-      to="/intervention/mda-point/report/9f19b77c-b9a5-5832-a4e5-4b461d18fce7"
-    >
-      <a
-        href="/intervention/mda-point/report/9f19b77c-b9a5-5832-a4e5-4b461d18fce7"
-        onClick={[Function]}
-      >
-        MDA-Point-2019-08-30m
-      </a>
-    </Link>
-  </td>,
-  <td
-    className="listview-th"
-    key="1"
-  >
-    2019-08-30
-  </td>,
-  <td
-    className="listview-th"
-    key="2"
-  >
-    2019-08-30
-  </td>,
-  <td
-    className="listview-th"
-    key="3"
-  >
-    2019-09-14
-  </td>,
-  <td
-    className="listview-th"
-    key="4"
-  >
-    active
-  </td>,
-  <td
-    className="listview-th"
-    key="0"
-  >
-    <Link
-      key="c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
-      replace={false}
-      to="/intervention/mda-point/report/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
-    >
-      <a
-        href="/intervention/mda-point/report/c6e59ec1-8c54-5fdf-acf3-ee3692983f38"
-        onClick={[Function]}
-      >
-        Berg Eswatini 2019
-      </a>
-    </Link>
-  </td>,
-  <td
-    className="listview-th"
-    key="1"
-  >
-    2019-08-29
-  </td>,
-  <td
-    className="listview-th"
-    key="2"
-  >
-    2019-08-29
-  </td>,
-  <td
-    className="listview-th"
-    key="3"
-  >
-    2019-09-18
-  </td>,
-  <td
-    className="listview-th"
-    key="4"
-  >
-    active
-  </td>,
-]
+        <div
+          className="previous-next-filled  icon"
+        />
+      </div>
+    </SortIcon>
+    <div
+      className="resizer "
+      draggable={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      role="separator"
+      style={
+        Object {
+          "cursor": "ew-resize",
+        }
+      }
+    />
+  </div>
+</div>
 `;
