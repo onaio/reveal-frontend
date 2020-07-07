@@ -6,7 +6,7 @@ import {
   OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT,
   OPENSRP_UPLOAD_ENDPOINT,
 } from '../../../../../constants';
-import { growl } from '../../../../../helpers/utils';
+import { growl, successGrowl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import store from '../../../../../store';
 import { fetchFiles, File } from '../../../../../store/ducks/opensrp/clientfiles';
@@ -50,12 +50,10 @@ export const postUploadedFile = async (
     method: 'POST',
   });
   if (response.ok) {
-    growl(FILE_UPLOADED_SUCCESSFULLY, {
-      onClose: () => setStateIfDone(),
-      type: toast.TYPE.SUCCESS,
-    });
+    successGrowl(FILE_UPLOADED_SUCCESSFULLY);
     await loadFiles();
     setFormSubmitstate();
+    setStateIfDone();
   } else {
     const err = `OpenSRPService update on ${OPENSRP_UPLOAD_ENDPOINT} failed, HTTP status ${response.status}`;
     growl(err, { type: toast.TYPE.ERROR });
