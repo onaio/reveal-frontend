@@ -17,6 +17,7 @@ import {
   NO_DATA_FOUND,
   NO_ROWS_FOUND,
   SAVE,
+  SELECTION_CRITERIA,
   STRUCTURES_COUNT,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
@@ -39,12 +40,14 @@ import hierarchyReducer, {
   getAllSelectedNodes,
   getCurrentChildren,
   getCurrentParentNode,
+  getLeafNodes,
   reducerName as hierarchyReducerName,
   selectNode,
   SelectNodeAction,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
+import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
 
@@ -55,6 +58,7 @@ export interface JurisdictionSelectorTableProps {
   plan: PlanDefinition;
   rootJurisdictionId: string;
   currentParentId: string | undefined;
+  jurisdictionsMetadata: JurisdictionsMetadata[];
   serviceClass: typeof OpenSRPService;
   treeFetchedCreator: ActionCreator<FetchedTreeAction>;
   currentParentNode: TreeNode | undefined;
@@ -63,6 +67,7 @@ export interface JurisdictionSelectorTableProps {
   deselectNodeCreator: ActionCreator<DeselectNodeAction>;
   autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
   selectedLeafNodes: TreeNode[];
+  getLeafNodes: TreeNode[];
 }
 
 const defaultProps = {
@@ -74,6 +79,8 @@ const defaultProps = {
   rootJurisdictionId: '',
   selectNodeCreator: selectNode,
   selectedLeafNodes: [],
+  getLeafNodes: [],
+  jurisdictionsMetadata: [],
   serviceClass: OpenSRPService,
   treeFetchedCreator: fetchTree,
 };
@@ -95,10 +102,11 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     deselectNodeCreator,
     autoSelectNodesCreator,
     selectedLeafNodes,
+    getLeafNodes,
     plan,
+    jurisdictionsMetadata,
     serviceClass,
   } = props;
-
   /** helper function that decides which action creator to call when
    * changing the selected status of a node
    * @param nodId - id of the node of interest
@@ -115,12 +123,21 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const [loading, setLoading] = React.useState<boolean>(true);
   const { broken, errorMessage, handleBrokenPage } = useHandleBrokenPage();
   const baseUrl = `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
+  const jurisdictionIds: string[] = jurisdictionsMetadata.map(meta => meta.key);
 
   /** callback used to do initial autoSelection ; auto selects all jurisdictions that are already assigned to a plan
    * @param node - takes a node and returns true if node should be auto-selected
    */
+
   const callback = (node: TreeNode) => {
     const existingAssignments = props.plan.jurisdiction.map(jurisdiction => jurisdiction.code);
+    if (
+      !existingAssignments.includes(node.model.id) &&
+      getLeafNodes.length &&
+      !node.children.length
+    ) {
+      return jurisdictionIds.includes(node.model.id);
+    }
     return existingAssignments.includes(node.model.id);
   };
 
@@ -188,7 +205,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     currentPage,
     pages,
   };
-
   const data = currentChildren.map(node => {
     return [
       <input
@@ -202,7 +218,11 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         }}
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
-      jurisdictionIds.length && jurisdictionIds.includes(node.model.id) ? 'Auto' : 'None',
+      node.model.meta.selected
+        ? jurisdictionIds.length && jurisdictionIds.includes(node.model.id)
+          ? 'Auto'
+          : 'Manual'
+        : 'None',
       node.model.node.attributes.structureCount,
     ];
   });
@@ -283,7 +303,7 @@ export { JurisdictionTable };
 /** map state to props interface  */
 type MapStateToProps = Pick<
   JurisdictionSelectorTableProps,
-  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes'
+  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes' | 'getLeafNodes'
 >;
 
 /** map action creators interface */
@@ -306,6 +326,7 @@ const mapStateToProps = (
     currentChildren: getCurrentChildren()(state, filters),
     currentParentNode: getCurrentParentNode()(state, filters),
     selectedLeafNodes: getAllSelectedNodes()(state, filters),
+    getLeafNodes: getLeafNodes()(state, filters),
   };
 };
 
