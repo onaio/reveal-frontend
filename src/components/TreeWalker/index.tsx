@@ -38,7 +38,7 @@ export const defaultTreeWalkerProps: TreeWalkerProps = {
   jurisdictionId: '',
   labels: {
     loadAncestorsError: COULDNT_LOAD_PARENTS,
-    loadChildrenError: 'Could not load children',
+    loadChildrenError: 'Could not load children', // do we even need this?
   },
   params: defaultLocationParams,
   propertyFilters: defaultLocationPropertyFilters,
@@ -138,6 +138,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
     //  1. get the object for jurisdictionId and set it as the currentNode
     //  2. get this currentNode's ancestors and add them to the hierarchy
     useEffect(() => {
+      // we only need to do this if we don't have a tree
       if (!tree) {
         if (
           (!currentNode && jurisdictionId) !== '' ||
@@ -168,20 +169,18 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
     // On component mount or whenever parentId changes, we try and get the currentNode's children
     useEffect(() => {
       if (tree) {
+        // if we have a tree then we can trivially get currentChildren right away
         const nodeFromTree = tree.first(treeNode => treeNode.model.id === parentId);
-
         if (nodeFromTree) {
-          fffChildren(parentId, nodeFromTree)
-            .then(result => {
-              if (result.error === null) {
-                setCurrentChildren(result.value);
-              } else {
-                displayError(result.error);
-              }
-            })
-            .catch(error => displayError(error));
+          const getChildrenResult = fffChildren(parentId, nodeFromTree);
+          if (getChildrenResult.error === null) {
+            setCurrentChildren(getChildrenResult.value);
+          } else {
+            displayError(getChildrenResult.error);
+          }
         }
       } else {
+        // if we don't have a tree we need to get current children using the API
         getChildrenFunc(paramsToUse, currentNode || parentId)
           .then(result => {
             if (result.value !== null) {

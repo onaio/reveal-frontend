@@ -181,20 +181,15 @@ export const getChildren = async (
 };
 
 /** stub function for loading all children */
-export const fffChildren = (
-  nodeId: string,
-  tree: TreeNode
-): Promise<Result<OpenSRPJurisdiction[]>> => {
+export const fffChildren = (nodeId: string, tree: TreeNode): Result<OpenSRPJurisdiction[]> => {
   let children: OpenSRPJurisdiction[] = [];
-  return new Promise(resolve => {
-    const nodeFromTree = tree.first(treeNode => treeNode.model.id === nodeId);
-    if (nodeFromTree && nodeFromTree.model.children) {
-      children = nodeFromTree.model.children.map((nodeModel: ParsedHierarchySingleNode) =>
-        formatJurisdiction(nodeModel)
-      );
-    }
-    resolve(success(children));
-  });
+  const nodeFromTree = tree.first(treeNode => treeNode.model.id === nodeId);
+  if (nodeFromTree && nodeFromTree.model.children) {
+    children = nodeFromTree.model.children.map((nodeModel: ParsedHierarchySingleNode) =>
+      formatJurisdiction(nodeModel)
+    );
+  }
+  return success(children);
 };
 
 /**
