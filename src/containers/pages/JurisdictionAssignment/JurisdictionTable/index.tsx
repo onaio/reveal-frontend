@@ -202,10 +202,11 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         }}
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
+      jurisdictionIds.length && jurisdictionIds.includes(node.model.id) ? 'Auto' : 'None',
       node.model.node.attributes.structureCount,
     ];
   });
-  const headerItems = ['', NAME, STRUCTURES_COUNT];
+  const headerItems = ['', NAME, SELECTION_CRITERIA, STRUCTURES_COUNT];
   const tableClass = 'table table-bordered';
 
   /** on change handler attached to the parent checkbox
@@ -235,6 +236,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           </th>
           <th style={{ width: '70%' }}>{headerItems[1]}</th>
           <th>{headerItems[2]}</th>
+          <th>{headerItems[3]}</th>
         </tr>
       </thead>
     );
