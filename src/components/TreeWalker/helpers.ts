@@ -1,6 +1,6 @@
 import { Result } from '@onaio/utils';
 import { uniqBy } from 'lodash';
-import { success } from '../../helpers/dataLoading/utils';
+import { failure, success } from '../../helpers/dataLoading/utils';
 import { OpenSRPService, URLParams } from '../../services/opensrp';
 import { ParsedHierarchySingleNode, TreeNode } from '../../store/ducks/opensrp/hierarchies/types';
 import {
@@ -195,4 +195,51 @@ export const fffChildren = (
     }
     resolve(success(children));
   });
+};
+
+/**
+ * Get jurisdictions using their ids
+ *
+ * Calls the OpenSRP findByJurisdictionIds locations API to get jurisdictions using
+ * an array os jurisdiction ids
+ *
+ * @param jurisdictionIds - array of jurisdiction ids
+ * @param params - url params to send with the request
+ * @param chunkSize - the max number of jurisdictions to try and get at the same time
+ * @param serviceClass - the OpenSRP server service class
+ * @param apiEndpoint - the API endpoint
+ */
+export const getJurisdictions = (
+  jurisdictionIds: string[],
+  params: URLParams,
+  chunkSize: number = 20,
+  serviceClass: typeof OpenSRPService = OpenSRPService,
+  apiEndpoint: string = FIND_BY_ID
+): Promise<Result<OpenSRPJurisdiction[]>> => {
+  const promises = [];
+  if (jurisdictionIds.length > 0) {
+    const service = new serviceClass(apiEndpoint);
+    // remove duplicates
+    const cleanedIds = Array.from(new Set(jurisdictionIds));
+    // cleanedIds may have a huge number of elements and so we need to chunk
+    // it so that our URL doesn't get too long
+    for (let index = 0, size = cleanedIds.length; index < size; index += chunkSize) {
+      params.jurisdiction_ids = cleanedIds.slice(index, index + chunkSize).join(',');
+      promises.push(service.list(params));
+    }
+  }
+  if (promises.length === 0) {
+    return new Promise(resolve => resolve(success([])));
+  } else {
+    return Promise.all(promises)
+      .then(results => {
+        // We are concatenating all the resulting arrays so that we return all nodes in one array
+        const children = [].concat.apply([], results);
+        // then we remove duplicates and return the children
+        return success(uniqBy(children, 'id'));
+      })
+      .catch((error: Error) => {
+        return failure(error);
+      });
+  }
 };
