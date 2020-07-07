@@ -159,6 +159,246 @@ exports[`components/IRS Reports/IRSPlansList renders plan definition list correc
 </h3>
 `;
 
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table headers 1`] = `null`;
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table headers 1`] = `
+<div
+  className="tr"
+  key="headerGroup_0"
+  role="row"
+  style={
+    Object {
+      "display": "flex",
+      "flex": "1 0 auto",
+      "minWidth": "250px",
+    }
+  }
+>
+  <div
+    className="th"
+    colSpan={1}
+    key="thead-th-0"
+    onClick={[Function]}
+    role="columnheader"
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "cursor": "pointer",
+        "flex": "150 0 auto",
+        "minWidth": "50px",
+        "position": "relative",
+        "width": "150px",
+      }
+    }
+    title="Toggle SortBy"
+  >
+    Title
+    <SortIcon
+      isSorted={false}
+    >
+      <div
+        className="icon-wrapper"
+      >
+        <div
+          className="previous-next-filled  icon"
+        />
+      </div>
+    </SortIcon>
+    <div
+      className="resizer "
+      draggable={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      role="separator"
+      style={
+        Object {
+          "cursor": "ew-resize",
+        }
+      }
+    />
+  </div>
+  <div
+    className="th"
+    colSpan={1}
+    key="thead-th-1"
+    onClick={[Function]}
+    role="columnheader"
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "cursor": "pointer",
+        "flex": "150 0 auto",
+        "minWidth": "50px",
+        "position": "relative",
+        "width": "150px",
+      }
+    }
+    title="Toggle SortBy"
+  >
+    Date Created
+    <SortIcon
+      isSorted={false}
+    >
+      <div
+        className="icon-wrapper"
+      >
+        <div
+          className="previous-next-filled  icon"
+        />
+      </div>
+    </SortIcon>
+    <div
+      className="resizer "
+      draggable={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      role="separator"
+      style={
+        Object {
+          "cursor": "ew-resize",
+        }
+      }
+    />
+  </div>
+  <div
+    className="th"
+    colSpan={1}
+    key="thead-th-2"
+    onClick={[Function]}
+    role="columnheader"
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "cursor": "pointer",
+        "flex": "150 0 auto",
+        "minWidth": "50px",
+        "position": "relative",
+        "width": "150px",
+      }
+    }
+    title="Toggle SortBy"
+  >
+    Start Date
+    <SortIcon
+      isSorted={false}
+    >
+      <div
+        className="icon-wrapper"
+      >
+        <div
+          className="previous-next-filled  icon"
+        />
+      </div>
+    </SortIcon>
+    <div
+      className="resizer "
+      draggable={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      role="separator"
+      style={
+        Object {
+          "cursor": "ew-resize",
+        }
+      }
+    />
+  </div>
+  <div
+    className="th"
+    colSpan={1}
+    key="thead-th-3"
+    onClick={[Function]}
+    role="columnheader"
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "cursor": "pointer",
+        "flex": "150 0 auto",
+        "minWidth": "50px",
+        "position": "relative",
+        "width": "150px",
+      }
+    }
+    title="Toggle SortBy"
+  >
+    End Date
+    <SortIcon
+      isSorted={false}
+    >
+      <div
+        className="icon-wrapper"
+      >
+        <div
+          className="previous-next-filled  icon"
+        />
+      </div>
+    </SortIcon>
+    <div
+      className="resizer "
+      draggable={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      role="separator"
+      style={
+        Object {
+          "cursor": "ew-resize",
+        }
+      }
+    />
+  </div>
+  <div
+    className="th"
+    colSpan={1}
+    key="thead-th-4"
+    onClick={[Function]}
+    role="columnheader"
+    style={
+      Object {
+        "boxSizing": "border-box",
+        "cursor": "pointer",
+        "flex": "150 0 auto",
+        "minWidth": "50px",
+        "position": "relative",
+        "width": "150px",
+      }
+    }
+    title="Toggle SortBy"
+  >
+    Status
+    <SortIcon
+      isSorted={false}
+    >
+      <div
+        className="icon-wrapper"
+      >
+        <div
+          className="previous-next-filled  icon"
+        />
+      </div>
+    </SortIcon>
+    <div
+      className="resizer "
+      draggable={false}
+      onClick={[Function]}
+      onMouseDown={[Function]}
+      onTouchStart={[Function]}
+      role="separator"
+      style={
+        Object {
+          "cursor": "ew-resize",
+        }
+      }
+    />
+  </div>
+</div>
+`;
 
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: table rows 1`] = `null`;
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: the full rendered rows tr index 0 1`] = `"TitleDate CreatedStart DateEnd DateStatus"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: the full rendered rows tr index 1 1`] = `"IRS 2019-09-05 TEST2019-09-052019-09-052019-09-25retired"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: the full rendered rows tr index 2 1`] = `"IRS 2019-08-30m2019-08-302019-08-302019-09-14active"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: the full rendered rows tr index 3 1`] = `"Berg Namibia 20192019-08-292019-08-292019-09-18active"`;
