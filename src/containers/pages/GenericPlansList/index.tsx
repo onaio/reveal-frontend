@@ -1,12 +1,19 @@
-import ListView from '@onaio/list-view';
+import { DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table';
+import { Dictionary } from '@onaio/utils';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
+import { Cell } from 'react-table';
 import { Col, Row } from 'reactstrap';
 import { createChangeHandler, SearchForm } from '../../../components/forms/Search';
 import HeaderBreadcrumb from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../components/page/Loading';
+import {
+  defaultOptions,
+  renderInFilterFactory,
+} from '../../../components/Table/DrillDownFilters/utils';
+import { NoDataComponent } from '../../../components/Table/NoDataComponent';
 import {
   DATE_CREATED,
   END_DATE,
@@ -69,28 +76,71 @@ export const GenericPlansList = (props: GenericPlanListProps & RouteComponentPro
     loadData().catch(error => displayError(error));
   }, []);
 
-  const listViewData = (planList: GenericPlan[]) =>
-    planList.map(planObj => {
-      return [
-        <Link to={`${pageUrl}/${planObj.plan_id}`} key={planObj.plan_id}>
-          {planObj.plan_title}
-        </Link>,
-        planObj.plan_date,
-        planObj.plan_effective_period_start,
-        planObj.plan_effective_period_end,
-        planStatusDisplay[planObj.plan_status] || planObj.plan_status,
-      ];
-    });
+  const columns = [
+    {
+      Cell: (planObj: Cell<GenericPlan>) => {
+        const original = planObj.row.original;
+        return (
+          <Link to={`${pageUrl}/${original.plan_id}`} key={original.plan_id}>
+            {original.plan_title}
+          </Link>
+        );
+      },
+      Header: TITLE,
+      accessor: 'plan_title',
+    },
+    {
+      Header: DATE_CREATED,
+      accessor: 'plan_date',
+    },
+    {
+      Header: START_DATE,
+      accessor: 'plan_effective_period_start',
+    },
+    {
+      Header: END_DATE,
+      accessor: 'plan_effective_period_end',
+    },
+    {
+      Header: STATUS_HEADER,
+      accessor: (d: Dictionary) => planStatusDisplay[d.plan_status] || d.plan_status,
+      id: 'plan_status',
+    },
+  ];
+
+  const drillDownProps: Pick<
+    DrillDownTableProps<Dictionary>,
+    | 'columns'
+    | 'data'
+    | 'loading'
+    | 'loadingComponent'
+    | 'renderInBottomFilterBar'
+    | 'renderInTopFilterBar'
+    | 'useDrillDown'
+    | 'renderNullDataComponent'
+  > = {
+    columns,
+    data: plans,
+    loading,
+    loadingComponent: Loading,
+    renderInBottomFilterBar: renderInFilterFactory({
+      showColumnHider: false,
+      showFilters: false,
+      showPagination: true,
+      showRowHeightPicker: false,
+      showSearch: false,
+    }),
+    renderInTopFilterBar: renderInFilterFactory({
+      ...defaultOptions,
+      componentProps: props,
+    }),
+    renderNullDataComponent: () => <NoDataComponent />,
+    useDrillDown: false,
+  };
 
   if (loading === true) {
     return <Loading />;
   }
-
-  const listViewProps = {
-    data: listViewData(plans),
-    headerItems: [TITLE, DATE_CREATED, START_DATE, END_DATE, STATUS_HEADER],
-    tableClass: 'table table-bordered plans-list',
-  };
 
   const searchFormChangeHandler = createChangeHandler(QUERY_PARAM_TITLE, props);
 
@@ -110,7 +160,7 @@ export const GenericPlansList = (props: GenericPlanListProps & RouteComponentPro
 
       <Row>
         <Col>
-          <ListView {...listViewProps} />
+          <DrillDownTable {...drillDownProps} />
         </Col>
       </Row>
     </div>
