@@ -6,8 +6,8 @@ export const reducerName = 'jurisdictionsMetadata';
 
 /**  Jurisdiction metadata interface */
 export interface JurisdictionsMetadata {
-  jurisdictionId: string;
-  jurisdictionRisk: string;
+  key: string;
+  value: string;
 }
 
 /**  JURISDICTIONS_METADATA_FETCHED action type */
