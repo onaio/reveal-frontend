@@ -13,6 +13,7 @@ import {
   formatJurisdiction,
   getAncestors,
   getChildren,
+  locationListAPIEndpoints,
 } from '../helpers';
 import { withTreeWalker, WithWalkerProps } from '../index';
 import {
@@ -43,6 +44,7 @@ describe('PlanAssignment/withTreeWalker', () => {
 
   const expectedProps = {
     LoadingIndicator: expect.any(Function),
+    apiEndPoints: locationListAPIEndpoints,
     currentChildren: [],
     currentNode: null,
     getAncestorsFunc: getAncestors,
@@ -56,7 +58,6 @@ describe('PlanAssignment/withTreeWalker', () => {
     loadChildren: expect.any(Function),
     params: defaultLocationParams,
     propertyFilters: defaultLocationPropertyFilters,
-    readAPIEndpoint: 'location',
     serviceClass: OpenSRPService,
     smile: ':-)',
     tree: locationTree,
