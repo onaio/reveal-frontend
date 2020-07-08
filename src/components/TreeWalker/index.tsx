@@ -134,12 +134,13 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
     useEffect(() => {
       if (tree) {
         setLoading(false);
-        let nodeFromTree: TreeNode | undefined;
-        if (jurisdictionId && jurisdictionId !== '') {
-          nodeFromTree = tree.first(treeNode => treeNode.model.id === jurisdictionId);
-        } else {
-          nodeFromTree = tree.isRoot() ? tree : tree.first(treeNode => treeNode.isRoot());
-        }
+        const nodeFromTree =
+          jurisdictionId && jurisdictionId !== ''
+            ? tree.first(treeNode => treeNode.model.id === jurisdictionId)
+            : tree.isRoot()
+            ? tree
+            : tree.first(treeNode => treeNode.isRoot());
+
         if (nodeFromTree) {
           if (useJurisdictionNodeType) {
             setCurrentNode(formatJurisdiction(nodeFromTree.model));
