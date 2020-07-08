@@ -39,6 +39,7 @@ const fetch = require('jest-fetch-mock');
 jest.mock('../../../../../configs/env', () => ({
   GISIDA_MAPBOX_TOKEN: 'hunter2',
   GISIDA_TIMEOUT: 3000,
+  HIDDEN_MAP_LEGEND_ITEMS: [],
   SUPERSET_IRS_REPORTING_INDICATOR_ROWS: 'namibia2019',
   SUPERSET_IRS_REPORTING_INDICATOR_STOPS: 'namibia2019',
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES: '11,12',
