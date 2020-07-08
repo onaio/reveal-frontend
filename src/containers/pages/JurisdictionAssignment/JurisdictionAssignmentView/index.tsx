@@ -51,16 +51,16 @@ reducerRegistry.register(jurisdictionMetadataReducerName, jurisdictionMetadataRe
 
 /** this component's props */
 export interface JurisdictionAssignmentViewProps {
+  fetchJurisdictionsMetadataCreator: ActionCreator<FetchJurisdictionsMetadataAction>;
   fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
-  fetchJurisdictionsMetadata: ActionCreator<FetchJurisdictionsMetadataAction>;
   jurisdictionsMetadata: JurisdictionsMetadata[];
   plan: PlanDefinition | null;
   serviceClass: typeof OpenSRPService;
 }
 
 export const defaultProps = {
+  fetchJurisdictionsMetadataCreator: fetchJurisdictionsMetadata,
   fetchPlanCreator: addPlanDefinition,
-  fetchJurisdictionsMetadata,
   jurisdictionsMetadata: [],
   plan: null,
   serviceClass: OpenSRPService,
@@ -87,7 +87,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     plan,
     serviceClass,
     fetchPlanCreator,
-    fetchJurisdictionsMetadata,
+    fetchJurisdictionsMetadataCreator,
     jurisdictionsMetadata,
   } = props;
 
@@ -100,7 +100,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     loadJurisdictionsMetadata(
       JURISDICTION_METADATA_RISK,
       OpenSRPService,
-      fetchJurisdictionsMetadata
+      fetchJurisdictionsMetadataCreator
     )
       .then(() => {
         setLoading(false);
@@ -178,9 +178,9 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
 
   const JurisdictionTableProps = {
     currentParentId: props.match.params.parentId,
+    jurisdictionsMetadata,
     plan,
     rootJurisdictionId,
-    jurisdictionsMetadata,
     serviceClass,
   };
 
@@ -217,7 +217,7 @@ type MapStateToProps =
   | Pick<JurisdictionAssignmentViewProps, 'jurisdictionsMetadata'>;
 type DispatchToProps =
   | Pick<JurisdictionAssignmentViewProps, 'fetchPlanCreator'>
-  | Pick<JurisdictionAssignmentViewProps, 'fetchJurisdictionsMetadata'>;
+  | Pick<JurisdictionAssignmentViewProps, 'fetchJurisdictionsMetadataCreator'>;
 
 const mapStateToProps = (
   state: Partial<Store>,
@@ -226,14 +226,14 @@ const mapStateToProps = (
   const planId = ownProps.match.params.planId;
   const planObj = getPlanDefinitionById(state, planId);
   return {
-    plan: planObj,
     jurisdictionsMetadata: getJurisdictionsMetadata(state),
+    plan: planObj,
   };
 };
 
 const mapDispatchToProps: DispatchToProps = {
+  fetchJurisdictionsMetadataCreator: fetchJurisdictionsMetadata,
   fetchPlanCreator: addPlanDefinition,
-  fetchJurisdictionsMetadata,
 };
 
 const ConnectedJurisdictionAssignmentView = connect(
