@@ -26,7 +26,6 @@ export interface TreeWalkerProps<T = any> {
   } /** Objects that holds strings to be displayed in the component */;
   params: URLParams /** URL params to send with the request to the API */;
   propertyFilters: URLParams /** property filters to send with the request to the API */;
-  // readAPIEndpoint: string /** the API endpoint to get a single object */;
   serviceClass: typeof OpenSRPService /** the API helper class */;
   tree: TreeNode | null /** If set, tree-walking will be limited to this jurisdiction tree */;
   useJurisdictionNodeType: boolean /** If set to true the type of objects returned will be OpenSRPJurisdiction instead of TreeNode.  Probably best to set this to true when using the OpenSRP API */;
