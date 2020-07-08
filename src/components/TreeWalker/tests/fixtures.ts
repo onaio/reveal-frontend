@@ -51,6 +51,25 @@ export const limitTree = [
   },
 ];
 
+export const raZambiaNode = locationTree.first(
+  treeNode => treeNode.model.id === '0ddd9ad1-452b-4825-a92a-49cb9fc82d18'
+);
+export const raLuapulaNode = locationTree.first(
+  treeNode => treeNode.model.id === 'cec79f21-33c3-43f5-a8af-59a47aa61b84'
+);
+export const raNchelengeNode = locationTree.first(
+  treeNode => treeNode.model.id === 'dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63'
+);
+export const raKashikishiHAHCNode = locationTree.first(
+  treeNode => treeNode.model.id === '8d44d54e-8b4c-465c-9e93-364a25739a6d'
+);
+export const raKsh2Node = locationTree.first(
+  treeNode => treeNode.model.id === 'fca0d71d-0410-45d3-8305-a9f092a150b8'
+);
+export const raKsh3Node = locationTree.first(
+  treeNode => treeNode.model.id === 'xyz0d71d-0410-45d3-8305-a9f092a150b8'
+);
+
 export const raZambia: OpenSRPJurisdiction = {
   id: '0ddd9ad1-452b-4825-a92a-49cb9fc82d18',
   properties: {
