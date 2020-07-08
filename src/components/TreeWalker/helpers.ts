@@ -223,9 +223,7 @@ export const getJurisdictions = (
       promises.push(service.list(params));
     }
   }
-  if (promises.length === 0) {
-    return new Promise(resolve => resolve(success([])));
-  } else {
+  if (promises.length > 0) {
     return Promise.all(promises)
       .then(results => {
         // We are concatenating all the resulting arrays so that we return all nodes in one array
@@ -236,5 +234,7 @@ export const getJurisdictions = (
       .catch((error: Error) => {
         return failure(error);
       });
+  } else {
+    return new Promise(resolve => resolve(success([])));
   }
 };
