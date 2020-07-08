@@ -1,8 +1,8 @@
 import { get, keyBy } from 'lodash';
 import moment from 'moment';
-import { OpenSRPJurisdiction } from '../../../../../components/TreeWalker/types';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
+import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
 
 /**
  * Get assignments payload
@@ -19,7 +19,7 @@ import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 export const getPayload = (
   selectedOrgs: string[],
   selectedPlan: PlanDefinition,
-  selectedJurisdiction: OpenSRPJurisdiction,
+  selectedJurisdiction: TreeNode,
   initialOrgs: string[] = [],
   existingAssignments: Assignment[] = []
 ): Assignment[] => {
@@ -41,7 +41,7 @@ export const getPayload = (
       }
       payload.push({
         fromDate: startDate,
-        jurisdiction: selectedJurisdiction.id,
+        jurisdiction: selectedJurisdiction.model.id,
         organization: orgId,
         plan: selectedPlan.identifier,
         toDate: endDate,
@@ -61,7 +61,7 @@ export const getPayload = (
       }
       payload.push({
         fromDate: startDate,
-        jurisdiction: selectedJurisdiction.id,
+        jurisdiction: selectedJurisdiction.model.id,
         organization: retiredOrgId,
         plan: selectedPlan.identifier,
         toDate: retireDate,
