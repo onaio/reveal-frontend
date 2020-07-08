@@ -130,6 +130,18 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         .includes('Akros_1')
     ).toBeTruthy();
 
+    expect(toJson(tbodyRow.find('SelectedJurisdictionsCount'))).toMatchSnapshot(
+      'structure count rendered'
+    );
+
+    expect(
+      tbodyRow
+        .find('SelectedJurisdictionsCount')
+        .at(0)
+        .text()
+        .includes('')
+    ).toBeTruthy();
+
     // akros is the last child it should not be clickable
     expect(toJson(wrapper.find('tbody tr NodeCell span'))).toMatchSnapshot(
       'should not have btn-link or onClick handler'

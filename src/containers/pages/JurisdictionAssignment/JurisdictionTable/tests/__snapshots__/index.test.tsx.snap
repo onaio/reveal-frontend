@@ -48,3 +48,164 @@ exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly
   Akros_1
 </span>
 `;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: structure count rendered 1`] = `
+<SelectedJurisdictionsCount
+  id="2942"
+  jurisdictions={Array []}
+  key="selected-jurisdictions-txt"
+  parentNode={
+    Node {
+      "children": Array [
+        Node {
+          "children": Array [
+            Node {
+              "children": Array [],
+              "config": Object {
+                "childrenPropertyName": "children",
+                "modelComparatorFn": undefined,
+              },
+              "model": Object {
+                "id": "3951",
+                "label": "Akros_1",
+                "meta": Object {
+                  "selected": false,
+                },
+                "node": Object {
+                  "attributes": Object {
+                    "geographicLevel": 2,
+                    "structureCount": 159,
+                  },
+                  "locationId": "3951",
+                  "name": "Akros_1",
+                  "parentLocation": Object {
+                    "locationId": "3019",
+                    "voided": false,
+                  },
+                  "voided": false,
+                },
+                "parent": "3019",
+              },
+              "parent": [Circular],
+            },
+          ],
+          "config": Object {
+            "childrenPropertyName": "children",
+            "modelComparatorFn": undefined,
+          },
+          "model": Object {
+            "children": Array [
+              Object {
+                "id": "3951",
+                "label": "Akros_1",
+                "meta": Object {
+                  "selected": false,
+                },
+                "node": Object {
+                  "attributes": Object {
+                    "geographicLevel": 2,
+                    "structureCount": 159,
+                  },
+                  "locationId": "3951",
+                  "name": "Akros_1",
+                  "parentLocation": Object {
+                    "locationId": "3019",
+                    "voided": false,
+                  },
+                  "voided": false,
+                },
+                "parent": "3019",
+              },
+            ],
+            "id": "3019",
+            "label": "Mtendere",
+            "meta": Object {
+              "selected": false,
+            },
+            "node": Object {
+              "attributes": Object {
+                "geographicLevel": 1,
+                "structureCount": 1,
+              },
+              "locationId": "3019",
+              "name": "Mtendere",
+              "parentLocation": Object {
+                "locationId": "2942",
+                "voided": false,
+              },
+              "voided": false,
+            },
+            "parent": "2942",
+          },
+          "parent": [Circular],
+        },
+      ],
+      "config": Object {
+        "childrenPropertyName": "children",
+        "modelComparatorFn": undefined,
+      },
+      "model": Object {
+        "children": Array [
+          Object {
+            "children": Array [
+              Object {
+                "id": "3951",
+                "label": "Akros_1",
+                "meta": Object {
+                  "selected": false,
+                },
+                "node": Object {
+                  "attributes": Object {
+                    "geographicLevel": 2,
+                    "structureCount": 159,
+                  },
+                  "locationId": "3951",
+                  "name": "Akros_1",
+                  "parentLocation": Object {
+                    "locationId": "3019",
+                    "voided": false,
+                  },
+                  "voided": false,
+                },
+                "parent": "3019",
+              },
+            ],
+            "id": "3019",
+            "label": "Mtendere",
+            "meta": Object {
+              "selected": false,
+            },
+            "node": Object {
+              "attributes": Object {
+                "geographicLevel": 1,
+                "structureCount": 1,
+              },
+              "locationId": "3019",
+              "name": "Mtendere",
+              "parentLocation": Object {
+                "locationId": "2942",
+                "voided": false,
+              },
+              "voided": false,
+            },
+            "parent": "2942",
+          },
+        ],
+        "id": "2942",
+        "label": "Lusaka",
+        "meta": Object {
+          "selected": false,
+        },
+        "node": Object {
+          "attributes": Object {
+            "geographicLevel": 0,
+          },
+          "locationId": "2942",
+          "name": "Lusaka",
+          "voided": false,
+        },
+      },
+    }
+  }
+/>
+`;
