@@ -1008,3 +1008,16 @@ export const downloadFile = (data: string, filename: string, type: string) => {
     }, 0);
   }
 };
+
+/** type of drill down props commonly used */
+export type DefaultDrillDownPropsType = Pick<
+  DrillDownTableProps<Dictionary>,
+  | 'columns'
+  | 'data'
+  | 'loading'
+  | 'loadingComponent'
+  | 'renderInBottomFilterBar'
+  | 'renderInTopFilterBar'
+  | 'useDrillDown'
+  | 'renderNullDataComponent'
+>;
