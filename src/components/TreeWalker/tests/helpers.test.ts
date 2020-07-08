@@ -1,5 +1,5 @@
 import flushPromises from 'flush-promises';
-import { getAncestors, getChildren } from '../helpers';
+import { getAncestors, getChildren, getJurisdictions } from '../helpers';
 import { limitTree, raKsh2, raKsh3, raLuapula, raNchelenge, raZambia } from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
@@ -100,6 +100,59 @@ describe('TreeWalker/helpers', () => {
     const result = await getChildren(params, null, limitTree);
     await flushPromises();
     expect(result).toEqual({ error: null, value: [raZambia] });
+  });
+
+  it('getJurisdictions just works', async () => {
+    const params = {
+      is_jurisdiction: true,
+      properties_filter: `status:Active`,
+      return_geometry: false,
+    };
+
+    const result0 = await getJurisdictions([], params);
+    await flushPromises();
+    expect(fetch.mock.calls).toEqual([]);
+    expect(result0).toEqual({ error: null, value: [] });
+
+    fetchMock.mockClear();
+    fetchMock.resetMocks();
+
+    fetch.mockResponseOnce(JSON.stringify([raZambia, raKsh2, raKsh3]), { status: 200 });
+    const result = await getJurisdictions(
+        [raZambia.id, raKsh2.id, raKsh2.id, raKsh3.id],
+        params
+      ) /** the duplicate should be ignored */;
+    await flushPromises();
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive&return_geometry=false&jurisdiction_ids=0ddd9ad1-452b-4825-a92a-49cb9fc82d18%2Cfca0d71d-0410-45d3-8305-a9f092a150b8%2Cxyz0d71d-0410-45d3-8305-a9f092a150b8',
+        partOfResult,
+      ],
+    ]);
+    expect(result).toEqual({ error: null, value: [raZambia, raKsh2, raKsh3] });
+
+    // Same data as the above but now test that it getChildren(params, limitTree[1].jurisdiction_id, limitTree, 1)will work when chunkSize requires multiple fetches from the API
+    fetchMock.mockClear();
+    fetchMock.resetMocks();
+
+    fetch.mockResponses(
+      [JSON.stringify([raZambia, raKsh2]), { status: 200 }],
+      [JSON.stringify([raKsh3]), { status: 200 }]
+    );
+
+    const result2 = await getJurisdictions([raZambia.id, raKsh2.id, raKsh3.id], params, 2);
+    await flushPromises();
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive&return_geometry=false&jurisdiction_ids=0ddd9ad1-452b-4825-a92a-49cb9fc82d18%2Cfca0d71d-0410-45d3-8305-a9f092a150b8',
+        partOfResult,
+      ],
+      [
+        'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive&return_geometry=false&jurisdiction_ids=xyz0d71d-0410-45d3-8305-a9f092a150b8',
+        partOfResult,
+      ],
+    ]);
+    expect(result2).toEqual({ error: null, value: [raZambia, raKsh2, raKsh3] });
   });
 
   it('getChildren works for getting non-root jurisdictions', async () => {
