@@ -61,6 +61,7 @@ describe('PlanAssignment/withTreeWalker', () => {
     serviceClass: OpenSRPService,
     smile: ':-)',
     tree: locationTree,
+    useJurisdictionNodeType: true,
   };
 
   const partOfResult = {
@@ -335,5 +336,95 @@ describe('PlanAssignment/withTreeWalker', () => {
     ]);
 
     wrapper.unmount();
+  });
+
+  it('TreeWalker works when useJurisdictionNodeType === false', async () => {
+    const wrapper = mount(
+      <SomeComponent
+        jurisdictionId="dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63" // ra Nchelenge
+        tree={locationTree}
+        useJurisdictionNodeType={false}
+        smile=":-)"
+      />
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    const currentNode = locationTree.first(
+      node => node.model.id === 'dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63'
+    );
+
+    if (!currentNode) {
+      fail();
+    }
+
+    const currentChildren = currentNode.children;
+    const hierarchy = currentNode.getPath();
+
+    // for some reason we cant select the wrapped component directly, so we get it
+    // through the div (that we know is there) and its parent
+    expect(
+      wrapper
+        .find('div')
+        .parent()
+        .props()
+    ).toEqual({
+      ...expectedProps,
+      currentChildren,
+      currentNode,
+      hierarchy,
+      jurisdictionId: 'dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63',
+      useJurisdictionNodeType: false,
+    });
+
+    expect(currentChildren.length).toEqual(1);
+    expect(hierarchy.length).toEqual(3);
+
+    // now lets try and call loadChildren to traverse the tree even further
+    await act(async () => {
+      const loadChildrenFunc = (wrapper
+        .find('div')
+        .parent()
+        .props() as WithWalkerProps).loadChildren;
+      loadChildrenFunc(currentChildren[0], {} as any); // ra Kashikishi HAHC
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    // drill down
+    const nextCurrentNode = locationTree.first(
+      node => node.model.id === currentChildren[0].model.id
+    ); // ra Kashikishi HAHC
+
+    if (!nextCurrentNode) {
+      fail();
+    }
+
+    const nextCurrentChildren = nextCurrentNode.children;
+    const nextHierarchy = nextCurrentNode.getPath();
+
+    // for some reason we cant select the wrapped component directly, so we get it
+    // through the div (that we know is there) and its parent
+    expect(
+      wrapper
+        .find('div')
+        .parent()
+        .props()
+    ).toEqual({
+      ...expectedProps,
+      currentChildren: nextCurrentChildren,
+      currentNode: nextCurrentNode,
+      hierarchy: nextHierarchy,
+      jurisdictionId: 'dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63',
+      useJurisdictionNodeType: false,
+    });
+
+    expect(nextCurrentChildren.length).toEqual(2);
+    expect(nextHierarchy.length).toEqual(4);
   });
 });
