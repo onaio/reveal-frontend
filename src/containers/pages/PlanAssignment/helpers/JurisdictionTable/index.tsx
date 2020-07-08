@@ -122,7 +122,7 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
       <JurisdictionCell
         key={`${node.model.id}-jurisdiction`}
         node={node}
-        url={`${ASSIGN_PLAN_URL}/${plan.identifier}/${node.id}`}
+        url={`${ASSIGN_PLAN_URL}/${plan.identifier}/${node.model.id}`}
       />,
       <AssignedOrgs key={`${node.model.id}-txt`} id={node.model.id} orgs={jurisdictionOrgs} />,
       <EditOrgs
