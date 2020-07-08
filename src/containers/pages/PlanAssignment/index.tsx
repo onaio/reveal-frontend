@@ -195,6 +195,13 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     return <Loading />;
   }
 
+  if (!tree) {
+    // we absolutely MUST stop if we do not have a tree
+    if (!broken) {
+      handleBrokenPage(COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY);
+    }
+  }
+
   if (broken) {
     return (
       <div className="global-error-container">
