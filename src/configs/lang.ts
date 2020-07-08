@@ -722,6 +722,9 @@ export const STRUCTURES_COUNT = translate('STRUCTURES_COUNT', 'Structures Count'
 
 export const ASSIGNMENT_TYPE = translate('ASSIGNMENT_TYPE', 'Assignment Type');
 
+export const AUTO = translate('AUTO', 'Auto');
+export const EXISTING = translate('EXISTING', 'Existing');
+
 export const COULD_NOT_LOAD_JURISDICTION = translate(
   'COULD_NOT_LOAD_JURISDICTION',
   'Could not load jurisdiction'

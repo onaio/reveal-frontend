@@ -10,6 +10,7 @@ import HeaderBreadcrumb, {
   Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Ripple from '../../../../components/page/Loading';
+import { JURISDICTION_METADATA_RISK_PERCENTAGE } from '../../../../configs/env';
 import {
   ASSIGNMENT_TYPE,
   AUTO,
@@ -137,7 +138,14 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       !leafNodes.length &&
       !node.children.length
     ) {
-      return jurisdictionMetaIds.includes(node.model.id);
+      const metaObj = jurisdictionsMetadata.find(
+        (m: JurisdictionsMetadata) => m.key === node.model.id
+      ) as JurisdictionsMetadata;
+      return (
+        jurisdictionMetaIds.includes(node.model.id) &&
+        metaObj.value &&
+        Number(metaObj.value) >= Number(JURISDICTION_METADATA_RISK_PERCENTAGE)
+      );
     }
     return existingAssignments.includes(node.model.id);
   };
