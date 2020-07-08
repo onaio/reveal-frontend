@@ -101,16 +101,6 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
       useJurisdictionNodeType,
     } = props;
 
-    /**
-     * TODO
-     * 1. Add ability to get all known jurisdiction ids from the API while having a tree
-     * 2. Add tests for (1)
-     * 3. Implement in PlanAssignment (while not getting geojson)
-     * 4. Add reducer to store geojson/jurisdictions
-     * 5. Make PlanAssignment ask for geojson and store in redux
-     * 6. Make geojson available for map
-     */
-
     // Set the parentId to be the currentNode's id
     let parentId = jurisdictionId;
     if (currentNode) {
