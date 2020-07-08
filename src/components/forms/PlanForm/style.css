@@ -15,3 +15,14 @@
   overflow-y: scroll;
   max-height: 200px;
 }
+
+.condition-group,
+.trigger-group {
+  background-color: aliceblue;
+  padding: 0.5rem;
+}
+
+.condition-group .form-control,
+.trigger-group .form-control {
+  margin-bottom: 0.5rem;
+}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardBody, CardHeader, Collapse } from 'reactstrap';
 import { format } from 'util';
-import { PlanJurisdictionFormFields } from '../../../../../../components/forms/PlanForm/helpers';
+import { PlanJurisdictionFormFields } from '../../../../../../components/forms/PlanForm/types';
 import { FIS_IN_JURISDICTION, JURISDICTION } from '../../../../../../configs/lang';
 import { FI_SINGLE_URL } from '../../../../../../constants';
 

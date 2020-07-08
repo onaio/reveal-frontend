@@ -24,6 +24,8 @@ import {
   ENABLE_IRS,
   ENABLE_JURISDICTION_METADATA_UPLOAD,
   ENABLE_MDA_POINT,
+  ENABLE_PLANNING,
+  ENABLE_POPULATION_SERVER_SETTINGS,
   ENABLE_PRACTITIONERS,
   ENABLE_TEAMS,
   ENABLE_USERS,
@@ -48,8 +50,10 @@ import {
   MONITOR,
   ORGANIZATIONS_LABEL,
   PLAN_TITLE,
+  PLANNING_PAGE_TITLE,
   PLANS,
   PRACTITIONERS,
+  SERVER_SETTINGS,
   SIGN_OUT,
   STUDENTS_TITLE,
   USERS,
@@ -58,19 +62,21 @@ import {
   ASSIGN_PLAN_URL,
   BACKEND_LOGIN_URL,
   CLIENTS_LIST_URL,
+  EDIT_SERVER_SETTINGS_URL,
   FI_URL,
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
   JSON_VALIDATORS_URL,
+  JURISDICTION_METADATA_URL,
   LOGOUT_URL,
   MANIFEST_RELEASE_URL,
   ORGANIZATIONS_LIST_URL,
   PLAN_LIST_URL,
+  PLANNING_VIEW_URL,
   PRACTITIONERS_LIST_URL,
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
-  UPLOAD_JURISDICTION_METADATA_URL,
   VIEW_DRAFT_FILES_URL,
 } from '../../../constants';
 import './Header.css';
@@ -157,6 +163,17 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           activeClassName="active"
                         >
                           {IRS_TITLE}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_PLANNING && (
+                      <DropdownItem>
+                        <NavLink
+                          to={PLANNING_VIEW_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {PLANNING_PAGE_TITLE}
                         </NavLink>
                       </DropdownItem>
                     )}
@@ -305,11 +322,22 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     {ENABLE_JURISDICTION_METADATA_UPLOAD && (
                       <DropdownItem>
                         <NavLink
-                          to={UPLOAD_JURISDICTION_METADATA_URL}
+                          to={JURISDICTION_METADATA_URL}
                           className="nav-link"
                           activeClassName="active"
                         >
                           {JURISDICTION_METADATA}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_POPULATION_SERVER_SETTINGS && (
+                      <DropdownItem>
+                        <NavLink
+                          to={EDIT_SERVER_SETTINGS_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {SERVER_SETTINGS}
                         </NavLink>
                       </DropdownItem>
                     )}

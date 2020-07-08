@@ -1788,6 +1788,23 @@
     reactstrap "^8.0.1"
     yup "^0.29.1"
 
+"@opensrp/population-characteristics@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@opensrp/population-characteristics/-/population-characteristics-0.0.2.tgz#a9fdaf6a3349d0e76a4272bd19768e116178b500"
+  integrity sha512-YHFjQAWtPbIdZwU/CFaZ5EXAh2Hp5EgWokh+IzvdAvuIP4dxUSJquYzReVWAg6wDzOIdE/wsPJrrR8y4RwQhWw==
+  dependencies:
+    "@fortawesome/fontawesome-svg-core" "^1.2.20"
+    "@fortawesome/free-brands-svg-icons" "^5.10.0"
+    "@fortawesome/free-regular-svg-icons" "^5.10.0"
+    "@fortawesome/free-solid-svg-icons" "^5.10.0"
+    "@fortawesome/react-fontawesome" "^0.1.4"
+    "@onaio/list-view" "^0.0.3"
+    "@onaio/redux-reducer-registry" "^0.0.9"
+    "@onaio/utils" "^0.0.1"
+    "@opensrp/server-service" "^0.0.2"
+    lodash "^4.17.15"
+    react-toastify "^6.0.5"
+
 "@opensrp/reducer-factory@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@opensrp/reducer-factory/-/reducer-factory-0.0.1.tgz#4a544e6ec29d97a7d8ba2d07f3a63a21ec49e723"
@@ -8654,6 +8671,11 @@ find-cache-dir@^2.0.0:
     make-dir "^2.0.0"
     pkg-dir "^3.0.0"
 
+find-insert-index@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/find-insert-index/-/find-insert-index-0.0.1.tgz#16cd34664c2ac233905ab2b39745bcec721362de"
+  integrity sha1-Fs00ZkwqwjOQWrKzl0W87HITYt4=
+
 find-root@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/find-root/-/find-root-1.1.0.tgz#abcfc8ba76f708c42a97b3d685b7e9450bfb9ce4"
@@ -11946,6 +11968,11 @@ merge2@^1.2.3:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/merge2/-/merge2-1.3.0.tgz#5b366ee83b2f1582c48f87e47cf1a9352103ca81"
   integrity sha512-2j4DAdlBOkiSZIsaXk4mTE3sRS02yBHAtfy127xRV3bQUFqXkjHCHLW6Scv7DwNRbIWNHH8zpnz9zMaKXIdvYw==
+
+mergesort@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/mergesort/-/mergesort-0.0.1.tgz#364ecc31b297dc7f44e511d365176f1c39d08fc2"
+  integrity sha1-Nk7MMbKX3H9E5RHTZRdvHDnQj8I=
 
 methods@~1.1.2:
   version "1.1.2"
@@ -16648,6 +16675,14 @@ traverse@~0.6.6:
   version "0.6.6"
   resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
   integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
+
+tree-model@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/tree-model/-/tree-model-1.0.7.tgz#45b2307aa2dfc2da8ceb6a631c1e2b15550dce88"
+  integrity sha512-oP4LUbCVtD2gcjcRaeI4L5hY60tHzB+AK/bthIJ2Pq1EUUOio5/xFzPWnGoBZlhtqpqbOkhFDzKIwKLOn0kccQ==
+  dependencies:
+    find-insert-index "0.0.1"
+    mergesort "0.0.1"
 
 trim-newlines@^2.0.0:
   version "2.0.0"

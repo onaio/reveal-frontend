@@ -140,3 +140,7 @@ fieldset[disabled] .gatekeeper-btn.active {
 .header-body {
   min-height: calc(100vh - 62px);
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}

@@ -35,6 +35,7 @@ export const ON_REROUTE_WITH_UNSAVED_CHANGES = translate(
 );
 export const HOME_TITLE = translate('HOME_TITLE', 'Home page');
 export const IRS_TITLE = translate('IRS_TITLE', 'IRS');
+export const PLANNING_PAGE_TITLE = translate('PLANNING_PAGE_TITLE', 'Planning tool');
 export const IRS_REPORTING_TITLE = translate('IRS_REPORTING_TITLE', 'IRS Reporting');
 export const CONDITIONAL_FORMATTING_RULES = translate(
   'CONDITIONAL_FORMATTING_RULES',
@@ -159,9 +160,17 @@ export const IDENTIFIER = translate('IDENTIFIER', 'Identifier');
 export const USERNAME = translate('USERNAME', 'Username');
 export const VIEW = translate('VIEW', 'view');
 export const JURISDICTION_METADATA = translate('JURISDICTION_METADATA', 'Jurisdiction Metadata');
+export const DOWNLOAD_JURISDICTION_METADATA = translate(
+  'DOWNLOAD_JURISDICTION_METADATA',
+  'Download Jurisdiction Metadata'
+);
 export const UPLOAD_JURISDICTION_METADATA = translate(
   'UPLOAD_JURISDICTION_METADATA',
   'Upload Jurisdiction Metadata'
+);
+export const HOW_TO_UPDATE_JURISDICTION_METADATA = translate(
+  'HOW_TO_UPDATE_JURISDICTION_METADATA',
+  'How To Update The Jurisdiction Metadata'
 );
 
 export const REACTIVE = translate('REACTIVE', 'Reactive');
@@ -169,6 +178,7 @@ export const REACTIVE_INVESTIGATION = translate('REACTIVE_INVESTIGATION', 'React
 export const REQUIRED = translate('REQUIRED', 'Required');
 export const SAVING = translate('SAVING', 'Saving');
 export const UPLOADING = translate('UPLOADING', 'Uploading');
+export const DOWNLOADING = translate('DOWNLOADING', 'Downloading');
 export const PLANS = translate('PLANS', 'Manage Plans');
 export const PLANNING = translate('PLANNING', 'Planning');
 export const MONITOR = translate('MONITOR', 'Monitor');
@@ -277,6 +287,10 @@ export const ORGANIZATION_EDITED_SUCCESSFULLY = translate(
 export const FILE_UPLOADED_SUCCESSFULLY = translate(
   'FILE_UPLOADED_SUCCESSFULLY',
   `File uploaded successfully.`
+);
+export const FILE_DOWNLOADED_SUCCESSFULLY = translate(
+  'FILE_DOWNLOADED_SUCCESSFULLY',
+  `File downloaded successfully.`
 );
 export const FILE_UPLOAD_FAILED = translate(
   'FILE_UPLOAD_FAILED',
@@ -481,6 +495,9 @@ export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
 );
 export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
 export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');
+export const DYNAMIC_FI_TITLE = translate('DYNAMIC_FI_TITLE', 'Dynamic FI');
+export const DYNAMIC_IRS_TITLE = translate('DYNAMIC_IRS_TITLE', 'Dynamic IRS');
+export const DYNAMIC_MDA_TITLE = translate('DYNAMIC_MDA_TITLE', 'Dynamic MDA');
 export const TEAM_ASSIGNMENT_SUCCESSFUL = translate(
   'TEAM_ASSIGNMENT_SUCCESSFUL',
   'Team(s) assignment updated successfully'
@@ -506,6 +523,7 @@ export const FILE_NAME = translate('FILE_NAME', 'File Name');
 export const OWNER = translate('OWNER', 'Owner');
 export const UPLOAD_DATE = translate('UPLOAD_DATE', 'Upload Date');
 export const UPLOAD_FILE = translate('UPLOAD_FILE', 'Upload File');
+export const DOWNLOAD_FILE = translate('DOWNLOAD_FILE', 'Download File');
 export const MODAL_BUTTON_CLASS = translate(
   'MODAL_BUTTON_CLASS',
   'focus-investigation btn btn-primary float-right mt-0'
@@ -658,3 +676,50 @@ export const AN_ERROR_OCURRED = translate(
   'An error ocurred. Please try and refresh the page.'
 );
 export const THE_SPECIFIC_ERROR_IS = translate('THE_SPECIFIC_ERROR_IS', 'The specific error is');
+
+export const SERVER_SETTINGS = translate('SERVER_SETTINGS', 'Server Settings');
+export const SEARCH_LABEL = translate('SEARCH_LABEL', 'Search');
+export const SEARCH_SETTINGS_LABEL = translate('SEARCH_SETTINGS_LABEL', 'Search Settings');
+export const PAGE_TITLE_LABEL = translate('PAGE_TITLE_LABEL', 'Server Settings');
+export const SETTINGS_LABEL = translate('SETTINGS_LABEL', 'Settings');
+export const INHERITED_FROM_LABEL = translate('INHERITED_FROM_LABEL', 'Inherited from');
+export const SET_TO_YES_LABEL = translate('SET_TO_YES_LABEL', `Set to 'Yes'`);
+export const SET_TO_NO_LABEL = translate('SET_TO_NO_LABEL', `Set to 'No'`);
+export const INHERIT_SETTING_LABEL = translate('INHERIT_SETTING_LABEL', 'Inherit setting');
+export const JURISDICTION_UPLOAD_STEP_1 = translate(
+  'JURISDICTION_UPLOAD_STEP_1',
+  'Click on the download template CSV button below.'
+);
+export const JURISDICTION_UPLOAD_STEP_2 = translate(
+  'JURISDICTION_UPLOAD_STEP_2',
+  'Open the downloaded file and complete the risk and target details on therespective columns.'
+);
+export const JURISDICTION_UPLOAD_STEP_3 = translate(
+  'JURISDICTION_UPLOAD_STEP_3',
+  'Save the updated CSV file.'
+);
+export const JURISDICTION_UPLOAD_STEP_4 = translate(
+  'JURISDICTION_UPLOAD_STEP_4',
+  'Select the saved file on the upload form.'
+);
+export const JURISDICTION_UPLOAD_STEP_5 = translate(
+  'JURISDICTION_UPLOAD_STEP_5',
+  'Click the "Upload File" button to complete the process.'
+);
+export const DRAFT_PLANS = translate('DRAFT PLANS', 'Draft plans');
+
+export const COULD_NOT_LOAD_JURISDICTION_HIERARCHY = translate(
+  'COULD_NOT_LOAD_JURISDICTION_HIERARCHY',
+  'Failed to load Jurisdiction hierarchy'
+);
+
+export const STRUCTURES_COUNT = translate('STRUCTURES_COUNT', 'Structures Count');
+
+export const COULD_NOT_LOAD_JURISDICTION = translate(
+  'COULD_NOT_LOAD_JURISDICTION',
+  'Could not load jurisdiction'
+);
+export const JURISDICTION_ASSIGNMENT_SUCCESSFUL = translate(
+  'JURISDICTION_ASSIGNMENT_SUCCESSFUL',
+  'Jurisdiction(s) assigned to plan successfully'
+);
