@@ -11,7 +11,7 @@ import {
   FIND_BY_PROPERTIES,
   LOCATION,
 } from './constants';
-import { APIEndpoints, OpenSRPJurisdiction } from './types';
+import { APIEndpoints, OpenSRPJurisdiction, TreeNodeType } from './types';
 
 /** Default params to be used when fetching locations from OpenSRP */
 export const defaultLocationParams = {
@@ -104,14 +104,22 @@ export const getAncestors = async (
  * Get children of a jurisdiction from an OpenSRP jurisdiction tree
  * @param nodeId - the id of the jurisdiction whose children you want
  * @param tree - the OpenSRP jurisdiction tree
+ * @param doFormat - whether to format children into OpenSRPJurisdiction types
  */
-export const getChildren = (nodeId: string, tree: TreeNode): Result<OpenSRPJurisdiction[]> => {
+export const getChildren = (
+  nodeId: string,
+  tree: TreeNode,
+  doFormat: boolean = true
+): Result<TreeNodeType[]> => {
   let children: OpenSRPJurisdiction[] = [];
   const nodeFromTree = tree.first(treeNode => treeNode.model.id === nodeId);
   if (nodeFromTree && nodeFromTree.model.children) {
-    children = nodeFromTree.model.children.map((nodeModel: ParsedHierarchySingleNode) =>
-      formatJurisdiction(nodeModel)
-    );
+    children =
+      doFormat === true
+        ? nodeFromTree.model.children.map((nodeModel: ParsedHierarchySingleNode) =>
+            formatJurisdiction(nodeModel)
+          )
+        : nodeFromTree.children;
   }
   return success(children);
 };
