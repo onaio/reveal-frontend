@@ -25,7 +25,7 @@ export const IRSIndicatorStops: { [key: string]: string[][] } = {
   zambia2019: [
     ['Complete', TASK_GREEN],
     ['Not Sprayed', TASK_RED],
-    ['Partially Sprayed', TASK_ORANGE],
+    ['Partially Sprayed', TASK_GREEN],
     ['Not Visited', TASK_YELLOW],
     ['Not Eligible', BLACK],
   ],
