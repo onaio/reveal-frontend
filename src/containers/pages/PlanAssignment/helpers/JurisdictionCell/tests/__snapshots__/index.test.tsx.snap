@@ -2,23 +2,23 @@
 
 exports[`PlanAssignment/JurisdictionCell renders leaf nodes: Leaf node 1`] = `
 <span
-  key="3091-span"
+  key="fca0d71d-0410-45d3-8305-a9f092a150b8-span"
 >
-  Rural
+  ra_ksh_2
 </span>
 `;
 
 exports[`PlanAssignment/JurisdictionCell renders leaf non-leaf nodes: Non-Leaf node 1`] = `
 <Link
-  key="3091-link"
+  key="cec79f21-33c3-43f5-a8af-59a47aa61b84-link"
   replace={false}
-  to="/3091"
+  to="/cec79f21-33c3-43f5-a8af-59a47aa61b84"
 >
   <a
-    href="/3091"
+    href="/cec79f21-33c3-43f5-a8af-59a47aa61b84"
     onClick={[Function]}
   >
-    Rural
+    ra Luapula
   </a>
 </Link>
 `;
