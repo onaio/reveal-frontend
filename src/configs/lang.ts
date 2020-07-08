@@ -720,7 +720,7 @@ export const COULD_NOT_LOAD_JURISDICTION_HIERARCHY = translate(
 
 export const STRUCTURES_COUNT = translate('STRUCTURES_COUNT', 'Structures Count');
 
-export const SELECTION_CRITERIA = translate('SELECTION_CRITERIA', 'Selection Criteria');
+export const ASSIGNMENT_TYPE = translate('ASSIGNMENT_TYPE', 'Assignment Type');
 
 export const COULD_NOT_LOAD_JURISDICTION = translate(
   'COULD_NOT_LOAD_JURISDICTION',

@@ -17,8 +17,10 @@ import {
   NO_DATA_FOUND,
   NO_ROWS_FOUND,
   SAVE,
-  SELECTION_CRITERIA,
   STRUCTURES_COUNT,
+  ASSIGNMENT_TYPE,
+  AUTO,
+  EXISTING,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
@@ -222,13 +224,13 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           jurisdictionIds.includes(node.model.id) &&
           !existingAssignments.includes(node.model.id) &&
           !getLeafNodes.length
-          ? 'Auto'
-          : 'Existing'
+          ? AUTO
+          : EXISTING
         : '',
       node.model.node.attributes.structureCount,
     ];
   });
-  const headerItems = ['', NAME, SELECTION_CRITERIA, STRUCTURES_COUNT];
+  const headerItems = ['', NAME, ASSIGNMENT_TYPE, STRUCTURES_COUNT];
   const tableClass = 'table table-bordered';
 
   /** on change handler attached to the parent checkbox

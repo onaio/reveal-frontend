@@ -107,6 +107,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       })
       .catch(error => {
         handleBrokenPage(error.message);
+        setLoading(false);
       });
   }, []);
 
