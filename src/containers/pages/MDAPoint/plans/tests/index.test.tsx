@@ -58,7 +58,12 @@ describe('components/MDA Reports/MDAPlansList', () => {
     );
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
-    expect(toJson(wrapper.find('.thead .tr'))).toMatchSnapshot('table headers');
+    const tableHeader = wrapper.find('.thead .tr .th');
+    Array(tableHeader.length)
+      .fill('')
+      .forEach((_, i) => {
+        expect(tableHeader.at(i).text()).toMatchSnapshot(`table header-${i + 1}`);
+      });
     expect(wrapper.find('.tbody .tr').length).toEqual(3);
     // have searchbar
     expect(wrapper.find('.search-input-wrapper').length).toEqual(1);
