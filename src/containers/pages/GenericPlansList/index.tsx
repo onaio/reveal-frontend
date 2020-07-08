@@ -1,4 +1,4 @@
-import { DrillDownTable, DrillDownTableProps } from '@onaio/drill-down-table';
+import { DrillDownTable } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -24,6 +24,7 @@ import {
 import { planStatusDisplay } from '../../../configs/settings';
 import { HOME_URL, QUERY_PARAM_TITLE } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
+import { DefaultDrillDownPropsType } from '../../../helpers/utils';
 import supersetFetch from '../../../services/superset';
 import { fetchMDAPointPlans } from '../../../store/ducks/generic/MDAPointPlans';
 import { fetchIRSPlans, GenericPlan } from '../../../store/ducks/generic/plans';
@@ -107,17 +108,7 @@ export const GenericPlansList = (props: GenericPlanListProps & RouteComponentPro
     },
   ];
 
-  const drillDownProps: Pick<
-    DrillDownTableProps<Dictionary>,
-    | 'columns'
-    | 'data'
-    | 'loading'
-    | 'loadingComponent'
-    | 'renderInBottomFilterBar'
-    | 'renderInTopFilterBar'
-    | 'useDrillDown'
-    | 'renderNullDataComponent'
-  > = {
+  const drillDownProps: DefaultDrillDownPropsType = {
     columns,
     data: plans,
     loading,
