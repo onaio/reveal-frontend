@@ -86,12 +86,16 @@ export type TreeActionTypes =
 
 /** action creator when adding a tree to store
  * @param apiResponse - the raw hierarchy as received from opensrp
+ * @param treeId - the treeId to use while saving to the store
  */
-export function fetchTree(apiResponse: RawOpenSRPHierarchy): FetchedTreeAction {
+export function fetchTree(
+  apiResponse: RawOpenSRPHierarchy,
+  treeId: string | null = null
+): FetchedTreeAction {
   const tree = generateJurisdictionTree(apiResponse);
   return {
     treeByRootId: {
-      [tree.model.id]: tree,
+      [treeId ? treeId : tree.model.id]: tree,
     },
     type: TREE_FETCHED,
   };

@@ -12,12 +12,13 @@ import reducer, {
   getCurrentParentNode,
   getNodeById,
   getRootByNodeId,
+  getTreeById,
   reducerName,
   selectNode,
 } from '..';
 import store from '../../../../index';
 import { TreeNode } from '../types';
-import { nodeIsSelected } from '../utils';
+import { generateJurisdictionTree, nodeIsSelected } from '../utils';
 import { anotherHierarchy, sampleHierarchy } from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
@@ -27,6 +28,7 @@ const parentNodeSelector = getCurrentParentNode();
 const nodeSelector = getNodeById();
 const rootSelector = getRootByNodeId();
 const ancestorSelector = getAncestors();
+const treeByIdSelector = getTreeById();
 
 describe('reducers/opensrp/hierarchies', () => {
   let flushThunks;
@@ -41,6 +43,13 @@ describe('reducers/opensrp/hierarchies', () => {
     // what do we expect returned from selectors for an unpopulated store
     expect(childrenSelector(store.getState(), { rootJurisdictionId: '' })).toEqual([]);
     expect(parentNodeSelector(store.getState(), { rootJurisdictionId: '' })).toBeUndefined();
+  });
+
+  it('works with custom tree id', () => {
+    store.dispatch(fetchTree(sampleHierarchy, '1337'));
+    expect(treeByIdSelector(store.getState(), { rootJurisdictionId: '1337' })).toEqual(
+      generateJurisdictionTree(sampleHierarchy)
+    );
   });
 
   it('should fetch tree', () => {
