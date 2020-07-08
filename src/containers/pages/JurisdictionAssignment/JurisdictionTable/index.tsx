@@ -128,12 +128,11 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   /** callback used to do initial autoSelection ; auto selects all jurisdictions that are already assigned to a plan
    * @param node - takes a node and returns true if node should be auto-selected
    */
-
+  const existingAssignments = props.plan.jurisdiction.map(jurisdiction => jurisdiction.code);
   const callback = (node: TreeNode) => {
-    const existingAssignments = props.plan.jurisdiction.map(jurisdiction => jurisdiction.code);
     if (
       !existingAssignments.includes(node.model.id) &&
-      getLeafNodes.length &&
+      !getLeafNodes.length &&
       !node.children.length
     ) {
       return jurisdictionIds.includes(node.model.id);
@@ -219,10 +218,13 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
       node.model.meta.selected
-        ? jurisdictionIds.length && jurisdictionIds.includes(node.model.id)
+        ? jurisdictionIds.length &&
+          jurisdictionIds.includes(node.model.id) &&
+          !existingAssignments.includes(node.model.id) &&
+          !getLeafNodes.length
           ? 'Auto'
-          : 'Manual'
-        : 'None',
+          : 'Existing'
+        : '',
       node.model.node.attributes.structureCount,
     ];
   });
