@@ -9,7 +9,7 @@ import {
   formatJurisdiction,
   getAncestors,
   getChildren,
-  locationListAPIEndpoints,
+  locationAPIEndpoints,
 } from './helpers';
 import { APIEndpoints, OpenSRPJurisdiction } from './types';
 
@@ -34,7 +34,7 @@ export interface TreeWalkerProps<T = any> {
 /** Defaults for TreeWalker component props */
 export const defaultTreeWalkerProps: TreeWalkerProps = {
   LoadingIndicator: () => <Fragment>Loading...</Fragment>,
-  apiEndPoints: locationListAPIEndpoints,
+  apiEndPoints: locationAPIEndpoints,
   getAncestorsFunc: getAncestors,
   getChildrenFunc: getChildren,
   jurisdictionId: '',

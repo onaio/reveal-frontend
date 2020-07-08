@@ -6,6 +6,7 @@ import { ParsedHierarchySingleNode, TreeNode } from '../../store/ducks/opensrp/h
 import {
   ACTIVE,
   COULDNT_LOAD_PARENTS,
+  FEATURE,
   FIND_BY_ID,
   FIND_BY_PROPERTIES,
   LOCATION,
@@ -23,7 +24,8 @@ export const defaultLocationPropertyFilters = {
   status: ACTIVE,
 };
 
-export const locationListAPIEndpoints: APIEndpoints = {
+/** Nice little object that holds the various endpoint values */
+export const locationAPIEndpoints: APIEndpoints = {
   findByJurisdictionIds: FIND_BY_ID,
   findByProperties: FIND_BY_PROPERTIES,
   location: LOCATION,
@@ -40,11 +42,11 @@ export const formatJurisdiction = (node: ParsedHierarchySingleNode): OpenSRPJuri
       geographicLevel: node.node.attributes.geographicLevel,
       name: node.label,
       parentId: node.parent,
-      status: 'Active',
+      status: ACTIVE,
       version: -1,
     },
     serverVersion: -1,
-    type: 'Feature',
+    type: FEATURE,
   };
 };
 
@@ -64,7 +66,7 @@ export const getAncestors = async (
   jurisdiction: OpenSRPJurisdiction,
   path: OpenSRPJurisdiction[] = [],
   errorMessage: string = COULDNT_LOAD_PARENTS,
-  apiEndpoint: string = locationListAPIEndpoints.location,
+  apiEndpoint: string = locationAPIEndpoints.location,
   serviceClass: typeof OpenSRPService = OpenSRPService
 ): Promise<Result<OpenSRPJurisdiction[]>> => {
   // Add the jurisdiction to the beginning of the array
@@ -73,10 +75,7 @@ export const getAncestors = async (
   }
 
   if (jurisdiction.properties.geographicLevel === 0 || !jurisdiction.properties.parentId) {
-    return {
-      error: null,
-      value: path,
-    };
+    return success(path);
   }
 
   const service = new serviceClass(apiEndpoint);
@@ -84,18 +83,15 @@ export const getAncestors = async (
     .read(jurisdiction.properties.parentId, defaultLocationParams)
     .then((response: OpenSRPJurisdiction) => {
       if (response) {
-        return { error: null, value: response };
+        return success(response);
       }
     })
     .catch((error: Error) => {
-      return { error, value: null };
+      return failure(error);
     });
 
   if (!result) {
-    return {
-      error: Error(errorMessage),
-      value: null,
-    };
+    return failure(Error(errorMessage));
   } else {
     if (result.value !== null) {
       return getAncestors(result.value, path);
@@ -137,7 +133,7 @@ export const getJurisdictions = (
   params: URLParams,
   chunkSize: number = 20,
   serviceClass: typeof OpenSRPService = OpenSRPService,
-  apiEndpoint: string = FIND_BY_ID
+  apiEndpoint: string = locationAPIEndpoints.findByJurisdictionIds
 ): Promise<Result<OpenSRPJurisdiction[]>> => {
   const promises = [];
   if (jurisdictionIds.length > 0) {
