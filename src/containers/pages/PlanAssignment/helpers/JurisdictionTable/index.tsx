@@ -15,6 +15,7 @@ import {
 import { PlanDefinition } from '../../../../../configs/settings';
 import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../../constants';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
+import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
 import { Organization } from '../../../../../store/ducks/opensrp/organizations';
 import { AssignedOrgs } from '../AssignedOrgs';
 import { EditOrgs } from '../EditOrgs';
@@ -47,16 +48,11 @@ export type JurisdictionTableProps = RouteComponentProps<RouteParams> & BaseJuri
  * @param props - the props that JurisdictionTable expects
  */
 const JurisdictionTable = (props: JurisdictionTableProps) => {
-  const {
-    assignments,
-    currentChildren,
-    currentNode,
-    hierarchy,
-    limits,
-    organizations,
-    plan,
-    submitCallBackFunc,
-  } = props;
+  const { assignments, organizations, plan, submitCallBackFunc } = props;
+
+  const currentChildren = props.currentChildren as TreeNode[];
+  const currentNode = props.currentNode as TreeNode;
+  const hierarchy = props.hierarchy as TreeNode[];
 
   if (!plan) {
     return null;
@@ -91,22 +87,23 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
 
   for (let index = 0; index < hierarchy.length; index++) {
     const element = hierarchy[index];
+
     if (index < hierarchy.length - 1) {
       breadcrumbProps.pages.push({
-        label: element.properties.name,
-        url: `${baseUrl}/${element.id}`,
+        label: element.model.label,
+        url: `${baseUrl}/${element.model.id}`,
       });
     } else {
       breadcrumbProps.currentPage = {
-        label: element.properties.name,
-        url: `${baseUrl}/${element.id}`,
+        label: element.model.label,
+        url: `${baseUrl}/${element.model.id}`,
       };
     }
   }
 
   const data = currentChildren.map(node => {
     const jurisdictionAssignments = assignments.filter(
-      assignment => assignment.jurisdiction === node.id
+      assignment => assignment.jurisdiction === node.model.id
     );
     const jurisdictionOrgs = organizations.filter(org => {
       const jurisdictionOrgIds = jurisdictionAssignments.map(assignment => assignment.organization);
@@ -123,17 +120,16 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
 
     return [
       <JurisdictionCell
-        key={`${node.id}-jurisdiction`}
+        key={`${node.model.id}-jurisdiction`}
         node={node}
-        jurisdictionTree={limits}
         url={`${ASSIGN_PLAN_URL}/${plan.identifier}/${node.id}`}
       />,
-      <AssignedOrgs key={`${node.id}-txt`} id={node.id} orgs={jurisdictionOrgs} />,
+      <AssignedOrgs key={`${node.model.id}-txt`} id={node.model.id} orgs={jurisdictionOrgs} />,
       <EditOrgs
         defaultValue={selectedOrgs}
         jurisdiction={node}
         existingAssignments={jurisdictionAssignments}
-        key={`${node.id}-form`}
+        key={`${node.model.id}-form`}
         options={orgOptions}
         plan={plan}
         submitCallBackFunc={submitCallBackFunc}
