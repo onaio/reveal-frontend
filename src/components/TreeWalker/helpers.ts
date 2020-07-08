@@ -10,7 +10,7 @@ import {
   FIND_BY_PROPERTIES,
   LOCATION,
 } from './constants';
-import { APIEndpoints, OpenSRPJurisdiction, SimpleJurisdiction } from './types';
+import { APIEndpoints, OpenSRPJurisdiction } from './types';
 
 /** Default params to be used when fetching locations from OpenSRP */
 export const defaultLocationParams = {
@@ -104,84 +104,12 @@ export const getAncestors = async (
   }
 };
 
-/** Get children of a jurisdiction from OpenSRP
- *
- * @param params - URL params to send with the request to the API
- * @param jurisdiction - the jurisdiction in question
- * @param limitTree - an array that limits the children we try and get from the API
- * @param chunkSize - the number of children to try and get at the same time
- * @param apiEndpoints - the API endpoints to use
- * @param serviceClass - the API helper class  Result<OpenSRPJurisdiction[]
+/**
+ * Get children of a jurisdiction from an OpenSRP jurisdiction tree
+ * @param nodeId - the id of the jurisdiction whose children you want
+ * @param tree - the OpenSRP jurisdiction tree
  */
-export const getChildren = async (
-  params: URLParams,
-  jurisdiction: OpenSRPJurisdiction | string | null,
-  limitTree: SimpleJurisdiction[] = [],
-  chunkSize: number = 20,
-  apiEndpoints: APIEndpoints = locationListAPIEndpoints,
-  serviceClass: typeof OpenSRPService = OpenSRPService
-): Promise<Result<OpenSRPJurisdiction[]>> => {
-  let service = new serviceClass(apiEndpoints.findByProperties);
-
-  const promises = [];
-
-  if (limitTree && limitTree.length > 0) {
-    // Basically if limitTree has any elements, then we need to ensure that when
-    // getting children from the API, we limit ourselves only to the jurisdictions
-    // contained in limitTree
-
-    // first we get the current parent i.e. the one whose children we want
-    let currentParentId: string | undefined;
-    if (jurisdiction) {
-      if (typeof jurisdiction === 'string') {
-        currentParentId = jurisdiction;
-      } else {
-        currentParentId = jurisdiction.id;
-      }
-    }
-
-    // We next want to find relevant jurisdictionIds for the current parent
-    // If we do find them, we will ONLY fetch them from
-    let jurisdictionIds: string[] = [];
-    if (currentParentId) {
-      // if we have a currentParentId then we check if limitTree contains any jurisdictions whose parent is currentParentId
-      jurisdictionIds = limitTree
-        .filter(elem => elem.jurisdiction_parent_id === currentParentId)
-        .map(elem => elem.jurisdiction_id);
-    } else {
-      // if no currentParentId then we check if we have any jurisdictions that have no parent
-      jurisdictionIds = limitTree
-        .filter(elem => elem.jurisdiction_parent_id === '' || !elem.jurisdiction_parent_id)
-        .map(elem => elem.jurisdiction_id);
-    }
-
-    if (jurisdictionIds.length > 0) {
-      service = new serviceClass(apiEndpoints.findByJurisdictionIds);
-      // jurisdictionIds may have a huge number of elements and so we need to chunk
-      // it so that our URL doesn't get too long
-      for (let index = 0, size = jurisdictionIds.length; index < size; index += chunkSize) {
-        params.jurisdiction_ids = jurisdictionIds.slice(index, index + chunkSize).join(',');
-        promises.push(service.list(params));
-      }
-    }
-  } else {
-    promises.push(service.list(params));
-  }
-
-  return Promise.all(promises)
-    .then(results => {
-      // We are concatenating all the resulting arrays so that we return all nodes in one array
-      const children = [].concat.apply([], results);
-      // then we remove duplicates and return the children
-      return { error: null, value: uniqBy(children, 'id') };
-    })
-    .catch((error: Error) => {
-      return { error, value: null };
-    });
-};
-
-/** stub function for loading all children */
-export const fffChildren = (nodeId: string, tree: TreeNode): Result<OpenSRPJurisdiction[]> => {
+export const getChildren = (nodeId: string, tree: TreeNode): Result<OpenSRPJurisdiction[]> => {
   let children: OpenSRPJurisdiction[] = [];
   const nodeFromTree = tree.first(treeNode => treeNode.model.id === nodeId);
   if (nodeFromTree && nodeFromTree.model.children) {
