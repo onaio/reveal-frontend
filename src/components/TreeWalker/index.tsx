@@ -2,20 +2,21 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { displayError } from '../../helpers/errors';
 import { getFilterParams, OpenSRPService, URLParams } from '../../services/opensrp';
 import { TreeNode } from '../../store/ducks/opensrp/hierarchies/types';
-import { COULDNT_LOAD_PARENTS, LOCATION } from './constants';
+import { COULDNT_LOAD_CHILDREN, COULDNT_LOAD_PARENTS } from './constants';
 import {
   defaultLocationParams,
   defaultLocationPropertyFilters,
-  fffChildren,
   formatJurisdiction,
   getAncestors,
   getChildren,
+  locationListAPIEndpoints,
 } from './helpers';
-import { OpenSRPJurisdiction } from './types';
+import { APIEndpoints, OpenSRPJurisdiction } from './types';
 
 /** Type def for the TreeWalker component */
 export interface TreeWalkerProps<T = any> {
   LoadingIndicator: React.FC<T> /** Element to show loading indicator */;
+  apiEndPoints: APIEndpoints;
   getAncestorsFunc: typeof getAncestors /** function to get ancestors */;
   getChildrenFunc: typeof getChildren /** function to get children */;
   jurisdictionId: string /** jurisdiction id --> used to start walking the tree from a particular point/node */;
@@ -25,7 +26,7 @@ export interface TreeWalkerProps<T = any> {
   } /** Objects that holds strings to be displayed in the component */;
   params: URLParams /** URL params to send with the request to the API */;
   propertyFilters: URLParams /** property filters to send with the request to the API */;
-  readAPIEndpoint: string /** the API endpoint to get a single object */;
+  // readAPIEndpoint: string /** the API endpoint to get a single object */;
   serviceClass: typeof OpenSRPService /** the API helper class */;
   tree: TreeNode | null /** If set, tree-walking will be limited to this jurisdiction tree */;
 }
@@ -33,16 +34,16 @@ export interface TreeWalkerProps<T = any> {
 /** Defaults for TreeWalker component props */
 export const defaultTreeWalkerProps: TreeWalkerProps = {
   LoadingIndicator: () => <Fragment>Loading...</Fragment>,
+  apiEndPoints: locationListAPIEndpoints,
   getAncestorsFunc: getAncestors,
   getChildrenFunc: getChildren,
   jurisdictionId: '',
   labels: {
     loadAncestorsError: COULDNT_LOAD_PARENTS,
-    loadChildrenError: 'Could not load children', // do we even need this?
+    loadChildrenError: COULDNT_LOAD_CHILDREN,
   },
   params: defaultLocationParams,
   propertyFilters: defaultLocationPropertyFilters,
-  readAPIEndpoint: LOCATION,
   serviceClass: OpenSRPService,
   tree: null,
 };
@@ -86,16 +87,26 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
     const [loading, setLoading] = useState<boolean>(true);
     const {
       LoadingIndicator,
+      apiEndPoints,
       getAncestorsFunc,
       getChildrenFunc,
       jurisdictionId,
       labels,
       params,
       propertyFilters,
-      readAPIEndpoint,
       serviceClass,
       tree,
     } = props;
+
+    /**
+     * TODO
+     * 1. Add ability to get all known jurisdiction ids from the API while having a tree
+     * 2. Add tests for (1)
+     * 3. Implement in PlanAssignment (while not getting geojson)
+     * 4. Add reducer to store geojson/jurisdictions
+     * 5. Make PlanAssignment ask for geojson and store in redux
+     * 6. Make geojson available for map
+     */
 
     // Set the parentId to be the currentNode's id
     const parentId = currentNode ? currentNode.id : jurisdictionId;
@@ -144,7 +155,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
           (!currentNode && jurisdictionId) !== '' ||
           (currentNode && currentNode.id !== jurisdictionId)
         ) {
-          const singleService = new serviceClass(readAPIEndpoint);
+          const singleService = new serviceClass(apiEndPoints.location);
           singleService
             .read(jurisdictionId, params)
             .then((response: OpenSRPJurisdiction) => {
@@ -159,6 +170,8 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
                     }
                   })
                   .catch((error: Error) => displayError(error));
+              } else {
+                displayError(Error(labels.loadAncestorsError));
               }
             })
             .catch((error: Error) => displayError(error));
@@ -172,7 +185,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
         // if we have a tree then we can trivially get currentChildren right away
         const nodeFromTree = tree.first(treeNode => treeNode.model.id === parentId);
         if (nodeFromTree) {
-          const getChildrenResult = fffChildren(parentId, nodeFromTree);
+          const getChildrenResult = getChildrenFunc(parentId, nodeFromTree);
           if (getChildrenResult.error === null) {
             setCurrentChildren(getChildrenResult.value);
           } else {
@@ -181,12 +194,14 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
         }
       } else {
         // if we don't have a tree we need to get current children using the API
-        getChildrenFunc(paramsToUse, currentNode || parentId)
-          .then(result => {
-            if (result.value !== null) {
-              setCurrentChildren(result.value);
+        const childrenService = new serviceClass(apiEndPoints.findByProperties);
+        childrenService
+          .list(paramsToUse)
+          .then((response: OpenSRPJurisdiction[]) => {
+            if (response) {
+              setCurrentChildren(response);
             } else {
-              displayError(result.error);
+              displayError(Error(labels.loadChildrenError));
             }
           })
           .finally(() => setLoading(false))
