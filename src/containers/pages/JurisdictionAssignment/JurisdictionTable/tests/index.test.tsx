@@ -11,7 +11,7 @@ import { ConnectedJurisdictionTable } from '..';
 import { ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { sampleHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
-import { fiPlans, plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
@@ -190,32 +190,6 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
           .find('input')
       )
     ).toMatchSnapshot('should be now deselected');
-  });
-
-  it('disables checkbox for Intervention type FI', async () => {
-    fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
-    const plan = fiPlans[0];
-    const props = {
-      plan,
-      rootJurisdictionId: '2942',
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedJurisdictionTable {...props} />
-        </Router>
-      </Provider>
-    );
-
-    // first flush promises
-    await act(async () => {
-      await new Promise(resolve => setImmediate(resolve));
-      wrapper.update();
-    });
-
-    const parentNodeRow = wrapper.find('tbody tr').at(0);
-
-    expect(toJson(parentNodeRow.find('input'))).toMatchSnapshot('should be disabled');
   });
 
   it('shows loader', async () => {
