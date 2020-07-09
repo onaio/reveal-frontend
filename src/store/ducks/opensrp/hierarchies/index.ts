@@ -314,7 +314,7 @@ export const getRootByNodeId = () =>
   createSelector(
     [getTreesByIds, getNodeId, getRootJurisdictionId],
     (trees, nodeId, rootJurisdictionId) => {
-      if (rootJurisdictionId && rootJurisdictionId !== '') {
+      if (!!rootJurisdictionId) {
         return rootJurisdictionId;
       }
       let nodeInTree;
