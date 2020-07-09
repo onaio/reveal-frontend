@@ -32,7 +32,8 @@ export interface Jurisdiction {
 export const reducerName = 'Jurisdiction';
 
 /** Jurisdiction Reducer */
-export const reducer = reducerFactory<Jurisdiction>(reducerName);
+const reducer = reducerFactory<Jurisdiction>(reducerName);
+export default reducer;
 
 // actions
 /** actionCreator returns action to to add Item records to store */
@@ -40,13 +41,10 @@ export const fetchJurisdictions = fetchActionCreatorFactory<Jurisdiction>(reduce
 export const removeJurisdictions = removeActionCreatorFactory(reducerName);
 
 // selectors
-// export const getJurisdictionById = getItemByIdFactory<Jurisdiction>(reducerName);
-// export const getJurisdictionsById = getItemsByIdFactory<Jurisdiction>(reducerName);
-// export const getJurisdictionsArray = getItemsArrayFactory<Jurisdiction>(reducerName);
-
 /** prop filters to customize selector queries */
 export interface Filters {
   jurisdictionId?: string /** jurisdiction id */;
+  jurisdictionIdsArray?: string[] /** array of jurisdiction ids */;
   parentId?: string /** parent id */;
 }
 
@@ -61,6 +59,13 @@ export const getJurisdictionId = (_: Partial<Store>, props: Filters) => props.ju
  * @param props -  the filterProps
  */
 export const getParentId = (_: Partial<Store>, props: Filters) => props.parentId;
+
+/** retrieve the jurisdictionIdsArray value
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getJurisdictionIdsArray = (_: Partial<Store>, props: Filters) =>
+  props.jurisdictionIdsArray;
 
 /** gets all jurisdictions keyed by id
  * @param state - the store
@@ -90,6 +95,16 @@ export const getJurisdictionById = () =>
  * @param props -  the filterProps
  */
 export const getJurisdictionsArray = () =>
-  createSelector([getJurisdictionsById], (jurisdictionsById): Jurisdiction[] => {
-    return values(jurisdictionsById);
-  });
+  createSelector(
+    [getJurisdictionsById, getParentId, getJurisdictionIdsArray],
+    (jurisdictionsById, parentId, jurisdictionIdsArray): Jurisdiction[] => {
+      const result = values(jurisdictionsById);
+      if (parentId) {
+        return result.filter(item => item.properties.parentId === parentId);
+      }
+      if (jurisdictionIdsArray) {
+        return result.filter(item => jurisdictionIdsArray.includes(item.id));
+      }
+      return result;
+    }
+  );
