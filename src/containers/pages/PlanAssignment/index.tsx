@@ -8,6 +8,8 @@ import { withTreeWalker } from '../../../components/TreeWalker';
 import {
   AN_ERROR_OCURRED,
   COULD_NOT_LOAD_ASSIGNMENTS,
+  COULD_NOT_LOAD_CHILDREN,
+  COULD_NOT_LOAD_PARENTS,
   COULD_NOT_LOAD_PLAN,
   COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY,
   COULD_NOT_LOAD_TEAMS,
@@ -229,6 +231,10 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     LoadingIndicator: Loading, // TODO: indicate what is loading
     assignments,
     jurisdictionId,
+    labels: {
+      loadAncestorsError: COULD_NOT_LOAD_PARENTS,
+      loadChildrenError: COULD_NOT_LOAD_CHILDREN,
+    },
     organizations,
     plan,
     submitCallBackFunc: fetchAssignmentsActionCreator,
