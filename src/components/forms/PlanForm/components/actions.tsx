@@ -28,7 +28,7 @@ export const getConditionAndTriggers = (
             {item.expression && (
               <React.Fragment>
                 <Label for={`activities[${index}].condition[${mapIndex}].expression`} sm={2}>
-                  Condition
+                  Expression
                 </Label>
                 <Field
                   className="form-control col-sm-10"
