@@ -133,21 +133,24 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
    */
   const existingAssignments = props.plan.jurisdiction.map(jurisdiction => jurisdiction.code);
   const callback = (node: TreeNode) => {
-    if (
-      !existingAssignments.includes(node.model.id) &&
-      !leafNodes.length &&
-      !node.children.length
-    ) {
-      const metaObj = jurisdictionsMetadata.find(
-        (m: JurisdictionsMetadata) => m.key === node.model.id
-      ) as JurisdictionsMetadata;
-      return (
-        jurisdictionMetaIds.includes(node.model.id) &&
-        metaObj.value &&
-        Number(metaObj.value) >= Number(JURISDICTION_METADATA_RISK_PERCENTAGE)
-      );
+    if (!leafNodes.filter(value => existingAssignments.includes(value.model.id)).length) {
+      if (!node.hasChildren()) {
+        const metaObj = jurisdictionsMetadata.find(
+          (m: JurisdictionsMetadata) => m.key === node.model.id
+        ) as JurisdictionsMetadata;
+        return (
+          jurisdictionMetaIds.includes(node.model.id) &&
+          metaObj.value &&
+          Number(metaObj.value) >= Number(JURISDICTION_METADATA_RISK_PERCENTAGE)
+        );
+      }
+    } else {
+      const isLeafNode = leafNodes.map(leaf => leaf.model.id).includes(node.model.id);
+      if (isLeafNode) {
+        return existingAssignments.includes(node.model.id);
+      }
     }
-    return existingAssignments.includes(node.model.id);
+    return false;
   };
 
   React.useEffect(() => {
@@ -215,6 +218,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     pages,
   };
   const data = currentChildren.map(node => {
+    const isLeafNode: boolean = leafNodes.map(leaf => leaf.model.id).includes(node.model.id);
     return [
       <input
         key={`${node.model.id}-check-jurisdiction`}
@@ -227,13 +231,15 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         }}
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
-      node.model.meta.selected
+      node.model.meta.selected && isLeafNode
         ? jurisdictionMetaIds.length &&
           jurisdictionMetaIds.includes(node.model.id) &&
-          !existingAssignments.includes(node.model.id) &&
-          !leafNodes.length
+          !leafNodes.filter(value => existingAssignments.includes(value.model.id)).length
           ? AUTO
-          : EXISTING
+          : leafNodes.filter(value => existingAssignments.includes(value.model.id)).length &&
+            existingAssignments.includes(node.model.id)
+          ? EXISTING
+          : 'Manual'
         : '',
       node.model.node.attributes.structureCount,
     ];
