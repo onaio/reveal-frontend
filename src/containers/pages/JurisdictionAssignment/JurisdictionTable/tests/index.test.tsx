@@ -180,11 +180,9 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     // create snapshot of checkbox before getting checked
     expect(toJson(parentNodeRow.find('input'))).toMatchSnapshot('should be unchecked');
 
-    await act(async () => {
-      // simulate click on checkbox to check
-      parentNodeRow.find('input').simulate('change', { target: { name: '', checked: true } });
-      wrapper.update();
-    });
+    // simulate click on checkbox to check
+    parentNodeRow.find('input').simulate('change', { target: { name: '', checked: true } });
+    wrapper.update();
 
     expect(
       toJson(
@@ -195,15 +193,13 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       )
     ).toMatchSnapshot('should be now checked');
 
-    await act(async () => {
-      // simulate click on checkbox to unchecked
-      wrapper
-        .find('tbody tr')
-        .at(0)
-        .find('input')
-        .simulate('change', { target: { name: '', checked: false } });
-      wrapper.update();
-    });
+    // simulate click on checkbox to unchecked
+    wrapper
+      .find('tbody tr')
+      .at(0)
+      .find('input')
+      .simulate('change', { target: { name: '', checked: false } });
+    wrapper.update();
 
     // checkbox is now deselected again
     expect(
