@@ -31,6 +31,8 @@ import {
   ADD_CODED_ACTIVITY,
   AN_ERROR_OCCURRED,
   CASE_NUMBER,
+  CONDITIONS_LABEL,
+  DEFINITION_URI,
   DESCRIPTION_LABEL,
   DYNAMIC_FI_TITLE,
   DYNAMIC_IRS_TITLE,
@@ -57,6 +59,7 @@ import {
   SELECT_PLACHOLDER,
   START_DATE,
   STATUS_HEADER,
+  TRIGGERS_LABEL,
 } from '../../../configs/lang';
 import {
   actionReasons,
@@ -85,6 +88,7 @@ import {
   isPlanTypeEnabled,
   planActivitiesMap,
   PlanSchema,
+  showDefinitionUriFor,
 } from './helpers';
 import './style.css';
 import {
@@ -792,6 +796,44 @@ const PlanForm = (props: PlanFormProps) => {
                               className="form-text text-danger"
                             />
                           </FormGroup>
+                          {showDefinitionUriFor.includes(values.interventionType) && (
+                            <FormGroup>
+                              <Label for={`activities-${index}-actionDefinitionUri`}>
+                                {DEFINITION_URI}
+                              </Label>
+                              <Field
+                                type="text"
+                                name={`activities[${index}].actionDefinitionUri`}
+                                id={`activities-${index}-actionDefinitionUri`}
+                                required={true}
+                                disabled={
+                                  disabledFields.includes('activities') ||
+                                  disabledActivityFields.includes('actionDefinitionUri')
+                                }
+                                className={
+                                  errors.activities &&
+                                  doesFieldHaveErrors(
+                                    'actionDefinitionUri',
+                                    index,
+                                    errors.activities
+                                  )
+                                    ? 'form-control is-invalid'
+                                    : 'form-control'
+                                }
+                              />
+                              <ErrorMessage
+                                name={`activities[${index}].actionDefinitionUri`}
+                                component="small"
+                                className="form-text text-danger"
+                              />
+                              <Field
+                                type="hidden"
+                                name={`activities[${index}].goalDefinitionUri`}
+                                id={`activities-${index}-goalDefinitionUri`}
+                                value={values.activities[index].actionDefinitionUri}
+                              />
+                            </FormGroup>
+                          )}
                           <fieldset>
                             <legend>{GOAL_LABEL}</legend>
                             <FormGroup>
@@ -932,13 +974,13 @@ const PlanForm = (props: PlanFormProps) => {
                           </fieldset>
                           {actionTriggers.hasOwnProperty(values.activities[index].actionCode) && (
                             <fieldset className="triggers-fieldset">
-                              <legend>Triggers</legend>
+                              <legend>{TRIGGERS_LABEL}</legend>
                               {actionTriggers[values.activities[index].actionCode]}
                             </fieldset>
                           )}
                           {actionConditions.hasOwnProperty(values.activities[index].actionCode) && (
                             <fieldset className="conditions-fieldset">
-                              <legend>Conditions</legend>
+                              <legend>{CONDITIONS_LABEL}</legend>
                               {actionConditions[values.activities[index].actionCode]}
                             </fieldset>
                           )}

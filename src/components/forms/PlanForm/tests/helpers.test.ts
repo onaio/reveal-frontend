@@ -13,9 +13,8 @@ import {
   getGoalUnitFromActionCode,
   getNameTitle,
   getPlanFormValues,
-  PlanFormFields,
 } from '../helpers';
-import { GoalUnit, PlanActionCodesType, PlanActivities } from '../types';
+import { GoalUnit, PlanActionCodesType, PlanActivities, PlanFormFields } from '../types';
 import {
   activities,
   event,

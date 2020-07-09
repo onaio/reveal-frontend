@@ -1162,5 +1162,17 @@
   "EXPRESSION_LABEL": {
     "message": "Expression",
     "description": "label, column header: name expression"
+  },
+  "TRIGGERS_LABEL": {
+    "message": "Triggers",
+    "description": "label, column header: Triggers"
+  },
+  "CONDITIONS_LABEL": {
+    "message": "Conditions",
+    "description": "label, column header: name Conditions"
+  },
+  "DEFINITION_URI": {
+    "message": "Definition Uri",
+    "description": "label, column header: name Definition Uri"
   }
 }
