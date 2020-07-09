@@ -47,7 +47,11 @@ describe('reducers/opensrp/hierarchies', () => {
       arraySelector(store.getState(), { jurisdictionIdsArray: [raKashikishiHAHC.id, raKsh3.id] })
     ).toEqual([raKashikishiHAHC, raKsh3]);
     expect(fcSelector(store.getState(), { parentId: raKashikishiHAHC.id })).toEqual({
-      features: [raKsh2],
+      features: [raKsh2, raKsh3],
+      type: 'FeatureCollection',
+    });
+    expect(fcSelector(store.getState(), { jurisdictionIdsArray: [raKsh3.id] })).toEqual({
+      features: [raKsh3],
       type: 'FeatureCollection',
     });
   });
