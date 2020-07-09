@@ -51,9 +51,9 @@ exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly
 
 exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: structure count rendered 1`] = `
 <SelectedJurisdictionsCount
+  dispatch={[Function]}
   id="2942"
   jurisdictions={Array []}
-  key="selected-jurisdictions-txt"
   parentNode={
     Node {
       "children": Array [
@@ -207,5 +207,6 @@ exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly
       },
     }
   }
+  selectedNodesUnderParent={Array []}
 />
 `;
