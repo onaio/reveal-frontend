@@ -86,12 +86,16 @@ export type TreeActionTypes =
 
 /** action creator when adding a tree to store
  * @param apiResponse - the raw hierarchy as received from opensrp
+ * @param treeId - the treeId to use while saving to the store
  */
-export function fetchTree(apiResponse: RawOpenSRPHierarchy): FetchedTreeAction {
+export function fetchTree(
+  apiResponse: RawOpenSRPHierarchy,
+  treeId: string | null = null
+): FetchedTreeAction {
   const tree = generateJurisdictionTree(apiResponse);
   return {
     treeByRootId: {
-      [tree.model.id]: tree,
+      [treeId ? treeId : tree.model.id]: tree,
     },
     type: TREE_FETCHED,
   };
@@ -295,6 +299,55 @@ export const getNodeById = () =>
     }
     const nodeOfInterest = tree.first(node => node.model.id === nodeId);
     return nodeOfInterest;
+  });
+
+/**
+ * Get the root id given a node
+ *
+ * Note: If you pass in rootJurisdictionId then that is what will be returned
+ * You should pass in rootJurisdictionId as '' when don't know it
+ *
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getRootByNodeId = () =>
+  createSelector(
+    [getTreesByIds, getNodeId, getRootJurisdictionId],
+    (trees, nodeId, rootJurisdictionId) => {
+      if (!!rootJurisdictionId) {
+        return rootJurisdictionId;
+      }
+      let nodeInTree;
+      for (const [treeId, tree] of Object.entries(trees)) {
+        nodeInTree = tree.first(node => {
+          return node.model.id === nodeId;
+        });
+        if (nodeInTree !== undefined) {
+          return treeId;
+        }
+      }
+      return;
+    }
+  );
+
+/**
+ * Get the ancestors of a given node as an array - ordered starting with the root
+ *
+ * Note that you can either pass in rootJurisdictionId or '' if you don't know the root
+ *
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getAncestors = () =>
+  createSelector([getRootByNodeId(), getTreesByIds, getNodeId], (rootId, treesByIds, nodeId) => {
+    if (rootId) {
+      const tree = treesByIds[rootId];
+      const thisNode = tree.first(node => node.model.id === nodeId);
+      if (thisNode) {
+        return thisNode.getPath();
+      }
+    }
+    return [];
   });
 
 /** retrieve the node designated as the current Parent id

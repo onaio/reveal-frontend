@@ -1,14 +1,17 @@
 import { Result } from '@onaio/utils';
 import { uniqBy } from 'lodash';
+import { failure, success } from '../../helpers/dataLoading/utils';
 import { OpenSRPService, URLParams } from '../../services/opensrp';
+import { ParsedHierarchySingleNode, TreeNode } from '../../store/ducks/opensrp/hierarchies/types';
 import {
   ACTIVE,
   COULDNT_LOAD_PARENTS,
+  FEATURE,
   FIND_BY_ID,
   FIND_BY_PROPERTIES,
   LOCATION,
 } from './constants';
-import { APIEndpoints, OpenSRPJurisdiction, SimpleJurisdiction } from './types';
+import { APIEndpoints, OpenSRPJurisdiction, TreeNodeType } from './types';
 
 /** Default params to be used when fetching locations from OpenSRP */
 export const defaultLocationParams = {
@@ -21,10 +24,30 @@ export const defaultLocationPropertyFilters = {
   status: ACTIVE,
 };
 
-export const locationListAPIEndpoints: APIEndpoints = {
+/** Nice little object that holds the various endpoint values */
+export const locationAPIEndpoints: APIEndpoints = {
   findByJurisdictionIds: FIND_BY_ID,
   findByProperties: FIND_BY_PROPERTIES,
   location: LOCATION,
+};
+
+/**
+ * Format a jurisdictions tree node into an OpenSRPJurisdiction object
+ * @param node - the tree node
+ */
+export const formatJurisdiction = (node: ParsedHierarchySingleNode): OpenSRPJurisdiction => {
+  return {
+    id: node.id,
+    properties: {
+      geographicLevel: node.node.attributes.geographicLevel,
+      name: node.label,
+      parentId: node.parent,
+      status: ACTIVE,
+      version: -1,
+    },
+    serverVersion: -1,
+    type: FEATURE,
+  };
 };
 
 /** Get ancestors of a jurisdiction from OpenSRP
@@ -43,7 +66,7 @@ export const getAncestors = async (
   jurisdiction: OpenSRPJurisdiction,
   path: OpenSRPJurisdiction[] = [],
   errorMessage: string = COULDNT_LOAD_PARENTS,
-  apiEndpoint: string = locationListAPIEndpoints.location,
+  apiEndpoint: string = locationAPIEndpoints.location,
   serviceClass: typeof OpenSRPService = OpenSRPService
 ): Promise<Result<OpenSRPJurisdiction[]>> => {
   // Add the jurisdiction to the beginning of the array
@@ -52,10 +75,7 @@ export const getAncestors = async (
   }
 
   if (jurisdiction.properties.geographicLevel === 0 || !jurisdiction.properties.parentId) {
-    return {
-      error: null,
-      value: path,
-    };
+    return success(path);
   }
 
   const service = new serviceClass(apiEndpoint);
@@ -63,18 +83,15 @@ export const getAncestors = async (
     .read(jurisdiction.properties.parentId, defaultLocationParams)
     .then((response: OpenSRPJurisdiction) => {
       if (response) {
-        return { error: null, value: response };
+        return success(response);
       }
     })
     .catch((error: Error) => {
-      return { error, value: null };
+      return failure(error);
     });
 
   if (!result) {
-    return {
-      error: Error(errorMessage),
-      value: null,
-    };
+    return failure(Error(errorMessage));
   } else {
     if (result.value !== null) {
       return getAncestors(result.value, path);
@@ -83,78 +100,72 @@ export const getAncestors = async (
   }
 };
 
-/** Get children of a jurisdiction from OpenSRP
- *
- * @param params - URL params to send with the request to the API
- * @param jurisdiction - the jurisdiction in question
- * @param limitTree - an array that limits the children we try and get from the API
- * @param chunkSize - the number of children to try and get at the same time
- * @param apiEndpoints - the API endpoints to use
- * @param serviceClass - the API helper class  Result<OpenSRPJurisdiction[]
+/**
+ * Get children of a jurisdiction from an OpenSRP jurisdiction tree
+ * @param nodeId - the id of the jurisdiction whose children you want
+ * @param tree - the OpenSRP jurisdiction tree
+ * @param doFormat - whether to format children into OpenSRPJurisdiction types
  */
-export const getChildren = async (
-  params: URLParams,
-  jurisdiction: OpenSRPJurisdiction | string | null,
-  limitTree: SimpleJurisdiction[] = [],
-  chunkSize: number = 20,
-  apiEndpoints: APIEndpoints = locationListAPIEndpoints,
-  serviceClass: typeof OpenSRPService = OpenSRPService
-): Promise<Result<OpenSRPJurisdiction[]>> => {
-  let service = new serviceClass(apiEndpoints.findByProperties);
-
-  const promises = [];
-
-  if (limitTree && limitTree.length > 0) {
-    // Basically if limitTree has any elements, then we need to ensure that when
-    // getting children from the API, we limit ourselves only to the jurisdictions
-    // contained in limitTree
-
-    // first we get the current parent i.e. the one whose children we want
-    let currentParentId: string | undefined;
-    if (jurisdiction) {
-      if (typeof jurisdiction === 'string') {
-        currentParentId = jurisdiction;
-      } else {
-        currentParentId = jurisdiction.id;
-      }
-    }
-
-    // We next want to find relevant jurisdictionIds for the current parent
-    // If we do find them, we will ONLY fetch them from
-    let jurisdictionIds: string[] = [];
-    if (currentParentId) {
-      // if we have a currentParentId then we check if limitTree contains any jurisdictions whose parent is currentParentId
-      jurisdictionIds = limitTree
-        .filter(elem => elem.jurisdiction_parent_id === currentParentId)
-        .map(elem => elem.jurisdiction_id);
-    } else {
-      // if no currentParentId then we check if we have any jurisdictions that have no parent
-      jurisdictionIds = limitTree
-        .filter(elem => elem.jurisdiction_parent_id === '' || !elem.jurisdiction_parent_id)
-        .map(elem => elem.jurisdiction_id);
-    }
-
-    if (jurisdictionIds.length > 0) {
-      service = new serviceClass(apiEndpoints.findByJurisdictionIds);
-      // jurisdictionIds may have a huge number of elements and so we need to chunk
-      // it so that our URL doesn't get too long
-      for (let index = 0, size = jurisdictionIds.length; index < size; index += chunkSize) {
-        params.jurisdiction_ids = jurisdictionIds.slice(index, index + chunkSize).join(',');
-        promises.push(service.list(params));
-      }
-    }
-  } else {
-    promises.push(service.list(params));
+export const getChildren = (
+  nodeId: string,
+  tree: TreeNode,
+  doFormat: boolean = true
+): Result<TreeNodeType[]> => {
+  let children: OpenSRPJurisdiction[] = [];
+  const nodeFromTree = tree.first(treeNode => treeNode.model.id === nodeId);
+  if (nodeFromTree && nodeFromTree.model.children) {
+    children = doFormat
+      ? nodeFromTree.model.children.map((nodeModel: ParsedHierarchySingleNode) =>
+          formatJurisdiction(nodeModel)
+        )
+      : nodeFromTree.children;
   }
+  return success(children);
+};
 
-  return Promise.all(promises)
-    .then(results => {
-      // We are concatenating all the resulting arrays so that we return all nodes in one array
-      const children = [].concat.apply([], results);
-      // then we remove duplicates and return the children
-      return { error: null, value: uniqBy(children, 'id') };
-    })
-    .catch((error: Error) => {
-      return { error, value: null };
-    });
+/**
+ * Get jurisdictions using their ids
+ *
+ * Calls the OpenSRP findByJurisdictionIds locations API to get jurisdictions using
+ * an array os jurisdiction ids
+ *
+ * @param jurisdictionIds - array of jurisdiction ids
+ * @param params - url params to send with the request
+ * @param chunkSize - the max number of jurisdictions to try and get at the same time
+ * @param serviceClass - the OpenSRP server service class
+ * @param apiEndpoint - the API endpoint
+ */
+export const getJurisdictions = (
+  jurisdictionIds: string[],
+  params: URLParams,
+  chunkSize: number = 20,
+  serviceClass: typeof OpenSRPService = OpenSRPService,
+  apiEndpoint: string = locationAPIEndpoints.findByJurisdictionIds
+): Promise<Result<OpenSRPJurisdiction[]>> => {
+  const promises = [];
+  if (jurisdictionIds.length > 0) {
+    const service = new serviceClass(apiEndpoint);
+    // remove duplicates
+    const cleanedIds = Array.from(new Set(jurisdictionIds));
+    // cleanedIds may have a huge number of elements and so we need to chunk
+    // it so that our URL doesn't get too long
+    for (let index = 0, size = cleanedIds.length; index < size; index += chunkSize) {
+      params.jurisdiction_ids = cleanedIds.slice(index, index + chunkSize).join(',');
+      promises.push(service.list(params));
+    }
+  }
+  if (promises.length > 0) {
+    return Promise.all(promises)
+      .then(results => {
+        // We are concatenating all the resulting arrays so that we return all nodes in one array
+        const children = [].concat.apply([], results);
+        // then we remove duplicates and return the children
+        return success(uniqBy(children, 'id'));
+      })
+      .catch((error: Error) => {
+        return failure(error);
+      });
+  } else {
+    return new Promise(resolve => resolve(success([])));
+  }
 };

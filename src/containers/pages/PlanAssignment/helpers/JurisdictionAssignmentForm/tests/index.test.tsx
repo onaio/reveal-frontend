@@ -4,9 +4,10 @@ import flushPromises from 'flush-promises';
 import MockDate from 'mockdate';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
+import { raZambiaNode } from '../../../../../../components/TreeWalker/tests/fixtures';
 import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { JurisdictionAssignmentForm } from '../index';
-import { apiCall, openSRPJurisdiction, submitCallbackPayload } from './fixtures';
+import { apiCall, submitCallbackPayload } from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -19,9 +20,13 @@ describe('PlanAssignment/JurisdictionAssignmentForm', () => {
   });
 
   it('renders without crashing', () => {
+    if (!raZambiaNode) {
+      fail();
+    }
+
     const props = {
       defaultValue: [{ label: 'Team X', value: 'x' }],
-      jurisdiction: openSRPJurisdiction,
+      jurisdiction: raZambiaNode,
       options: [
         { label: 'Team X', value: 'x' },
         { label: 'Team Y', value: 'y' },
@@ -55,6 +60,10 @@ describe('PlanAssignment/JurisdictionAssignmentForm', () => {
   });
 
   it('form works as expected', async () => {
+    if (!raZambiaNode) {
+      fail();
+    }
+
     fetch.mockResponseOnce(JSON.stringify({}), { status: 200 });
 
     const cancelMock: any = jest.fn();
@@ -64,7 +73,7 @@ describe('PlanAssignment/JurisdictionAssignmentForm', () => {
     const props = {
       cancelCallBackFunc: cancelMock,
       defaultValue: [{ label: 'Team X', value: 'x' }],
-      jurisdiction: openSRPJurisdiction,
+      jurisdiction: raZambiaNode,
       options: [
         { label: 'Team X', value: 'x' },
         { label: 'Team Y', value: 'y' },
@@ -103,13 +112,17 @@ describe('PlanAssignment/JurisdictionAssignmentForm', () => {
   });
 
   it('form errors as expected', async () => {
+    if (!raZambiaNode) {
+      fail();
+    }
+
     fetch.mockResponseOnce(JSON.stringify({}), { status: 400 });
 
     const submitMock: any = jest.fn();
 
     const props = {
       defaultValue: [{ label: 'Team X', value: 'x' }],
-      jurisdiction: openSRPJurisdiction,
+      jurisdiction: raZambiaNode,
       options: [
         { label: 'Team X', value: 'x' },
         { label: 'Team Y', value: 'y' },
