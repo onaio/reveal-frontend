@@ -1,9 +1,6 @@
 import { Dictionary } from '@onaio/utils/dist/types/types';
 import {
   fetchActionCreatorFactory,
-  // getItemsByIdFactory,
-  // getItemByIdFactory,
-  // getItemsArrayFactory,
   reducerFactory,
   removeActionCreatorFactory,
 } from '@opensrp/reducer-factory';
@@ -11,7 +8,6 @@ import { Feature, FeatureCollection, Geometry } from '@turf/turf';
 import { get, values } from 'lodash';
 import { Store } from 'redux';
 import { createSelector } from 'reselect';
-// import { Feature } from 'react-mapbox-gl';
 
 /** The shape of a jurisdiction received from the OpenSRP API */
 export interface Jurisdiction {
