@@ -134,12 +134,19 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       'structure count rendered'
     );
 
-    expect(
+    /* expect(
       tbodyRow
         .find('SelectedJurisdictionsCount')
         .at(0)
         .text()
         .includes('')
+    ).toBeTruthy(); */
+
+    expect(
+      (wrapper
+        .find('SelectedJurisdictionsCount')
+        .first()
+        .props() as any).parentNode
     ).toBeTruthy();
 
     // akros is the last child it should not be clickable

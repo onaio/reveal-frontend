@@ -46,7 +46,7 @@ import hierarchyReducer, {
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
-import { SelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
+import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
 
@@ -204,7 +204,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
       node.model.node.attributes.structureCount,
-      <SelectedJurisdictionsCount
+      <ConnectedSelectedJurisdictionsCount
         key={`selected-jurisdictions-txt`}
         parentNode={node}
         id={node.model.id}
