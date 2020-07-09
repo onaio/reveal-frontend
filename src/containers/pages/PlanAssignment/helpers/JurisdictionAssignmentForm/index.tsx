@@ -2,7 +2,6 @@ import { ErrorMessage, Field, Form, Formik, FormikActions } from 'formik';
 import React, { Fragment } from 'react';
 import { Button, Col, FormGroup, Row } from 'reactstrap';
 import { SelectField, SelectOption } from '../../../../../components/TreeWalker/SelectField';
-import { OpenSRPJurisdiction } from '../../../../../components/TreeWalker/types';
 import {
   CLOSE,
   COULD_NOT_LOAD_FORM,
@@ -16,6 +15,7 @@ import { OPENSRP_POST_ASSIGNMENTS_ENDPOINT } from '../../../../../constants';
 import { successGrowl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
+import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
 import { getPayload } from './helpers';
 
 /** Props for JurisdictionAssignmentForm */
@@ -23,7 +23,7 @@ export interface AssignmentFormProps {
   cancelCallBackFunc: () => void /** callback for when the cancel button is clicked */;
   defaultValue: SelectOption[] /** array of the currently selected (or default value) organization identifiers */;
   existingAssignments: Assignment[];
-  jurisdiction: OpenSRPJurisdiction | null;
+  jurisdiction: TreeNode | null;
   labels: {
     assignmentSuccess: string;
     close: string;

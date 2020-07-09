@@ -100,6 +100,8 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
             throw new Error(COULD_NOT_LOAD_JURISDICTION);
           }
           if (result.value) {
+            // TODO: review this - we already have the entire hierarchy in
+            // the hierarchy reducer module, do we need to always call OpenSRP?
             getAncestors(result.value)
               .then(ancestors => {
                 if (ancestors.value) {

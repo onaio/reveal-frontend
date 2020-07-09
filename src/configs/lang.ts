@@ -671,6 +671,11 @@ export const COULD_NOT_LOAD_ASSIGNMENTS = translate(
 );
 export const COULD_NOT_LOAD_TEAMS = translate('COULD_NOT_LOAD_TEAMS', 'Unable to load teams');
 export const COULD_NOT_LOAD_PLAN = translate('COULD_NOT_LOAD_PLAN', 'Unable to load plan');
+export const COULD_NOT_LOAD_CHILDREN = translate(
+  'COULD_NOT_LOAD_CHILDREN',
+  'Could not load children'
+);
+export const COULD_NOT_LOAD_PARENTS = translate('COULD_NOT_LOAD_PARENTS', 'Could not load parents');
 export const AN_ERROR_OCURRED = translate(
   'AN_ERROR_OCURRED',
   'An error ocurred. Please try and refresh the page.'

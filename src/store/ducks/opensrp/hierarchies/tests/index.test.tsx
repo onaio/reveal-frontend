@@ -7,22 +7,28 @@ import reducer, {
   fetchTree,
   Filters,
   getAllSelectedNodes,
+  getAncestors,
   getCurrentChildren,
   getCurrentParentNode,
   getNodeById,
+  getRootByNodeId,
+  getTreeById,
   reducerName,
   selectNode,
 } from '..';
 import store from '../../../../index';
 import { TreeNode } from '../types';
-import { nodeIsSelected } from '../utils';
-import { sampleHierarchy } from './fixtures';
+import { generateJurisdictionTree, nodeIsSelected } from '../utils';
+import { anotherHierarchy, sampleHierarchy } from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
 const childrenSelector = getCurrentChildren();
 const parentNodeSelector = getCurrentParentNode();
 const nodeSelector = getNodeById();
+const rootSelector = getRootByNodeId();
+const ancestorSelector = getAncestors();
+const treeByIdSelector = getTreeById();
 
 describe('reducers/opensrp/hierarchies', () => {
   let flushThunks;
@@ -37,6 +43,13 @@ describe('reducers/opensrp/hierarchies', () => {
     // what do we expect returned from selectors for an unpopulated store
     expect(childrenSelector(store.getState(), { rootJurisdictionId: '' })).toEqual([]);
     expect(parentNodeSelector(store.getState(), { rootJurisdictionId: '' })).toBeUndefined();
+  });
+
+  it('works with custom tree id', () => {
+    store.dispatch(fetchTree(sampleHierarchy, '1337'));
+    expect(treeByIdSelector(store.getState(), { rootJurisdictionId: '1337' })).toEqual(
+      generateJurisdictionTree(sampleHierarchy)
+    );
   });
 
   it('should fetch tree', () => {
@@ -119,5 +132,52 @@ describe('reducers/opensrp/hierarchies', () => {
       rootJurisdictionId,
     });
     expect(allSelected.length).toEqual(1);
+  });
+
+  it('can hold multiple trees', () => {
+    store.dispatch(fetchTree(sampleHierarchy));
+    store.dispatch(fetchTree(anotherHierarchy));
+    expect(Object.keys(store.getState().hierarchy.treeByRootId)).toEqual(['1337', '2942']);
+  });
+
+  it('can find rootId given a node', () => {
+    store.dispatch(fetchTree(sampleHierarchy));
+    store.dispatch(fetchTree(anotherHierarchy));
+    const filters: Filters = {
+      nodeId: '3951',
+      rootJurisdictionId: '',
+    };
+    expect(rootSelector(store.getState(), filters)).toEqual('2942');
+    expect(rootSelector(store.getState(), { rootJurisdictionId: '999', nodeId: '7331' })).toEqual(
+      '999'
+    );
+    expect(rootSelector(store.getState(), { ...filters, nodeId: '7331' })).toEqual('1337');
+    expect(rootSelector(store.getState(), { ...filters, nodeId: '?' })).toBeUndefined();
+  });
+
+  it('getAncestors works', () => {
+    store.dispatch(fetchTree(sampleHierarchy));
+    store.dispatch(fetchTree(anotherHierarchy));
+    const filters: Filters = {
+      nodeId: '3951',
+      rootJurisdictionId: '',
+    };
+    expect(ancestorSelector(store.getState(), filters).map(n => n.model.id)).toEqual([
+      '2942',
+      '3019',
+      '3951',
+    ]);
+    expect(
+      ancestorSelector(store.getState(), { ...filters, nodeId: '7331' }).map(n => n.model.id)
+    ).toEqual(['1337', '7331']);
+    expect(
+      ancestorSelector(store.getState(), { ...filters, nodeId: '2942' }).map(n => n.model.id)
+    ).toEqual(['2942']);
+    expect(ancestorSelector(store.getState(), { ...filters, nodeId: '?' })).toEqual([]);
+    expect(
+      ancestorSelector(store.getState(), { rootJurisdictionId: '2942', nodeId: '3019' }).map(
+        n => n.model.id
+      )
+    ).toEqual(['2942', '3019']);
   });
 });

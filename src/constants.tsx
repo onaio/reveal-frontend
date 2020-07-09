@@ -142,6 +142,7 @@ export const OPENSRP_PLANS_BY_USER_FILTER = 'plans/user';
 export const OPENSRP_V1_SETTINGS_ENDPOINT = 'settings/sync';
 export const OPENSRP_V2_SETTINGS = 'v2/settings/';
 export const OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT = 'location/getHierarchy';
+export const OPENSRP_PLAN_HIERARCHY_ENDPOINT = 'location/getHierarchy/plan';
 export const OPENSRP_FIND_LOCATION_BY_JURISDICTION_IDS = `location/findByJurisdictionIds`;
 export const OPENSRP_ACTIVE = 'Active';
 export const OPENSRP_STATUS = 'status';

@@ -1,3 +1,5 @@
+import { TreeNode } from '../../store/ducks/opensrp/hierarchies/types';
+
 /** The shape of a jurisdiction received from the OpenSRP API */
 export interface OpenSRPJurisdiction {
   id: string;
@@ -13,13 +15,10 @@ export interface OpenSRPJurisdiction {
   type: 'Feature';
 }
 
-/** Used to describe OpenSRP jurisdictions in short form */
-export interface SimpleJurisdiction {
-  jurisdiction_id: string;
-  jurisdiction_parent_id: string;
-}
-
 /** Object containing known API endpoints by name */
 export interface APIEndpoints {
   [key: string]: string;
 }
+
+/** Convenient type for either an array of jurisdictions or of tree nodes */
+export type TreeNodeType = OpenSRPJurisdiction | TreeNode;
