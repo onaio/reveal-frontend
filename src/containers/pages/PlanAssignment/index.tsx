@@ -1,16 +1,15 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import superset from '@onaio/superset-connector';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Store } from 'redux';
+import { ActionCreator, Store } from 'redux';
 import Loading from '../../../components/page/Loading';
 import { withTreeWalker } from '../../../components/TreeWalker';
-import { SimpleJurisdiction } from '../../../components/TreeWalker/types';
-import { SUPERSET_PLAN_HIERARCHY_SLICE } from '../../../configs/env';
 import {
   AN_ERROR_OCURRED,
   COULD_NOT_LOAD_ASSIGNMENTS,
+  COULD_NOT_LOAD_CHILDREN,
+  COULD_NOT_LOAD_PARENTS,
   COULD_NOT_LOAD_PLAN,
   COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY,
   COULD_NOT_LOAD_TEAMS,
@@ -20,17 +19,24 @@ import { PlanDefinition } from '../../../configs/settings';
 import {
   OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
+  OPENSRP_PLAN_HIERARCHY_ENDPOINT,
   OPENSRP_PLANS,
 } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
-import supersetFetch from '../../../services/superset';
 import assignmentReducer, {
   Assignment,
   fetchAssignments,
   getAssignmentsArrayByPlanId,
   reducerName as assignmentReducerName,
 } from '../../../store/ducks/opensrp/assignments';
+import hierarchyReducer, {
+  FetchedTreeAction,
+  fetchTree,
+  getTreeById,
+  reducerName as hierarchyReducerName,
+} from '../../../store/ducks/opensrp/hierarchies';
+import { RawOpenSRPHierarchy, TreeNode } from '../../../store/ducks/opensrp/hierarchies/types';
 import organizationsReducer, {
   fetchOrganizations,
   getOrganizationsArray,
@@ -49,6 +55,7 @@ import { AssignmentResponse } from './helpers/types';
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
+reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
 // TODO: Determine if this can safely be un-commented so as not to remount
 // const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
@@ -59,7 +66,8 @@ interface PlanAssignmentProps extends JurisdictionTableProps {
   addPlanActionCreator: typeof addPlanDefinition;
   fetchAssignmentsActionCreator: typeof fetchAssignments;
   fetchOrganizationsActionCreator: typeof fetchOrganizations;
-  supersetService: typeof supersetFetch;
+  fetchTreeActionCreator: ActionCreator<FetchedTreeAction>;
+  tree: TreeNode | null;
 }
 
 /**
@@ -74,7 +82,6 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [broken, setBroken] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [hierarchyLimits, setHierarchyLimits] = useState<SimpleJurisdiction[]>([]);
 
   const {
     OpenSRPServiceClass,
@@ -82,9 +89,10 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     assignments,
     fetchAssignmentsActionCreator,
     fetchOrganizationsActionCreator,
+    fetchTreeActionCreator,
+    tree,
     organizations,
     plan,
-    supersetService,
   } = props;
   const planId = props.match.params.planId;
 
@@ -102,19 +110,15 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
 
   useEffect(() => {
     // Get Plan hierarchy
-    const supersetParams = superset.getFormData(15000, [
-      { comparator: planId, operator: '==', subject: 'plan_id' },
-    ]);
-    const planHierarchyPromise = supersetService(SUPERSET_PLAN_HIERARCHY_SLICE, supersetParams)
-      .then((result: SimpleJurisdiction[]) => {
-        if (result) {
-          setHierarchyLimits(result);
+    const OpenPlanHierarchyService = new OpenSRPServiceClass(OPENSRP_PLAN_HIERARCHY_ENDPOINT);
+    const planHierarchyPromise = OpenPlanHierarchyService.read(planId, {
+      return_structure_count: false,
+    })
+      .then((response: RawOpenSRPHierarchy) => {
+        if (response) {
+          fetchTreeActionCreator(response, planId);
         } else {
-          if (hierarchyLimits.length < 1) {
-            // this means that we basically have not succeeded to make this call
-            // if hierarchyLimits is not populated we cannot proceed
-            handleBrokenPage(COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY);
-          }
+          throw new Error(COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY);
         }
       })
       .catch(e => {
@@ -122,8 +126,8 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
       });
 
     // get all assignments
-    const OpenSrpAssignedService = new OpenSRPServiceClass(OPENSRP_GET_ASSIGNMENTS_ENDPOINT);
-    const assignmentsPromise = OpenSrpAssignedService.list({ plan: planId })
+    const OpenSRPAssignedService = new OpenSRPServiceClass(OPENSRP_GET_ASSIGNMENTS_ENDPOINT);
+    const assignmentsPromise = OpenSRPAssignedService.list({ plan: planId })
       .then((response: AssignmentResponse[]) => {
         if (response) {
           const receivedAssignments: Assignment[] = response.map(assignment => {
@@ -193,6 +197,13 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     return <Loading />;
   }
 
+  if (!tree) {
+    // we absolutely MUST stop if we do not have a tree
+    if (!broken) {
+      handleBrokenPage(COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY);
+    }
+  }
+
   if (broken) {
     return (
       <div className="global-error-container">
@@ -220,10 +231,15 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     LoadingIndicator: Loading, // TODO: indicate what is loading
     assignments,
     jurisdictionId,
-    limits: hierarchyLimits,
+    labels: {
+      loadAncestorsError: COULD_NOT_LOAD_PARENTS,
+      loadChildrenError: COULD_NOT_LOAD_CHILDREN,
+    },
     organizations,
     plan,
     submitCallBackFunc: fetchAssignmentsActionCreator,
+    tree,
+    useJurisdictionNodeType: false,
   };
 
   return <WrappedJurisdictionTable {...wrappedProps} />;
@@ -235,7 +251,7 @@ const defaultPlanAssignmentProps: Partial<PlanAssignmentProps> = {
   addPlanActionCreator: addPlanDefinition,
   fetchAssignmentsActionCreator: fetchAssignments,
   fetchOrganizationsActionCreator: fetchOrganizations,
-  supersetService: supersetFetch,
+  fetchTreeActionCreator: fetchTree,
 };
 
 PlanAssignment.defaultProps = defaultPlanAssignmentProps;
@@ -247,6 +263,7 @@ interface DispatchedStateProps {
   assignments: Assignment[];
   organizations: Organization[];
   plan: PlanDefinition | null;
+  tree: TreeNode | null;
 }
 
 /** map dispatch to props */
@@ -254,19 +271,26 @@ const mapDispatchToProps = {
   addPlanActionCreator: addPlanDefinition,
   fetchAssignmentsActionCreator: fetchAssignments,
   fetchOrganizationsActionCreator: fetchOrganizations,
+  fetchTreeActionCreator: fetchTree,
 };
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
+  // selectors
+  const treeSelector = getTreeById();
+
   // TODO: use reselect
   const plan = getPlanDefinitionById(state, ownProps.match.params.planId);
   const organizations = getOrganizationsArray(state);
   const assignments = getAssignmentsArrayByPlanId(state, ownProps.match.params.planId);
 
+  const tree = treeSelector(state, { rootJurisdictionId: ownProps.match.params.planId });
+
   return {
     assignments,
     organizations,
     plan,
+    tree: tree || null,
   };
 };
 
