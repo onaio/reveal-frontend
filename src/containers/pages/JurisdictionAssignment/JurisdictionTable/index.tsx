@@ -20,7 +20,12 @@ import {
   STRUCTURES_COUNT,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
+import {
+  ASSIGN_JURISDICTIONS_URL,
+  INTERVENTION_TYPE_CODE,
+  INTERVENTION_TYPE_DYNAMIC_FI,
+  INTERVENTION_TYPE_FI,
+} from '../../../../constants';
 import {
   LoadOpenSRPHierarchy,
   putJurisdictionsToPlan,
@@ -98,7 +103,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     plan,
     serviceClass,
   } = props;
-
   /** helper function that decides which action creator to call when
    * changing the selected status of a node
    * @param nodId - id of the node of interest
@@ -112,7 +116,23 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     }
   }
 
+  const isSingleSelect = () => {
+    const interventionType = plan.useContext.find(
+      element => element.code === INTERVENTION_TYPE_CODE
+    );
+    if (
+      interventionType &&
+      (interventionType.valueCodableConcept === INTERVENTION_TYPE_FI ||
+        interventionType.valueCodableConcept === INTERVENTION_TYPE_DYNAMIC_FI)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const [loading, setLoading] = React.useState<boolean>(true);
+  const [singleSelect] = React.useState<boolean>(isSingleSelect);
   const { broken, errorMessage, handleBrokenPage } = useHandleBrokenPage();
   const baseUrl = `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
 
@@ -195,6 +215,10 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         key={`${node.model.id}-check-jurisdiction`}
         type="checkbox"
         checked={nodeIsSelected(node)}
+        disabled={
+          singleSelect &&
+          (node.hasChildren() || (selectedLeafNodes.length > 0 && !nodeIsSelected(node)))
+        }
         // tslint:disable-next-line: jsx-no-lambda
         onChange={e => {
           const newSelectedValue = e.target.checked;
@@ -230,6 +254,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
             <input
               type="checkbox"
               checked={checkParentCheckbox(currentParentNode, currentChildren)}
+              disabled={singleSelect}
               onChange={onParentCheckboxClick}
             />
           </th>
