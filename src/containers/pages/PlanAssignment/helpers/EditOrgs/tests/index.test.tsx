@@ -3,9 +3,10 @@ import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
+import { raNchelengeNode } from '../../../../../../components/TreeWalker/tests/fixtures';
 import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { defaultAssignmentProps } from '../../JurisdictionAssignmentForm';
-import { assignment4, openSRPJurisdiction } from '../../JurisdictionAssignmentForm/tests/fixtures';
+import { assignment4 } from '../../JurisdictionAssignmentForm/tests/fixtures';
 import { EditOrgs } from '../index';
 
 describe('PlanAssignment/EditOrgs', () => {
@@ -14,13 +15,17 @@ describe('PlanAssignment/EditOrgs', () => {
   });
 
   it('works as expected', async () => {
+    if (!raNchelengeNode) {
+      fail();
+    }
+
     const submitMock: any = jest.fn();
     const growlMock: any = jest.fn();
 
     const props = {
       defaultValue: [{ label: 'Team X', value: 'x' }],
       existingAssignments: [assignment4],
-      jurisdiction: openSRPJurisdiction,
+      jurisdiction: raNchelengeNode,
       options: [
         { label: 'Team X', value: 'x' },
         { label: 'Team Y', value: 'y' },
@@ -39,8 +44,6 @@ describe('PlanAssignment/EditOrgs', () => {
     // we can click the button to show the form
     await act(async () => {
       (wrapper.find('button.show-form').props() as any).onClick();
-    });
-    await act(async () => {
       await flushPromises();
       wrapper.update();
     });
@@ -59,8 +62,6 @@ describe('PlanAssignment/EditOrgs', () => {
     // we can click the close button form to go back to before
     await act(async () => {
       (wrapper.find('button.cancel').props() as any).onClick();
-    });
-    await act(async () => {
       await flushPromises();
       wrapper.update();
     });

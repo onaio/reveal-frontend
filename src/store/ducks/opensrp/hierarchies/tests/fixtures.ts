@@ -63,3 +63,45 @@ export const sampleHierarchy: RawOpenSRPHierarchy = {
     },
   },
 };
+
+export const anotherHierarchy: RawOpenSRPHierarchy = {
+  locationsHierarchy: {
+    map: {
+      '1337': {
+        id: '1337',
+        label: 'Lusaka',
+        node: {
+          locationId: '1337',
+          name: 'Lusaka',
+          attributes: {
+            geographicLevel: 0,
+          },
+          voided: false,
+        },
+        children: {
+          '7331': {
+            id: '7331',
+            label: 'Mtendere',
+            node: {
+              locationId: '7331',
+              name: 'Mtendere',
+              parentLocation: {
+                locationId: '1337',
+                voided: false,
+              },
+              attributes: {
+                structureCount: 1,
+                geographicLevel: 1,
+              },
+              voided: false,
+            },
+            parent: '1337',
+          },
+        },
+      },
+    },
+    parentChildren: {
+      '1337': ['7331'],
+    },
+  },
+};
