@@ -4468,7 +4468,7 @@ Array [
     className="col-sm-2 col-form-label"
     htmlFor="activities[0].condition[0].expression"
   >
-    Condition
+    Expression
   </label>,
   <label
     className="col-sm-2 col-form-label"
@@ -4480,7 +4480,7 @@ Array [
     className="col-sm-2 col-form-label"
     htmlFor="activities[0].condition[1].expression"
   >
-    Condition
+    Expression
   </label>,
   <label
     className="col-sm-2 col-form-label"
@@ -4492,7 +4492,7 @@ Array [
     className="col-sm-2 col-form-label"
     htmlFor="activities[1].condition[0].expression"
   >
-    Condition
+    Expression
   </label>,
   <label
     className="col-sm-2 col-form-label"
@@ -4636,9 +4636,9 @@ Array [
   </label>,
   <label
     className="col-sm-2 col-form-label"
-    htmlFor="activities[0].trigger[1].description"
+    htmlFor="activities[0].trigger[1].expression"
   >
-    Description
+    Expression
   </label>,
   <label
     className="col-sm-2 col-form-label"
@@ -4664,12 +4664,12 @@ exports[`containers/forms/PlanForm renders dynamic plans correctly: triggers tex
 <textarea
   className="form-control col-sm-10"
   disabled={false}
-  id="activities[0].trigger[1].description"
-  name="activities[0].trigger[1].description"
+  id="activities[0].trigger[1].expression"
+  name="activities[0].trigger[1].expression"
   onBlur={[Function]}
   onChange={[Function]}
-  required={false}
-  value=""
+  required={true}
+  value="questionnaire = 'Register_Structure'"
 />
 `;
 
