@@ -272,7 +272,7 @@ const PlanForm = (props: PlanFormProps) => {
         }}
         validationSchema={PlanSchema}
       >
-        {({ errors, handleChange, isSubmitting, setFieldValue, values }) => (
+        {({ errors, handleChange, isSubmitting, setFieldValue, values, touched }) => (
           <Form
             /* tslint:disable-next-line jsx-no-lambda */
             onChange={(e: FormEvent) => {
@@ -397,20 +397,23 @@ const PlanForm = (props: PlanFormProps) => {
                     <div id="jurisdictions-select-container" className="mb-5">
                       {values.jurisdictions.map((_, index) => (
                         <fieldset key={index}>
-                          {errors.jurisdictions && errors.jurisdictions[index] && (
-                            <div className="alert alert-danger" role="alert">
-                              <h6 className="alert-heading">{PLEASE_FIX_THESE_ERRORS}</h6>
-                              <ul className="list-unstyled">
-                                {Object.entries(errors.jurisdictions[index] || {}).map(
-                                  ([key, val]) => (
-                                    <li key={key}>
-                                      <strong>{jurisdictionLabel}</strong>: {val}
-                                    </li>
-                                  )
-                                )}
-                              </ul>
-                            </div>
-                          )}
+                          {errors.jurisdictions &&
+                            errors.jurisdictions[index] &&
+                            touched.jurisdictions &&
+                            touched.jurisdictions[index] && (
+                              <div className="alert alert-danger" role="alert">
+                                <h6 className="alert-heading">{PLEASE_FIX_THESE_ERRORS}</h6>
+                                <ul className="list-unstyled">
+                                  {Object.entries(errors.jurisdictions[index] || {}).map(
+                                    ([key, val]) => (
+                                      <li key={key}>
+                                        <strong>{jurisdictionLabel}</strong>: {val}
+                                      </li>
+                                    )
+                                  )}
+                                </ul>
+                              </div>
+                            )}
                           <div className="jurisdiction-item position-relative">
                             {values.jurisdictions && values.jurisdictions.length > 1 && (
                               <button
@@ -454,11 +457,14 @@ const PlanForm = (props: PlanFormProps) => {
                                 id={`jurisdictions-${index}-name`}
                               />
 
-                              {errors.jurisdictions && errors.jurisdictions[index] && (
-                                <small className="form-text text-danger jurisdictions-error">
-                                  {AN_ERROR_OCCURRED}
-                                </small>
-                              )}
+                              {errors.jurisdictions &&
+                                errors.jurisdictions[index] &&
+                                touched.jurisdictions &&
+                                touched.jurisdictions[index] && (
+                                  <small className="form-text text-danger jurisdictions-error">
+                                    {AN_ERROR_OCCURRED}
+                                  </small>
+                                )}
 
                               <ErrorMessage
                                 name={`jurisdictions[${index}].id`}
