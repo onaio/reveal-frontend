@@ -114,12 +114,11 @@ export const getChildren = (
   let children: OpenSRPJurisdiction[] = [];
   const nodeFromTree = tree.first(treeNode => treeNode.model.id === nodeId);
   if (nodeFromTree && nodeFromTree.model.children) {
-    children =
-      doFormat === true
-        ? nodeFromTree.model.children.map((nodeModel: ParsedHierarchySingleNode) =>
-            formatJurisdiction(nodeModel)
-          )
-        : nodeFromTree.children;
+    children = doFormat
+      ? nodeFromTree.model.children.map((nodeModel: ParsedHierarchySingleNode) =>
+          formatJurisdiction(nodeModel)
+        )
+      : nodeFromTree.children;
   }
   return success(children);
 };
