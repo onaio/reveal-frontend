@@ -728,3 +728,6 @@ export const JURISDICTION_ASSIGNMENT_SUCCESSFUL = translate(
   'JURISDICTION_ASSIGNMENT_SUCCESSFUL',
   'Jurisdiction(s) assigned to plan successfully'
 );
+
+export const GOAL_LABEL = translate('GOAL_LABEL', 'Goal');
+export const EXPRESSION_LABEL = translate('EXPRESSION_LABEL', 'Expression');

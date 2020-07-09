@@ -1154,5 +1154,13 @@
   "INHERIT_SETTING_LABEL": {
     "message": "Inherit setting",
     "description": "settings inherited from"
+  },
+  "GOAL_LABEL": {
+    "message": "Goal",
+    "description": "label, column header: goal"
+  },
+  "EXPRESSION_LABEL": {
+    "message": "Expression",
+    "description": "label, column header: name expression"
   }
 }

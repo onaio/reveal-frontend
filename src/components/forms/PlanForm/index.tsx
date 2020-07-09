@@ -40,6 +40,7 @@ import {
   FOCUS_CLASSIFICATION_LABEL,
   FOCUS_INVESTIGATION,
   FOCUS_INVESTIGATION_STATUS_REASON,
+  GOAL_LABEL,
   INTERVENTION_TYPE_LABEL,
   IRS_TITLE,
   LOCATIONS,
@@ -792,7 +793,7 @@ const PlanForm = (props: PlanFormProps) => {
                             />
                           </FormGroup>
                           <fieldset>
-                            <legend>Goal</legend>
+                            <legend>{GOAL_LABEL}</legend>
                             <FormGroup>
                               <Label for={`activities-${index}-goalValue`}>{QUANTITY_LABEL}</Label>
                               <InputGroup id={`activities-${index}-goalValue-input-group`}>
