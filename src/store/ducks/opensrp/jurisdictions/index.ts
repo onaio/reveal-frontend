@@ -7,17 +7,18 @@ import {
   reducerFactory,
   removeActionCreatorFactory,
 } from '@opensrp/reducer-factory';
+import { Feature, FeatureCollection, Geometry } from '@turf/turf';
 import { get, values } from 'lodash';
 import { Store } from 'redux';
 import { createSelector } from 'reselect';
-import { Geometry } from '../../../../helpers/utils';
+// import { Feature } from 'react-mapbox-gl';
 
 /** The shape of a jurisdiction received from the OpenSRP API */
 export interface Jurisdiction {
   id: string;
+  geometry?: Geometry;
   properties: {
     code?: string;
-    geometry?: Geometry;
     geographicLevel: number;
     name: string;
     parentId?: string;
@@ -106,5 +107,21 @@ export const getJurisdictionsArray = () =>
         return result.filter(item => jurisdictionIdsArray.includes(item.id));
       }
       return result;
+    }
+  );
+
+/**
+ * retrieve jurisdictions as a geojson feature collection
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getJurisdictionsFC = () =>
+  createSelector(
+    [getJurisdictionsArray()],
+    (jurisdictionsArray): FeatureCollection => {
+      return {
+        features: jurisdictionsArray.filter(item => 'geometry' in item) as Feature[],
+        type: 'FeatureCollection',
+      };
     }
   );

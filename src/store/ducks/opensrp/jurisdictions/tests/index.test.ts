@@ -4,6 +4,7 @@ import reducer, {
   fetchJurisdictions,
   getJurisdictionById,
   getJurisdictionsArray,
+  getJurisdictionsFC,
   reducerName,
   removeJurisdictions,
 } from '..';
@@ -18,6 +19,7 @@ reducerRegistry.register(reducerName, reducer);
 
 const arraySelector = getJurisdictionsArray();
 const jurisdictionSelector = getJurisdictionById();
+const fcSelector = getJurisdictionsFC();
 const data = [raKashikishiHAHC, raKsh2, raKsh3];
 
 describe('reducers/opensrp/hierarchies', () => {
@@ -44,5 +46,9 @@ describe('reducers/opensrp/hierarchies', () => {
     expect(
       arraySelector(store.getState(), { jurisdictionIdsArray: [raKashikishiHAHC.id, raKsh3.id] })
     ).toEqual([raKashikishiHAHC, raKsh3]);
+    expect(fcSelector(store.getState(), { parentId: raKashikishiHAHC.id })).toEqual({
+      features: [raKsh2],
+      type: 'FeatureCollection',
+    });
   });
 });
