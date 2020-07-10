@@ -1788,10 +1788,10 @@
     reactstrap "^8.0.1"
     yup "^0.29.1"
 
-"@opensrp/population-characteristics@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@opensrp/population-characteristics/-/population-characteristics-0.0.2.tgz#a9fdaf6a3349d0e76a4272bd19768e116178b500"
-  integrity sha512-YHFjQAWtPbIdZwU/CFaZ5EXAh2Hp5EgWokh+IzvdAvuIP4dxUSJquYzReVWAg6wDzOIdE/wsPJrrR8y4RwQhWw==
+"@opensrp/population-characteristics@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@opensrp/population-characteristics/-/population-characteristics-0.0.6.tgz#ef2826dd4e38d5e0ee470fdbfc78b1aebcc99de3"
+  integrity sha512-4F/hMBM0uxYQ7l3OiSXfxUyfqfczFa11OFCm/8pnP36+qsuaUXUvBsShmSRPYkKzlmZmG2mpUsB+tUqp601a9w==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.20"
     "@fortawesome/free-brands-svg-icons" "^5.10.0"
