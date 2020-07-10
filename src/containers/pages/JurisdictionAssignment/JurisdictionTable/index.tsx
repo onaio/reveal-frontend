@@ -112,6 +112,9 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     }
   }
 
+  /** function for determining whether the jurisdiction assignment table allows for
+   * multiple selection or single selection based on the plan intervention type
+   */
   const isSingleSelect = () => {
     const interventionType = plan.useContext.find(
       element => element.code === INTERVENTION_TYPE_CODE
