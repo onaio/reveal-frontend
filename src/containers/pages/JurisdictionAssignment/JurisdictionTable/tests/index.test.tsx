@@ -81,6 +81,10 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       </Provider>
     );
 
+    const div = document.createElement('div');
+    div.setAttribute('id', 'jurisdiction-tooltip-2942');
+    document.body.appendChild(div);
+
     // first flush promises
     await act(async () => {
       await new Promise(resolve => setImmediate(resolve));
@@ -95,6 +99,19 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         .at(0)
         .text()
         .includes('Lusaka')
+    ).toBeTruthy();
+
+    // simulate click on checkbox to check
+    tbodyRow.find('input').simulate('change', { target: { name: '', checked: true } });
+    wrapper.update();
+    renderTable(wrapper, 'input checked');
+
+    expect(
+      wrapper
+        .find('tbody tr')
+        .at(0)
+        .text()
+        .includes('1')
     ).toBeTruthy();
 
     // test drilldown
@@ -137,6 +154,13 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
   });
 
   it('selects and deselect nodes', async () => {
+    const div = document.createElement('div');
+    div.setAttribute('id', 'jurisdiction-tooltip-2942');
+    document.body.appendChild(div);
+
+    const div1 = document.createElement('div');
+    div1.setAttribute('id', 'jurisdiction-tooltip-3951');
+    document.body.appendChild(div1);
     fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
     const plan = plans[0];
     const props = {
@@ -164,6 +188,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     // simulate click on checkbox to check
     parentNodeRow.find('input').simulate('change', { target: { name: '', checked: true } });
     wrapper.update();
+
     expect(
       toJson(
         wrapper
