@@ -149,7 +149,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         );
       }
     } else {
-      const isLeafNode = leafNodes.map(leaf => leaf.model.id).includes(node.model.id);
+      const isLeafNode = !node.hasChildren();
       if (isLeafNode) {
         return existingAssignments.includes(node.model.id);
       }

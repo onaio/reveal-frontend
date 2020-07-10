@@ -29,6 +29,7 @@ import {
   loadJurisdictionsMetadata,
 } from '../../../../helpers/dataLoading/jurisdictions';
 import { loadOpenSRPPlan } from '../../../../helpers/dataLoading/plans';
+import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
@@ -105,9 +106,11 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       .then(() => {
         setLoading(false);
       })
-      .catch(error => {
+      .finally(() => {
         setLoading(false);
-        return error;
+      })
+      .catch(error => {
+        displayError(error);
       });
   }, []);
 
