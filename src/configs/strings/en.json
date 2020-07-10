@@ -1122,5 +1122,9 @@
   "AN_ERROR_OCURRED": {
     "message": "An error ocurred. Please try and refresh the page.",
     "description": "Generic error message"
+  },
+  "FALLBACK_CUSTOM_ERROR_MESSAGE": {
+    "message": "There has been an error. It’s been reported to the site administrators via email and should be fixed shortly. Thanks for your patience.",
+    "description": "Error message displayed when application encounters internal error"
   }
 }

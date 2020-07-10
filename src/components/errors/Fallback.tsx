@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Container, Row } from 'reactstrap';
+import { AN_ERROR_OCCURRED, FALLBACK_CUSTOM_ERROR_MESSAGE } from '../../configs/lang';
 
 /**
  * Fallback
@@ -19,12 +20,9 @@ export const Fallback = () => {
     >
       <Row style={{ marginTop: '40px' }} className="text-center">
         <Col sm="12" md={{ size: 4, offset: 4 }}>
-          <h1>An Error Occurred</h1>
+          <h1>{AN_ERROR_OCCURRED}</h1>
           <div>
-            <p>
-              There has been an error. It’s been reported to the site administrators via email and
-              should be fixed shortly. Thanks for your patience.
-            </p>
+            <p>{FALLBACK_CUSTOM_ERROR_MESSAGE}</p>
           </div>
         </Col>
       </Row>

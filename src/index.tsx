@@ -1,10 +1,12 @@
 import { history } from '@onaio/connected-reducer-registry';
 import * as Sentry from '@sentry/browser';
+import * as SentryReact from '@sentry/react';
 import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './App/App';
+import { Fallback } from './components/errors/Fallback';
 import Logout from './components/Logout';
 import { SENTRY_DSN } from './configs/env';
 import * as serviceWorker from './serviceWorker';
@@ -21,9 +23,11 @@ if (SENTRY_DSN !== '') {
 
 ReactDOM.render(
   <Provider store={store}>
-    <ConnectedRouter history={history}>
-      <App logoutComponent={Logout} />
-    </ConnectedRouter>
+    <SentryReact.ErrorBoundary fallback={Fallback}>
+      <ConnectedRouter history={history}>
+        <App logoutComponent={Logout} />
+      </ConnectedRouter>
+    </SentryReact.ErrorBoundary>
   </Provider>,
   document.getElementById('reveal-root')
 );

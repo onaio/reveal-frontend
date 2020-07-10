@@ -657,3 +657,7 @@ export const AN_ERROR_OCURRED = translate(
   'An error ocurred. Please try and refresh the page.'
 );
 export const THE_SPECIFIC_ERROR_IS = translate('THE_SPECIFIC_ERROR_IS', 'The specific error is');
+export const FALLBACK_CUSTOM_ERROR_MESSAGE = translate(
+  'FALLBACK_CUSTOM_ERROR_MESSAGE',
+  `There has been an error. It’s been reported to the site administrators via email and should be fixed shortly. Thanks for your patience.`
+);
