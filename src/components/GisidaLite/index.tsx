@@ -15,7 +15,7 @@ interface MapIcon {
 }
 
 /** interface for  GisidaLite props */
-interface GisidaLiteProps {
+export interface GisidaLiteProps {
   accessToken: string;
   attributionControl: boolean;
   customAttribution: string;
@@ -142,7 +142,7 @@ GisidaLite.defaultProps = gisidaLiteDefaultProps;
  * @param prevProps
  * @param nextProps
  */
-const arePropsEqual = (prevProps: GisidaLiteProps, nextProps: GisidaLiteProps) => {
+export const arePropsEqual = (prevProps: GisidaLiteProps, nextProps: GisidaLiteProps) => {
   if (prevProps.layers.length !== nextProps.layers.length) {
     return false;
   }
