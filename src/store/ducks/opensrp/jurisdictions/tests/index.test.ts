@@ -40,9 +40,14 @@ describe('reducers/opensrp/hierarchies', () => {
 
   it('should be able to store and retrieve jurisdictions', () => {
     store.dispatch(fetchJurisdictions(data));
-    expect(arraySelector(store.getState(), {})).toEqual(data);
+    // idsSelector
     expect(idsSelector(store.getState(), {})).toEqual(data.map(e => e.id));
+    expect(idsSelector(store.getState(), { filterGeom: false })).toEqual([raKashikishiHAHC.id]);
+    expect(idsSelector(store.getState(), { filterGeom: true })).toEqual([raKsh2.id, raKsh3.id]);
+    // jurisdictionSelector
     expect(jurisdictionSelector(store.getState(), { jurisdictionId: raKsh2.id })).toEqual(raKsh2);
+    // arraySelector
+    expect(arraySelector(store.getState(), {})).toEqual(data);
     expect(arraySelector(store.getState(), { parentId: raKashikishiHAHC.id })).toEqual([
       raKsh2,
       raKsh3,
@@ -50,6 +55,7 @@ describe('reducers/opensrp/hierarchies', () => {
     expect(
       arraySelector(store.getState(), { jurisdictionIdsArray: [raKashikishiHAHC.id, raKsh3.id] })
     ).toEqual([raKashikishiHAHC, raKsh3]);
+    // fcSelector
     expect(fcSelector(store.getState(), { parentId: raKashikishiHAHC.id })).toEqual({
       features: [raKsh2, raKsh3],
       type: 'FeatureCollection',

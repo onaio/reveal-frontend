@@ -40,6 +40,7 @@ export const removeJurisdictions = removeActionCreatorFactory(reducerName);
 // selectors
 /** prop filters to customize selector queries */
 export interface Filters {
+  filterGeom?: boolean /** whether to filter jurisdictions that have geometry field */;
   jurisdictionId?: string /** jurisdiction id */;
   jurisdictionIdsArray?: string[] /** array of jurisdiction ids */;
   parentId?: string /** parent id */;
@@ -63,6 +64,12 @@ export const getParentId = (_: Partial<Store>, props: Filters) => props.parentId
  */
 export const getJurisdictionIdsArray = (_: Partial<Store>, props: Filters) =>
   props.jurisdictionIdsArray;
+
+/** retrieve the filterGeom value
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getFilterGeom = (_: Partial<Store>, props: Filters) => props.filterGeom;
 
 /** gets all jurisdictions keyed by id
  * @param state - the store
@@ -92,9 +99,19 @@ export const getJurisdictionById = () =>
  * @param props -  the filterProps
  */
 export const getJurisdictionIds = () =>
-  createSelector([getJurisdictionsById], (jurisdictionsById): string[] => {
-    return Object.keys(jurisdictionsById);
-  });
+  createSelector(
+    [getJurisdictionsById, getFilterGeom],
+    (jurisdictionsById, filterGeom): string[] => {
+      if (filterGeom === undefined) {
+        return Object.keys(jurisdictionsById);
+      }
+      return values(jurisdictionsById)
+        .filter(item => {
+          return 'geometry' in item === filterGeom;
+        })
+        .map(item => item.id);
+    }
+  );
 
 /**
  * retrieve jurisdictions as an array
