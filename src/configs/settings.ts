@@ -727,7 +727,7 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-			description: 'Trigger when a Family Registration event is submitted',
+            description: 'Trigger when a Family Registration event is submitted',
             expression: "questionnaire = 'Family_Registration'",
           },
           name: 'event-submission',
@@ -792,7 +792,8 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-			description: 'Trigger when a Family Registration or Family Member Registration event is submitted',
+            description:
+              'Trigger when a Family Registration or Family Member Registration event is submitted',
             expression:
               "questionnaire = 'Family_Registration' or questionnaire = 'Family_Member_Registration'",
           },
@@ -851,7 +852,7 @@ export const planActivities: PlanActivities = {
       trigger: [
         {
           expression: {
-			description: 'Trigger when a MDA Dispense event is submitted',
+            description: 'Trigger when a MDA Dispense event is submitted',
             expression: "questionnaire = 'mda_dispense'",
           },
           name: 'event-submission',
@@ -918,7 +919,8 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-			description: 'Trigger when a Family Registration or Family Member Registration event is submitted',
+            description:
+              'Trigger when a Family Registration or Family Member Registration event is submitted',
             expression:
               "questionnaire = 'Family_Registration' or questionnaire = 'Family_Member_Registration'",
           },
@@ -999,7 +1001,7 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-			description: 'Trigger when a Register_Structure event is submitted',
+            description: 'Trigger when a Register_Structure event is submitted',
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
@@ -1068,7 +1070,7 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-			  description: 'Trigger when a Register_Structure event is submitted',
+            description: 'Trigger when a Register_Structure event is submitted',
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
@@ -1136,7 +1138,7 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-			description: 'Trigger when a Register_Structure event is submitted',
+            description: 'Trigger when a Register_Structure event is submitted',
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
@@ -1204,7 +1206,7 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-			description: 'Trigger when a Register_Structure event is submitted',
+            description: 'Trigger when a Register_Structure event is submitted',
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
