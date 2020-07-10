@@ -183,7 +183,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
 </Breadcrumb>
 `;
 
-exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title: GisidaWrapperMock div 1`] = `
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title: MemoizedGisidaLiteMock div 1`] = `
 <div>
   I love oov
 </div>

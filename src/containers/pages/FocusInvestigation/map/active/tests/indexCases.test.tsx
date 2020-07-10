@@ -16,8 +16,11 @@ import * as fixturesMap from './fixtures';
 
 jest.mock('../../../../../../components/GisidaLite', () => {
   const GisidaLiteMock = () => <div>I love oov</div>;
+  const MemoizedGisidaLiteMock = () => <div>I love oov</div>;
+
   return {
     GisidaLite: GisidaLiteMock,
+    MemoizedGisidaLite: MemoizedGisidaLiteMock,
   };
 });
 jest.mock('../../../../../../configs/env');
@@ -84,7 +87,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(componentProps.historicalPolyIndexCases.features.length).toEqual(2);
 
     // gisida lite layers
-    const gisidaLiteProps: any = wrapper.find('GisidaLiteMock').props();
+    const gisidaLiteProps: any = wrapper.find('MemoizedGisidaLiteMock').props();
     const { layers } = gisidaLiteProps;
 
     layers.forEach((layer: any) => {
