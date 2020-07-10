@@ -44,7 +44,6 @@ import IRSPlansReducer, {
 } from '../../../../store/ducks/generic/plans';
 import {
   fetchPlanRecords,
-  InterventionType,
   makePlansArraySelector,
   PlanRecord,
   PlanRecordResponse,
@@ -230,28 +229,11 @@ const mapStateToProps = (
   ownProps: PlanAssignmentWithRouteProps
 ): DispatchedStateProps => {
   const title = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const planStatus = [PlanStatus.ACTIVE];
-  const fiPlans = plansArraySelector(state as Registry, {
-    interventionType: InterventionType.FI,
-    statusList: planStatus,
+  const activePlans = plansArraySelector(state as Registry, {
+    statusList: [PlanStatus.ACTIVE],
     title,
   });
-  const irsPlans = plansArraySelector(state as Registry, {
-    interventionType: InterventionType.IRS,
-    statusList: planStatus,
-    title,
-  });
-  const mdaPlans = plansArraySelector(state as Registry, {
-    interventionType: InterventionType.MDA,
-    statusList: planStatus,
-    title,
-  });
-  const mdaPointPlans = plansArraySelector(state as Registry, {
-    interventionType: InterventionType.MDAPoint,
-    statusList: planStatus,
-    title,
-  });
-  const plans = [...fiPlans, ...irsPlans, ...mdaPlans, ...mdaPointPlans].sort(
+  const plans = activePlans.sort(
     (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
   );
   return {

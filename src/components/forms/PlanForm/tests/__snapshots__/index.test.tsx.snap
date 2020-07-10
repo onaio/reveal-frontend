@@ -4468,7 +4468,7 @@ Array [
     className="col-sm-2 col-form-label"
     htmlFor="activities[0].condition[0].expression"
   >
-    Condition
+    Expression
   </label>,
   <label
     className="col-sm-2 col-form-label"
@@ -4480,7 +4480,7 @@ Array [
     className="col-sm-2 col-form-label"
     htmlFor="activities[0].condition[1].expression"
   >
-    Condition
+    Expression
   </label>,
   <label
     className="col-sm-2 col-form-label"
@@ -4492,7 +4492,7 @@ Array [
     className="col-sm-2 col-form-label"
     htmlFor="activities[1].condition[0].expression"
   >
-    Condition
+    Expression
   </label>,
   <label
     className="col-sm-2 col-form-label"
@@ -4636,6 +4636,12 @@ Array [
   </label>,
   <label
     className="col-sm-2 col-form-label"
+    htmlFor="activities[0].trigger[1].expression"
+  >
+    Expression
+  </label>,
+  <label
+    className="col-sm-2 col-form-label"
     htmlFor="activities[0].trigger[1].description"
   >
     Description
@@ -4661,16 +4667,28 @@ Array [
 `;
 
 exports[`containers/forms/PlanForm renders dynamic plans correctly: triggers textareas 1`] = `
-<textarea
-  className="form-control col-sm-10"
-  disabled={false}
-  id="activities[0].trigger[1].description"
-  name="activities[0].trigger[1].description"
-  onBlur={[Function]}
-  onChange={[Function]}
-  required={false}
-  value=""
-/>
+Array [
+  <textarea
+    className="form-control col-sm-10"
+    disabled={false}
+    id="activities[0].trigger[1].expression"
+    name="activities[0].trigger[1].expression"
+    onBlur={[Function]}
+    onChange={[Function]}
+    required={true}
+    value="questionnaire = 'Register_Structure'"
+  />,
+  <textarea
+    className="form-control col-sm-10"
+    disabled={false}
+    id="activities[0].trigger[1].description"
+    name="activities[0].trigger[1].description"
+    onBlur={[Function]}
+    onChange={[Function]}
+    required={false}
+    value="Trigger when a Register_Structure event is submitted"
+  />,
+]
 `;
 
 exports[`containers/forms/PlanForm renders jurisdictions fields correctly: addJurisdiction button 1`] = `

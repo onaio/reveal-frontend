@@ -644,6 +644,26 @@ describe('containers/forms/PlanForm - Submission', () => {
     // nice, eh?
   });
 
+  it('Location field does not fires errors all time', async () => {
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
+    // no location error when other fields change
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'MDA-Point' } });
+    wrapper.update();
+    expect(wrapper.find('small.jurisdictions-error').length).toBeFalsy();
+    // error on submit when field not filled
+    wrapper.find('form').simulate('submit');
+    await new Promise<any>(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    expect(wrapper.find('small.jurisdictions-error').text()).toEqual('An Error Ocurred');
+  });
+
   it('Form validation works for activity fields', async () => {
     const wrapper = mount(
       <MemoryRouter>

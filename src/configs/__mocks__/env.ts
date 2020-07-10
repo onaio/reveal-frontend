@@ -52,8 +52,6 @@ export type SUPERSET_GOALS_SLICE = typeof SUPERSET_GOALS_SLICE;
 export const SUPERSET_TASKS_SLICE = 4;
 export type SUPERSET_TASKS_SLICE = typeof SUPERSET_TASKS_SLICE;
 
-export const SUPERSET_PLAN_HIERARCHY_SLICE = 5;
-
 /** Do you want to enable team assignment? */
 export const ENABLE_ASSIGN = true;
 
@@ -158,3 +156,5 @@ export const ENABLE_MDA_POINT = true;
 export const SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE = '01';
 
 export const SHOW_MDA_SCHOOL_REPORT_LABEL = true;
+
+export const HIDDEN_MAP_LEGEND_ITEMS = [];

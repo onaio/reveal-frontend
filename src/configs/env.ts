@@ -12,6 +12,10 @@ export type LANGUAGE = typeof LANGUAGE;
 export const DOMAIN_NAME = process.env.REACT_APP_DOMAIN_NAME || 'http://localhost:3000';
 export type DOMAIN_NAME = typeof DOMAIN_NAME;
 
+/** Sentry */
+export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN || '';
+export type SENTRY_DSN = typeof SENTRY_DSN;
+
 /** The Tracking Code for google analytics */
 export const GA_CODE = process.env.REACT_APP_GA_CODE || '';
 export type GA_CODE = typeof GA_CODE;
@@ -133,10 +137,6 @@ export type SUPERSET_PLANS_TABLE_SLICE = typeof SUPERSET_PLANS_TABLE_SLICE;
 export const SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE =
   process.env.REACT_APP_SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE || '0';
 export type SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE = typeof SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE;
-
-export const SUPERSET_PLAN_HIERARCHY_SLICE =
-  process.env.REACT_APP_SUPERSET_PLAN_HIERARCHY_SLICE || '0';
-export type SUPERSET_PLAN_HIERARCHY_SLICE = typeof SUPERSET_PLAN_HIERARCHY_SLICE;
 
 export const SUPERSET_MDA_POINT_REPORTING_PLANS_SLICE =
   process.env.REACT_APP_SUPERSET_MDA_POINT_REPORTING_PLANS_SLICE || '0';
@@ -343,3 +343,8 @@ export const ENABLE_POPULATION_SERVER_SETTINGS =
 export type ENABLE_POPULATION_SERVER_SETTINGS = typeof ENABLE_POPULATION_SERVER_SETTINGS;
 export const ENABLE_PLANNING = process.env.REACT_APP_ENABLE_PLANNING === 'true';
 export type ENABLE_PLANNING = typeof ENABLE_PLANNING;
+
+export const HIDDEN_MAP_LEGEND_ITEMS = String(
+  process.env.REACT_APP_HIDDEN_MAP_LEGEND_ITEMS || ' '
+).split(',');
+export type HIDDEN_MAP_LEGEND_ITEMS = typeof HIDDEN_MAP_LEGEND_ITEMS;

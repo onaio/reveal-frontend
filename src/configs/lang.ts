@@ -671,11 +671,20 @@ export const COULD_NOT_LOAD_ASSIGNMENTS = translate(
 );
 export const COULD_NOT_LOAD_TEAMS = translate('COULD_NOT_LOAD_TEAMS', 'Unable to load teams');
 export const COULD_NOT_LOAD_PLAN = translate('COULD_NOT_LOAD_PLAN', 'Unable to load plan');
+export const COULD_NOT_LOAD_CHILDREN = translate(
+  'COULD_NOT_LOAD_CHILDREN',
+  'Could not load children'
+);
+export const COULD_NOT_LOAD_PARENTS = translate('COULD_NOT_LOAD_PARENTS', 'Could not load parents');
 export const AN_ERROR_OCURRED = translate(
   'AN_ERROR_OCURRED',
   'An error ocurred. Please try and refresh the page.'
 );
 export const THE_SPECIFIC_ERROR_IS = translate('THE_SPECIFIC_ERROR_IS', 'The specific error is');
+export const FALLBACK_CUSTOM_ERROR_MESSAGE = translate(
+  'FALLBACK_CUSTOM_ERROR_MESSAGE',
+  `There has been an error. It’s been reported to the site administrators via email and should be fixed shortly. Thanks for your patience.`
+);
 
 export const SERVER_SETTINGS = translate('SERVER_SETTINGS', 'Server Settings');
 export const SEARCH_LABEL = translate('SEARCH_LABEL', 'Search');
@@ -723,3 +732,10 @@ export const JURISDICTION_ASSIGNMENT_SUCCESSFUL = translate(
   'JURISDICTION_ASSIGNMENT_SUCCESSFUL',
   'Jurisdiction(s) assigned to plan successfully'
 );
+
+export const SELECTED_JURISDICTIONS = translate('SELECTED_JURISDICTIONS', 'Selected Jurisdictions');
+export const GOAL_LABEL = translate('GOAL_LABEL', 'Goal');
+export const EXPRESSION_LABEL = translate('EXPRESSION_LABEL', 'Expression');
+export const TRIGGERS_LABEL = translate('TRIGGERS_LABEL', 'Triggers');
+export const CONDITIONS_LABEL = translate('CONDITIONS_LABEL', 'Triggers');
+export const DEFINITION_URI = translate('DEFINITION_URI', 'Definition Uri');

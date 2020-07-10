@@ -1127,6 +1127,10 @@
     "message": "An error ocurred. Please try and refresh the page.",
     "description": "Generic error message"
   },
+  "FALLBACK_CUSTOM_ERROR_MESSAGE": {
+    "message": "There has been an error. It’s been reported to the site administrators via email and should be fixed shortly. Thanks for your patience.",
+    "description": "Error message displayed when application encounters internal error"
+  },
   "SERVER_SETTINGS": {
     "message": "Server Settings",
     "description": "label: server settings"
@@ -1154,5 +1158,25 @@
   "INHERIT_SETTING_LABEL": {
     "message": "Inherit setting",
     "description": "settings inherited from"
+  },
+  "GOAL_LABEL": {
+    "message": "Goal",
+    "description": "label, column header: goal"
+  },
+  "EXPRESSION_LABEL": {
+    "message": "Expression",
+    "description": "label, column header: name expression"
+  },
+  "TRIGGERS_LABEL": {
+    "message": "Triggers",
+    "description": "label, column header: Triggers"
+  },
+  "CONDITIONS_LABEL": {
+    "message": "Conditions",
+    "description": "label, column header: name Conditions"
+  },
+  "DEFINITION_URI": {
+    "message": "Definition Uri",
+    "description": "label, column header: name Definition Uri"
   }
 }
