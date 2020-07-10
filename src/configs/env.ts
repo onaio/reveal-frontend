@@ -12,6 +12,10 @@ export type LANGUAGE = typeof LANGUAGE;
 export const DOMAIN_NAME = process.env.REACT_APP_DOMAIN_NAME || 'http://localhost:3000';
 export type DOMAIN_NAME = typeof DOMAIN_NAME;
 
+/** Sentry */
+export const SENTRY_DSN = process.env.REACT_APP_SENTRY_DSN || '';
+export type SENTRY_DSN = typeof SENTRY_DSN;
+
 /** The Tracking Code for google analytics */
 export const GA_CODE = process.env.REACT_APP_GA_CODE || '';
 export type GA_CODE = typeof GA_CODE;
