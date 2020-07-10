@@ -187,6 +187,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         if (apiResponse.value) {
           const responseData = apiResponse.value;
           treeFetchedCreator(responseData);
+          // TODO: should this be in both this useEffect and the next one?
           autoSelectNodesCreator(rootJurisdictionId, callback);
           setLoading(false);
         }
@@ -202,6 +203,8 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
 
   React.useEffect(() => {
     if (leafNodes.length && !isLeafNodesLoaded) {
+      // TODO: should this be in both this useEffect and the previous one?
+      autoSelectNodesCreator(rootJurisdictionId, callback);
       setLeafNodeLoaded(true);
     }
   }, [leafNodes]);
