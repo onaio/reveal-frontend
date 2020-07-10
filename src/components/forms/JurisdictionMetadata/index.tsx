@@ -18,7 +18,19 @@ import {
   UPLOAD_FILE,
   UPLOADING,
 } from '../../../configs/lang';
-import { HOME_URL, OPENSRP_V1_SETTINGS_ENDPOINT } from '../../../constants';
+import {
+  APPLICATION_CSV,
+  APPLICATION_VND_EXCEL,
+  APPLICATION_X_CSV,
+  HOME_URL,
+  OPENSRP_V1_SETTINGS_ENDPOINT,
+  TEXT_COMMA_SEPARATED_VALUES,
+  TEXT_CSV,
+  TEXT_PLAIN,
+  TEXT_TAB_SEPARATED_VALUES,
+  TEXT_X_COMMA_SEPARATED_VALUES,
+  TEXT_X_CSV,
+} from '../../../constants';
 import {
   creatSettingsPayloads,
   growl,
@@ -27,7 +39,17 @@ import {
 } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 
-const SUPPORTED_FORMATS = ['text/csv'];
+const SUPPORTED_FORMATS = [
+  TEXT_CSV,
+  APPLICATION_CSV,
+  TEXT_PLAIN,
+  TEXT_X_CSV,
+  APPLICATION_VND_EXCEL,
+  APPLICATION_X_CSV,
+  TEXT_COMMA_SEPARATED_VALUES,
+  TEXT_X_COMMA_SEPARATED_VALUES,
+  TEXT_TAB_SEPARATED_VALUES,
+];
 
 /** yup validation schema for Jurisdiction Metadata Form input */
 export const JurisdictionSchema = Yup.object().shape({
@@ -144,9 +166,9 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
                 data-testid="file"
               />
               <ErrorMessage
-                name="csvFile"
+                name="csv"
                 component="small"
-                className="form-text text-danger name-error"
+                className="form-text text-danger csv-error"
               />
             </FormGroup>
             <hr className="mb-2" />
