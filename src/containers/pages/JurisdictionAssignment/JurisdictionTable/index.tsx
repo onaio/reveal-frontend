@@ -21,8 +21,8 @@ import {
   NO_ROWS_FOUND,
   RISK_LABEL,
   SAVE,
-  STATUS_SETTING,
   SELECTED_JURISDICTIONS,
+  STATUS_SETTING,
   STRUCTURES_COUNT,
   USER_CHANGE,
 } from '../../../../configs/lang';
@@ -289,7 +289,14 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       />,
     ];
   });
-  const headerItems = ['', NAME, RISK_LABEL, STATUS_SETTING, STRUCTURES_COUNT, SELECTED_JURISDICTIONS];
+  const headerItems = [
+    '',
+    NAME,
+    RISK_LABEL,
+    STATUS_SETTING,
+    STRUCTURES_COUNT,
+    SELECTED_JURISDICTIONS,
+  ];
   const tableClass = 'table table-bordered';
 
   /** on change handler attached to the parent checkbox
