@@ -13,6 +13,7 @@ import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  HIDDEN_MAP_LEGEND_ITEMS,
   SUPERSET_IRS_REPORTING_INDICATOR_ROWS,
   SUPERSET_IRS_REPORTING_INDICATOR_STOPS,
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES,
@@ -283,12 +284,18 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
             {indicatorStops && (
               <div className="mapLegend">
                 <h6>{LEGEND_LABEL}</h6>
-                {indicatorStops.map((stop, i) => (
-                  <div className="sidebar-legend-item" key={i}>
-                    <span className="sidebar-legend-color" style={{ backgroundColor: stop[1] }} />
-                    <span className="sidebar-legend-label">{stop[0]}</span>
-                  </div>
-                ))}
+                {indicatorStops.map(
+                  (stop, i) =>
+                    !HIDDEN_MAP_LEGEND_ITEMS.includes(stop[0]) && (
+                      <div className="sidebar-legend-item" key={i}>
+                        <span
+                          className="sidebar-legend-color"
+                          style={{ backgroundColor: stop[1] }}
+                        />
+                        <span className="sidebar-legend-label">{stop[0]}</span>
+                      </div>
+                    )
+                )}
                 <hr />
               </div>
             )}

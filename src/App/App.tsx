@@ -2,6 +2,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import {
   faCog,
+  faDownload,
   faExternalLinkSquareAlt,
   faMap,
   faSearch,
@@ -43,6 +44,7 @@ import '@onaio/drill-down-table/dist/table.css';
 import { Footer } from '../components/page/Footer';
 import {
   ACTIVE_IRS_PLAN_URL,
+  ASSIGN_JURISDICTIONS_URL,
   ASSIGN_PLAN_URL,
   ASSIGN_PRACTITIONERS_URL,
   BACKEND_CALLBACK_PATH,
@@ -54,6 +56,7 @@ import {
   DRAFT_IRS_PLAN_URL,
   EDIT_ORGANIZATION_URL,
   EDIT_PRACTITIONER_URL,
+  EDIT_SERVER_SETTINGS_URL,
   FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
@@ -61,39 +64,54 @@ import {
   GA_ENV_TEST,
   HOME_URL,
   INTERVENTION_IRS_DRAFTS_URL,
+  JSON_VALIDATORS_URL,
+  JURISDICTION_METADATA_URL,
   LOGOUT_URL,
+  MANIFEST_FILE_UPLOAD,
+  MANIFEST_RELEASE_URL,
   MAP,
   MDA_POINT_LOCATION_REPORT_URL,
   NEW_IRS_PLAN_URL,
   NEW_PLAN_URL,
+  NEW_PLANNING_PLAN_URL,
   ORGANIZATIONS_LIST_URL,
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
+  PLANNING_VIEW_URL,
   PRACTITIONERS_LIST_URL,
   REACT_CALLBACK_PATH,
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
   SINGLE_ORGANIZATION_URL,
-  UPLOAD_JURISDICTION_METADATA_URL,
+  VIEW_DRAFT_FILES_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
+import { JSONValidatorListPage } from '../containers/pages/ConfigForm/JSONValidators';
+import { ManifestDraftFilesPage } from '../containers/pages/ConfigForm/manifest/draftFiles';
+import { ManifestFiles } from '../containers/pages/ConfigForm/manifest/filesList';
+import { ManifestReleasesPage } from '../containers/pages/ConfigForm/manifest/releases';
+import ConnectedUploadConfigFilePage from '../containers/pages/ConfigForm/manifest/uploadFile';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
 import FIJurisdiction from '../containers/pages/FocusInvestigation/jurisdiction';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
 import ConnectedPlanCompletion from '../containers/pages/FocusInvestigation/map/planCompletion';
 import Home from '../containers/pages/Home/Home';
-import IrsPlans from '../containers/pages/InterventionPlan/IRS';
-import IrsPlan from '../containers/pages/InterventionPlan/IRS/plan';
-import NewPlan from '../containers/pages/InterventionPlan/NewPlan/General';
-import NewIRSPlan from '../containers/pages/InterventionPlan/NewPlan/IRS';
+import IrsPlan from '../containers/pages/InterventionPlan/IRSPlan';
+import BaseNewPlan, {
+  NewIRSPlan,
+  NewPlanForPlanning,
+} from '../containers/pages/InterventionPlan/NewPlan/General';
 import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
+import { DraftPlans } from '../containers/pages/InterventionPlan/PlanningView/DraftPlans';
+import { IRSPlans } from '../containers/pages/InterventionPlan/PlanningView/IRSPlans';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import ConnectedIRSAssignmentPlansList from '../containers/pages/IRS/assignments';
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/JurisdictionAssignmentView';
 import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
 import ConnectedClientListView from '../containers/pages/MDAPoint/ClientListView';
 import ConnectedMdaPointJurisdictionReport from '../containers/pages/MDAPoint/jurisdictionsReport';
@@ -103,14 +121,25 @@ import ConnectedAssignPractitioner from '../containers/pages/OrganizationViews/A
 import ConnectedCreateEditOrgView from '../containers/pages/OrganizationViews/CreateEditOrgView';
 import ConnectedOrgsListView from '../containers/pages/OrganizationViews/OrganizationListView';
 import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/SingleOrganizationView';
+import { ConnectedPlanAssignment } from '../containers/pages/PlanAssignment';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
+import { EditServerSettings } from '../containers/pages/ServerSettings/EditSettings';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 import store from '../store';
 import { getOauthProviderState } from '../store/selectors';
 import './App.css';
 
-library.add(faExternalLinkSquareAlt, faSearch, faSlidersH, faCog, faMap, faUser, faTextHeight);
+library.add(
+  faDownload,
+  faExternalLinkSquareAlt,
+  faSearch,
+  faSlidersH,
+  faCog,
+  faMap,
+  faUser,
+  faTextHeight
+);
 
 toast.configure({
   autoClose: TOAST_AUTO_CLOSE_DELAY /** defines how long a toast remains visible on screen */,
@@ -181,7 +210,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={INTERVENTION_IRS_DRAFTS_URL}
-                  component={IrsPlans}
+                  component={IRSPlans}
                 />
                 {/* New IRS Plan form view */}
                 <ConnectedPrivateRoute
@@ -266,7 +295,7 @@ const App = (props: AppProps) => {
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedIRSReportingMap}
                 />
-                {/* IRS Assignment views */}
+                {/* Plan Assignment views for Plan */}
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
@@ -274,12 +303,20 @@ const App = (props: AppProps) => {
                   path={`${ASSIGN_PLAN_URL}`}
                   component={ConnectedIRSAssignmentPlansList}
                 />
+                {/* Plan assignment views for Plan & Jurisdictions */}
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${ASSIGN_PLAN_URL}/:id`}
-                  component={IrsPlan}
+                  path={`${ASSIGN_PLAN_URL}/:planId`}
+                  component={ConnectedPlanAssignment}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${ASSIGN_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedPlanAssignment}
                 />
                 {/* Focus Investigation Reporting list view */}
                 <ConnectedPrivateRoute
@@ -334,7 +371,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={NEW_PLAN_URL}
-                  component={NewPlan}
+                  component={BaseNewPlan}
                 />
                 {/* Edit Focus Investigation Plan form view */}
                 <ConnectedPrivateRoute
@@ -432,13 +469,99 @@ const App = (props: AppProps) => {
                   path={`${ASSIGN_PRACTITIONERS_URL}/:id`}
                   component={ConnectedAssignPractitioner}
                 />
+                {/** form config views */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={MANIFEST_RELEASE_URL}
+                  component={ManifestReleasesPage}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${MANIFEST_RELEASE_URL}/:id`}
+                  component={ManifestFiles}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={JSON_VALIDATORS_URL}
+                  component={JSONValidatorListPage}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${MANIFEST_FILE_UPLOAD}/:type`}
+                  component={ConnectedUploadConfigFilePage}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${MANIFEST_FILE_UPLOAD}/:type/:id`}
+                  component={ConnectedUploadConfigFilePage}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={VIEW_DRAFT_FILES_URL}
+                  component={ManifestDraftFilesPage}
+                />
                 {/* Upload Jurisdiction Metadata view */}
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={UPLOAD_JURISDICTION_METADATA_URL}
+                  path={JURISDICTION_METADATA_URL}
                   component={JurisdictionMetadata}
+                />
+                {/* server settings - Editing population characteristics */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={EDIT_SERVER_SETTINGS_URL}
+                  component={EditServerSettings}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={PLANNING_VIEW_URL}
+                  component={DraftPlans}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={NEW_PLANNING_PLAN_URL}
+                  component={NewPlanForPlanning}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
+                  component={ConnectedJurisdictionAssignmentView}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId`}
+                  component={ConnectedJurisdictionAssignmentView}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${ASSIGN_JURISDICTIONS_URL}/:planId`}
+                  component={ConnectedJurisdictionAssignmentView}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route

@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanAssignment/JurisdictionCell renders leaf nodes: Leaf node 1`] = `
+<span
+  key="fca0d71d-0410-45d3-8305-a9f092a150b8-span"
+>
+  ra_ksh_2
+</span>
+`;
+
+exports[`PlanAssignment/JurisdictionCell renders leaf non-leaf nodes: Non-Leaf node 1`] = `
+<Link
+  key="cec79f21-33c3-43f5-a8af-59a47aa61b84-link"
+  replace={false}
+  to="/cec79f21-33c3-43f5-a8af-59a47aa61b84"
+>
+  <a
+    href="/cec79f21-33c3-43f5-a8af-59a47aa61b84"
+    onClick={[Function]}
+  >
+    ra Luapula
+  </a>
+</Link>
+`;

@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanAssignment/AssignedOrgs renders when limit greater than orgs: Org names 1`] = `
+<span
+  id="org-span-42"
+>
+  The Luang, Demo Team, Takang 1
+</span>
+`;
+
+exports[`PlanAssignment/AssignedOrgs renders when limit lower than orgs: Org names 1`] = `
+<span
+  id="org-tooltip-42"
+>
+  The Luang, Demo Team and 1 more
+</span>
+`;
+
+exports[`PlanAssignment/AssignedOrgs renders when no orgs: Org names 1`] = `null`;

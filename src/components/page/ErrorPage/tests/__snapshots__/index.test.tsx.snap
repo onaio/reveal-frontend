@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/pages/errorPage renders correctly with props: default props 1`] = `
+<ErrorPage
+  errorMessage="Something is about to hit the fan"
+>
+  <div
+    className="global-error-container"
+  >
+    <p>
+      An error ocurred. Please try and refresh the page.
+    </p>
+    <p>
+      The specific error is
+      : 
+      <span
+        className="text-danger"
+      >
+        Something is about to hit the fan
+      </span>
+    </p>
+  </div>
+</ErrorPage>
+`;
+
+exports[`src/components/pages/errorPage renders correctly: default props 1`] = `
+<ErrorPage
+  errorMessage=""
+>
+  <div
+    className="global-error-container"
+  >
+    <p>
+      An error ocurred. Please try and refresh the page.
+    </p>
+  </div>
+</ErrorPage>
+`;

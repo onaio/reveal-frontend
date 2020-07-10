@@ -4,6 +4,7 @@ import { mount, ReactWrapper, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { cloneDeep } from 'lodash';
 import React from 'react';
+import { MemoryRouter } from 'react-router-dom';
 import PlanForm, { propsForUpdatingPlans } from '..';
 import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
@@ -23,12 +24,20 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders without crashing', () => {
-    shallow(<PlanForm />);
+    shallow(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
   });
 
   it('renders correctly', () => {
     fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
     expect(toJson(wrapper.find('#interventionType select'))).toMatchSnapshot(
       'interventionType field'
     );
@@ -61,6 +70,10 @@ describe('containers/forms/PlanForm', () => {
     expect(wrapper.find('#jurisdictions-select-container').length).toEqual(1);
     expect(wrapper.find('#jurisdictions-display-container').length).toEqual(0);
 
+    // should not have triggers or conditions
+    expect(wrapper.find('.triggers-fieldset').length).toEqual(0);
+    expect(wrapper.find('.conditions-fieldset').length).toEqual(0);
+
     // if you set fiReason to case triggered then caseNum and opensrpEventId are now rendered
     wrapper
       .find('#fiReason select')
@@ -80,8 +93,42 @@ describe('containers/forms/PlanForm', () => {
     wrapper.unmount();
   });
 
+  it('renders dynamic plans correctly', () => {
+    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
+    wrapper
+      .find('#interventionType select')
+      .simulate('change', { target: { value: 'Dynamic-IRS', name: 'interventionType' } });
+
+    expect(toJson(wrapper.find('.triggers-fieldset legend'))).toMatchSnapshot('triggers legends');
+    expect(toJson(wrapper.find('.trigger-group label'))).toMatchSnapshot('triggers labels');
+    expect(toJson(wrapper.find('.triggers-fieldset input'))).toMatchSnapshot('triggers inputs');
+    expect(toJson(wrapper.find('.triggers-fieldset textarea'))).toMatchSnapshot(
+      'triggers textareas'
+    );
+
+    expect(toJson(wrapper.find('.conditions-fieldset legend'))).toMatchSnapshot(
+      'conditions legends'
+    );
+    expect(toJson(wrapper.find('.condition-group label'))).toMatchSnapshot('conditions labels');
+    expect(toJson(wrapper.find('.conditions-fieldset input'))).toMatchSnapshot('conditions inputs');
+    expect(toJson(wrapper.find('.conditions-fieldset textarea'))).toMatchSnapshot(
+      'conditions textareas'
+    );
+
+    wrapper.unmount();
+  });
+
   it('renders activity fields correctly', () => {
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
 
     function checkActivities(num: number, name: string = 'FI') {
       // FI activities by default
@@ -180,7 +227,11 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders jurisdictions fields correctly', () => {
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
 
     function checkJurisdtictions(num: number) {
       // FI activities by default
@@ -439,7 +490,11 @@ describe('containers/forms/PlanForm - Edit', () => {
 
 describe('containers/forms/PlanForm - Submission', () => {
   it('Form validation works', async () => {
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
 
     // no errors are initially shown
     expect(
@@ -528,7 +583,7 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     // interventionType should be as expected
     expect(wrapper.find('small.interventionType-error').text()).toEqual(
-      'interventionType must be one of the following values: FI, IRS, MDA, MDA-Point'
+      'interventionType must be one of the following values: Dynamic-FI, Dynamic-IRS, Dynamic-MDA, FI, IRS, MDA, MDA-Point'
     );
 
     // Set FI for interventionType field value so that we can test the other fields
@@ -589,8 +644,32 @@ describe('containers/forms/PlanForm - Submission', () => {
     // nice, eh?
   });
 
+  it('Location field does not fires errors all time', async () => {
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
+    // no location error when other fields change
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'MDA-Point' } });
+    wrapper.update();
+    expect(wrapper.find('small.jurisdictions-error').length).toBeFalsy();
+    // error on submit when field not filled
+    wrapper.find('form').simulate('submit');
+    await new Promise<any>(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    expect(wrapper.find('small.jurisdictions-error').text()).toEqual('An Error Ocurred');
+  });
+
   it('Form validation works for activity fields', async () => {
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
 
     // no errors are initially present
     expect(
@@ -674,7 +753,11 @@ describe('containers/forms/PlanForm - Submission', () => {
   });
 
   it('Auto-setting name and title field values works', async () => {
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
     // Set IRS for interventionType
     wrapper
       .find('select[name="interventionType"]')
@@ -736,7 +819,11 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
 
-    const wrapper = mount(<PlanForm />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
 
     // Set FI for interventionType
     wrapper
@@ -817,6 +904,46 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     const payload = {
       ...generatePlanDefinition(getPlanFormValues(plans[1])),
+      version: 2,
+    };
+
+    // the last request should be the one that is sent to OpenSRP
+    expect(fetch.mock.calls.pop()).toEqual([
+      'https://test.smartregister.org/opensrp/rest/plans',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        body: JSON.stringify(payload),
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer hunter2',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'PUT',
+      },
+    ]);
+  });
+
+  it('Form submission for dynamic plans works', async () => {
+    // ensure that we are logged in so that we can get the OpenSRP token from Redux
+    const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
+    store.dispatch(authenticateUser(authenticated, user, extraData));
+
+    fetch.mockResponseOnce(JSON.stringify({}));
+
+    const props = {
+      ...propsForUpdatingPlans(),
+      initialValues: getPlanFormValues(plans[5]),
+    };
+    const wrapper = mount(<PlanForm {...props} />);
+
+    wrapper.find('form').simulate('submit');
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    const payload = {
+      ...generatePlanDefinition(getPlanFormValues(plans[5])),
       version: 2,
     };
 

@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanAssignment/JurisdictionAssignmentForm form errors as expected: Form error 1`] = `
+<p
+  className="form-text text-danger assignments-error"
+>
+  OpenSRPService create on organization/assignLocationsAndPlans failed, HTTP status 400
+</p>
+`;
+
+exports[`PlanAssignment/JurisdictionAssignmentForm renders without crashing 1`] = `
+Object {
+  "children": undefined,
+  "className": "form-control",
+  "defaultValue": Array [
+    Object {
+      "label": "Team X",
+      "value": "x",
+    },
+  ],
+  "field": Object {
+    "name": "organizations",
+    "onBlur": [Function],
+    "onChange": [Function],
+    "value": Array [
+      "x",
+    ],
+  },
+  "form": Any<Object>,
+  "options": Array [
+    Object {
+      "label": "Team X",
+      "value": "x",
+    },
+    Object {
+      "label": "Team Y",
+      "value": "y",
+    },
+  ],
+}
+`;
+
+exports[`PlanAssignment/JurisdictionAssignmentForm renders without crashing: Submit buttons 1`] = `
+Array [
+  <button
+    aria-label={null}
+    className="btn-block cancel btn btn-secondary btn-sm"
+    onClick={[Function]}
+    type="button"
+  >
+    Close
+  </button>,
+  <button
+    aria-label={null}
+    className="btn-block submit btn btn-primary btn-sm"
+    disabled={false}
+    onClick={[Function]}
+    type="submit"
+  >
+    Save
+  </button>,
+]
+`;
+
+exports[`PlanAssignment/JurisdictionAssignmentForm shows error if no plan or jurisdiction: no plan or jurisdiction 1`] = `
+<span>
+  Could not load the form.
+</span>
+`;

@@ -1,0 +1,65 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/ConfigForm/manifest/draftFiles renders draft files table correctly 1`] = `
+Object {
+  "LoadingComponent": <Ripple
+    borderColor="#ff5d00"
+    borderStyle="solid"
+    borderWidth="4px"
+    height="64px"
+    minHeight="80vh"
+    width="64px"
+  />,
+  "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
+  "clearDraftFiles": [Function],
+  "createdAt": "Created at",
+  "customAlert": [Function],
+  "data": Array [
+    Object {
+      "createdAt": "Jun 19, 2020, 4:23:22 PM",
+      "form_relation": "",
+      "id": "53",
+      "identifier": "reveal-test-file.json",
+      "isDraft": true,
+      "isJsonValidator": false,
+      "jursdiction": "",
+      "label": "test publish",
+      "module": "",
+      "version": "1.0.27",
+    },
+    Object {
+      "createdAt": "Jun 19, 2020, 12:31:37 PM",
+      "form_relation": "",
+      "id": "52",
+      "identifier": "test-form-1.json",
+      "isDraft": true,
+      "isJsonValidator": false,
+      "jursdiction": "",
+      "label": "test form",
+      "module": "",
+      "version": "1.0.26",
+    },
+  ],
+  "debounceTime": 1000,
+  "downloadEndPoint": "clientForm",
+  "downloadLabel": "Download",
+  "drillDownProps": Object {
+    "paginate": false,
+    "renderNullDataComponent": [Function],
+  },
+  "endpoint": "clientForm/metadata",
+  "fetchDraftFiles": [Function],
+  "fileNameLabel": "File Name",
+  "fileVersionLabel": "File Version",
+  "formUploadUrl": "/manifest",
+  "getPayload": [Function],
+  "identifierLabel": "Identifier",
+  "makeReleaseLabel": "Make Release",
+  "manifestEndPoint": "manifest",
+  "moduleLabel": "Module",
+  "placeholder": "Find Draft Files",
+  "releasesUrl": "/manifest/releases",
+  "uploadFileLabel": "Upload New File",
+  "uploadTypeUrl": "file-upload",
+}
+`;
