@@ -397,6 +397,10 @@ export const getAllSelectedNodes = () =>
     return nodesList;
   });
 
+/** returns an array of all leaf nodes for a particular jurisdiction
+ * @param state - the store
+ * @param props -  the filterProps
+ */
 export const getLeafNodes = () =>
   createSelector(getTreeById(), tree => {
     const nodesList: TreeNode[] = [];
