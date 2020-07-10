@@ -87,11 +87,19 @@ import {
 /** Array of FI Statuses */
 export const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStatusType);
 
+/** intervention types on which to show action.definitionUri form */
+export const showDefinitionUriFor = [
+  InterventionType.DynamicFI,
+  InterventionType.DynamicIRS,
+  InterventionType.DynamicMDA,
+];
+
 /** Yup validation schema for PlanForm */
 export const PlanSchema = Yup.object().shape({
   activities: Yup.array().of(
     Yup.object().shape({
       actionCode: Yup.string().oneOf(PlanActionCodes.map(e => e)),
+      actionDefinitionUri: Yup.string(),
       actionDescription: Yup.string().required(REQUIRED),
       actionIdentifier: Yup.string(),
       actionReason: Yup.string()
@@ -172,6 +180,7 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
     ...(condition.length > 0 && { condition }),
     ...(trigger.length > 0 && { trigger }),
     actionCode: activityObj.action.code,
+    actionDefinitionUri: activityObj.action.definitionUri || '',
     actionDescription: activityObj.action.description || '',
     actionIdentifier: activityObj.action.identifier || '',
     actionReason: activityObj.action.reason || '',

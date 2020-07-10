@@ -13,9 +13,8 @@ import {
   getGoalUnitFromActionCode,
   getNameTitle,
   getPlanFormValues,
-  PlanFormFields,
 } from '../helpers';
-import { GoalUnit, PlanActionCodesType, PlanActivities } from '../types';
+import { GoalUnit, PlanActionCodesType, PlanActivities, PlanFormFields } from '../types';
 import {
   activities,
   event,
@@ -124,6 +123,7 @@ describe('containers/forms/PlanForm/helpers', () => {
 
   it('getPlanFormValues can get original planForm', () => {
     const planForm = planFormValues as PlanFormFields;
+    planForm.activities[0].actionDefinitionUri = '';
 
     const generatedPlan = generatePlanDefinition(planForm);
     const generatedPlanForm = getPlanFormValues(generatedPlan);
