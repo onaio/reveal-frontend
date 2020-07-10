@@ -17,6 +17,7 @@ import {
   NO_DATA_FOUND,
   NO_ROWS_FOUND,
   SAVE,
+  SELECTED_JURISDICTIONS,
   STRUCTURES_COUNT,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
@@ -46,6 +47,7 @@ import hierarchyReducer, {
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { InterventionType } from '../../../../store/ducks/plans';
+import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
 
@@ -207,7 +209,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     currentPage,
     pages,
   };
-
   const data = currentChildren.map(node => {
     return [
       <input
@@ -226,9 +227,15 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
       node.model.node.attributes.structureCount,
+      <ConnectedSelectedJurisdictionsCount
+        key={`selected-jurisdictions-txt`}
+        parentNode={node}
+        id={node.model.id}
+        jurisdictions={selectedLeafNodes}
+      />,
     ];
   });
-  const headerItems = ['', NAME, STRUCTURES_COUNT];
+  const headerItems = ['', NAME, STRUCTURES_COUNT, SELECTED_JURISDICTIONS];
   const tableClass = 'table table-bordered';
 
   /** on change handler attached to the parent checkbox
@@ -259,6 +266,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           </th>
           <th style={{ width: '70%' }}>{headerItems[1]}</th>
           <th>{headerItems[2]}</th>
+          <th>{headerItems[3]}</th>
         </tr>
       </thead>
     );
