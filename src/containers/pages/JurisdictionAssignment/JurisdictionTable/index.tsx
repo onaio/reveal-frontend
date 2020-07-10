@@ -22,11 +22,12 @@ import {
   RISK_LABEL,
   SAVE,
   STATUS_SETTING,
+  SELECTED_JURISDICTIONS,
   STRUCTURES_COUNT,
   USER_CHANGE,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
+import { ASSIGN_JURISDICTIONS_URL, INTERVENTION_TYPE_CODE } from '../../../../constants';
 import {
   LoadOpenSRPHierarchy,
   putJurisdictionsToPlan,
@@ -53,6 +54,8 @@ import hierarchyReducer, {
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
+import { InterventionType } from '../../../../store/ducks/plans';
+import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
 
@@ -125,9 +128,27 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     }
   }
 
+  /** function for determining whether the jurisdiction assignment table allows for
+   * multiple selection or single selection based on the plan intervention type
+   */
+  const isSingleSelect = () => {
+    const interventionType = plan.useContext.find(
+      element => element.code === INTERVENTION_TYPE_CODE
+    );
+    if (
+      interventionType &&
+      (interventionType.valueCodableConcept === InterventionType.FI ||
+        interventionType.valueCodableConcept === InterventionType.DynamicFI)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const [loading, setLoading] = React.useState<boolean>(true);
   const [isLeafNodesLoaded, setLeafNodeLoaded] = React.useState<boolean>(false);
-
+  const [singleSelect] = React.useState<boolean>(isSingleSelect);
   const { broken, errorMessage, handleBrokenPage } = useHandleBrokenPage();
   const baseUrl = `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
   const jurisdictionMetaIds: string[] = jurisdictionsMetadata.map(meta => meta.key);
@@ -237,6 +258,10 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         key={`${node.model.id}-check-jurisdiction`}
         type="checkbox"
         checked={nodeIsSelected(node)}
+        disabled={
+          singleSelect &&
+          (node.hasChildren() || (selectedLeafNodes.length > 0 && !nodeIsSelected(node)))
+        }
         // tslint:disable-next-line: jsx-no-lambda
         onChange={e => {
           const newSelectedValue = e.target.checked;
@@ -256,9 +281,15 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           : USER_CHANGE
         : '',
       node.model.node.attributes.structureCount,
+      <ConnectedSelectedJurisdictionsCount
+        key={`selected-jurisdictions-txt`}
+        parentNode={node}
+        id={node.model.id}
+        jurisdictions={selectedLeafNodes}
+      />,
     ];
   });
-  const headerItems = ['', NAME, RISK_LABEL, STATUS_SETTING, STRUCTURES_COUNT];
+  const headerItems = ['', NAME, RISK_LABEL, STATUS_SETTING, STRUCTURES_COUNT, SELECTED_JURISDICTIONS];
   const tableClass = 'table table-bordered';
 
   /** on change handler attached to the parent checkbox
@@ -283,6 +314,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
             <input
               type="checkbox"
               checked={checkParentCheckbox(currentParentNode, currentChildren)}
+              disabled={singleSelect}
               onChange={onParentCheckboxClick}
             />
           </th>
@@ -290,6 +322,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           <th>{headerItems[2]}</th>
           <th>{headerItems[3]}</th>
           <th>{headerItems[4]}</th>
+          <th>{headerItems[5]}</th>
         </tr>
       </thead>
     );

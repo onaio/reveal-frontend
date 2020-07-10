@@ -236,6 +236,8 @@ export interface Filters {
   nodeId?: string /** target node with this id */;
   leafNodesOnly?: boolean /** specified when requesting for selected nodes, truthy returns leaf nodes */;
   currentParentId?: string /** to use when filtering current children */;
+  selectedLeafNodes?: TreeNode[] /** to use when filtering from the selected leaves */;
+  parentNode?: TreeNode /** to use when filtering from the selected leaves */;
 }
 
 /** retrieve the rootJurisdiction value
@@ -416,3 +418,47 @@ export const getLeafNodes = () =>
     });
     return nodesList;
   });
+
+/** retrieve the parent node value
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getParentNode = (_: Partial<Store>, props: Filters) => props.parentNode;
+
+/** retrieve the leaf nodes only value
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getSelectedLeafNodes = (_: Partial<Store>, props: Filters) => props.selectedLeafNodes;
+
+/** returns an array of all the selected nodes from a specified node on the tree
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getSelectedNodesUnderParentNode = () =>
+  createSelector(
+    getParentNode,
+    getSelectedLeafNodes,
+    (tree: TreeNode | undefined, selectedLeafNodes: TreeNode[] | undefined): TreeNode[] => {
+      const nodesList: TreeNode[] = [];
+      if (!tree) {
+        if (!selectedLeafNodes) {
+          return nodesList;
+        }
+        return nodesList;
+      }
+
+      if (selectedLeafNodes) {
+        tree.walk(node => {
+          selectedLeafNodes.forEach(leaf => {
+            if (leaf.model.id === node.model.id) {
+              nodesList.push(leaf);
+            }
+          });
+          return true;
+        });
+      }
+
+      return nodesList;
+    }
+  );
