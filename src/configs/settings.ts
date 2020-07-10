@@ -699,7 +699,7 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-            description: 'Register structure Event submitted for a residential structure',
+            description: 'Register structure event submitted for a residential structure',
             expression:
               "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
           },
@@ -727,7 +727,8 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-            expression: "questionnaire = 'Family Registration'",
+            description: 'Trigger when a Family Registration event is submitted',
+            expression: "questionnaire = 'Family_Registration'",
           },
           name: 'event-submission',
           type: NAMED_EVENT_TRIGGER_TYPE,
@@ -791,8 +792,10 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
+            description:
+              'Trigger when a Family Registration or Family Member Registration event is submitted',
             expression:
-              "questionnaire = 'Family Registration' or questionnaire = 'Family Member Registration'",
+              "questionnaire = 'Family_Registration' or questionnaire = 'Family_Member_Registration'",
           },
           name: 'event-submission',
           type: NAMED_EVENT_TRIGGER_TYPE,
@@ -849,6 +852,7 @@ export const planActivities: PlanActivities = {
       trigger: [
         {
           expression: {
+            description: 'Trigger when a MDA Dispense event is submitted',
             expression: "questionnaire = 'mda_dispense'",
           },
           name: 'event-submission',
@@ -883,9 +887,9 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description:
-              'Person is older than 5 years or person associated with questionaire response if older than 5 years',
+              'Person or person associated with questionaire response is older than 5 years and younger than 14 years 11 months',
             expression:
-              "($this.is(FHIR.Patient) and $this.birthDate <= today() - 5 'years') or ($this.contained.where(Patient.birthDate <= today() - 5 'years').exists())",
+              "($this.is(FHIR.Patient) and $this.birthDate <= today() - 60 'months' and $this.birthDate >= today() - 179 'months') or ($this.contained.where(Patient.birthDate <= today() - 60 'months' and $this.birthDate >= today() - 179 'months').exists())",
             subjectCodableConcept: {
               text: 'Person',
             },
@@ -907,7 +911,7 @@ export const planActivities: PlanActivities = {
         end: '',
         start: '',
       },
-      title: MDA_POINT_DISPENSE_CODE,
+      title: 'Distribute Drugs',
       trigger: [
         {
           name: PLAN_ACTIVATION_TRIGGER_NAME,
@@ -915,8 +919,10 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
+            description:
+              'Trigger when a Family Registration or Family Member Registration event is submitted',
             expression:
-              "questionnaire = 'Family Registration' or questionnaire = 'Family Member Registration'",
+              "questionnaire = 'Family_Registration' or questionnaire = 'Family_Member_Registration'",
           },
           name: 'event-submission',
           type: NAMED_EVENT_TRIGGER_TYPE,
@@ -934,7 +940,7 @@ export const planActivities: PlanActivities = {
             detailQuantity: {
               comparator: '>=',
               unit: GoalUnit.PERCENT,
-              value: 100,
+              value: 75,
             },
           },
           due: '',
@@ -995,6 +1001,7 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
+            description: 'Trigger when a Register_Structure event is submitted',
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
@@ -1063,6 +1070,7 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
+            description: 'Trigger when a Register_Structure event is submitted',
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
@@ -1130,6 +1138,7 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
+            description: 'Trigger when a Register_Structure event is submitted',
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
@@ -1197,6 +1206,7 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
+            description: 'Trigger when a Register_Structure event is submitted',
             expression: "questionnaire = 'Register_Structure'",
           },
           name: 'event-submission',
@@ -1399,7 +1409,7 @@ export const planActivities: PlanActivities = {
             detailQuantity: {
               comparator: '>=',
               unit: GoalUnit.PERCENT,
-              value: 100,
+              value: 75,
             },
           },
           due: '',

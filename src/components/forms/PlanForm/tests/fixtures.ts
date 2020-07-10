@@ -49,6 +49,7 @@ const processActivity = (activityObj: PlanActivity) => {
       }),
     }),
     actionCode: activityObj.action.code,
+    actionDefinitionUri: activityObj.action.definitionUri || '',
     actionDescription: activityObj.action.description || '',
     actionIdentifier: activityObj.action.identifier || '',
     actionReason: activityObj.action.reason || '',
@@ -780,6 +781,7 @@ export const planFormValues2 = {
   activities: [
     {
       actionCode: 'Case Confirmation',
+      actionDefinitionUri: '',
       actionDescription: 'Confirm the index case',
       actionIdentifier: 'c711ae51-6432-4b68-84c3-d2b5b1fd1948',
       actionReason: 'Investigation',
@@ -793,6 +795,7 @@ export const planFormValues2 = {
     },
     {
       actionCode: 'RACD Register Family',
+      actionDefinitionUri: '',
       actionDescription:
         'Register all families & famiy members in all residential structures enumerated (100%) within the operational area',
       actionIdentifier: '402b8c13-6774-4515-929f-48e71a61a379',
@@ -808,6 +811,7 @@ export const planFormValues2 = {
     },
     {
       actionCode: 'Bednet Distribution',
+      actionDefinitionUri: '',
       actionDescription:
         'Visit 100% of residential structures in the operational area and provide nets',
       actionIdentifier: '1bd830ea-50e3-44dc-b855-9d5e9339e2be',
@@ -823,6 +827,7 @@ export const planFormValues2 = {
     },
     {
       actionCode: 'Blood Screening',
+      actionDefinitionUri: '',
       actionDescription:
         'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
       actionIdentifier: '2303a70e-4e3f-4fb9-a430-f0476010bfb5',
@@ -838,6 +843,7 @@ export const planFormValues2 = {
     },
     {
       actionCode: 'Larval Dipping',
+      actionDefinitionUri: '',
       actionDescription:
         'Perform a minimum of three larval dipping activities in the operational area',
       actionIdentifier: '2482dfd7-8284-43c6-bea1-a03dcda71ff4',
@@ -853,6 +859,7 @@ export const planFormValues2 = {
     },
     {
       actionCode: 'Mosquito Collection',
+      actionDefinitionUri: '',
       actionDescription:
         'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
       actionIdentifier: '423f6665-5367-40be-855e-7c5e6941a0c3',
@@ -868,6 +875,7 @@ export const planFormValues2 = {
     },
     {
       actionCode: 'BCC',
+      actionDefinitionUri: '',
       actionDescription: 'Conduct BCC activity',
       actionIdentifier: 'c8fc89a9-cdd2-4746-8272-650883ae380e',
       actionReason: 'Investigation',

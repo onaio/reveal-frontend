@@ -1,8 +1,10 @@
+import { Geometry } from '@turf/turf';
 import { TreeNode } from '../../store/ducks/opensrp/hierarchies/types';
 
 /** The shape of a jurisdiction received from the OpenSRP API */
 export interface OpenSRPJurisdiction {
   id: string;
+  geometry?: Geometry;
   properties: {
     code?: string;
     geographicLevel: number;

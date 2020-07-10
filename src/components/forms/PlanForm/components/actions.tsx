@@ -2,6 +2,7 @@ import { Dictionary } from '@onaio/utils';
 import { Field } from 'formik';
 import React from 'react';
 import { FormGroup, Label } from 'reactstrap';
+import { DESCRIPTION_LABEL, EXPRESSION_LABEL, NAME } from '../../../../configs/lang';
 import { PlanActivityFormFields } from '../types';
 
 /**
@@ -28,7 +29,7 @@ export const getConditionAndTriggers = (
             {item.expression && (
               <React.Fragment>
                 <Label for={`activities[${index}].condition[${mapIndex}].expression`} sm={2}>
-                  Condition
+                  {EXPRESSION_LABEL}
                 </Label>
                 <Field
                   className="form-control col-sm-10"
@@ -43,7 +44,7 @@ export const getConditionAndTriggers = (
             {item.description && (
               <React.Fragment>
                 <Label for={`activities[${index}].condition[${mapIndex}].description`} sm={2}>
-                  Description
+                  {DESCRIPTION_LABEL}
                 </Label>
                 <Field
                   className="form-control col-sm-10"
@@ -70,7 +71,7 @@ export const getConditionAndTriggers = (
             {item.name && (
               <React.Fragment>
                 <Label for={`activities[${index}].trigger[${mapIndex}].name`} sm={2}>
-                  Name
+                  {NAME}
                 </Label>
                 <Field
                   className="form-control col-sm-10"
@@ -83,10 +84,10 @@ export const getConditionAndTriggers = (
                 />
               </React.Fragment>
             )}
-            {item.description && (
+            {item.expression && (
               <React.Fragment>
                 <Label for={`activities[${index}].trigger[${mapIndex}].expression`} sm={2}>
-                  Condition
+                  {EXPRESSION_LABEL}
                 </Label>
                 <Field
                   className="form-control col-sm-10"
@@ -98,10 +99,10 @@ export const getConditionAndTriggers = (
                 />
               </React.Fragment>
             )}
-            {item.expression && (
+            {item.description && (
               <React.Fragment>
                 <Label for={`activities[${index}].trigger[${mapIndex}].description`} sm={2}>
-                  Description
+                  {DESCRIPTION_LABEL}
                 </Label>
                 <Field
                   className="form-control col-sm-10"

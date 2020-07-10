@@ -730,3 +730,9 @@ export const JURISDICTION_ASSIGNMENT_SUCCESSFUL = translate(
 );
 
 export const SELECTED_JURISDICTIONS = translate('SELECTED_JURISDICTIONS', 'Selected Jurisdictions');
+export const GOAL_LABEL = translate('GOAL_LABEL', 'Goal');
+export const EXPRESSION_LABEL = translate('EXPRESSION_LABEL', 'Expression');
+export const TRIGGERS_LABEL = translate('TRIGGERS_LABEL', 'Triggers');
+export const CONDITIONS_LABEL = translate('CONDITIONS_LABEL', 'Triggers');
+export const DEFINITION_URI = translate('DEFINITION_URI', 'Definition Uri');
+
