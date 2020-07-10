@@ -10,14 +10,14 @@ import ConnectedPlansLocationNames, { PlanLocationNames } from '..';
 import { OPENSRP_LOCATIONS_BY_PLAN } from '../../../../../../constants';
 import { OpenSRPService } from '../../../../../../services/opensrp';
 import store from '../../../../../../store';
+import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import locationReducer, {
   fetchLocations,
   Location,
   reducerName,
   removeAllPlansLocations,
-} from '../../../../../../store/ducks/opensrp/locations';
-import { sampleLocations } from '../../../../../../store/ducks/opensrp/locations/tests/fixtures';
-import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+} from '../../../../../../store/ducks/opensrp/planLocations';
+import { sampleLocations } from '../../../../../../store/ducks/opensrp/planLocations/tests/fixtures';
 
 reducerRegistry.register(reducerName, locationReducer);
 const history = createBrowserHistory();
@@ -56,7 +56,7 @@ describe('src/components/locationIdToNames', () => {
     });
     const props = {
       plan: plans[1],
-      serviceClass: classMock,
+      serviceClass: classMock as any,
     };
 
     mount(
