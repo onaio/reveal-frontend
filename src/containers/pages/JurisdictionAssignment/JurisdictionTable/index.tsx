@@ -124,6 +124,8 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   }
 
   const [loading, setLoading] = React.useState<boolean>(true);
+  const [isLeafNodesLoaded, setLeafNodeLoaded] = React.useState<boolean>(false);
+
   const { broken, errorMessage, handleBrokenPage } = useHandleBrokenPage();
   const baseUrl = `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
   const jurisdictionMetaIds: string[] = jurisdictionsMetadata.map(meta => meta.key);
@@ -162,7 +164,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         if (apiResponse.value) {
           const responseData = apiResponse.value;
           treeFetchedCreator(responseData);
-          autoSelectNodesCreator(rootJurisdictionId, callback);
           setLoading(false);
         }
         if (apiResponse.error) {
@@ -174,6 +175,13 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         setLoading(false);
       });
   }, []);
+
+  React.useEffect(() => {
+    if (leafNodes.length && !isLeafNodesLoaded) {
+      autoSelectNodesCreator(rootJurisdictionId, callback);
+      setLeafNodeLoaded(true);
+    }
+  }, [leafNodes]);
 
   if (loading) {
     return <Ripple />;
