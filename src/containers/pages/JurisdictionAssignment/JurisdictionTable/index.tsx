@@ -12,16 +12,17 @@ import HeaderBreadcrumb, {
 import Ripple from '../../../../components/page/Loading';
 import { JURISDICTION_METADATA_RISK_PERCENTAGE } from '../../../../configs/env';
 import {
-  ASSIGNMENT_TYPE,
-  AUTO,
+  AUTO_SELECTION,
   COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
-  EXISTING,
+  EXISTING_SELECTION,
   JURISDICTION_ASSIGNMENT_SUCCESSFUL,
   NAME,
   NO_DATA_FOUND,
   NO_ROWS_FOUND,
   SAVE,
+  STATUS_SETTING,
   STRUCTURES_COUNT,
+  USER_CHANGE,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
@@ -243,16 +244,16 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         ? jurisdictionMetaIds.length &&
           jurisdictionMetaIds.includes(node.model.id) &&
           !leafNodes.filter(value => existingAssignments.includes(value.model.id)).length
-          ? AUTO
+          ? AUTO_SELECTION
           : leafNodes.filter(value => existingAssignments.includes(value.model.id)).length &&
             existingAssignments.includes(node.model.id)
-          ? EXISTING
-          : 'Manual'
+          ? EXISTING_SELECTION
+          : USER_CHANGE
         : '',
       node.model.node.attributes.structureCount,
     ];
   });
-  const headerItems = ['', NAME, ASSIGNMENT_TYPE, STRUCTURES_COUNT];
+  const headerItems = ['', NAME, STATUS_SETTING, STRUCTURES_COUNT];
   const tableClass = 'table table-bordered';
 
   /** on change handler attached to the parent checkbox

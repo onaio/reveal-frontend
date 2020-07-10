@@ -720,10 +720,11 @@ export const COULD_NOT_LOAD_JURISDICTION_HIERARCHY = translate(
 
 export const STRUCTURES_COUNT = translate('STRUCTURES_COUNT', 'Structures Count');
 
-export const ASSIGNMENT_TYPE = translate('ASSIGNMENT_TYPE', 'Assignment Type');
+export const STATUS_SETTING = translate('STATUS_SETTING', 'Status setting by...');
 
-export const AUTO = translate('AUTO', 'Auto');
-export const EXISTING = translate('EXISTING', 'Existing');
+export const AUTO_SELECTION = translate('AUTO_SELECTION', 'Auto-selection');
+export const EXISTING_SELECTION = translate('EXISTING_SELECTION', 'Existing selection');
+export const USER_CHANGE = translate('USER_CHANGE', 'User Change');
 
 export const COULD_NOT_LOAD_JURISDICTION = translate(
   'COULD_NOT_LOAD_JURISDICTION',
