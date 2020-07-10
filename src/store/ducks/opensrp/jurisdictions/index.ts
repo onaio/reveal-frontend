@@ -87,6 +87,16 @@ export const getJurisdictionById = () =>
   );
 
 /**
+ * Get jurisdiction ids
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getJurisdictionIds = () =>
+  createSelector([getJurisdictionsById], (jurisdictionsById): string[] => {
+    return Object.keys(jurisdictionsById);
+  });
+
+/**
  * retrieve jurisdictions as an array
  * @param state - the store
  * @param props -  the filterProps

@@ -3,6 +3,7 @@ import { FlushThunks } from 'redux-testkit';
 import reducer, {
   fetchJurisdictions,
   getJurisdictionById,
+  getJurisdictionIds,
   getJurisdictionsArray,
   getJurisdictionsFC,
   reducerName,
@@ -20,6 +21,7 @@ reducerRegistry.register(reducerName, reducer);
 const arraySelector = getJurisdictionsArray();
 const jurisdictionSelector = getJurisdictionById();
 const fcSelector = getJurisdictionsFC();
+const idsSelector = getJurisdictionIds();
 const data = [raKashikishiHAHC, raKsh2, raKsh3];
 
 describe('reducers/opensrp/hierarchies', () => {
@@ -33,11 +35,13 @@ describe('reducers/opensrp/hierarchies', () => {
 
   it('should have initial state', () => {
     expect(arraySelector(store.getState(), {})).toEqual([]);
+    expect(idsSelector(store.getState(), {})).toEqual([]);
   });
 
   it('should be able to store and retrieve jurisdictions', () => {
     store.dispatch(fetchJurisdictions(data));
     expect(arraySelector(store.getState(), {})).toEqual(data);
+    expect(idsSelector(store.getState(), {})).toEqual(data.map(e => e.id));
     expect(jurisdictionSelector(store.getState(), { jurisdictionId: raKsh2.id })).toEqual(raKsh2);
     expect(arraySelector(store.getState(), { parentId: raKashikishiHAHC.id })).toEqual([
       raKsh2,
