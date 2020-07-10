@@ -1409,7 +1409,7 @@ export const planActivities: PlanActivities = {
             detailQuantity: {
               comparator: '>=',
               unit: GoalUnit.PERCENT,
-              value: 100,
+              value: 75,
             },
           },
           due: '',
