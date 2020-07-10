@@ -6,6 +6,7 @@ import reducer, {
   getJurisdictionIds,
   getJurisdictionsArray,
   getJurisdictionsFC,
+  getMissingJurisdictionIds,
   reducerName,
   removeJurisdictions,
 } from '..';
@@ -22,6 +23,7 @@ const arraySelector = getJurisdictionsArray();
 const jurisdictionSelector = getJurisdictionById();
 const fcSelector = getJurisdictionsFC();
 const idsSelector = getJurisdictionIds();
+const missingIdsSelector = getMissingJurisdictionIds();
 const data = [raKashikishiHAHC, raKsh2, raKsh3];
 
 describe('reducers/opensrp/hierarchies', () => {
@@ -44,6 +46,20 @@ describe('reducers/opensrp/hierarchies', () => {
     expect(idsSelector(store.getState(), {})).toEqual(data.map(e => e.id));
     expect(idsSelector(store.getState(), { filterGeom: false })).toEqual([raKashikishiHAHC.id]);
     expect(idsSelector(store.getState(), { filterGeom: true })).toEqual([raKsh2.id, raKsh3.id]);
+    // getMissingJurisdictionIds
+    expect(missingIdsSelector(store.getState(), { filterGeom: false })).toEqual([
+      raKashikishiHAHC.id,
+    ]);
+    expect(missingIdsSelector(store.getState(), { filterGeom: true })).toEqual([
+      raKsh2.id,
+      raKsh3.id,
+    ]);
+    expect(
+      missingIdsSelector(store.getState(), {
+        filterGeom: true,
+        jurisdictionIdsArray: ['1337', '7331', raKashikishiHAHC.id, raKsh2.id, raKsh3.id],
+      })
+    ).toEqual(['1337', '7331', raKashikishiHAHC.id]);
     // jurisdictionSelector
     expect(jurisdictionSelector(store.getState(), { jurisdictionId: raKsh2.id })).toEqual(raKsh2);
     // arraySelector

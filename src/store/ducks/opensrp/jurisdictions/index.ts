@@ -148,3 +148,32 @@ export const getJurisdictionsFC = () =>
       };
     }
   );
+
+/** Get Missing Jurisdiction Ids
+ *
+ * This is a convenient selector that takes an array of jurisdiction ids and then
+ * returns the ones that are not already existing in the Redux store.
+ *
+ * Passing filterGeom === true will additionally return ids of jurisdictions that have
+ * no geometry field.
+ *
+ * The initial use-case of this is to provide the ability to figure out which jurisdiction
+ * ids are missing from a known list of ids; and which are both missing and have no
+ * geometry.
+ *
+ * ^^ Might be useful when we are trying to figure out which jurisdictions to fetch from
+ * OpenSRP API when we need geometries.
+ *
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getMissingJurisdictionIds = () =>
+  createSelector(
+    [getJurisdictionIds(), getJurisdictionIdsArray],
+    (jurisdictionIds, inputJurisdictionIdsArray): string[] => {
+      if (!inputJurisdictionIdsArray) {
+        return jurisdictionIds;
+      }
+      return inputJurisdictionIdsArray.filter(id => !jurisdictionIds.includes(id));
+    }
+  );
