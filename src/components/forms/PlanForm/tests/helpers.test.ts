@@ -123,6 +123,7 @@ describe('containers/forms/PlanForm/helpers', () => {
 
   it('getPlanFormValues can get original planForm', () => {
     const planForm = planFormValues as PlanFormFields;
+    planForm.activities[0].actionDefinitionUri = '';
 
     const generatedPlan = generatePlanDefinition(planForm);
     const generatedPlanForm = getPlanFormValues(generatedPlan);

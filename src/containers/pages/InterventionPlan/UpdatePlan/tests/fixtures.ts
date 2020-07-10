@@ -30,6 +30,7 @@ export const updatePlanFormProps = {
     activities: [
       {
         actionCode: 'BCC',
+        actionDefinitionUri: '',
         actionDescription: 'Perform BCC for the operational area',
         actionIdentifier: '3f2eef38-38fe-4108-abb3-4e896b880302',
         actionReason: 'Routine',
@@ -43,6 +44,7 @@ export const updatePlanFormProps = {
       },
       {
         actionCode: 'IRS',
+        actionDefinitionUri: '',
         actionDescription: 'Visit each structure in the operational area and attempt to spray',
         actionIdentifier: '95a5a00f-a411-4fe5-bd9c-460a856239c9',
         actionReason: 'Routine',
