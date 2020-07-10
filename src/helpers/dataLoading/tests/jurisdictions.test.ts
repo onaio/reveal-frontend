@@ -3,8 +3,14 @@ import {
   OPENSRP_FIND_LOCATION_BY_JURISDICTION_IDS,
   OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT,
   OPENSRP_PLANS,
+  OPENSRP_V2_SETTINGS,
 } from '../../../constants';
-import { loadJurisdiction, LoadOpenSRPHierarchy, putJurisdictionsToPlan } from '../jurisdictions';
+import {
+  loadJurisdiction,
+  loadJurisdictionsMetadata,
+  LoadOpenSRPHierarchy,
+  putJurisdictionsToPlan,
+} from '../jurisdictions';
 import { failure, success } from '../utils';
 
 describe('helpers/dataLoading.jurisdictions', () => {
@@ -158,5 +164,29 @@ describe('helpers/dataLoading.jurisdictions', () => {
     // Uses the correct service method
     expect(mockList).toHaveBeenCalledTimes(1);
     expect(res).toEqual(failure(err));
+  });
+  it('loads jurisdictions metadata successfully', async () => {
+    const mockJurisdictionsMetadataResponse = [{}];
+    const mockRead = jest.fn(async () => mockJurisdictionsMetadataResponse);
+    const sampleMockCreator = (args: any) => ({ type: 'someType', payload: args });
+    const mockActionCreator = jest.fn(sampleMockCreator);
+    const mockClass: any = jest.fn().mockImplementation(() => {
+      return {
+        read: mockRead,
+      };
+    });
+    const settingsIdentifier = 'jurisdiction_metadata-test-risk';
+    loadJurisdictionsMetadata(settingsIdentifier, mockClass, mockActionCreator).catch(e => {
+      throw e;
+    });
+    await flushPromises();
+
+    // calls the correct endpoint
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_V2_SETTINGS);
+
+    // Uses the correct service method
+    expect(mockRead).toHaveBeenCalledTimes(1);
+    // calls action creator correctly.
+    expect(mockActionCreator).toHaveBeenCalledWith(mockJurisdictionsMetadataResponse);
   });
 });

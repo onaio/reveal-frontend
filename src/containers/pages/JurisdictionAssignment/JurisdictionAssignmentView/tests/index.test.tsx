@@ -10,6 +10,7 @@ import { ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import plansReducer, { reducerName } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import { plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { jurisdictionsMetadataArray } from '../../../../../store/ducks/tests/fixtures';
 import { akros2, fetchCalls, lusaka, mtendere } from './fixtures';
 
 reducerRegistry.register(reducerName, plansReducer);
@@ -40,12 +41,14 @@ describe('src/containers/JurisdictionView', () => {
   it('renders correctly', async () => {
     const plan = plans[0];
     fetch
+      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
       .once(JSON.stringify(plan), { status: 200 })
       .once(JSON.stringify([akros2]), { status: 200 })
       .once(JSON.stringify(mtendere), { status: 200 })
       .once(JSON.stringify(lusaka), { status: 200 });
     const props = {
       history,
+      jurisdictionsMetadata: jurisdictionsMetadataArray,
       location: {
         hash: '',
         pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
@@ -86,10 +89,12 @@ describe('src/containers/JurisdictionView', () => {
   it('works correctly with store', async () => {
     const plan = plans[0];
     fetch
+      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
       .once(JSON.stringify(plan), { status: 200 })
       .once(JSON.stringify([akros2]), { status: 200 })
       .once(JSON.stringify(mtendere), { status: 200 })
-      .once(JSON.stringify(lusaka), { status: 200 });
+      .once(JSON.stringify(lusaka), { status: 200 })
+      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 });
     const props = {
       history,
       location: {
@@ -135,6 +140,7 @@ describe('src/containers/JurisdictionView', () => {
   it('shows loader', async () => {
     const plan = plans[0];
     fetch
+      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
       .once(JSON.stringify(plan), { status: 200 })
       .once(JSON.stringify([akros2]), { status: 200 })
       .once(JSON.stringify(mtendere), { status: 200 })
@@ -173,6 +179,7 @@ describe('src/containers/JurisdictionView', () => {
   it('plan error Message', async () => {
     const plan = plans[0];
     fetch
+      .once(JSON.stringify([]), { status: 500 })
       .once(JSON.stringify({}), { status: 500 })
       .once(JSON.stringify([akros2]), { status: 200 })
       .once(JSON.stringify(mtendere), { status: 200 })
@@ -206,7 +213,7 @@ describe('src/containers/JurisdictionView', () => {
       wrapper.update();
     });
 
-    expect(fetch.mock.calls.length).toEqual(4);
+    expect(fetch.mock.calls.length).toEqual(5);
 
     // check renderer error message
     expect(wrapper.text()).toMatchSnapshot('should be plan error page');
@@ -214,6 +221,7 @@ describe('src/containers/JurisdictionView', () => {
   it('single jurisdiction error Message', async () => {
     const plan = plans[0];
     fetch
+      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
       .once(JSON.stringify(plan), { status: 200 })
       .once(JSON.stringify([]), { status: 500 })
       .once(JSON.stringify(mtendere), { status: 200 })
@@ -254,6 +262,7 @@ describe('src/containers/JurisdictionView', () => {
   it('getting root jurisdiction error Message', async () => {
     const plan = plans[0];
     fetch
+      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
       .once(JSON.stringify(plan), { status: 200 })
       .once(JSON.stringify([akros2]), { status: 200 })
       .once(JSON.stringify(mtendere), { status: 200 })
