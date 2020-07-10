@@ -6,11 +6,11 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import {
-  raKashikishiHAHC,
-  raKsh3,
-  raLuapula,
-  raNchelenge,
-  raZambia,
+  raKashikishiHAHCNode,
+  raKsh3Node,
+  raLuapulaNode,
+  raNchelengeNode,
+  raZambiaNode,
 } from '../../../../../../components/TreeWalker/tests/fixtures';
 import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import {
@@ -29,25 +29,29 @@ describe('PlanAssignment/JurisdictionTable', () => {
   });
 
   it('works as expected', async () => {
+    if (!(raKsh3Node && raKashikishiHAHCNode && raNchelengeNode && raLuapulaNode && raZambiaNode)) {
+      fail();
+    }
+
     const callBack: any = jest.fn();
     const orgs = [organization1, organization2, organization3];
     const props = {
       assignments,
-      currentChildren: [raKsh3],
-      currentNode: raKashikishiHAHC,
-      hierarchy: [raZambia, raLuapula, raNchelenge, raKashikishiHAHC],
+      currentChildren: [raKsh3Node],
+      currentNode: raKashikishiHAHCNode,
+      hierarchy: [raZambiaNode, raLuapulaNode, raNchelengeNode, raKashikishiHAHCNode],
       history,
       location: {
         hash: '',
-        pathname: `/assign/${plans[0].identifier}/${raKashikishiHAHC.id}`,
+        pathname: `/assign/${plans[0].identifier}/${raKashikishiHAHCNode.model.id}`,
         search: '',
         state: {},
       },
       match: {
         isExact: true,
-        params: { jurisdictionId: raKashikishiHAHC.id, planId: plans[0].identifier },
+        params: { jurisdictionId: raKashikishiHAHCNode.model.id, planId: plans[0].identifier },
         path: '/assign/:planId/:jurisdictionId',
-        url: `/assign/${plans[0].identifier}/${raKashikishiHAHC.id}`,
+        url: `/assign/${plans[0].identifier}/${raKashikishiHAHCNode.model.id}`,
       },
       organizations: orgs,
       plan: plans[0],
@@ -58,7 +62,7 @@ describe('PlanAssignment/JurisdictionTable', () => {
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/assign/${plans[0].identifier}/${raKashikishiHAHC.id}`,
+            pathname: `/assign/${plans[0].identifier}/${raKashikishiHAHCNode.id}`,
             search: '',
             state: {},
           },
@@ -83,7 +87,7 @@ describe('PlanAssignment/JurisdictionTable', () => {
       cancelCallBackFunc: expect.any(Function),
       defaultValue: [],
       existingAssignments: [],
-      jurisdiction: raKsh3,
+      jurisdiction: raKsh3Node,
       labels: {
         assignmentSuccess: 'Team(s) assignment updated successfully',
         close: 'Close',

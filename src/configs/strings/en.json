@@ -987,6 +987,10 @@
     "message": "Manifest Releases",
     "description": "manifest releases page title"
   },
+  "RELEASES_LABEL": {
+    "message": "Releases",
+    "description": "manifest releases page title"
+  },
   "FORM_DRAFT_FILES": {
     "message": "Draft Files",
     "description": "draft files page title"
@@ -1044,7 +1048,7 @@
     "description": "table cell text - view files"
   },
   "APP_ID_LABEL": {
-    "message": "APP Id",
+    "message": "App Id",
     "description": "table header label - application identifier"
   },
   "APP_VERSION_LABEL": {
@@ -1126,5 +1130,53 @@
   "FALLBACK_CUSTOM_ERROR_MESSAGE": {
     "message": "There has been an error. It’s been reported to the site administrators via email and should be fixed shortly. Thanks for your patience.",
     "description": "Error message displayed when application encounters internal error"
+  },
+  "SERVER_SETTINGS": {
+    "message": "Server Settings",
+    "description": "label: server settings"
+  },
+  "SEARCH_SETTINGS_LABEL": {
+    "message": "Search Settings",
+    "description": "settings search bar place holder"
+  },
+  "PAGE_TITLE_LABEL": {
+    "message": "Server Settings",
+    "description": ""
+  },
+  "INHERITED_FROM_LABEL": {
+    "message": "Inherited from?",
+    "description": "table header label: settings inherited from?"
+  },
+  "SET_TO_YES_LABEL": {
+    "message": "Set to 'Yes'",
+    "description": "set population characteristics settings to true"
+  },
+  "SET_TO_NO_LABEL": {
+    "message": "Set to 'No'",
+    "description": "set population characteristics settings to false"
+  },
+  "INHERIT_SETTING_LABEL": {
+    "message": "Inherit setting",
+    "description": "settings inherited from"
+  },
+  "GOAL_LABEL": {
+    "message": "Goal",
+    "description": "label, column header: goal"
+  },
+  "EXPRESSION_LABEL": {
+    "message": "Expression",
+    "description": "label, column header: name expression"
+  },
+  "TRIGGERS_LABEL": {
+    "message": "Triggers",
+    "description": "label, column header: Triggers"
+  },
+  "CONDITIONS_LABEL": {
+    "message": "Conditions",
+    "description": "label, column header: name Conditions"
+  },
+  "DEFINITION_URI": {
+    "message": "Definition Uri",
+    "description": "label, column header: name Definition Uri"
   }
 }

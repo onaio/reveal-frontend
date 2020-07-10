@@ -38,8 +38,30 @@ describe('components/forms/JurisdictionMetadata', () => {
     });
   });
 
+  it('form validation works', async () => {
+    const { getByText, getByTestId } = render(<JurisdictionMetadataForm />);
+    fireEvent.submit(getByTestId('form'));
+    /** Assert Validation Response and Button disable */
+    await waitFor(() => {
+      expect(getByText('Upload File')).toBeDisabled();
+    });
+  });
+
+  it('file type validation works', async () => {
+    const { getByText, getByTestId } = render(<JurisdictionMetadataForm />);
+    const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
+    const fileInput = getByText('Upload File');
+    fireEvent.change(fileInput, { target: { file: [file] } });
+    fireEvent.submit(getByTestId('form'));
+    /** Assert Validation Response and Button disable */
+    await waitFor(() => {
+      expect(getByText('Upload File')).toBeDisabled();
+    });
+  });
+
   it('submitForm uploads CSV file', async () => {
-    const file = new File([''], 'jurisdiction.csv', { type: 'text/csv' });
+    const fileContents = 'jurisdiction_id, jurisdiction_name';
+    const file = new File([fileContents], 'jurisdiction.csv', { type: 'text/csv' });
     const setSubmitting = jest.fn();
     const setGlobalError = jest.fn();
     const setIfDoneHere = jest.fn();

@@ -138,10 +138,6 @@ export const SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE =
   process.env.REACT_APP_SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE || '0';
 export type SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE = typeof SUPERSET_PLAN_STRUCTURE_PIVOT_SLICE;
 
-export const SUPERSET_PLAN_HIERARCHY_SLICE =
-  process.env.REACT_APP_SUPERSET_PLAN_HIERARCHY_SLICE || '0';
-export type SUPERSET_PLAN_HIERARCHY_SLICE = typeof SUPERSET_PLAN_HIERARCHY_SLICE;
-
 export const SUPERSET_MDA_POINT_REPORTING_PLANS_SLICE =
   process.env.REACT_APP_SUPERSET_MDA_POINT_REPORTING_PLANS_SLICE || '0';
 export type SUPERSET_MDA_POINT_REPORTING_PLANS_SLICE = typeof SUPERSET_MDA_POINT_REPORTING_PLANS_SLICE;
@@ -204,6 +200,11 @@ export const OPENSRP_API_BASE_URL =
   process.env.REACT_APP_OPENSRP_API_BASE_URL ||
   'https://reveal-stage.smartregister.org/opensrp/rest/';
 export type OPENSRP_API_BASE_URL = typeof OPENSRP_API_BASE_URL;
+
+export const OPENSRP_API_V2_BASE_URL =
+  process.env.REACT_APP_OPENSRP_API_V2_BASE_URL ||
+  'https://reveal-stage.smartregister.org/opensrp/rest/v2/';
+export type OPENSRP_API_V2_BASE_URL = typeof OPENSRP_API_V2_BASE_URL;
 
 /** Onadata oAuth2 settings */
 export const ENABLE_ONADATA_OAUTH = process.env.REACT_APP_ENABLE_ONADATA_OAUTH === 'true';
@@ -315,7 +316,8 @@ export type REACT_APP_NAME = typeof REACT_APP_NAME;
 
 /** list of plan types to be added to intervention type field when adding plans */
 export const ENABLED_PLAN_TYPES = String(
-  process.env.REACT_APP_ENABLED_PLAN_TYPES || 'FI,IRS,MDA,MDA-Point'
+  process.env.REACT_APP_ENABLED_PLAN_TYPES ||
+    'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'
 ).split(',');
 export type ENABLED_PLAN_TYPES = typeof ENABLED_PLAN_TYPES;
 
@@ -334,3 +336,15 @@ export type REVEAL_BRAND_IMG_SRC = typeof REVEAL_BRAND_IMG_SRC;
 export const SHOW_MDA_SCHOOL_REPORT_LABEL =
   process.env.REACT_APP_SHOW_MDA_SCHOOL_REPORT_LABEL === 'true';
 export type SHOW_MDA_SCHOOL_REPORT_LABEL = typeof SHOW_MDA_SCHOOL_REPORT_LABEL;
+
+/** list of plan types to be added to intervention type field when adding plans */
+export const ENABLE_POPULATION_SERVER_SETTINGS =
+  process.env.REACT_APP_ENABLE_POPULATION_SERVER_SETTINGS === 'true';
+export type ENABLE_POPULATION_SERVER_SETTINGS = typeof ENABLE_POPULATION_SERVER_SETTINGS;
+export const ENABLE_PLANNING = process.env.REACT_APP_ENABLE_PLANNING === 'true';
+export type ENABLE_PLANNING = typeof ENABLE_PLANNING;
+
+export const HIDDEN_MAP_LEGEND_ITEMS = String(
+  process.env.REACT_APP_HIDDEN_MAP_LEGEND_ITEMS || ' '
+).split(',');
+export type HIDDEN_MAP_LEGEND_ITEMS = typeof HIDDEN_MAP_LEGEND_ITEMS;

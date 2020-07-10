@@ -9,19 +9,19 @@ import { MemoryRouter } from 'react-router-dom';
 import Loading from '../../../../components/page/Loading';
 import { defaultWalkerProps } from '../../../../components/TreeWalker';
 import {
-  limitTree,
-  raKashikishiHAHC,
-  raKsh2,
-  raKsh3,
-  raLuapula,
-  raNchelenge,
-  raZambia,
+  locationsHierarchy,
+  locationTree,
+  raKashikishiHAHCNode,
 } from '../../../../components/TreeWalker/tests/fixtures';
 import { OpenSRPService } from '../../../../services/opensrp';
 import assignmentReducer, {
   fetchAssignments,
   reducerName as assignmentReducerName,
 } from '../../../../store/ducks/opensrp/assignments';
+import hierarchyReducer, {
+  fetchTree,
+  reducerName as hierarchyReducerName,
+} from '../../../../store/ducks/opensrp/hierarchies';
 import organizationsReducer, {
   fetchOrganizations,
   reducerName as organizationsReducerName,
@@ -48,6 +48,7 @@ jest.mock('../../../../configs/env');
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
 reducerRegistry.register(organizationsReducerName, organizationsReducer);
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
+reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
 const history = createBrowserHistory();
 const callBack: any = jest.fn();
@@ -61,19 +62,24 @@ const baseProps = {
   history,
   location: {
     hash: '',
-    pathname: `/assign/${plans[0].identifier}/${raKashikishiHAHC.id}`,
+    pathname: `/assign/${plans[0].identifier}/${raKashikishiHAHCNode &&
+      raKashikishiHAHCNode.model.id}`,
     search: '',
     state: {},
   },
   match: {
     isExact: true,
-    params: { jurisdictionId: raKashikishiHAHC.id, planId: plans[0].identifier },
+    params: {
+      jurisdictionId: raKashikishiHAHCNode ? raKashikishiHAHCNode.model.id : 'nope',
+      planId: plans[0].identifier,
+    },
     path: '/assign/:planId/:jurisdictionId',
-    url: `/assign/${plans[0].identifier}/${raKashikishiHAHC.id}`,
+    url: `/assign/${plans[0].identifier}/${raKashikishiHAHCNode && raKashikishiHAHCNode.model.id}`,
   },
   organizations: orgs,
   plan: plans[0],
   submitCallBackFunc: callBack,
+  tree: locationTree,
 };
 
 describe('PlanAssignment', () => {
@@ -84,32 +90,25 @@ describe('PlanAssignment', () => {
   });
 
   it('works as expected', async () => {
-    const supersetServiceMock: any = jest.fn();
-    supersetServiceMock.mockImplementation(async () => limitTree);
-
     fetch.mockResponses(
+      /** Get plan hierarchy */
+      [JSON.stringify(locationsHierarchy), { status: 200 }],
       /** These calls are made by PlanAssignment */
       [JSON.stringify(assignments), { status: 200 }],
       [JSON.stringify([organization1, organization2, organization3]), { status: 200 }],
-      [JSON.stringify([plans[0]]), { status: 200 }],
-      /** These next calls represent TreeWalker building the location hierarchy */
-      [JSON.stringify(raKashikishiHAHC), { status: 200 }],
-      [JSON.stringify([raKsh2, raKsh3]), { status: 200 }],
-      [JSON.stringify(raNchelenge), { status: 200 }],
-      [JSON.stringify(raLuapula), { status: 200 }],
-      [JSON.stringify(raZambia), { status: 200 }]
+      [JSON.stringify([plans[0]]), { status: 200 }]
     );
 
     const props = {
       ...baseProps,
-      supersetService: supersetServiceMock,
     };
 
     const wrapper = mount(
       <MemoryRouter
         initialEntries={[
           {
-            pathname: `/assign/${plans[0].identifier}/${raKashikishiHAHC.id}`,
+            pathname: `/assign/${plans[0].identifier}/${raKashikishiHAHCNode &&
+              raKashikishiHAHCNode.model.id}`,
             search: '',
             state: {},
           },
@@ -125,42 +124,33 @@ describe('PlanAssignment', () => {
     });
 
     expect(fetch.mock.calls[0][0]).toEqual(
-      'https://test.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?plan=356b6b84-fc36-4389-a44a-2b038ed2f38d'
+      'https://test.smartregister.org/opensrp/rest/location/getHierarchy/plan/356b6b84-fc36-4389-a44a-2b038ed2f38d?return_structure_count=false'
     );
     expect(fetch.mock.calls[1][0]).toEqual(
-      'https://test.smartregister.org/opensrp/rest/organization'
+      'https://test.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?plan=356b6b84-fc36-4389-a44a-2b038ed2f38d'
     );
     expect(fetch.mock.calls[2][0]).toEqual(
+      'https://test.smartregister.org/opensrp/rest/organization'
+    );
+    expect(fetch.mock.calls[3][0]).toEqual(
       'https://test.smartregister.org/opensrp/rest/plans/356b6b84-fc36-4389-a44a-2b038ed2f38d'
     );
-
-    expect(supersetServiceMock.mock.calls).toEqual([
-      [
-        5,
-        {
-          adhoc_filters: [
-            {
-              clause: 'WHERE',
-              comparator: '356b6b84-fc36-4389-a44a-2b038ed2f38d',
-              expressionType: 'SIMPLE',
-              operator: '==',
-              subject: 'plan_id',
-            },
-          ],
-          row_limit: 15000,
-        },
-      ],
-    ]);
 
     expect(wrapper.find('TreeWalker').props()).toEqual({
       LoadingIndicator: Loading,
       OpenSRPServiceClass: OpenSRPService,
       addPlanActionCreator: addPlanDefinition,
+      apiEndPoints: {
+        findByJurisdictionIds: 'location/findByJurisdictionIds',
+        findByProperties: 'location/findByProperties',
+        location: 'location',
+      },
       assignments,
       currentChildren: [],
       currentNode: null,
       fetchAssignmentsActionCreator: fetchAssignments,
       fetchOrganizationsActionCreator: fetchOrganizations,
+      fetchTreeActionCreator: fetchTree,
       getAncestorsFunc: expect.any(Function),
       getChildrenFunc: expect.any(Function),
       hierarchy: [],
@@ -168,8 +158,8 @@ describe('PlanAssignment', () => {
       jurisdictionId: '8d44d54e-8b4c-465c-9e93-364a25739a6d',
       labels: {
         loadAncestorsError: 'Could not load parents',
+        loadChildrenError: 'Could not load children',
       },
-      limits: limitTree,
       loadChildren: expect.any(Function),
       location: expect.any(Object),
       match: expect.any(Object),
@@ -182,10 +172,10 @@ describe('PlanAssignment', () => {
       propertyFilters: {
         status: 'Active',
       },
-      readAPIEndpoint: 'location',
       serviceClass: expect.any(Function),
       submitCallBackFunc: expect.any(Function),
-      supersetService: supersetServiceMock,
+      tree: locationTree,
+      useJurisdictionNodeType: false,
     });
     wrapper.unmount();
   });
@@ -222,10 +212,8 @@ describe('PlanAssignment', () => {
   });
 
   it('shows an error message if no plan jurisdiction hierarchy', async () => {
-    const supersetServiceMock: any = jest.fn();
-    supersetServiceMock.mockImplementation(async () => undefined);
-
     fetch.mockResponses(
+      [JSON.stringify({}), { status: 400 }],
       [JSON.stringify(assignments), { status: 200 }],
       [JSON.stringify([organization1, organization2, organization3]), { status: 200 }],
       [JSON.stringify([plans[0]]), { status: 200 }]
@@ -233,7 +221,6 @@ describe('PlanAssignment', () => {
 
     const props = {
       ...baseProps,
-      supersetService: supersetServiceMock,
     };
 
     const wrapper = mount(
@@ -253,10 +240,8 @@ describe('PlanAssignment', () => {
   });
 
   it('shows an error message if no organizations', async () => {
-    const supersetServiceMock: any = jest.fn();
-    supersetServiceMock.mockImplementation(async () => limitTree);
-
     fetch.mockResponses(
+      [JSON.stringify(locationsHierarchy), { status: 200 }],
       [JSON.stringify(assignments), { status: 200 }],
       [JSON.stringify([]), { status: 400 }],
       [JSON.stringify([plans[0]]), { status: 200 }]
@@ -264,7 +249,6 @@ describe('PlanAssignment', () => {
 
     const props = {
       ...baseProps,
-      supersetService: supersetServiceMock,
     };
 
     const wrapper = mount(
@@ -282,10 +266,8 @@ describe('PlanAssignment', () => {
   });
 
   it('shows an error message if no plan', async () => {
-    const supersetServiceMock: any = jest.fn();
-    supersetServiceMock.mockImplementation(async () => limitTree);
-
     fetch.mockResponses(
+      [JSON.stringify(locationsHierarchy), { status: 200 }],
       [JSON.stringify(assignments), { status: 200 }],
       [JSON.stringify([]), { status: 200 }],
       [JSON.stringify([]), { status: 400 }]
@@ -293,7 +275,6 @@ describe('PlanAssignment', () => {
 
     const props = {
       ...baseProps,
-      supersetService: supersetServiceMock,
     };
 
     const wrapper = mount(

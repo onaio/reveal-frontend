@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/containers/../PlanningView/DraftPlans renders plans list correctly: button props 1`] = `
+Object {
+  "children": "Create New Plan",
+  "className": "create-plan btn btn-primary float-right mt-3 mb-3",
+  "href": "/plans/planning/new",
+  "onClick": [Function],
+}
+`;
+
+exports[`src/containers/../PlanningView/DraftPlans renders plans list correctly: drill down table props 1`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Array [
+    Object {
+      "Cell": [Function],
+      "Header": "Name",
+      "accessor": "plan_title",
+      "minWidth": 200,
+    },
+    Object {
+      "Header": "Date Created",
+      "accessor": "plan_date",
+      "maxWidth": 50,
+      "minWidth": 20,
+    },
+    Object {
+      "Header": "Status",
+      "accessor": [Function],
+      "id": "plan_status",
+      "maxWidth": 50,
+      "minWidth": 20,
+    },
+  ],
+  "data": Array [],
+  "hasChildren": [Function],
+  "identifierField": "id",
+  "linkerField": "id",
+  "loading": false,
+  "loadingComponent": [Function],
+  "paginate": true,
+  "parentIdentifierField": "parent_id",
+  "renderInBottomFilterBar": [Function],
+  "renderInTopFilterBar": [Function],
+  "renderNullDataComponent": [Function],
+  "resize": true,
+  "rootParentId": null,
+  "useDrillDown": false,
+}
+`;

@@ -30,20 +30,13 @@ export const MEDIUM_PRIORITY = 'medium-priority';
 export const HIGH_PRIORITIY = 'high-priority';
 export const TRUE = 'True';
 export const FALSE = 'False';
+export const DISABLED = 'Disabled';
 export const INTERVENTION_TYPE_CODE = 'interventionType';
 export const FI_STATUS_CODE = 'fiStatus';
 export const FI_REASON_CODE = 'fiReason';
 export const OPENSRP_EVENT_ID_CODE = 'opensrpEventId';
 export const CASE_NUMBER_CODE = 'caseNum';
 export const TASK_GENERATION_STATUS_CODE = 'taskGenerationStatus';
-export const CASE_CONFIRMATION_ACTIVITY_CODE = 'caseConfirmation';
-export const FAMILY_REGISTRATION_ACTIVITY_CODE = 'familyRegistration';
-export const BLOOD_SCREENING_ACTIVITY_CODE = 'bloodScreening';
-export const BEDNET_DISTRIBUTION_ACTIVITY_CODE = 'bednetDistribution';
-export const LARVAL_DIPPING_ACTIVITY_CODE = 'larvalDipping';
-export const MOSQUITO_COLLECTION_ACTIVITY_CODE = 'mosquitoCollection';
-export const MDA_POINT_DISPENSE_ACTIVITY_CODE = 'pointDispenseMDA';
-export const MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE = 'pointAdverseMDA';
 export const GA_ENV_TEST = 'test';
 export const PLAN_ID = 'plan_id';
 export const PLAN_INTERVENTION_TYPE = 'plan_intervention_type';
@@ -62,6 +55,9 @@ export const HISTORICAL_INDEX_CASES = 'historical-index-cases';
 export const CURRENT_INDEX_CASES = 'current-index-cases';
 export const FILE_UPLOAD_TYPE = 'file-upload';
 export const VALIDATOR_UPLOAD_TYPE = 'validator-upload';
+export const DAYS = 'days';
+export const CONDITION = 'condition';
+export const TRIGGER = 'trigger';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
@@ -102,12 +98,16 @@ export const BACKEND_CALLBACK_PATH = '/fe/oauth/callback/:id';
 export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
 export const CLIENTS_LIST_URL = '/clients';
 export const UPLOAD_CLIENT_CSV_URL = '/clients/upload';
-export const UPLOAD_JURISDICTION_METADATA_URL = '/jurisdiction-metadata/upload';
+export const JURISDICTION_METADATA_URL = '/jurisdiction-metadata';
 export const GO_BACK_TEXT = 'Go Back';
 export const MANIFEST_RELEASE_URL = '/manifest/releases';
 export const VIEW_DRAFT_FILES_URL = '/files/draft';
 export const JSON_VALIDATORS_URL = '/json-validators';
 export const MANIFEST_FILE_UPLOAD = '/manifest';
+export const EDIT_SERVER_SETTINGS_URL = '/server-settings';
+export const PLANNING_VIEW_URL = '/plans/planning';
+export const NEW_PLANNING_PLAN_URL = `${PLANNING_VIEW_URL}/${NEW}`;
+export const ASSIGN_JURISDICTIONS_URL = '/assignJurisdictions';
 /** how long after opening a logout window should we wait before redirecting to express' server logout
  * I am not sure the optimum value for this, mozilla firefox seems to take some
  * time loading up the logoutWindow and actually making the request.
@@ -140,18 +140,46 @@ export const TEAM_ID_PARAM = 'team_id';
 export const OPENSRP_TEMPLATE_ENDPOINT = 'template';
 export const OPENSRP_PLANS_BY_USER_FILTER = 'plans/user';
 export const OPENSRP_V1_SETTINGS_ENDPOINT = 'settings/sync';
+export const OPENSRP_V2_SETTINGS = 'v2/settings/';
+export const OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT = 'location/getHierarchy';
+export const OPENSRP_PLAN_HIERARCHY_ENDPOINT = 'location/getHierarchy/plan';
+export const OPENSRP_FIND_LOCATION_BY_JURISDICTION_IDS = `location/findByJurisdictionIds`;
 export const OPENSRP_ACTIVE = 'Active';
 export const OPENSRP_STATUS = 'status';
 export const OPENSRP_MANIFEST_ENDPOINT = 'manifest';
 export const OPENSRP_FORMS_ENDPOINT = 'clientForm';
 export const OPENSRP_MANIFEST_FORMS_ENDPOINT = 'clientForm/release-related-files';
 export const OPENSRP_FORM_METADATA_ENDPOINT = 'clientForm/metadata';
+export const SETTINGS_ENDPOINT = 'settings/';
+export const LOCATIONS_ENDPOINT = 'location/location-tree';
+export const SECURITY_AUTHENTICATE_ENDPOINT = 'security/authenticate';
 
 // colors
 export const GREEN = 'Green';
 export const YELLOW = 'Yellow';
 export const ORANGE = 'Orange';
 export const RED = 'Red';
+
+// plan activity codes
+export const CASE_CONFIRMATION_ACTIVITY_CODE = 'caseConfirmation';
+export const FAMILY_REGISTRATION_ACTIVITY_CODE = 'familyRegistration';
+export const BLOOD_SCREENING_ACTIVITY_CODE = 'bloodScreening';
+export const BEDNET_DISTRIBUTION_ACTIVITY_CODE = 'bednetDistribution';
+export const LARVAL_DIPPING_ACTIVITY_CODE = 'larvalDipping';
+export const MOSQUITO_COLLECTION_ACTIVITY_CODE = 'mosquitoCollection';
+export const BCC_ACTIVITY_CODE = 'BCC';
+export const IRS_ACTIVITY_CODE = 'IRS';
+export const MDA_POINT_DISPENSE_ACTIVITY_CODE = 'pointDispenseMDA';
+export const MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE = 'pointAdverseMDA';
+export const DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE = 'dynamicFamilyRegistration';
+export const DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE = 'dynamicBloodScreening';
+export const DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE = 'dynamicBednetDistribution';
+export const DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE = 'dynamicLarvalDipping';
+export const DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE = 'dynamicMosquitoCollection';
+export const DYNAMIC_BCC_ACTIVITY_CODE = 'dynamicBCC';
+export const DYNAMIC_IRS_ACTIVITY_CODE = 'dynamicIRS';
+export const DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE = 'dynamicCommunityDispenseMDA';
+export const DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE = 'dynamicCommunityAdherenceMDA';
 
 // task action codes
 export const BCC_CODE = 'BCC';
@@ -164,7 +192,13 @@ export const LARVAL_DIPPING_CODE = 'Larval Dipping';
 export const MOSQUITO_COLLECTION_CODE = 'Mosquito Collection';
 export const MDA_POINT_DISPENSE_CODE = 'MDA Dispense';
 export const MDA_POINT_ADVERSE_EFFECTS_CODE = 'MDA Adverse Event(s)';
+export const MDA_ADHERENCE_CODE = 'MDA Adherence';
 export const GOAL_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
+
+// dynamic plan activities
+export const NAMED_EVENT_TRIGGER_TYPE = 'named-event';
+export const PLAN_ACTIVATION_TRIGGER_NAME = 'plan-activation';
+export const APPLICABILITY_CONDITION_KIND = 'applicability';
 
 export const PRACTITIONER_CODE = {
   text: 'Community Health Worker',
@@ -180,3 +214,21 @@ export const ROUTINE_QUERY_PARAM = 'routine_plans';
 
 /** Settings Configuration */
 export const SETTINGS_CONFIGURATION = 'SettingConfiguration';
+
+/** Jurisdiction Metadata */
+export const JURISDICTION_METADATA_RISK = 'jurisdiction_metadata-risk';
+export const JURISDICTION_METADATA_COVERAGE = 'jurisdiction_metadata-coverage';
+export const JURISDICTION_CSV_TEMPLATE = 'jurisdiction_id,jurisdiction_name,risk,coverage';
+export const JURISDICTION_CSV_FILE_NAME = 'jurisdiction-metadata';
+export const GET_ALL = 'getAll';
+
+/** CSV File MIME Types */
+export const TEXT_CSV = 'text/csv';
+export const APPLICATION_CSV = 'application/csv';
+export const TEXT_PLAIN = 'text/plain';
+export const TEXT_X_CSV = 'text/x-csv';
+export const APPLICATION_VND_EXCEL = 'application/vnd.ms-excel';
+export const APPLICATION_X_CSV = 'application/x-csv';
+export const TEXT_COMMA_SEPARATED_VALUES = 'text/comma-separated-values';
+export const TEXT_X_COMMA_SEPARATED_VALUES = 'text/x-comma-separated-values';
+export const TEXT_TAB_SEPARATED_VALUES = 'text/tab-separated-values';
