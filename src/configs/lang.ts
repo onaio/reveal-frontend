@@ -729,6 +729,7 @@ export const JURISDICTION_ASSIGNMENT_SUCCESSFUL = translate(
   'Jurisdiction(s) assigned to plan successfully'
 );
 
+export const SELECTED_JURISDICTIONS = translate('SELECTED_JURISDICTIONS', 'Selected Jurisdictions');
 export const GOAL_LABEL = translate('GOAL_LABEL', 'Goal');
 export const EXPRESSION_LABEL = translate('EXPRESSION_LABEL', 'Expression');
 export const TRIGGERS_LABEL = translate('TRIGGERS_LABEL', 'Triggers');

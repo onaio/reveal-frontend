@@ -17,10 +17,11 @@ import {
   NO_DATA_FOUND,
   NO_ROWS_FOUND,
   SAVE,
+  SELECTED_JURISDICTIONS,
   STRUCTURES_COUNT,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
+import { ASSIGN_JURISDICTIONS_URL, INTERVENTION_TYPE_CODE } from '../../../../constants';
 import {
   LoadOpenSRPHierarchy,
   putJurisdictionsToPlan,
@@ -45,6 +46,8 @@ import hierarchyReducer, {
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
+import { InterventionType } from '../../../../store/ducks/plans';
+import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
 
@@ -98,7 +101,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     plan,
     serviceClass,
   } = props;
-
   /** helper function that decides which action creator to call when
    * changing the selected status of a node
    * @param nodId - id of the node of interest
@@ -112,7 +114,26 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     }
   }
 
+  /** function for determining whether the jurisdiction assignment table allows for
+   * multiple selection or single selection based on the plan intervention type
+   */
+  const isSingleSelect = () => {
+    const interventionType = plan.useContext.find(
+      element => element.code === INTERVENTION_TYPE_CODE
+    );
+    if (
+      interventionType &&
+      (interventionType.valueCodableConcept === InterventionType.FI ||
+        interventionType.valueCodableConcept === InterventionType.DynamicFI)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const [loading, setLoading] = React.useState<boolean>(true);
+  const [singleSelect] = React.useState<boolean>(isSingleSelect);
   const { broken, errorMessage, handleBrokenPage } = useHandleBrokenPage();
   const baseUrl = `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
 
@@ -188,13 +209,16 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     currentPage,
     pages,
   };
-
   const data = currentChildren.map(node => {
     return [
       <input
         key={`${node.model.id}-check-jurisdiction`}
         type="checkbox"
         checked={nodeIsSelected(node)}
+        disabled={
+          singleSelect &&
+          (node.hasChildren() || (selectedLeafNodes.length > 0 && !nodeIsSelected(node)))
+        }
         // tslint:disable-next-line: jsx-no-lambda
         onChange={e => {
           const newSelectedValue = e.target.checked;
@@ -203,9 +227,15 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
       node.model.node.attributes.structureCount,
+      <ConnectedSelectedJurisdictionsCount
+        key={`selected-jurisdictions-txt`}
+        parentNode={node}
+        id={node.model.id}
+        jurisdictions={selectedLeafNodes}
+      />,
     ];
   });
-  const headerItems = ['', NAME, STRUCTURES_COUNT];
+  const headerItems = ['', NAME, STRUCTURES_COUNT, SELECTED_JURISDICTIONS];
   const tableClass = 'table table-bordered';
 
   /** on change handler attached to the parent checkbox
@@ -230,11 +260,13 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
             <input
               type="checkbox"
               checked={checkParentCheckbox(currentParentNode, currentChildren)}
+              disabled={singleSelect}
               onChange={onParentCheckboxClick}
             />
           </th>
           <th style={{ width: '70%' }}>{headerItems[1]}</th>
           <th>{headerItems[2]}</th>
+          <th>{headerItems[3]}</th>
         </tr>
       </thead>
     );
