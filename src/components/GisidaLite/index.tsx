@@ -134,4 +134,14 @@ const GisidaLite = (props: GisidaLiteProps) => {
 
 GisidaLite.defaultProps = gisidaLiteDefaultProps;
 
-export { GisidaLite };
+const arePropsEqual = (prevProps: GisidaLiteProps, nextProps: GisidaLiteProps) => {
+  if (prevProps.layers.length !== nextProps.layers.length) {
+    return false;
+  }
+
+  return true;
+};
+
+const MemoizedGisidaLite = React.memo(GisidaLite, arePropsEqual);
+
+export { GisidaLite, MemoizedGisidaLite };
