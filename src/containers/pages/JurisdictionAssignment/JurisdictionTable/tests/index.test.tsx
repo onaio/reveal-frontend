@@ -81,6 +81,10 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       </Provider>
     );
 
+    const div = document.createElement('div');
+    div.setAttribute('id', 'jurisdiction-tooltip-2942');
+    document.body.appendChild(div);
+
     // first flush promises
     await act(async () => {
       await new Promise(resolve => setImmediate(resolve));
@@ -95,6 +99,19 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         .at(0)
         .text()
         .includes('Lusaka')
+    ).toBeTruthy();
+
+    // simulate click on checkbox to check
+    tbodyRow.find('input').simulate('change', { target: { name: '', checked: true } });
+    wrapper.update();
+    renderTable(wrapper, 'input checked');
+
+    expect(
+      wrapper
+        .find('tbody tr')
+        .at(0)
+        .text()
+        .includes('1')
     ).toBeTruthy();
 
     // test drilldown
@@ -128,25 +145,6 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         .at(0)
         .text()
         .includes('Akros_1')
-    ).toBeTruthy();
-
-    expect(toJson(tbodyRow.find('SelectedJurisdictionsCount'))).toMatchSnapshot(
-      'structure count rendered'
-    );
-
-    /* expect(
-      tbodyRow
-        .find('SelectedJurisdictionsCount')
-        .at(0)
-        .text()
-        .includes('')
-    ).toBeTruthy(); */
-
-    expect(
-      (wrapper
-        .find('SelectedJurisdictionsCount')
-        .first()
-        .props() as any).parentNode
     ).toBeTruthy();
 
     // akros is the last child it should not be clickable
