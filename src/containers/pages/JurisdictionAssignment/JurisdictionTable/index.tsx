@@ -19,6 +19,7 @@ import {
   NAME,
   NO_DATA_FOUND,
   NO_ROWS_FOUND,
+  RISK_LABEL,
   SAVE,
   STATUS_SETTING,
   STRUCTURES_COUNT,
@@ -228,6 +229,9 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   };
   const data = currentChildren.map(node => {
     const isLeafNode: boolean = leafNodes.map(leaf => leaf.model.id).includes(node.model.id);
+    const metaObj = jurisdictionsMetadata.find(
+      (m: JurisdictionsMetadata) => m.key === node.model.id
+    ) as JurisdictionsMetadata;
     return [
       <input
         key={`${node.model.id}-check-jurisdiction`}
@@ -240,6 +244,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         }}
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
+      (metaObj && metaObj.value) || '',
       node.model.meta.selected && isLeafNode
         ? jurisdictionMetaIds.length &&
           jurisdictionMetaIds.includes(node.model.id) &&
@@ -253,7 +258,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       node.model.node.attributes.structureCount,
     ];
   });
-  const headerItems = ['', NAME, STATUS_SETTING, STRUCTURES_COUNT];
+  const headerItems = ['', NAME, RISK_LABEL, STATUS_SETTING, STRUCTURES_COUNT];
   const tableClass = 'table table-bordered';
 
   /** on change handler attached to the parent checkbox
@@ -284,6 +289,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           <th style={{ width: '70%' }}>{headerItems[1]}</th>
           <th>{headerItems[2]}</th>
           <th>{headerItems[3]}</th>
+          <th>{headerItems[4]}</th>
         </tr>
       </thead>
     );
