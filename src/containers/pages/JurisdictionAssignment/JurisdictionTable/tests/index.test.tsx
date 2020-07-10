@@ -11,7 +11,7 @@ import { ConnectedJurisdictionTable } from '..';
 import { ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { sampleHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
-import { plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { irsPlans, plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
@@ -34,7 +34,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
   });
 
   it('works correctly through a full render cycle', async () => {
-    const plan = plans[0];
+    const plan = irsPlans[0];
 
     /** current architecture does not use the Jurisdiction table as a view
      * it is seen as a controlled component that is feed some data from controlling component
@@ -138,7 +138,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
 
   it('selects and deselect nodes', async () => {
     fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
-    const plan = plans[0];
+    const plan = irsPlans[0];
     const props = {
       plan,
       rootJurisdictionId: '2942',
@@ -194,7 +194,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
 
   it('shows loader', async () => {
     fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
-    const plan = plans[0];
+    const plan = irsPlans[0];
     const props = {
       plan,
       rootJurisdictionId: '2942',
@@ -217,7 +217,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
 
   it('shows errorMessage', async () => {
     fetch.once(JSON.stringify({}), { status: 500 });
-    const plan = plans[0];
+    const plan = irsPlans[0];
     const props = {
       plan,
       rootJurisdictionId: '2942',
@@ -240,5 +240,97 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     expect(wrapper.find('ErrorPage').text()).toMatchSnapshot(
       'should have jurisdiction hierarchy error message'
     );
+  });
+
+  it('disables and enables checkbox for FI plans', async () => {
+    const plan = plans[0];
+    const CustomView = (props: RouteComponentProps<Dictionary>) => {
+      const mockProps = {
+        currentParentId: props.match.params.parentId,
+        plan,
+        rootJurisdictionId: '2942',
+      };
+      return <ConnectedJurisdictionTable {...mockProps} />;
+    };
+
+    const App = () => {
+      return (
+        <Switch>
+          <Route
+            exact={true}
+            path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
+            component={CustomView}
+          />
+          <Route exact={true} path={`${ASSIGN_JURISDICTIONS_URL}/:planId`} component={CustomView} />
+        </Switch>
+      );
+    };
+
+    fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter
+          initialEntries={[
+            {
+              hash: '',
+              pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+              search: '',
+              state: {},
+            },
+          ]}
+        >
+          <App />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    // first flush promises
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    const tbodyRow = wrapper.find('tbody tr');
+    expect(
+      wrapper
+        .find('tbody tr')
+        .at(0)
+        .find('input')
+        .prop('disabled')
+    ).toBe(true);
+
+    // drilldown
+    tbodyRow
+      .at(0)
+      .find('NodeCell Link a')
+      .simulate('click', { button: 0 });
+
+    wrapper.update();
+
+    expect(
+      wrapper
+        .find('tbody tr')
+        .at(0)
+        .find('input')
+        .prop('disabled')
+    ).toBe(true);
+
+    // drill down
+    wrapper
+      .find('tbody tr')
+      .at(0)
+      .find('NodeCell a')
+      .simulate('click', { button: 0 });
+
+    wrapper.update();
+
+    expect(
+      wrapper
+        .find('tbody tr')
+        .at(0)
+        .find('input')
+        .prop('disabled')
+    ).toBe(false);
   });
 });

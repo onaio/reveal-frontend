@@ -20,12 +20,7 @@ import {
   STRUCTURES_COUNT,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
-import {
-  ASSIGN_JURISDICTIONS_URL,
-  INTERVENTION_TYPE_CODE,
-  INTERVENTION_TYPE_DYNAMIC_FI,
-  INTERVENTION_TYPE_FI,
-} from '../../../../constants';
+import { ASSIGN_JURISDICTIONS_URL, INTERVENTION_TYPE_CODE } from '../../../../constants';
 import {
   LoadOpenSRPHierarchy,
   putJurisdictionsToPlan,
@@ -50,6 +45,7 @@ import hierarchyReducer, {
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
+import { InterventionType } from '../../../../store/ducks/plans';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
 
@@ -122,8 +118,8 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     );
     if (
       interventionType &&
-      (interventionType.valueCodableConcept === INTERVENTION_TYPE_FI ||
-        interventionType.valueCodableConcept === INTERVENTION_TYPE_DYNAMIC_FI)
+      (interventionType.valueCodableConcept === InterventionType.FI ||
+        interventionType.valueCodableConcept === InterventionType.DynamicFI)
     ) {
       return true;
     } else {

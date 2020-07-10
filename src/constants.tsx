@@ -232,7 +232,3 @@ export const APPLICATION_X_CSV = 'application/x-csv';
 export const TEXT_COMMA_SEPARATED_VALUES = 'text/comma-separated-values';
 export const TEXT_X_COMMA_SEPARATED_VALUES = 'text/x-comma-separated-values';
 export const TEXT_TAB_SEPARATED_VALUES = 'text/tab-separated-values';
-
-/** Intervention Types */
-export const INTERVENTION_TYPE_FI = 'FI';
-export const INTERVENTION_TYPE_DYNAMIC_FI = 'Dynamic-FI';
