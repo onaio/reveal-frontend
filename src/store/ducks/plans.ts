@@ -13,6 +13,9 @@ export const reducerName = 'plans';
 
 /** Enum representing the possible intervention types */
 export enum InterventionType {
+  DynamicFI = 'Dynamic-FI',
+  DynamicIRS = 'Dynamic-IRS',
+  DynamicMDA = 'Dynamic-MDA',
   FI = 'FI',
   IRS = 'IRS',
   MDA = 'MDA',

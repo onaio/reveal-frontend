@@ -1,10 +1,15 @@
+import { Dictionary } from '@onaio/utils';
 import { parseISO } from 'date-fns';
 import moment from 'moment';
 import { FormEvent } from 'react';
 import { DEFAULT_ACTIVITY_DURATION_DAYS, DEFAULT_TIME } from '../../../../configs/env';
+import {
+  planActivities as planActivitiesFromConfig,
+  PlanActivity,
+} from '../../../../configs/settings';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
-import { PlanActivityFormFields, PlanFormFields } from '../helpers';
-import { GoalUnit, PlanActivities } from '../types';
+import { PlanActivityFormFields, PlanFormFields } from '../types';
+import { GoalUnit } from '../types';
 
 const goalDue = moment()
   .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
@@ -19,1194 +24,114 @@ timingPeriodEnd.setMilliseconds(0);
 const timingPeriodStart = moment().toDate();
 timingPeriodStart.setMilliseconds(0);
 
-export const expectedActivity = {
-  BCC: {
-    actionCode: 'BCC',
-    actionDescription: 'Conduct BCC activity',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Behaviour Change Communication',
-    goalDescription: 'Complete at least 1 BCC activity for the operational area',
+export const expectedActivity: Dictionary = {};
+export const planActivityWithEmptyfields: Dictionary = {};
+
+const processActivity = (activityObj: PlanActivity) => {
+  return {
+    ...(activityObj.action.condition && {
+      condition: activityObj.action.condition.map(item => {
+        return {
+          description: item.expression.description || '',
+          expression: item.expression.expression || '',
+        };
+      }),
+    }),
+    ...(activityObj.action.trigger && {
+      trigger: activityObj.action.trigger.map(item => {
+        return {
+          ...(item.expression && {
+            description: item.expression.description || '',
+            expression: item.expression.expression,
+          }),
+          name: item.name,
+        };
+      }),
+    }),
+    actionCode: activityObj.action.code,
+    actionDefinitionUri: activityObj.action.definitionUri || '',
+    actionDescription: activityObj.action.description || '',
+    actionIdentifier: activityObj.action.identifier || '',
+    actionReason: activityObj.action.reason || '',
+    actionTitle: activityObj.action.title || '',
+    goalDescription: activityObj.goal.description || '',
     goalDue,
     goalPriority: 'medium-priority',
-    goalValue: 1,
+    goalValue: activityObj.goal.target[0].detail.detailQuantity.value,
     timingPeriodEnd,
     timingPeriodStart,
-  },
-  IRS: {
-    actionCode: 'IRS',
-    actionDescription: 'Visit each structure in the operational area and attempt to spray',
-    actionIdentifier: '',
-    actionReason: 'Routine',
-    actionTitle: 'Spray Structures',
-    goalDescription: 'Spray structures in the operational area',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 90,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  bednetDistribution: {
-    actionCode: 'Bednet Distribution',
-    actionDescription:
-      'Visit 100% of residential structures in the operational area and provide nets',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Bednet Distribution',
-    goalDescription:
-      'Visit 100% of residential structures in the operational area and provide nets',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 100,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  bloodScreening: {
-    actionCode: 'Blood Screening',
-    actionDescription:
-      'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Blood screening',
-    goalDescription:
-      'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 100,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  caseConfirmation: {
-    actionCode: 'Case Confirmation',
-    actionDescription: 'Confirm the index case',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Case Confirmation',
-    goalDescription: 'Confirm the index case',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 1,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  familyRegistration: {
-    actionCode: 'RACD Register Family',
-    actionDescription:
-      'Register all families & family members in all residential structures enumerated (100%) within the operational area',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Family Registration',
-    goalDescription:
-      'Register all families & family members in all residential structures enumerated (100%) within the operational area',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 100,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  larvalDipping: {
-    actionCode: 'Larval Dipping',
-    actionDescription:
-      'Perform a minimum of three larval dipping activities in the operational area',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Larval Dipping',
-    goalDescription: 'Perform a minimum of three larval dipping activities in the operational area',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 3,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  mosquitoCollection: {
-    actionCode: 'Mosquito Collection',
-    actionDescription:
-      'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Mosquito Collection',
-    goalDescription:
-      'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 3,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
+  };
 };
 
-export const planActivityWithEmptyfields: PlanActivities = {
-  BCC: {
-    action: {
-      code: 'BCC',
-      description: '',
-      goalId: 'BCC_Focus',
-      identifier: '',
-      prefix: 99,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Operational_Area',
-      },
-      taskTemplate: 'BCC_Focus',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: 'Behaviour Change Communication',
-    },
-    goal: {
-      description: '',
-      id: 'BCC_Focus',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.ACTIVITY,
-              value: 1,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Number of BCC Activities Completed',
-        },
-      ],
-    },
-  },
-  IRS: {
-    action: {
-      code: 'IRS',
-      description: '',
-      goalId: 'IRS',
-      identifier: '',
-      prefix: 7,
-      reason: 'Routine',
-      subjectCodableConcept: {
-        text: 'Residential_Structure',
-      },
-      taskTemplate: 'Spray_Structures',
-      timingPeriod: {
-        end: '',
-        start: '',
-      },
-      title: '',
-    },
-    goal: {
-      description: '',
-      id: 'IRS',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.PERCENT,
-              value: 90,
-            },
-          },
-          due: '',
-          measure: 'Percent of structures sprayed',
-        },
-      ],
-    },
-  },
-  bednetDistribution: {
-    action: {
-      code: 'Bednet Distribution',
-      description: '',
-      goalId: 'RACD_bednet_distribution',
-      identifier: '',
-      prefix: 4,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Residential_Structure',
-      },
-      taskTemplate: 'Bednet_Distribution',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: '',
-    },
-    goal: {
-      description: '',
-      id: 'RACD_bednet_distribution',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.PERCENT,
-              value: 100,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Percent of residential structures received nets',
-        },
-      ],
-    },
-  },
-  bloodScreening: {
-    action: {
-      code: 'Blood Screening',
-      description: '',
-      goalId: 'RACD_Blood_Screening',
-      identifier: '',
-      prefix: 3,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Person',
-      },
-      taskTemplate: 'RACD_Blood_Screening',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: '',
-    },
-    goal: {
-      description: '',
-      id: 'RACD_Blood_Screening',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.PERSON,
-              value: 100,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Number of registered people tested',
-        },
-      ],
-    },
-  },
-  caseConfirmation: {
-    action: {
-      code: 'Case Confirmation',
-      description: '',
-      goalId: 'Case_Confirmation',
-      identifier: '',
-      prefix: 1,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Person',
-      },
-      taskTemplate: 'Case_Confirmation',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: '',
-    },
-    goal: {
-      description: '',
-      id: 'Case_Confirmation',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.CASE,
-              value: 1,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Number of cases confirmed',
-        },
-      ],
-    },
-  },
-  familyRegistration: {
-    action: {
-      code: 'RACD Register Family',
-      description: '',
-      goalId: 'RACD_register_families',
-      identifier: '',
-      prefix: 2,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Person',
-      },
-      taskTemplate: 'RACD_register_families',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: '',
-    },
-    goal: {
-      description: '',
-      id: 'RACD_register_families',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.PERCENT,
-              value: 100,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Percent of residential structures with full family registration',
-        },
-      ],
-    },
-  },
-  larvalDipping: {
-    action: {
-      code: 'Larval Dipping',
-      description: '',
-      goalId: 'Larval_Dipping',
-      identifier: '',
-      prefix: 5,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Person',
-      },
-      taskTemplate: 'Larval_Dipping',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: '',
-    },
-    goal: {
-      description: '',
-      id: 'Larval_Dipping',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.ACTIVITY,
-              value: 3,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Number of larval dipping activities completed',
-        },
-      ],
-    },
-  },
-  mosquitoCollection: {
-    action: {
-      code: 'Mosquito Collection',
-      description: '',
-      goalId: 'Mosquito_Collection',
-      identifier: '',
-      prefix: 6,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Person',
-      },
-      taskTemplate: 'Mosquito_Collection_Point',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: '',
-    },
-    goal: {
-      description: '',
-      id: 'Mosquito_Collection',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.ACTIVITY,
-              value: 3,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Number of mosquito collection activities completed',
-        },
-      ],
-    },
-  },
-  pointAdverseMDA: {
-    action: {
-      code: 'MDA Adverse Event(s)',
-      description: '',
-      goalId: 'Point_adverse_effect_MDA',
-      identifier: '',
-      prefix: 6,
-      reason: 'Routine',
-      subjectCodableConcept: {
-        text: 'MDA_Point_Adverse_Event',
-      },
-      taskTemplate: 'MDA_Point_Adverse_Event',
-      timingPeriod: {
-        end: '',
-        start: '',
-      },
-      title: 'MDA Adverse Event(s)',
-    },
-    goal: {
-      description: '',
-      id: 'Point_adverse_effect_MDA',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.PERCENT,
-              value: 2,
-            },
-          },
-          due: '',
-          measure: 'Percent of people who reported adverse events',
-        },
-      ],
-    },
-  },
-  pointDispenseMDA: {
-    action: {
-      code: 'MDA Dispense',
-      description: '',
-      goalId: 'Point_dispense_MDA',
-      identifier: '',
-      prefix: 6,
-      reason: 'Routine',
-      subjectCodableConcept: {
-        text: 'MDA_Point_Dispense',
-      },
-      taskTemplate: 'MDA_Point_Dispense',
-      timingPeriod: {
-        end: '',
-        start: '',
-      },
-      title: 'MDA Dispense',
-    },
-    goal: {
-      description: '',
-      id: 'Point_dispense_MDA',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.PERCENT,
-              value: 2,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Percent of eligible people',
-        },
-      ],
-    },
-  },
-};
+for (const [key, activityObj] of Object.entries(planActivitiesFromConfig)) {
+  // build expectedActivity
+  expectedActivity[key] = processActivity(activityObj);
 
-export const expectedActivityEmptyField = {
-  BCC: {
-    actionCode: 'BCC',
-    actionDescription: '',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Behaviour Change Communication',
-    goalDescription: '',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 1,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  IRS: {
-    actionCode: 'IRS',
-    actionDescription: '',
-    actionIdentifier: '',
-    actionReason: 'Routine',
-    actionTitle: '',
-    goalDescription: '',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 90,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  bednetDistribution: {
-    actionCode: 'Bednet Distribution',
-    actionDescription: '',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: '',
-    goalDescription: '',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 100,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  bloodScreening: {
-    actionCode: 'Blood Screening',
-    actionDescription: '',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: '',
-    goalDescription: '',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 100,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  caseConfirmation: {
-    actionCode: 'Case Confirmation',
-    actionDescription: '',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: '',
-    goalDescription: '',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 1,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  familyRegistration: {
-    actionCode: 'RACD Register Family',
-    actionDescription: '',
-    actionIdentifier: '',
-    actionReason: '',
-    actionTitle: '',
-    goalDescription: '',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 100,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  larvalDipping: {
-    actionCode: 'Larval Dipping',
-    actionDescription: '',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: '',
-    goalDescription: '',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 3,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  mosquitoCollection: {
-    actionCode: 'Mosquito Collection',
-    actionDescription: '',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: '',
-    goalDescription: '',
-    goalDue,
-    goalPriority: 'medium-priority',
-    goalValue: 3,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-};
+  // build planActivityWithEmptyfields
+  planActivityWithEmptyfields[key] = {
+    ...activityObj,
+    action: {
+      ...activityObj.action,
+      description: '',
+      identifier: '',
+    },
+    goal: {
+      ...activityObj.goal,
+      description: '',
+    },
+  };
+}
 
-export const extractedActivitiesFromForms = [
-  {
-    actionCode: 'Case Confirmation',
-    actionDescription: 'Confirm the index case',
+export const expectedActivityEmptyField: Dictionary = {};
+for (const [key, activityObj] of Object.entries(expectedActivity)) {
+  expectedActivityEmptyField[key] = {
+    ...activityObj,
+    actionDescription: '',
     actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Case Confirmation',
-    goalDescription: 'Confirm the index case',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 1,
-    timingPeriodEnd,
-    timingPeriodStart,
-  },
-  {
-    actionCode: 'RACD Register Family',
-    actionDescription:
-      'Register all families & family members in all residential structures enumerated (100%) within the operational area',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Family Registration',
-    goalDescription:
-      'Register all families & family members in all residential structures enumerated (100%) within the operational area',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 100,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'Blood Screening',
-    actionDescription:
-      'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Blood screening',
-    goalDescription:
-      'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 100,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'Bednet Distribution',
-    actionDescription:
-      'Visit 100% of residential structures in the operational area and provide nets',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Bednet Distribution',
-    goalDescription:
-      'Visit 100% of residential structures in the operational area and provide nets',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 100,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'Larval Dipping',
-    actionDescription:
-      'Perform a minimum of three larval dipping activities in the operational area',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Larval Dipping',
-    goalDescription: 'Perform a minimum of three larval dipping activities in the operational area',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 3,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'Mosquito Collection',
-    actionDescription:
-      'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Mosquito Collection',
-    goalDescription:
-      'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 3,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'MDA Adverse Event(s)',
-    actionDescription: 'Report any adverse events from medication',
-    actionIdentifier: '',
-    actionReason: 'Routine',
-    actionTitle: 'MDA Adverse Event(s)',
-    goalDescription: 'Report any adverse events from medication',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 2,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'MDA Dispense',
-    actionDescription: 'Dispense medication to each eligible person',
-    actionIdentifier: '',
-    actionReason: 'Routine',
-    actionTitle: 'MDA Dispense',
-    goalDescription: 'Dispense medication to each eligible person',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 2,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'IRS',
-    actionDescription: 'Visit each structure in the operational area and attempt to spray',
-    actionIdentifier: '',
-    actionReason: 'Routine',
-    actionTitle: 'Spray Structures',
-    goalDescription: 'Spray structures in the operational area',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 90,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-  {
-    actionCode: 'BCC',
-    actionDescription: 'Conduct BCC activity',
-    actionIdentifier: '',
-    actionReason: 'Investigation',
-    actionTitle: 'Behaviour Change Communication',
-    goalDescription: 'Complete at least 1 BCC activity for the operational area',
-    goalDue: goalDue.toISOString(),
-    goalPriority: 'medium-priority',
-    goalValue: 1,
-    timingPeriodEnd: timingPeriodEnd.toISOString(),
-    timingPeriodStart: timingPeriodStart.toISOString(),
-  },
-];
+    goalDescription: '',
+  };
+}
 
-export const planActivities: PlanActivities = {
-  BCC: {
-    action: {
-      code: 'BCC',
-      description: 'Conduct BCC activity',
-      goalId: 'BCC_Focus',
-      identifier: '',
-      prefix: 99,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Operational_Area',
-      },
-      taskTemplate: 'BCC_Focus',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: 'Behaviour Change Communication',
-    },
-    goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.ACTIVITY,
-              value: 1,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Number of BCC Activities Completed',
-        },
-      ],
-    },
-  },
-  IRS: {
-    action: {
-      code: 'IRS',
-      description: 'Visit each structure in the operational area and attempt to spray',
-      goalId: 'IRS',
-      identifier: '',
-      prefix: 7,
-      reason: 'Routine',
-      subjectCodableConcept: {
-        text: 'Residential_Structure',
-      },
-      taskTemplate: 'Spray_Structures',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: 'Spray Structures',
-    },
-    goal: {
-      description: 'Spray structures in the operational area',
-      id: 'IRS',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.PERCENT,
-              value: 90,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Percent of structures sprayed',
-        },
-      ],
-    },
-  },
-  bednetDistribution: {
-    action: {
-      code: 'Bednet Distribution',
-      description: 'Visit 100% of residential structures in the operational area and provide nets',
-      goalId: 'RACD_bednet_distribution',
-      identifier: '',
-      prefix: 4,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Residential_Structure',
-      },
-      taskTemplate: 'Bednet_Distribution',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: 'Bednet Distribution',
-    },
-    goal: {
-      description: 'Visit 100% of residential structures in the operational area and provide nets',
-      id: 'RACD_bednet_distribution',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.PERCENT,
-              value: 100,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Percent of residential structures received nets',
-        },
-      ],
-    },
-  },
-  bloodScreening: {
-    action: {
-      code: 'Blood Screening',
-      description:
-        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
-      goalId: 'RACD_Blood_Screening',
-      identifier: '',
-      prefix: 3,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Person',
-      },
-      taskTemplate: 'RACD_Blood_Screening',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: 'Blood screening',
-    },
-    goal: {
-      description:
-        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
-      id: 'RACD_Blood_Screening',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.PERSON,
-              value: 100,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Number of registered people tested',
-        },
-      ],
-    },
-  },
-  caseConfirmation: {
-    action: {
-      code: 'Case Confirmation',
-      description: 'Confirm the index case',
-      goalId: 'Case_Confirmation',
-      identifier: '',
-      prefix: 1,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Case_Confirmation',
-      },
-      taskTemplate: 'Case_Confirmation',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: 'Case Confirmation',
-    },
-    goal: {
-      description: 'Confirm the index case',
-      id: 'Case_Confirmation',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.CASE,
-              value: 1,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Number of cases confirmed',
-        },
-      ],
-    },
-  },
-  familyRegistration: {
-    action: {
-      code: 'RACD Register Family',
-      description:
-        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
-      goalId: 'RACD_register_families',
-      identifier: '',
-      prefix: 2,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Residential_Structure',
-      },
-      taskTemplate: 'RACD_register_families',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: 'Family Registration',
-    },
-    goal: {
-      description:
-        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
-      id: 'RACD_register_families',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.PERCENT,
-              value: 100,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Percent of residential structures with full family registration',
-        },
-      ],
-    },
-  },
-  larvalDipping: {
-    action: {
-      code: 'Larval Dipping',
-      description: 'Perform a minimum of three larval dipping activities in the operational area',
-      goalId: 'Larval_Dipping',
-      identifier: '',
-      prefix: 5,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Breeding_Site',
-      },
-      taskTemplate: 'Larval_Dipping',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: 'Larval Dipping',
-    },
-    goal: {
-      description: 'Perform a minimum of three larval dipping activities in the operational area',
-      id: 'Larval_Dipping',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.ACTIVITY,
-              value: 3,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Number of larval dipping activities completed',
-        },
-      ],
-    },
-  },
-  mosquitoCollection: {
-    action: {
-      code: 'Mosquito Collection',
-      description:
-        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
-      goalId: 'Mosquito_Collection',
-      identifier: '',
-      prefix: 6,
-      reason: 'Investigation',
-      subjectCodableConcept: {
-        text: 'Mosquito_Collection_Point',
-      },
-      taskTemplate: 'Mosquito_Collection_Point',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: 'Mosquito Collection',
-    },
-    goal: {
-      description:
-        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
-      id: 'Mosquito_Collection',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.ACTIVITY,
-              value: 3,
-            },
-          },
-          due: goalDue.toISOString(),
-          measure: 'Number of mosquito collection activities completed',
-        },
-      ],
-    },
-  },
+export const extractedActivitiesFromForms = Object.values(planActivitiesFromConfig)
+  .sort((a, b) => a.action.prefix - b.action.prefix)
+  .map(e => {
+    return processActivity(e);
+  });
 
-  pointAdverseMDA: {
+export const planActivities: Dictionary = {};
+for (const [key, activityObj] of Object.entries(planActivitiesFromConfig)) {
+  planActivities[key] = {
+    ...activityObj,
     action: {
-      code: 'MDA Adverse Event(s)',
-      description: 'Report any adverse events from medication',
-      goalId: 'Point_adverse_effect_MDA',
-      identifier: '',
-      prefix: 6,
-      reason: 'Routine',
-      subjectCodableConcept: {
-        text: 'MDA_Point_Adverse_Event',
-      },
-      taskTemplate: 'MDA_Point_Adverse_Event',
+      ...activityObj.action,
       timingPeriod: {
         end: timingPeriodEnd.toISOString(),
         start: timingPeriodStart.toISOString(),
       },
-      title: 'MDA Adverse Event(s)',
     },
     goal: {
-      description: 'Report any adverse events from medication',
-      id: 'Point_adverse_effect_MDA',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.PERCENT,
-              value: 2,
-            },
-          },
-          due: timingPeriodEnd.toISOString(),
-          measure: 'Percent of people who reported adverse events',
-        },
-      ],
+      ...activityObj.goal,
+      target: activityObj.goal.target.map(e => {
+        return {
+          ...e,
+          due: goalDue.toISOString(),
+        };
+      }),
     },
-  },
-  pointDispenseMDA: {
-    action: {
-      code: 'MDA Dispense',
-      description: 'Dispense medication to each eligible person',
-      goalId: 'Point_dispense_MDA',
-      identifier: '',
-      prefix: 6,
-      reason: 'Routine',
-      subjectCodableConcept: {
-        text: 'MDA_Point_Dispense',
-      },
-      taskTemplate: 'MDA_Point_Dispense',
-      timingPeriod: {
-        end: timingPeriodEnd.toISOString(),
-        start: timingPeriodStart.toISOString(),
-      },
-      title: 'MDA Dispense',
-    },
-    goal: {
-      description: 'Dispense medication to each eligible person',
-      id: 'Point_dispense_MDA',
-      priority: 'medium-priority',
-      target: [
-        {
-          detail: {
-            detailQuantity: {
-              comparator: '>=',
-              unit: GoalUnit.PERCENT,
-              value: 2,
-            },
-          },
-          due: timingPeriodEnd.toISOString(),
-          measure: 'Percent of eligible people',
-        },
-      ],
-    },
-  },
-};
+  };
+}
 
-export const planActivityWithoutTargets = {
-  ...planActivities,
-  BCC: {
-    ...planActivities.BCC,
+export const planActivityWithoutTargets: Dictionary = {};
+for (const [key, activity] of Object.entries(planActivities)) {
+  planActivityWithoutTargets[key] = {
+    ...activity,
     goal: {
-      description: 'Complete at least 1 BCC activity for the operational area',
-      id: 'BCC_Focus',
-      priority: 'medium-priority',
+      description: activity.goal.description,
+      id: activity.goal.id,
+      priority: activity.goal.priority,
     },
-  },
-  IRS: {
-    ...planActivities.IRS,
-    goal: {
-      description: 'Spray structures in the operational area',
-      id: 'IRS',
-      priority: 'medium-priority',
-    },
-  },
-  bednetDistribution: {
-    ...planActivities.bednetDistribution,
-    goal: {
-      description: 'Visit 100% of residential structures in the operational area and provide nets',
-      id: 'RACD_bednet_distribution',
-      priority: 'medium-priority',
-    },
-  },
-  bloodScreening: {
-    ...planActivities.bloodScreening,
-    goal: {
-      description:
-        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
-      id: 'RACD_Blood_Screening',
-      priority: 'medium-priority',
-    },
-  },
-  caseConfirmation: {
-    ...planActivities.caseConfirmation,
-    goal: {
-      description: 'Confirm the index case',
-      id: 'Case_Confirmation',
-      priority: 'medium-priority',
-    },
-  },
-  familyRegistration: {
-    ...planActivities.familyRegistration,
-    goal: {
-      description:
-        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
-      id: 'RACD_register_families',
-      priority: 'medium-priority',
-    },
-  },
-  larvalDipping: {
-    ...planActivities.larvalDipping,
-    goal: {
-      description: 'Perform a minimum of three larval dipping activities in the operational area',
-      id: 'Larval_Dipping',
-      priority: 'medium-priority',
-    },
-  },
-  mosquitoCollection: {
-    ...planActivities.mosquitoCollection,
-    goal: {
-      description:
-        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
-      id: 'Mosquito_Collection',
-      priority: 'medium-priority',
-    },
-  },
-} as PlanActivities;
+  };
+}
 
 export const activities: PlanActivityFormFields[] = [
   {
@@ -1321,7 +246,7 @@ export const expectedExtractActivityFromPlanformResult = {
       prefix: 1,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Jurisdiction',
       },
       taskTemplate: 'Case_Confirmation',
       timingPeriod: {
@@ -1339,7 +264,7 @@ export const expectedExtractActivityFromPlanformResult = {
       prefix: 2,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Residential_Structure',
+        text: 'Location',
       },
       taskTemplate: 'RACD_register_families',
       timingPeriod: {
@@ -1374,7 +299,7 @@ export const expectedExtractActivityFromPlanformResult = {
       prefix: 4,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Residential_Structure',
+        text: 'Location',
       },
       taskTemplate: 'Bednet_Distribution',
       timingPeriod: {
@@ -1391,7 +316,7 @@ export const expectedExtractActivityFromPlanformResult = {
       prefix: 5,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Breeding_Site',
+        text: 'Location',
       },
       taskTemplate: 'Larval_Dipping',
       timingPeriod: {
@@ -1409,7 +334,7 @@ export const expectedExtractActivityFromPlanformResult = {
       prefix: 6,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Mosquito_Collection_Point',
+        text: 'Location',
       },
       taskTemplate: 'Mosquito_Collection_Point',
       timingPeriod: {
@@ -1426,7 +351,7 @@ export const expectedExtractActivityFromPlanformResult = {
       prefix: 7,
       reason: 'Investigation',
       subjectCodableConcept: {
-        text: 'Operational_Area',
+        text: 'Jurisdiction',
       },
       taskTemplate: 'BCC_Focus',
       timingPeriod: {
@@ -1721,7 +646,7 @@ export const expectedPlanDefinition = {
       prefix: 1,
       reason: 'Routine',
       subjectCodableConcept: {
-        text: 'Residential_Structure',
+        text: 'Location',
       },
       taskTemplate: 'Spray_Structures',
       timingPeriod: {
@@ -1736,6 +661,7 @@ export const expectedPlanDefinition = {
     end: '2019-08-29',
     start: '2019-08-09',
   },
+  experimental: false,
   goal: [
     {
       description: 'Spray structures in the operational area',
@@ -1855,6 +781,7 @@ export const planFormValues2 = {
   activities: [
     {
       actionCode: 'Case Confirmation',
+      actionDefinitionUri: '',
       actionDescription: 'Confirm the index case',
       actionIdentifier: 'c711ae51-6432-4b68-84c3-d2b5b1fd1948',
       actionReason: 'Investigation',
@@ -1868,6 +795,7 @@ export const planFormValues2 = {
     },
     {
       actionCode: 'RACD Register Family',
+      actionDefinitionUri: '',
       actionDescription:
         'Register all families & famiy members in all residential structures enumerated (100%) within the operational area',
       actionIdentifier: '402b8c13-6774-4515-929f-48e71a61a379',
@@ -1883,6 +811,7 @@ export const planFormValues2 = {
     },
     {
       actionCode: 'Bednet Distribution',
+      actionDefinitionUri: '',
       actionDescription:
         'Visit 100% of residential structures in the operational area and provide nets',
       actionIdentifier: '1bd830ea-50e3-44dc-b855-9d5e9339e2be',
@@ -1898,6 +827,7 @@ export const planFormValues2 = {
     },
     {
       actionCode: 'Blood Screening',
+      actionDefinitionUri: '',
       actionDescription:
         'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
       actionIdentifier: '2303a70e-4e3f-4fb9-a430-f0476010bfb5',
@@ -1913,6 +843,7 @@ export const planFormValues2 = {
     },
     {
       actionCode: 'Larval Dipping',
+      actionDefinitionUri: '',
       actionDescription:
         'Perform a minimum of three larval dipping activities in the operational area',
       actionIdentifier: '2482dfd7-8284-43c6-bea1-a03dcda71ff4',
@@ -1928,6 +859,7 @@ export const planFormValues2 = {
     },
     {
       actionCode: 'Mosquito Collection',
+      actionDefinitionUri: '',
       actionDescription:
         'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
       actionIdentifier: '423f6665-5367-40be-855e-7c5e6941a0c3',
@@ -1943,6 +875,7 @@ export const planFormValues2 = {
     },
     {
       actionCode: 'BCC',
+      actionDefinitionUri: '',
       actionDescription: 'Conduct BCC activity',
       actionIdentifier: 'c8fc89a9-cdd2-4746-8272-650883ae380e',
       actionReason: 'Investigation',
@@ -1969,6 +902,61 @@ export const planFormValues2 = {
   status: 'active',
   taskGenerationStatus: 'False',
   title: 'A2-Lusaka Akros Test Focus 2',
+  version: '1',
+};
+
+export const planFormValues3 = {
+  activities: [
+    {
+      actionCode: 'IRS',
+      actionDescription: 'Visit each structure in the operational area and attempt to spray',
+      actionIdentifier: 'b646cfe1-7180-4494-80b5-ee20579dc343',
+      actionReason: 'Routine',
+      actionTitle: 'Spray Structures',
+      condition: [
+        {
+          description: 'Structure is residential',
+          expression:
+            "$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').text = 'Residential Structure'",
+        },
+        {
+          description: 'Register structure Event submitted for a residential structure',
+          expression:
+            "$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and item.where(linkId='structureType').answer.value ='Residential Structure')",
+        },
+      ],
+      goalDescription: 'Spray structures in the operational area',
+      goalDue: moment('2020-12-31T00:00:00.000Z').toDate(),
+      goalPriority: 'medium-priority',
+      goalValue: 90,
+      timingPeriodEnd: moment('2020-12-31T00:00:00.000Z').toDate(),
+      timingPeriodStart: moment('2020-06-24T00:00:00.000Z').toDate(),
+      trigger: [
+        { name: 'plan-activation' },
+        {
+          description: '',
+          expression: "questionnaire = 'Register_Structure'",
+          name: 'event-submission',
+        },
+      ],
+    },
+  ],
+  caseNum: '',
+  date: moment('2020-06-24T00:00:00.000Z').toDate(),
+  end: moment('2020-12-31T00:00:00.000Z').toDate(),
+  fiReason: undefined,
+  fiStatus: undefined,
+  identifier: '043fc8cb-0459-4b39-b71c-abc15f13a5dd',
+  interventionType: InterventionType.DynamicIRS,
+  jurisdictions: [
+    { id: '6fffaf7f-f16f-4713-a1ac-0cf6e2fe7f2a', name: '6fffaf7f-f16f-4713-a1ac-0cf6e2fe7f2a' },
+  ],
+  name: 'IRS-2020-06-24-Dynamic-Task-Test-Plan',
+  opensrpEventId: undefined,
+  start: moment('2020-06-24T00:00:00.000Z').toDate(),
+  status: PlanStatus.ACTIVE,
+  taskGenerationStatus: 'Disabled',
+  title: 'IRS 2020-06-24 Dynamic Task Test Plan',
   version: '1',
 };
 

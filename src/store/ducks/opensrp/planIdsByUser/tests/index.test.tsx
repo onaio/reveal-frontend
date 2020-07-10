@@ -38,6 +38,7 @@ describe('reducers/opensrp/PlanDefinition.reselect.userNameFilter', () => {
       'f0558ad1-396d-4d97-9fff-c46cf92b6ce6',
       '0e85c238-39c1-4cea-a926-3d89f0c98429',
       'f3da140c-2d2c-4bf7-8189-c2349f143a72',
+      '043fc8cb-0459-4b39-b71c-abc15f13a5dd',
     ]);
     // dispatch call (x1) should not overwrite the work done by dispatch call x.
     const anotherUserName = 'user2';
@@ -51,6 +52,7 @@ describe('reducers/opensrp/PlanDefinition.reselect.userNameFilter', () => {
       'f0558ad1-396d-4d97-9fff-c46cf92b6ce6',
       '0e85c238-39c1-4cea-a926-3d89f0c98429',
       'f3da140c-2d2c-4bf7-8189-c2349f143a72',
+      '043fc8cb-0459-4b39-b71c-abc15f13a5dd',
     ]);
   });
 

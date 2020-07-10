@@ -127,6 +127,7 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
   const [ifDoneHere, setIfDoneHere] = useState<boolean>(false);
   const { initialValues, redirectAfterAction, disabledFields } = props;
   const [globalError, setGlobalError] = useState<string>('');
+  const [disabled, setDisabled] = useState<boolean>(true);
 
   return (
     <div className="form-container">
@@ -155,6 +156,7 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
                 // tslint:disable-next-line: jsx-no-lambda
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   setGlobalError('');
+                  setDisabled(false);
                   setFieldValue(
                     'file',
                     event && event.target && event.target.files && event.target.files[0]
@@ -173,9 +175,9 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
             <Button
               type="submit"
               id="jurisdiction-metadata-form-submit-button"
-              className="btn btn-block btn btn-primary"
+              className="btn btn-primary"
               aria-label={UPLOAD_FILE}
-              disabled={isSubmitting || Object.keys(errors).length > 0}
+              disabled={isSubmitting || Object.keys(errors).length > 0 || disabled}
             >
               {isSubmitting ? UPLOADING : `${UPLOAD} ${FILE}`}
             </Button>

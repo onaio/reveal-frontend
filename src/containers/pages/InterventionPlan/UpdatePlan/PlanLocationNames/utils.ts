@@ -2,7 +2,7 @@ import { OPENSRP_LOCATIONS_BY_PLAN } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import store from '../../../../../store';
-import { fetchLocations, Location } from '../../../../../store/ducks/opensrp/locations';
+import { fetchLocations, Location } from '../../../../../store/ducks/opensrp/planLocations';
 
 /** async function that takes in a planId and calls
  * performs the api call and then updates the store

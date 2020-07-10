@@ -1612,6 +1612,29 @@ export const assignment4 = {
   plan: 'alpha',
   toDate: '2019-12-31T16:00:01-08:00',
 };
+export const assignment5 = {
+  fromDate: '2019-08-31T16:00:00-08:00',
+  jurisdiction: 'blue-base',
+  organization: 'caboose',
+  plan: 'beta',
+  toDate: '2019-12-31T16:00:01-08:00',
+};
+export const assignment6 = {
+  // slightly different from 1
+  fromDate: '2019-08-31T16:00:00-08:00',
+  jurisdiction: 'outpost-number-one',
+  organization: 'griff',
+  plan: 'alpha',
+  toDate: '1979-12-31T16:00:01-08:00', // different end date to simulate retirement
+};
+export const assignment7 = {
+  // slightly different from 1
+  fromDate: '2019-08-31T16:00:00-08:00',
+  jurisdiction: 'outpost-number-one',
+  organization: 'griff',
+  plan: 'alpha',
+  toDate: '2020-12-31T16:00:01-08:00', // different end date to simulate retirement
+};
 export const assignments = [assignment1, assignment2, assignment3, assignment4];
 
 export const practitioners: Practitioner[] = [practitioner1, practitioner2, practitioner3];
@@ -1670,3 +1693,67 @@ export const sortedPlansArray = [
 ];
 
 export const Item = 0.6;
+
+export const JurisdictionMetadata = [
+  {
+    key: '79b139c-3a20-4656-b684-d2d9ed83c94e',
+    value: '80',
+    label: 'test1 metadata',
+    description: 'Jurisdiction Metadata for test1 id 79b139c-3a20-4656-b684-d2d9ed83c94e',
+    uuid: 'e56ce640-38ee-444a-9f06-a53d64a96116',
+    settingsId: '33',
+    settingIdentifier: 'jurisdiction_metadata-risk',
+    settingMetadataId: '92',
+    teamId: '',
+    providerId: 'onatest',
+    locationId: '',
+    v1Settings: false,
+    resolveSettings: false,
+    documentId: 'bc15c480-0319-4711-8bfe-6e0a64b297e3',
+    serverVersion: 1592833111093,
+  },
+  {
+    key: '02ebbc84-5e29-4cd5-9b79-c594058923e9',
+    value: '70',
+    label: 'test2 metadata',
+    description: 'Jurisdiction Metadata for test2 id 02ebbc84-5e29-4cd5-9b79-c594058923e9',
+    uuid: 'fd8dfc3e-7202-4ceb-97ce-13c0b7966e61',
+    settingsId: '33',
+    settingIdentifier: 'jurisdiction_metadata-risk',
+    settingMetadataId: '93',
+    teamId: '',
+    providerId: 'onatest',
+    locationId: '',
+    v1Settings: false,
+    resolveSettings: false,
+    documentId: 'bc15c480-0319-4711-8bfe-6e0a64b297e3',
+    serverVersion: 1592833111093,
+  },
+];
+
+export const jurisdictionsResponse = [
+  {
+    type: 'Feature',
+    id: '2980',
+    properties: {
+      status: 'Active',
+      parentId: '2941',
+      name: 'Nyaluwiro',
+      geographicLevel: 1,
+      version: 0,
+    },
+    serverVersion: 1542961567681,
+  },
+  {
+    type: 'Feature',
+    id: '3087',
+    properties: {
+      status: 'Active',
+      parentId: '2967',
+      name: 'KSB_25',
+      geographicLevel: 2,
+      version: 0,
+    },
+    serverVersion: 1542961695762,
+  },
+];

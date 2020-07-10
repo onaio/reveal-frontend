@@ -1,0 +1,120 @@
+{
+  "locationsHierarchy": {
+    "map": {
+      "0ddd9ad1-452b-4825-a92a-49cb9fc82d18": {
+        "id": "0ddd9ad1-452b-4825-a92a-49cb9fc82d18",
+        "label": "ra Zambia",
+        "node": {
+          "locationId": "0ddd9ad1-452b-4825-a92a-49cb9fc82d18",
+          "name": "ra Zambia",
+          "attributes": {
+            "geographicLevel": 0
+          },
+          "voided": false
+        },
+        "children": {
+          "cec79f21-33c3-43f5-a8af-59a47aa61b84": {
+            "id": "cec79f21-33c3-43f5-a8af-59a47aa61b84",
+            "label": "ra Luapula",
+            "node": {
+              "locationId": "cec79f21-33c3-43f5-a8af-59a47aa61b84",
+              "name": "ra Luapula",
+              "parentLocation": {
+                "locationId": "0ddd9ad1-452b-4825-a92a-49cb9fc82d18",
+                "voided": false
+              },
+              "attributes": {
+                "geographicLevel": 1
+              },
+              "voided": false
+            },
+            "children": {
+              "dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63": {
+                "id": "dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63",
+                "label": "ra Nchelenge",
+                "node": {
+                  "locationId": "dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63",
+                  "name": "ra Nchelenge",
+                  "parentLocation": {
+                    "locationId": "cec79f21-33c3-43f5-a8af-59a47aa61b84",
+                    "voided": false
+                  },
+                  "attributes": {
+                    "geographicLevel": 2
+                  },
+                  "voided": false
+                },
+                "children": {
+                  "8d44d54e-8b4c-465c-9e93-364a25739a6d": {
+                    "id": "8d44d54e-8b4c-465c-9e93-364a25739a6d",
+                    "label": "ra Kashikishi HAHC",
+                    "node": {
+                      "locationId": "8d44d54e-8b4c-465c-9e93-364a25739a6d",
+                      "name": "ra Kashikishi HAHC",
+                      "parentLocation": {
+                        "locationId": "dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63",
+                        "voided": false
+                      },
+                      "attributes": {
+                        "geographicLevel": 3
+                      },
+                      "voided": false
+                    },
+                    "children": {
+                      "fca0d71d-0410-45d3-8305-a9f092a150b8": {
+                        "id": "fca0d71d-0410-45d3-8305-a9f092a150b8",
+                        "label": "ra_ksh_2",
+                        "node": {
+                          "locationId": "fca0d71d-0410-45d3-8305-a9f092a150b8",
+                          "name": "ra_ksh_2",
+                          "parentLocation": {
+                            "locationId": "8d44d54e-8b4c-465c-9e93-364a25739a6d",
+                            "voided": false
+                          },
+                          "attributes": {
+                            "geographicLevel": 4
+                          },
+                          "voided": false
+                        },
+                        "parent": "8d44d54e-8b4c-465c-9e93-364a25739a6d"
+                      },
+                      "xyz0d71d-0410-45d3-8305-a9f092a150b8": {
+                        "id": "xyz0d71d-0410-45d3-8305-a9f092a150b8",
+                        "label": "ra_ksh_3",
+                        "node": {
+                          "locationId": "xyz0d71d-0410-45d3-8305-a9f092a150b8",
+                          "name": "ra_ksh_3",
+                          "parentLocation": {
+                            "locationId": "8d44d54e-8b4c-465c-9e93-364a25739a6d",
+                            "voided": false
+                          },
+                          "attributes": {
+                            "geographicLevel": 4
+                          },
+                          "voided": false
+                        },
+                        "parent": "8d44d54e-8b4c-465c-9e93-364a25739a6d"
+                      }
+                    },
+                    "parent": "dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"
+                  }
+                },
+                "parent": "cec79f21-33c3-43f5-a8af-59a47aa61b84"
+              }
+            },
+            "parent": "0ddd9ad1-452b-4825-a92a-49cb9fc82d18"
+          }
+        }
+      }
+    },
+    "parentChildren": {
+      "0ddd9ad1-452b-4825-a92a-49cb9fc82d18": ["cec79f21-33c3-43f5-a8af-59a47aa61b84"],
+      "8d44d54e-8b4c-465c-9e93-364a25739a6d": [
+        "fca0d71d-0410-45d3-8305-a9f092a150b8",
+        "xyz0d71d-0410-45d3-8305-a9f092a150b8"
+      ],
+      "cec79f21-33c3-43f5-a8af-59a47aa61b84": ["dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"],
+      "dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63": ["8d44d54e-8b4c-465c-9e93-364a25739a6d"]
+    }
+  }
+}

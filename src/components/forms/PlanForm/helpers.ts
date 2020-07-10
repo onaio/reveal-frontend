@@ -1,6 +1,7 @@
+import { Dictionary } from '@onaio/utils';
 import { parseISO } from 'date-fns';
 import { FormikErrors } from 'formik';
-import { findKey, omit, pick } from 'lodash';
+import { findKey, pick } from 'lodash';
 import moment from 'moment';
 import { FormEvent } from 'react';
 import * as Yup from 'yup';
@@ -10,6 +11,7 @@ import {
   DEFAULT_ACTIVITY_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
   DEFAULT_TIME,
+  ENABLED_PLAN_TYPES,
   PLAN_UUID_NAMESPACE,
 } from '../../../configs/env';
 import { DATE_IS_REQUIRED, NAME_IS_REQUIRED, REQUIRED } from '../../../configs/lang';
@@ -20,6 +22,8 @@ import {
   goalPriorities,
   PlanAction,
   PlanActionCodes,
+  PlanActionCondition,
+  PlanActionTrigger,
   planActivities,
   PlanActivity,
   PlanDefinition,
@@ -30,6 +34,38 @@ import {
   taskGenerationStatuses,
   UseContext,
 } from '../../../configs/settings';
+import {
+  APPLICABILITY_CONDITION_KIND,
+  BCC_ACTIVITY_CODE,
+  BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  BLOOD_SCREENING_ACTIVITY_CODE,
+  CASE_CONFIRMATION_ACTIVITY_CODE,
+  CASE_NUMBER_CODE,
+  CONDITION,
+  DAYS,
+  DYNAMIC_BCC_ACTIVITY_CODE,
+  DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
+  DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
+  DYNAMIC_IRS_ACTIVITY_CODE,
+  DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
+  DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
+  DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
+  DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  FAMILY_REGISTRATION_ACTIVITY_CODE,
+  FI_REASON_CODE,
+  FI_STATUS_CODE,
+  INTERVENTION_TYPE_CODE,
+  IRS_ACTIVITY_CODE,
+  LARVAL_DIPPING_ACTIVITY_CODE,
+  MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
+  MDA_POINT_DISPENSE_ACTIVITY_CODE,
+  MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  NAMED_EVENT_TRIGGER_TYPE,
+  OPENSRP_EVENT_ID_CODE,
+  TASK_GENERATION_STATUS_CODE,
+  TRIGGER,
+} from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import {
@@ -39,23 +75,31 @@ import {
   GoalPriorityType,
   GoalUnit,
   PlanActionCodesType,
+  PlanActivityExpression,
+  PlanActivityFormFields,
   PlanActivityTitlesType,
+  PlanActivityTrigger,
+  PlanFormFields,
+  PlanJurisdictionFormFields,
   taskGenerationStatusType,
 } from './types';
 
-/** separate FI, IRS and MDA point activities */
-export const FIActivities = omit(planActivities, ['IRS', 'pointAdverseMDA', 'pointDispenseMDA']);
-export const IRSActivities = pick(planActivities, ['IRS']);
-export const MDAPointActivities = pick(planActivities, ['pointAdverseMDA', 'pointDispenseMDA']);
-
 /** Array of FI Statuses */
 export const fiStatusCodes = Object.values(FIClassifications).map(e => e.code as FIStatusType);
+
+/** intervention types on which to show action.definitionUri form */
+export const showDefinitionUriFor = [
+  InterventionType.DynamicFI,
+  InterventionType.DynamicIRS,
+  InterventionType.DynamicMDA,
+];
 
 /** Yup validation schema for PlanForm */
 export const PlanSchema = Yup.object().shape({
   activities: Yup.array().of(
     Yup.object().shape({
       actionCode: Yup.string().oneOf(PlanActionCodes.map(e => e)),
+      actionDefinitionUri: Yup.string(),
       actionDescription: Yup.string().required(REQUIRED),
       actionIdentifier: Yup.string(),
       actionReason: Yup.string()
@@ -100,47 +144,6 @@ export const PlanSchema = Yup.object().shape({
   version: Yup.string(),
 });
 
-/** Plan activity form fields interface */
-export interface PlanActivityFormFields {
-  actionCode: string;
-  actionDescription: string;
-  actionIdentifier: string;
-  actionReason: string;
-  actionTitle: string;
-  goalDescription: string;
-  goalDue: Date;
-  goalPriority: string;
-  goalValue: number;
-  timingPeriodEnd: Date;
-  timingPeriodStart: Date;
-}
-
-/** Plan jurisdictions form fields interface */
-export interface PlanJurisdictionFormFields {
-  id: string;
-  name: string;
-}
-
-/** Plan form fields interface */
-export interface PlanFormFields {
-  activities: PlanActivityFormFields[];
-  caseNum?: string;
-  date: Date;
-  end: Date;
-  fiReason?: FIReasonType;
-  fiStatus?: FIStatusType;
-  identifier: string;
-  interventionType: InterventionType;
-  jurisdictions: PlanJurisdictionFormFields[];
-  name: string;
-  opensrpEventId?: string;
-  start: Date;
-  status: PlanStatus;
-  taskGenerationStatus: taskGenerationStatusType;
-  title: string;
-  version: string;
-}
-
 /**
  * Convert a plan activity object to an object that can be used in the PlanForm
  * activities section
@@ -149,8 +152,35 @@ export interface PlanFormFields {
 export function extractActivityForForm(activityObj: PlanActivity): PlanActivityFormFields {
   const planActivityKey: string =
     findKey(planActivities, (a: PlanActivity) => a.action.code === activityObj.action.code) || '';
+
+  const condition: PlanActivityExpression[] = [];
+  if (activityObj.action.condition) {
+    for (const iterator of activityObj.action.condition) {
+      condition.push({
+        description: iterator.expression.description || '',
+        expression: iterator.expression.expression || '',
+      });
+    }
+  }
+
+  const trigger: PlanActivityTrigger[] = [];
+  if (activityObj.action.trigger) {
+    for (const iterator of activityObj.action.trigger) {
+      trigger.push({
+        ...(iterator.expression && {
+          description: iterator.expression.description || '',
+          expression: iterator.expression.expression,
+        }),
+        name: iterator.name,
+      });
+    }
+  }
+
   return {
+    ...(condition.length > 0 && { condition }),
+    ...(trigger.length > 0 && { trigger }),
     actionCode: activityObj.action.code,
+    actionDefinitionUri: activityObj.action.definitionUri || '',
     actionDescription: activityObj.action.description || '',
     actionIdentifier: activityObj.action.identifier || '',
     actionReason: activityObj.action.reason || '',
@@ -162,7 +192,7 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
       activityObj.goal.target[0].due !== ''
         ? parseISO(`${activityObj.goal.target[0].due}${DEFAULT_TIME}`)
         : moment()
-            .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
+            .add(DEFAULT_ACTIVITY_DURATION_DAYS, DAYS)
             .toDate(),
     goalPriority: activityObj.goal.priority || goalPriorities[1],
     goalValue:
@@ -176,7 +206,7 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
       activityObj.action.timingPeriod.end && activityObj.action.timingPeriod.end !== ''
         ? parseISO(`${activityObj.action.timingPeriod.end}${DEFAULT_TIME}`)
         : moment()
-            .add(DEFAULT_ACTIVITY_DURATION_DAYS, 'days')
+            .add(DEFAULT_ACTIVITY_DURATION_DAYS, DAYS)
             .toDate(),
     timingPeriodStart:
       activityObj.action.timingPeriod.start && activityObj.action.timingPeriod.start !== ''
@@ -185,17 +215,66 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
   };
 }
 
+/** group plan activities */
+export const FIActivities = pick(planActivities, [
+  BCC_ACTIVITY_CODE,
+  BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  BLOOD_SCREENING_ACTIVITY_CODE,
+  CASE_CONFIRMATION_ACTIVITY_CODE,
+  FAMILY_REGISTRATION_ACTIVITY_CODE,
+  LARVAL_DIPPING_ACTIVITY_CODE,
+  MOSQUITO_COLLECTION_ACTIVITY_CODE,
+]);
+export const IRSActivities = pick(planActivities, [IRS_ACTIVITY_CODE]);
+export const MDAActivities = pick(planActivities, [CASE_CONFIRMATION_ACTIVITY_CODE]);
+export const MDAPointActivities = pick(planActivities, [
+  MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
+  MDA_POINT_DISPENSE_ACTIVITY_CODE,
+]);
+export const DynamicFIActivities = pick(planActivities, [
+  DYNAMIC_BCC_ACTIVITY_CODE,
+  DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
+  DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
+  DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
+  DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE,
+]);
+export const DynamicMDAActivities = pick(planActivities, [
+  DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
+  DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
+  DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
+]);
+export const DynamicIRSActivities = pick(planActivities, [
+  DYNAMIC_BCC_ACTIVITY_CODE,
+  DYNAMIC_IRS_ACTIVITY_CODE,
+]);
+
+export type FormActivity =
+  | typeof FIActivities
+  | typeof IRSActivities
+  | typeof MDAPointActivities
+  | typeof DynamicFIActivities
+  | typeof DynamicIRSActivities
+  | typeof DynamicMDAActivities;
+
 /**
  * Converts a plan activities objects to a list of activities for use on PlanForm
  * @param items - plan activities
  */
-export function getFormActivities(
-  items: typeof FIActivities | typeof IRSActivities | typeof MDAPointActivities
-) {
+export function getFormActivities(items: FormActivity) {
   return Object.values(items)
     .sort((a, b) => a.action.prefix - b.action.prefix)
     .map(e => extractActivityForForm(e));
 }
+
+const planActivitiesMap: Dictionary<PlanActivityFormFields[]> = {};
+planActivitiesMap[InterventionType.IRS] = getFormActivities(IRSActivities);
+planActivitiesMap[InterventionType.FI] = getFormActivities(FIActivities);
+planActivitiesMap[InterventionType.MDAPoint] = getFormActivities(MDAPointActivities);
+planActivitiesMap[InterventionType.DynamicFI] = getFormActivities(DynamicFIActivities);
+planActivitiesMap[InterventionType.DynamicIRS] = getFormActivities(DynamicIRSActivities);
+planActivitiesMap[InterventionType.DynamicMDA] = getFormActivities(DynamicMDAActivities);
+export { planActivitiesMap };
 
 /**
  * Get a plan activity from a plan definition object
@@ -224,43 +303,77 @@ export function getActivityFromPlan(
 /**
  * Get plan activity object using an action code
  * @param {PlanActionCodesType} actionCode - the action code
+ * @param {boolean} isDynamic - whether we are looking for dynamic activities
  */
 export function getPlanActivityFromActionCode(
-  actionCode: PlanActionCodesType
+  actionCode: PlanActionCodesType,
+  isDynamic: boolean = false
 ): PlanActivity | null {
-  if (actionCode === 'BCC') {
-    return planActivities.BCC;
-  }
-  if (actionCode === 'IRS') {
-    return planActivities.IRS;
-  }
-  if (actionCode === 'Bednet Distribution') {
-    return planActivities.bednetDistribution;
-  }
-  if (actionCode === 'Blood Screening') {
-    return planActivities.bloodScreening;
-  }
-  if (actionCode === 'Case Confirmation') {
-    return planActivities.caseConfirmation;
-  }
-  if (actionCode === 'RACD Register Family') {
-    return planActivities.familyRegistration;
-  }
-  if (actionCode === 'Larval Dipping') {
-    return planActivities.larvalDipping;
-  }
-  if (actionCode === 'Mosquito Collection') {
-    return planActivities.mosquitoCollection;
-  }
-  if (actionCode === 'MDA Adverse Event(s)') {
-    return planActivities.pointAdverseMDA;
-  }
-  if (actionCode === 'MDA Dispense') {
-    return planActivities.pointDispenseMDA;
+  const search = Object.values(planActivities).filter(item => {
+    if (isDynamic) {
+      return (
+        item.action.code === actionCode &&
+        (Object.keys(item.action).includes(CONDITION) || Object.keys(item.action).includes(TRIGGER))
+      );
+    } else {
+      return (
+        item.action.code === actionCode &&
+        !Object.keys(item.action).includes(CONDITION) &&
+        !Object.keys(item.action).includes(TRIGGER)
+      );
+    }
+  });
+  if (search.length > 0) {
+    return search[0];
   }
 
   return null;
 }
+
+/**
+ * Get the plan definition conditions from form field values
+ * @param element - form field values for one plan activity
+ */
+const getConditionFromFormField = (
+  element: PlanActivityFormFields
+): PlanActionCondition[] | undefined => {
+  return (
+    element.condition &&
+    element.condition.map(item => {
+      return {
+        expression: {
+          ...(item.description && { description: item.description }),
+          expression: item.expression,
+        },
+        kind: APPLICABILITY_CONDITION_KIND,
+      };
+    })
+  );
+};
+
+/**
+ * Get the plan definition triggers from form field values
+ * @param element - form field values for one plan activity
+ */
+const getTriggerFromFormField = (
+  element: PlanActivityFormFields
+): PlanActionTrigger[] | undefined => {
+  return (
+    element.trigger &&
+    element.trigger.map(item => {
+      return {
+        ...((item.description || item.expression) && {
+          expression: {
+            ...(item.description && { description: item.description }),
+            ...(item.expression && { expression: item.expression }),
+          },
+        }),
+        name: item.name,
+        type: NAMED_EVENT_TRIGGER_TYPE,
+      } as PlanActionTrigger;
+    })
+  );
+};
 
 /**
  * Get action and plans from PlanForm activities
@@ -288,7 +401,13 @@ export function extractActivitiesFromPlanForm(
       let thisAction: PlanAction = planActivities.BCC.action;
       let thisGoal: PlanGoal = planActivities.BCC.goal;
 
-      const planActivity = getPlanActivityFromActionCode(element.actionCode as PlanActionCodesType);
+      // lets figure out if this is a dynamic activity
+      const isDynamic =
+        Object.keys(element).includes(CONDITION) || Object.keys(element).includes(TRIGGER);
+      const planActivity = getPlanActivityFromActionCode(
+        element.actionCode as PlanActionCodesType,
+        isDynamic
+      );
 
       if (planActivity) {
         thisAction = {
@@ -300,6 +419,9 @@ export function extractActivitiesFromPlanForm(
           ...planActionGoal.goal,
         };
       }
+
+      const condition = getConditionFromFormField(element);
+      const trigger = getTriggerFromFormField(element);
 
       const thisActionIdentifier =
         !element.actionIdentifier || element.actionIdentifier === ''
@@ -316,6 +438,8 @@ export function extractActivitiesFromPlanForm(
 
       // next put in values from the form
       const actionFields: Partial<PlanAction> = {
+        ...(condition && { condition }),
+        ...(trigger && { trigger }),
         description: element.actionDescription,
         identifier: thisActionIdentifier,
         prefix,
@@ -372,8 +496,8 @@ export function extractActivitiesFromPlanForm(
 export const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [string, string] => {
   const target = event.target as HTMLInputElement;
   const currentInterventionType =
-    target.name === 'interventionType' ? target.value : formValues.interventionType;
-  const currentFiStatus = target.name === 'fiStatus' ? target.value : formValues.fiStatus;
+    target.name === INTERVENTION_TYPE_CODE ? target.value : formValues.interventionType;
+  const currentFiStatus = target.name === FI_STATUS_CODE ? target.value : formValues.fiStatus;
 
   let currentJurisdiction = '';
   if (formValues.jurisdictions.length > 0) {
@@ -448,30 +572,30 @@ export function generatePlanDefinition(
 
   const useContext: UseContext[] = [
     {
-      code: 'interventionType',
+      code: INTERVENTION_TYPE_CODE,
       valueCodableConcept: formValue.interventionType,
     },
   ];
 
   if (formValue.fiStatus) {
-    useContext.push({ code: 'fiStatus', valueCodableConcept: formValue.fiStatus });
+    useContext.push({ code: FI_STATUS_CODE, valueCodableConcept: formValue.fiStatus });
   }
 
   if (formValue.fiReason) {
-    useContext.push({ code: 'fiReason', valueCodableConcept: formValue.fiReason });
+    useContext.push({ code: FI_REASON_CODE, valueCodableConcept: formValue.fiReason });
   }
 
   if (formValue.caseNum) {
-    useContext.push({ code: 'caseNum', valueCodableConcept: formValue.caseNum });
+    useContext.push({ code: CASE_NUMBER_CODE, valueCodableConcept: formValue.caseNum });
   }
 
   if (formValue.opensrpEventId) {
-    useContext.push({ code: 'opensrpEventId', valueCodableConcept: formValue.opensrpEventId });
+    useContext.push({ code: OPENSRP_EVENT_ID_CODE, valueCodableConcept: formValue.opensrpEventId });
   }
 
   if (formValue.taskGenerationStatus) {
     useContext.push({
-      code: 'taskGenerationStatus',
+      code: TASK_GENERATION_STATUS_CODE,
       valueCodableConcept: formValue.taskGenerationStatus,
     });
   }
@@ -487,6 +611,7 @@ export function generatePlanDefinition(
       end: moment(formValue.end).format(DATE_FORMAT.toUpperCase()),
       start: moment(formValue.start).format(DATE_FORMAT.toUpperCase()),
     },
+    experimental: false,
     identifier: planIdentifier,
     jurisdiction: formValue.jurisdictions
       ? formValue.jurisdictions.map(e => {
@@ -500,6 +625,17 @@ export function generatePlanDefinition(
     version: planVersion as string,
   };
 }
+
+/**
+ * Check if the plan is a dynamic plan
+ * @param planObject - the plan
+ */
+export const isDynamicPlan = (planObject: PlanDefinition) =>
+  planObject.action
+    .map(action => {
+      return Object.keys(action).includes(CONDITION) || Object.keys(action).includes(TRIGGER);
+    })
+    .includes(true);
 
 /**
  * Get plan form field values from plan definition object
@@ -516,22 +652,22 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
 
   for (const context of planObject.useContext) {
     switch (context.code) {
-      case 'interventionType':
+      case INTERVENTION_TYPE_CODE:
         typeUseContext.push(context);
         break;
-      case 'fiReason':
+      case FI_REASON_CODE:
         reasonUseContext.push(context);
         break;
-      case 'fiStatus':
+      case FI_STATUS_CODE:
         statusUseContext.push(context);
         break;
-      case 'opensrpEventId':
+      case OPENSRP_EVENT_ID_CODE:
         eventIdUseContext.push(context);
         break;
-      case 'caseNum':
+      case CASE_NUMBER_CODE:
         caseNumUseContext.push(context);
         break;
-      case 'taskGenerationStatus':
+      case TASK_GENERATION_STATUS_CODE:
         taskGenerationStatusContext.push(context);
         break;
     }
@@ -560,15 +696,20 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
   );
 
   if (activities.length < 1) {
-    if (interventionType === InterventionType.IRS) {
-      activities = getFormActivities(IRSActivities);
+    if (planActivitiesMap.hasOwnProperty(interventionType)) {
+      activities = planActivitiesMap[interventionType];
     }
-    if (interventionType === InterventionType.FI) {
-      activities = getFormActivities(FIActivities);
-    }
-    if (interventionType === InterventionType.MDAPoint) {
-      activities = getFormActivities(MDAPointActivities);
-    }
+  }
+
+  let taskGenerationStatus: taskGenerationStatusType;
+
+  if (isDynamicPlan(planObject)) {
+    taskGenerationStatus = taskGenerationStatuses[2]; // Disabled
+  } else {
+    taskGenerationStatus =
+      taskGenerationStatusContext.length > 0
+        ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
+        : taskGenerationStatuses[1];
   }
 
   return {
@@ -595,10 +736,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
       eventIdUseContext.length > 0 ? eventIdUseContext[0].valueCodableConcept : undefined,
     start: parseISO(`${planObject.effectivePeriod.start}${DEFAULT_TIME}`),
     status: planObject.status as PlanStatus,
-    taskGenerationStatus:
-      taskGenerationStatusContext.length > 0
-        ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
-        : taskGenerationStatuses[1],
+    taskGenerationStatus,
     title: planObject.title,
     version: planObject.version,
   };
@@ -615,3 +753,10 @@ export function getGoalUnitFromActionCode(actionCode: PlanActionCodesType): Goal
   }
   return GoalUnit.UNKNOWN;
 }
+
+/**
+ * Check if a plan type should be visible
+ * @param {InterventionType} planType - plan type
+ */
+export const isPlanTypeEnabled = (planType: InterventionType): boolean =>
+  ENABLED_PLAN_TYPES.includes(planType);

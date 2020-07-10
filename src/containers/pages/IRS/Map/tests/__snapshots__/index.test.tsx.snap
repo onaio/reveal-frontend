@@ -99,7 +99,7 @@ Array [
       className="sidebar-legend-color"
       style={
         Object {
-          "backgroundColor": "#FF851B",
+          "backgroundColor": "#68BB0C",
         }
       }
     />

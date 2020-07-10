@@ -17,7 +17,7 @@ import locationsReducer, {
   getLocationsByPlanId,
   Location,
   reducerName as locationsReducerName,
-} from '../../../../../store/ducks/opensrp/locations';
+} from '../../../../../store/ducks/opensrp/planLocations';
 import { InterventionType } from '../../../../../store/ducks/plans';
 import { loadLocations } from './utils';
 
