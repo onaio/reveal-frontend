@@ -63,6 +63,7 @@ export interface PlanActivityTrigger {
 /** Plan activity form fields interface */
 export interface PlanActivityFormFields {
   actionCode: string;
+  actionDefinitionUri?: string;
   actionDescription: string;
   actionIdentifier: string;
   actionReason: string;
