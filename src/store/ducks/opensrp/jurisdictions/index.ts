@@ -40,6 +40,7 @@ export const removeJurisdictions = removeActionCreatorFactory(reducerName);
 // selectors
 /** prop filters to customize selector queries */
 export interface Filters {
+  filterGeom?: boolean /** whether to filter jurisdictions that have geometry field */;
   jurisdictionId?: string /** jurisdiction id */;
   jurisdictionIdsArray?: string[] /** array of jurisdiction ids */;
   parentId?: string /** parent id */;
@@ -64,6 +65,12 @@ export const getParentId = (_: Partial<Store>, props: Filters) => props.parentId
 export const getJurisdictionIdsArray = (_: Partial<Store>, props: Filters) =>
   props.jurisdictionIdsArray;
 
+/** retrieve the filterGeom value
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getFilterGeom = (_: Partial<Store>, props: Filters) => props.filterGeom;
+
 /** gets all jurisdictions keyed by id
  * @param state - the store
  * @param _ -  the filterProps
@@ -83,6 +90,26 @@ export const getJurisdictionById = () =>
         return null;
       }
       return get(jurisdictionsById, jurisdictionId, null);
+    }
+  );
+
+/**
+ * Get jurisdiction ids
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getJurisdictionIds = () =>
+  createSelector(
+    [getJurisdictionsById, getFilterGeom],
+    (jurisdictionsById, filterGeom): string[] => {
+      if (filterGeom === undefined) {
+        return Object.keys(jurisdictionsById);
+      }
+      return values(jurisdictionsById)
+        .filter(item => {
+          return 'geometry' in item === filterGeom;
+        })
+        .map(item => item.id);
     }
   );
 
@@ -119,5 +146,34 @@ export const getJurisdictionsFC = () =>
         features: jurisdictionsArray.filter(item => 'geometry' in item) as Feature[],
         type: 'FeatureCollection',
       };
+    }
+  );
+
+/** Get Missing Jurisdiction Ids
+ *
+ * This is a convenient selector that takes an array of jurisdiction ids and then
+ * returns the ones that are not already existing in the Redux store.
+ *
+ * Passing filterGeom === true will additionally return ids of jurisdictions that have
+ * no geometry field.
+ *
+ * The initial use-case of this is to provide the ability to figure out which jurisdiction
+ * ids are missing from a known list of ids; and which are both missing and have no
+ * geometry.
+ *
+ * ^^ Might be useful when we are trying to figure out which jurisdictions to fetch from
+ * OpenSRP API when we need geometries.
+ *
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getMissingJurisdictionIds = () =>
+  createSelector(
+    [getJurisdictionIds(), getJurisdictionIdsArray],
+    (jurisdictionIds, inputJurisdictionIdsArray): string[] => {
+      if (!inputJurisdictionIdsArray) {
+        return jurisdictionIds;
+      }
+      return inputJurisdictionIdsArray.filter(id => !jurisdictionIds.includes(id));
     }
   );
