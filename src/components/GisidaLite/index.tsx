@@ -134,6 +134,14 @@ const GisidaLite = (props: GisidaLiteProps) => {
 
 GisidaLite.defaultProps = gisidaLiteDefaultProps;
 
+/**
+ * Custom quality method for React.memo
+ * TODO: The custom functions checks if layers.length has changed for prevProps and nextProps. This
+ * might be limiting since the length might be the same but the elements of the two arrays are different. A
+ * proper implementation that compares the elements is required to replace current implementation
+ * @param prevProps
+ * @param nextProps
+ */
 const arePropsEqual = (prevProps: GisidaLiteProps, nextProps: GisidaLiteProps) => {
   if (prevProps.layers.length !== nextProps.layers.length) {
     return false;
