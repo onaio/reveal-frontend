@@ -130,11 +130,6 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
     renderNullDataComponent: () => <NoDataComponent />,
     useDrillDown: false,
   };
-  const error = true;
-
-  if (error) {
-    throw new Error('eric simulated error');
-  }
 
   return (
     <div>
