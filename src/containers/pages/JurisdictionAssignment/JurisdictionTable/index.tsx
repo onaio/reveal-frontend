@@ -187,6 +187,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         if (apiResponse.value) {
           const responseData = apiResponse.value;
           treeFetchedCreator(responseData);
+          autoSelectNodesCreator(rootJurisdictionId, callback);
           setLoading(false);
         }
         if (apiResponse.error) {
@@ -201,7 +202,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
 
   React.useEffect(() => {
     if (leafNodes.length && !isLeafNodesLoaded) {
-      autoSelectNodesCreator(rootJurisdictionId, callback);
       setLeafNodeLoaded(true);
     }
   }, [leafNodes]);
