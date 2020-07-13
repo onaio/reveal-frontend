@@ -12,12 +12,19 @@ import store from '../../../../../store';
 import { fetchFiles, File } from '../../../../../store/ducks/opensrp/clientfiles';
 import { getAccessToken } from '../../../../../store/selectors';
 
+/** useState function type for setting loader on and off */
+type SetIsLoading = ((status: boolean) => void) | null;
+
 /** loads and persists to store files data from upload/history endpoint
  */
 export const loadFiles = async (
+  setLoading: SetIsLoading = null,
   fetchFileAction = fetchFiles,
   serviceClass: any = OpenSRPService
 ) => {
+  if (setLoading) {
+    setLoading(true);
+  }
   const serve = new serviceClass(OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT);
   serve
     .list()
@@ -26,7 +33,8 @@ export const loadFiles = async (
     })
     .catch((err: Error) => {
       growl(err.message, { type: toast.TYPE.ERROR });
-    });
+    })
+    .finally(() => setLoading && setLoading(false));
 };
 /**
  * Posts uploaded file to opensrp
