@@ -131,12 +131,20 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
             : tree.first(treeNode => treeNode.isRoot());
 
         if (nodeFromTree) {
+          let parentNode: TreeNodeType = nodeFromTree;
+          let pedigree: TreeNodeType[] = nodeFromTree.getPath();
           if (useJurisdictionNodeType) {
-            setCurrentNode(formatJurisdiction(nodeFromTree.model));
-            setHierarchy(nodeFromTree.getPath().map(item => formatJurisdiction(item.model)));
+            parentNode = formatJurisdiction(parentNode.model);
+            pedigree = nodeFromTree.getPath().map(item => formatJurisdiction(item.model));
+          }
+          // if there is no jurisdictionId, then drilling down has not begun, we set
+          // the currentParent node to null since the root node will be  the current child derivatively
+          if (jurisdictionId === '') {
+            setCurrentNode(null);
+            setHierarchy([]);
           } else {
-            setCurrentNode(nodeFromTree);
-            setHierarchy(nodeFromTree.getPath());
+            setCurrentNode(parentNode);
+            setHierarchy(pedigree);
           }
           // we can also get current children here but that's handled below to keep code DRY
         }
@@ -184,18 +192,11 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
     useEffect(() => {
       if (tree) {
         // if we have a tree then we can trivially get currentChildren right away
-        const nodeFromTree = tree.first(treeNode => treeNode.model.id === parentId);
-        if (nodeFromTree) {
-          const getChildrenResult = getChildrenFunc(
-            parentId,
-            nodeFromTree,
-            useJurisdictionNodeType
-          );
-          if (getChildrenResult.error === null) {
-            setCurrentChildren(getChildrenResult.value);
-          } else {
-            displayError(getChildrenResult.error);
-          }
+        const getChildrenResult = getChildrenFunc(parentId, tree, useJurisdictionNodeType);
+        if (getChildrenResult.error === null) {
+          setCurrentChildren(getChildrenResult.value);
+        } else {
+          displayError(getChildrenResult.error);
         }
       } else {
         // if we don't have a tree we need to get current children using the API
