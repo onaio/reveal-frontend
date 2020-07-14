@@ -30,15 +30,19 @@ Array [
   >
     <Link
       key="0"
-      replace={false}
       to="/"
     >
-      <a
+      <LinkAnchor
         href="/"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        Home
-      </a>
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -46,15 +50,19 @@ Array [
   >
     <Link
       key="1"
-      replace={false}
       to="/intervention/irs/report"
     >
-      <a
+      <LinkAnchor
         href="/intervention/irs/report"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        IRS Reporting
-      </a>
+        <a
+          href="/intervention/irs/report"
+          onClick={[Function]}
+        >
+          IRS Reporting
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li

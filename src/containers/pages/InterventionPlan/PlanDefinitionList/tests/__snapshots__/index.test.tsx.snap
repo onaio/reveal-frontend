@@ -88,17 +88,22 @@ exports[`components/InterventionPlan/PlanDefinitionList renders plan definition 
           to="/plans/new"
         >
           <Link
-            className="create-plan btn btn-primary float-right mt-3 mb-3"
-            replace={false}
+            className="focus-investigation btn btn-primary float-right mt-3 mb-3"
             to="/plans/new"
           >
-            <a
-              className="create-plan btn btn-primary float-right mt-3 mb-3"
+            <LinkAnchor
+              className="focus-investigation btn btn-primary float-right mt-3 mb-3"
               href="/plans/new"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              Add Plan
-            </a>
+              <a
+                className="focus-investigation btn btn-primary float-right mt-3 mb-3"
+                href="/plans/new"
+                onClick={[Function]}
+              >
+                Add Plan
+              </a>
+            </LinkAnchor>
           </Link>
         </LinkAsButton>
       </div>

@@ -188,15 +188,19 @@ Array [
   >
     <Link
       key="0"
-      replace={false}
       to="/"
     >
-      <a
+      <LinkAnchor
         href="/"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        Home
-      </a>
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -204,15 +208,19 @@ Array [
   >
     <Link
       key="1"
-      replace={false}
       to="/intervention/mda-point/report"
     >
-      <a
+      <LinkAnchor
         href="/intervention/mda-point/report"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        MDA Point Reporting
-      </a>
+        <a
+          href="/intervention/mda-point/report"
+          onClick={[Function]}
+        >
+          MDA Point Reporting
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
