@@ -399,6 +399,26 @@ export const getAllSelectedNodes = () =>
     return nodesList;
   });
 
+/** returns an array of all leaf nodes for a particular jurisdiction
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getLeafNodes = () =>
+  createSelector(getTreeById(), tree => {
+    const nodesList: TreeNode[] = [];
+    if (!tree) {
+      return [];
+    }
+    tree.walk(node => {
+      const shouldAddNode = !nodeHasChildren(node);
+      if (shouldAddNode) {
+        nodesList.push(node);
+      }
+      return true;
+    });
+    return nodesList;
+  });
+
 /** retrieve the parent node value
  * @param state - the store
  * @param props -  the filterProps

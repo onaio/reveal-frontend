@@ -15,6 +15,7 @@ import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Ripple from '../../../../components/page/Loading';
 import { getAncestors } from '../../../../components/TreeWalker/helpers';
+import { JURISDICTION_METADATA_RISK } from '../../../../configs/env';
 import {
   ASSIGN_JURISDICTIONS,
   COULD_NOT_LOAD_JURISDICTION,
@@ -23,9 +24,20 @@ import {
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { ASSIGN_JURISDICTIONS_URL, PLANNING_VIEW_URL } from '../../../../constants';
-import { loadJurisdiction } from '../../../../helpers/dataLoading/jurisdictions';
+import {
+  loadJurisdiction,
+  loadJurisdictionsMetadata,
+} from '../../../../helpers/dataLoading/jurisdictions';
 import { loadOpenSRPPlan } from '../../../../helpers/dataLoading/plans';
+import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
+import jurisdictionMetadataReducer, {
+  fetchJurisdictionsMetadata,
+  FetchJurisdictionsMetadataAction,
+  getJurisdictionsMetadata,
+  JurisdictionsMetadata,
+  reducerName as jurisdictionMetadataReducerName,
+} from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import plansReducer, {
   addPlanDefinition,
   AddPlanDefinitionAction,
@@ -36,16 +48,21 @@ import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
 
 reducerRegistry.register(reducerName, plansReducer);
+reducerRegistry.register(jurisdictionMetadataReducerName, jurisdictionMetadataReducer);
 
 /** this component's props */
 export interface JurisdictionAssignmentViewProps {
+  fetchJurisdictionsMetadataCreator: ActionCreator<FetchJurisdictionsMetadataAction>;
   fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
+  jurisdictionsMetadata: JurisdictionsMetadata[];
   plan: PlanDefinition | null;
   serviceClass: typeof OpenSRPService;
 }
 
 export const defaultProps = {
+  fetchJurisdictionsMetadataCreator: fetchJurisdictionsMetadata,
   fetchPlanCreator: addPlanDefinition,
+  jurisdictionsMetadata: [],
   plan: null,
   serviceClass: OpenSRPService,
 };
@@ -67,11 +84,35 @@ export type JurisdictionAssignmentViewFullProps = JurisdictionAssignmentViewProp
  *  2). render drillDown table where, user can select assignments
  */
 export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFullProps) => {
-  const { plan, serviceClass, fetchPlanCreator } = props;
+  const {
+    plan,
+    serviceClass,
+    fetchPlanCreator,
+    fetchJurisdictionsMetadataCreator,
+    jurisdictionsMetadata,
+  } = props;
+
   const [rootJurisdictionId, setRootJurisdictionId] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(!plan);
 
   const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
+
+  React.useEffect(() => {
+    loadJurisdictionsMetadata(
+      JURISDICTION_METADATA_RISK,
+      OpenSRPService,
+      fetchJurisdictionsMetadataCreator
+    )
+      .then(() => {
+        setLoading(false);
+      })
+      .finally(() => {
+        setLoading(false);
+      })
+      .catch(error => {
+        displayError(error);
+      });
+  }, []);
 
   React.useEffect(() => {
     const planId = props.match.params.planId;
@@ -140,6 +181,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
 
   const JurisdictionTableProps = {
     currentParentId: props.match.params.parentId,
+    jurisdictionsMetadata,
     plan,
     rootJurisdictionId,
     serviceClass,
@@ -173,8 +215,12 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
 
 JurisdictionAssignmentView.defaultProps = defaultProps;
 
-type MapStateToProps = Pick<JurisdictionAssignmentViewProps, 'plan'>;
-type DispatchToProps = Pick<JurisdictionAssignmentViewProps, 'fetchPlanCreator'>;
+type MapStateToProps =
+  | Pick<JurisdictionAssignmentViewProps, 'plan'>
+  | Pick<JurisdictionAssignmentViewProps, 'jurisdictionsMetadata'>;
+type DispatchToProps =
+  | Pick<JurisdictionAssignmentViewProps, 'fetchPlanCreator'>
+  | Pick<JurisdictionAssignmentViewProps, 'fetchJurisdictionsMetadataCreator'>;
 
 const mapStateToProps = (
   state: Partial<Store>,
@@ -183,11 +229,13 @@ const mapStateToProps = (
   const planId = ownProps.match.params.planId;
   const planObj = getPlanDefinitionById(state, planId);
   return {
+    jurisdictionsMetadata: getJurisdictionsMetadata(state),
     plan: planObj,
   };
 };
 
 const mapDispatchToProps: DispatchToProps = {
+  fetchJurisdictionsMetadataCreator: fetchJurisdictionsMetadata,
   fetchPlanCreator: addPlanDefinition,
 };
 

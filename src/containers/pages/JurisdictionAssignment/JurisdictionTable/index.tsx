@@ -10,15 +10,21 @@ import HeaderBreadcrumb, {
   Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Ripple from '../../../../components/page/Loading';
+import { JURISDICTION_METADATA_RISK_PERCENTAGE } from '../../../../configs/env';
 import {
+  AUTO_SELECTION,
   COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
+  EXISTING_SELECTION,
   JURISDICTION_ASSIGNMENT_SUCCESSFUL,
   NAME,
   NO_DATA_FOUND,
   NO_ROWS_FOUND,
+  RISK_LABEL,
   SAVE,
   SELECTED_JURISDICTIONS,
+  STATUS_SETTING,
   STRUCTURES_COUNT,
+  USER_CHANGE,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { ASSIGN_JURISDICTIONS_URL, INTERVENTION_TYPE_CODE } from '../../../../constants';
@@ -40,12 +46,14 @@ import hierarchyReducer, {
   getAllSelectedNodes,
   getCurrentChildren,
   getCurrentParentNode,
+  getLeafNodes,
   reducerName as hierarchyReducerName,
   selectNode,
   SelectNodeAction,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
+import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import { InterventionType } from '../../../../store/ducks/plans';
 import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
@@ -58,6 +66,7 @@ export interface JurisdictionSelectorTableProps {
   plan: PlanDefinition;
   rootJurisdictionId: string;
   currentParentId: string | undefined;
+  jurisdictionsMetadata: JurisdictionsMetadata[];
   serviceClass: typeof OpenSRPService;
   treeFetchedCreator: ActionCreator<FetchedTreeAction>;
   currentParentNode: TreeNode | undefined;
@@ -66,6 +75,7 @@ export interface JurisdictionSelectorTableProps {
   deselectNodeCreator: ActionCreator<DeselectNodeAction>;
   autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
   selectedLeafNodes: TreeNode[];
+  leafNodes: TreeNode[];
 }
 
 const defaultProps = {
@@ -74,6 +84,8 @@ const defaultProps = {
   currentParentId: undefined,
   currentParentNode: undefined,
   deselectNodeCreator: deselectNode,
+  jurisdictionsMetadata: [],
+  leafNodes: [],
   rootJurisdictionId: '',
   selectNodeCreator: selectNode,
   selectedLeafNodes: [],
@@ -98,7 +110,9 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     deselectNodeCreator,
     autoSelectNodesCreator,
     selectedLeafNodes,
+    leafNodes,
     plan,
+    jurisdictionsMetadata,
     serviceClass,
   } = props;
   /** helper function that decides which action creator to call when
@@ -133,16 +147,35 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   };
 
   const [loading, setLoading] = React.useState<boolean>(true);
+  const [isLeafNodesLoaded, setLeafNodeLoaded] = React.useState<boolean>(false);
   const [singleSelect] = React.useState<boolean>(isSingleSelect);
   const { broken, errorMessage, handleBrokenPage } = useHandleBrokenPage();
   const baseUrl = `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
+  const jurisdictionMetaIds: string[] = jurisdictionsMetadata.map(meta => meta.key);
 
   /** callback used to do initial autoSelection ; auto selects all jurisdictions that are already assigned to a plan
    * @param node - takes a node and returns true if node should be auto-selected
    */
+  const existingAssignments = props.plan.jurisdiction.map(jurisdiction => jurisdiction.code);
   const callback = (node: TreeNode) => {
-    const existingAssignments = props.plan.jurisdiction.map(jurisdiction => jurisdiction.code);
-    return existingAssignments.includes(node.model.id);
+    if (!leafNodes.filter(value => existingAssignments.includes(value.model.id)).length) {
+      if (!node.hasChildren()) {
+        const metaObj = jurisdictionsMetadata.find(
+          (m: JurisdictionsMetadata) => m.key === node.model.id
+        ) as JurisdictionsMetadata;
+        return (
+          jurisdictionMetaIds.includes(node.model.id) &&
+          metaObj.value &&
+          Number(metaObj.value) >= Number(JURISDICTION_METADATA_RISK_PERCENTAGE)
+        );
+      }
+    } else {
+      const isLeafNode = !node.hasChildren();
+      if (isLeafNode) {
+        return existingAssignments.includes(node.model.id);
+      }
+    }
+    return false;
   };
 
   React.useEffect(() => {
@@ -154,6 +187,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         if (apiResponse.value) {
           const responseData = apiResponse.value;
           treeFetchedCreator(responseData);
+          // TODO: should this be in both this useEffect and the next one?
           autoSelectNodesCreator(rootJurisdictionId, callback);
           setLoading(false);
         }
@@ -166,6 +200,14 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         setLoading(false);
       });
   }, []);
+
+  React.useEffect(() => {
+    if (leafNodes.length && !isLeafNodesLoaded) {
+      // TODO: should this be in both this useEffect and the previous one?
+      autoSelectNodesCreator(rootJurisdictionId, callback);
+      setLeafNodeLoaded(true);
+    }
+  }, [leafNodes]);
 
   if (loading) {
     return <Ripple />;
@@ -210,6 +252,10 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     pages,
   };
   const data = currentChildren.map(node => {
+    const isLeafNode: boolean = leafNodes.map(leaf => leaf.model.id).includes(node.model.id);
+    const metaObj = jurisdictionsMetadata.find(
+      (m: JurisdictionsMetadata) => m.key === node.model.id
+    ) as JurisdictionsMetadata;
     return [
       <input
         key={`${node.model.id}-check-jurisdiction`}
@@ -226,6 +272,17 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         }}
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
+      (metaObj && metaObj.value) || '',
+      node.model.meta.selected && isLeafNode
+        ? jurisdictionMetaIds.length &&
+          jurisdictionMetaIds.includes(node.model.id) &&
+          !leafNodes.filter(value => existingAssignments.includes(value.model.id)).length
+          ? AUTO_SELECTION
+          : leafNodes.filter(value => existingAssignments.includes(value.model.id)).length &&
+            existingAssignments.includes(node.model.id)
+          ? EXISTING_SELECTION
+          : USER_CHANGE
+        : '',
       node.model.node.attributes.structureCount,
       <ConnectedSelectedJurisdictionsCount
         key={`selected-jurisdictions-txt`}
@@ -235,7 +292,14 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       />,
     ];
   });
-  const headerItems = ['', NAME, STRUCTURES_COUNT, SELECTED_JURISDICTIONS];
+  const headerItems = [
+    '',
+    NAME,
+    RISK_LABEL,
+    STATUS_SETTING,
+    STRUCTURES_COUNT,
+    SELECTED_JURISDICTIONS,
+  ];
   const tableClass = 'table table-bordered';
 
   /** on change handler attached to the parent checkbox
@@ -267,6 +331,8 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           <th style={{ width: '70%' }}>{headerItems[1]}</th>
           <th>{headerItems[2]}</th>
           <th>{headerItems[3]}</th>
+          <th>{headerItems[4]}</th>
+          <th>{headerItems[5]}</th>
         </tr>
       </thead>
     );
@@ -313,7 +379,7 @@ export { JurisdictionTable };
 /** map state to props interface  */
 type MapStateToProps = Pick<
   JurisdictionSelectorTableProps,
-  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes'
+  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes' | 'leafNodes'
 >;
 
 /** map action creators interface */
@@ -335,6 +401,7 @@ const mapStateToProps = (
   return {
     currentChildren: getCurrentChildren()(state, filters),
     currentParentNode: getCurrentParentNode()(state, filters),
+    leafNodes: getLeafNodes()(state, filters),
     selectedLeafNodes: getAllSelectedNodes()(state, filters),
   };
 };

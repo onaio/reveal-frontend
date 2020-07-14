@@ -10,6 +10,7 @@ import reducer, {
   getAncestors,
   getCurrentChildren,
   getCurrentParentNode,
+  getLeafNodes,
   getNodeById,
   getRootByNodeId,
   getTreeById,
@@ -100,7 +101,7 @@ describe('reducers/opensrp/hierarchies', () => {
 
   it('auto selecting nodes works', () => {
     // checking that dispatching actions has desired effect
-    const rootJurisdictionId = '2942';
+    let rootJurisdictionId = '2942';
     const nodeIdToAutoSelect = '2942';
     const callback = (node: TreeNode) => node.model.id === nodeIdToAutoSelect;
     const filters = {
@@ -132,6 +133,15 @@ describe('reducers/opensrp/hierarchies', () => {
       rootJurisdictionId,
     });
     expect(allSelected.length).toEqual(1);
+    let leafNodes = getLeafNodes()(store.getState(), {
+      rootJurisdictionId,
+    });
+    rootJurisdictionId = '89898';
+    expect(leafNodes.length).toEqual(1);
+    leafNodes = getLeafNodes()(store.getState(), {
+      rootJurisdictionId,
+    });
+    expect(leafNodes.length).toEqual(0);
   });
 
   it('can hold multiple trees', () => {

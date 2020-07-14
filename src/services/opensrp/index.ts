@@ -72,7 +72,7 @@ export class OpenSRPService extends OpenSRPServiceWeb {
   }
 
   public async readFile(
-    id: string | number,
+    id?: string | number,
     params: URLParams | null = null,
     method: HTTPMethod = 'GET'
   ): Promise<{}> {
