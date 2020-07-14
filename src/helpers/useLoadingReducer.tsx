@@ -1,6 +1,5 @@
 import { Dictionary } from '@onaio/utils';
 import { useReducer } from 'react';
-import uuid from 'uuid/v1';
 
 // action types
 export const START_LOAD = 'START_LOAD';
@@ -56,24 +55,30 @@ export const reducer = (state: State, action: ActionType) => {
  * , for e.g. when promises are spread across hooks, or where they are nested.
  *
  */
-export const useLoadingReducer = () => {
-  const [store, dispatch] = useReducer(reducer, {});
+export const useLoadingReducer = (initialKey?: string, load: boolean = true) => {
+  let initialState: State = {};
+  if (initialKey) {
+    initialState = {
+      [initialKey]: load,
+    };
+  }
+  const [store, dispatch] = useReducer(reducer, initialState);
 
-  const startLoading = (anId?: string) => {
-    const key = anId ? anId : uuid();
+  const changeLoading = (key: string, loadStatus: boolean) => {
+    const type = loadStatus ? START_LOAD : END_LOAD;
     dispatch({
       key,
-      type: START_LOAD,
+      type,
     });
     return key;
   };
 
+  const startLoading = (key: string, condition: boolean = true) => {
+    return changeLoading(key, condition);
+  };
+
   const stopLoading = (key: string) => {
-    dispatch({
-      key,
-      type: END_LOAD,
-    });
-    return;
+    return changeLoading(key, false);
   };
 
   const loading = () => {
@@ -81,5 +86,5 @@ export const useLoadingReducer = () => {
     return Object.values(store).reduce(reducingFn, false);
   };
 
-  return { startLoading, stopLoading, loading };
+  return { startLoading, stopLoading, loading, initialKey };
 };
