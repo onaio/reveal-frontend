@@ -58,6 +58,8 @@ const Mapbox = ReactMapboxGl({
  */
 const GisidaLite = (props: GisidaLiteProps) => {
   const [renderLayers, setRenderLayers] = React.useState<boolean>(false);
+  const [allLayersReceived, setAllLayersReceived] = React.useState<boolean>(true);
+
   const {
     layers,
     mapCenter,
@@ -100,6 +102,10 @@ const GisidaLite = (props: GisidaLiteProps) => {
     [mapIcons]
   );
 
+  React.useEffect(() => {
+    setAllLayersReceived(!allLayersReceived);
+  }, [layers.length]);
+
   return (
     <Mapbox
       center={mapCenter}
@@ -115,6 +121,7 @@ const GisidaLite = (props: GisidaLiteProps) => {
     >
       <>
         {renderLayers &&
+          allLayersReceived &&
           layers.map((item: any) => <Fragment key={`gsLite-${item.key}`}>{item}</Fragment>)}
         <ZoomControl />
       </>
