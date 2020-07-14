@@ -60,6 +60,10 @@ import hierarchyReducer, {
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
+import {
+  addPlanDefinition,
+  AddPlanDefinitionAction,
+} from '../../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
 import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
@@ -80,6 +84,7 @@ export interface JurisdictionSelectorTableProps {
   selectNodeCreator: ActionCreator<SelectNodeAction>;
   deselectNodeCreator: ActionCreator<DeselectNodeAction>;
   autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
+  fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
   selectedLeafNodes: TreeNode[];
   leafNodes: TreeNode[];
 }
@@ -90,6 +95,7 @@ const defaultProps = {
   currentParentId: undefined,
   currentParentNode: undefined,
   deselectNodeCreator: deselectNode,
+  fetchPlanCreator: addPlanDefinition,
   jurisdictionsMetadata: [],
   leafNodes: [],
   rootJurisdictionId: '',
@@ -115,6 +121,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     selectNodeCreator,
     deselectNodeCreator,
     autoSelectNodesCreator,
+    fetchPlanCreator,
     selectedLeafNodes,
     leafNodes,
     plan,
@@ -357,7 +364,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
    */
   const commitJurisdictions = (thePlan: PlanDefinition) => {
     const jurisdictionIds = selectedLeafNodes.map(node => node.model.id);
-    return putJurisdictionsToPlan(thePlan, jurisdictionIds, serviceClass)
+    return putJurisdictionsToPlan(thePlan, jurisdictionIds, serviceClass, fetchPlanCreator)
       .then(() => {
         successGrowl(`${selectedLeafNodes.length} ${JURISDICTION_ASSIGNMENT_SUCCESSFUL}`);
       })
@@ -425,7 +432,11 @@ type MapStateToProps = Pick<
 /** map action creators interface */
 type DispatchToProps = Pick<
   JurisdictionSelectorTableProps,
-  'treeFetchedCreator' | 'selectNodeCreator' | 'deselectNodeCreator' | 'autoSelectNodesCreator'
+  | 'treeFetchedCreator'
+  | 'selectNodeCreator'
+  | 'deselectNodeCreator'
+  | 'autoSelectNodesCreator'
+  | 'fetchPlanCreator'
 >;
 
 /** maps props to store state */
@@ -450,6 +461,7 @@ const mapStateToProps = (
 const mapDispatchToProps: DispatchToProps = {
   autoSelectNodesCreator: autoSelectNodes,
   deselectNodeCreator: deselectNode,
+  fetchPlanCreator: addPlanDefinition,
   selectNodeCreator: selectNode,
   treeFetchedCreator: fetchTree,
 };
