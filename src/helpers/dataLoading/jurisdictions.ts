@@ -18,6 +18,7 @@ import {
   FetchJurisdictionsMetadataAction,
   JurisdictionsMetadata,
 } from '../../store/ducks/opensrp/jurisdictionsMetadata';
+import { AddPlanDefinitionAction } from '../../store/ducks/opensrp/PlanDefinition';
 import { failure, success } from './utils';
 
 /** find plans that the given user has access to
@@ -49,7 +50,8 @@ export async function LoadOpenSRPHierarchy<T = RawOpenSRPHierarchy>(
 export async function putJurisdictionsToPlan(
   planPayload: PlanDefinition,
   jurisdictionIds: string[],
-  service: typeof OpenSRPService = OpenSRPService
+  service: typeof OpenSRPService = OpenSRPService,
+  fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>
 ) {
   const serve = new service(OPENSRP_PLANS);
   const jurisdictions = jurisdictionIds.map(jurisdictionId => ({ code: jurisdictionId }));
@@ -57,6 +59,7 @@ export async function putJurisdictionsToPlan(
   return await serve
     .update(payload)
     .then(response => {
+      fetchPlanCreator(payload);
       return success<Dictionary | undefined>(response);
     })
     .catch((err: Error) => {
