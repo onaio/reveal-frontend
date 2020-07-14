@@ -92,11 +92,11 @@ describe('PlanAssignment/withTreeWalker', () => {
         .props()
     ).toEqual({
       ...expectedProps,
-      currentChildren: currentTreeNode.model.children.map((child: ParsedHierarchySingleNode) =>
+      currentChildren: [currentTreeNode.model].map((child: ParsedHierarchySingleNode) =>
         formatJurisdiction(child)
       ),
-      currentNode: formatJurisdiction(currentTreeNode.model),
-      hierarchy: [formatJurisdiction(currentTreeNode.model)],
+      currentNode: null,
+      hierarchy: [],
     });
 
     expect(fetch.mock.calls).toEqual([]);
