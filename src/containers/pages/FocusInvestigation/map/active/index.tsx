@@ -306,6 +306,8 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     ...otherLayers,
   ];
 
+  console.log('gs layers?????????', gsLayers);
+
   const mapCenter = getCenter({
     features: [jurisdiction.geojson as any],
     type: 'FeatureCollection',
