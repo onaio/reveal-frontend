@@ -747,3 +747,6 @@ export const EXPRESSION_LABEL = translate('EXPRESSION_LABEL', 'Expression');
 export const TRIGGERS_LABEL = translate('TRIGGERS_LABEL', 'Triggers');
 export const CONDITIONS_LABEL = translate('CONDITIONS_LABEL', 'Triggers');
 export const DEFINITION_URI = translate('DEFINITION_URI', 'Definition Uri');
+
+export const SAVE_DRAFT = translate('SAVE_DRAFT', 'save draft');
+export const SAVE_AND_ACTIVATE = translate('SAVE_AND_ACTIVATE', 'Save & Activate');

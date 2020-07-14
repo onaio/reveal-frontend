@@ -8,10 +8,12 @@ import { Provider } from 'react-redux';
 import { Route, Router, Switch } from 'react-router';
 import { MemoryRouter, RouteComponentProps } from 'react-router-dom';
 import { ConnectedJurisdictionTable } from '..';
-import { ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
+import { ASSIGN_JURISDICTIONS_URL, ASSIGN_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { sampleHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
 import { irsPlans, plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { PlanStatus } from '../../../../../store/ducks/plans';
+import { afterDraftSave, afterSaveAndActivate } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
@@ -357,5 +359,135 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         .find('input')
         .prop('disabled')
     ).toBe(false);
+  });
+
+  it('makes correct calls after clicking save draft action', async () => {
+    const plan = { ...plans[0], status: PlanStatus.DRAFT };
+
+    const CustomView = (props: RouteComponentProps<Dictionary>) => {
+      const mockProps = {
+        currentParentId: props.match.params.parentId,
+        plan,
+        rootJurisdictionId: '2942',
+      };
+      return <ConnectedJurisdictionTable {...mockProps} />;
+    };
+
+    const App = () => {
+      return (
+        <Switch>
+          <Route
+            exact={true}
+            path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
+            component={CustomView}
+          />
+          <Route exact={true} path={`${ASSIGN_JURISDICTIONS_URL}/:planId`} component={CustomView} />
+        </Switch>
+      );
+    };
+
+    fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter
+          initialEntries={[
+            {
+              hash: '',
+              pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+              search: '',
+              state: {},
+            },
+          ]}
+        >
+          <App />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    // first flush promises
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    // simulate a click on draft
+    wrapper.find('#save-draft button').simulate('click');
+
+    // flush promises
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+    });
+
+    // check fetch request
+    expect(fetch.mock.calls[1]).toEqual(afterDraftSave);
+  });
+
+  it('makes correct calls after clicking save and activate', async () => {
+    const plan = { ...plans[0], status: PlanStatus.DRAFT };
+
+    const CustomView = (props: RouteComponentProps<Dictionary>) => {
+      const mockProps = {
+        currentParentId: props.match.params.parentId,
+        plan,
+        rootJurisdictionId: '2942',
+      };
+      return <ConnectedJurisdictionTable {...mockProps} />;
+    };
+
+    const App = () => {
+      return (
+        <Switch>
+          <Route
+            exact={true}
+            path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
+            component={CustomView}
+          />
+          <Route exact={true} path={`${ASSIGN_JURISDICTIONS_URL}/:planId`} component={CustomView} />
+        </Switch>
+      );
+    };
+
+    fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter
+          initialEntries={[
+            {
+              hash: '',
+              pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+              search: '',
+              state: {},
+            },
+          ]}
+        >
+          <App />
+        </MemoryRouter>
+      </Provider>
+    );
+
+    // first flush promises
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    // simulate a click on draft
+    wrapper.find('#save-and-activate button').simulate('click');
+
+    // flush promises
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    // check fetch request
+    expect(fetch.mock.calls[1]).toEqual(afterSaveAndActivate);
+
+    // check redirection
+    expect((wrapper.find('Router').props() as any).history.location.pathname).toEqual(
+      `${ASSIGN_PLAN_URL}/${plan.identifier}`
+    );
   });
 });
