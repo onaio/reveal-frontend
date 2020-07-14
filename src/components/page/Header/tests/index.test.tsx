@@ -1,4 +1,4 @@
-import { mount, shallow } from 'enzyme';
+import { mount, ReactWrapper, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
@@ -8,6 +8,14 @@ import HeaderComponentWithRouter from '..';
 const history = createBrowserHistory();
 
 jest.mock('../../../../configs/env');
+
+// initial attempt at breaking down the snapshot
+/** helper to render all nav links */
+const renderNavLinks = (wrapper: ReactWrapper, message: string = '') => {
+  wrapper.find('NavLink').forEach(link => {
+    expect(toJson(link)).toMatchSnapshot(message);
+  });
+};
 
 describe('components/page/Header', () => {
   beforeEach(() => {
@@ -44,7 +52,7 @@ describe('components/page/Header', () => {
         <HeaderComponentWithRouter {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    renderNavLinks(wrapper);
     wrapper.unmount();
   });
 
@@ -62,7 +70,7 @@ describe('components/page/Header', () => {
         <HeaderComponentWithRouter {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    renderNavLinks(wrapper);
     wrapper.unmount();
   });
 });
