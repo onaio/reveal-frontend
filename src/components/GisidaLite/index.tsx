@@ -102,6 +102,10 @@ const GisidaLite = (props: GisidaLiteProps) => {
     [mapIcons]
   );
 
+  /**
+   * Workaround to wait for all layers to be received to render the layers otherwise
+   * some layers are not displayed properly
+   */
   React.useEffect(() => {
     setAllLayersReceived(!allLayersReceived);
   }, [layers.length]);
