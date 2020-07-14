@@ -103,8 +103,9 @@ const GisidaLite = (props: GisidaLiteProps) => {
   );
 
   /**
-   * Workaround to wait for all layers to be received to render the layers otherwise
-   * some layers are not displayed properly
+   * Workaround to wait for all layers to be received inorder to render the layers otherwise
+   * some layers are being rendered incorrectly, for instance, structures that were to be
+   * rendered as yellow were now being rendered green
    */
   React.useEffect(() => {
     setAllLayersReceived(!allLayersReceived);
