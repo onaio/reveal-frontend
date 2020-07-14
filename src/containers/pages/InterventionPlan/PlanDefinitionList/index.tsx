@@ -15,47 +15,47 @@ import {
 } from '../../../../components/Table/DrillDownFilters/utils';
 import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
 import { ADD_PLAN, HOME, PLANS } from '../../../../configs/lang';
-import { PlanDefinition } from '../../../../configs/settings';
 import {
   HOME_URL,
   OPENSRP_PLANS,
   PLAN_LIST_URL,
+  PLAN_RECORD_BY_ID,
   QUERY_PARAM_TITLE,
   QUERY_PARAM_USER,
 } from '../../../../constants';
 import { loadPlansByUserFilter } from '../../../../helpers/dataLoading/plans';
 import { displayError } from '../../../../helpers/errors';
-import { getQueryParams } from '../../../../helpers/utils';
+import {
+  extractPlanRecordResponseFromPlanPayload,
+  getQueryParams,
+} from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
-import planDefinitionReducer, {
-  fetchPlanDefinitions,
-  makePlanDefinitionsArraySelector,
-  reducerName as planDefinitionReducerName,
-} from '../../../../store/ducks/opensrp/PlanDefinition';
 import plansByUserReducer, {
   makePlansByUserNamesSelector,
   reducerName as plansByUserReducerName,
 } from '../../../../store/ducks/opensrp/planIdsByUser';
+import {
+  fetchPlanRecords,
+  makePlansArraySelector,
+  PlanRecord,
+  PlanRecordResponse,
+} from '../../../../store/ducks/plans';
 import './index.css';
 import { TableColumns } from './utils';
 
 /** register the plan definitions reducer */
-reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 reducerRegistry.register(plansByUserReducerName, plansByUserReducer);
 
 /** interface for PlanList props */
 interface PlanListProps {
-  fetchPlans: typeof fetchPlanDefinitions;
-  plans: PlanDefinition[];
+  fetchPlans: typeof fetchPlanRecords;
+  plans: PlanRecord[];
   service: typeof OpenSRPService;
   userName: string | null;
 }
 
 /** Plans filter selector */
-const plansDefinitionsArraySelector = makePlanDefinitionsArraySelector(
-  'planDefinitionsById',
-  'date'
-);
+const plansDefinitionsArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID, 'plan_date');
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
@@ -81,7 +81,11 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
     try {
       setLoading(plans.length < 1); // only set loading when there are no plans
       const planObjects = await apiService.list();
-      fetchPlans(planObjects);
+      if (planObjects) {
+        const planRecords: PlanRecordResponse[] =
+          planObjects.map(extractPlanRecordResponseFromPlanPayload) || [];
+        return fetchPlans(planRecords);
+      }
     } catch (e) {
       displayError(e);
     } finally {
@@ -100,7 +104,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
   }, []);
 
   const tableProps: Pick<
-    DrillDownTableProps<PlanDefinition>,
+    DrillDownTableProps<PlanRecord>,
     | 'columns'
     | 'data'
     | 'loading'
@@ -160,7 +164,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
 
 /** Declare default props for PlanDefinitionList */
 const defaultProps: PlanListProps = {
-  fetchPlans: fetchPlanDefinitions,
+  fetchPlans: fetchPlanRecords,
   plans: [],
   service: OpenSRPService,
   userName: null,
@@ -174,7 +178,7 @@ export { PlanDefinitionList };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
-  plans: PlanDefinition[];
+  plans: PlanRecord[];
   userName: string | null;
 }
 
@@ -195,7 +199,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 };
 
 /** map dispatch to props */
-const mapDispatchToProps = { fetchPlans: fetchPlanDefinitions };
+const mapDispatchToProps = { fetchPlans: fetchPlanRecords };
 
 /** Connected ActiveFI component */
 const ConnectedPlanDefinitionList = connect(
