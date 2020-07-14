@@ -102,28 +102,33 @@ exports[`containers/pages/Home renders Home correctly & changes Title of page 1`
             >
               <Link
                 className="home-link"
-                replace={false}
                 to="/intervention/irs/drafts"
               >
-                <a
+                <LinkAnchor
                   className="home-link"
                   href="/intervention/irs/drafts"
-                  onClick={[Function]}
+                  navigate={[Function]}
                 >
-                  <Button
-                    className="btn-intervention btn-lg btn-block btn-outline-green"
-                    color="outline"
-                    tag="button"
+                  <a
+                    className="home-link"
+                    href="/intervention/irs/drafts"
+                    onClick={[Function]}
                   >
-                    <button
-                      aria-label={null}
-                      className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
-                      onClick={[Function]}
+                    <Button
+                      className="btn-intervention btn-lg btn-block btn-outline-green"
+                      color="outline"
+                      tag="button"
                     >
-                      IRS
-                    </button>
-                  </Button>
-                </a>
+                      <button
+                        aria-label={null}
+                        className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
+                        onClick={[Function]}
+                      >
+                        IRS
+                      </button>
+                    </Button>
+                  </a>
+                </LinkAnchor>
               </Link>
             </div>
           </Col>
@@ -145,28 +150,33 @@ exports[`containers/pages/Home renders Home correctly & changes Title of page 1`
             >
               <Link
                 className="home-link"
-                replace={false}
                 to="/focus-investigation"
               >
-                <a
+                <LinkAnchor
                   className="home-link"
                   href="/focus-investigation"
-                  onClick={[Function]}
+                  navigate={[Function]}
                 >
-                  <Button
-                    className="btn-intervention btn-lg btn-block btn-outline-green"
-                    color="outline"
-                    tag="button"
+                  <a
+                    className="home-link"
+                    href="/focus-investigation"
+                    onClick={[Function]}
                   >
-                    <button
-                      aria-label={null}
-                      className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
-                      onClick={[Function]}
+                    <Button
+                      className="btn-intervention btn-lg btn-block btn-outline-green"
+                      color="outline"
+                      tag="button"
                     >
-                      Focus Investigation
-                    </button>
-                  </Button>
-                </a>
+                      <button
+                        aria-label={null}
+                        className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
+                        onClick={[Function]}
+                      >
+                        Focus Investigation
+                      </button>
+                    </Button>
+                  </a>
+                </LinkAnchor>
               </Link>
             </div>
           </Col>
@@ -188,28 +198,33 @@ exports[`containers/pages/Home renders Home correctly & changes Title of page 1`
             >
               <Link
                 className="home-link"
-                replace={false}
                 to="/teams"
               >
-                <a
+                <LinkAnchor
                   className="home-link"
                   href="/teams"
-                  onClick={[Function]}
+                  navigate={[Function]}
                 >
-                  <Button
-                    className="btn-intervention btn-lg btn-block btn-outline-green"
-                    color="outline"
-                    tag="button"
+                  <a
+                    className="home-link"
+                    href="/teams"
+                    onClick={[Function]}
                   >
-                    <button
-                      aria-label={null}
-                      className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
-                      onClick={[Function]}
+                    <Button
+                      className="btn-intervention btn-lg btn-block btn-outline-green"
+                      color="outline"
+                      tag="button"
                     >
-                      Teams
-                    </button>
-                  </Button>
-                </a>
+                      <button
+                        aria-label={null}
+                        className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
+                        onClick={[Function]}
+                      >
+                        Teams
+                      </button>
+                    </Button>
+                  </a>
+                </LinkAnchor>
               </Link>
             </div>
           </Col>

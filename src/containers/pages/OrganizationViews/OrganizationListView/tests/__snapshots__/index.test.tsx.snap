@@ -23,15 +23,19 @@ exports[`src/containers/TeamAssignment/OrganizationListView/ renders a dumb Team
         >
           <Link
             key="0"
-            replace={false}
             to="/"
           >
-            <a
+            <LinkAnchor
               href="/"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              Home
-            </a>
+              <a
+                href="/"
+                onClick={[Function]}
+              >
+                Home
+              </a>
+            </LinkAnchor>
           </Link>
         </li>
       </BreadcrumbItem>
@@ -63,14 +67,12 @@ exports[`src/containers/TeamAssignment/OrganizationListView/ renders a dumb Team
       Array [
         <Link
           className="organization-name-link"
-          replace={false}
           to="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
         >
           The Luang
         </Link>,
         "fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
         <Link
-          replace={false}
           to="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
         >
           view
@@ -85,16 +87,21 @@ exports[`src/containers/TeamAssignment/OrganizationListView/ renders a dumb Team
       <Link
         className="organization-name-link"
         key="orgName-fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
-        replace={false}
         to="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
       >
-        <a
+        <LinkAnchor
           className="organization-name-link"
           href="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
-          onClick={[Function]}
+          navigate={[Function]}
         >
-          The Luang
-        </a>
+          <a
+            className="organization-name-link"
+            href="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
+            onClick={[Function]}
+          >
+            The Luang
+          </a>
+        </LinkAnchor>
       </Link>
     </td>
     <td
@@ -109,15 +116,19 @@ exports[`src/containers/TeamAssignment/OrganizationListView/ renders a dumb Team
     >
       <Link
         key="action-fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
-        replace={false}
         to="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
       >
-        <a
+        <LinkAnchor
           href="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
-          onClick={[Function]}
+          navigate={[Function]}
         >
-          view
-        </a>
+          <a
+            href="/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4"
+            onClick={[Function]}
+          >
+            view
+          </a>
+        </LinkAnchor>
       </Link>
     </td>
   </ElementMap>

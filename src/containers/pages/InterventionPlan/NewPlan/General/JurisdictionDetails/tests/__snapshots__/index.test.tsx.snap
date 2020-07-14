@@ -19,15 +19,19 @@ exports[`src/containers/pages/interventionPlan/NewPlan/JurisdictionDetials rende
     className="card-body"
   >
     <Link
-      replace={false}
       to="/focus-investigation/view/1337"
     >
-      <a
+      <LinkAnchor
         href="/focus-investigation/view/1337"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        Focus Investigations in Kilimani 89
-      </a>
+        <a
+          href="/focus-investigation/view/1337"
+          onClick={[Function]}
+        >
+          Focus Investigations in Kilimani 89
+        </a>
+      </LinkAnchor>
     </Link>
   </div>
 </CardBody>

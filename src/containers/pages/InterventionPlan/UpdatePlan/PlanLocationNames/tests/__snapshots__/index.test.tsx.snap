@@ -50,15 +50,19 @@ exports[`src/components/locationIdToNames renders jurisdiction names as links fo
   key="0"
 >
   <Link
-    replace={false}
     to="/focus-investigation/view/f45b9380-c970-4dd1-8533-9e95ab12f128"
   >
-    <a
+    <LinkAnchor
       href="/focus-investigation/view/f45b9380-c970-4dd1-8533-9e95ab12f128"
-      onClick={[Function]}
+      navigate={[Function]}
     >
-      Namibia
-    </a>
+      <a
+        href="/focus-investigation/view/f45b9380-c970-4dd1-8533-9e95ab12f128"
+        onClick={[Function]}
+      >
+        Namibia
+      </a>
+    </LinkAnchor>
   </Link>
   <h2
     className="mock-child"
@@ -73,15 +77,19 @@ exports[`src/components/locationIdToNames renders jurisdiction names as links fo
   key="1"
 >
   <Link
-    replace={false}
     to="/focus-investigation/view/3951"
   >
-    <a
+    <LinkAnchor
       href="/focus-investigation/view/3951"
-      onClick={[Function]}
+      navigate={[Function]}
     >
-      Akros_1
-    </a>
+      <a
+        href="/focus-investigation/view/3951"
+        onClick={[Function]}
+      >
+        Akros_1
+      </a>
+    </LinkAnchor>
   </Link>
   <h2
     className="mock-child"
