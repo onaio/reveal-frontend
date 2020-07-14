@@ -2,7 +2,7 @@ import superset, { SupersetFormData } from '@onaio/superset-connector';
 import * as React from 'react';
 import { GeoJSONLayer } from 'react-mapbox-gl';
 import { ActionCreator } from 'redux';
-import { GREY } from '../../../../../../colors';
+import { BLUE, GREY } from '../../../../../../colors';
 import {
   circleLayerTemplate,
   fillLayerTemplate,
@@ -234,7 +234,8 @@ export const buildJurisdictionLayers = (jurisdiction: Jurisdiction | null) => {
  * @param {FeatureCollection<StructureGeoJSON> | null} structs - the structures
  */
 export const buildStructureLayers = (
-  structs: FeatureCollection<StructureGeoJSON> | null
+  structs: FeatureCollection<StructureGeoJSON> | null,
+  isJurisdiction?: boolean
 ): JSX.Element[] => {
   const structureLayers: JSX.Element[] = [];
   if (structs && structs.features && structs.features.length) {
@@ -243,7 +244,7 @@ export const buildStructureLayers = (
         {...lineLayerTemplate}
         linePaint={{
           ...lineLayerTemplate.linePaint,
-          'line-color': GREY,
+          'line-color': isJurisdiction ? BLUE : GREY,
           'line-opacity': 1,
           'line-width': 2,
         }}
@@ -258,7 +259,8 @@ export const buildStructureLayers = (
         fillPaint={{
           ...fillLayerTemplate.fillPaint,
           'fill-color': GREY,
-          'fill-outline-color': GREY,
+          'fill-opacity': isJurisdiction ? 0.5 : 1,
+          'fill-outline-color': isJurisdiction ? BLUE : GREY,
         }}
         data={structs}
         id={STRUCTURES_FILL}
