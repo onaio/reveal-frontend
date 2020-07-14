@@ -54,6 +54,8 @@ export const reducer = (state: State, action: ActionType) => {
  * however there are a few cases where the above might not work and hence a useCase for this hook
  * , for e.g. when promises are spread across hooks, or where they are nested.
  *
+ * @param initialKey - uses this key to create the initial state
+ * @param load - the value of initialKey; forms the initial state
  */
 export const useLoadingReducer = (initialKey?: string, load: boolean = true) => {
   let initialState: State = {};
@@ -73,10 +75,19 @@ export const useLoadingReducer = (initialKey?: string, load: boolean = true) => 
     return key;
   };
 
+  /** sets loading to true for loading sequence with the  passed in key
+   * @param key - target this load entry
+   * @param condition - by default start loading will start the loading sequence to true, this overrides that
+   *
+   * @return {string} the key
+   */
   const startLoading = (key: string, condition: boolean = true) => {
     return changeLoading(key, condition);
   };
 
+  /** closes a loading entry
+   * @param key - loading entry to target
+   */
   const stopLoading = (key: string) => {
     return changeLoading(key, false);
   };
