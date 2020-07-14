@@ -1,8 +1,9 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { FeatureCollection } from '@turf/turf';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
+import GeojsonExtent from '@mapbox/geojson-extent';
+import { FeatureCollection } from '@turf/turf';
 import { GisidaLite } from '../../../components/GisidaLite';
 import { getCenter } from '../../../components/GisidaLite/helpers';
 import { getJurisdictions } from '../../../components/TreeWalker/helpers';
@@ -11,11 +12,13 @@ import { OpenSRPService } from '../../../services/opensrp';
 import { getJurisdictionsIdArray } from '../../../store/ducks/jurisdictions';
 import { Filters, getCurrentChildren } from '../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../store/ducks/opensrp/hierarchies/types';
+import Loading from '../../../components/page/Loading';
 import jurisdictionReducer, {
   fetchJurisdictions,
   Filters as JurisdictionGeomFilters,
   getJurisdictionsFC,
   reducerName as jurisdictionReducerName,
+  getJurisdictionsById,
 } from '../../../store/ducks/opensrp/jurisdictions';
 import { buildStructureLayers, getMapBounds } from '../FocusInvestigation/map/active/helpers/utils';
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
@@ -29,7 +32,6 @@ export interface AssignmentMapWrapperProps {
   serviceClass: typeof OpenSRPService;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   getJurisdictionsFeatures: FeatureCollection;
-  jurisdictionArray: any;
 }
 
 const defaultProps = {
@@ -38,7 +40,6 @@ const defaultProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   getJurisdictionsFeatures: undefined,
   rootJurisdictionId: '',
-  jurisdictionArray: [],
   serviceClass: OpenSRPService,
 };
 
@@ -51,8 +52,10 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   } = props;
   const currentChildIds: string[] = currentChildren.map(node => node.model.id);
   const [loading, setLoading] = React.useState(true);
+  const collection: any = getJurisdictionsFeatures.features;
+  const collectionIds: string[] = collection.map((c: any) => c.id);
   React.useEffect(() => {
-    if (!getJurisdictionsFeatures.features.length) {
+    if (!currentChildIds.filter(cc => collectionIds.includes(cc)).length) {
       setLoading(true);
       const params = {
         is_jurisdiction: true,
@@ -69,14 +72,18 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
         })
         .catch(error => displayError(error));
     }
-  }, [getJurisdictionsFeatures]);
+  }, [currentChildIds]);
   let structures: JSX.Element[] = [];
   let mapCenter;
+  let mapBounds;
   if (getJurisdictionsFeatures.features.length) {
-    structures = buildStructureLayers(getJurisdictionsFeatures as any);
+    structures = buildStructureLayers(getJurisdictionsFeatures as any, true);
     mapCenter = getCenter(getJurisdictionsFeatures);
+    mapBounds = GeojsonExtent(getJurisdictionsFeatures);
   }
-  const mapBounds = getMapBounds(null);
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <div className="map">
       {!loading ? (
@@ -95,11 +102,7 @@ export { AssignmentMapWrapper };
 /** Map state to props */
 type MapStateToProps = Pick<
   AssignmentMapWrapperProps,
-  | 'currentParentId'
-  | 'rootJurisdictionId'
-  | 'currentChildren'
-  | 'getJurisdictionsFeatures'
-  | 'jurisdictionArray'
+  'currentParentId' | 'rootJurisdictionId' | 'currentChildren' | 'getJurisdictionsFeatures'
 >;
 
 /** map action creators interface */
@@ -126,15 +129,17 @@ const mapStateToProps = (
     filterGeom: false,
     jurisdictionId: ownProps.currentParentId || ownProps.rootJurisdictionId,
     jurisdictionIdsArray: childJurisdictions.map((node: TreeNode) => node.model.id),
-    parentId: ownProps.rootJurisdictionId,
   };
 
   return {
     currentParentId: ownProps.currentParentId,
     rootJurisdictionId: ownProps.rootJurisdictionId,
     currentChildren: childJurisdictions,
-    getJurisdictionsFeatures: getJurisdictionsFC()(state, jurisdictionFilters),
-    jurisdictionArray: getJurisdictionsIdArray(state),
+    getJurisdictionsFeatures: getJurisdictionsFC()(
+      state,
+      jurisdictionFilters,
+      getJurisdictionsById(state, jurisdictionFilters)
+    ),
   };
 };
 
