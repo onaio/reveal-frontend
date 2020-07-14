@@ -1,6 +1,5 @@
 import React from 'react';
 import { GeoJSONLayer } from 'react-mapbox-gl';
-import { GISIDA_MAPBOX_TOKEN } from '../../../configs/env';
 import { imgArr } from '../../../configs/settings';
 import { MAIN_PLAN } from '../../../constants';
 import { jurisdiction1 } from '../../../store/ducks/tests/fixtures';
@@ -10,10 +9,6 @@ import { arePropsEqual, GisidaLiteProps } from '../index';
 describe('components/GisidaLite/arePropsEqual', () => {
   it('returns false if layers length has changed', () => {
     const prevProps: GisidaLiteProps = {
-      accessToken: GISIDA_MAPBOX_TOKEN,
-      attributionControl: true,
-      customAttribution: '&copy; Reveal',
-      injectCSS: true,
       layers: [],
       mapCenter: undefined,
       mapHeight: '800px',
@@ -39,10 +34,6 @@ describe('components/GisidaLite/arePropsEqual', () => {
 
   it('returns true if length has not changed', () => {
     const prevProps: GisidaLiteProps = {
-      accessToken: GISIDA_MAPBOX_TOKEN,
-      attributionControl: true,
-      customAttribution: '&copy; Reveal',
-      injectCSS: true,
       layers: [],
       mapCenter: undefined,
       mapHeight: '800px',

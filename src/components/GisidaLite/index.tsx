@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash';
 import { EventData, Style } from 'mapbox-gl';
 import { Map } from 'mapbox-gl';
 import React, { Fragment } from 'react';
@@ -124,15 +125,12 @@ const GisidaLite = (props: GisidaLiteProps) => {
 GisidaLite.defaultProps = gisidaLiteDefaultProps;
 
 /**
- * Custom quality method for React.memo
- * TODO: The custom functions checks if layers.length has changed for prevProps and nextProps. This
- * might be limiting since the length might be the same but the elements of the two arrays are different. A
- * proper implementation that compares the elements is required to replace current implementation
+ * Custom equality method for React.memo
  * @param prevProps
  * @param nextProps
  */
 export const arePropsEqual = (prevProps: GisidaLiteProps, nextProps: GisidaLiteProps) => {
-  if (prevProps.layers.length !== nextProps.layers.length) {
+  if (!isEqual(prevProps.layers, nextProps.layers)) {
     return false;
   }
 
