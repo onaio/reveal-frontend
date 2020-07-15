@@ -44,6 +44,13 @@ const fetch = require('jest-fetch-mock');
 
 jest.mock('../../../../configs/env');
 
+jest.mock('../../AssigmentMapWrapper', () => {
+  const mockComponent = (_: any) => <div id="mockComponent">Assignment wrapperv</div>;
+  return {
+    ConnectedAssignmentMapWrapper: mockComponent,
+  };
+});
+
 // register reducers
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
 reducerRegistry.register(organizationsReducerName, organizationsReducer);

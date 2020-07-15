@@ -4,6 +4,7 @@ import { FeatureCollection } from '@turf/turf';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
+import { CountriesAdmin0 } from '../../../../src/configs/settings';
 import { GisidaLite } from '../../../components/GisidaLite';
 import { getCenter } from '../../../components/GisidaLite/helpers';
 import Loading from '../../../components/page/Loading';
@@ -19,7 +20,6 @@ import jurisdictionReducer, {
   getJurisdictionsFC,
   reducerName as jurisdictionReducerName,
 } from '../../../store/ducks/opensrp/jurisdictions';
-import { CountriesAdmin0 } from '../../../../src/configs/settings';
 import { buildStructureLayers } from '../FocusInvestigation/map/active/helpers/utils';
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
@@ -139,14 +139,14 @@ const mapStateToProps = (
   };
 
   return {
-    currentParentId: ownProps.currentParentId,
-    rootJurisdictionId: ownProps.rootJurisdictionId,
     currentChildren: childJurisdictions,
+    currentParentId: ownProps.currentParentId,
     getJurisdictionsFeatures: getJurisdictionsFC()(
       state,
       jurisdictionFilters,
       getJurisdictionsById(state, jurisdictionFilters)
     ),
+    rootJurisdictionId: ownProps.rootJurisdictionId,
   };
 };
 
