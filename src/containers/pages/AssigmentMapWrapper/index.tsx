@@ -19,6 +19,7 @@ import jurisdictionReducer, {
   getJurisdictionsFC,
   reducerName as jurisdictionReducerName,
 } from '../../../store/ducks/opensrp/jurisdictions';
+import { CountriesAdmin0 } from '../../../../src/configs/settings';
 import { buildStructureLayers } from '../FocusInvestigation/map/active/helpers/utils';
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
@@ -53,6 +54,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   const [loading, setLoading] = React.useState(true);
   const collection: any = getJurisdictionsFeatures.features;
   const collectionIds: string[] = collection.map((c: any) => c.id);
+  const jurisdictionLabels = currentChildren.map(d => d.model.label);
   React.useEffect(() => {
     if (!currentChildIds.filter(cc => collectionIds.includes(cc)).length) {
       setLoading(true);
@@ -77,15 +79,20 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   let mapBounds;
   if (getJurisdictionsFeatures.features.length) {
     structures = buildStructureLayers(getJurisdictionsFeatures as any, true);
-    mapCenter = getCenter(getJurisdictionsFeatures);
-    mapBounds = GeojsonExtent(getJurisdictionsFeatures);
+    if (Object.keys(CountriesAdmin0).filter(admin => jurisdictionLabels.includes(admin)).length) {
+      mapCenter = undefined;
+      mapBounds = undefined;
+    } else {
+      mapCenter = getCenter(getJurisdictionsFeatures);
+      mapBounds = GeojsonExtent(getJurisdictionsFeatures);
+    }
   }
   if (loading) {
     return <Loading />;
   }
   return (
     <div className="map">
-      {!loading ? (
+      {!loading && typeof mapCenter !== 'undefined' ? (
         <GisidaLite layers={[...structures]} mapCenter={mapCenter} mapBounds={mapBounds} />
       ) : null}
     </div>
@@ -128,6 +135,7 @@ const mapStateToProps = (
     filterGeom: false,
     jurisdictionId: ownProps.currentParentId || ownProps.rootJurisdictionId,
     jurisdictionIdsArray: childJurisdictions.map((node: TreeNode) => node.model.id),
+    parentId: ownProps.currentParentId,
   };
 
   return {
