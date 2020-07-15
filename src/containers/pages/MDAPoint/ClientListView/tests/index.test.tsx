@@ -1,5 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Helmet } from 'react-helmet';
@@ -91,7 +92,7 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
     wrapper.unmount();
   });
 
-  it('renders ClientListView correctly for null files', () => {
+  it('renders ClientListView correctly for null files', async () => {
     const mock: any = jest.fn();
     // mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
@@ -107,9 +108,12 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
         <ClientListView {...props} />
       </Router>
     );
+    await flushPromises();
+    wrapper.update();
+
     expect(wrapper.find(ClientListView).props().files).toEqual(null);
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
-    expect(wrapper.find('.listview-thead').length).toEqual(0);
+    expect(wrapper.find('.listview-thead').length).toEqual(1);
     expect(wrapper.find('HeaderBreadcrumb').props()).toEqual({
       currentPage: {
         label: 'Students',
@@ -122,6 +126,7 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
         },
       ],
     });
+    expect(wrapper.find('#table-row .col div').text()).toEqual('No Data Found');
     wrapper.unmount();
   });
 
