@@ -7,7 +7,6 @@ import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/T
 import {
   ASSIGN_PLANS,
   HOME,
-  LOADING,
   NAME,
   NO_ROWS_FOUND,
   TEAMS_ASSIGNMENT,
@@ -58,14 +57,23 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
     return null;
   }
 
+  // we will use the jurisdiction id in the url to know if the parent
+  // node has been set, if drilling down has began.
+  let derivedChildrenNodes = currentChildren;
+  if (!props.match.params.jurisdictionId) {
+    derivedChildrenNodes = [currentNode];
+  }
+
   const pageTitle = plan.title;
   const baseUrl = `${ASSIGN_PLAN_URL}/${plan.identifier}`;
 
+  const initialCurrentPage = {
+    label: pageTitle,
+    url: baseUrl,
+  };
+
   const breadcrumbProps = {
-    currentPage: {
-      label: currentNode ? LOADING : pageTitle,
-      url: baseUrl,
-    },
+    currentPage: initialCurrentPage,
     pages: [
       {
         label: HOME,
@@ -78,30 +86,27 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
     ],
   };
 
-  if (currentNode) {
-    breadcrumbProps.pages.push({
-      label: pageTitle,
-      url: baseUrl,
-    });
-  }
+  // create breadcrumb props.
+  if (props.match.params.jurisdictionId) {
+    const path = [...hierarchy];
+    const lastNode = path.pop();
 
-  for (let index = 0; index < hierarchy.length; index++) {
-    const element = hierarchy[index];
+    breadcrumbProps.pages.push(initialCurrentPage);
 
-    if (index < hierarchy.length - 1) {
+    path.forEach(nd => {
       breadcrumbProps.pages.push({
-        label: element.model.label,
-        url: `${baseUrl}/${element.model.id}`,
+        label: nd.model.label,
+        url: `${baseUrl}/${nd.model.id}`,
       });
-    } else {
-      breadcrumbProps.currentPage = {
-        label: element.model.label,
-        url: `${baseUrl}/${element.model.id}`,
-      };
-    }
+    });
+
+    breadcrumbProps.currentPage = {
+      label: (lastNode as TreeNode).model.label,
+      url: `${baseUrl}/${(lastNode as TreeNode).model.id}`,
+    };
   }
 
-  const data = currentChildren.map(node => {
+  const data = derivedChildrenNodes.map(node => {
     const jurisdictionAssignments = assignments.filter(
       assignment => assignment.jurisdiction === node.model.id
     );
