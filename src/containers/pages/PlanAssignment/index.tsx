@@ -48,9 +48,9 @@ import planDefinitionReducer, {
   getPlanDefinitionById,
   reducerName as planDefinitionReducerName,
 } from '../../../store/ducks/opensrp/PlanDefinition';
+import { ConnectedAssignmentMapWrapper } from '../AssigmentMapWrapper';
 import { JurisdictionTable, JurisdictionTableProps } from './helpers/JurisdictionTable';
 import { AssignmentResponse } from './helpers/types';
-import { ConnectedAssignmentMapWrapper } from '../AssigmentMapWrapper';
 
 // register reducers
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
