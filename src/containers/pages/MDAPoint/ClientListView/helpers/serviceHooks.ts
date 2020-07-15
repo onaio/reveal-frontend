@@ -18,15 +18,15 @@ type SetIsLoading = React.Dispatch<React.SetStateAction<boolean>> | null;
 /** loads and persists to store files data from upload/history endpoint
  */
 export const loadFiles = async (
-  setLoading: SetIsLoading = null,
   fetchFileAction = fetchFiles,
-  serviceClass: any = OpenSRPService
+  serviceClass: typeof OpenSRPService = OpenSRPService,
+  setLoading: SetIsLoading = null
 ) => {
   if (setLoading) {
     setLoading(true);
   }
   const serve = new serviceClass(OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT);
-  serve
+  await serve
     .list()
     .then((response: File[]) => {
       store.dispatch(fetchFileAction(response, true));

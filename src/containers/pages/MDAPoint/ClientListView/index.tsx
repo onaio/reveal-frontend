@@ -89,7 +89,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
       /**
        * Fetch files incase the files are not available e.g when page is refreshed
        */
-      loadFiles(setLoading).catch(err => displayError(err));
+      loadFiles(fetchFiles, OpenSRPService, setLoading).catch(err => displayError(err));
     }
     /**
      * We do not need to re-run since this effect doesn't depend on any values from api yet

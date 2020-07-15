@@ -18,7 +18,7 @@ describe('src/containers/pages/ClientListView/helpers/servicehooks', () => {
       };
     });
 
-    loadFiles(mockSetLoader, mockActionCreator, mockClass).catch(e => {
+    loadFiles(mockActionCreator, mockClass as any, mockSetLoader).catch(e => {
       throw e;
     });
     await flushPromises();
