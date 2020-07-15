@@ -61,7 +61,11 @@ describe('reducers/opensrp/hierarchies', () => {
     store.dispatch(fetchTree(sampleHierarchy));
     // when the parent node is undefined; current children is set to an array of the rootNode
     expect(childrenSelector(store.getState(), filters).length).toEqual(1);
-    expect(parentNodeSelector(store.getState(), filters)).toBeUndefined();
+    const parentNode = parentNodeSelector(store.getState(), filters);
+    if (!parentNode) {
+      fail();
+    }
+    expect(parentNode.model.id).toEqual('2942');
 
     filters = {
       ...filters,
