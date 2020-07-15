@@ -217,8 +217,17 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     return <ErrorPage errorMessage={errorMessage} />;
   }
 
-  if (currentChildren.length === 0) {
+  if (!currentParentNode) {
     handleBrokenPage(NO_DATA_FOUND);
+  }
+
+  // we will use the currentParentId prop to know if the parent node has
+  // been set, if drilling down has begun.
+  let derivedParentNode = currentParentNode;
+  let derivedChildrenNodes = currentChildren;
+  if (!props.currentParentId) {
+    derivedParentNode = undefined;
+    derivedChildrenNodes = currentParentNode ? [currentParentNode] : [];
   }
 
   /** creating breadCrumb props */
@@ -229,8 +238,8 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   };
   const pages: Page[] = [];
 
-  if (currentParentNode) {
-    const path = currentParentNode.getPath();
+  if (derivedParentNode) {
+    const path = derivedParentNode.getPath();
     const lastNode = path.pop();
 
     pages.push(currentPage);
@@ -251,7 +260,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     currentPage,
     pages,
   };
-  const data = currentChildren.map(node => {
+  const data = derivedChildrenNodes.map(node => {
     const isLeafNode: boolean = leafNodes.map(leaf => leaf.model.id).includes(node.model.id);
     const metaObj = jurisdictionsMetadata.find(
       (m: JurisdictionsMetadata) => m.key === node.model.id
@@ -388,6 +397,11 @@ type DispatchToProps = Pick<
   'treeFetchedCreator' | 'selectNodeCreator' | 'deselectNodeCreator' | 'autoSelectNodesCreator'
 >;
 
+const childrenSelector = getCurrentChildren();
+const parentNodeSelector = getCurrentParentNode();
+const leafNodesSelector = getLeafNodes();
+const selectedLeafNodesSelector = getAllSelectedNodes();
+
 /** maps props to store state */
 const mapStateToProps = (
   state: Partial<Store>,
@@ -399,10 +413,10 @@ const mapStateToProps = (
     rootJurisdictionId: ownProps.rootJurisdictionId,
   };
   return {
-    currentChildren: getCurrentChildren()(state, filters),
-    currentParentNode: getCurrentParentNode()(state, filters),
-    leafNodes: getLeafNodes()(state, filters),
-    selectedLeafNodes: getAllSelectedNodes()(state, filters),
+    currentChildren: childrenSelector(state, filters),
+    currentParentNode: parentNodeSelector(state, filters),
+    leafNodes: leafNodesSelector(state, filters),
+    selectedLeafNodes: selectedLeafNodesSelector(state, filters),
   };
 };
 
