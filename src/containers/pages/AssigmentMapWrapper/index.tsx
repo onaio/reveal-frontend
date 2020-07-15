@@ -1,26 +1,25 @@
+import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { FeatureCollection } from '@turf/turf';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
-import GeojsonExtent from '@mapbox/geojson-extent';
-import { FeatureCollection } from '@turf/turf';
 import { GisidaLite } from '../../../components/GisidaLite';
 import { getCenter } from '../../../components/GisidaLite/helpers';
+import Loading from '../../../components/page/Loading';
 import { getJurisdictions } from '../../../components/TreeWalker/helpers';
 import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
-import { getJurisdictionsIdArray } from '../../../store/ducks/jurisdictions';
 import { Filters, getCurrentChildren } from '../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../store/ducks/opensrp/hierarchies/types';
-import Loading from '../../../components/page/Loading';
 import jurisdictionReducer, {
   fetchJurisdictions,
   Filters as JurisdictionGeomFilters,
+  getJurisdictionsById,
   getJurisdictionsFC,
   reducerName as jurisdictionReducerName,
-  getJurisdictionsById,
 } from '../../../store/ducks/opensrp/jurisdictions';
-import { buildStructureLayers, getMapBounds } from '../FocusInvestigation/map/active/helpers/utils';
+import { buildStructureLayers } from '../FocusInvestigation/map/active/helpers/utils';
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** props for Plan jurisdiction and team assignment higher order component */

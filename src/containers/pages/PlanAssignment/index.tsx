@@ -50,6 +50,7 @@ import planDefinitionReducer, {
 } from '../../../store/ducks/opensrp/PlanDefinition';
 import { JurisdictionTable, JurisdictionTableProps } from './helpers/JurisdictionTable';
 import { AssignmentResponse } from './helpers/types';
+import { ConnectedAssignmentMapWrapper } from '../AssigmentMapWrapper';
 
 // register reducers
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
@@ -242,7 +243,18 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     useJurisdictionNodeType: false,
   };
 
-  return <WrappedJurisdictionTable {...wrappedProps} />;
+  const AssignmentWraperProps = {
+    currentParentId: jurisdictionId,
+    rootJurisdictionId: props.match.params.planId,
+    serviceClass: OpenSRPServiceClass,
+  };
+
+  return (
+    <>
+      <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />
+      <WrappedJurisdictionTable {...wrappedProps} />
+    </>
+  );
 };
 
 /** Default props for PlanAssignment */
