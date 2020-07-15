@@ -127,7 +127,7 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
           jurisdictionId && jurisdictionId !== ''
             ? tree.first(treeNode => treeNode.model.id === jurisdictionId)
             : tree.isRoot()
-            ? tree
+            ? tree // TODO -review: if node is not root, then no node in its structure will be root
             : tree.first(treeNode => treeNode.isRoot());
 
         if (nodeFromTree) {
@@ -137,15 +137,8 @@ export function withTreeWalker<T>(WrappedComponent: React.FC<T>) {
             parentNode = formatJurisdiction(parentNode.model);
             pedigree = nodeFromTree.getPath().map(item => formatJurisdiction(item.model));
           }
-          // if there is no jurisdictionId, then drilling down has not begun, we set
-          // the currentParent node to null since the root node will be  the current child derivatively
-          if (jurisdictionId === '') {
-            setCurrentNode(null);
-            setHierarchy([]);
-          } else {
-            setCurrentNode(parentNode);
-            setHierarchy(pedigree);
-          }
+          setCurrentNode(parentNode);
+          setHierarchy(pedigree);
           // we can also get current children here but that's handled below to keep code DRY
         }
       }
