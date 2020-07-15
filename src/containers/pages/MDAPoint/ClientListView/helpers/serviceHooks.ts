@@ -13,7 +13,7 @@ import { fetchFiles, File } from '../../../../../store/ducks/opensrp/clientfiles
 import { getAccessToken } from '../../../../../store/selectors';
 
 /** useState function type for setting loader on and off */
-type SetIsLoading = ((status: boolean) => void) | null;
+type SetIsLoading = React.Dispatch<React.SetStateAction<boolean>> | null;
 
 /** loads and persists to store files data from upload/history endpoint
  */

@@ -84,15 +84,12 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
 
   const [loading, setLoading] = useState(false);
 
-  // update loading status
-  const isLoading = (status: boolean) => setLoading(status);
-
   React.useEffect(() => {
     if (!(files && files.length)) {
       /**
        * Fetch files incase the files are not available e.g when page is refreshed
        */
-      loadFiles(isLoading).catch(err => displayError(err));
+      loadFiles(setLoading).catch(err => displayError(err));
     }
     /**
      * We do not need to re-run since this effect doesn't depend on any values from api yet
