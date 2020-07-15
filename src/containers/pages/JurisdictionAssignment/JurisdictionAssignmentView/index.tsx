@@ -136,7 +136,8 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       const oneOfJurisdictions = plan.jurisdiction.map(
         jurisdictionCode => jurisdictionCode.code
       )[0];
-      const jurisdictionLoadingKey = startLoading('jurisdictions');
+      const jurisdictionLoadingKey = 'jurisdictions';
+      startLoading(jurisdictionLoadingKey);
       loadJurisdiction(oneOfJurisdictions, OpenSRPService)
         .then(result => {
           if (!result || result.error) {

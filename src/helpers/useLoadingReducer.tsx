@@ -92,6 +92,9 @@ export const useLoadingReducer = (initialKey?: string, load: boolean = true) => 
     return changeLoading(key, false);
   };
 
+  /** returns the combined state of loading entries, basically does a logical `or` on each of the
+   * loading entries
+   */
   const loading = () => {
     const reducingFn = (accumulator: boolean, currentValue: boolean) => accumulator || currentValue;
     return Object.values(store).reduce(reducingFn, false);
