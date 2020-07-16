@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import ConnectedPlanDefinitionList, { PlanDefinitionList } from '../';
+import { PlanDefinitionList } from '../';
 import { NO_DATA_FOUND } from '../../../../../configs/lang';
 import { PLAN_LIST_URL } from '../../../../../constants';
 import * as planDataLoaders from '../../../../../helpers/dataLoading/plans';
@@ -187,7 +187,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedPlanDefinitionList {...props} />
+          <PlanDefinitionList {...props} />
         </Router>
       </Provider>
     );
@@ -229,7 +229,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedPlanDefinitionList {...props} />
+          <PlanDefinitionList {...props} />
         </Router>
       </Provider>
     );
@@ -272,7 +272,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedPlanDefinitionList {...props} />
+          <PlanDefinitionList {...props} />
         </Router>
       </Provider>
     );
@@ -312,7 +312,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedPlanDefinitionList {...props} />
+          <PlanDefinitionList {...props} />
         </Router>
       </Provider>
     );

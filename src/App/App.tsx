@@ -103,7 +103,7 @@ import BaseNewPlan, {
   NewIRSPlan,
   NewPlanForPlanning,
 } from '../containers/pages/InterventionPlan/NewPlan/General';
-import ConnectedPlanDefinitionList from '../containers/pages/InterventionPlan/PlanDefinitionList';
+import { PlanDefinitionList } from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import { DraftPlans } from '../containers/pages/InterventionPlan/PlanningView/DraftPlans';
 import { IRSPlans } from '../containers/pages/InterventionPlan/PlanningView/IRSPlans';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
@@ -387,7 +387,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={PLAN_LIST_URL}
-                  component={ConnectedPlanDefinitionList}
+                  component={PlanDefinitionList}
                 />
                 {/** Organization list view */}
                 <ConnectedPrivateRoute

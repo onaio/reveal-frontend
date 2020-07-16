@@ -70,6 +70,7 @@ export const draftPageColumns: Array<DrillDownColumn<PlanRecord>> = [
 
 /** options for when creating the drafts page plans render prop */
 interface Options {
+  addPlanBtnText?: string;
   pageTitle: string;
   breadCrumbProps: BreadCrumbProps;
   newPlanUrl: string;
@@ -78,7 +79,7 @@ interface Options {
  * renders the whole view.
  */
 export const draftPlansPageBodyFactory = (options: Options) => {
-  const { pageTitle, breadCrumbProps, newPlanUrl } = options;
+  const { pageTitle, breadCrumbProps, newPlanUrl, addPlanBtnText } = options;
   return (renderConnectedTable: RenderProp) => {
     return (
       <div className="mb-5">
@@ -95,7 +96,7 @@ export const draftPlansPageBodyFactory = (options: Options) => {
               <LinkAsButton
                 to={newPlanUrl}
                 classNameProp="create-plan btn btn-primary float-right mt-3 mb-3"
-                text={CREATE_NEW_PLAN}
+                text={addPlanBtnText || CREATE_NEW_PLAN}
               />
             </Col>
           )}
