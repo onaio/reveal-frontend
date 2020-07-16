@@ -1,8 +1,12 @@
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { BreadCrumbProps } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { ADD_PLAN, HOME, PLANS } from '../../../../configs/lang';
-import { HOME_URL, NEW_PLANNING_PLAN_URL, PLAN_LIST_URL } from '../../../../constants';
+import { HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL } from '../../../../constants';
+import plansByUserReducer, {
+  reducerName as plansByUserReducerName,
+} from '../../../../store/ducks/opensrp/planIdsByUser';
 import {
   createConnectedOpenSRPPlansList,
   OpenSRPPlanListViewProps,
@@ -10,6 +14,9 @@ import {
 import { draftPlansPageBodyFactory } from '../PlanningView/helpers/utils';
 import './index.css';
 import { TableColumns } from './utils';
+
+/** register the plan definitions reducer */
+reducerRegistry.register(plansByUserReducerName, plansByUserReducer);
 
 const ConnectedOpenSRPPlansList = createConnectedOpenSRPPlansList();
 
@@ -31,7 +38,7 @@ export const PlanDefinitionList = (props: RouteComponentProps) => {
   const renderBody = draftPlansPageBodyFactory({
     addPlanBtnText: ADD_PLAN,
     breadCrumbProps,
-    newPlanUrl: NEW_PLANNING_PLAN_URL,
+    newPlanUrl: NEW_PLAN_URL,
     pageTitle,
   });
 

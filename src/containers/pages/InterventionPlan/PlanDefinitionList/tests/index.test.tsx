@@ -1,6 +1,8 @@
 import { renderTable } from '@onaio/drill-down-table';
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -9,10 +11,17 @@ import { PlanDefinitionList } from '../';
 import { NO_DATA_FOUND } from '../../../../../configs/lang';
 import { PLAN_LIST_URL } from '../../../../../constants';
 import * as planDataLoaders from '../../../../../helpers/dataLoading/plans';
+import { extractPlanRecordResponseFromPlanPayload } from '../../../../../helpers/utils';
 import store from '../../../../../store';
-import { fetchPlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { fetchPlansByUser } from '../../../../../store/ducks/opensrp/planIdsByUser';
+import plansByUserReducer, {
+  reducerName as plansByUserReducerName,
+} from '../../../../../store/ducks/opensrp/planIdsByUser';
+import plansReducer, {
+  fetchPlanRecords,
+  reducerName as plansReducerName,
+} from '../../../../../store/ducks/plans';
 
 jest.mock('../../../../../configs/env');
 /* tslint:disable-next-line no-var-requires */
@@ -26,6 +35,14 @@ jest.mock('../../../../../components/forms/UserFilter', () => {
   };
 });
 
+/** register the plan definitions reducer */
+reducerRegistry.register(plansReducerName, plansReducer);
+reducerRegistry.register(plansByUserReducerName, plansByUserReducer);
+
+const extractedPlanRecords = fixtures.plans
+  .map((plan: any) => extractPlanRecordResponseFromPlanPayload(plan))
+  .filter((plan: any) => !!plan);
+
 describe('components/InterventionPlan/PlanDefinitionList', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -36,35 +53,25 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
   });
 
   it('renders without crashing', () => {
-    const mockList = jest.fn(async () => {
-      return Promise.reject(new Error('random error'));
-    });
-    const mockClass: any = jest.fn().mockImplementation(() => {
-      return {
-        list: mockList,
-      };
-    });
+    const mock: any = jest.fn();
+    fetch.once(JSON.stringify([]));
     const props = {
       history,
-      location: {
-        hash: '',
-        pathname: PLAN_LIST_URL,
-        search: '',
-        state: undefined,
-      },
+      location: mock,
       match: {
         isExact: true,
         params: {},
         path: `${PLAN_LIST_URL}/`,
         url: `${PLAN_LIST_URL}/`,
       },
-      plans: fixtures.plans,
-      service: mockClass,
+      plansArray: fixtures.plans,
     };
     shallow(
-      <Router history={history}>
-        <PlanDefinitionList {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <PlanDefinitionList {...props} />
+        </Router>
+      </Provider>
     );
   });
 
@@ -91,15 +98,17 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         path: `${PLAN_LIST_URL}/`,
         url: `${PLAN_LIST_URL}/`,
       },
-      plans: fixtures.plans,
-      service: mockClass,
+      plansArray: fixtures.plans,
+      serviceClass: mockClass,
     };
     const wrapper = mount(
-      <Router history={history}>
-        <PlanDefinitionList {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <PlanDefinitionList {...props} />
+        </Router>
+      </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
+    await flushPromises();
     wrapper.update();
     expect(wrapper.find('HeaderBreadcrumb').props()).toMatchSnapshot('bread crumb props');
     expect(toJson(wrapper.find('Row').at(0))).toMatchSnapshot('row heading');
@@ -115,6 +124,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
       };
     });
     fetch.mockResponseOnce(fixtures.plansJSON);
+    store.dispatch(fetchPlanRecords(extractedPlanRecords));
     const props = {
       history,
       location: {
@@ -130,15 +140,17 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         path: `${PLAN_LIST_URL}/`,
         url: `${PLAN_LIST_URL}/`,
       },
-      plans: fixtures.plans,
-      service: mockClass,
+      plansArray: fixtures.plans,
+      serviceClass: mockClass,
     };
     const wrapper = mount(
-      <Router history={history}>
-        <PlanDefinitionList {...props} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <PlanDefinitionList {...props} />
+        </Router>
+      </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
+    await flushPromises();
     wrapper.update();
 
     renderTable(wrapper, 'before clicking on sort');
@@ -167,14 +179,14 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         list: mockList,
       };
     });
-    store.dispatch(fetchPlanDefinitions(fixtures.plans));
-
+    store.dispatch(fetchPlanRecords(extractedPlanRecords));
     const props = {
-      fetchPlans: jest.fn(),
       history,
       location: {
+        hash: '',
         pathname: PLAN_LIST_URL,
         search: '?title=Mosh',
+        state: undefined,
       },
       match: {
         isExact: true,
@@ -182,7 +194,8 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         path: `${PLAN_LIST_URL}`,
         url: `${PLAN_LIST_URL}`,
       },
-      service: mockClass,
+      plansArray: fixtures.plans,
+      serviceClass: mockClass,
     };
     const wrapper = mount(
       <Provider store={store}>
@@ -191,7 +204,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
+    await flushPromises();
     wrapper.update();
     expect(
       wrapper
@@ -209,14 +222,15 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         list: mockList,
       };
     });
-    store.dispatch(fetchPlanDefinitions(fixtures.plans));
-
+    store.dispatch(fetchPlanRecords(extractedPlanRecords));
     const props = {
       fetchPlans: jest.fn(),
       history,
       location: {
+        hash: '',
         pathname: PLAN_LIST_URL,
         search: '?title=MOSH',
+        state: undefined,
       },
       match: {
         isExact: true,
@@ -224,7 +238,8 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         path: `${PLAN_LIST_URL}`,
         url: `${PLAN_LIST_URL}`,
       },
-      service: mockClass,
+      plansArray: fixtures.plans,
+      serviceClass: mockClass,
     };
     const wrapper = mount(
       <Provider store={store}>
@@ -233,7 +248,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
+    await flushPromises();
     wrapper.update();
 
     expect(
@@ -252,14 +267,15 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         list: mockList,
       };
     });
-    store.dispatch(fetchPlanDefinitions(fixtures.plans));
-
+    store.dispatch(fetchPlanRecords(extractedPlanRecords));
     const props = {
       fetchPlans: jest.fn(),
       history,
       location: {
+        hash: '',
         pathname: PLAN_LIST_URL,
         search: '?title=asdfasdf',
+        state: undefined,
       },
       match: {
         isExact: true,
@@ -267,7 +283,8 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         path: `${PLAN_LIST_URL}`,
         url: `${PLAN_LIST_URL}`,
       },
-      service: mockClass,
+      plansArray: fixtures.plans,
+      serviceClass: mockClass,
     };
     const wrapper = mount(
       <Provider store={store}>
@@ -276,7 +293,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
+    await flushPromises();
     wrapper.update();
     expect(wrapper.text().includes(NO_DATA_FOUND)).toBeTruthy();
   });
@@ -291,15 +308,18 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         list: mockList,
       };
     });
-    store.dispatch(fetchPlanDefinitions(fixtures.plans));
+
+    store.dispatch(fetchPlanRecords(extractedPlanRecords));
     const userName = 'macTavish';
     store.dispatch(fetchPlansByUser([fixtures.plans[0]], userName));
     const props = {
       fetchPlans: jest.fn(),
       history,
       location: {
+        hash: '',
         pathname: PLAN_LIST_URL,
         search: `?user=${userName}`,
+        state: undefined,
       },
       match: {
         isExact: true,
@@ -307,7 +327,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         path: `${PLAN_LIST_URL}`,
         url: `${PLAN_LIST_URL}`,
       },
-      service: mockClass,
+      serviceClass: mockClass,
     };
     const wrapper = mount(
       <Provider store={store}>
@@ -316,7 +336,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
+    await flushPromises();
     wrapper.update();
     // only one plan is rendered fixtures.plan1
     expect(wrapper.find('.tbody .tr').text()).toMatchInlineSnapshot(

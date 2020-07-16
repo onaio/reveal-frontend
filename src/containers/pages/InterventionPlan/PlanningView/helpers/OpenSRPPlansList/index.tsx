@@ -86,7 +86,7 @@ const OpenSRPPlansList = (props: OpenSRPPlanListViewProps & RouteComponentProps)
   }, [props.userName]);
 
   /** topbar filters */
-  const topFilterBarParams = {
+  let topFilterBarParams: any = {
     ...defaultOptions,
     componentProps: props,
     queryParam: QUERY_PARAM_TITLE,
@@ -94,7 +94,7 @@ const OpenSRPPlansList = (props: OpenSRPPlanListViewProps & RouteComponentProps)
   };
 
   if (userNameFilter) {
-    (topFilterBarParams as any) = {
+    topFilterBarParams = {
       ...topFilterBarParams,
       serviceClass: props.serviceClass,
       showFilters: true,
