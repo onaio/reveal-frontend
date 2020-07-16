@@ -2,7 +2,7 @@ import superset, { SupersetFormData } from '@onaio/superset-connector';
 import * as React from 'react';
 import { GeoJSONLayer } from 'react-mapbox-gl';
 import { ActionCreator } from 'redux';
-import { BLUE, GREY } from '../../../../../../colors';
+import { GREY } from '../../../../../../colors';
 import {
   circleLayerTemplate,
   fillLayerTemplate,
@@ -244,9 +244,9 @@ export const buildStructureLayers = (
         {...lineLayerTemplate}
         linePaint={{
           ...lineLayerTemplate.linePaint,
-          'line-color': isJurisdiction ? BLUE : GREY,
+          'line-color': isJurisdiction ? ['get', 'lineColor'] : GREY,
           'line-opacity': 1,
-          'line-width': 2,
+          'line-width': isJurisdiction ? 6 : 2,
         }}
         data={structs}
         id={STRUCTURES_LINE}
@@ -258,9 +258,9 @@ export const buildStructureLayers = (
         {...fillLayerTemplate}
         fillPaint={{
           ...fillLayerTemplate.fillPaint,
-          'fill-color': GREY,
+          'fill-color': isJurisdiction ? ['get', 'fillColor'] : GREY,
           'fill-opacity': isJurisdiction ? 0.5 : 1,
-          'fill-outline-color': isJurisdiction ? BLUE : GREY,
+          'fill-outline-color': isJurisdiction ? ['get', 'fillOutlineColor'] : GREY,
         }}
         data={structs}
         id={STRUCTURES_FILL}

@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
 import { CountriesAdmin0 } from '../../../../src/configs/settings';
-import { GisidaLite } from '../../../components/GisidaLite';
+import { MemoizedGisidaLite } from '../../../components/GisidaLite';
 import { getCenter } from '../../../components/GisidaLite/helpers';
 import Loading from '../../../components/page/Loading';
 import { getJurisdictions } from '../../../components/TreeWalker/helpers';
@@ -52,11 +52,9 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   } = props;
   const currentChildIds: string[] = currentChildren.map(node => node.model.id);
   const [loading, setLoading] = React.useState(true);
-  const collection: any = getJurisdictionsFeatures.features;
-  const collectionIds: string[] = collection.map((c: any) => c.id);
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   React.useEffect(() => {
-    if (!currentChildIds.filter(cc => collectionIds.includes(cc)).length) {
+    if (!getJurisdictionsFeatures.features.length) {
       setLoading(true);
       const params = {
         is_jurisdiction: true,
@@ -65,7 +63,22 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
       getJurisdictions(currentChildIds, params, 30, serviceClass)
         .then(res => {
           if (res.value && res.value.length) {
-            fetchJurisdictionsActionCreator(res.value);
+            const newCollection = res.value.map(val => {
+              const getNode: any = currentChildren.find(node => node.model.id === val.id);
+              return {
+                ...val,
+                properties: {
+                  ...val.properties,
+                  fillColor:
+                    getNode.model.meta && getNode.model.meta.selected ? '#f14423' : '#792b16',
+                  fillOutlineColor:
+                    getNode.model.meta && getNode.model.meta.selected ? '#22bcfb' : '#ffffff',
+                  lineColor:
+                    getNode.model.meta && getNode.model.meta.selected ? '#22bcfb' : '#ffffff',
+                },
+              };
+            });
+            fetchJurisdictionsActionCreator(newCollection);
           }
         })
         .finally(() => {
@@ -73,7 +86,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
         })
         .catch(error => displayError(error));
     }
-  }, [currentChildIds]);
+  }, [getJurisdictionsFeatures]);
   let structures: JSX.Element[] = [];
   let mapCenter;
   let mapBounds;
@@ -90,10 +103,11 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   if (loading) {
     return <Loading />;
   }
+
   return (
     <div className="map">
       {!loading && typeof mapCenter !== 'undefined' ? (
-        <GisidaLite layers={[...structures]} mapCenter={mapCenter} mapBounds={mapBounds} />
+        <MemoizedGisidaLite layers={[...structures]} mapCenter={mapCenter} mapBounds={mapBounds} />
       ) : null}
     </div>
   );

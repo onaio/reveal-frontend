@@ -20,6 +20,7 @@ export interface Jurisdiction {
     parentId?: string;
     status: string;
     version: string | number;
+    color?: string;
   };
   serverVersion: number;
   type: Readonly<'Feature'>;
