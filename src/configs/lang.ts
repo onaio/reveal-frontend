@@ -555,6 +555,11 @@ export const MDA_POINT_LOCATION_REPORT_TITLE = translate(
   'MDA Point Location Report'
 );
 
+export const MDA_POINT_CHILD_REPORT_TITLE = translate(
+  'MDA_POINT_CHILD_REPORT_TITLE',
+  'MDA Point Child Report'
+);
+
 export const MDA_POINT_SCHOOL_REPORT_TITLE = translate(
   'MDA_POINT_SCHOOL_REPORT_TITLE',
   'MDA Point School Report'

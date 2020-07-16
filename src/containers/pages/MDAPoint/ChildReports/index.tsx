@@ -10,7 +10,6 @@ import HeaderBreadcrumb, {
   Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
-  SHOW_MDA_SCHOOL_REPORT_LABEL,
   SUPERSET_MDA_POINT_CHILD_REPORT_DATA_SLICE,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES,
 } from '../../../../configs/env';
@@ -20,9 +19,8 @@ import {
   CHILDS_NAME,
   ENROLLED_IN_SCHOOL,
   HOME,
-  MDA_POINT_LOCATION_REPORT_TITLE,
+  MDA_POINT_CHILD_REPORT_TITLE,
   MDA_POINT_PLANS,
-  MDA_POINT_SCHOOL_REPORT_TITLE,
   MMA_DRUGS_ADMINISTRED,
   NATIONAL_ID,
   PZQ_DISTRIBUTED,
@@ -45,7 +43,6 @@ import MDAPointChildReportReducer, {
 } from '../../../../store/ducks/generic/MDAChildReport';
 import { getMDAPointPlanById } from '../../../../store/ducks/generic/MDAPointPlans';
 import { ChildSupersetDataTable, ChildSupersetDataTableProps } from './ChildSupersetDataTable';
-
 /** register the MDA point child report definitions reducer */
 reducerRegistry.register(MDAPointChildReportReducerName, MDAPointChildReportReducer);
 
@@ -97,13 +94,10 @@ const ChildReportList = (props: ChildReportsProps) => {
     },
   ];
 
-  const useSchoolLabel = SHOW_MDA_SCHOOL_REPORT_LABEL
-    ? MDA_POINT_SCHOOL_REPORT_TITLE
-    : MDA_POINT_LOCATION_REPORT_TITLE;
   const pages = prevPage ? [...homePage, ...prevPage] : [...homePage];
   const breadcrumbProps = {
     currentPage: {
-      label: pageTitle || useSchoolLabel,
+      label: pageTitle || MDA_POINT_CHILD_REPORT_TITLE,
       url: pageUrl,
     },
     pages,
@@ -117,8 +111,7 @@ const ChildReportList = (props: ChildReportsProps) => {
     supersetSliceId,
     tableClass,
   };
-
-  const fullTitle = `${useSchoolLabel}: ${pageTitle}`;
+  const fullTitle = `${MDA_POINT_CHILD_REPORT_TITLE}: ${pageTitle}`;
 
   return (
     <div>
@@ -200,12 +193,15 @@ const mapStateToProps = (
 
   const data = childData.map(sch => {
     return [
-      sch.client_age_category,
-      sch.sacregistered,
-      sch.mmacov,
-      sch.sacrefused,
-      sch.sacrefmedreason,
-      sch.albdist,
+      `${sch.client_first_name} ${sch.client_last_name}`,
+      sch.sactanationalid === 0 ? '' : sch.sactanationalid,
+      sch.sactacurrenroll === 0 ? 'No' : sch.sactacurrenroll,
+      sch.mmadrugadmin === 0 ? 'No' : sch.mmadrugadmin,
+      sch.mmanodrugadminreason === 0 ? 'No' : sch.mmanodrugadminreason,
+      sch.mmanodrugadminreason === 0 ? 'No' : sch.mmanodrugadminreason,
+      sch.mmaadr === 0 ? 'No' : sch.mmaadr,
+      sch.mmapzqdosagegiven,
+      sch.mmaalbgiven,
     ];
   });
 
