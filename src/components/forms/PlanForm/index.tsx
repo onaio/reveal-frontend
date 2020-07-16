@@ -71,9 +71,11 @@ import {
   goalPrioritiesDisplay,
   goalUnitDisplay,
   planActivities,
+  PlanDefinition,
   planStatusDisplay,
 } from '../../../configs/settings';
 import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constants';
+import { AddPlanOnFormSuccess } from '../../../containers/forms/ConnectedPlanForm';
 import { OpenSRPService } from '../../../services/opensrp';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
@@ -154,6 +156,7 @@ export interface PlanFormProps {
     child?: LocationChildRenderProp /** nested render content for each location name */
   ) => JSX.Element;
   /** a render prop that renders the plan's location names */
+  addPlanOnFormSuccess?: AddPlanOnFormSuccess;
 }
 
 /** Plan Form component */
@@ -174,6 +177,7 @@ const PlanForm = (props: PlanFormProps) => {
     initialValues,
     jurisdictionLabel,
     redirectAfterAction,
+    addPlanOnFormSuccess,
   } = props;
 
   useEffect(() => {
@@ -244,6 +248,15 @@ const PlanForm = (props: PlanFormProps) => {
     return <Redirect to={redirectAfterAction} />;
   }
 
+  const onSubmitSuccess = (setSubmitting: any, payload: PlanDefinition) => {
+    if (addPlanOnFormSuccess) {
+      addPlanOnFormSuccess(payload);
+    }
+
+    setSubmitting(false);
+    setAreWeDoneHere(true);
+  };
+
   return (
     <div className="form-container">
       <Formik
@@ -257,8 +270,7 @@ const PlanForm = (props: PlanFormProps) => {
             apiService
               .update(payload)
               .then(() => {
-                setSubmitting(false);
-                setAreWeDoneHere(true);
+                onSubmitSuccess(setSubmitting, payload);
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);
@@ -267,8 +279,7 @@ const PlanForm = (props: PlanFormProps) => {
             apiService
               .create(payload)
               .then(() => {
-                setSubmitting(false);
-                setAreWeDoneHere(true);
+                onSubmitSuccess(setSubmitting, payload);
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);

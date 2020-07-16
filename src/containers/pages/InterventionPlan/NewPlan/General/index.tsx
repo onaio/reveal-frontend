@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Col, Row } from 'reactstrap';
-import PlanForm, {
-  defaultInitialValues,
-  PlanFormProps,
-} from '../../../../../components/forms/PlanForm';
+import { defaultInitialValues, PlanFormProps } from '../../../../../components/forms/PlanForm';
 import { planActivitiesMap } from '../../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb, {
   Page,
@@ -27,6 +24,7 @@ import {
   PLANNING_VIEW_URL,
 } from '../../../../../constants';
 import { InterventionType } from '../../../../../store/ducks/plans';
+import ConnectedPlanForm from '../../../../forms/ConnectedPlanForm';
 import { JurisdictionDetails } from './JurisdictionDetails';
 
 /** expose props that would enable one to customize the underlying planForm props */
@@ -112,7 +110,7 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <Row>
         <Col md={8} id="planform-col-container">
-          <PlanForm {...planFormProps} key={formValues.interventionType} />
+          <ConnectedPlanForm {...planFormProps} key={formValues.interventionType} />
         </Col>
         {props.showJurisdictionDetails && (
           <Col md={4}>

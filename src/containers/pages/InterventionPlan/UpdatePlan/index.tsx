@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
-import PlanForm, {
+import {
   LocationChildRenderProp,
   propsForUpdatingPlans,
 } from '../../../../components/forms/PlanForm';
@@ -23,6 +23,7 @@ import planDefinitionReducer, {
   getPlanDefinitionById,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
+import ConnectedPlanForm from '../../../forms/ConnectedPlanForm';
 import ConnectedCaseDetails, { CaseDetailsProps } from './CaseDetails';
 import ConnectedPlanLocationNames from './PlanLocationNames';
 import { getEventId, planIsReactive } from './utils';
@@ -124,7 +125,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <Row>
         <Col md={8}>
-          <PlanForm {...planFormProps} />
+          <ConnectedPlanForm {...planFormProps} />
         </Col>
         <Col md={4}>
           {/* Only show case details if plan is reactive */}
