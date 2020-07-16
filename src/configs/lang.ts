@@ -592,6 +592,11 @@ export const ALB_TABLETS_DISTRIBUTED = translate(
   'ALB_TABLETS_DISTRIBUTED',
   'Alb Tablets Distributed'
 );
+export const CHILDS_NAME = translate('CHILDS_NAME', "Child's name");
+export const NATIONAL_ID = translate('NATIONAL_ID', 'National ID');
+export const ENROLLED_IN_SCHOOL = translate('ENROLLED_IN_SCHOOL', 'Enrolled in school');
+export const MMA_DRUGS_ADMINISTRED = translate('CHILDS_NAME', 'MMA drug administered');
+export const PZQ_DISTRIBUTED = translate('PZQ_DISTRIBUTED', 'PZQ tablets distributed');
 
 export const MANIFEST_RELEASES = translate('MANIFEST_RELEASES', 'Manifest Releases');
 export const RELEASES_LABEL = translate('RELEASES_LABEL', 'Releases');
