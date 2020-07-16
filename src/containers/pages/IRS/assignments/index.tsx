@@ -15,12 +15,7 @@ import {
   TITLE,
 } from '../../../../configs/lang';
 import { planStatusDisplay } from '../../../../configs/settings';
-import {
-  ASSIGN_PLAN_URL,
-  HOME_URL,
-  NEW_PLANNING_PLAN_URL,
-  REPORT_IRS_PLAN_URL,
-} from '../../../../constants';
+import { ASSIGN_PLAN_URL, HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
@@ -97,7 +92,7 @@ export const OpenSRPPlansList = (props: RouteComponentProps) => {
 
   const renderBody = draftPlansPageBodyFactory({
     breadCrumbProps,
-    newPlanUrl: NEW_PLANNING_PLAN_URL,
+    newPlanUrl: '',
     pageTitle,
   });
 

@@ -90,13 +90,15 @@ export const draftPlansPageBodyFactory = (options: Options) => {
           <Col md={8}>
             <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
           </Col>
-          <Col md={4}>
-            <LinkAsButton
-              to={newPlanUrl}
-              classNameProp="create-plan btn btn-primary float-right mt-3 mb-3"
-              text={CREATE_NEW_PLAN}
-            />
-          </Col>
+          {newPlanUrl && (
+            <Col md={4}>
+              <LinkAsButton
+                to={newPlanUrl}
+                classNameProp="create-plan btn btn-primary float-right mt-3 mb-3"
+                text={CREATE_NEW_PLAN}
+              />
+            </Col>
+          )}
         </Row>
         {renderConnectedTable()}
         <br />

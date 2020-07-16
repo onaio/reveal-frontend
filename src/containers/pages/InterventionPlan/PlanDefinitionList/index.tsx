@@ -184,12 +184,12 @@ interface DispatchedStateProps {
 
 /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
-  const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
+  const title = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const userName = getQueryParams(ownProps.location)[QUERY_PARAM_USER] as string;
   const planIds = makePlansByUserNamesSelector()(state, { userName });
   const planDefinitionsArray = plansDefinitionsArraySelector(state, {
     planIds,
-    title: searchedTitle,
+    title,
   });
 
   return {
