@@ -4,7 +4,7 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import { IRSAssignmentPlansList } from '../';
+import { OpenSRPPlansList } from '../';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 
 /* tslint:disable-next-line no-var-requires */
@@ -23,7 +23,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     };
     shallow(
       <Router history={history}>
-        <IRSAssignmentPlansList {...props} />
+        <OpenSRPPlansList {...props} />
       </Router>
     );
   });
@@ -36,7 +36,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     };
     const wrapper = mount(
       <Router history={history}>
-        <IRSAssignmentPlansList {...props} />
+        <OpenSRPPlansList {...props} />
       </Router>
     );
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');

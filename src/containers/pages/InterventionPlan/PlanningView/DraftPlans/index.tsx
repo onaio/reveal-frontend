@@ -4,11 +4,12 @@ import { RouteComponentProps } from 'react-router';
 import { BreadCrumbProps } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { DRAFT_PLANS, HOME } from '../../../../../configs/lang';
 import { HOME_URL, NEW_PLANNING_PLAN_URL, PLANNING_VIEW_URL } from '../../../../../constants';
+import { PlanStatus } from '../../../../../store/ducks/plans';
 import {
   createConnectedOpenSRPPlansList,
   OpenSRPPlanListViewProps,
 } from '../helpers/OpenSRPPlansList';
-import { draftPlansPageBodyFactory } from '../helpers/utils';
+import { draftPageColumns, draftPlansPageBodyFactory } from '../helpers/utils';
 
 const ConnectedOpenSRPPlansList = createConnectedOpenSRPPlansList();
 
@@ -35,7 +36,9 @@ export const DraftPlans = (props: RouteComponentProps) => {
 
   const opensrpListProps: Partial<OpenSRPPlanListViewProps> & RouteComponentProps = {
     ...props,
+    activePlans: [PlanStatus.DRAFT],
     renderBody,
+    tableColumns: draftPageColumns,
   };
 
   return <ConnectedOpenSRPPlansList {...opensrpListProps} />;

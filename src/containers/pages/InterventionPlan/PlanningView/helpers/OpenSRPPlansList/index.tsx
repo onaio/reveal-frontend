@@ -20,11 +20,9 @@ import plansReducer, {
   FetchPlanRecordsAction,
   makePlansArraySelector,
   PlanRecord,
-  PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../../../store/ducks/plans';
 import { BaseListComponent, BaseListComponentProps, BaseListTableProps } from '../BaseListing';
-import { draftPageColumns } from '../utils';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -35,8 +33,10 @@ export type RenderProp = () => React.ReactNode;
 /** props for opensrpPlansList view */
 export interface OpenSRPPlanListViewProps
   extends Omit<BaseListComponentProps, 'loadData' | 'getTableProps'> {
+  activePlans: string[];
   fetchPlanRecordsCreator: ActionCreator<FetchPlanRecordsAction>;
   serviceClass: typeof OpenSRPService;
+  sortByDate: boolean;
   tableColumns: Array<DrillDownColumn<PlanRecord>>;
   renderBody: (renderProp: RenderProp) => React.ReactNode;
 }
@@ -50,11 +50,13 @@ const defaultBodyRenderer = (componentRender: RenderProp) => {
 };
 
 export const defaultProps: OpenSRPPlanListViewProps = {
+  activePlans: [],
   fetchPlanRecordsCreator: fetchPlanRecords,
   plansArray: [],
   renderBody: defaultBodyRenderer,
   serviceClass: OpenSRPService,
-  tableColumns: draftPageColumns,
+  sortByDate: false,
+  tableColumns: [],
 };
 
 /** container view that renders opensrp plans from store , adds reveal-domain specific
@@ -112,14 +114,22 @@ export type MapStateToProps = Pick<BaseListComponentProps, 'plansArray'>;
 export type MapDispatchToProps = Pick<OpenSRPPlanListViewProps, 'fetchPlanRecordsCreator'>;
 
 /** maps props  to state */
-const mapStateToProps = (state: Partial<Store>, ownProps: RouteComponentProps): MapStateToProps => {
-  const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
+const mapStateToProps = (
+  state: Partial<Store>,
+  ownProps: RouteComponentProps & OpenSRPPlanListViewProps
+): MapStateToProps => {
+  const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID, 'plan_date');
   const title = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const planStatus = [PlanStatus.DRAFT];
-  const plansRecordsArray = plansArraySelector(state as Registry, {
+  const planStatus = ownProps.activePlans;
+  let plansRecordsArray = plansArraySelector(state as Registry, {
     statusList: planStatus,
     title,
   });
+  if (ownProps.sortByDate) {
+    plansRecordsArray = plansRecordsArray.sort(
+      (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
+    );
+  }
   const props = {
     plansArray: plansRecordsArray,
   };
