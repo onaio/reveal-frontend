@@ -9,6 +9,7 @@ import { handleDownload, loadFiles, postUploadedFile } from '../serviceHooks';
 
 describe('src/containers/pages/ClientListView/helpers/servicehooks', () => {
   it('loadOrganization works correctly', async () => {
+    const mockSetLoader = jest.fn();
     const mockList = jest.fn(async () => fixtures.files);
     const mockActionCreator = jest.fn();
     const mockClass = jest.fn().mockImplementation(() => {
@@ -17,7 +18,7 @@ describe('src/containers/pages/ClientListView/helpers/servicehooks', () => {
       };
     });
 
-    loadFiles(mockActionCreator, mockClass).catch(e => {
+    loadFiles(mockActionCreator, mockClass as any, mockSetLoader).catch(e => {
       throw e;
     });
     await flushPromises();
@@ -30,6 +31,10 @@ describe('src/containers/pages/ClientListView/helpers/servicehooks', () => {
 
     // calls action creator correctly.
     expect(mockActionCreator).toHaveBeenCalledWith(fixtures.files, true);
+    // should set and uset loader
+    expect(mockSetLoader).toHaveBeenCalledTimes(2);
+    expect(mockSetLoader.mock.calls[0][0]).toEqual(true);
+    expect(mockSetLoader.mock.calls[1][0]).toEqual(false);
   });
 
   it('loadOrgPractitioners works correctly', async () => {
