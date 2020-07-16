@@ -195,11 +195,11 @@ const mapStateToProps = (
     return [
       `${sch.client_first_name} ${sch.client_last_name}`,
       sch.sactanationalid === 0 ? '' : sch.sactanationalid,
-      sch.sactacurrenroll === 0 ? 'No' : sch.sactacurrenroll,
-      sch.mmadrugadmin === 0 ? 'No' : sch.mmadrugadmin,
-      sch.mmanodrugadminreason === 0 ? 'No' : sch.mmanodrugadminreason,
-      sch.mmanodrugadminreason === 0 ? 'No' : sch.mmanodrugadminreason,
-      sch.mmaadr === 0 ? 'No' : sch.mmaadr,
+      sch.sactacurrenroll === 0 ? 'No' : 'Yes',
+      sch.mmadrugadmin === 0 ? 'No' : 'Yes',
+      sch.mmanodrugadminreason === 0 ? 'No' : 'Yes',
+      sch.mmanodrugadminreason === 0 ? 'No' : 'Yes',
+      sch.mmaadr === 0 ? 'No' : 'Yes',
       sch.mmapzqdosagegiven,
       sch.mmaalbgiven,
     ];

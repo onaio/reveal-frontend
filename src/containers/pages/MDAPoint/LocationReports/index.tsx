@@ -140,10 +140,8 @@ const LocationReportsList = (props: LocationReportsProps) => {
       <Row>
         <Col>
           <GenericSupersetDataTable {...listViewProps} />
+          <Link to={childUrl}>See all children</Link>
         </Col>
-      </Row>
-      <Row>
-        <Link to={childUrl}>View all</Link>
       </Row>
     </div>
   );
