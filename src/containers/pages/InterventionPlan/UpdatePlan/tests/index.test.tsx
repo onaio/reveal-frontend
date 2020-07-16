@@ -58,15 +58,18 @@ describe('components/InterventionPlan/UpdatePlan', () => {
   it('renders plan definition list correctly', () => {
     fetch.mockResponseOnce(JSON.stringify(fixtures.plans[1]));
     const wrapper = mount(
-      <Router history={history}>
-        <UpdatePlan {...getProps()} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...getProps()} />
+        </Router>
+      </Provider>
     );
     expect(toJson(wrapper.find('Breadcrumb'))).toMatchSnapshot('Breadcrumb');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('Page title');
 
-    expect(wrapper.find('PlanForm').props()).toEqual({
+    expect(wrapper.find('ConnectedPlanForm').props()).toEqual({
       ...updatePlanFormProps,
+      addPlan: expect.any(Function),
       renderLocationNames: expect.any(Function),
     });
     wrapper.unmount();
@@ -75,9 +78,11 @@ describe('components/InterventionPlan/UpdatePlan', () => {
   it('renders plan Location names component', () => {
     fetch.mockResponseOnce(JSON.stringify(fixtures.plans[1]));
     const wrapper = mount(
-      <Router history={history}>
-        <UpdatePlan {...getProps()} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...getProps()} />
+        </Router>
+      </Provider>
     );
     expect(toJson(wrapper.find('#Helmuth'))).toMatchSnapshot('Renders PlanLocation Mock');
   });
@@ -86,15 +91,17 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     // fetch with a array response
     fetch.mockResponseOnce(JSON.stringify([fixtures.plans[1]]));
     const wrapper = mount(
-      <Router history={history}>
-        <UpdatePlan {...getProps()} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...getProps()} />
+        </Router>
+      </Provider>
     );
 
     await act(async () => {
       await new Promise<unknown>(resolve => setImmediate(resolve));
     });
-    const FetchPlanSpy = jest.spyOn(wrapper.props().children.props, 'fetchPlan');
+    const FetchPlanSpy = jest.spyOn(wrapper.props().children.props.children.props, 'fetchPlan');
     expect(FetchPlanSpy).toHaveBeenCalledWith(fixtures.plans[1]);
     wrapper.unmount();
   });
@@ -103,14 +110,16 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     // fetch with an object response
     fetch.mockResponseOnce(JSON.stringify(fixtures.plans[1]));
     const wrapper = mount(
-      <Router history={history}>
-        <UpdatePlan {...getProps()} />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...getProps()} />
+        </Router>
+      </Provider>
     );
     await act(async () => {
       await new Promise<unknown>(resolve => setImmediate(resolve));
     });
-    const FetchPlanSpy = jest.spyOn(wrapper.props().children.props, 'fetchPlan');
+    const FetchPlanSpy = jest.spyOn(wrapper.props().children.props.children.props, 'fetchPlan');
     expect(FetchPlanSpy).toHaveBeenCalledWith(fixtures.plans[1]);
   });
 

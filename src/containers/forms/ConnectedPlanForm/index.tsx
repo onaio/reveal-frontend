@@ -1,11 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PlanForm, { PlanFormProps } from '../../../components/forms/PlanForm';
+import PlanForm, {
+  defaultProps as defaultPlanFormProps,
+  PlanFormProps,
+} from '../../../components/forms/PlanForm';
 import { PlanDefinition } from '../../../configs/settings';
 import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
 
 /** interface for ConnectedPlanForm props */
-export interface ConnectedPlanFormProps extends Partial<PlanFormProps> {
+export interface ConnectedPlanFormProps extends PlanFormProps {
   addPlan: typeof addPlanDefinition;
 }
 
@@ -25,6 +28,7 @@ const ConnectedPlanForm = (props: ConnectedPlanFormProps) => {
 
 export const defaultProps: ConnectedPlanFormProps = {
   addPlan: addPlanDefinition,
+  ...defaultPlanFormProps,
 };
 
 ConnectedPlanForm.defaultProps = defaultProps;

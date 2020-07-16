@@ -2,9 +2,11 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { defaultProps as defaultPlanFormProps } from '../../../../../../components/forms/PlanForm';
 import HeaderBreadcrumb from '../../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { defaultProps as defaultPlanFormProps } from '../../../../../../containers/forms/ConnectedPlanForm';
+import store from '../../../../../../store';
 import BaseNewPlan, { NewIRSPlan, NewPlanForPlanning } from '../index';
 
 const history = createBrowserHistory();
@@ -20,16 +22,19 @@ describe('containers/pages/NewPlan', () => {
 
   it('renders correctly', () => {
     const wrapper = mount(
-      <Router history={history}>
-        <BaseNewPlan />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <BaseNewPlan />
+        </Router>
+      </Provider>
     );
 
     // check that page title is displayed
     expect(toJson(wrapper.find('h3.mb-3.page-title'))).toMatchSnapshot('page title');
 
-    expect(wrapper.find('PlanForm').props()).toEqual({
+    expect(wrapper.find('ConnectedPlanForm').props()).toEqual({
       ...defaultPlanFormProps,
+      addPlan: expect.any(Function),
       formHandler: expect.any(Function),
     });
 
@@ -40,7 +45,7 @@ describe('containers/pages/NewPlan', () => {
       wrapper
         .find('Row')
         .find('Col#planform-col-container')
-        .find('PlanForm')
+        .find('ConnectedPlanForm')
     ).toHaveLength(1);
 
     // test that JurisdictionDetails are shown
@@ -72,13 +77,16 @@ describe('containers/pages/NewPlan', () => {
 
   it('renders text correctly for New Plan in planning tool ', () => {
     const wrapper = mount(
-      <Router history={history}>
-        <NewPlanForPlanning />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <NewPlanForPlanning />
+        </Router>
+      </Provider>
     );
 
-    expect(wrapper.find('PlanForm').props()).toEqual({
+    expect(wrapper.find('ConnectedPlanForm').props()).toEqual({
       ...defaultPlanFormProps,
+      addPlan: expect.any(Function),
       allowMoreJurisdictions: false,
       cascadingSelect: false,
       formHandler: expect.any(Function),
@@ -97,13 +105,16 @@ describe('containers/pages/NewPlan', () => {
   });
   it('render correctly for New IRS plan', () => {
     const wrapper = mount(
-      <Router history={history}>
-        <NewIRSPlan />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <NewIRSPlan />
+        </Router>
+      </Provider>
     );
 
-    expect(wrapper.find('PlanForm').props()).toEqual({
+    expect(wrapper.find('ConnectedPlanForm').props()).toEqual({
       ...defaultPlanFormProps,
+      addPlan: expect.any(Function),
       allowMoreJurisdictions: false,
       cascadingSelect: false,
       disabledFields: ['interventionType', 'status'],
