@@ -1,3 +1,4 @@
+import { viewport } from '@mapbox/geo-viewport';
 import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { FeatureCollection } from '@turf/turf';
@@ -6,7 +7,6 @@ import { connect } from 'react-redux';
 import { Store } from 'redux';
 import { CountriesAdmin0 } from '../../../../src/configs/settings';
 import { MemoizedGisidaLite } from '../../../components/GisidaLite';
-import { getCenter } from '../../../components/GisidaLite/helpers';
 import Loading from '../../../components/page/Loading';
 import { getJurisdictions } from '../../../components/TreeWalker/helpers';
 import { displayError } from '../../../helpers/errors';
@@ -90,27 +90,33 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   let structures: JSX.Element[] = [];
   let mapCenter;
   let mapBounds;
+  let zoom;
   if (getJurisdictionsFeatures.features.length) {
     structures = buildStructureLayers(getJurisdictionsFeatures as any, true);
     if (Object.keys(CountriesAdmin0).filter(admin => jurisdictionLabels.includes(admin)).length) {
       mapCenter = undefined;
       mapBounds = undefined;
     } else {
-      mapCenter = getCenter(getJurisdictionsFeatures);
       mapBounds = GeojsonExtent(getJurisdictionsFeatures);
+      const centerAndZoom = viewport(mapBounds, [800, 400]);
+      mapCenter = centerAndZoom.center;
+      zoom = centerAndZoom.zoom;
     }
   }
   if (loading) {
     return <Loading />;
   }
 
-  return (
+  return typeof mapBounds !== 'undefined' ? (
     <div className="map">
-      {!loading && typeof mapCenter !== 'undefined' ? (
-        <MemoizedGisidaLite layers={[...structures]} mapCenter={mapCenter} mapBounds={mapBounds} />
-      ) : null}
+      <MemoizedGisidaLite
+        layers={[...structures]}
+        zoom={zoom}
+        mapCenter={mapCenter}
+        mapBounds={mapBounds}
+      />
     </div>
-  );
+  ) : null;
 };
 
 AssignmentMapWrapper.defaultProps = defaultProps;
@@ -139,7 +145,7 @@ const mapStateToProps = (
 ): MapStateToProps => {
   const filters: Filters = {
     currentParentId: ownProps.currentParentId,
-    leafNodesOnly: true,
+    leafNodesOnly: false,
     rootJurisdictionId: ownProps.rootJurisdictionId,
   };
 
