@@ -156,7 +156,7 @@ export interface PlanFormProps {
     child?: LocationChildRenderProp /** nested render content for each location name */
   ) => JSX.Element;
   /** a render prop that renders the plan's location names */
-  addPlanOnFormSuccess?: AddPlanOnFormSuccess;
+  addPlan?: AddPlanOnFormSuccess;
 }
 
 /** Plan Form component */
@@ -177,7 +177,7 @@ const PlanForm = (props: PlanFormProps) => {
     initialValues,
     jurisdictionLabel,
     redirectAfterAction,
-    addPlanOnFormSuccess,
+    addPlan,
   } = props;
 
   useEffect(() => {
@@ -249,8 +249,8 @@ const PlanForm = (props: PlanFormProps) => {
   }
 
   const onSubmitSuccess = (setSubmitting: any, payload: PlanDefinition) => {
-    if (addPlanOnFormSuccess) {
-      addPlanOnFormSuccess(payload);
+    if (addPlan) {
+      addPlan(payload);
     }
 
     setSubmitting(false);

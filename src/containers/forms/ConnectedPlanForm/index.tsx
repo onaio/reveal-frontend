@@ -23,12 +23,12 @@ const ConnectedPlanForm = (props: ConnectedPlanFormProps) => {
     addPlan(payload);
   };
 
-  return <PlanForm {...props} addPlanOnFormSuccess={addPlanOnFormSuccess} />;
+  return <PlanForm {...props} addPlan={addPlanOnFormSuccess} />;
 };
 
 export const defaultProps: ConnectedPlanFormProps = {
-  addPlan: addPlanDefinition,
   ...defaultPlanFormProps,
+  addPlan: addPlanDefinition,
 };
 
 ConnectedPlanForm.defaultProps = defaultProps;
