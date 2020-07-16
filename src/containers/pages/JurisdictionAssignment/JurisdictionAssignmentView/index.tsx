@@ -70,8 +70,8 @@ export const defaultProps = {
 /** view will require a planId from the url */
 export interface RouteParams {
   planId: string;
-  rootId: string;
-  parentId: string;
+  rootId?: string;
+  parentId?: string;
 }
 
 /** full props with route props added for JurisdictionAssignmentView */
@@ -94,7 +94,6 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
 
   const [rootJurisdictionId, setRootJurisdictionId] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(!plan);
-
   const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
 
   React.useEffect(() => {

@@ -352,6 +352,10 @@ export const getAncestors = () =>
     return [];
   });
 
+/** caveat: parentId is dictated by the jurisdictionId in the url, if parentId is undefined
+ * it means drilling down has not begun, so we return the root of the tree as the parentNode as
+ * opposed to returning undefined
+ */
 /** retrieve the node designated as the current Parent id
  * @param state - the store
  * @param props -  the filterProps
@@ -360,6 +364,9 @@ export const getCurrentParentNode = () =>
   createSelector(getTreeById(), getCurrentParentId, (tree, parentId) => {
     if (!tree) {
       return;
+    }
+    if (parentId === undefined) {
+      return tree;
     }
     return tree.first(node => node.model.id === parentId);
   });
