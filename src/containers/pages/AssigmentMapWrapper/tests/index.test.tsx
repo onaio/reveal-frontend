@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { FeatureCollection } from '@turf/turf';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -59,6 +60,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     store.dispatch(fetchJurisdictions(fixtures.payload as any));
     const props = {
       currentParentId: '07b09ec1-0589-4a98-9480-4c403ac24d59',
+      getJurisdictionsFeatures: fixtures.geoCollection as FeatureCollection,
       rootJurisdictionId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
     };
 
@@ -76,8 +78,10 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     wrapper.unmount();
   });
   it('works correctly with store', async () => {
+    store.dispatch(fetchJurisdictions(fixtures.payload as any));
     const props = {
       currentParentId: '07b09ec1-0589-4a98-9480-4c403ac24d59',
+      getJurisdictionsFeatures: fixtures.geoCollection as FeatureCollection,
       rootJurisdictionId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
     };
     const wrapper = mount(

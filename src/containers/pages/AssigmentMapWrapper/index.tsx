@@ -60,7 +60,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   const [loading, setLoading] = React.useState(true);
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   React.useEffect(() => {
-    if (getJurisdictionsFeatures && !getJurisdictionsFeatures.features.length) {
+    if (!getJurisdictionsFeatures.features.length) {
       setLoading(true);
       const params = {
         is_jurisdiction: true,
