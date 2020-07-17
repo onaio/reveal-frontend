@@ -4,6 +4,7 @@
 import { Dictionary } from '@onaio/utils';
 import { cloneDeep, uniqWith } from 'lodash';
 import TreeModel from 'tree-model';
+import { AUTO_SELECTION, USER_CHANGE } from '../../../../configs/lang';
 import {
   ParsedHierarchySingleNode,
   RawHierarchySingleNode,
@@ -14,6 +15,13 @@ import {
 
 export const META_FIELD_NAME = 'meta';
 export const SELECT_KEY = 'selected';
+export const SELECT_REASON_KEY = 'selectedBy';
+
+export const SelectionReason = {
+  AUTO_SELECTION,
+  NOT_CHANGED: '',
+  USER_CHANGE,
+};
 
 /** mutates the structure of the children property in a single node
  * @param {RawHierarchySingleNode} rawSingleNode - single node i.e. part of rawOpensrp hierarchy
@@ -74,15 +82,16 @@ export const generateJurisdictionTree = (apiResponse: RawOpenSRPHierarchy) => {
  * @param attrAccessor - the key to use when assigning the value
  * @param attrValue - the value to assign to attrAccessor
  * @param cascadeDown - whether to do the value assignment on each of the node's descendants
- * @param cascadeDown - whether to do the value assignment on each of the node's ancestors
+ * @param cascadeUp - whether to do the value assignment on each of the node's ancestors
  */
-export function setAttrsToNode(
+export function SetSelectAttrToNode(
   aTree: TreeNode,
   nodeId: string,
   attrAccessor: string,
   attrValue: string | number | boolean,
   cascadeDown: boolean = false,
-  cascadeUp: boolean = false
+  cascadeUp: boolean = false,
+  selectedBy: string = ''
 ) {
   const treeClone = cloneDeep(aTree);
   const argNode = treeClone.first(nd => nd.model.id === nodeId);
@@ -90,10 +99,12 @@ export function setAttrsToNode(
     return treeClone;
   }
   argNode.model[META_FIELD_NAME][attrAccessor] = attrValue;
+  argNode.model[META_FIELD_NAME][SELECT_REASON_KEY] = selectedBy;
   if (cascadeDown) {
     // argNode is part of this walk.
     argNode.walk(nd => {
       nd.model[META_FIELD_NAME][attrAccessor] = attrValue;
+      nd.model[META_FIELD_NAME][SELECT_REASON_KEY] = selectedBy;
       // removing this return cause a type error, that's its sole purpose
       return true;
     });
@@ -104,10 +115,10 @@ export function setAttrsToNode(
     parentsPath.pop();
     parentsPath.forEach(parentNode => {
       parentNode.model[META_FIELD_NAME][attrAccessor] = attrValue;
+      parentNode.model[META_FIELD_NAME][SELECT_REASON_KEY] = selectedBy;
     });
   }
   return { treeClone, argNode };
-  // do not setTree here yet so that the caller can perform additional mutations
 }
 
 /** given an array of the childrenNodes, return true if all of them are selected
@@ -139,7 +150,7 @@ export const nodeHasChildren = (node: TreeNode) => {
 /** traverse up and select the parent nodes where necessary
  * @param node a node
  */
-export function computeParentNodesSelection(node: TreeNode) {
+export function computeParentNodesSelection(node: TreeNode, selectedBy: string = '') {
   const parentsPath = node.getPath();
   const reversedParentSPath = parentsPath.reverse();
   // now for each of the parent if all the children are selected then label the parent as selected too
@@ -147,6 +158,7 @@ export function computeParentNodesSelection(node: TreeNode) {
     const allChildrenAreSelected = areAllChildrenSelected(parentNode.children);
     if (allChildrenAreSelected) {
       parentNode.model[META_FIELD_NAME][SELECT_KEY] = allChildrenAreSelected;
+      parentNode.model[META_FIELD_NAME][SELECT_REASON_KEY] = selectedBy;
     } else {
       break;
     }
@@ -158,19 +170,21 @@ export function computeParentNodesSelection(node: TreeNode) {
  */
 export const autoSelectNodesAndCascade = (
   tree: TreeNode,
-  callback: (node: TreeNode) => boolean
+  callback: (node: TreeNode) => boolean,
+  selectedBy: string = AUTO_SELECTION
 ) => {
   let treeClone = cloneDeep(tree);
   if (!treeClone) {
     return;
   }
   // deselect all
-  treeClone = setAttrsToNode(tree, tree.model.id, SELECT_KEY, false, true).treeClone;
+  treeClone = SetSelectAttrToNode(tree, tree.model.id, SELECT_KEY, false, true).treeClone;
   const parentNodes: TreeNode[] = [];
   treeClone.walk(node => {
     if (callback(node)) {
       node.walk(nd => {
         nd.model[META_FIELD_NAME][SELECT_KEY] = true;
+        nd.model[META_FIELD_NAME][SELECT_REASON_KEY] = selectedBy;
         // removing this return cause a type error, that's its sole purpose
         return true;
       });
@@ -184,7 +198,29 @@ export const autoSelectNodesAndCascade = (
 
   // now select parents accordingly
   parentNodesSet.forEach(node => {
-    computeParentNodesSelection(node);
+    computeParentNodesSelection(node, AUTO_SELECTION);
   });
   return treeClone;
+};
+
+/** compute Selected nodes from the tree
+ * @param tree - the whole tree or undefined
+ * @param leafNodesOnly - whether to include the leaf nodes only
+ */
+export const computeSelectedNodes = (
+  tree: TreeNode | undefined,
+  leafNodesOnly: boolean | undefined
+) => {
+  const nodesList: TreeNode[] = [];
+  if (!tree) {
+    return [];
+  }
+  tree.walk(node => {
+    const shouldAddNode = nodeIsSelected(node) && !(leafNodesOnly && nodeHasChildren(node));
+    if (shouldAddNode) {
+      nodesList.push(node);
+    }
+    return true;
+  });
+  return nodesList;
 };
