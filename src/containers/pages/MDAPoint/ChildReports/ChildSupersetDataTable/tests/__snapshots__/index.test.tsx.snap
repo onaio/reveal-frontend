@@ -15,7 +15,7 @@ exports[`components/ChildSupersetDataTable should render list correctly: table w
         className="listview-td"
         items={
           Array [
-            "Age",
+            "name",
             "col-1",
             "col-2",
             "col-3",
@@ -26,7 +26,7 @@ exports[`components/ChildSupersetDataTable should render list correctly: table w
           className="listview-td"
           key="0"
         >
-          Age
+          name
         </th>
         <th
           className="listview-td"
@@ -61,7 +61,7 @@ exports[`components/ChildSupersetDataTable should render list correctly: table w
         className="listview-th"
         items={
           Array [
-            "11 - 15",
+            "test",
             9,
             6,
             3,
@@ -72,7 +72,7 @@ exports[`components/ChildSupersetDataTable should render list correctly: table w
           className="listview-th"
           key="0"
         >
-          11 - 15
+          test
         </td>
         <td
           className="listview-th"
@@ -103,7 +103,7 @@ exports[`components/ChildSupersetDataTable should render list correctly: table w
         className="listview-th"
         items={
           Array [
-            "< 6",
+            "user",
             6,
             0,
             0,
@@ -114,7 +114,7 @@ exports[`components/ChildSupersetDataTable should render list correctly: table w
           className="listview-th"
           key="0"
         >
-          &lt; 6
+          user
         </td>
         <td
           className="listview-th"

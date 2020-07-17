@@ -5,11 +5,11 @@ import { ChildSupersetDataTable } from '..';
 
 const props = {
   data: [
-    ['11 - 15', 9, 6, 3],
-    ['< 6', 6, 0, 0],
+    ['test', 9, 6, 3],
+    ['user', 6, 0, 0],
   ],
   fetchItems: jest.fn(),
-  headerItems: ['Age', 'col-1', 'col-2', 'col-3'],
+  headerItems: ['name', 'col-1', 'col-2', 'col-3'],
   service: jest.fn(),
   supersetSliceId: '1',
 };
