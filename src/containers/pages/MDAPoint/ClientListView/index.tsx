@@ -1,6 +1,6 @@
-import ListView from '@onaio/list-view';
+import ListView, { ListViewProps } from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
@@ -19,6 +19,7 @@ import {
   DOWNLOAD,
   FILE_NAME,
   HOME,
+  NO_DATA_FOUND,
   OWNER,
   STUDENTS_TITLE,
   UPLOAD_DATE,
@@ -80,25 +81,28 @@ export const buildListViewData: (rowData: File[]) => ReactNode[][] | undefined =
 
 export const ClientListView = (props: ClientListViewProps & RouteComponentProps) => {
   const { location, files, clientLabel } = props;
+
+  const [loading, setLoading] = useState(false);
+
   React.useEffect(() => {
     if (!(files && files.length)) {
       /**
        * Fetch files incase the files are not available e.g when page is refreshed
        */
-      loadFiles().catch(err => displayError(err));
+      loadFiles(fetchFiles, OpenSRPService, setLoading).catch(err => displayError(err));
     }
     /**
      * We do not need to re-run since this effect doesn't depend on any values from api yet
      */
   }, []);
   /** Overide renderRows to render html inside td */
-  let listViewProps;
+  const listViewProps: Pick<ListViewProps, 'data' | 'headerItems' | 'tableClass'> = {
+    data: [],
+    headerItems: [FILE_NAME, OWNER, UPLOAD_DATE],
+    tableClass: TABLE_BORDERED_CLASS,
+  };
   if (files && files.length) {
-    listViewProps = {
-      data: buildListViewData(files),
-      headerItems: [FILE_NAME, OWNER, UPLOAD_DATE],
-      tableClass: TABLE_BORDERED_CLASS,
-    };
+    listViewProps.data = buildListViewData(files) || [];
   }
   /** Load Modal once we hit this route */
   if (location.pathname === UPLOAD_CLIENT_CSV_URL) {
@@ -123,6 +127,12 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
     text: ADD_NEW_CSV,
     to: UPLOAD_CLIENT_CSV_URL,
   };
+
+  /** show loader */
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div>
       <Helmet>
@@ -141,7 +151,8 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
       </Row>
       <Row id="table-row">
         <Col>
-          {listViewProps && files && files.length ? <ListView {...listViewProps} /> : <Loading />}
+          <ListView {...listViewProps} />
+          {!(files && files.length) && <div>{NO_DATA_FOUND}</div>}
         </Col>
       </Row>
       <hr />
