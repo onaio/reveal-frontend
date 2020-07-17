@@ -769,7 +769,15 @@ export const SAVE_AND_ACTIVATE = translate('SAVE_AND_ACTIVATE', 'Save & Activate
 
 export const CANNOT_ASSIGN_TEAM_LABEL = translate(
   'CANNOT_ASSIGN_TEAM',
-  'Cannot assign teams for expired plans'
+  'Cannot assign teams for expired plans');
+  
+export const NUMBER_OF_STRUCTURES_IN_JURISDICTIONS = translate(
+  'NUMBER_OF_STRUCTURES_IN_JURISDICTIONS',
+  'NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS'
+);
+export const ADJUST_SLIDER_MESSAGE = translate(
+  'ADJUST_SLIDER_MESSAGE',
+  'Adjust slider to auto-target jurisdictions'
 );
 
 export const NUMBER_OF_STRUCTURES_IN_JURISDICTIONS = translate(
