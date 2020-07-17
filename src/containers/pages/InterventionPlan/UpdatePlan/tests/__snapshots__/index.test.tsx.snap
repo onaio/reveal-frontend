@@ -31,15 +31,19 @@ exports[`components/InterventionPlan/UpdatePlan renders plan definition list cor
         >
           <Link
             key="0"
-            replace={false}
             to="/"
           >
-            <a
+            <LinkAnchor
               href="/"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              Home
-            </a>
+              <a
+                href="/"
+                onClick={[Function]}
+              >
+                Home
+              </a>
+            </LinkAnchor>
           </Link>
         </li>
       </BreadcrumbItem>
@@ -52,15 +56,19 @@ exports[`components/InterventionPlan/UpdatePlan renders plan definition list cor
         >
           <Link
             key="1"
-            replace={false}
             to="/plans/list"
           >
-            <a
+            <LinkAnchor
               href="/plans/list"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              Manage Plans
-            </a>
+              <a
+                href="/plans/list"
+                onClick={[Function]}
+              >
+                Manage Plans
+              </a>
+            </LinkAnchor>
           </Link>
         </li>
       </BreadcrumbItem>

@@ -23,15 +23,19 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
         >
           <Link
             key="0"
-            replace={false}
             to="/"
           >
-            <a
+            <LinkAnchor
               href="/"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              Home
-            </a>
+              <a
+                href="/"
+                onClick={[Function]}
+              >
+                Home
+              </a>
+            </LinkAnchor>
           </Link>
         </li>
       </BreadcrumbItem>
@@ -44,15 +48,19 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
         >
           <Link
             key="1"
-            replace={false}
             to="/teams"
           >
-            <a
+            <LinkAnchor
               href="/teams"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              Teams
-            </a>
+              <a
+                href="/teams"
+                onClick={[Function]}
+              >
+                Teams
+              </a>
+            </LinkAnchor>
           </Link>
         </li>
       </BreadcrumbItem>
@@ -65,15 +73,19 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
         >
           <Link
             key="2"
-            replace={false}
             to="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
           >
-            <a
+            <LinkAnchor
               href="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              Takang 1
-            </a>
+              <a
+                href="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
+                onClick={[Function]}
+              >
+                Takang 1
+              </a>
+            </LinkAnchor>
           </Link>
         </li>
       </BreadcrumbItem>
