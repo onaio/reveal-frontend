@@ -7,10 +7,14 @@ import PlanForm, {
 import { PlanDefinition } from '../../../configs/settings';
 import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
 
-/** interface for ConnectedPlanForm props */
-export interface ConnectedPlanFormProps extends PlanFormProps {
-  addPlan: typeof addPlanDefinition;
-}
+type Modify<T, R> = Omit<T, keyof R> & R;
+
+export type ConnectedPlanFormProps = Modify<
+  PlanFormProps,
+  {
+    addPlan: typeof addPlanDefinition;
+  }
+>;
 
 /** Interface for method addPlanOnFormSuccess */
 export type AddPlanOnFormSuccess = (payload: PlanDefinition) => void;
@@ -27,9 +31,9 @@ const ConnectedPlanForm = (props: ConnectedPlanFormProps) => {
 };
 
 export const defaultProps: ConnectedPlanFormProps = {
-  ...defaultPlanFormProps,
   addPlan: addPlanDefinition,
-};
+  ...defaultPlanFormProps,
+} as ConnectedPlanFormProps;
 
 ConnectedPlanForm.defaultProps = defaultProps;
 

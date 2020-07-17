@@ -24,7 +24,7 @@ import {
   PLANNING_VIEW_URL,
 } from '../../../../../constants';
 import { InterventionType } from '../../../../../store/ducks/plans';
-import ConnectedPlanForm from '../../../../forms/ConnectedPlanForm';
+import ConnectedPlanForm, { ConnectedPlanFormProps } from '../../../../forms/ConnectedPlanForm';
 import { JurisdictionDetails } from './JurisdictionDetails';
 
 /** expose props that would enable one to customize the underlying planForm props */
@@ -110,7 +110,10 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <Row>
         <Col md={8} id="planform-col-container">
-          <ConnectedPlanForm {...planFormProps} key={formValues.interventionType} />
+          <ConnectedPlanForm
+            {...(planFormProps as ConnectedPlanFormProps)}
+            key={formValues.interventionType}
+          />
         </Col>
         {props.showJurisdictionDetails && (
           <Col md={4}>
