@@ -45,6 +45,7 @@ import plansReducer, {
   getPlanDefinitionById,
   reducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
+import { ConnectedAssignmentMapWrapper } from '../../AssigmentMapWrapper/';
 import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
 
@@ -191,6 +192,12 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     serviceClass,
   };
 
+  const AssignmentWraperProps = {
+    currentParentId: props.match.params.parentId,
+    rootJurisdictionId,
+    serviceClass,
+  };
+
   const breadcrumbProps = {
     currentPage: {
       label: plan.title,
@@ -212,6 +219,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
+      <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />
       <ConnectedJurisdictionTable {...JurisdictionTableProps} />
     </>
   );

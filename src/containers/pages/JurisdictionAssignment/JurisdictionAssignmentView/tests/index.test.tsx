@@ -27,6 +27,13 @@ jest.mock('../../JurisdictionTable', () => {
   };
 });
 
+jest.mock('../../../AssigmentMapWrapper', () => {
+  const mockComponent2 = (_: any) => <div id="mockComponent2">Assignment Wrapper</div>;
+  return {
+    ConnectedAssignmentMapWrapper: mockComponent2,
+  };
+});
+
 describe('src/containers/JurisdictionView', () => {
   /** renders correctly, a full render cycle
    *  check that errors are raised.
@@ -125,7 +132,7 @@ describe('src/containers/JurisdictionView', () => {
     });
 
     expect(wrapper.text()).toMatchInlineSnapshot(
-      `"Planning toolA2-Lusaka Akros Test Focus 2Assign JurisdictionsI love oov"`
+      `"Planning toolA2-Lusaka Akros Test Focus 2Assign JurisdictionsAssignment WrapperI love oov"`
     );
 
     // check props given to mock component

@@ -20,6 +20,7 @@ export interface Jurisdiction {
     parentId?: string;
     status: string;
     version: string | number;
+    color?: string;
   };
   serverVersion: number;
   type: Readonly<'Feature'>;
@@ -124,7 +125,12 @@ export const getJurisdictionsArray = () =>
     (jurisdictionsById, parentId, jurisdictionIdsArray): Jurisdiction[] => {
       const result = values(jurisdictionsById);
       if (parentId) {
-        return result.filter(item => item.properties.parentId === parentId);
+        return result.filter(item => {
+          if (!item.properties.parentId) {
+            return item.id === parentId;
+          }
+          return item.properties.parentId === parentId;
+        });
       }
       if (jurisdictionIdsArray) {
         return result.filter(item => jurisdictionIdsArray.includes(item.id));

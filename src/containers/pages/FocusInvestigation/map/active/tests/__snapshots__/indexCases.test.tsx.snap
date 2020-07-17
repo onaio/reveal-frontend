@@ -37,6 +37,7 @@ Object {
   },
   "fillPaint": Object {
     "fill-color": "#666a6d",
+    "fill-opacity": 1,
     "fill-outline-color": "#666a6d",
   },
   "id": "structures-fill",

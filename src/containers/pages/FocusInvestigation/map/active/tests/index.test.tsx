@@ -29,8 +29,10 @@ import * as fixturesMap from './fixtures';
 
 jest.mock('../../../../../../components/GisidaLite', () => {
   const GisidaLiteMock = () => <div>I love oov</div>;
+  const MemoizedGisidaLiteMock = () => <div>I love oov</div>;
   return {
     GisidaLite: GisidaLiteMock,
+    MemoizedGisidaLite: MemoizedGisidaLiteMock,
   };
 });
 jest.mock('../../../../../../configs/env');
@@ -121,7 +123,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(toJson(headerWrapper)).toMatchSnapshot('Breadcrumb');
 
     // Check gisida component using a mock
-    expect(toJson(wrapper.find('GisidaLiteMock div'))).toMatchSnapshot('GisidaWrapperMock div');
+    expect(toJson(wrapper.find('MemoizedGisidaLiteMock div'))).toMatchSnapshot(
+      'MemoizedGisidaLiteMock div'
+    );
 
     // how about the selectPlan component
     expect(wrapper.find('SelectPlan').length).toEqual(1);
