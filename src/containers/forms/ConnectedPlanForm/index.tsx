@@ -9,6 +9,7 @@ import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
 
 type Modify<T, R> = Omit<T, keyof R> & R;
 
+/** Interface for ConnectedPlan props */
 export type ConnectedPlanFormProps = Modify<
   PlanFormProps,
   {

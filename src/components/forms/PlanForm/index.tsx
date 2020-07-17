@@ -156,7 +156,7 @@ export interface PlanFormProps {
     child?: LocationChildRenderProp /** nested render content for each location name */
   ) => JSX.Element;
   /** a render prop that renders the plan's location names */
-  addPlan?: AddPlanOnFormSuccess;
+  addPlan?: AddPlanOnFormSuccess /** Add new/update plan to redux store */;
 }
 
 /** Plan Form component */
