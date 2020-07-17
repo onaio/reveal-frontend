@@ -33,6 +33,7 @@ import {
   ASSIGN_JURISDICTIONS_URL,
   ASSIGN_PLAN_URL,
   INTERVENTION_TYPE_CODE,
+  AUTO_ASSIGN_JURISDICTIONS_URL,
 } from '../../../../constants';
 import {
   LoadOpenSRPHierarchy,
@@ -58,16 +59,14 @@ import hierarchyReducer, {
   SelectNodeAction,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
-import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
+import { nodeIsSelected, SelectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
-import {
-  addPlanDefinition,
-  AddPlanDefinitionAction,
-} from '../../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
+import { RiskLabel } from '../helpers/RiskLabel';
 import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
+import { AddPlanDefinitionAction, addPlanDefinition } from '../../../../store/ducks/opensrp/PlanDefinition';
 
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
@@ -87,6 +86,7 @@ export interface JurisdictionSelectorTableProps {
   fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
   selectedLeafNodes: TreeNode[];
   leafNodes: TreeNode[];
+  autoSelectionFlow: boolean;
 }
 
 const defaultProps = {
@@ -103,6 +103,7 @@ const defaultProps = {
   selectedLeafNodes: [],
   serviceClass: OpenSRPService,
   treeFetchedCreator: fetchTree,
+  autoselectionFlow: false,
 };
 
 /** JurisdictionTable responsibilities,
@@ -111,6 +112,14 @@ const defaultProps = {
  * 2). also gets the locations that are already assigned to plan
  *    - that's why I passed the plan as a prop
  * 3). render the drill down table.
+ */
+/** 2 cases for this:
+ * 1). used as part of the autoSelection process.
+ *    when autoselection is enabled we finish the workflow in the plan assignment view,otherwise one would have to start all over.
+ *    for the time being there will not be auto-selecting existing jurisdiction assignments.
+ * 2). used when autoSelection is disabled.
+ *    here we have to show previous selections.
+ *    when autoselection is disabled autoSelect previously selected jurisdictions i.e. if plan is still draft.
  */
 const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const {
@@ -127,6 +136,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     plan,
     jurisdictionsMetadata,
     serviceClass,
+    autoSelectionFlow,
   } = props;
   /** helper function that decides which action creator to call when
    * changing the selected status of a node
@@ -135,9 +145,9 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
    */
   function applySelectedToNode(nodeId: string, value: boolean) {
     if (value) {
-      selectNodeCreator(rootJurisdictionId, nodeId);
+      selectNodeCreator(rootJurisdictionId, nodeId, SelectionReason.USER_CHANGE);
     } else {
-      deselectNodeCreator(rootJurisdictionId, nodeId);
+      deselectNodeCreator(rootJurisdictionId, nodeId, SelectionReason.USER_CHANGE);
     }
   }
 
@@ -160,68 +170,83 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   };
 
   const [loading, setLoading] = React.useState<boolean>(true);
-  const [isLeafNodesLoaded, setLeafNodeLoaded] = React.useState<boolean>(false);
+  // const [isLeafNodesLoaded, setLeafNodeLoaded] = React.useState<boolean>(false);
   const [singleSelect] = React.useState<boolean>(isSingleSelect);
   const { broken, errorMessage, handleBrokenPage } = useHandleBrokenPage();
-  const baseUrl = `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
-  const jurisdictionMetaIds: string[] = jurisdictionsMetadata.map(meta => meta.key);
+  const baseUrl = !autoSelectionFlow
+    ? `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
+    : `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
   const history = useHistory();
+  // const jurisdictionMetaIds: string[] = jurisdictionsMetadata.map(meta => meta.key);
 
-  /** callback used to do initial autoSelection ; auto selects all jurisdictions that are already assigned to a plan
-   * @param node - takes a node and returns true if node should be auto-selected
+  // /** callback used to do initial autoSelection ; auto selects all jurisdictions that are already assigned to a plan
+  //  * @param node - takes a node and returns true if node should be auto-selected
+  //  */
+  // const existingAssignments = props.plan.jurisdiction.map(jurisdiction => jurisdiction.code);
+  // const callback = (node: TreeNode) => {
+  //   if (!leafNodes.filter(value => existingAssignments.includes(value.model.id)).length) {
+  //     if (!node.hasChildren()) {
+  //       const metaObj = jurisdictionsMetadata.find(
+  //         (m: JurisdictionsMetadata) => m.key === node.model.id
+  //       ) as JurisdictionsMetadata;
+  //       return (
+  //         jurisdictionMetaIds.includes(node.model.id) &&
+  //         metaObj.value &&
+  //         Number(metaObj.value) >= Number(JURISDICTION_METADATA_RISK_PERCENTAGE)
+  //       );
+  //     }
+  //   } else {
+  //     const isLeafNode = !node.hasChildren();
+  //     if (isLeafNode) {
+  //       return existingAssignments.includes(node.model.id);
+  //     }
+  //   }
+  //   return false;
+  // };
+
+  /** this is used for auto-selecting existing assigned jurisdictions
+   * it will be invoked when auto-selection is turned off.
    */
-  const existingAssignments = props.plan.jurisdiction.map(jurisdiction => jurisdiction.code);
   const callback = (node: TreeNode) => {
-    if (!leafNodes.filter(value => existingAssignments.includes(value.model.id)).length) {
-      if (!node.hasChildren()) {
-        const metaObj = jurisdictionsMetadata.find(
-          (m: JurisdictionsMetadata) => m.key === node.model.id
-        ) as JurisdictionsMetadata;
-        return (
-          jurisdictionMetaIds.includes(node.model.id) &&
-          metaObj.value &&
-          Number(metaObj.value) >= Number(JURISDICTION_METADATA_RISK_PERCENTAGE)
-        );
-      }
-    } else {
-      const isLeafNode = !node.hasChildren();
-      if (isLeafNode) {
-        return existingAssignments.includes(node.model.id);
-      }
-    }
-    return false;
+    const existingAssignments = plan.jurisdiction;
+    return existingAssignments.includes(node.model.id);
   };
 
   React.useEffect(() => {
     const params = {
       return_structure_count: true,
     };
-    LoadOpenSRPHierarchy(rootJurisdictionId, OpenSRPService, params)
-      .then((apiResponse: Result<RawOpenSRPHierarchy>) => {
-        if (apiResponse.value) {
-          const responseData = apiResponse.value;
-          treeFetchedCreator(responseData);
-          // TODO: should this be in both this useEffect and the next one?
-          autoSelectNodesCreator(rootJurisdictionId, callback);
+    if (!autoSelectionFlow) {
+      LoadOpenSRPHierarchy(rootJurisdictionId, OpenSRPService, params)
+        .then((apiResponse: Result<RawOpenSRPHierarchy>) => {
+          if (apiResponse.value) {
+            const responseData = apiResponse.value;
+            treeFetchedCreator(responseData);
+            // TODO: should this be in both this useEffect and the next one?
+
+            autoSelectNodesCreator(rootJurisdictionId, callback, SelectionReason.USER_CHANGE);
+            setLoading(false);
+          }
+          if (apiResponse.error) {
+            throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
+          }
+        })
+        .catch(() => {
+          handleBrokenPage(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
           setLoading(false);
-        }
-        if (apiResponse.error) {
-          throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-        }
-      })
-      .catch(() => {
-        handleBrokenPage(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-        setLoading(false);
-      });
+        });
+    } else {
+      setLoading(false);
+    }
   }, []);
 
-  React.useEffect(() => {
-    if (leafNodes.length && !isLeafNodesLoaded) {
-      // TODO: should this be in both this useEffect and the previous one?
-      autoSelectNodesCreator(rootJurisdictionId, callback);
-      setLeafNodeLoaded(true);
-    }
-  }, [leafNodes]);
+  // React.useEffect(() => {
+  //   if (leafNodes.length && !isLeafNodesLoaded) {
+  //     // TODO: should this be in both this useEffect and the previous one?
+  //     autoSelectNodesCreator(rootJurisdictionId, callback);
+  //     // setLeafNodeLoaded(true);
+  //   }
+  // }, [leafNodes]);
 
   if (loading) {
     return <Ripple />;
@@ -274,11 +299,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     currentPage,
     pages,
   };
-  const data = derivedChildrenNodes.map(node => {
-    const isLeafNode: boolean = leafNodes.map(leaf => leaf.model.id).includes(node.model.id);
-    const metaObj = jurisdictionsMetadata.find(
-      (m: JurisdictionsMetadata) => m.key === node.model.id
-    ) as JurisdictionsMetadata;
+  const data = currentChildren.map(node => {
     return [
       <input
         key={`${node.model.id}-check-jurisdiction`}
@@ -295,18 +316,10 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         }}
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
-      (metaObj && metaObj.value) || '',
-      node.model.meta.selected && isLeafNode
-        ? jurisdictionMetaIds.length &&
-          jurisdictionMetaIds.includes(node.model.id) &&
-          !leafNodes.filter(value => existingAssignments.includes(value.model.id)).length
-          ? AUTO_SELECTION
-          : leafNodes.filter(value => existingAssignments.includes(value.model.id)).length &&
-            existingAssignments.includes(node.model.id)
-          ? EXISTING_SELECTION
-          : USER_CHANGE
-        : '',
       node.model.node.attributes.structureCount,
+      ...(autoSelectionFlow ? [<RiskLabel key={node.model.id + 'sdfasd'} node={node} metadata={jurisdictionsMetadata} />] : []),
+      nodeIsSelected(node) ? 'Targeted' : 'NotTargeted', // this too makes sense for the leaf nodes
+      node.model.meta.selectedBy,
       <ConnectedSelectedJurisdictionsCount
         key={`selected-jurisdictions-txt`}
         parentNode={node}
@@ -318,9 +331,10 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const headerItems = [
     '',
     NAME,
-    RISK_LABEL,
-    STATUS_SETTING,
     STRUCTURES_COUNT,
+    ...(autoSelectionFlow ? [RISK_LABEL] : []),
+    'Target Status',
+    STATUS_SETTING,
     SELECTED_JURISDICTIONS,
   ];
   const tableClass = 'table table-bordered';
@@ -351,11 +365,12 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
               onChange={onParentCheckboxClick}
             />
           </th>
-          <th style={{ width: '70%' }}>{headerItems[1]}</th>
+          <th>{headerItems[1]}</th>
           <th>{headerItems[2]}</th>
           <th>{headerItems[3]}</th>
           <th>{headerItems[4]}</th>
           <th>{headerItems[5]}</th>
+          {autoSelectionFlow && <th>{headerItems[6]}</th>}
         </tr>
       </thead>
     );
