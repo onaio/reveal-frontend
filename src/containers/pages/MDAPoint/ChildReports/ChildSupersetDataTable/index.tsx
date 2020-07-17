@@ -31,7 +31,7 @@ export const ChildSupersetDataTable = (props: ChildSupersetDataTableProps) => {
         fetchItems(result);
       });
     } catch (e) {
-      // handle error
+      displayError(e);
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,7 @@ export const ChildSupersetDataTable = (props: ChildSupersetDataTableProps) => {
     tableClass: tableClass || 'table table-striped table-bordered plans-list',
   };
 
-  if (loading === true) {
+  if (loading) {
     return <Loading />;
   }
 

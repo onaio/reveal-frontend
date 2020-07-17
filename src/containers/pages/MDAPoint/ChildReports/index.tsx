@@ -23,9 +23,11 @@ import {
   MDA_POINT_PLANS,
   MMA_DRUGS_ADMINISTRED,
   NATIONAL_ID,
+  NO,
   PZQ_DISTRIBUTED,
   SACS_REFUSED,
   SACS_SICK,
+  YES,
 } from '../../../../configs/lang';
 import {
   HOME_URL,
@@ -195,11 +197,11 @@ const mapStateToProps = (
     return [
       `${sch.client_first_name} ${sch.client_last_name}`,
       sch.sactanationalid === 0 ? '' : sch.sactanationalid,
-      sch.sactacurrenroll === 0 ? 'No' : 'Yes',
-      sch.mmadrugadmin === 0 ? 'No' : 'Yes',
-      sch.mmanodrugadminreason === 0 ? 'No' : 'Yes',
-      sch.mmanodrugadminreason === 0 ? 'No' : 'Yes',
-      sch.mmaadr === 0 ? 'No' : 'Yes',
+      sch.sactacurrenroll === 0 ? NO : YES,
+      sch.mmadrugadmin === 0 ? NO : YES,
+      sch.mmanodrugadminreason === 0 ? NO : YES,
+      sch.mmanodrugadminreason === 0 ? NO : YES,
+      sch.mmaadr === 0 ? NO : YES,
       sch.mmapzqdosagegiven,
       sch.mmaalbgiven,
     ];

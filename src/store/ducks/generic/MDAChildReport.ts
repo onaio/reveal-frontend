@@ -8,6 +8,22 @@ export const reducerName = 'MDAChildReport';
 
 /** Child report interface */
 export interface ChildReport {
+  id: string;
+  plan_id: string;
+  jurisdiction_id: string;
+  jurisdiction_name: string;
+  jurisdiction_name_path: string[];
+  jurisdiction_path: string[];
+  jurisdiction_parent_id: string;
+  client_first_name: string;
+  client_last_name: string;
+  sactanationalid: number | string;
+  sactacurrenroll: number | string;
+  mmadrugadmin: number | string;
+  mmanodrugadminreason: number | string;
+  mmaadr: number | string;
+  mmapzqdosagegiven: number | string;
+  mmaalbgiven: number | string;
   [key: string]: any;
 }
 
@@ -45,16 +61,16 @@ export type MDAPointChildReportActionTypes =
 
 /**
  * Fetch Plan Definitions action creator
- * @param {MDAPointChild[]} MDAPointPlanList - list of child report objects
+ * @param childReportList - list of child report objects
  */
 export const FetchMDAPointChildReportAction = (
   childReportList: ChildReport[] = []
 ): FetchMDAPointChildReport => {
   const childReportByPlanId = {};
   childReportList.forEach((report: ChildReport) => {
-    (childReportByPlanId as any)[report.plan_id]
-      ? (childReportByPlanId as any)[report.plan_id].push(report)
-      : ((childReportByPlanId as any)[report.plan_id] = [report]);
+    (childReportByPlanId as ChildReport)[report.plan_id]
+      ? (childReportByPlanId as ChildReport)[report.plan_id].push(report)
+      : ((childReportByPlanId as ChildReport)[report.plan_id] = [report]);
   });
   return {
     childReportByPlanId,
