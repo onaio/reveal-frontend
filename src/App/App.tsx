@@ -4,6 +4,7 @@ import {
   faCog,
   faDownload,
   faExternalLinkSquareAlt,
+  faHome,
   faMap,
   faSearch,
   faSlidersH,
@@ -47,6 +48,7 @@ import {
   ASSIGN_JURISDICTIONS_URL,
   ASSIGN_PLAN_URL,
   ASSIGN_PRACTITIONERS_URL,
+  AUTO_ASSIGN_JURISDICTIONS_URL,
   BACKEND_CALLBACK_PATH,
   BACKEND_CALLBACK_URL,
   BACKEND_LOGIN_URL,
@@ -112,6 +114,7 @@ import { OpenSRPPlansList } from '../containers/pages/IRS/assignments';
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
 import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/JurisdictionAssignmentView';
 import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
 import ConnectedChildReports from '../containers/pages/MDAPoint/ChildReports';
@@ -140,7 +143,8 @@ library.add(
   faCog,
   faMap,
   faUser,
-  faTextHeight
+  faTextHeight,
+  faHome
 );
 
 toast.configure({
@@ -571,6 +575,27 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={`${ASSIGN_JURISDICTIONS_URL}/:planId`}
                   component={ConnectedJurisdictionAssignmentView}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
+                  component={ConnectedAutoSelectView}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId`}
+                  component={ConnectedAutoSelectView}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId`}
+                  component={ConnectedAutoSelectView}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
