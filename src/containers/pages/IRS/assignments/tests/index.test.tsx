@@ -12,7 +12,11 @@ import { ASSIGN_PLANS } from '../../../../../configs/lang';
 import { ASSIGN_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
-import plansReducer, { reducerName as plansReducerName } from '../../../../../store/ducks/plans';
+import plansReducer, {
+  fetchPlanRecords,
+  PlanRecordResponse,
+  reducerName as plansReducerName,
+} from '../../../../../store/ducks/plans';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -51,6 +55,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
 
   it('renders plan definition list correctly', async () => {
     fetch.mockResponseOnce(fixtures.planRecords);
+    store.dispatch(fetchPlanRecords(fixtures.extractedPlans as PlanRecordResponse[]));
     const mock: any = jest.fn();
     const props = {
       activePlans: ['active'],

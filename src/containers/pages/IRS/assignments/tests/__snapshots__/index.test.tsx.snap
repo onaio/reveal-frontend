@@ -2,11 +2,9 @@
 
 exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 0 1`] = `"TitleInterventionStart DateEnd DatePlan Status"`;
 
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 1 1`] = `"IRS 2019-09-05 TESTIRS2019-09-052019-09-25retired"`;
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 1 1`] = `"IRS 2019-08-30mIRS2019-08-302019-09-14active"`;
 
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 2 1`] = `"IRS 2019-08-30mIRS2019-08-302019-09-14active"`;
-
-exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 3 1`] = `"Berg Namibia 2019IRS2019-08-292019-09-18active"`;
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 2 1`] = `"Berg Namibia 2019IRS2019-08-292019-09-18active"`;
 
 exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: breadcrumbs 1`] = `
 Array [

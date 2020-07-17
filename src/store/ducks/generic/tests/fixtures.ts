@@ -81,6 +81,20 @@ export const planRecords: PlanRecord[] = [
   },
 ];
 
+export const extractedPlans = planRecords.map(plan => ({
+  date: plan.plan_date,
+  effective_period_end: plan.plan_effective_period_end,
+  effective_period_start: plan.plan_effective_period_start,
+  fi_reason: plan.plan_fi_reason,
+  fi_status: plan.plan_fi_status,
+  identifier: plan.id,
+  intervention_type: plan.plan_intervention_type,
+  status: plan.plan_status,
+  title: plan.plan_title,
+  useContext: plan.plan_useContext,
+  version: plan.plan_version,
+}));
+
 // tslint:disable: object-literal-sort-keys
 export const namibiaIRSJurisdictions = [
   {
