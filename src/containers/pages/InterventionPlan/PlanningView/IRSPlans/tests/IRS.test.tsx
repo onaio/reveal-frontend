@@ -75,7 +75,6 @@ describe('containers/pages/IRS', () => {
     const mock: any = jest.fn();
     fetch.mockResponse(plansJSON);
     const props = {
-      activePlans: ['drafts'],
       history,
       location: mock,
       match: {
@@ -84,6 +83,7 @@ describe('containers/pages/IRS', () => {
         path: INTERVENTION_IRS_DRAFTS_URL,
         url: INTERVENTION_IRS_DRAFTS_URL,
       },
+      planStatuses: ['drafts'],
       tableColumns: irsDraftPageColumns,
     };
 
@@ -115,7 +115,6 @@ describe('containers/pages/IRS', () => {
   it('Search works correctly', async () => {
     fetch.mockResponse(plansJSON);
     const props = {
-      activePlans: ['drafts'],
       history,
       location: {
         hash: '',
@@ -129,6 +128,7 @@ describe('containers/pages/IRS', () => {
         path: INTERVENTION_IRS_DRAFTS_URL,
         url: INTERVENTION_IRS_DRAFTS_URL,
       },
+      planStatuses: ['drafts'],
       tableColumns: irsDraftPageColumns,
     };
 
@@ -152,7 +152,6 @@ describe('containers/pages/IRS', () => {
   it('does not show loader for no data', async () => {
     fetch.mockReject(new Error('No Plans returned'));
     const props = {
-      activePlans: ['drafts'],
       history,
       location: {
         hash: '',
@@ -166,6 +165,7 @@ describe('containers/pages/IRS', () => {
         path: INTERVENTION_IRS_DRAFTS_URL,
         url: INTERVENTION_IRS_DRAFTS_URL,
       },
+      planStatuses: ['drafts'],
       tableColumns: irsDraftPageColumns,
     };
 

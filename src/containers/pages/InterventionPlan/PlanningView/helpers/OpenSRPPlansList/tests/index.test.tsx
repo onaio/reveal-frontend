@@ -40,7 +40,6 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
     const mock: any = jest.fn();
     fetch.mockResponse(plansJSON);
     const props = {
-      activePlans: ['draft'],
       history,
       location: mock,
       match: {
@@ -49,6 +48,7 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
         path: '',
         url: '',
       },
+      planStatuses: ['draft'],
       tableColumns: draftPageColumns,
     };
 
@@ -75,7 +75,6 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
   it('Search works correctly', async () => {
     fetch.mockResponse(plansJSON);
     const props = {
-      activePlans: ['draft'],
       history,
       location: {
         hash: '',
@@ -89,6 +88,7 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
         path: '',
         url: '',
       },
+      planStatuses: ['draft'],
       tableColumns: draftPageColumns,
     };
 
@@ -109,7 +109,6 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
   it('does not show loader for no data', async () => {
     fetch.mockReject(new Error('No Plans returned'));
     const props = {
-      activePlans: ['draft'],
       history,
       location: {
         hash: '',
@@ -123,6 +122,7 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
         path: INTERVENTION_IRS_DRAFTS_URL,
         url: INTERVENTION_IRS_DRAFTS_URL,
       },
+      planStatuses: ['draft'],
       tableColumns: draftPageColumns,
     };
 

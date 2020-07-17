@@ -46,8 +46,8 @@ export type RenderProp = () => React.ReactNode;
 /** props for opensrpPlansList view */
 export interface OpenSRPPlanListViewProps
   extends Omit<BaseListComponentProps, 'loadData' | 'getTableProps'> {
-  activePlans: string[];
   fetchPlanRecordsCreator: ActionCreator<FetchPlanRecordsAction>;
+  planStatuses: string[];
   serviceClass: typeof OpenSRPService;
   sortByDate: boolean;
   tableColumns: Array<DrillDownColumn<PlanRecord>>;
@@ -65,8 +65,8 @@ const defaultBodyRenderer = (componentRender: RenderProp) => {
 };
 
 export const defaultProps: OpenSRPPlanListViewProps = {
-  activePlans: [],
   fetchPlanRecordsCreator: fetchPlanRecords,
+  planStatuses: [],
   plansArray: [],
   renderBody: defaultBodyRenderer,
   serviceClass: OpenSRPService,
@@ -165,7 +165,7 @@ const mapStateToProps = (
 ): MapStateToProps & UserName => {
   const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
   const title = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const statusList = ownProps.activePlans;
+  const statusList = ownProps.planStatuses;
   const dataSelectors: DataSelectors = {
     statusList,
     title,

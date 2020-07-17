@@ -36,7 +36,7 @@ export const DraftPlans = (props: RouteComponentProps) => {
 
   const opensrpListProps: Partial<OpenSRPPlanListViewProps> & RouteComponentProps = {
     ...props,
-    activePlans: [PlanStatus.DRAFT],
+    planStatuses: [PlanStatus.DRAFT],
     renderBody,
     tableColumns: draftPageColumns,
   };

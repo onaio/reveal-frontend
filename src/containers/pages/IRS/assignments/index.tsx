@@ -98,7 +98,7 @@ export const OpenSRPPlansList = (props: RouteComponentProps) => {
 
   const opensrpListProps: Partial<OpenSRPPlanListViewProps> & RouteComponentProps = {
     ...props,
-    activePlans: [PlanStatus.ACTIVE],
+    planStatuses: [PlanStatus.ACTIVE],
     renderBody,
     sortByDate: true,
     tableColumns,

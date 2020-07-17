@@ -58,7 +58,6 @@ describe('components/IRS Reports/IRSPlansList', () => {
     store.dispatch(fetchPlanRecords(fixtures.extractedPlans as PlanRecordResponse[]));
     const mock: any = jest.fn();
     const props = {
-      activePlans: ['active'],
       history,
       location: mock,
       match: {
@@ -67,6 +66,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
         path: ASSIGN_PLANS,
         url: ASSIGN_PLAN_URL,
       },
+      planStatuses: ['active'],
       plansArray: fixtures.planRecords,
       sortByDate: true,
       tableColumns,
