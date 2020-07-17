@@ -9,9 +9,14 @@ import LinkAsButton from '../../../../../components/LinkAsButton';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { ENABLE_JURISDICTIONS_AUTO_SELECTION } from '../../../../../configs/env';
 import { CREATE_NEW_PLAN, DATE_CREATED, NAME, STATUS_HEADER } from '../../../../../configs/lang';
 import { planStatusDisplay } from '../../../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL, DRAFT_IRS_PLAN_URL } from '../../../../../constants';
+import {
+  ASSIGN_JURISDICTIONS_URL,
+  AUTO_ASSIGN_JURISDICTIONS_URL,
+  DRAFT_IRS_PLAN_URL,
+} from '../../../../../constants';
 import { PlanRecord } from '../../../../../store/ducks/plans';
 import { RenderProp } from './OpenSRPPlansList';
 
@@ -50,13 +55,18 @@ export const irsDraftPageColumns: Array<DrillDownColumn<PlanRecord>> = [
   ...commonColumns,
 ];
 
+/** based on whether auto-selection of jurisdictions is enabled */
+export const baseUrlForDraftPlansPage = ENABLE_JURISDICTIONS_AUTO_SELECTION
+  ? AUTO_ASSIGN_JURISDICTIONS_URL
+  : ASSIGN_JURISDICTIONS_URL;
+
 /** columns for the draft plan page */
 export const draftPageColumns: Array<DrillDownColumn<PlanRecord>> = [
   {
     Cell: (cell: Cell<PlanRecord>) => {
       const original = cell.row.original;
       return (
-        <Link to={`${ASSIGN_JURISDICTIONS_URL}/${original.id}`} key={original.id}>
+        <Link to={`${baseUrlForDraftPlansPage}/${original.id}`} key={original.id}>
           {cell.value}
         </Link>
       );
