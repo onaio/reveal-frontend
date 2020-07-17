@@ -30,6 +30,7 @@ import {
 } from '../../../../helpers/dataLoading/jurisdictions';
 import { loadOpenSRPPlan } from '../../../../helpers/dataLoading/plans';
 import { displayError } from '../../../../helpers/errors';
+import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { OpenSRPService } from '../../../../services/opensrp';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
@@ -94,20 +95,23 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
   } = props;
 
   const [rootJurisdictionId, setRootJurisdictionId] = React.useState<string>('');
-  const [loading, setLoading] = React.useState<boolean>(!plan);
+  const planLoadingKey = 'plan';
+  const { startLoading, stopLoading, loading } = useLoadingReducer(planLoadingKey, !plan);
+
   const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
 
   React.useEffect(() => {
+    const metadataLoadingKey = startLoading('metadata');
     loadJurisdictionsMetadata(
       JURISDICTION_METADATA_RISK,
       OpenSRPService,
       fetchJurisdictionsMetadataCreator
     )
       .then(() => {
-        setLoading(false);
+        stopLoading(metadataLoadingKey);
       })
       .finally(() => {
-        setLoading(false);
+        stopLoading(metadataLoadingKey);
       })
       .catch(error => {
         displayError(error);
@@ -115,15 +119,15 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
   }, []);
 
   React.useEffect(() => {
+    startLoading(planLoadingKey);
     const planId = props.match.params.planId;
-    setLoading(true);
     loadOpenSRPPlan(planId, serviceClass, fetchPlanCreator)
       .then(() => {
-        setLoading(false);
+        stopLoading(planLoadingKey);
       })
-      .catch(_ => {
+      .catch((_: Error) => {
         handleBrokenPage(COULD_NOT_LOAD_PLAN);
-        setLoading(false);
+        stopLoading(planLoadingKey);
       });
   }, []);
 
@@ -133,12 +137,12 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       const oneOfJurisdictions = plan.jurisdiction.map(
         jurisdictionCode => jurisdictionCode.code
       )[0];
-      setLoading(true);
+      const jurisdictionLoadingKey = 'jurisdictions';
+      startLoading(jurisdictionLoadingKey);
       loadJurisdiction(oneOfJurisdictions, OpenSRPService)
         .then(result => {
           if (!result || result.error) {
-            setLoading(false);
-            throw new Error(COULD_NOT_LOAD_JURISDICTION);
+            throw new Error('could not load single jurisdiction');
           }
           if (result.value) {
             // TODO: review this - we already have the entire hierarchy in
@@ -149,7 +153,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
                   // get the first ancestor
                   const rootJurisdiction = ancestors.value[0];
                   setRootJurisdictionId(rootJurisdiction.id);
-                  setLoading(false);
+                  stopLoading(jurisdictionLoadingKey);
                 } else {
                   throw new Error(COULD_NOT_LOAD_JURISDICTION);
                 }
@@ -161,11 +165,12 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
         })
         .catch(error => {
           handleBrokenPage(error.message);
+          stopLoading(jurisdictionLoadingKey);
         });
     }
   }, [plan]);
 
-  if (loading) {
+  if (loading()) {
     return <Ripple />;
   }
   if (!plan) {
