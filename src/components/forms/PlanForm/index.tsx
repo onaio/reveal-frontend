@@ -71,7 +71,6 @@ import {
   goalPrioritiesDisplay,
   goalUnitDisplay,
   planActivities,
-  PlanDefinition,
   planStatusDisplay,
 } from '../../../configs/settings';
 import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constants';
@@ -88,6 +87,7 @@ import {
   getGoalUnitFromActionCode,
   getNameTitle,
   isPlanTypeEnabled,
+  onSubmitSuccess,
   planActivitiesMap,
   PlanSchema,
   showDefinitionUriFor,
@@ -248,15 +248,6 @@ const PlanForm = (props: PlanFormProps) => {
     return <Redirect to={redirectAfterAction} />;
   }
 
-  const onSubmitSuccess = (setSubmitting: any, payload: PlanDefinition) => {
-    if (addPlan) {
-      addPlan(payload);
-    }
-
-    setSubmitting(false);
-    setAreWeDoneHere(true);
-  };
-
   return (
     <div className="form-container">
       <Formik
@@ -270,7 +261,7 @@ const PlanForm = (props: PlanFormProps) => {
             apiService
               .update(payload)
               .then(() => {
-                onSubmitSuccess(setSubmitting, payload);
+                onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);
@@ -279,7 +270,7 @@ const PlanForm = (props: PlanFormProps) => {
             apiService
               .create(payload)
               .then(() => {
-                onSubmitSuccess(setSubmitting, payload);
+                onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);
