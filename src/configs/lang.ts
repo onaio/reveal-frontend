@@ -555,6 +555,11 @@ export const MDA_POINT_LOCATION_REPORT_TITLE = translate(
   'MDA Point Location Report'
 );
 
+export const MDA_POINT_CHILD_REPORT_TITLE = translate(
+  'MDA_POINT_CHILD_REPORT_TITLE',
+  'MDA Point Child Report'
+);
+
 export const MDA_POINT_SCHOOL_REPORT_TITLE = translate(
   'MDA_POINT_SCHOOL_REPORT_TITLE',
   'MDA Point School Report'
@@ -592,6 +597,11 @@ export const ALB_TABLETS_DISTRIBUTED = translate(
   'ALB_TABLETS_DISTRIBUTED',
   'Alb Tablets Distributed'
 );
+export const CHILDS_NAME = translate('CHILDS_NAME', "Child's name");
+export const NATIONAL_ID = translate('NATIONAL_ID', 'National ID');
+export const ENROLLED_IN_SCHOOL = translate('ENROLLED_IN_SCHOOL', 'Enrolled in school');
+export const MMA_DRUGS_ADMINISTRED = translate('MMA_DRUGS_ADMINISTRED', 'MMA drug administered');
+export const PZQ_DISTRIBUTED = translate('PZQ_DISTRIBUTED', 'PZQ tablets distributed');
 
 export const MANIFEST_RELEASES = translate('MANIFEST_RELEASES', 'Manifest Releases');
 export const RELEASES_LABEL = translate('RELEASES_LABEL', 'Releases');
