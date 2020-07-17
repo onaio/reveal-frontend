@@ -23,15 +23,19 @@ exports[`src/containers/TeamAssignment/PractitionersListView/ renders a dumb Tea
         >
           <Link
             key="0"
-            replace={false}
             to="/"
           >
-            <a
+            <LinkAnchor
               href="/"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              Home
-            </a>
+              <a
+                href="/"
+                onClick={[Function]}
+              >
+                Home
+              </a>
+            </LinkAnchor>
           </Link>
         </li>
       </BreadcrumbItem>
@@ -65,7 +69,6 @@ exports[`src/containers/TeamAssignment/PractitionersListView/ renders a dumb Tea
         "tlv2",
         "p5id",
         <Link
-          replace={false}
           to="/practitioners/edit/p5id"
         >
           Edit
@@ -97,15 +100,19 @@ exports[`src/containers/TeamAssignment/PractitionersListView/ renders a dumb Tea
     >
       <Link
         key="action-p5id"
-        replace={false}
         to="/practitioners/edit/p5id"
       >
-        <a
+        <LinkAnchor
           href="/practitioners/edit/p5id"
-          onClick={[Function]}
+          navigate={[Function]}
         >
-          Edit
-        </a>
+          <a
+            href="/practitioners/edit/p5id"
+            onClick={[Function]}
+          >
+            Edit
+          </a>
+        </LinkAnchor>
       </Link>
     </td>
   </ElementMap>

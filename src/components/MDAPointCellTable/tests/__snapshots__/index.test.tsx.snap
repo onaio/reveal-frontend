@@ -13,7 +13,6 @@ exports[`src/components/mdaPointCellTable renders correctly when is_virtual_juri
 exports[`src/components/mdaPointCellTable renders correctly: has children 1`] = `
 <div>
   <Link
-    replace={false}
     to=""
   >
     CellValue
@@ -24,7 +23,6 @@ exports[`src/components/mdaPointCellTable renders correctly: has children 1`] = 
 exports[`src/components/mdaPointCellTable renders correctly: has not children 1`] = `
 <div>
   <Link
-    replace={false}
     to="/intervention/mda-point/location-report/plan_id/jurisdiction_id"
   >
     CellValue

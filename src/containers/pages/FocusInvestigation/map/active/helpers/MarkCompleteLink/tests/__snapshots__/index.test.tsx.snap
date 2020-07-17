@@ -55,17 +55,23 @@ exports[`containers/pages/FocusInvestigation/active/map/helpers/MarkCompleteLink
     <Link
       className="btn btn-primary"
       color="primary"
-      replace={false}
       to="/focus-investigation/view/complete/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
     >
-      <a
+      <LinkAnchor
         className="btn btn-primary"
         color="primary"
         href="/focus-investigation/view/complete/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        Mark as complete
-      </a>
+        <a
+          className="btn btn-primary"
+          color="primary"
+          href="/focus-investigation/view/complete/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+          onClick={[Function]}
+        >
+          Mark as complete
+        </a>
+      </LinkAnchor>
     </Link>
   </MarkCompleteLink>
 </Router>
