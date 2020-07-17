@@ -7,15 +7,16 @@
 import { Dictionary } from '@onaio/utils/dist/types/types';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
+import { USER_CHANGE } from '../../../../configs/lang';
 import { AutoSelectCallback, RawOpenSRPHierarchy, TreeNode } from './types';
 import {
   autoSelectNodesAndCascade,
   computeParentNodesSelection,
+  computeSelectedNodes,
   generateJurisdictionTree,
   nodeHasChildren,
-  nodeIsSelected,
   SELECT_KEY,
-  setAttrsToNode,
+  SetSelectAttrToNode,
 } from './utils';
 
 /** reducer name for hierarchy reducer */
@@ -72,6 +73,7 @@ export interface AutoSelectNodesAction extends AnyAction {
   type: typeof AUTO_SELECT_NODES;
   rootJurisdictionId: string;
   callback: AutoSelectCallback;
+  selectedBy: string; // TODO: types
 }
 
 /** combined full action types | its a union */
@@ -105,10 +107,15 @@ export function fetchTree(
  * @param rootJurisdictionId - need to know the tree that should be modified
  * @param nodeId - the id of the node whose selected status should be changed
  */
-export function selectNode(rootJurisdictionId: string, nodeId: string): SelectNodeAction {
+export function selectNode(
+  rootJurisdictionId: string,
+  nodeId: string,
+  selectedBy: string
+): SelectNodeAction {
   return {
     nodeId,
     rootJurisdictionId,
+    selectedBy,
     type: SELECT_NODE,
   };
 }
@@ -125,13 +132,24 @@ export function deforest(): DeforestAction {
  * @param rootJurisdictionId - so that we can know what tree to target
  * @param nodeId - the node whose selected status is going to be set to false
  */
-export function deselectNode(rootJurisdictionId: string, nodeId: string): DeselectNodeAction {
+export function deselectNode(
+  rootJurisdictionId: string,
+  nodeId: string,
+  selectedBy: string
+): DeselectNodeAction {
   return {
     nodeId,
     rootJurisdictionId,
+    selectedBy,
     type: DESELECT_NODE,
   };
 }
+
+/** can autoselect jurisdictions for several reasons one such reason is that you loaded
+ * autoselecting already assigned jurisdictions(for a plan that is still in draft)
+ * autoselecting jurisdictions based on a plan-risk metric
+ */
+/** should be possible to add an entry on the reason of auto-selection to each node. */
 
 /** sets nodes to selected based on calculation that you provide
  * @param rootJurisdictionId - to know what tree to target
@@ -139,11 +157,13 @@ export function deselectNode(rootJurisdictionId: string, nodeId: string): Desele
  */
 export function autoSelectNodes(
   rootJurisdictionId: string,
-  callback: AutoSelectCallback
+  callback: AutoSelectCallback,
+  selectedBy: string = USER_CHANGE
 ): AutoSelectNodesAction {
   return {
     callback,
     rootJurisdictionId,
+    selectedBy, // TODO : types
     type: AUTO_SELECT_NODES,
   };
 }
@@ -184,14 +204,16 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
       if (!treeOfInterest) {
         return state;
       }
-      const { treeClone: alteredTree, argNode } = setAttrsToNode(
+      const { treeClone: alteredTree, argNode } = SetSelectAttrToNode(
         treeOfInterest,
         action.nodeId,
         SELECT_KEY,
         true,
-        true
+        true,
+        false,
+        action.selectedBy
       );
-      computeParentNodesSelection(argNode);
+      computeParentNodesSelection(argNode, action.selectedBy);
       return {
         ...state,
         treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: alteredTree },
@@ -205,7 +227,15 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
       if (!wantedTree) {
         return state;
       }
-      const response = setAttrsToNode(wantedTree, action.nodeId, SELECT_KEY, false, true, true);
+      const response = SetSelectAttrToNode(
+        wantedTree,
+        action.nodeId,
+        SELECT_KEY,
+        false,
+        true,
+        true,
+        action.selectedBy
+      );
       return {
         ...state,
         treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: response.treeClone },
@@ -217,7 +247,7 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
       if (!theTree) {
         return state;
       }
-      const treeResponse = autoSelectNodesAndCascade(theTree, action.callback);
+      const treeResponse = autoSelectNodesAndCascade(theTree, action.callback, action.selectedBy);
       return {
         ...state,
         treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: treeResponse },
@@ -391,20 +421,7 @@ export const getCurrentChildren = () => {
  * @param props -  the filterProps
  */
 export const getAllSelectedNodes = () =>
-  createSelector(getTreeById(), getLeafNodesOnly, (tree, leafNodesOnly) => {
-    const nodesList: TreeNode[] = [];
-    if (!tree) {
-      return [];
-    }
-    tree.walk(node => {
-      const shouldAddNode = nodeIsSelected(node) && !(leafNodesOnly && nodeHasChildren(node));
-      if (shouldAddNode) {
-        nodesList.push(node);
-      }
-      return true;
-    });
-    return nodesList;
-  });
+  createSelector(getTreeById(), getLeafNodesOnly, computeSelectedNodes);
 
 /** returns an array of all leaf nodes for a particular jurisdiction
  * @param state - the store
@@ -469,3 +486,17 @@ export const getSelectedNodesUnderParentNode = () =>
       return nodesList;
     }
   );
+
+/** returns the total structure count for all selected nodes in the entire tree
+ * requires only the rootJurisdiction id
+ * @param state -  the store state
+ * @param {Pick<Filters, 'rootJurisdictionId'>} filters
+ */
+export const getStructuresCount = () =>
+  createSelector(getTreeById(), tree => {
+    const allSelectedLeafNodes = computeSelectedNodes(tree, true);
+    const reducingFn = (acc: number, value: number) => acc + value;
+    return allSelectedLeafNodes
+      .map(node => node.model.node.attributes.structureCount)
+      .reduce(reducingFn, 0);
+  });
