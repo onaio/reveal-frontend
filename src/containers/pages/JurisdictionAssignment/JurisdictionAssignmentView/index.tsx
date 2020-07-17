@@ -190,6 +190,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     plan,
     rootJurisdictionId,
     serviceClass,
+    autoSelectionFlow: false,
   };
 
   const AssignmentWraperProps = {
