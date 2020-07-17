@@ -1,5 +1,4 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { FeatureCollection } from '@turf/turf';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -16,17 +15,25 @@ import jurisdictionsReducer, {
   fetchJurisdictions,
   reducerName as jurisdictionsReducerName,
 } from '../../../../store/ducks/opensrp/jurisdictions';
+import jurisdictionMetadataReducer, {
+  reducerName as jurisdictionMetadataReducerName,
+} from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
+import plansReducer, {
+  reducerName as plansReducerName,
+} from '../../../../store/ducks/opensrp/PlanDefinition';
 import * as fixtures from './fixtures';
 
 reducerRegistry.register(jurisdictionsReducerName, jurisdictionsReducer);
 reducerRegistry.register(hierachyReducerName, hierachyReducer);
+reducerRegistry.register(jurisdictionMetadataReducerName, jurisdictionMetadataReducer);
+reducerRegistry.register(plansReducerName, plansReducer);
 
 const history = createBrowserHistory();
 
 jest.mock('../../../../components/GisidaLite', () => {
-  const GisidaLiteMock = () => <div>I love oov</div>;
+  const MemoizedGisidaLiteMock = () => <div>I love oov</div>;
   return {
-    MemoizedGisidaLite: GisidaLiteMock,
+    MemoizedGisidaLite: MemoizedGisidaLiteMock,
   };
 });
 jest.mock('../../../../configs/env');
@@ -39,7 +46,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
-    fetch.resetMocks();
+    store.dispatch(fetchJurisdictions(fixtures.payload as any));
   });
   it('renders successfully', () => {
     shallow(
@@ -49,9 +56,9 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     );
   });
   it('renders jurisdictions assignment map', () => {
+    store.dispatch(fetchJurisdictions(fixtures.payload as any));
     const props = {
       currentParentId: '07b09ec1-0589-4a98-9480-4c403ac24d59',
-      getJurisdictionsFeatures: fixtures.geoCollection as FeatureCollection,
       rootJurisdictionId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
     };
 
@@ -62,12 +69,13 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         </Router>
       </Provider>
     );
-
+    expect(toJson(wrapper.find('MemoizedGisidaLiteMock div'))).toMatchSnapshot(
+      'MemoizedGisidaLiteMock div'
+    );
     expect(toJson(wrapper.find('AssignmentMapWrapper'))).toMatchSnapshot();
     wrapper.unmount();
   });
   it('works correctly with store', async () => {
-    store.dispatch(fetchJurisdictions(fixtures.payload as any));
     const props = {
       currentParentId: '07b09ec1-0589-4a98-9480-4c403ac24d59',
       rootJurisdictionId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',

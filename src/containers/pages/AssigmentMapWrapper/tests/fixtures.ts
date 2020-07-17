@@ -166,7 +166,7 @@ export const geoCollection = {
       properties: {
         geographicLevel: 3,
         name: 'Two Two Two Release Village',
-        parentId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
+        // parentId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
         status: 'Active',
         version: 0,
       },
@@ -338,7 +338,7 @@ export const geoCollection = {
       properties: {
         geographicLevel: 3,
         name: 'Two Three Two Release Village',
-        parentId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
+        // parentId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
         status: 'Active',
         version: 0,
       },

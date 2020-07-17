@@ -131,7 +131,7 @@ GisidaLite.defaultProps = gisidaLiteDefaultProps;
  * @param nextProps
  */
 export const arePropsEqual = (prevProps: GisidaLiteProps, nextProps: GisidaLiteProps) => {
-  if (!isEqual(prevProps.mapBounds, nextProps.mapBounds)) {
+  if (!isEqual(prevProps.layers, nextProps.layers)) {
     return false;
   }
 

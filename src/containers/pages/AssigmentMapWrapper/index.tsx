@@ -9,10 +9,12 @@ import { CountriesAdmin0 } from '../../../../src/configs/settings';
 import { MemoizedGisidaLite } from '../../../components/GisidaLite';
 import Loading from '../../../components/page/Loading';
 import { getJurisdictions } from '../../../components/TreeWalker/helpers';
+import { MAP_LOAD_ERROR } from '../../../configs/lang';
 import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import { Filters, getCurrentChildren } from '../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../store/ducks/opensrp/hierarchies/types';
+import { nodeIsSelected } from '../../../store/ducks/opensrp/hierarchies/utils';
 import jurisdictionReducer, {
   fetchJurisdictions,
   Filters as JurisdictionGeomFilters,
@@ -58,7 +60,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   const [loading, setLoading] = React.useState(true);
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   React.useEffect(() => {
-    if (!getJurisdictionsFeatures.features.length) {
+    if (getJurisdictionsFeatures && !getJurisdictionsFeatures.features.length) {
       setLoading(true);
       const params = {
         is_jurisdiction: true,
@@ -73,19 +75,16 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
         .then(res => {
           if (res.value && res.value.length && currentChildren.length) {
             const newCollection = res.value.map(val => {
-              const getNode: any = currentChildren.find(
+              const getNode: TreeNode | any = currentChildren.find(
                 node => node.model.id === val.id || node.parent.model.id === val.id
               );
               return {
                 ...val,
                 properties: {
                   ...val.properties,
-                  fillColor:
-                    getNode.model.meta && getNode.model.meta.selected ? '#f14423' : '#792b16',
-                  fillOutlineColor:
-                    getNode.model.meta && getNode.model.meta.selected ? '#22bcfb' : '#ffffff',
-                  lineColor:
-                    getNode.model.meta && getNode.model.meta.selected ? '#22bcfb' : '#ffffff',
+                  fillColor: nodeIsSelected(getNode) ? '#f14423' : '#792b16',
+                  fillOutlineColor: nodeIsSelected(getNode) ? '#22bcfb' : '#ffffff',
+                  lineColor: nodeIsSelected(getNode) ? '#22bcfb' : '#ffffff',
                 },
               };
             });
@@ -102,7 +101,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   let mapCenter;
   let mapBounds;
   let zoom;
-  if (getJurisdictionsFeatures.features.length) {
+  if (getJurisdictionsFeatures && getJurisdictionsFeatures.features.length) {
     structures = buildStructureLayers(getJurisdictionsFeatures as any, true);
     if (Object.keys(CountriesAdmin0).filter(admin => jurisdictionLabels.includes(admin)).length) {
       mapCenter = undefined;
@@ -118,16 +117,20 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     return <Loading />;
   }
 
-  return typeof mapBounds !== 'undefined' ? (
+  return (
     <div className="map">
-      <MemoizedGisidaLite
-        layers={[...structures]}
-        zoom={zoom}
-        mapCenter={mapCenter}
-        mapBounds={mapBounds}
-      />
+      {typeof mapBounds !== 'undefined' ? (
+        <MemoizedGisidaLite
+          layers={[...structures]}
+          zoom={zoom}
+          mapCenter={mapCenter}
+          mapBounds={mapBounds}
+        />
+      ) : (
+        <div>{MAP_LOAD_ERROR}</div>
+      )}
     </div>
-  ) : null;
+  );
 };
 
 AssignmentMapWrapper.defaultProps = defaultProps;
@@ -168,7 +171,7 @@ const mapStateToProps = (
       ? [ownProps.rootJurisdictionId]
       : childJurisdictions.map((node: TreeNode) => node.model.id),
     parentId:
-      ownProps.currentParentId === ownProps.rootJurisdictionId
+      ownProps.currentParentId === ownProps.rootJurisdictionId || !ownProps.currentParentId
         ? undefined
         : ownProps.currentParentId || ownProps.rootJurisdictionId,
   };
