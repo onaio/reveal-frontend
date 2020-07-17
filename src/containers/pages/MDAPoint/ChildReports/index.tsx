@@ -152,24 +152,22 @@ ChildReportList.defaultProps = defaultProps;
 
 export { ChildReportList };
 
-interface DispatchedStateProps {
-  data: React.ReactNode[][];
-  pageUrl: string;
-  pageTitle: string | null;
-  prevPage: Page[];
-}
-
 /** map state to props */
 const mapStateToProps = (
   state: Partial<Store>,
   ownProps: RouteComponentProps<RouteParams>
-): DispatchedStateProps => {
+): ChildReportsProps => {
   const { planId, jurisdictionId } = ownProps.match.params;
 
   let pageUrl = MDA_POINT_CHILD_REPORT_URL;
   let childData: ChildReport[] = [];
   let pageTitle = null;
   let prevPage: Page[] = [];
+  const supersetSliceId = SUPERSET_MDA_POINT_CHILD_REPORT_DATA_SLICE;
+  const fetchItems = FetchMDAPointChildReportAction;
+  const service = supersetFetch;
+  const headerItems = tableHeaders;
+  const tableClass = 'table table-striped table-bordered plans-list';
 
   if (planId && jurisdictionId) {
     // get parent jurisdiction id and name
@@ -209,9 +207,14 @@ const mapStateToProps = (
 
   return {
     data,
+    fetchItems,
+    headerItems,
     pageTitle,
     pageUrl,
     prevPage,
+    service,
+    supersetSliceId,
+    tableClass,
   };
 };
 
