@@ -23,7 +23,10 @@ import { getQueryParams } from '../../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../../services/opensrp';
 
 import { displayError } from '../../../../../../helpers/errors';
-import { makePlansByUserNamesSelector } from '../../../../../../store/ducks/opensrp/planIdsByUser';
+import plansByUserReducer, {
+  makePlansByUserNamesSelector,
+  reducerName as plansByUserReducerName,
+} from '../../../../../../store/ducks/opensrp/planIdsByUser';
 import plansReducer, {
   fetchPlanRecords,
   FetchPlanRecordsAction,
@@ -35,6 +38,7 @@ import { BaseListComponent, BaseListComponentProps, BaseListTableProps } from '.
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
+reducerRegistry.register(plansByUserReducerName, plansByUserReducer);
 
 /** minimal type for a renderProp */
 export type RenderProp = () => React.ReactNode;
