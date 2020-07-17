@@ -5,6 +5,7 @@ import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { PlanDefinitionList } from '../';
@@ -108,8 +109,10 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(wrapper.find('HeaderBreadcrumb').props()).toMatchSnapshot('bread crumb props');
     expect(toJson(wrapper.find('Row').at(0))).toMatchSnapshot('row heading');
     expect(toJson(wrapper.find('HelmetWrapper'))).toMatchSnapshot('helmet');
@@ -149,8 +152,10 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     renderTable(wrapper, 'before clicking on sort');
 
@@ -203,8 +208,10 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(
       wrapper
         .find('.tbody .tr .td')
@@ -246,8 +253,10 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     expect(
       wrapper
@@ -290,8 +299,10 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(wrapper.text().includes(NO_DATA_FOUND)).toBeTruthy();
   });
 

@@ -3,6 +3,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { createConnectedOpenSRPPlansList } from '..';
@@ -60,8 +61,10 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
       </Provider>
     );
 
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     const samplePlanRecord = fixtures.planRecordResponse3;
     samplePlanRecord.status = PlanStatus.DRAFT;
@@ -100,8 +103,10 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
       </Provider>
     );
 
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     renderTable(wrapper, 'find single row for entry with Khlong ');
     wrapper.unmount();
   });
@@ -136,8 +141,10 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
 
     expect(wrapper.find('Ripple').length).toEqual(1);
 
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     renderTable(wrapper, 'find No Data Found text');
     wrapper.unmount();
