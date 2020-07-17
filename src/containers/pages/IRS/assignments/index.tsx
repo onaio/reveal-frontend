@@ -1,5 +1,4 @@
 import { DrillDownColumn } from '@onaio/drill-down-table';
-import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Dictionary } from '@onaio/utils/';
 import React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
@@ -16,18 +15,12 @@ import {
 } from '../../../../configs/lang';
 import { planStatusDisplay } from '../../../../configs/settings';
 import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../constants';
-import IRSPlansReducer, {
-  reducerName as IRSPlansReducerName,
-} from '../../../../store/ducks/generic/plans';
 import { PlanRecord, PlanStatus } from '../../../../store/ducks/plans';
 import {
   createConnectedOpenSRPPlansList,
   OpenSRPPlanListViewProps,
 } from '../../InterventionPlan/PlanningView/helpers/OpenSRPPlansList';
 import { draftPlansPageBodyFactory } from '../../InterventionPlan/PlanningView/helpers/utils';
-
-/** register the plan definitions reducer */
-reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 
 /** assign plans table columns */
 export const tableColumns: Array<DrillDownColumn<PlanRecord>> = [
