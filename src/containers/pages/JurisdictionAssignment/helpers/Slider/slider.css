@@ -1,0 +1,82 @@
+.input-range__track {
+  height: 0.65rem;
+}
+
+.input-range__track--active {
+  background: #2c9646;
+}
+
+/* slider icon */
+.input-range__slider {
+  color: #2c9646;
+  position: absolute;
+  margin-left: 3px;
+  margin-top: 6px;
+}
+
+.input-range__slider:before {
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-left: solid 2px currentColor;
+  border-top: solid 2px currentColor;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+  top: 7.4px;
+  left: 5px;
+}
+
+.input-range__slider:after {
+  content: '';
+  position: absolute;
+  right: 5px;
+  top: 7.4px;
+  width: 7px;
+  height: 7px;
+  border-bottom: solid 2px currentColor;
+  border-right: solid 2px currentColor;
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+/* slider size and placement */
+.input-range__slider {
+  background: #ffffff;
+  border: 1px solid gray;
+  margin-top: -1.1rem;
+  margin-left: -0.75rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.form {
+  margin: 20px;
+}
+
+.input-range__label--value {
+  display: none;
+}
+
+.input-range__label-container {
+  color: black;
+}
+
+/** other page layout stuff */
+.auto-target-row > div {
+  border-collapse: collapse;
+  border: 1px solid#f0f0f0;
+}
+
+.slider-section {
+  text-align: left;
+}
+
+.svg-inline--fa.fa-w-18.fa-home{
+  height: 3rem;
+  width: auto;
+}
+
+.risk-label{
+  color: #2c9646;
+}
