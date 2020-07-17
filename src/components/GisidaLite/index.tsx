@@ -1,3 +1,4 @@
+import { isEqual } from 'lodash';
 import { EventData, Style } from 'mapbox-gl';
 import { Map } from 'mapbox-gl';
 import React, { Fragment } from 'react';
@@ -15,11 +16,7 @@ interface MapIcon {
 }
 
 /** interface for  GisidaLite props */
-interface GisidaLiteProps {
-  accessToken: string;
-  attributionControl: boolean;
-  customAttribution: string;
-  injectCSS: boolean;
+export interface GisidaLiteProps {
   layers: JSX.Element[];
   mapCenter: [number, number] | undefined;
   mapBounds?: FitBounds;
@@ -34,10 +31,6 @@ interface GisidaLiteProps {
 
 /** Default props for GisidaLite */
 const gisidaLiteDefaultProps: GisidaLiteProps = {
-  accessToken: GISIDA_MAPBOX_TOKEN,
-  attributionControl: true,
-  customAttribution: '&copy; Reveal',
-  injectCSS: true,
   layers: [],
   mapCenter: undefined,
   mapHeight: '800px',
@@ -47,6 +40,13 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   scrollZoom: true,
   zoom: 17,
 };
+
+const Mapbox = ReactMapboxGl({
+  accessToken: GISIDA_MAPBOX_TOKEN,
+  attributionControl: true,
+  customAttribution: '&copy; Reveal',
+  injectCSS: true,
+});
 
 /**
  * Really simple Gisida :)
@@ -58,11 +58,8 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
  */
 const GisidaLite = (props: GisidaLiteProps) => {
   const [renderLayers, setRenderLayers] = React.useState<boolean>(false);
+
   const {
-    accessToken,
-    attributionControl,
-    customAttribution,
-    injectCSS,
     layers,
     mapCenter,
     mapHeight,
@@ -78,35 +75,31 @@ const GisidaLite = (props: GisidaLiteProps) => {
     return <Loading />;
   }
 
-  const Mapbox = ReactMapboxGl({
-    accessToken,
-    attributionControl,
-    customAttribution,
-    injectCSS,
-  });
-
-  const runAfterMapLoaded = (map: Map) => {
-    if (mapIcons) {
-      mapIcons.forEach(element => {
-        map.loadImage(
-          element.imageUrl,
-          (
-            _: Error,
-            res:
-              | HTMLImageElement
-              | ArrayBufferView
-              | { width: number; height: number; data: Uint8Array | Uint8ClampedArray }
-              | ImageData
-          ) => {
-            map.addImage(element.id, res);
-            if (!renderLayers) {
-              setRenderLayers(true);
+  const runAfterMapLoaded = React.useCallback(
+    (map: Map) => {
+      if (mapIcons) {
+        mapIcons.forEach(element => {
+          map.loadImage(
+            element.imageUrl,
+            (
+              _: Error,
+              res:
+                | HTMLImageElement
+                | ArrayBufferView
+                | { width: number; height: number; data: Uint8Array | Uint8ClampedArray }
+                | ImageData
+            ) => {
+              map.addImage(element.id, res);
+              if (!renderLayers) {
+                setRenderLayers(true);
+              }
             }
-          }
-        );
-      });
-    }
-  };
+          );
+        });
+      }
+    },
+    [mapIcons]
+  );
 
   return (
     <Mapbox
@@ -123,9 +116,7 @@ const GisidaLite = (props: GisidaLiteProps) => {
     >
       <>
         {renderLayers &&
-          layers.map((item: any, index: number) => (
-            <Fragment key={`gsLite-${index}`}>{item}</Fragment>
-          ))}
+          layers.map((item: any) => <Fragment key={`gsLite-${item.key}`}>{item}</Fragment>)}
         <ZoomControl />
       </>
     </Mapbox>
@@ -134,4 +125,15 @@ const GisidaLite = (props: GisidaLiteProps) => {
 
 GisidaLite.defaultProps = gisidaLiteDefaultProps;
 
-export { GisidaLite };
+/**
+ * Custom equality method for React.memo
+ * @param prevProps
+ * @param nextProps
+ */
+export const arePropsEqual = (prevProps: GisidaLiteProps, nextProps: GisidaLiteProps): boolean => {
+  return isEqual(prevProps.layers, nextProps.layers);
+};
+
+const MemoizedGisidaLite = React.memo(GisidaLite, arePropsEqual);
+
+export { GisidaLite, MemoizedGisidaLite };
