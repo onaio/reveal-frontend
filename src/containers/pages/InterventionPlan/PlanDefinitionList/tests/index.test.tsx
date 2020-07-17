@@ -124,7 +124,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
       };
     });
     fetch.mockResponseOnce(fixtures.plansJSON);
-    store.dispatch(fetchPlanRecords(extractedPlanRecords));
     const props = {
       history,
       location: {
@@ -140,8 +139,8 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         path: `${PLAN_LIST_URL}/`,
         url: `${PLAN_LIST_URL}/`,
       },
-      plansArray: fixtures.plans,
-      serviceClass: mockClass,
+      plans: fixtures.plans,
+      service: mockClass,
     };
     const wrapper = mount(
       <Provider store={store}>
@@ -150,7 +149,7 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
         </Router>
       </Provider>
     );
-    await flushPromises();
+    await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
     renderTable(wrapper, 'before clicking on sort');
@@ -224,7 +223,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     });
     store.dispatch(fetchPlanRecords(extractedPlanRecords));
     const props = {
-      fetchPlans: jest.fn(),
       history,
       location: {
         hash: '',
@@ -269,7 +267,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     });
     store.dispatch(fetchPlanRecords(extractedPlanRecords));
     const props = {
-      fetchPlans: jest.fn(),
       history,
       location: {
         hash: '',
@@ -313,7 +310,6 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     const userName = 'macTavish';
     store.dispatch(fetchPlansByUser([fixtures.plans[0]], userName));
     const props = {
-      fetchPlans: jest.fn(),
       history,
       location: {
         hash: '',
