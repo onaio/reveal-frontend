@@ -42,6 +42,7 @@ export interface PlanRecordResponse {
   name: string;
   status: string;
   title: string;
+  useContext?: UseContext[];
   version: string;
 }
 
@@ -57,6 +58,7 @@ export interface PlanRecord {
   plan_intervention_type: InterventionType;
   plan_status: PlanStatus;
   plan_title: string;
+  plan_useContext?: UseContext[];
   plan_version?: string;
   plan_jurisdictions_ids?: string[];
 }
@@ -251,6 +253,7 @@ export const fetchPlanRecords = (planList: PlanRecordResponse[] = []): FetchPlan
         plan_intervention_type: plan.intervention_type,
         plan_status: plan.status as PlanStatus,
         plan_title: plan.title,
+        plan_useContext: plan.useContext,
         plan_version: plan.version,
       };
       if (plan.jurisdictions) {
