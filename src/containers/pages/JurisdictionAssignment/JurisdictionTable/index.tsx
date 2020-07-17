@@ -3,6 +3,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Result } from '@onaio/utils/dist/types/types';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 import Button from 'reactstrap/lib/Button';
 import { ActionCreator, Store } from 'redux';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
@@ -20,14 +21,19 @@ import {
   NO_DATA_FOUND,
   NO_ROWS_FOUND,
   RISK_LABEL,
-  SAVE,
+  SAVE_AND_ACTIVATE,
+  SAVE_DRAFT,
   SELECTED_JURISDICTIONS,
   STATUS_SETTING,
   STRUCTURES_COUNT,
   USER_CHANGE,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL, INTERVENTION_TYPE_CODE } from '../../../../constants';
+import {
+  ASSIGN_JURISDICTIONS_URL,
+  ASSIGN_PLAN_URL,
+  INTERVENTION_TYPE_CODE,
+} from '../../../../constants';
 import {
   LoadOpenSRPHierarchy,
   putJurisdictionsToPlan,
@@ -54,7 +60,11 @@ import hierarchyReducer, {
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
-import { InterventionType } from '../../../../store/ducks/plans';
+import {
+  addPlanDefinition,
+  AddPlanDefinitionAction,
+} from '../../../../store/ducks/opensrp/PlanDefinition';
+import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
 import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
@@ -74,6 +84,7 @@ export interface JurisdictionSelectorTableProps {
   selectNodeCreator: ActionCreator<SelectNodeAction>;
   deselectNodeCreator: ActionCreator<DeselectNodeAction>;
   autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
+  fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
   selectedLeafNodes: TreeNode[];
   leafNodes: TreeNode[];
 }
@@ -84,6 +95,7 @@ const defaultProps = {
   currentParentId: undefined,
   currentParentNode: undefined,
   deselectNodeCreator: deselectNode,
+  fetchPlanCreator: addPlanDefinition,
   jurisdictionsMetadata: [],
   leafNodes: [],
   rootJurisdictionId: '',
@@ -109,6 +121,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     selectNodeCreator,
     deselectNodeCreator,
     autoSelectNodesCreator,
+    fetchPlanCreator,
     selectedLeafNodes,
     leafNodes,
     plan,
@@ -152,6 +165,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const { broken, errorMessage, handleBrokenPage } = useHandleBrokenPage();
   const baseUrl = `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
   const jurisdictionMetaIds: string[] = jurisdictionsMetadata.map(meta => meta.key);
+  const history = useHistory();
 
   /** callback used to do initial autoSelection ; auto selects all jurisdictions that are already assigned to a plan
    * @param node - takes a node and returns true if node should be auto-selected
@@ -354,21 +368,54 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     tableClass,
   };
 
-  /** put payload of selected jurisdictions with the plan info to the api */
-  const commitJurisdictions = () => {
+  /** put payload of selected jurisdictions with the plan info to the api
+   * @param thePlan - plan payload
+   */
+  const commitJurisdictions = (thePlan: PlanDefinition) => {
     const jurisdictionIds = selectedLeafNodes.map(node => node.model.id);
-    putJurisdictionsToPlan(plan, jurisdictionIds, serviceClass)
+    return putJurisdictionsToPlan(thePlan, jurisdictionIds, serviceClass, fetchPlanCreator)
       .then(() => {
         successGrowl(`${selectedLeafNodes.length} ${JURISDICTION_ASSIGNMENT_SUCCESSFUL}`);
       })
       .catch(error => displayError(error));
   };
 
+  /** click handler called when jurisdictions are saved and plan is set to active */
+  const onSaveAndActivate = () => {
+    const teamAssignmentUrl = `${ASSIGN_PLAN_URL}/${plan.identifier}`;
+    // modify the active status of the plan;
+    const planPayload = { ...plan, status: PlanStatus.ACTIVE };
+    commitJurisdictions(planPayload)
+      .then(() => {
+        // redirect to this plans assignment page
+        history.push(teamAssignmentUrl);
+      })
+      .catch(err => displayError(err));
+  };
+
   return (
     <Fragment>
-      <Button className="float-right" color="primary" onClick={commitJurisdictions} size="xs">
-        {SAVE}
+      <Button
+        id="save-draft"
+        className="float-right"
+        color="primary"
+        // tslint:disable-next-line: jsx-no-lambda
+        onClick={() => commitJurisdictions(plan)}
+        size="xs"
+      >
+        {SAVE_DRAFT}
       </Button>
+
+      <Button
+        id="save-and-activate"
+        className="float-right mr-3"
+        color="primary"
+        onClick={onSaveAndActivate}
+        size="xs"
+      >
+        {SAVE_AND_ACTIVATE}
+      </Button>
+
       <HeaderBreadcrumb {...breadCrumbProps} />
       <ListView {...listViewProps} />
       {!data.length && (
@@ -394,7 +441,11 @@ type MapStateToProps = Pick<
 /** map action creators interface */
 type DispatchToProps = Pick<
   JurisdictionSelectorTableProps,
-  'treeFetchedCreator' | 'selectNodeCreator' | 'deselectNodeCreator' | 'autoSelectNodesCreator'
+  | 'treeFetchedCreator'
+  | 'selectNodeCreator'
+  | 'deselectNodeCreator'
+  | 'autoSelectNodesCreator'
+  | 'fetchPlanCreator'
 >;
 
 const childrenSelector = getCurrentChildren();
@@ -424,6 +475,7 @@ const mapStateToProps = (
 const mapDispatchToProps: DispatchToProps = {
   autoSelectNodesCreator: autoSelectNodes,
   deselectNodeCreator: deselectNode,
+  fetchPlanCreator: addPlanDefinition,
   selectNodeCreator: selectNode,
   treeFetchedCreator: fetchTree,
 };

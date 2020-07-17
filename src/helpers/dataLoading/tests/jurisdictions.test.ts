@@ -67,12 +67,18 @@ describe('helpers/dataLoading.jurisdictions', () => {
     const mockPlan: any = {};
     const jurisdictionIds = ['1', '2', '3'];
     const mockUpdate = jest.fn(() => Promise.resolve({}));
+    const mockActionCreator = jest.fn();
     const mockClass: any = jest.fn().mockImplementation(() => {
       return {
         update: mockUpdate,
       };
     });
-    let response = await putJurisdictionsToPlan(mockPlan, jurisdictionIds, mockClass);
+    let response = await putJurisdictionsToPlan(
+      mockPlan,
+      jurisdictionIds,
+      mockClass,
+      mockActionCreator
+    );
     await new Promise(resolve => setImmediate(resolve));
     // calls the correct endpoint
     expect(mockClass).toHaveBeenCalledWith(OPENSRP_PLANS);
@@ -90,7 +96,12 @@ describe('helpers/dataLoading.jurisdictions', () => {
       };
     });
 
-    response = await putJurisdictionsToPlan(mockPlan, jurisdictionIds, errMockClass);
+    response = await putJurisdictionsToPlan(
+      mockPlan,
+      jurisdictionIds,
+      errMockClass,
+      mockActionCreator
+    );
     await new Promise(resolve => setImmediate(resolve));
     // calls the correct endpoint
     expect(mockClass).toHaveBeenCalledWith(OPENSRP_PLANS);
