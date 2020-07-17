@@ -27,7 +27,6 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** props for Plan jurisdiction and team assignment higher order component */
 export interface AssignmentMapWrapperProps {
-  // plan: PlanDefinition;
   rootJurisdictionId: string;
   currentParentId: string | undefined;
   currentChildren: TreeNode[];

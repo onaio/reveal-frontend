@@ -230,8 +230,9 @@ export const buildJurisdictionLayers = (jurisdiction: Jurisdiction | null) => {
   return jurisdictionLayer;
 };
 
-/** returns the layers for the structures
+/** returns the layers for FI structures
  * @param {FeatureCollection<StructureGeoJSON> | null} structs - the structures
+ * @param isJurisdiction - param to determine whether we need to build FI or jurisdiction assignment layers
  */
 export const buildStructureLayers = (
   structs: FeatureCollection<StructureGeoJSON> | null,
