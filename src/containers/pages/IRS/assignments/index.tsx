@@ -15,7 +15,7 @@ import {
   TITLE,
 } from '../../../../configs/lang';
 import { planStatusDisplay } from '../../../../configs/settings';
-import { ASSIGN_PLAN_URL, HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../constants';
 import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
@@ -30,7 +30,7 @@ import { draftPlansPageBodyFactory } from '../../InterventionPlan/PlanningView/h
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 
 /** assign plans table columns */
-const tableColumns: Array<DrillDownColumn<PlanRecord>> = [
+export const tableColumns: Array<DrillDownColumn<PlanRecord>> = [
   {
     Cell: (cell: Cell<PlanRecord>) => {
       const original = cell.row.original as Dictionary;
@@ -85,7 +85,7 @@ export const OpenSRPPlansList = (props: RouteComponentProps) => {
   const breadCrumbProps: BreadCrumbProps = {
     currentPage: {
       label: pageTitle,
-      url: REPORT_IRS_PLAN_URL,
+      url: ASSIGN_PLAN_URL,
     },
     pages: [homePage],
   };

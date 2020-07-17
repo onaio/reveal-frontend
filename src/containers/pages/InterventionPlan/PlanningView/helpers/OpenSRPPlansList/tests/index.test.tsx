@@ -16,6 +16,7 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../../../store/ducks/tests/fixtures';
+import { draftPageColumns } from '../../utils';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -39,6 +40,7 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
     const mock: any = jest.fn();
     fetch.mockResponse(plansJSON);
     const props = {
+      activePlans: ['draft'],
       history,
       location: mock,
       match: {
@@ -47,6 +49,7 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
         path: '',
         url: '',
       },
+      tableColumns: draftPageColumns,
     };
 
     const wrapper = mount(
@@ -72,6 +75,7 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
   it('Search works correctly', async () => {
     fetch.mockResponse(plansJSON);
     const props = {
+      activePlans: ['draft'],
       history,
       location: {
         hash: '',
@@ -85,6 +89,7 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
         path: '',
         url: '',
       },
+      tableColumns: draftPageColumns,
     };
 
     const wrapper = mount(
@@ -97,7 +102,6 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
 
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
-
     renderTable(wrapper, 'find single row for entry with Khlong ');
     wrapper.unmount();
   });
@@ -105,6 +109,7 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
   it('does not show loader for no data', async () => {
     fetch.mockReject(new Error('No Plans returned'));
     const props = {
+      activePlans: ['draft'],
       history,
       location: {
         hash: '',
@@ -118,6 +123,7 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
         path: INTERVENTION_IRS_DRAFTS_URL,
         url: INTERVENTION_IRS_DRAFTS_URL,
       },
+      tableColumns: draftPageColumns,
     };
 
     const wrapper = mount(
