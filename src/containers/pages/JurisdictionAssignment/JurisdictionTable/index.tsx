@@ -1,7 +1,7 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Result } from '@onaio/utils/dist/types/types';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import Button from 'reactstrap/lib/Button';
@@ -11,11 +11,8 @@ import HeaderBreadcrumb, {
   Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Ripple from '../../../../components/page/Loading';
-import { JURISDICTION_METADATA_RISK_PERCENTAGE } from '../../../../configs/env';
 import {
-  AUTO_SELECTION,
   COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
-  EXISTING_SELECTION,
   JURISDICTION_ASSIGNMENT_SUCCESSFUL,
   NAME,
   NO_DATA_FOUND,
@@ -26,14 +23,13 @@ import {
   SELECTED_JURISDICTIONS,
   STATUS_SETTING,
   STRUCTURES_COUNT,
-  USER_CHANGE,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import {
   ASSIGN_JURISDICTIONS_URL,
   ASSIGN_PLAN_URL,
-  INTERVENTION_TYPE_CODE,
   AUTO_ASSIGN_JURISDICTIONS_URL,
+  INTERVENTION_TYPE_CODE,
 } from '../../../../constants';
 import {
   LoadOpenSRPHierarchy,
@@ -61,12 +57,15 @@ import hierarchyReducer, {
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected, SelectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
+import {
+  addPlanDefinition,
+  AddPlanDefinitionAction,
+} from '../../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
 import { RiskLabel } from '../helpers/RiskLabel';
 import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
-import { AddPlanDefinitionAction, addPlanDefinition } from '../../../../store/ducks/opensrp/PlanDefinition';
 
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
@@ -317,7 +316,15 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
       node.model.node.attributes.structureCount,
-      ...(autoSelectionFlow ? [<RiskLabel key={node.model.id + 'sdfasd'} node={node} metadata={jurisdictionsMetadata} />] : []),
+      ...(autoSelectionFlow
+        ? [
+            <RiskLabel
+              key={node.model.id + 'sdfasd'}
+              node={node}
+              metadata={jurisdictionsMetadata}
+            />,
+          ]
+        : []),
       nodeIsSelected(node) ? 'Targeted' : 'NotTargeted', // this too makes sense for the leaf nodes
       node.model.meta.selectedBy,
       <ConnectedSelectedJurisdictionsCount
@@ -409,7 +416,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   };
 
   return (
-    <Fragment>
+    <div>
       <Button
         id="save-draft"
         className="float-right"
@@ -439,7 +446,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           <hr />
         </div>
       )}
-    </Fragment>
+    </div>
   );
 };
 

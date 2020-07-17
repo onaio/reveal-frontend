@@ -17,26 +17,24 @@ import Ripple from '../../../../components/page/Loading';
 import { getAncestors } from '../../../../components/TreeWalker/helpers';
 import { JURISDICTION_METADATA_RISK } from '../../../../configs/env';
 import {
-  ASSIGN_JURISDICTIONS,
   COULD_NOT_LOAD_JURISDICTION,
   COULD_NOT_LOAD_PLAN,
   PLANNING_PAGE_TITLE,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL, PLANNING_VIEW_URL, AUTO_ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
+import { AUTO_ASSIGN_JURISDICTIONS_URL, PLANNING_VIEW_URL } from '../../../../constants';
 import {
   loadJurisdiction,
   loadJurisdictionsMetadata,
 } from '../../../../helpers/dataLoading/jurisdictions';
 import { loadOpenSRPPlan } from '../../../../helpers/dataLoading/plans';
-import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
   FetchJurisdictionsMetadataAction,
+  getJurisdictionsMetadata,
   JurisdictionsMetadata,
   reducerName as jurisdictionMetadataReducerName,
-  getJurisdictionsMetadata,
 } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import plansReducer, {
   addPlanDefinition,
@@ -44,6 +42,7 @@ import plansReducer, {
   getPlanDefinitionById,
   reducerName as planReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
+import { ConnectedAssignmentMapWrapper } from '../../AssigmentMapWrapper';
 import { ConnectedJurisdictionSelectionsSlider } from '../helpers/Slider';
 import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
@@ -177,7 +176,7 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     plan,
     rootJurisdictionId,
     serviceClass,
-    onClickNext : () => setStep(1),
+    onClickNext: () => setStep(1),
   };
 
   const jurisdictionTableProps = {
@@ -186,8 +185,8 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     serviceClass,
     autoSelectionFlow: true,
     currentParentId: props.match.params.parentId,
-    jurisdictionsMetadata: jurisdictionsMetadata
-  }
+    jurisdictionsMetadata,
+  };
 
   const breadcrumbProps = {
     currentPage: {
@@ -202,6 +201,12 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     ],
   };
 
+  const AssignmentWraperProps = {
+    currentParentId: props.match.params.parentId,
+    rootJurisdictionId,
+    serviceClass,
+  };
+
   const pageTitle = plan.title;
   return (
     <>
@@ -211,6 +216,7 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       {step === 0 && <ConnectedJurisdictionSelectionsSlider {...sliderProps} />}
+      {step === 1 && <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />}
       {step === 1 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
     </>
   );
