@@ -49,8 +49,12 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     currentChildren,
     fetchJurisdictionsActionCreator,
     getJurisdictionsFeatures,
+    currentParentId,
+    rootJurisdictionId,
   } = props;
-  const currentChildIds: string[] = currentChildren.map(node => node.model.id);
+  const currentChildIds: string[] = currentChildren.length
+    ? currentChildren.map(node => node.model.id)
+    : [];
   const [loading, setLoading] = React.useState(true);
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   React.useEffect(() => {
@@ -60,11 +64,18 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
         is_jurisdiction: true,
         return_geometry: true,
       };
-      getJurisdictions(currentChildIds, params, 30, serviceClass)
+      getJurisdictions(
+        !currentParentId ? [rootJurisdictionId] : currentChildIds,
+        params,
+        30,
+        serviceClass
+      )
         .then(res => {
-          if (res.value && res.value.length) {
+          if (res.value && res.value.length && currentChildren.length) {
             const newCollection = res.value.map(val => {
-              const getNode: any = currentChildren.find(node => node.model.id === val.id);
+              const getNode: any = currentChildren.find(
+                node => node.model.id === val.id || node.parent.model.id === val.id
+              );
               return {
                 ...val,
                 properties: {
@@ -86,7 +97,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
         })
         .catch(error => displayError(error));
     }
-  }, [getJurisdictionsFeatures]);
+  }, [getJurisdictionsFeatures, currentParentId]);
   let structures: JSX.Element[] = [];
   let mapCenter;
   let mapBounds;
@@ -98,7 +109,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
       mapBounds = undefined;
     } else {
       mapBounds = GeojsonExtent(getJurisdictionsFeatures);
-      const centerAndZoom = viewport(mapBounds, [800, 400]);
+      const centerAndZoom = viewport(mapBounds, [600, 400]);
       mapCenter = centerAndZoom.center;
       zoom = centerAndZoom.zoom;
     }
@@ -150,12 +161,16 @@ const mapStateToProps = (
   };
 
   const childJurisdictions = getCurrentChildren()(state, filters);
-
   const jurisdictionFilters: JurisdictionGeomFilters = {
     filterGeom: false,
     jurisdictionId: ownProps.currentParentId || ownProps.rootJurisdictionId,
-    jurisdictionIdsArray: childJurisdictions.map((node: TreeNode) => node.model.id),
-    parentId: ownProps.currentParentId,
+    jurisdictionIdsArray: !ownProps.currentParentId
+      ? [ownProps.rootJurisdictionId]
+      : childJurisdictions.map((node: TreeNode) => node.model.id),
+    parentId:
+      ownProps.currentParentId === ownProps.rootJurisdictionId
+        ? undefined
+        : ownProps.currentParentId || ownProps.rootJurisdictionId,
   };
 
   return {
