@@ -115,6 +115,7 @@ import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsRe
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
+import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
 import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/JurisdictionAssignmentView';
 import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
 import ConnectedChildReports from '../containers/pages/MDAPoint/ChildReports';
