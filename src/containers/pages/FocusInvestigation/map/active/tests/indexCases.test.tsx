@@ -15,8 +15,11 @@ import ConnectedMapSingleFI from '../../active/';
 import * as fixturesMap from './fixtures';
 
 jest.mock('../../../../../../components/GisidaLite', () => {
+  const GisidaLiteMock = () => <div>I love oov</div>;
   const MemoizedGisidaLiteMock = () => <div>I love oov</div>;
+
   return {
+    GisidaLite: GisidaLiteMock,
     MemoizedGisidaLite: MemoizedGisidaLiteMock,
   };
 });
