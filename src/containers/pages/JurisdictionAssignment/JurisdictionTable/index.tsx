@@ -11,11 +11,8 @@ import HeaderBreadcrumb, {
   Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Ripple from '../../../../components/page/Loading';
-import { JURISDICTION_METADATA_RISK_PERCENTAGE } from '../../../../configs/env';
 import {
-  AUTO_SELECTION,
   COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
-  EXISTING_SELECTION,
   JURISDICTION_ASSIGNMENT_SUCCESSFUL,
   NAME,
   NO_DATA_FOUND,
@@ -26,13 +23,12 @@ import {
   SELECTED_JURISDICTIONS,
   STATUS_SETTING,
   STRUCTURES_COUNT,
-  USER_CHANGE,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import {
   ASSIGN_JURISDICTIONS_URL,
-  INTERVENTION_TYPE_CODE,
   AUTO_ASSIGN_JURISDICTIONS_URL,
+  INTERVENTION_TYPE_CODE,
 } from '../../../../constants';
 import {
   LoadOpenSRPHierarchy,
@@ -119,6 +115,7 @@ const defaultProps = {
  *    here we have to show previous selections.
  *    when autoselection is disabled autoSelect previously selected jurisdictions i.e. if plan is still draft.
  */
+/**  */
 const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const {
     rootJurisdictionId,
@@ -174,32 +171,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const baseUrl = !autoSelectionFlow
     ? `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
     : `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
-  // const jurisdictionMetaIds: string[] = jurisdictionsMetadata.map(meta => meta.key);
-
-  // /** callback used to do initial autoSelection ; auto selects all jurisdictions that are already assigned to a plan
-  //  * @param node - takes a node and returns true if node should be auto-selected
-  //  */
-  // const existingAssignments = props.plan.jurisdiction.map(jurisdiction => jurisdiction.code);
-  // const callback = (node: TreeNode) => {
-  //   if (!leafNodes.filter(value => existingAssignments.includes(value.model.id)).length) {
-  //     if (!node.hasChildren()) {
-  //       const metaObj = jurisdictionsMetadata.find(
-  //         (m: JurisdictionsMetadata) => m.key === node.model.id
-  //       ) as JurisdictionsMetadata;
-  //       return (
-  //         jurisdictionMetaIds.includes(node.model.id) &&
-  //         metaObj.value &&
-  //         Number(metaObj.value) >= Number(JURISDICTION_METADATA_RISK_PERCENTAGE)
-  //       );
-  //     }
-  //   } else {
-  //     const isLeafNode = !node.hasChildren();
-  //     if (isLeafNode) {
-  //       return existingAssignments.includes(node.model.id);
-  //     }
-  //   }
-  //   return false;
-  // };
 
   /** this is used for auto-selecting existing assigned jurisdictions
    * it will be invoked when auto-selection is turned off.
@@ -210,6 +181,10 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   };
 
   React.useEffect(() => {
+    /** will move this to the calling component.
+     * that means This component will only be responsible for callbacks on user clicks and rendering the data.
+     * What about customization of the ui.
+     */
     const params = {
       return_structure_count: true,
     };
@@ -236,14 +211,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       setLoading(false);
     }
   }, []);
-
-  // React.useEffect(() => {
-  //   if (leafNodes.length && !isLeafNodesLoaded) {
-  //     // TODO: should this be in both this useEffect and the previous one?
-  //     autoSelectNodesCreator(rootJurisdictionId, callback);
-  //     // setLeafNodeLoaded(true);
-  //   }
-  // }, [leafNodes]);
 
   if (loading) {
     return <Ripple />;
@@ -314,7 +281,15 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
       node.model.node.attributes.structureCount,
-      ...(autoSelectionFlow ? [<RiskLabel key={node.model.id + 'sdfasd'} node={node} metadata={jurisdictionsMetadata} />] : []),
+      ...(autoSelectionFlow
+        ? [
+            <RiskLabel
+              key={node.model.id + 'sdfasd'}
+              node={node}
+              metadata={jurisdictionsMetadata}
+            />,
+          ]
+        : []),
       nodeIsSelected(node) ? 'Targeted' : 'NotTargeted', // this too makes sense for the leaf nodes
       node.model.meta.selectedBy,
       <ConnectedSelectedJurisdictionsCount
