@@ -4,6 +4,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import {
@@ -35,6 +36,7 @@ import {
 } from '../../../../configs/lang';
 import {
   HOME_URL,
+  MDA_POINT_CHILD_REPORT_URL,
   MDA_POINT_LOCATION_REPORT_URL,
   REPORT_MDA_POINT_PLAN_URL,
 } from '../../../../constants';
@@ -55,6 +57,7 @@ reducerRegistry.register(MDAPointLocationReportReducerName, MDAPointLocationRepo
 const slices = SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
 
 interface LocationReportsProps extends GenericSupersetDataTableProps {
+  childUrl: string;
   pageTitle: string | null;
   pageUrl: string;
   prevPage: Page[] | null;
@@ -78,6 +81,7 @@ const tableHeaders = [
  */
 const LocationReportsList = (props: LocationReportsProps) => {
   const {
+    childUrl,
     pageTitle,
     pageUrl,
     supersetSliceId,
@@ -122,7 +126,6 @@ const LocationReportsList = (props: LocationReportsProps) => {
   };
 
   const fullTitle = `${useSchoolLabel}: ${pageTitle}`;
-
   return (
     <div>
       <Helmet>
@@ -137,6 +140,7 @@ const LocationReportsList = (props: LocationReportsProps) => {
       <Row>
         <Col>
           <GenericSupersetDataTable {...listViewProps} />
+          <Link to={childUrl}>See all children</Link>
         </Col>
       </Row>
     </div>
@@ -145,6 +149,7 @@ const LocationReportsList = (props: LocationReportsProps) => {
 
 /** Declare default props for MDAPointPlansList */
 const defaultProps: LocationReportsProps = {
+  childUrl: MDA_POINT_CHILD_REPORT_URL,
   data: [],
   fetchItems: FetchMDAPointLocationReportAction,
   headerItems: tableHeaders,
@@ -161,6 +166,7 @@ LocationReportsList.defaultProps = defaultProps;
 export { LocationReportsList };
 
 interface DispatchedStateProps {
+  childUrl: string;
   data: React.ReactNode[][];
   pageUrl: string;
   pageTitle: string | null;
@@ -173,7 +179,7 @@ const mapStateToProps = (
   ownProps: RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
   const { planId, jurisdictionId } = ownProps.match.params;
-
+  let childUrl = MDA_POINT_CHILD_REPORT_URL;
   let pageUrl = MDA_POINT_LOCATION_REPORT_URL;
   let locationData: LocationReport[] = [];
   let pageTitle = null;
@@ -195,6 +201,8 @@ const mapStateToProps = (
 
     // build page url
     pageUrl = `${MDA_POINT_LOCATION_REPORT_URL}/${planId}/${jurisdictionId}`;
+
+    childUrl = `${MDA_POINT_CHILD_REPORT_URL}/${planId}/${jurisdictionId}`;
     // get school reporting data
     locationData = makeMDAPointLocationReportsArraySelector(planId)(state, {
       jurisdiction_id: jurisdictionId,
@@ -216,6 +224,7 @@ const mapStateToProps = (
   });
 
   return {
+    childUrl,
     data,
     pageTitle,
     pageUrl,

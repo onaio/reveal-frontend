@@ -555,6 +555,11 @@ export const MDA_POINT_LOCATION_REPORT_TITLE = translate(
   'MDA Point Location Report'
 );
 
+export const MDA_POINT_CHILD_REPORT_TITLE = translate(
+  'MDA_POINT_CHILD_REPORT_TITLE',
+  'MDA Point Child Report'
+);
+
 export const MDA_POINT_SCHOOL_REPORT_TITLE = translate(
   'MDA_POINT_SCHOOL_REPORT_TITLE',
   'MDA Point School Report'
@@ -592,6 +597,11 @@ export const ALB_TABLETS_DISTRIBUTED = translate(
   'ALB_TABLETS_DISTRIBUTED',
   'Alb Tablets Distributed'
 );
+export const CHILDS_NAME = translate('CHILDS_NAME', "Child's name");
+export const NATIONAL_ID = translate('NATIONAL_ID', 'National ID');
+export const ENROLLED_IN_SCHOOL = translate('ENROLLED_IN_SCHOOL', 'Enrolled in school');
+export const MMA_DRUGS_ADMINISTRED = translate('MMA_DRUGS_ADMINISTRED', 'MMA drug administered');
+export const PZQ_DISTRIBUTED = translate('PZQ_DISTRIBUTED', 'PZQ tablets distributed');
 
 export const MANIFEST_RELEASES = translate('MANIFEST_RELEASES', 'Manifest Releases');
 export const RELEASES_LABEL = translate('RELEASES_LABEL', 'Releases');
@@ -747,3 +757,6 @@ export const EXPRESSION_LABEL = translate('EXPRESSION_LABEL', 'Expression');
 export const TRIGGERS_LABEL = translate('TRIGGERS_LABEL', 'Triggers');
 export const CONDITIONS_LABEL = translate('CONDITIONS_LABEL', 'Triggers');
 export const DEFINITION_URI = translate('DEFINITION_URI', 'Definition Uri');
+
+export const SAVE_DRAFT = translate('SAVE_DRAFT', 'save draft');
+export const SAVE_AND_ACTIVATE = translate('SAVE_AND_ACTIVATE', 'Save & Activate');

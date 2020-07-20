@@ -8,16 +8,21 @@ exports[`components/LinkToNewPlans Matches snapshot 1`] = `
 >
   <Link
     className="focus-investigation btn btn-primary float-right mt-5"
-    replace={false}
     to="/plans/new"
   >
-    <a
+    <LinkAnchor
       className="focus-investigation btn btn-primary float-right mt-5"
       href="/plans/new"
-      onClick={[Function]}
+      navigate={[Function]}
     >
-      Link
-    </a>
+      <a
+        className="focus-investigation btn btn-primary float-right mt-5"
+        href="/plans/new"
+        onClick={[Function]}
+      >
+        Link
+      </a>
+    </LinkAnchor>
   </Link>
 </LinkAsButton>
 `;

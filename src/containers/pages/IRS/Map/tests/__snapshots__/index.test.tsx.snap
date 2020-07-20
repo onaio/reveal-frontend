@@ -436,15 +436,19 @@ Array [
   >
     <Link
       key="0"
-      replace={false}
       to="/"
     >
-      <a
+      <LinkAnchor
         href="/"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        Home
-      </a>
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -452,15 +456,19 @@ Array [
   >
     <Link
       key="1"
-      replace={false}
       to="/intervention/irs/report"
     >
-      <a
+      <LinkAnchor
         href="/intervention/irs/report"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        IRS Reporting
-      </a>
+        <a
+          href="/intervention/irs/report"
+          onClick={[Function]}
+        >
+          IRS Reporting
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -468,15 +476,19 @@ Array [
   >
     <Link
       key="2"
-      replace={false}
       to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce"
     >
-      <a
+      <LinkAnchor
         href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        IRS 2019-09-05 TEST
-      </a>
+        <a
+          href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce"
+          onClick={[Function]}
+        >
+          IRS 2019-09-05 TEST
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -484,15 +496,19 @@ Array [
   >
     <Link
       key="3"
-      replace={false}
       to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/22bc44dd-752d-4c20-8761-617361b4f1e7"
     >
-      <a
+      <LinkAnchor
         href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/22bc44dd-752d-4c20-8761-617361b4f1e7"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        Zambia
-      </a>
+        <a
+          href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/22bc44dd-752d-4c20-8761-617361b4f1e7"
+          onClick={[Function]}
+        >
+          Zambia
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -500,15 +516,19 @@ Array [
   >
     <Link
       key="4"
-      replace={false}
       to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/fd5a22ba-fa0e-4fdc-ae1c-1db8965b7b43"
     >
-      <a
+      <LinkAnchor
         href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/fd5a22ba-fa0e-4fdc-ae1c-1db8965b7b43"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        Lusaka
-      </a>
+        <a
+          href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/fd5a22ba-fa0e-4fdc-ae1c-1db8965b7b43"
+          onClick={[Function]}
+        >
+          Lusaka
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -516,15 +536,19 @@ Array [
   >
     <Link
       key="5"
-      replace={false}
       to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/8f1fd4cf-264d-4ed6-8838-e538c5845d46"
     >
-      <a
+      <LinkAnchor
         href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/8f1fd4cf-264d-4ed6-8838-e538c5845d46"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        Lusaka_Test
-      </a>
+        <a
+          href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/8f1fd4cf-264d-4ed6-8838-e538c5845d46"
+          onClick={[Function]}
+        >
+          Lusaka_Test
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -532,15 +556,19 @@ Array [
   >
     <Link
       key="6"
-      replace={false}
       to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/2bf9915d-8725-4061-983d-5938802ac0f0"
     >
-      <a
+      <LinkAnchor
         href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/2bf9915d-8725-4061-983d-5938802ac0f0"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        Lusaka HFC
-      </a>
+        <a
+          href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/2bf9915d-8725-4061-983d-5938802ac0f0"
+          onClick={[Function]}
+        >
+          Lusaka HFC
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li

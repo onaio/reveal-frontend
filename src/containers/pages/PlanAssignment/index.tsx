@@ -48,6 +48,8 @@ import planDefinitionReducer, {
   getPlanDefinitionById,
   reducerName as planDefinitionReducerName,
 } from '../../../store/ducks/opensrp/PlanDefinition';
+import { ConnectedAssignmentMapWrapper } from '../AssigmentMapWrapper';
+import { useHandleBrokenPage } from '../JurisdictionAssignment/helpers/utils';
 import { JurisdictionTable, JurisdictionTableProps } from './helpers/JurisdictionTable';
 import { AssignmentResponse } from './helpers/types';
 
@@ -80,9 +82,6 @@ interface PlanAssignmentProps extends JurisdictionTableProps {
  */
 const PlanAssignment = (props: PlanAssignmentProps) => {
   const [loading, setLoading] = useState<boolean>(true);
-  const [broken, setBroken] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
   const {
     OpenSRPServiceClass,
     addPlanActionCreator,
@@ -102,11 +101,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   }
 
   /** Convenience function to handle cases where we must abort and tell the user we have done so */
-  const handleBrokenPage = (message: string) => {
-    displayError(Error(message));
-    setErrorMessage(message);
-    setBroken(true);
-  };
+  const { handleBrokenPage, broken, errorMessage } = useHandleBrokenPage();
 
   useEffect(() => {
     // Get Plan hierarchy
@@ -242,7 +237,18 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     useJurisdictionNodeType: false,
   };
 
-  return <WrappedJurisdictionTable {...wrappedProps} />;
+  const AssignmentWraperProps = {
+    currentParentId: jurisdictionId,
+    rootJurisdictionId: props.match.params.planId,
+    serviceClass: OpenSRPServiceClass,
+  };
+
+  return (
+    <>
+      <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />
+      <WrappedJurisdictionTable {...wrappedProps} />
+    </>
+  );
 };
 
 /** Default props for PlanAssignment */

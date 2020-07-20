@@ -13,6 +13,8 @@ export const GREY = '#666a6d';
 export type GREY = typeof GREY;
 export const WHITE = '#ffffff';
 export type WHITE = typeof WHITE;
+export const BLUE = '#22bcfb';
+export type BLUE = typeof BLUE;
 
 // map stuff
 export const DEFAULT_MAP_COLOR = '#FFDC00';

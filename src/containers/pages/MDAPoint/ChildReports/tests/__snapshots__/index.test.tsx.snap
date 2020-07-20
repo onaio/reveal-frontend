@@ -1,0 +1,357 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/MDA Reports/MDAPlansList should render school reports correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      to="/"
+    >
+      <LinkAnchor
+        href="/"
+        navigate={[Function]}
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="1"
+      to="/intervention/mda-point/report"
+    >
+      <LinkAnchor
+        href="/intervention/mda-point/report"
+        navigate={[Function]}
+      >
+        <a
+          href="/intervention/mda-point/report"
+          onClick={[Function]}
+        >
+          MDA Point Plans
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="2"
+      to="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c"
+    >
+      <LinkAnchor
+        href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c"
+        navigate={[Function]}
+      >
+        <a
+          href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c"
+          onClick={[Function]}
+        >
+          MDA-Point-2019-09-05-TEST
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="3"
+      to="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/2942"
+    >
+      <LinkAnchor
+        href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/2942"
+        navigate={[Function]}
+      >
+        <a
+          href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/2942"
+          onClick={[Function]}
+        >
+          Lusaka
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="4"
+      to="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/3019"
+    >
+      <LinkAnchor
+        href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/3019"
+        navigate={[Function]}
+      >
+        <a
+          href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/3019"
+          onClick={[Function]}
+        >
+          Mtendere
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    Akros_1
+  </li>,
+]
+`;
+
+exports[`components/MDA Reports/MDAPlansList should render school reports correctly: table 1`] = `
+<table
+  className="table table-striped table-bordered plans-list"
+>
+  <thead
+    className="listview-thead"
+  >
+    <tr
+      className="listview-tr"
+    >
+      <ElementMap
+        HTMLTag="th"
+        className="listview-td"
+        items={
+          Array [
+            "Child's name",
+            "National ID",
+            "Enrolled in school",
+            "MMA drug administered",
+            "SACs Refused",
+            "SACs Sick/Pregnant/Contraindicated",
+            "ADR Reported",
+            "PZQ tablets distributed",
+            "Alb Tablets Distributed",
+          ]
+        }
+      >
+        <th
+          className="listview-td"
+          key="0"
+        >
+          Child's name
+        </th>
+        <th
+          className="listview-td"
+          key="1"
+        >
+          National ID
+        </th>
+        <th
+          className="listview-td"
+          key="2"
+        >
+          Enrolled in school
+        </th>
+        <th
+          className="listview-td"
+          key="3"
+        >
+          MMA drug administered
+        </th>
+        <th
+          className="listview-td"
+          key="4"
+        >
+          SACs Refused
+        </th>
+        <th
+          className="listview-td"
+          key="5"
+        >
+          SACs Sick/Pregnant/Contraindicated
+        </th>
+        <th
+          className="listview-td"
+          key="6"
+        >
+          ADR Reported
+        </th>
+        <th
+          className="listview-td"
+          key="7"
+        >
+          PZQ tablets distributed
+        </th>
+        <th
+          className="listview-td"
+          key="8"
+        >
+          Alb Tablets Distributed
+        </th>
+      </ElementMap>
+    </tr>
+  </thead>
+  <tbody
+    className="listview-tbody"
+  >
+    <tr
+      className="listview-tr"
+      key="0"
+    >
+      <ElementMap
+        HTMLTag="td"
+        className="listview-th"
+        items={
+          Array [
+            "annonymous user",
+            "2345",
+            "No",
+            "Yes",
+            "No",
+            "No",
+            "No",
+            0,
+            0,
+          ]
+        }
+      >
+        <td
+          className="listview-th"
+          key="0"
+        >
+          annonymous user
+        </td>
+        <td
+          className="listview-th"
+          key="1"
+        >
+          2345
+        </td>
+        <td
+          className="listview-th"
+          key="2"
+        >
+          No
+        </td>
+        <td
+          className="listview-th"
+          key="3"
+        >
+          Yes
+        </td>
+        <td
+          className="listview-th"
+          key="4"
+        >
+          No
+        </td>
+        <td
+          className="listview-th"
+          key="5"
+        >
+          No
+        </td>
+        <td
+          className="listview-th"
+          key="6"
+        >
+          No
+        </td>
+        <td
+          className="listview-th"
+          key="7"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="8"
+        >
+          0
+        </td>
+      </ElementMap>
+    </tr>
+    <tr
+      className="listview-tr"
+      key="1"
+    >
+      <ElementMap
+        HTMLTag="td"
+        className="listview-th"
+        items={
+          Array [
+            "known man",
+            "843",
+            "No",
+            "No",
+            "Yes",
+            "Yes",
+            "No",
+            0,
+            0,
+          ]
+        }
+      >
+        <td
+          className="listview-th"
+          key="0"
+        >
+          known man
+        </td>
+        <td
+          className="listview-th"
+          key="1"
+        >
+          843
+        </td>
+        <td
+          className="listview-th"
+          key="2"
+        >
+          No
+        </td>
+        <td
+          className="listview-th"
+          key="3"
+        >
+          No
+        </td>
+        <td
+          className="listview-th"
+          key="4"
+        >
+          Yes
+        </td>
+        <td
+          className="listview-th"
+          key="5"
+        >
+          Yes
+        </td>
+        <td
+          className="listview-th"
+          key="6"
+        >
+          No
+        </td>
+        <td
+          className="listview-th"
+          key="7"
+        >
+          0
+        </td>
+        <td
+          className="listview-th"
+          key="8"
+        >
+          0
+        </td>
+      </ElementMap>
+    </tr>
+  </tbody>
+</table>
+`;

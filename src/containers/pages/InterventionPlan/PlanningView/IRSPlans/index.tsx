@@ -69,6 +69,7 @@ export const IRSPlans = (props: RouteComponentProps) => {
 
   const opensrpListProps: Partial<OpenSRPPlanListViewProps> & RouteComponentProps = {
     ...props,
+    planStatuses: [PlanStatus.DRAFT],
     renderBody,
     tableColumns: irsDraftPageColumns,
   };

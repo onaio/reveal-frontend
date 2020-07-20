@@ -81,6 +81,20 @@ export const planRecords: PlanRecord[] = [
   },
 ];
 
+export const extractedPlans = planRecords.map(plan => ({
+  date: plan.plan_date,
+  effective_period_end: plan.plan_effective_period_end,
+  effective_period_start: plan.plan_effective_period_start,
+  fi_reason: plan.plan_fi_reason,
+  fi_status: plan.plan_fi_status,
+  identifier: plan.id,
+  intervention_type: plan.plan_intervention_type,
+  status: plan.plan_status,
+  title: plan.plan_title,
+  useContext: plan.plan_useContext,
+  version: plan.plan_version,
+}));
+
 // tslint:disable: object-literal-sort-keys
 export const namibiaIRSJurisdictions = [
   {
@@ -310,6 +324,45 @@ export const MDAPointSchoolReportData = [
     mmaadr: 0,
     mmaadrsev: 0,
     albdist: 0,
+  },
+];
+
+export const MDAPointChildReportData = [
+  {
+    plan_id: '40357eff-81b6-4e32-bd3d-484019689f7c',
+    school_location_id: '154153',
+    client_age_category: '11 - 15',
+    jurisdiction_id: '3951',
+    jurisdiction_depth: 2,
+    jurisdiction_id_path: ['2942', '3019', '3951'],
+    jurisdiction_name_path: ['Lusaka', 'Mtendere', 'Akros_1'],
+    client_first_name: 'annonymous',
+    client_last_name: 'user',
+    sactanationalid: '2345',
+    sactacurrenroll: 0,
+    mmadrugadmin: 'Yes',
+    mmanodrugadminreason: 0,
+    mmaadr: 0,
+    mmapzqdosagegiven: 0,
+    mmaalbgiven: 0,
+  },
+  {
+    plan_id: '40357eff-81b6-4e32-bd3d-484019689f7c',
+    school_location_id: '154153',
+    client_age_category: '11 - 15',
+    jurisdiction_id: '3951',
+    jurisdiction_depth: 2,
+    jurisdiction_id_path: ['2942', '3019', '3951'],
+    jurisdiction_name_path: ['Lusaka', 'Mtendere', 'Akros_1'],
+    client_first_name: 'known',
+    client_last_name: 'man',
+    sactanationalid: '843',
+    sactacurrenroll: 0,
+    mmadrugadmin: 0,
+    mmanodrugadminreason: 'Yes',
+    mmaadr: 0,
+    mmapzqdosagegiven: 0,
+    mmaalbgiven: 0,
   },
 ];
 /* tslint:disable-next-line no-var-requires */

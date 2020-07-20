@@ -863,6 +863,7 @@ export const extractPlanRecordResponseFromPlanPayload = (
       name,
       status,
       title,
+      useContext,
       version,
     };
     if (planPayload.jurisdiction) {

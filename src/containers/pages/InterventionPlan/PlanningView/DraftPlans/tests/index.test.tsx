@@ -2,6 +2,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
@@ -49,8 +50,10 @@ describe('src/containers/../PlanningView/DraftPlans', () => {
       </Provider>
     );
 
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual(DRAFT_PLANS);
     expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot('drill down table props');

@@ -130,12 +130,8 @@ GisidaLite.defaultProps = gisidaLiteDefaultProps;
  * @param prevProps
  * @param nextProps
  */
-export const arePropsEqual = (prevProps: GisidaLiteProps, nextProps: GisidaLiteProps) => {
-  if (!isEqual(prevProps.layers, nextProps.layers)) {
-    return false;
-  }
-
-  return true;
+export const arePropsEqual = (prevProps: GisidaLiteProps, nextProps: GisidaLiteProps): boolean => {
+  return isEqual(prevProps.layers, nextProps.layers);
 };
 
 const MemoizedGisidaLite = React.memo(GisidaLite, arePropsEqual);

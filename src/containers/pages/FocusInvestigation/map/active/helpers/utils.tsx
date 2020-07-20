@@ -230,11 +230,13 @@ export const buildJurisdictionLayers = (jurisdiction: Jurisdiction | null) => {
   return jurisdictionLayer;
 };
 
-/** returns the layers for the structures
+/** returns the layers for FI structures
  * @param {FeatureCollection<StructureGeoJSON> | null} structs - the structures
+ * @param isJurisdiction - param to determine whether we need to build FI or jurisdiction assignment layers
  */
 export const buildStructureLayers = (
-  structs: FeatureCollection<StructureGeoJSON> | null
+  structs: FeatureCollection<StructureGeoJSON> | null,
+  isJurisdiction?: boolean
 ): JSX.Element[] => {
   const structureLayers: JSX.Element[] = [];
   if (structs && structs.features && structs.features.length) {
@@ -243,9 +245,9 @@ export const buildStructureLayers = (
         {...lineLayerTemplate}
         linePaint={{
           ...lineLayerTemplate.linePaint,
-          'line-color': GREY,
+          'line-color': isJurisdiction ? ['get', 'lineColor'] : GREY,
           'line-opacity': 1,
-          'line-width': 2,
+          'line-width': isJurisdiction ? 6 : 2,
         }}
         data={structs}
         id={STRUCTURES_LINE}
@@ -257,8 +259,9 @@ export const buildStructureLayers = (
         {...fillLayerTemplate}
         fillPaint={{
           ...fillLayerTemplate.fillPaint,
-          'fill-color': GREY,
-          'fill-outline-color': GREY,
+          'fill-color': isJurisdiction ? ['get', 'fillColor'] : GREY,
+          'fill-opacity': isJurisdiction ? 0.5 : 1,
+          'fill-outline-color': isJurisdiction ? ['get', 'fillOutlineColor'] : GREY,
         }}
         data={structs}
         id={STRUCTURES_FILL}

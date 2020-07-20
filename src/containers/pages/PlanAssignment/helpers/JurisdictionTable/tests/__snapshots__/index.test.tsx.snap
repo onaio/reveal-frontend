@@ -9,15 +9,19 @@ Array [
   >
     <Link
       key="0"
-      replace={false}
       to="/"
     >
-      <a
+      <LinkAnchor
         href="/"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        Home
-      </a>
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -25,15 +29,19 @@ Array [
   >
     <Link
       key="1"
-      replace={false}
       to="/assign"
     >
-      <a
+      <LinkAnchor
         href="/assign"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        Assign Plans
-      </a>
+        <a
+          href="/assign"
+          onClick={[Function]}
+        >
+          Assign Plans
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -41,15 +49,19 @@ Array [
   >
     <Link
       key="2"
-      replace={false}
       to="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d"
     >
-      <a
+      <LinkAnchor
         href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        A2-Lusaka Akros Test Focus 2
-      </a>
+        <a
+          href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+          onClick={[Function]}
+        >
+          A2-Lusaka Akros Test Focus 2
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -57,15 +69,19 @@ Array [
   >
     <Link
       key="3"
-      replace={false}
       to="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/0ddd9ad1-452b-4825-a92a-49cb9fc82d18"
     >
-      <a
+      <LinkAnchor
         href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/0ddd9ad1-452b-4825-a92a-49cb9fc82d18"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        ra Zambia
-      </a>
+        <a
+          href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/0ddd9ad1-452b-4825-a92a-49cb9fc82d18"
+          onClick={[Function]}
+        >
+          ra Zambia
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -73,15 +89,19 @@ Array [
   >
     <Link
       key="4"
-      replace={false}
       to="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/cec79f21-33c3-43f5-a8af-59a47aa61b84"
     >
-      <a
+      <LinkAnchor
         href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/cec79f21-33c3-43f5-a8af-59a47aa61b84"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        ra Luapula
-      </a>
+        <a
+          href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/cec79f21-33c3-43f5-a8af-59a47aa61b84"
+          onClick={[Function]}
+        >
+          ra Luapula
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
@@ -89,15 +109,19 @@ Array [
   >
     <Link
       key="5"
-      replace={false}
       to="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"
     >
-      <a
+      <LinkAnchor
         href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        ra Nchelenge
-      </a>
+        <a
+          href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"
+          onClick={[Function]}
+        >
+          ra Nchelenge
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
