@@ -1,6 +1,5 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { Result } from '@onaio/utils/dist/types/types';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -12,7 +11,6 @@ import HeaderBreadcrumb, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Ripple from '../../../../components/page/Loading';
 import {
-  COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
   JURISDICTION_ASSIGNMENT_SUCCESSFUL,
   NAME,
   NO_DATA_FOUND,
@@ -31,7 +29,6 @@ import {
   INTERVENTION_TYPE_CODE,
 } from '../../../../constants';
 import {
-  LoadOpenSRPHierarchy,
   putJurisdictionsToPlan,
 } from '../../../../helpers/dataLoading/jurisdictions';
 import { displayError } from '../../../../helpers/errors';
@@ -53,7 +50,7 @@ import hierarchyReducer, {
   selectNode,
   SelectNodeAction,
 } from '../../../../store/ducks/opensrp/hierarchies';
-import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
+import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected, SelectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import { InterventionType } from '../../../../store/ducks/plans';
@@ -66,6 +63,7 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
 /** props for the Jurisdiction selector table component */
 export interface JurisdictionSelectorTableProps {
+  tree: TreeNode;
   plan: PlanDefinition;
   rootJurisdictionId: string;
   currentParentId: string | undefined;
@@ -101,8 +99,7 @@ const defaultProps = {
 };
 
 /** JurisdictionTable responsibilities,
- * 1). get location hierarchy from api for the rootJurisdiction
- *    - for this I only need the root jurisdiction
+ * 1). 
  * 2). also gets the locations that are already assigned to plan
  *    - that's why I passed the plan as a prop
  * 3). render the drill down table.
@@ -115,9 +112,14 @@ const defaultProps = {
  *    here we have to show previous selections.
  *    when autoselection is disabled autoSelect previously selected jurisdictions i.e. if plan is still draft.
  */
-/**  */
+/** the business logic involved around the action handlers should remain in this component.
+ * This compoent will effectively be a HOC that specifies what the action handlers are 
+ * and passes those on to the table. The table should be thought of as the presentational
+ * component.
+ */
 const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const {
+    tree
     rootJurisdictionId,
     treeFetchedCreator,
     currentParentNode,
@@ -149,6 +151,11 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   /** function for determining whether the jurisdiction assignment table allows for
    * multiple selection or single selection based on the plan intervention type
    */
+  /** new computation for this: 
+   * for FI and dynamic-FI we will :
+   *  enabling a checkbox will be bound by these rules
+   *    1) if checkbox is a parent checkbox(i.e. if not leaf node) disable.
+   */
   const isSingleSelect = () => {
     const interventionType = plan.useContext.find(
       element => element.code === INTERVENTION_TYPE_CODE
@@ -172,6 +179,11 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     ? `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
     : `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
 
+  /** TODO - this is domain logic that should not belong here. 
+   * the tree should be in a proper state before it gets here 
+   * What we could probably do is add a prop that tells this component if the we think data is 
+   * now fully updated before rendering.
+   * */
   /** this is used for auto-selecting existing assigned jurisdictions
    * it will be invoked when auto-selection is turned off.
    */
@@ -179,38 +191,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     const existingAssignments = plan.jurisdiction;
     return existingAssignments.includes(node.model.id);
   };
-
-  React.useEffect(() => {
-    /** will move this to the calling component.
-     * that means This component will only be responsible for callbacks on user clicks and rendering the data.
-     * What about customization of the ui.
-     */
-    const params = {
-      return_structure_count: true,
-    };
-    if (!autoSelectionFlow) {
-      LoadOpenSRPHierarchy(rootJurisdictionId, OpenSRPService, params)
-        .then((apiResponse: Result<RawOpenSRPHierarchy>) => {
-          if (apiResponse.value) {
-            const responseData = apiResponse.value;
-            treeFetchedCreator(responseData);
-            // TODO: should this be in both this useEffect and the next one?
-
-            autoSelectNodesCreator(rootJurisdictionId, callback, SelectionReason.USER_CHANGE);
-            setLoading(false);
-          }
-          if (apiResponse.error) {
-            throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-          }
-        })
-        .catch(() => {
-          handleBrokenPage(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
-    }
-  }, []);
 
   if (loading) {
     return <Ripple />;
@@ -234,7 +214,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   }
 
   /** creating breadCrumb props */
-
   let currentPage: Page = {
     label: '....',
     url: baseUrl,
@@ -263,7 +242,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     currentPage,
     pages,
   };
-  const data = currentChildren.map(node => {
+  const data = derivedChildrenNodes.map(node => {
     return [
       <input
         key={`${node.model.id}-check-jurisdiction`}

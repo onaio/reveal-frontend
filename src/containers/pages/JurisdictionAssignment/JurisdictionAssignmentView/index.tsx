@@ -168,9 +168,43 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
           stopLoading(jurisdictionLoadingKey);
         });
     }
+
+    
   }, [plan]);
 
-  if (loading()) {
+  React.useEffect(() => {
+    /** will move this to the calling component.
+     * that means This component will only be responsible for callbacks on user clicks and rendering the data.
+     * What about customization of the ui.
+     */
+    const params = {
+      return_structure_count: true,
+    };
+    if (!autoSelectionFlow) {
+      LoadOpenSRPHierarchy(rootJurisdictionId, OpenSRPService, params)
+        .then((apiResponse: Result<RawOpenSRPHierarchy>) => {
+          if (apiResponse.value) {
+            const responseData = apiResponse.value;
+            treeFetchedCreator(responseData);
+            // TODO: should this be in both this useEffect and the next one?
+
+            autoSelectNodesCreator(rootJurisdictionId, callback, SelectionReason.USER_CHANGE);
+            setLoading(false);
+          }
+          if (apiResponse.error) {
+            throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
+          }
+        })
+        .catch(() => {
+          handleBrokenPage(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
+  if (loading) {
     return <Ripple />;
   }
   if (!plan) {
