@@ -48,6 +48,16 @@ describe('src/containers/pages/InterventionPlan/IRS/plan/serviceCals', () => {
         name: 'IRS-2019-08-09',
         status: 'draft',
         title: 'IRS 2019-08-09',
+        useContext: [
+          {
+            code: 'interventionType',
+            valueCodableConcept: 'IRS',
+          },
+          {
+            code: 'taskGenerationStatus',
+            valueCodableConcept: 'False',
+          },
+        ],
         version: '1',
       },
     ]);

@@ -9,35 +9,36 @@ import {
   STATUS_HEADER,
   TITLE,
 } from '../../../../configs/lang';
-import { PlanDefinition, planStatusDisplay, UseContext } from '../../../../configs/settings';
+import { planStatusDisplay, UseContext } from '../../../../configs/settings';
 import { PLAN_UPDATE_URL } from '../../../../constants';
+import { PlanRecord } from '../../../../store/ducks/plans';
 
-export const TableColumns: Array<DrillDownColumn<PlanDefinition>> = [
+export const TableColumns: Array<DrillDownColumn<PlanRecord>> = [
   {
-    Cell: (cell: Cell<PlanDefinition>) => {
+    Cell: (cell: Cell<PlanRecord>) => {
       const original = cell.row.original;
       return (
-        <Link to={`${PLAN_UPDATE_URL}/${original.identifier}`} key={original.identifier}>
+        <Link to={`${PLAN_UPDATE_URL}/${original.id}`} key={original.id}>
           {cell.value}
         </Link>
       );
     },
     Header: TITLE,
-    accessor: 'title',
+    accessor: 'plan_title',
     minWidth: 200,
   },
   {
-    Cell: ({ value }: Cell<PlanDefinition>) => {
+    Cell: ({ value }: Cell<PlanRecord>) => {
       const typeUseContext = value.filter((e: any) => e.code === 'interventionType');
       return typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : null;
     },
     Header: INTERVENTION_TYPE_LABEL,
-    accessor: 'useContext',
+    accessor: 'plan_useContext',
     maxWidth: 40,
     minWidth: 10,
-    sortType: (rowA: Row<PlanDefinition>, rowB: Row<PlanDefinition>, columnId: string) => {
+    sortType: (rowA: Row<PlanRecord>, rowB: Row<PlanRecord>, columnId: string) => {
       /** custom sort function based useContext */
-      const getIntervention = (row: Row<PlanDefinition>) => {
+      const getIntervention = (row: Row<PlanRecord>) => {
         const interventionPlanContext = (row.original as Dictionary)[columnId].filter(
           (context: UseContext) => context.code === 'interventionType'
         );
@@ -49,17 +50,17 @@ export const TableColumns: Array<DrillDownColumn<PlanDefinition>> = [
     },
   },
   {
-    Cell: (cell: Cell<PlanDefinition>) => {
+    Cell: (cell: Cell<PlanRecord>) => {
       return planStatusDisplay[cell.value] || null;
     },
     Header: STATUS_HEADER,
-    accessor: 'status',
+    accessor: 'plan_status',
     maxWidth: 30,
     minWidth: 10,
   },
   {
     Header: LAST_MODIFIED,
-    accessor: 'date',
+    accessor: 'plan_date',
     maxWidth: 30,
     minWidth: 20,
   },

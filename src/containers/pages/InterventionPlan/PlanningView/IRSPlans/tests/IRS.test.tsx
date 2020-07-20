@@ -3,6 +3,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
@@ -18,6 +19,7 @@ import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
+import { irsDraftPageColumns } from '../../helpers/utils';
 
 reducerRegistry.register(plansReducerName, plansReducer);
 
@@ -57,9 +59,10 @@ describe('containers/pages/IRS', () => {
       </Provider>
     );
 
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
-
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual(`${IRS_PLANS}${DRAFTS_PARENTHESIS}`);
     expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot('drill down table props');
@@ -80,6 +83,8 @@ describe('containers/pages/IRS', () => {
         path: INTERVENTION_IRS_DRAFTS_URL,
         url: INTERVENTION_IRS_DRAFTS_URL,
       },
+      planStatuses: ['drafts'],
+      tableColumns: irsDraftPageColumns,
     };
 
     const wrapper = mount(
@@ -89,9 +94,10 @@ describe('containers/pages/IRS', () => {
         </Router>
       </Provider>
     );
-
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     const dumbComponent = wrapper.find('OpenSRPPlansList');
     const dumbComponentProps = dumbComponent.props() as any;
@@ -122,6 +128,8 @@ describe('containers/pages/IRS', () => {
         path: INTERVENTION_IRS_DRAFTS_URL,
         url: INTERVENTION_IRS_DRAFTS_URL,
       },
+      planStatuses: ['drafts'],
+      tableColumns: irsDraftPageColumns,
     };
 
     const wrapper = mount(
@@ -132,8 +140,10 @@ describe('containers/pages/IRS', () => {
       </Provider>
     );
 
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     renderTable(wrapper, 'find single row for entry with Khlong ');
     wrapper.unmount();
@@ -155,6 +165,8 @@ describe('containers/pages/IRS', () => {
         path: INTERVENTION_IRS_DRAFTS_URL,
         url: INTERVENTION_IRS_DRAFTS_URL,
       },
+      planStatuses: ['drafts'],
+      tableColumns: irsDraftPageColumns,
     };
 
     const wrapper = mount(
@@ -167,8 +179,10 @@ describe('containers/pages/IRS', () => {
 
     expect(wrapper.find('Ripple').length).toEqual(1);
 
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     renderTable(wrapper, 'find No Data Found text');
     wrapper.unmount();

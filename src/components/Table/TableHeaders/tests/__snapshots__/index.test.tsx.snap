@@ -172,16 +172,21 @@ exports[`components/page/Header renders routine headers correctly 1`] = `
               >
                 <Link
                   className="focus-investigation btn btn-primary float-right mt-5"
-                  replace={false}
                   to="/plans/new"
                 >
-                  <a
+                  <LinkAnchor
                     className="focus-investigation btn btn-primary float-right mt-5"
                     href="/plans/new"
-                    onClick={[Function]}
+                    navigate={[Function]}
                   >
-                    Add Focus Investigation
-                  </a>
+                    <a
+                      className="focus-investigation btn btn-primary float-right mt-5"
+                      href="/plans/new"
+                      onClick={[Function]}
+                    >
+                      Add Focus Investigation
+                    </a>
+                  </LinkAnchor>
                 </Link>
               </LinkAsButton>
             </div>

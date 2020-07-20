@@ -33,17 +33,23 @@ exports[`containers/pages/FocusInvestigation/activeMap displays the correct badg
   <Link
     className="btn btn-primary"
     color="primary"
-    replace={false}
     to="/focus-investigation/view/complete/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
   >
-    <a
+    <LinkAnchor
       className="btn btn-primary"
       color="primary"
       href="/focus-investigation/view/complete/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-      onClick={[Function]}
+      navigate={[Function]}
     >
-      Mark as complete
-    </a>
+      <a
+        className="btn btn-primary"
+        color="primary"
+        href="/focus-investigation/view/complete/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+        onClick={[Function]}
+      >
+        Mark as complete
+      </a>
+    </LinkAnchor>
   </Link>
 </MarkCompleteLink>
 `;
@@ -71,15 +77,19 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         >
           <Link
             key="0"
-            replace={false}
             to="/"
           >
-            <a
+            <LinkAnchor
               href="/"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              Home
-            </a>
+              <a
+                href="/"
+                onClick={[Function]}
+              >
+                Home
+              </a>
+            </LinkAnchor>
           </Link>
         </li>
       </BreadcrumbItem>
@@ -92,15 +102,19 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         >
           <Link
             key="1"
-            replace={false}
             to="/focus-investigation"
           >
-            <a
+            <LinkAnchor
               href="/focus-investigation"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              Focus Investigations
-            </a>
+              <a
+                href="/focus-investigation"
+                onClick={[Function]}
+              >
+                Focus Investigations
+              </a>
+            </LinkAnchor>
           </Link>
         </li>
       </BreadcrumbItem>
@@ -113,15 +127,19 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         >
           <Link
             key="2"
-            replace={false}
             to="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
           >
-            <a
+            <LinkAnchor
               href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              Chadiza
-            </a>
+              <a
+                href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                onClick={[Function]}
+              >
+                Chadiza
+              </a>
+            </LinkAnchor>
           </Link>
         </li>
       </BreadcrumbItem>
@@ -134,15 +152,19 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         >
           <Link
             key="3"
-            replace={false}
             to="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
           >
-            <a
+            <LinkAnchor
               href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              Naviluli
-            </a>
+              <a
+                href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+                onClick={[Function]}
+              >
+                Naviluli
+              </a>
+            </LinkAnchor>
           </Link>
         </li>
       </BreadcrumbItem>
@@ -155,15 +177,19 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         >
           <Link
             key="4"
-            replace={false}
             to="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
           >
-            <a
+            <LinkAnchor
               href="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
-              onClick={[Function]}
+              navigate={[Function]}
             >
-              NVI_439
-            </a>
+              <a
+                href="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
+                onClick={[Function]}
+              >
+                NVI_439
+              </a>
+            </LinkAnchor>
           </Link>
         </li>
       </BreadcrumbItem>
@@ -183,7 +209,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
 </Breadcrumb>
 `;
 
-exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title: GisidaWrapperMock div 1`] = `
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title: MemoizedGisidaLiteMock div 1`] = `
 <div>
   I love oov
 </div>

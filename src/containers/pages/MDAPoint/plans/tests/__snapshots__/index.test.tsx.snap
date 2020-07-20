@@ -110,15 +110,19 @@ Array [
   >
     <Link
       key="0"
-      replace={false}
       to="/"
     >
-      <a
+      <LinkAnchor
         href="/"
-        onClick={[Function]}
+        navigate={[Function]}
       >
-        Home
-      </a>
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
     </Link>
   </li>,
   <li
