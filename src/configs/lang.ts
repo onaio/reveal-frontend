@@ -145,6 +145,12 @@ export const UPLOAD = translate('UPLOAD', 'Upload');
 export const IRS_PLANS = translate('IRS_PLANS', 'IRS Plans');
 export const MDA_POINT_PLANS = translate('MDA_POINT_PLANS', 'MDA Point Plans');
 export const COUNTRY = translate('COUNTRY', 'Country');
+export const JURISDICTION_HIERARCHY = translate('JURISDICTION_HIERARCHY', 'jurisdictionHierachy');
+export const JURISDICTION_HIERARCHY_TEMPLATE = translate(
+  'JURISDICTION_HIERARCHY_TEMPLATE',
+  'JurisdictionHierachyTemplate'
+);
+export const SELECT_COUNTRY = translate('SELECT_COUNTRY', 'Select Country');
 export const NEW_TITLE = translate('NEW_TITLE', 'New');
 export const PLAN_TITLE = translate('PLAN_TITLE', 'Plan');
 export const PLAN_STATUS = translate('PLAN_STATUS', 'Plan Status');
