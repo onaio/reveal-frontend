@@ -760,3 +760,8 @@ export const DEFINITION_URI = translate('DEFINITION_URI', 'Definition Uri');
 
 export const SAVE_DRAFT = translate('SAVE_DRAFT', 'save draft');
 export const SAVE_AND_ACTIVATE = translate('SAVE_AND_ACTIVATE', 'Save & Activate');
+
+export const CANNOT_ASSIGN_TEAM_LABEL = translate(
+  'CANNOT_ASSIGN_TEAM',
+  'Cannot assign teams for expired plans'
+);

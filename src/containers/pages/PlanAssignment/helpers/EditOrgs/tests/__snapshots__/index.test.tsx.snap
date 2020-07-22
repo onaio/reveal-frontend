@@ -1,9 +1,22 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PlanAssignment/EditOrgs works as expected with for plans with past dates: Show form button 1`] = `
+<button
+  aria-label={null}
+  className="show-form disabled btn btn-primary btn-sm"
+  id="jurisiction-dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"
+  onClick={[Function]}
+  type="button"
+>
+  Assign Teams
+</button>
+`;
+
 exports[`PlanAssignment/EditOrgs works as expected: Show form button 1`] = `
 <button
   aria-label={null}
   className="show-form btn btn-primary btn-sm"
+  id="jurisiction-dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"
   onClick={[Function]}
   type="button"
 >
