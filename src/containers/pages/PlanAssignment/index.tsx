@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { ActionCreator, Store } from 'redux';
 import Loading from '../../../components/page/Loading';
 import { withTreeWalker } from '../../../components/TreeWalker';
+import { MAP_ENABLED_PLAN_TYPES } from '../../../configs/env';
 import {
   AN_ERROR_OCURRED,
   COULD_NOT_LOAD_ASSIGNMENTS,
@@ -17,6 +18,7 @@ import {
 } from '../../../configs/lang';
 import { PlanDefinition } from '../../../configs/settings';
 import {
+  INTERVENTION_TYPE_CODE,
   OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
   OPENSRP_PLAN_HIERARCHY_ENDPOINT,
@@ -243,9 +245,21 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     serviceClass: OpenSRPServiceClass,
   };
 
+  /**
+   * Check if a plan type should be visible
+   */
+  const isMapEnabled = (): boolean => {
+    let interventionType: string | undefined = '';
+    if (plan) {
+      const type = plan.useContext.find(element => element.code === INTERVENTION_TYPE_CODE);
+      type ? (interventionType = type.valueCodableConcept) : (interventionType = '');
+    }
+    return MAP_ENABLED_PLAN_TYPES.includes(interventionType ? interventionType : '');
+  };
+
   return (
     <>
-      <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />
+      {isMapEnabled ? <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} /> : ''}
       <WrappedJurisdictionTable {...wrappedProps} />
     </>
   );
