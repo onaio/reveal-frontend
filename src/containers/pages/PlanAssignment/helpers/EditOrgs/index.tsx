@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button } from 'reactstrap';
-import { ASSIGN_TEAMS } from '../../../../../configs/lang';
+import { Button, Tooltip } from 'reactstrap';
+import { ASSIGN_TEAMS, CANNOT_ASSIGN_TEAM } from '../../../../../configs/lang';
 import {
   AssignmentFormProps,
   defaultAssignmentProps,
@@ -21,7 +21,12 @@ interface EditOrgsProps extends AssignmentFormProps {
  */
 const EditOrgs = (props: EditOrgsProps) => {
   const [showForm, setShowForm] = useState(false);
-  const { assignTeamsLabel } = props;
+  const { assignTeamsLabel, jurisdiction, plan } = props;
+
+  const { id: jurisdictionId } = jurisdiction && jurisdiction.model;
+  const endDate = plan && plan.effectivePeriod.end;
+
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
   const callBack = (_: React.MouseEvent) => {
     setShowForm(true);
@@ -31,12 +36,38 @@ const EditOrgs = (props: EditOrgsProps) => {
     setShowForm(false);
   };
 
+  /** show and hide tooltip */
+  const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
+
+  const isExpired = new Date() > new Date(endDate as string);
+  const assignBtnId = `jurisiction-${jurisdictionId}`;
+
   return showForm ? (
     <JurisdictionAssignmentForm {...props} cancelCallBackFunc={closeForm} />
   ) : (
-    <Button onClick={callBack} size="sm" color="primary" className="show-form">
-      {assignTeamsLabel}
-    </Button>
+    <div>
+      <Button
+        onClick={callBack}
+        size="sm"
+        color="primary"
+        className="show-form"
+        disabled={isExpired}
+        id={assignBtnId}
+      >
+        {assignTeamsLabel}
+      </Button>
+      {isExpired && (
+        <Tooltip
+          placement="top"
+          className="tool-tip"
+          isOpen={tooltipOpen}
+          target={assignBtnId}
+          toggle={toggleTooltip}
+        >
+          {CANNOT_ASSIGN_TEAM}
+        </Tooltip>
+      )}
+    </div>
   );
 };
 
