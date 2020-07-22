@@ -254,7 +254,10 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
       const type = plan.useContext.find(element => element.code === INTERVENTION_TYPE_CODE);
       type ? (interventionType = type.valueCodableConcept) : (interventionType = '');
     }
-    return MAP_ENABLED_PLAN_TYPES.includes(interventionType ? interventionType : '');
+    if (MAP_ENABLED_PLAN_TYPES.length === 0) {
+      return true;
+    }
+    return MAP_ENABLED_PLAN_TYPES.includes(interventionType);
   };
 
   return (
