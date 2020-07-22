@@ -359,3 +359,10 @@ export type JURISDICTION_METADATA_RISK = typeof JURISDICTION_METADATA_RISK;
 export const JURISDICTION_METADATA_RISK_PERCENTAGE =
   process.env.REACT_APP_JURISDICTION_METADATA_RISK_PERCENTAGE || '90';
 export type JURISDICTION_METADATA_RISK_PERCENTAGE = typeof JURISDICTION_METADATA_RISK_PERCENTAGE;
+
+/** plan types with map enabled during plan assignment */
+export const MAP_ENABLED_PLAN_TYPES = String(
+  process.env.REACT_APP_MAP_ENABLED_PLAN_TYPES ||
+    'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'
+).split(',');
+export type MAP_ENABLED_PLAN_TYPES = typeof MAP_ENABLED_PLAN_TYPES;
