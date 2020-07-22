@@ -779,3 +779,12 @@ export const ADJUST_SLIDER_MESSAGE = translate(
   'ADJUST_SLIDER_MESSAGE',
   'Adjust slider to auto-target jurisdictions'
 );
+
+export const AUTO_TARGET_JURISDICTIONS_BY_RISK = translate(
+  'AUTO_TARGET_JURISDICTIONS_BY_RISK',
+  'Auto target jurisdictions by risk'
+);
+export const REFINE_SELECTED_JURISDICTIONS = translate(
+  'REFINE_SELECTED_JURISDICTIONS',
+  'Refine selected jurisdictions'
+);
