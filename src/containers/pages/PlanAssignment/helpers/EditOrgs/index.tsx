@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Tooltip } from 'reactstrap';
-import { ASSIGN_TEAMS, CANNOT_ASSIGN_TEAM } from '../../../../../configs/lang';
+import { ASSIGN_TEAMS, CANNOT_ASSIGN_TEAM_LABEL } from '../../../../../configs/lang';
 import {
   AssignmentFormProps,
   defaultAssignmentProps,
@@ -26,7 +26,7 @@ const EditOrgs = (props: EditOrgsProps) => {
 
   const { id: jurisdictionId } = jurisdiction && jurisdiction.model;
   const endDate = plan && plan.effectivePeriod.end;
-  const isPlanExpired = new Date() < new Date(endDate as string);
+  const isPlanExpired = new Date() > new Date(endDate as string);
 
   /**
    * toggle assign plan button and team assigning form
@@ -57,7 +57,7 @@ const EditOrgs = (props: EditOrgsProps) => {
         onClick={callBack}
         size="sm"
         color="primary"
-        className={`show-form ${isPlanExpired ? 'disabled' : ''}`}
+        className={`show-form${isPlanExpired ? ' disabled' : ''}`}
         id={assignBtnId}
       >
         {assignTeamsLabel}
@@ -70,7 +70,7 @@ const EditOrgs = (props: EditOrgsProps) => {
           target={assignBtnId}
           toggle={toggleTooltip}
         >
-          {CANNOT_ASSIGN_TEAM}
+          {CANNOT_ASSIGN_TEAM_LABEL}
         </Tooltip>
       )}
     </div>
