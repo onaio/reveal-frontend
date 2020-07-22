@@ -110,6 +110,7 @@ export const EDIT_SERVER_SETTINGS_URL = '/server-settings';
 export const PLANNING_VIEW_URL = '/plans/planning';
 export const NEW_PLANNING_PLAN_URL = `${PLANNING_VIEW_URL}/${NEW}`;
 export const ASSIGN_JURISDICTIONS_URL = '/assignJurisdictions';
+export const MANUAL_ASSIGN_JURISDICTIONS_URL = '/manualSelectJurisdictions';
 export const AUTO_ASSIGN_JURISDICTIONS_URL = '/auoSelectJurisdictions';
 /** how long after opening a logout window should we wait before redirecting to express' server logout
  * I am not sure the optimum value for this, mozilla firefox seems to take some
