@@ -21,14 +21,22 @@ interface EditOrgsProps extends AssignmentFormProps {
  */
 const EditOrgs = (props: EditOrgsProps) => {
   const [showForm, setShowForm] = useState(false);
+  const [tooltipOpen, setTooltipOpen] = useState(false);
   const { assignTeamsLabel, jurisdiction, plan } = props;
 
   const { id: jurisdictionId } = jurisdiction && jurisdiction.model;
   const endDate = plan && plan.effectivePeriod.end;
+  const isPlanExpired = new Date() < new Date(endDate as string);
 
-  const [tooltipOpen, setTooltipOpen] = useState(false);
-
-  const callBack = (_: React.MouseEvent) => {
+  /**
+   * toggle assign plan button and team assigning form
+   * @param {React.MouseEvent} _
+   * @param {boolean} disabled
+   */
+  const callBack = (_: React.MouseEvent, disabled: boolean = isPlanExpired) => {
+    if (disabled) {
+      return false;
+    }
     setShowForm(true);
   };
 
@@ -39,7 +47,6 @@ const EditOrgs = (props: EditOrgsProps) => {
   /** show and hide tooltip */
   const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
-  const isExpired = new Date() > new Date(endDate as string);
   const assignBtnId = `jurisiction-${jurisdictionId}`;
 
   return showForm ? (
@@ -50,13 +57,12 @@ const EditOrgs = (props: EditOrgsProps) => {
         onClick={callBack}
         size="sm"
         color="primary"
-        className="show-form"
-        disabled={isExpired}
+        className={`show-form ${isPlanExpired ? 'disabled' : ''}`}
         id={assignBtnId}
       >
         {assignTeamsLabel}
       </Button>
-      {isExpired && (
+      {isPlanExpired && (
         <Tooltip
           placement="top"
           className="tool-tip"
