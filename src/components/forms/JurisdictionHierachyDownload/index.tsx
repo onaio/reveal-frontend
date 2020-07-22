@@ -1,7 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Papaparse from 'papaparse';
 import React, { useState } from 'react';
-import { ValueType } from 'react-select';
 import { Button, FormGroup } from 'reactstrap';
 import JurisdictionSelect from '../../../components/forms/JurisdictionSelect';
 import {
@@ -134,7 +133,7 @@ const JurisdictionHierachyDownloadForm = (props: JurisdictionHierachyDownloadFor
                 aria-label={SELECT_COUNTRY}
                 disabled={false}
                 // tslint:disable-next-line: jsx-no-lambda
-                onChange={(value: ValueType<{ value: string; label: string }>) => {
+                validate={(value: any) => {
                   if (value) {
                     setDisabled(false);
                   }
