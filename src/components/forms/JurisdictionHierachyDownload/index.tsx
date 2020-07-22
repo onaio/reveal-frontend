@@ -1,10 +1,9 @@
-import { ErrorMessage, Field, FieldProps, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import Papaparse from 'papaparse';
 import React, { useState } from 'react';
+import { ValueType } from 'react-select';
 import { Button, FormGroup } from 'reactstrap';
-import JurisdictionSelect, {
-  JurisdictionSelectProps,
-} from '../../../components/forms/JurisdictionSelect';
+import JurisdictionSelect from '../../../components/forms/JurisdictionSelect';
 import {
   DOWNLOAD,
   DOWNLOAD_FILE,
@@ -88,6 +87,8 @@ export const submitJurisdictionHierachyForm = (
           successGrowl(FILE_DOWNLOADED_SUCCESSFULLY);
           setSubmitting(false);
         }
+      } else {
+        setSubmitting(false);
       }
     })
     .catch((e: Error) => {
@@ -99,7 +100,7 @@ export const submitJurisdictionHierachyForm = (
 const JurisdictionHierachyDownloadForm = (props: JurisdictionHierachyDownloadFormProps) => {
   const { initialValues } = props;
   const [globalError, setGlobalError] = useState<string>('');
-  const [disabled, setDisabled] = useState<boolean>(false);
+  const [disabled, setDisabled] = useState<boolean>(true);
   return (
     <div className="form-container">
       <Formik
@@ -124,6 +125,12 @@ const JurisdictionHierachyDownloadForm = (props: JurisdictionHierachyDownloadFor
                 placeholder={SELECT_COUNTRY}
                 aria-label={SELECT_COUNTRY}
                 disabled={false}
+                // tslint:disable-next-line: jsx-no-lambda
+                onChange={(value: ValueType<{ value: string; label: string }>) => {
+                  if (value) {
+                    setDisabled(false);
+                  }
+                }}
                 labelFieldName={`jurisdictions.name`}
               />
               <Field type="hidden" name={`jurisdictions.name`} id={`jurisdictions.name`} />
