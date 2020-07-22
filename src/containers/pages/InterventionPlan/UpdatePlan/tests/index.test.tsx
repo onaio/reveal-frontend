@@ -217,7 +217,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     });
     wrapper.update();
 
-    /**@todo Simulate input change did not hework. So the workaround was to clear the store of
+    /**@todo Simulate input change did not work. So the workaround was to clear the store of
      * plan definitions before submit. The best implementation is to simulate input change
      * and assert that the store gets updated with that change
      */
@@ -269,7 +269,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     });
     wrapper.update();
 
-    /**@todo Simulate input change did not hework. So the workaround was to clear the store of
+    /**@todo Simulate input change did not work. So the workaround was to clear the store of
      * plan definitions before submit. The best implementation is to simulate input change
      * and assert that the store gets updated with that change
      */

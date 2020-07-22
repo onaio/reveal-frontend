@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { connect } from 'react-redux';
 import { Col, Row } from 'reactstrap';
-import { defaultInitialValues, PlanFormProps } from '../../../../../components/forms/PlanForm';
+import PlanForm, {
+  defaultInitialValues,
+  PlanFormProps,
+} from '../../../../../components/forms/PlanForm';
 import { planActivitiesMap } from '../../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb, {
   Page,
@@ -23,12 +27,13 @@ import {
   PLAN_LIST_URL,
   PLANNING_VIEW_URL,
 } from '../../../../../constants';
+import { addPlanDefinition } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType } from '../../../../../store/ducks/plans';
-import ConnectedPlanForm, { ConnectedPlanFormProps } from '../../../../forms/ConnectedPlanForm';
 import { JurisdictionDetails } from './JurisdictionDetails';
 
 /** expose props that would enable one to customize the underlying planForm props */
 interface BaseNewPlanProps {
+  addPlan: typeof addPlanDefinition;
   extraPlanFormProps: Partial<PlanFormProps>;
   breadCrumbParentPage: Page;
   showJurisdictionDetails: boolean;
@@ -36,6 +41,7 @@ interface BaseNewPlanProps {
 
 /** the default props */
 export const defaultBasePlanProps = {
+  addPlan: addPlanDefinition,
   breadCrumbParentPage: {
     label: PLANS,
     url: PLAN_LIST_URL,
@@ -100,6 +106,7 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
     ...{ ...lookedUpPlanFormProps, initialValues: formValues, ...props.extraPlanFormProps },
     formHandler: formValuesHandler,
   };
+  const { addPlan } = props;
 
   return (
     <div>
@@ -110,10 +117,7 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <Row>
         <Col md={8} id="planform-col-container">
-          <ConnectedPlanForm
-            {...(planFormProps as ConnectedPlanFormProps)}
-            key={formValues.interventionType}
-          />
+          <PlanForm {...planFormProps} key={formValues.interventionType} addPlan={addPlan} />
         </Col>
         {props.showJurisdictionDetails && (
           <Col md={4}>
@@ -175,4 +179,10 @@ export const NewIRSPlan = () => {
   return <BaseNewPlan {...baseNewPlanProps} />;
 };
 
-export default BaseNewPlan;
+/** map dispatch to props */
+const mapDispatchToProps = { addPlan: addPlanDefinition };
+
+/** Connected component */
+const ConnectedBaseNewPlan = connect(null, mapDispatchToProps)(BaseNewPlan);
+
+export default ConnectedBaseNewPlan;
