@@ -66,7 +66,7 @@ export const draftPageColumns: Array<DrillDownColumn<PlanRecord>> = [
     Cell: (cell: Cell<PlanRecord>) => {
       const original = cell.row.original;
       return (
-        <Link to={`${baseUrlForDraftPlansPage}/${original.id}`} key={original.id}>
+        <Link to={`${ASSIGN_JURISDICTIONS_URL}/${original.id}`} key={original.id}>
           {cell.value}
         </Link>
       );
