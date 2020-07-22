@@ -57,13 +57,10 @@ export const reducer = (state: State, action: ActionType) => {
  * @param initialKey - uses this key to create the initial state
  * @param load - the value of initialKey; forms the initial state
  */
-export const useLoadingReducer = (initialKey?: string, load: boolean = true) => {
-  let initialState: State = {};
-  if (initialKey) {
-    initialState = {
-      [initialKey]: load,
-    };
-  }
+export const useLoadingReducer = (initialLoadingState: boolean = true) => {
+  const initialLoadingStateKey = 'initialState';
+  const initialState: State = { [initialLoadingStateKey]: initialLoadingState };
+
   const [store, dispatch] = useReducer(reducer, initialState);
 
   const changeLoading = (key: string, loadStatus: boolean) => {
@@ -92,13 +89,30 @@ export const useLoadingReducer = (initialKey?: string, load: boolean = true) => 
     return changeLoading(key, false);
   };
 
+  /** if there is no other state other than initialState, return the value
+   * of initial state as loading. otherwise disregard initial state if there are other
+   * entries.
+   */
+
   /** returns the combined state of loading entries, basically does a logical `or` on each of the
    * loading entries
    */
   const loading = () => {
+    // remove initialState if there is more than one entry
+    const numOfEntries = Object.entries(store).length;
+    let storeSliceOfInterest = store;
+    if (numOfEntries > 1) {
+      const nonDefaultStore: State = {};
+      Object.entries(store).forEach(([key, value]) => {
+        if (key !== initialLoadingStateKey) {
+          nonDefaultStore[key] = value;
+        }
+      });
+      storeSliceOfInterest = nonDefaultStore;
+    }
     const reducingFn = (accumulator: boolean, currentValue: boolean) => accumulator || currentValue;
-    return Object.values(store).reduce(reducingFn, false);
+    return Object.values(storeSliceOfInterest).reduce(reducingFn, false);
   };
 
-  return { startLoading, stopLoading, loading, initialKey };
+  return { startLoading, stopLoading, loading };
 };
