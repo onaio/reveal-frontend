@@ -71,6 +71,7 @@ import {
   LOGOUT_URL,
   MANIFEST_FILE_UPLOAD,
   MANIFEST_RELEASE_URL,
+  MANUAL_ASSIGN_JURISDICTIONS_URL,
   MAP,
   MDA_POINT_CHILD_REPORT_URL,
   MDA_POINT_LOCATION_REPORT_URL,
@@ -115,6 +116,7 @@ import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsRe
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
+import { ConnectedJurisdictionAssignmentEntry } from '../containers/pages/JurisdictionAssignment/JurisdictionAssignmentEntryView';
 import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/JurisdictionAssignmentView';
 import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
 import ConnectedChildReports from '../containers/pages/MDAPoint/ChildReports';
@@ -559,21 +561,21 @@ const App = (props: AppProps) => {
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
+                  path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
                   component={ConnectedJurisdictionAssignmentView}
                 />
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId`}
+                  path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId`}
                   component={ConnectedJurisdictionAssignmentView}
                 />
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${ASSIGN_JURISDICTIONS_URL}/:planId`}
+                  path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId`}
                   component={ConnectedJurisdictionAssignmentView}
                 />
                 <ConnectedPrivateRoute
@@ -596,6 +598,13 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId`}
                   component={ConnectedAutoSelectView}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${ASSIGN_JURISDICTIONS_URL}/:planId`}
+                  component={ConnectedJurisdictionAssignmentEntry}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
