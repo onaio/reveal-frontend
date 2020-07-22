@@ -31,10 +31,14 @@ export interface Option {
   name: string;
 }
 
+/** interface for each select dropdown option */
 export interface JurisdictionHierachyDownloadFormFields {
   jurisdictions: Option;
 }
 
+/**
+ * interface for the Jurisdiction hierarchy download form fields
+ */
 export interface JurisdictionHierachyDownloadFormProps {
   disabledFields: string[];
   serviceClass: OpenSRPService;
@@ -51,11 +55,12 @@ export const defaultInitialValues: JurisdictionHierachyDownloadFormFields = {
   jurisdictions: { id: '', name: '' },
 };
 
+// Create csv data for the selected jurisdiction hieracrhy
 const createCsv = (entries: JurisdictionHierachyFile[], fileName: string): void => {
   const csv: string = Papaparse.unparse(entries, {
     header: true,
   });
-  // download file
+  // Export csv file
   downloadFile(csv, fileName, TEXT_CSV);
 };
 
@@ -97,6 +102,9 @@ export const submitJurisdictionHierachyForm = (
     });
 };
 
+/**
+ * Compponent that renders form to select country and export jurisdiction hierarchy data for selected country
+ */
 const JurisdictionHierachyDownloadForm = (props: JurisdictionHierachyDownloadFormProps) => {
   const { initialValues } = props;
   const [globalError, setGlobalError] = useState<string>('');
@@ -157,6 +165,9 @@ const JurisdictionHierachyDownloadForm = (props: JurisdictionHierachyDownloadFor
   );
 };
 
+/**
+ * JurisdictionHierarchyDownload - enables users to export jurisdiction hierarchies based on seelcted country
+ */
 const defaultProps: JurisdictionHierachyDownloadFormProps = {
   disabledFields: [],
   initialValues: defaultInitialValues,
