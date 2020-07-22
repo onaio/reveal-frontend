@@ -177,6 +177,7 @@ export function getPlanDefinitionsArray(
 export interface PlanDefinitionFilters {
   title?: string /** plan object title */;
   planIds?: string[] | null /** return only plans whose id appear here */;
+  statusList?: string[] /** array of plan statuses */;
 }
 
 /** planDefinitionsByIdBaseSelector selects store slice object with of all plans
@@ -208,6 +209,13 @@ export const getTitle = (_: Partial<Store>, props: PlanDefinitionFilters) => pro
  * @param props - the plan filters object
  */
 export const getPlanIds = (_: Partial<Store>, props: PlanDefinitionFilters) => props.planIds;
+
+/** getStatusList
+ * Gets statusList from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getStatusList = (_: Partial<Store>, props: PlanDefinitionFilters) => props.statusList;
 
 /** getPlansArrayByTitle
  * Gets an array of Plan objects filtered by plan title
@@ -264,6 +272,18 @@ export const getPlanDefinitionsArrayByInterventionType = (planKey?: string) => {
   );
 };
 
+/** getPlanDefinitionsArrayByStatus
+ * Gets an array of Plan objects filtered by plan status
+ * @param {Partial<Store>} state - the redux store
+ * @param {PlanDefinitionFilters} props - the plan defintion filters object
+ */
+export const getPlanDefinitionsArrayByStatus = (planKey?: string) =>
+  createSelector([planDefinitionsArrayBaseSelector(planKey), getStatusList], (plans, statusList) =>
+    statusList
+      ? plans.filter(plan => (statusList.length ? statusList.includes(plan.status) : true))
+      : plans
+  );
+
 /** makePlanDefinitionsArraySelector
  * Returns a selector that gets an array of IRSPlan objects filtered by one or all
  * of the following:
@@ -290,9 +310,10 @@ export const makePlanDefinitionsArraySelector = (
       getPlanDefinitionsArrayByInterventionType(planKey),
       getPlanDefinitionsArrayByTitle(planKey),
       getPlanDefinitionsArrayByPlanIds(planKey),
+      getPlanDefinitionsArrayByStatus(planKey),
     ],
-    (plans1, plans2, plans3) => {
-      let finalPlans = intersect([plans1, plans2, plans3], JSON.stringify);
+    (plans1, plans2, plans3, plan4) => {
+      let finalPlans = intersect([plans1, plans2, plans3, plan4], JSON.stringify);
       if (sortField) {
         finalPlans = descendingOrderSort(finalPlans, sortField);
       }

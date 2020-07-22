@@ -14,6 +14,7 @@ import {
   renderInFilterFactory,
 } from '../../../../components/Table/DrillDownFilters/utils';
 import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
+import { HIDDEN_PLAN_STATUSES } from '../../../../configs/env';
 import { ADD_PLAN, HOME, PLANS } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import {
@@ -25,7 +26,7 @@ import {
 } from '../../../../constants';
 import { loadPlansByUserFilter } from '../../../../helpers/dataLoading/plans';
 import { displayError } from '../../../../helpers/errors';
-import { getQueryParams } from '../../../../helpers/utils';
+import { getPlanStatusToDisplay, getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
@@ -42,6 +43,9 @@ import { TableColumns } from './utils';
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 reducerRegistry.register(plansByUserReducerName, plansByUserReducer);
+
+/** a list of plan statuses to be displayed */
+const allowedPlanStatusList = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
 
 /** interface for PlanList props */
 interface PlanListProps {
@@ -185,6 +189,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const planIds = makePlansByUserNamesSelector()(state, { userName });
   const planDefinitionsArray = plansDefinitionsArraySelector(state, {
     planIds,
+    statusList: allowedPlanStatusList,
     title: searchedTitle,
   });
 

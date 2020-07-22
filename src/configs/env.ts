@@ -326,3 +326,28 @@ export type REVEAL_BRAND_IMG_SRC = typeof REVEAL_BRAND_IMG_SRC;
 export const SHOW_MDA_SCHOOL_REPORT_LABEL =
   process.env.REACT_APP_SHOW_MDA_SCHOOL_REPORT_LABEL === 'true';
 export type SHOW_MDA_SCHOOL_REPORT_LABEL = typeof SHOW_MDA_SCHOOL_REPORT_LABEL;
+
+/** list of plan types to be added to intervention type field when adding plans */
+export const ENABLE_POPULATION_SERVER_SETTINGS =
+  process.env.REACT_APP_ENABLE_POPULATION_SERVER_SETTINGS === 'true';
+export type ENABLE_POPULATION_SERVER_SETTINGS = typeof ENABLE_POPULATION_SERVER_SETTINGS;
+export const ENABLE_PLANNING = process.env.REACT_APP_ENABLE_PLANNING === 'true';
+export type ENABLE_PLANNING = typeof ENABLE_PLANNING;
+
+export const HIDDEN_MAP_LEGEND_ITEMS = String(
+  process.env.REACT_APP_HIDDEN_MAP_LEGEND_ITEMS || ' '
+).split(',');
+export type HIDDEN_MAP_LEGEND_ITEMS = typeof HIDDEN_MAP_LEGEND_ITEMS;
+export const JURISDICTION_METADATA_RISK =
+  process.env.REACT_APP_JURISDICTION_METADATA_RISK || 'jurisdiction_metadata-risk';
+export type JURISDICTION_METADATA_RISK = typeof JURISDICTION_METADATA_RISK;
+
+export const JURISDICTION_METADATA_RISK_PERCENTAGE =
+  process.env.REACT_APP_JURISDICTION_METADATA_RISK_PERCENTAGE || '90';
+export type JURISDICTION_METADATA_RISK_PERCENTAGE = typeof JURISDICTION_METADATA_RISK_PERCENTAGE;
+
+/** list of plan statuses enabled on Manage plans and reporting pages */
+export const HIDDEN_PLAN_STATUSES = String(
+  process.env.REACT_APP_HIDDEN_PLAN_STATUSES || 'retired'
+).split(',');
+export type HIDDEN_PLAN_STATUSES = typeof HIDDEN_PLAN_STATUSES;
