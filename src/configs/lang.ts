@@ -769,15 +769,7 @@ export const SAVE_AND_ACTIVATE = translate('SAVE_AND_ACTIVATE', 'Save & Activate
 
 export const CANNOT_ASSIGN_TEAM_LABEL = translate(
   'CANNOT_ASSIGN_TEAM',
-  'Cannot assign teams for expired plans');
-  
-export const NUMBER_OF_STRUCTURES_IN_JURISDICTIONS = translate(
-  'NUMBER_OF_STRUCTURES_IN_JURISDICTIONS',
-  'NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS'
-);
-export const ADJUST_SLIDER_MESSAGE = translate(
-  'ADJUST_SLIDER_MESSAGE',
-  'Adjust slider to auto-target jurisdictions'
+  'Cannot assign teams for expired plans'
 );
 
 export const NUMBER_OF_STRUCTURES_IN_JURISDICTIONS = translate(
@@ -788,6 +780,7 @@ export const ADJUST_SLIDER_MESSAGE = translate(
   'ADJUST_SLIDER_MESSAGE',
   'Adjust slider to auto-target jurisdictions'
 );
+
 export const ERROR_PERMISSION_DENIED = translate(
   'ERROR_PERMISSION_DENIED',
   'This user does not have permissions to access this page'
