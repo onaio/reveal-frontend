@@ -783,3 +783,12 @@ export const ERROR_PERMISSION_DENIED = translate(
   'ERROR_PERMISSION_DENIED',
   'This user does not have permissions to access this page'
 );
+
+export const AUTO_TARGET_JURISDICTIONS_BY_RISK = translate(
+  'AUTO_TARGET_JURISDICTIONS_BY_RISK',
+  'Auto target jurisdictions by risk'
+);
+export const REFINE_SELECTED_JURISDICTIONS = translate(
+  'REFINE_SELECTED_JURISDICTIONS',
+  'Refine selected jurisdictions'
+);
