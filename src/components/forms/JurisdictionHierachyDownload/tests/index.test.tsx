@@ -8,10 +8,14 @@ import {
   FILE_DOWNLOADED_SUCCESSFULLY,
   JURISDICTION_HIERARCHY_TEMPLATE,
 } from '../../../../configs/lang';
-import { TEXT_CSV } from '../../../../constants';
+import { OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT, TEXT_CSV } from '../../../../constants';
 import * as helperUtils from '../../../../helpers/utils';
 import { sampleHierarchy } from '../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
 import { csvData } from './fixtures/csvData';
+
+jest.mock('../../../../configs/env');
+// tslint:disable-next-line: no-var-requires
+const fetch = require('jest-fetch-mock');
 
 describe('components/forms/JurisdictionMetadata', () => {
   beforeEach(() => {
@@ -38,6 +42,7 @@ describe('components/forms/JurisdictionMetadata', () => {
   });
   it('submitJurisdictionHierachyForm downloads CSV file', async () => {
     const jurisdictions: Option = { id: '', name: '' };
+    fetch.once(JSON.stringify(sampleHierarchy));
     const setSubmitting = jest.fn();
     const setGlobalError = jest.fn();
     const mockGrowl: any = jest.fn();
@@ -57,11 +62,12 @@ describe('components/forms/JurisdictionMetadata', () => {
       initialValues: {
         jurisdictions,
       },
-      serviceClass: new mockedOpenSRPservice(),
+      serviceClass: new mockedOpenSRPservice(OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT),
     };
     submitJurisdictionHierachyForm(setSubmitting, setGlobalError, props as any, { jurisdictions });
     await waitFor(() => {
       expect(mockedOpenSRPservice).toHaveBeenCalledTimes(1);
+      expect(mockedOpenSRPservice).toHaveBeenCalledWith(OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT);
       expect(mockGrowl).toBeCalled();
       expect(mockGrowl).toBeCalledWith(FILE_DOWNLOADED_SUCCESSFULLY);
       expect(mockDownload).toBeCalled();

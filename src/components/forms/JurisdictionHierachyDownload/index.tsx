@@ -21,7 +21,7 @@ import { LOCATION } from '../../TreeWalker/constants';
 
 export interface JurisdictionHierachyFile {
   jurisdiction_id: string;
-  jurisdiction_label: string;
+  jurisdiction_name: string;
 }
 
 /** interface for each select dropdown option */
@@ -39,14 +39,7 @@ export interface JurisdictionHierachyDownloadFormFields {
  * interface for the Jurisdiction hierarchy download form fields
  */
 export interface JurisdictionHierachyDownloadFormProps {
-  disabledFields: string[];
   serviceClass: OpenSRPService;
-  submitForm: (
-    setSubmitting: (isSubmitting: boolean) => void,
-    setGlobalError: (errorMessage: string) => void,
-    props: JurisdictionHierachyDownloadFormProps,
-    values: JurisdictionHierachyDownloadFormFields
-  ) => void;
   initialValues: JurisdictionHierachyDownloadFormFields;
 }
 
@@ -68,7 +61,7 @@ export const submitJurisdictionHierachyForm = (
   setGlobalError: (errorMessage: string) => void,
   props: JurisdictionHierachyDownloadFormProps,
   values: JurisdictionHierachyDownloadFormFields
-) => {
+): void => {
   const params = {
     return_structure_count: false,
   };
@@ -83,7 +76,7 @@ export const submitJurisdictionHierachyForm = (
           tree.walk((node: TreeNode) => {
             records.push({
               jurisdiction_id: node.model.id,
-              jurisdiction_label: node.model.label,
+              jurisdiction_name: node.model.label,
             } as JurisdictionHierachyFile);
             return true;
           });
@@ -114,7 +107,7 @@ const JurisdictionHierachyDownloadForm = (props: JurisdictionHierachyDownloadFor
         initialValues={initialValues}
         // tslint:disable-next-line: jsx-no-lambda
         onSubmit={(values, { setSubmitting }) => {
-          props.submitForm(setSubmitting, setGlobalError, props, values);
+          submitJurisdictionHierachyForm(setSubmitting, setGlobalError, props, values);
         }}
       >
         {({ errors, isSubmitting }) => (
@@ -131,7 +124,6 @@ const JurisdictionHierachyDownloadForm = (props: JurisdictionHierachyDownloadFor
                 id={`jurisdictions-id`}
                 placeholder={SELECT_COUNTRY}
                 aria-label={SELECT_COUNTRY}
-                disabled={false}
                 // tslint:disable-next-line: jsx-no-lambda
                 validate={(value: any) => {
                   if (value) {
@@ -168,10 +160,8 @@ const JurisdictionHierachyDownloadForm = (props: JurisdictionHierachyDownloadFor
  * JurisdictionHierarchyDownload - enables users to export jurisdiction hierarchies based on seelcted country
  */
 const defaultProps: JurisdictionHierachyDownloadFormProps = {
-  disabledFields: [],
   initialValues: defaultInitialValues,
   serviceClass: new OpenSRPService(OPENSRP_V2_SETTINGS),
-  submitForm: submitJurisdictionHierachyForm,
 };
 
 JurisdictionHierachyDownloadForm.defaultProps = defaultProps;
