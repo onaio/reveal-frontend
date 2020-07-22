@@ -246,16 +246,13 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   };
 
   /**
-   * Check if a plan type should be visible
+   * Check if map should be visible based on plan type
    */
   const isMapEnabled = (): boolean => {
     let interventionType: string | undefined = '';
     if (plan) {
       const type = plan.useContext.find(element => element.code === INTERVENTION_TYPE_CODE);
       type ? (interventionType = type.valueCodableConcept) : (interventionType = '');
-    }
-    if (MAP_ENABLED_PLAN_TYPES.length === 0) {
-      return true;
     }
     return MAP_ENABLED_PLAN_TYPES.includes(interventionType);
   };
