@@ -34,7 +34,7 @@ exports[`PlanAssignment shows an error message if no plan jurisdiction hierarchy
     <span
       className="text-danger"
     >
-      OpenSRPService read on location/getHierarchy/plan failed, HTTP status 400
+      OpenSRPService read on location/hierarchy/plan failed, HTTP status 400
     </span>
   </p>
 </div>
