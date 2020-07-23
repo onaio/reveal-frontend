@@ -66,8 +66,8 @@ import {
   TASK_GENERATION_STATUS_CODE,
   TRIGGER,
 } from '../../../constants';
-import { AddPlanOnFormSuccess } from '../../../containers/forms/ConnectedPlanForm';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
+import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import {
   ActionReasonType,
@@ -773,7 +773,7 @@ export const onSubmitSuccess = (
   setSubmitting: (isSubmitting: boolean) => void,
   setAreWeDoneHere: React.Dispatch<React.SetStateAction<boolean>>,
   payload: PlanDefinition,
-  addPlan?: AddPlanOnFormSuccess
+  addPlan?: typeof addPlanDefinition
 ) => {
   if (addPlan) {
     addPlan(payload);

@@ -74,8 +74,8 @@ import {
   planStatusDisplay,
 } from '../../../configs/settings';
 import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constants';
-import { AddPlanOnFormSuccess } from '../../../containers/forms/ConnectedPlanForm';
 import { OpenSRPService } from '../../../services/opensrp';
+import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
 import JurisdictionSelect from '../JurisdictionSelect';
@@ -156,7 +156,7 @@ export interface PlanFormProps {
     child?: LocationChildRenderProp /** nested render content for each location name */
   ) => JSX.Element;
   /** a render prop that renders the plan's location names */
-  addPlan?: AddPlanOnFormSuccess /** Add new/update plan to redux store */;
+  addPlan?: typeof addPlanDefinition /** Add new/update plan to redux store */;
 }
 
 /** Plan Form component */
