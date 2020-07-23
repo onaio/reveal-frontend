@@ -116,3 +116,8 @@ export const useLoadingReducer = (initialLoadingState: boolean = true) => {
 
   return { startLoading, stopLoading, loading };
 };
+
+/** types fot useLoadingReducer exposed api */
+export type StartLoading = (key: string, condition?: boolean) => void;
+export type StopLoading = (key: string) => void;
+export type Loading = () => boolean;
