@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { ActionCreator, Store } from 'redux';
 import Loading from '../../../components/page/Loading';
 import { withTreeWalker } from '../../../components/TreeWalker';
-import { MAP_ENABLED_PLAN_TYPES } from '../../../configs/env';
+import { MAP_DISABLED_PLAN_TYPES } from '../../../configs/env';
 import {
   AN_ERROR_OCURRED,
   COULD_NOT_LOAD_ASSIGNMENTS,
@@ -248,18 +248,18 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   /**
    * Check if map should be visible based on plan type
    */
-  const isMapEnabled = (): boolean => {
+  const isMapDisabled = (): boolean => {
     let interventionType: string | undefined = '';
     if (plan) {
       const type = plan.useContext.find(element => element.code === INTERVENTION_TYPE_CODE);
       type ? (interventionType = type.valueCodableConcept) : (interventionType = '');
     }
-    return MAP_ENABLED_PLAN_TYPES.includes(interventionType);
+    return MAP_DISABLED_PLAN_TYPES.includes(interventionType);
   };
 
   return (
     <>
-      {isMapEnabled ? <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} /> : ''}
+      {isMapDisabled ? '' : <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />}
       <WrappedJurisdictionTable {...wrappedProps} />
     </>
   );
