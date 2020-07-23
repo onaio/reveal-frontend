@@ -6,7 +6,7 @@
 
 import { Dictionary } from '@onaio/utils/dist/types/types';
 import FlatToNested from 'flat-to-nested';
-import { keyBy } from 'lodash';
+import { keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import TreeModel from 'tree-model';
@@ -532,7 +532,7 @@ export const getStructuresCount = () =>
 export const getSelectedHierarchy = () => {
   return createSelector(getTreeById(), tree => {
     // get selected leaf nodes.
-    const allSelectedLeafNodes = computeSelectedNodes(tree, false);
+    const allSelectedLeafNodes = computeSelectedNodes(tree, true);
     if (allSelectedLeafNodes.length === 0) {
       return;
     }
@@ -545,7 +545,14 @@ export const getSelectedHierarchy = () => {
     });
 
     // flatten it into an array in preparation of creating a nested structure
-    const normalNodes = allSelectedLeafNodes.map(node => node.model);
+    // TODO - any
+    const normalNodes: TreeNode[] = [];
+    values(allNodesInPaths).forEach((node: any) => {
+      const data = node.model;
+      // remove the existing children field, we will add it later with the computed children
+      delete data.children;
+      normalNodes.push(data);
+    });
 
     // nest them normal nodes into a hierarchy
     const flatToNested = new (FlatToNested as any)({
