@@ -82,8 +82,6 @@ export const isMapDisabled = (plan: PlanDefinition | null): boolean => {
     const type = plan.useContext.find(element => element.code === INTERVENTION_TYPE_CODE);
     if (type) {
       return MAP_DISABLED_PLAN_TYPES.includes(type.valueCodableConcept);
-    } else {
-      return false;
     }
   }
   return false;
