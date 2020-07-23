@@ -365,3 +365,10 @@ export const MAP_DISABLED_PLAN_TYPES = String(
   process.env.REACT_APP_MAP_DISABLED_PLAN_TYPES || ''
 ).split(',');
 export type MAP_DISABLED_PLAN_TYPES = typeof MAP_DISABLED_PLAN_TYPES;
+
+/** list of plan statuses enabled on Manage plans and reporting pages */
+export const HIDDEN_PLAN_STATUSES = String(
+  process.env.REACT_APP_HIDDEN_PLAN_STATUSES || 'retired'
+).split(',');
+export type HIDDEN_PLAN_STATUSES = typeof HIDDEN_PLAN_STATUSES;
+

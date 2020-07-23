@@ -37,6 +37,7 @@ import {
   getColor,
   getColorByValue,
   getLocationColumns,
+  getPlanStatusToDisplay,
   getQueryParams,
   IndicatorThresholdItemPercentage,
   isPlanDefinitionOfType,
@@ -405,5 +406,11 @@ describe('helpers/utils', () => {
     expect(payload.settings).toHaveLength(2);
     expect(payload.settings[0].value).toEqual('30');
     expect(payload.settings[0].key).toEqual('79b139c-3a20-4656-b684-d2d9ed83c94e');
+  });
+
+  it('getPlanStatusToDisplay - eliminates unwanted plans', () => {
+    expect(getPlanStatusToDisplay([])).toEqual(['active', 'complete', 'draft', 'retired']);
+    expect(getPlanStatusToDisplay(['active'])).toEqual(['complete', 'draft', 'retired']);
+    expect(getPlanStatusToDisplay(['active', 'draft'])).toEqual(['complete', 'retired']);
   });
 });

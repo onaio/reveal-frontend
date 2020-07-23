@@ -73,7 +73,13 @@ describe('reducers/IRS/IRSPlan', () => {
     expect(IRSPlansArraySelector(store.getState(), { plan_title: 'Berg' })).toEqual([
       fixtures.plans[2],
     ]);
-
+    expect(IRSPlansArraySelector(store.getState(), { statusList: ['retired'] })).toEqual([
+      fixtures.plans[0],
+    ]);
+    expect(IRSPlansArraySelector(store.getState(), { statusList: ['draft'] })).toEqual([]);
+    expect(
+      IRSPlansArraySelector(store.getState(), { statusList: ['active'], plan_title: 'irs' })
+    ).toEqual([fixtures.plans[1]]);
     // reset
     store.dispatch(removeIRSPlans());
     expect(getIRSPlansArray(store.getState())).toEqual([]);

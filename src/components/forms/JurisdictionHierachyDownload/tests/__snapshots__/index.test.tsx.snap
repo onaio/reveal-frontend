@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/forms/JurisdictionMetadata renders correctly: JurisdictionHierachyDownloadForm react-select-3-input 1`] = `
+<input
+  aria-autocomplete="list"
+  aria-label="Select Country"
+  autoCapitalize="none"
+  autoComplete="off"
+  autoCorrect="off"
+  disabled={false}
+  id="react-select-3-input"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onFocus={[Function]}
+  spellCheck="false"
+  style={
+    Object {
+      "background": 0,
+      "border": 0,
+      "boxSizing": "content-box",
+      "color": "inherit",
+      "fontSize": "inherit",
+      "label": "input",
+      "opacity": 1,
+      "outline": 0,
+      "padding": 0,
+      "width": "2px",
+    }
+  }
+  tabIndex="0"
+  type="text"
+  value=""
+/>
+`;
