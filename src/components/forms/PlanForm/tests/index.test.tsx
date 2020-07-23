@@ -645,7 +645,7 @@ describe('containers/forms/PlanForm - Submission', () => {
     // nice, eh?
   });
 
-  it('Location field does not fires errors all time', async () => {
+  it('Location and title fields does not fires errors all time', async () => {
     const wrapper = mount(
       <MemoryRouter>
         <PlanForm />
@@ -656,12 +656,19 @@ describe('containers/forms/PlanForm - Submission', () => {
       .find('select[name="interventionType"]')
       .simulate('change', { target: { name: 'interventionType', value: 'MDA-Point' } });
     wrapper.update();
+    // fields don't have errors
     expect(wrapper.find('small.jurisdictions-error').length).toBeFalsy();
+    expect(wrapper.find('input[name="title"]').hasClass('is-invalid')).toBeFalsy();
+    // simulate touch on title field
+    wrapper
+      .find('input[name="title"]')
+      .simulate('change', { target: { name: 'title', value: '' } });
+
     // error on submit when field not filled
     wrapper.find('form').simulate('submit');
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
-
+    expect(wrapper.find('input[name="title"]').hasClass('is-invalid')).toBeTruthy();
     expect(wrapper.find('small.jurisdictions-error').text()).toEqual('An Error Ocurred');
   });
 

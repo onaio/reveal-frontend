@@ -184,6 +184,7 @@ export function getMDAPointPlansArray(
 /** This interface represents the structure of MDAPoint plan filter options/params */
 export interface MDAPointPlanFilters {
   plan_title?: string /** MDAPoint plan title */;
+  statusList?: string[] /** array of plan statuses */;
 }
 
 /** MDAPointPlansArrayBaseSelector select an array of all plans
@@ -200,6 +201,13 @@ export const MDAPointPlansArrayBaseSelector = (planKey?: string) => (
  */
 export const getTitle = (_: Partial<Store>, props: MDAPointPlanFilters) => props.plan_title;
 
+/** getStatusList
+ * Gets statusList from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getStatusList = (_: Partial<Store>, props: MDAPointPlanFilters) => props.statusList;
+
 /** getPlansArrayByTitle
  * Gets an array of Plan objects filtered by plan title
  * @param {Partial<Store>} state - the redux store
@@ -209,6 +217,18 @@ export const getMDAPointPlansArrayByTitle = (planKey?: string) =>
   createSelector([MDAPointPlansArrayBaseSelector(planKey), getTitle], (plans, title) =>
     title
       ? plans.filter(plan => plan.plan_title.toLowerCase().includes(title.toLowerCase()))
+      : plans
+  );
+
+/** getMDAPointPlansArrayByStatus
+ * Gets an array of Plan objects filtered by plan status
+ * @param {Partial<Store>} state - the redux store
+ * @param {PlanDefinitionFilters} props - the plan defintion filters object
+ */
+export const getMDAPointPlansArrayByStatus = (planKey?: string) =>
+  createSelector([MDAPointPlansArrayBaseSelector(planKey), getStatusList], (plans, statusList) =>
+    statusList
+      ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
       : plans
   );
 
@@ -229,7 +249,8 @@ export const getMDAPointPlansArrayByTitle = (planKey?: string) =>
  * @param {string} sortField - sort by field
  */
 export const makeMDAPointPlansArraySelector = (planKey?: string) => {
-  return createSelector([getMDAPointPlansArrayByTitle(planKey)], plans =>
-    intersect([plans], JSON.stringify)
+  return createSelector(
+    [getMDAPointPlansArrayByTitle(planKey), getMDAPointPlansArrayByStatus(planKey)],
+    (plan1, plan2) => intersect([plan1, plan2], JSON.stringify)
   );
 };
