@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Button } from 'reactstrap';
-import { ASSIGN_TEAMS } from '../../../../../configs/lang';
+import { Button, Tooltip } from 'reactstrap';
+import { ASSIGN_TEAMS, CANNOT_ASSIGN_TEAM_LABEL } from '../../../../../configs/lang';
 import {
   AssignmentFormProps,
   defaultAssignmentProps,
@@ -21,9 +21,22 @@ interface EditOrgsProps extends AssignmentFormProps {
  */
 const EditOrgs = (props: EditOrgsProps) => {
   const [showForm, setShowForm] = useState(false);
-  const { assignTeamsLabel } = props;
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+  const { assignTeamsLabel, jurisdiction, plan } = props;
 
-  const callBack = (_: React.MouseEvent) => {
+  const { id: jurisdictionId } = jurisdiction && jurisdiction.model;
+  const endDate = plan && plan.effectivePeriod.end;
+  const isPlanExpired = new Date() > new Date(endDate as string);
+
+  /**
+   * toggle assign plan button and team assigning form
+   * @param {React.MouseEvent} _
+   * @param {boolean} disabled
+   */
+  const callBack = (_: React.MouseEvent, disabled: boolean = isPlanExpired) => {
+    if (disabled) {
+      return false;
+    }
     setShowForm(true);
   };
 
@@ -31,12 +44,36 @@ const EditOrgs = (props: EditOrgsProps) => {
     setShowForm(false);
   };
 
+  /** show and hide tooltip */
+  const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
+
+  const assignBtnId = `jurisiction-${jurisdictionId}`;
+
   return showForm ? (
     <JurisdictionAssignmentForm {...props} cancelCallBackFunc={closeForm} />
   ) : (
-    <Button onClick={callBack} size="sm" color="primary" className="show-form">
-      {assignTeamsLabel}
-    </Button>
+    <div>
+      <Button
+        onClick={callBack}
+        size="sm"
+        color="primary"
+        className={`show-form${isPlanExpired ? ' disabled' : ''}`}
+        id={assignBtnId}
+      >
+        {assignTeamsLabel}
+      </Button>
+      {isPlanExpired && (
+        <Tooltip
+          placement="top"
+          className="tool-tip"
+          isOpen={tooltipOpen}
+          target={assignBtnId}
+          toggle={toggleTooltip}
+        >
+          {CANNOT_ASSIGN_TEAM_LABEL}
+        </Tooltip>
+      )}
+    </div>
   );
 };
 
