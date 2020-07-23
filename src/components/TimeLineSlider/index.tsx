@@ -2,6 +2,7 @@ import { findIndex } from 'lodash';
 import React from 'react';
 import './index.css';
 
+/** describes a single stop object */
 export interface Stop {
   labelInStop: string | number;
   labelBelowStop: string | number;
@@ -13,6 +14,10 @@ export interface TimelineSliderProps {
   keyOfCurrentStop: number | string;
 }
 
+/** helper to get the stop given the keyOfCurrentStop
+ * @param stops - an array of the stops
+ * @param currentStopKey - key of the current stop
+ */
 export const getCurrentStopFromKey = (stops: Stop[], currentStopKey: string | number) => {
   return findIndex(stops, (stop: Stop) => {
     const keys = Array.isArray(stop.keys) ? stop.keys : [stop.keys];
@@ -20,6 +25,7 @@ export const getCurrentStopFromKey = (stops: Stop[], currentStopKey: string | nu
   });
 };
 
+/** renders a timeline slider with stops  */
 export const TimelineSlider = (props: TimelineSliderProps) => {
   const { stops, keyOfCurrentStop } = props;
   // find the stop with the keyOfCurrentStop as part of keys
