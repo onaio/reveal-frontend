@@ -27,6 +27,7 @@ export interface GisidaLiteProps {
   zoom: number;
   mapIcons: MapIcon[];
   onClickHandler?: (map: Map, event: EventData) => void;
+  onMouseMoveHandler?: (map: Map, event: EventData) => void;
 }
 
 /** Default props for GisidaLite */
@@ -69,6 +70,7 @@ const GisidaLite = (props: GisidaLiteProps) => {
     onClickHandler,
     zoom,
     mapBounds,
+    onMouseMoveHandler,
   } = props;
 
   if (mapCenter === undefined) {
@@ -136,6 +138,7 @@ const GisidaLite = (props: GisidaLiteProps) => {
       onStyleLoad={runAfterMapLoaded}
       onClick={onClickHandler}
       onRender={onRender}
+      onMouseMove={onMouseMoveHandler}
     >
       <>
         {renderLayers &&
