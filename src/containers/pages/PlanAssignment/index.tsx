@@ -78,12 +78,15 @@ interface PlanAssignmentProps extends JurisdictionTableProps {
  * Check if map should be visible based on plan type
  */
 export const isMapDisabled = (plan: PlanDefinition | null): boolean => {
-  let interventionType: string | undefined = '';
   if (plan) {
     const type = plan.useContext.find(element => element.code === INTERVENTION_TYPE_CODE);
-    type ? (interventionType = type.valueCodableConcept) : (interventionType = '');
+    if (type) {
+      return MAP_DISABLED_PLAN_TYPES.includes(type.valueCodableConcept);
+    } else {
+      return false;
+    }
   }
-  return MAP_DISABLED_PLAN_TYPES.includes(interventionType);
+  return false;
 };
 
 /**
