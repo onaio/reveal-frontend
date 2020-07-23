@@ -359,3 +359,9 @@ export type JURISDICTION_METADATA_RISK = typeof JURISDICTION_METADATA_RISK;
 export const JURISDICTION_METADATA_RISK_PERCENTAGE =
   process.env.REACT_APP_JURISDICTION_METADATA_RISK_PERCENTAGE || '90';
 export type JURISDICTION_METADATA_RISK_PERCENTAGE = typeof JURISDICTION_METADATA_RISK_PERCENTAGE;
+
+/** list of plan statuses enabled on Manage plans and reporting pages */
+export const HIDDEN_PLAN_STATUSES = String(
+  process.env.REACT_APP_HIDDEN_PLAN_STATUSES || 'retired'
+).split(',');
+export type HIDDEN_PLAN_STATUSES = typeof HIDDEN_PLAN_STATUSES;

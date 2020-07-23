@@ -1,8 +1,10 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { BreadCrumbProps } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { HIDDEN_PLAN_STATUSES } from '../../../../configs/env';
 import { ADD_PLAN, HOME, PLANS } from '../../../../configs/lang';
 import { HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL } from '../../../../constants';
+import { getPlanStatusToDisplay } from '../../../../helpers/utils';
 import {
   createConnectedOpenSRPPlansList,
   OpenSRPPlanListViewProps,
@@ -28,6 +30,8 @@ export const PlanDefinitionList = (props: RouteComponentProps) => {
     pages: [homePage],
   };
 
+  const planStatuses = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
+
   const renderBody = draftPlansPageBodyFactory({
     addPlanBtnText: ADD_PLAN,
     breadCrumbProps,
@@ -37,6 +41,7 @@ export const PlanDefinitionList = (props: RouteComponentProps) => {
 
   const opensrpListProps: Partial<OpenSRPPlanListViewProps> & RouteComponentProps = {
     ...props,
+    planStatuses,
     renderBody,
     tableColumns: TableColumns,
     userNameFilter: true,

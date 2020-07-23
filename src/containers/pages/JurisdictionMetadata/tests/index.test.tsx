@@ -47,7 +47,7 @@ describe('src/containers/pages/JurisdictionMetadata', () => {
     // look for crucial components or pages that should be displayed
 
     // expect a form
-    expect(wrapper.find('form').length).toEqual(2);
+    expect(wrapper.find('form').length).toEqual(3);
 
     // page title
     const helmet = Helmet.peek();

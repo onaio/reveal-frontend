@@ -64,7 +64,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
       .forEach((_, i) => {
         expect(tableHeader.at(i).text()).toMatchSnapshot(`table header-${i + 1}`);
       });
-    expect(wrapper.find('.tbody .tr').length).toEqual(3);
+    expect(wrapper.find('.tbody .tr').length).toEqual(2);
     // have searchbar
     expect(wrapper.find('.search-input-wrapper').length).toEqual(1);
     // have top and bottom pagination

@@ -3,10 +3,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Store } from 'redux';
-import { SUPERSET_MDA_POINT_REPORTING_PLANS_SLICE } from '../../../../configs/env';
+import {
+  HIDDEN_PLAN_STATUSES,
+  SUPERSET_MDA_POINT_REPORTING_PLANS_SLICE,
+} from '../../../../configs/env';
 import { MDA_POINT_PLANS } from '../../../../configs/lang';
 import { QUERY_PARAM_TITLE, REPORT_MDA_POINT_PLAN_URL } from '../../../../constants';
-import { getQueryParams } from '../../../../helpers/utils';
+import { getPlanStatusToDisplay, getQueryParams } from '../../../../helpers/utils';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import MDAPointPlansReducer, {
@@ -19,6 +22,9 @@ import { GenericPlanListProps, GenericPlansList } from '../../GenericPlansList';
 
 /** register the MDA plan definitions reducer */
 reducerRegistry.register(MDAPointPlansReducerName, MDAPointPlansReducer);
+
+/** a list of plan statuses to be displayed */
+const allowedPlanStatusList = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
 
 /** Simple component that loads a preview list of MDA plans */
 const MDAPointPlansList = (props: GenericPlanListProps & RouteComponentProps) => {
@@ -56,7 +62,10 @@ const mapStateToProps = (
   ownProps: RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const MDAPointPlansArray = makeMDAPointPlansArraySelector()(state, { plan_title: searchedTitle });
+  const MDAPointPlansArray = makeMDAPointPlansArraySelector()(state, {
+    plan_title: searchedTitle,
+    statusList: allowedPlanStatusList,
+  });
 
   return {
     ...ownProps,
