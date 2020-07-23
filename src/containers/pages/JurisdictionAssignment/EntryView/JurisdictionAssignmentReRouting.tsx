@@ -12,17 +12,22 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Store } from 'redux';
-import { ENABLE_JURISDICTIONS_AUTO_SELECTION } from '../../../../configs/env';
+import {
+  ENABLE_JURISDICTION_AUTO_SELECTION_FOR_PLAN_TYPES,
+  ENABLE_JURISDICTIONS_AUTO_SELECTION,
+} from '../../../../configs/env';
 import { PlanDefinition } from '../../../../configs/settings';
 import {
   AUTO_ASSIGN_JURISDICTIONS_URL,
   MANUAL_ASSIGN_JURISDICTIONS_URL,
 } from '../../../../constants';
+import { isPlanDefinitionOfType } from '../../../../helpers/utils';
 import hierarchyReducer, {
   getTreeById,
   reducerName as hierarchyReducerName,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
+import { InterventionType } from '../../../../store/ducks/plans';
 
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
@@ -46,6 +51,12 @@ export const getNextUrl = (plan: PlanDefinition, tree: TreeNode) => {
   if (!ENABLE_JURISDICTIONS_AUTO_SELECTION) {
     return MANUAL_ASSIGN_JURISDICTIONS_URL;
   }
+  // auto selection could be disabled for some plan types. if plan type is not in the whitelist
+  const whitelistedTypes: InterventionType[] = ENABLE_JURISDICTION_AUTO_SELECTION_FOR_PLAN_TYPES as InterventionType[];
+  if (!isPlanDefinitionOfType(plan, whitelistedTypes)) {
+    return MANUAL_ASSIGN_JURISDICTIONS_URL;
+  }
+
   // if plan does not have at-least one Jurisdiction then the page will break
   const planHasManyJurisdictions = plan.jurisdiction.length > 1;
   if (planHasManyJurisdictions) {
@@ -62,6 +73,7 @@ export const getNextUrl = (plan: PlanDefinition, tree: TreeNode) => {
   return AUTO_ASSIGN_JURISDICTIONS_URL;
 };
 
+/** redirects to either manual jurisdiction selection or auto-jurisdiction selection */
 const JurisdictionAssignmentReRouting = (props: JurisdictionAssignmentReRoutingProps) => {
   const { plan, tree, rootJurisdictionId } = props;
 
@@ -77,9 +89,19 @@ const JurisdictionAssignmentReRouting = (props: JurisdictionAssignmentReRoutingP
 JurisdictionAssignmentReRouting.defaultProps = defaultProps;
 export { JurisdictionAssignmentReRouting };
 
+/** describe props mapped to store */
+type MapStateToProps = Pick<JurisdictionAssignmentReRoutingProps, 'tree'>;
+
 const treeSelector = getTreeById();
 
-const mapStateToProps = (state: Partial<Store>, ownProps: JurisdictionAssignmentReRoutingProps) => {
+/** map state to Props
+ * @param state - the store
+ * @param ownProps - components props
+ */
+const mapStateToProps = (
+  state: Partial<Store>,
+  ownProps: JurisdictionAssignmentReRoutingProps
+): MapStateToProps => {
   return {
     tree: treeSelector(state, { rootJurisdictionId: ownProps.rootJurisdictionId }),
   };
