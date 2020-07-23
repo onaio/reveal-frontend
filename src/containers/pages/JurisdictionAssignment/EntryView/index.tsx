@@ -45,7 +45,9 @@ export interface EntryViewRouteParams {
 
 export type FullEntryViewProps = EntryViewProps & RouteComponentProps<EntryViewRouteParams>;
 
-/** retrieves the info from the api and  puts in the store. */
+/** makes service calls for getting the plan and the hierarchy map
+ * and renders component to route to either auto-selection or manual selection
+ */
 const EntryView = (props: FullEntryViewProps) => {
   const { serviceClass, plan, treeFetchedCreator, fetchPlanCreator } = props;
 
