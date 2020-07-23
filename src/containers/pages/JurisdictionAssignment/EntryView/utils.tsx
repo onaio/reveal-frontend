@@ -13,23 +13,35 @@ import {
   LoadOpenSRPHierarchy,
 } from '../../../../helpers/dataLoading/jurisdictions';
 import { loadOpenSRPPlan } from '../../../../helpers/dataLoading/plans';
+import { StartLoading, StopLoading } from '../../../../helpers/useLoadingReducer';
 import { OpenSRPService } from '../../../../services/opensrp';
+import { FetchedTreeAction } from '../../../../store/ducks/opensrp/hierarchies';
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { AddPlanDefinitionAction } from '../../../../store/ducks/opensrp/PlanDefinition';
+import { HandleBrokenPage } from '../helpers/utils';
 
+/** hook to load a plan and dispatch to store
+ * @param routePlanId - id of the plan, usually got from the route
+ * @param plan - if the plan exists, otherwise null
+ * @param serviceClass -  opensrp service
+ * @param fetchPlanCreator - action creator to be called with plan payload once fetched
+ * @param handleBrokenPage - helper to handle errors
+ * @param stopLoading- helper to denote when loading should stop
+ * @param startLoading - helper to denote when loading should start
+ */
 export function usePlanEffect(
   routePlanId: string,
   plan: PlanDefinition | null,
   serviceClass: typeof OpenSRPService,
   fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>,
-  handleBrokenPage: any,
-  stopLoading: any,
-  startLoading: any
+  handleBrokenPage: HandleBrokenPage,
+  stopLoading: StopLoading,
+  startLoading: StartLoading
 ) {
   React.useEffect(() => {
     // create promise to fetch the plan
-    const planAndMetaLoadingKey = 'planMetadata';
-    startLoading(planAndMetaLoadingKey, !plan);
+    const planLoadingKey = 'planMetadata';
+    startLoading(planLoadingKey, !plan);
     const planDataPromise = loadOpenSRPPlan(routePlanId, serviceClass, fetchPlanCreator).catch(
       _ => {
         handleBrokenPage(COULD_NOT_LOAD_PLAN);
@@ -38,18 +50,26 @@ export function usePlanEffect(
 
     Promise.all([planDataPromise])
       .finally(() => {
-        stopLoading(planAndMetaLoadingKey);
+        stopLoading(planLoadingKey);
       })
       .catch(e => handleBrokenPage(e.message));
   }, []);
 }
 
+/** gets the rootJurisdictionId - uses any of the assigned/existing jurisdictions
+ * @param plan - the plan if it exists, otherwise null
+ * @param serviceClass - the opensrpService
+ * @param handleBrokenPage - helper to handle errors
+ * @param stopLoading - helper to stop loading
+ * @param startLoading - helper to start loading
+ * @param tree - the tree if it exists, used to know if we should set loading to true.
+ */
 export function useGetRootJurisdictionId(
   plan: PlanDefinition | null,
   serviceClass: typeof OpenSRPService,
-  handleBrokenPage: any,
-  stopLoading: any,
-  startLoading: any,
+  handleBrokenPage: HandleBrokenPage,
+  stopLoading: StopLoading,
+  startLoading: StartLoading,
   tree?: TreeNode
 ) {
   const [rootJurisdictionId, setRootJurisdictionId] = React.useState<string>('');
@@ -97,12 +117,20 @@ export function useGetRootJurisdictionId(
   return rootJurisdictionId;
 }
 
+/** get the jurisdiction Tree given the rootJurisdiction Id
+ * @param rootJurisdictionId - id of top level jurisdiction
+ * @param startLoading - helper to start loading
+ * @param treeFetchedCreator - action creator to be called with tree payload once fetched
+ * @param stopLoading - helper to stop loading
+ * @param handleBrokenPage - helper to handle page errors
+ * @param tree - the tree if it exists, used to know if we should set loading to true.
+ */
 export function useGetJurisdictionTree(
   rootJurisdictionId: string,
-  startLoading: any,
-  treeFetchedCreator: any,
-  stopLoading: any,
-  handleBrokenPage: any,
+  startLoading: StartLoading,
+  treeFetchedCreator: ActionCreator<FetchedTreeAction>,
+  stopLoading: StopLoading,
+  handleBrokenPage: HandleBrokenPage,
   tree?: TreeNode
 ) {
   React.useEffect(() => {
