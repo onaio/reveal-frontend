@@ -6,7 +6,7 @@ import { jurisdiction1 } from '../../../store/ducks/tests/fixtures';
 import { gsLiteStyle, lineLayerTemplate } from '../helpers';
 import { arePropsEqual, GisidaLiteProps } from '../index';
 
-describe('components/GisidaLite', () => {
+describe('components/GisidaLite/arePropsEqual', () => {
   it('returns false if layers length has changed', () => {
     const prevProps: GisidaLiteProps = {
       layers: [],
