@@ -1,16 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { percentage } from '@onaio/utils';
 import { Result } from '@onaio/utils/dist/types/types';
 import React, { useState } from 'react';
 import InputRange, { Range } from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import { connect } from 'react-redux';
+import { Button } from 'reactstrap';
 import Col from 'reactstrap/lib/Col';
-import Container from 'reactstrap/lib/Container';
 import Row from 'reactstrap/lib/Row';
 import { ActionCreator, Store } from 'redux';
-import LinkAsButton from '../../../../../components/LinkAsButton';
 import { ErrorPage } from '../../../../../components/page/ErrorPage';
 import {
   ADJUST_SLIDER_MESSAGE,
@@ -18,16 +16,8 @@ import {
   NUMBER_OF_STRUCTURES_IN_JURISDICTIONS,
 } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
-import {
-  ASSIGN_JURISDICTIONS_URL,
-  JURISDICTION_METADATA_RISK,
-  RISK_LABEL,
-} from '../../../../../constants';
-import {
-  loadJurisdictionsMetadata,
-  LoadOpenSRPHierarchy,
-} from '../../../../../helpers/dataLoading/jurisdictions';
-import { displayError } from '../../../../../helpers/errors';
+import { ASSIGN_JURISDICTIONS_URL, RISK_LABEL } from '../../../../../constants';
+import { LoadOpenSRPHierarchy } from '../../../../../helpers/dataLoading/jurisdictions';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import hierarchyReducer, {
   autoSelectNodes,
@@ -42,6 +32,7 @@ import {
   RawOpenSRPHierarchy,
   TreeNode,
 } from '../../../../../store/ducks/opensrp/hierarchies/types';
+import { SelectionReason } from '../../../../../store/ducks/opensrp/hierarchies/utils';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
   FetchJurisdictionsMetadataAction,
@@ -49,8 +40,6 @@ import jurisdictionMetadataReducer, {
   reducerName,
 } from '../../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import './slider.css';
-import { Button } from 'reactstrap';
-import { SelectionReason } from '../../../../../store/ducks/opensrp/hierarchies/utils';
 
 reducerRegistry.register(reducerName, jurisdictionMetadataReducer);
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
@@ -72,7 +61,7 @@ interface Props {
   autoSelectCreator: ActionCreator<AutoSelectNodesAction>;
   fetchTreeCreator: ActionCreator<FetchedTreeAction>;
   plan: PlanDefinition | null;
-  onClickNext: any
+  onClickNext: any;
 }
 
 const defaultProps = {
@@ -85,7 +74,9 @@ const defaultProps = {
   autoSelectCreator: autoSelectNodes,
   fetchTreeCreator: fetchTree,
   plan: null,
-  onClickNext: () => {return}
+  onClickNext: () => {
+    return;
+  },
 };
 
 export const JurisdictionSelectionsSlider = (props: Props) => {
@@ -95,13 +86,22 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
   const {
     serviceClass,
     rootJurisdictionId,
-    tree,
     structuresCount,
     autoSelectCreator,
-    fetchJurisdictionsMetadataCreator,
     jurisdictionsMetadata,
     plan,
   } = props;
+
+  const onChangeComplete = (val: number | Range) => {
+    const metaJurOfInterest = jurisdictionsMetadata.filter(metaObject => metaObject.value > val);
+    const jurisdictionsIdsMeta = metaJurOfInterest.map(meta => meta.key);
+    const callback = (node: TreeNode) => {
+      const isLeafNodePastThreshHold =
+        !node.hasChildren() && jurisdictionsIdsMeta.includes(node.model.id);
+      return isLeafNodePastThreshHold;
+    };
+    autoSelectCreator(rootJurisdictionId, callback, SelectionReason.AUTO_SELECTION);
+  };
 
   React.useEffect(() => {
     const params = {
@@ -125,16 +125,7 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
       });
   }, []);
 
-  const onChangeComplete = (value: number | Range) => {
-    const metaJurOfInterest = jurisdictionsMetadata.filter(metaObject => metaObject.value > value);
-    const jurisdictionsIdsMeta = metaJurOfInterest.map(meta => meta.key);
-    const callback = (node: TreeNode) => {
-      return jurisdictionsIdsMeta.includes(node.model.id);
-    };
-    autoSelectCreator(rootJurisdictionId, callback,  SelectionReason.AUTO_SELECTION);
-  };
-
-  const onChange = (value: number | Range) => setValue(value);
+  const onChange = (val: number | Range) => setValue(val);
 
   /** takes you to the jurisdictions refinement page. */
 
@@ -142,15 +133,9 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
     return <ErrorPage errorMessage={'Could not load plan'} />;
   }
 
-  const linkAsButtonProps = {
-    classNameProp: 'focus-investigation btn btn-success float-right mt-3  ',
-    text: 'Continue to next step',
-    to: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
-  };
-
   return (
     <div className="mt-3">
-      <hr></hr>
+      <hr />
       <Row>
         <Col xs="12" md={{ size: 8, offset: 2 }} style={{ textAlign: 'center' }}>
           <h4 className="mb-5 font-weight-bold">{ADJUST_SLIDER_MESSAGE}</h4>
@@ -178,7 +163,9 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
         </Col>
       </Row>
       <hr />
-      <Button className='btn btn-success float-right mt-3' onClick={props.onClickNext} >Continue to next step</Button>  
+      <Button className="btn btn-success float-right mt-3" onClick={props.onClickNext}>
+        Continue to next step
+      </Button>
     </div>
   );
 };
