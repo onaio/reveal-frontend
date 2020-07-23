@@ -18,7 +18,7 @@ export const SELECT_KEY = 'selected';
 export const SELECT_REASON_KEY = 'selectedBy';
 export const META_STRUCTURE_COUNT = 'metaStructureCount';
 
-export const SelectionReason = {
+export const selectionReason = {
   AUTO_SELECTION,
   NOT_CHANGED: '',
   USER_CHANGE,
@@ -151,7 +151,10 @@ export const nodeHasChildren = (node: TreeNode) => {
 /** traverse up and select the parent nodes where necessary
  * @param node a node
  */
-export function computeParentNodesSelection(node: TreeNode, selectedBy: string = '') {
+export function computeParentNodesSelection(
+  node: TreeNode,
+  selectedBy: string = selectionReason.NOT_CHANGED
+) {
   const parentsPath = node.getPath();
   const reversedParentSPath = parentsPath.reverse();
   // now for each of the parent if all the children are selected then label the parent as selected too
@@ -237,14 +240,18 @@ export const preOrderStructureCountComputation = (node: TreeNode) => {
     return structureCount;
   }
   let thisNodesSelectedStructs = 0;
-  node.children.forEach((node: TreeNode) => {
-    thisNodesSelectedStructs += preOrderStructureCountComputation(node);
+  node.children.forEach((nd: TreeNode) => {
+    thisNodesSelectedStructs += preOrderStructureCountComputation(nd);
   });
 
   node.model.meta[META_STRUCTURE_COUNT] = thisNodesSelectedStructs;
   return thisNodesSelectedStructs;
 };
 
+/** find the parent node in a tree given the parentId
+ * @param tree - the tree
+ * @param parentId - id of the parent node
+ */
 export const findAParentNode = (tree: TreeNode | undefined, parentId: string | undefined) => {
   if (!tree) {
     return;
@@ -255,6 +262,9 @@ export const findAParentNode = (tree: TreeNode | undefined, parentId: string | u
   return tree.first(node => node.model.id === parentId);
 };
 
+/** find the current children from  a parent node. This is defined here to avoid repetition
+ * @param parentNode -  the parent Node
+ */
 export const getChildrenForNode = (parentNode: TreeNode | undefined) => {
   let children = [];
   if (parentNode) {
