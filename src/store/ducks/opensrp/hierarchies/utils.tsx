@@ -16,6 +16,7 @@ import {
 export const META_FIELD_NAME = 'meta';
 export const SELECT_KEY = 'selected';
 export const SELECT_REASON_KEY = 'selectedBy';
+export const META_STRUCTURE_COUNT = 'metaStructureCount';
 
 export const SelectionReason = {
   AUTO_SELECTION,
@@ -223,4 +224,41 @@ export const computeSelectedNodes = (
     return true;
   });
   return nodesList;
+};
+
+/** will compute structure counts
+ * @param node - the root node of a tree or subtree
+ */
+export const preOrderStructureCountComputation = (node: TreeNode) => {
+  if (!node.hasChildren()) {
+    const structureCount =
+      (node.model.node.attributes && node.model.node.attributes.structureCount) || 0;
+    node.model.meta[META_STRUCTURE_COUNT] = structureCount;
+    return structureCount;
+  }
+  let thisNodesSelectedStructs = 0;
+  node.children.forEach((node: TreeNode) => {
+    thisNodesSelectedStructs += preOrderStructureCountComputation(node);
+  });
+
+  node.model.meta[META_STRUCTURE_COUNT] = thisNodesSelectedStructs;
+  return thisNodesSelectedStructs;
+};
+
+export const findAParentNode = (tree: TreeNode | undefined, parentId: string | undefined) => {
+  if (!tree) {
+    return;
+  }
+  if (parentId === undefined) {
+    return tree;
+  }
+  return tree.first(node => node.model.id === parentId);
+};
+
+export const getChildrenForNode = (parentNode: TreeNode | undefined) => {
+  let children = [];
+  if (parentNode) {
+    children = parentNode.children;
+  }
+  return children;
 };
