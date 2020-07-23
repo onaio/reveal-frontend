@@ -284,7 +284,7 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
         false,
         true,
         true,
-        action.selectedBy
+        selectionReason.NOT_CHANGED
       );
       return {
         ...state,
