@@ -75,6 +75,18 @@ interface PlanAssignmentProps extends JurisdictionTableProps {
 }
 
 /**
+ * Check if map should be visible based on plan type
+ */
+export const isMapDisabled = (plan: PlanDefinition | null): boolean => {
+  let interventionType: string | undefined = '';
+  if (plan) {
+    const type = plan.useContext.find(element => element.code === INTERVENTION_TYPE_CODE);
+    type ? (interventionType = type.valueCodableConcept) : (interventionType = '');
+  }
+  return MAP_DISABLED_PLAN_TYPES.includes(interventionType);
+};
+
+/**
  * PlanAssignment
  *
  * This component handles the plan assignment pages i.e. the pages where a user is
@@ -245,21 +257,9 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     serviceClass: OpenSRPServiceClass,
   };
 
-  /**
-   * Check if map should be visible based on plan type
-   */
-  const isMapDisabled = (): boolean => {
-    let interventionType: string | undefined = '';
-    if (plan) {
-      const type = plan.useContext.find(element => element.code === INTERVENTION_TYPE_CODE);
-      type ? (interventionType = type.valueCodableConcept) : (interventionType = '');
-    }
-    return MAP_DISABLED_PLAN_TYPES.includes(interventionType);
-  };
-
   return (
     <>
-      {isMapDisabled ? '' : <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />}
+      {isMapDisabled(plan) ? '' : <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />}
       <WrappedJurisdictionTable {...wrappedProps} />
     </>
   );
