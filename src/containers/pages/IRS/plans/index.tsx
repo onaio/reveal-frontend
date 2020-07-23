@@ -3,10 +3,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Store } from 'redux';
-import { SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
+import { HIDDEN_PLAN_STATUSES, SUPERSET_IRS_REPORTING_PLANS_SLICE } from '../../../../configs/env';
 import { IRS_PLANS } from '../../../../configs/lang';
 import { QUERY_PARAM_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
-import { getQueryParams, RouteParams } from '../../../../helpers/utils';
+import { getPlanStatusToDisplay, getQueryParams, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import IRSPlansReducer, {
   fetchIRSPlans,
@@ -18,6 +18,9 @@ import { GenericPlanListProps, GenericPlansList } from '../../GenericPlansList';
 
 /** register the IRS plan definitions reducer */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
+
+/** a list of plan statuses to be displayed */
+const allowedPlanStatusList = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
 
 /** Simple component that loads a preview list of IRS plans */
 const IRSPlansList = (props: GenericPlanListProps & RouteComponentProps) => {
@@ -55,7 +58,10 @@ const mapStateToProps = (
   ownProps: RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const plans = makeIRSPlansArraySelector()(state, { plan_title: searchedTitle });
+  const plans = makeIRSPlansArraySelector()(state, {
+    plan_title: searchedTitle,
+    statusList: allowedPlanStatusList,
+  });
 
   return {
     ...ownProps,

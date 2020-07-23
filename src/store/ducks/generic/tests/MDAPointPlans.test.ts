@@ -80,7 +80,13 @@ describe('reducers/MDAPoint/MDAPointPlan', () => {
     expect(MDAPointPlansArraySelector(store.getState(), { plan_title: 'Berg' })).toEqual([
       fixtures.MDAPointplans[2],
     ]);
-
+    expect(MDAPointPlansArraySelector(store.getState(), { statusList: ['retired'] })).toEqual([
+      fixtures.MDAPointplans[0],
+    ]);
+    expect(MDAPointPlansArraySelector(store.getState(), { statusList: ['draft'] })).toEqual([]);
+    expect(
+      MDAPointPlansArraySelector(store.getState(), { statusList: ['active'], plan_title: 'mda' })
+    ).toEqual([fixtures.MDAPointplans[1]]);
     // reset
     store.dispatch(removeMDAPointPlans());
     expect(getMDAPointPlansArray(store.getState())).toEqual([]);
