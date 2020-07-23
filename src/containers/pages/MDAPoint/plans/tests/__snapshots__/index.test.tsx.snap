@@ -59,20 +59,6 @@ Object {
       "jurisdiction_root_parent_ids": Array [
         "2942",
       ],
-      "plan_date": "2019-09-05",
-      "plan_effective_period_end": "2019-09-25",
-      "plan_effective_period_start": "2019-09-05",
-      "plan_id": "40357eff-81b6-4e32-bd3d-484019689f7c",
-      "plan_intervention_type": "MDA-Point",
-      "plan_name": "MDA-Point-2019-09-05-TEST",
-      "plan_status": "retired",
-      "plan_title": "MDA-Point-2019-09-05 TEST",
-      "plan_version": "2",
-    },
-    Object {
-      "jurisdiction_root_parent_ids": Array [
-        "2942",
-      ],
       "plan_date": "2019-08-30",
       "plan_effective_period_end": "2019-09-14",
       "plan_effective_period_start": "2019-08-30",

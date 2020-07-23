@@ -58,8 +58,30 @@ describe('components/MDA Reports/MDAPlansList', () => {
     );
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
-    expect(toJson(wrapper.find('thead tr th'))).toMatchSnapshot('table headers');
-    expect(toJson(wrapper.find('tbody tr td'))).toMatchSnapshot('table rows');
+    const tableHeader = wrapper.find('.thead .tr .th');
+    Array(tableHeader.length)
+      .fill('')
+      .forEach((_, i) => {
+        expect(tableHeader.at(i).text()).toMatchSnapshot(`table header-${i + 1}`);
+      });
+    expect(wrapper.find('.tbody .tr').length).toEqual(2);
+    // have searchbar
+    expect(wrapper.find('.search-input-wrapper').length).toEqual(1);
+    // have top and bottom pagination
+    expect(wrapper.find('.pagination').length).toEqual(2);
+    // have height and columns filters
+    expect(
+      wrapper
+        .find('.filter-bar-btns span')
+        .at(0)
+        .text()
+    ).toEqual('Row Height');
+    expect(
+      wrapper
+        .find('.filter-bar-btns span')
+        .at(1)
+        .text()
+    ).toEqual('Customize Columns');
 
     expect(wrapper.find('GenericPlansList').length).toBe(1);
     expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('GenericPlansList props');
