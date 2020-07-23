@@ -134,6 +134,12 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
 
 BaseNewPlan.defaultProps = defaultBasePlanProps;
 
+/** map dispatch to props */
+const mapDispatchToProps = { addPlan: addPlanDefinition };
+
+/** Connected component */
+const ConnectedBaseNewPlan = connect(null, mapDispatchToProps)(BaseNewPlan);
+
 /** form used in the planning tool */
 export const NewPlanForPlanning = () => {
   const baseNewPlanProps = {
@@ -149,7 +155,7 @@ export const NewPlanForPlanning = () => {
     },
     showJurisdictionDetails: false,
   };
-  return <BaseNewPlan {...baseNewPlanProps} />;
+  return <ConnectedBaseNewPlan {...baseNewPlanProps} />;
 };
 
 /** NewIRSPlan can and will be removed once the irs planning module is removed
@@ -176,13 +182,7 @@ export const NewIRSPlan = () => {
       redirectAfterAction: INTERVENTION_IRS_DRAFTS_URL,
     },
   };
-  return <BaseNewPlan {...baseNewPlanProps} />;
+  return <ConnectedBaseNewPlan {...baseNewPlanProps} />;
 };
-
-/** map dispatch to props */
-const mapDispatchToProps = { addPlan: addPlanDefinition };
-
-/** Connected component */
-const ConnectedBaseNewPlan = connect(null, mapDispatchToProps)(BaseNewPlan);
 
 export default ConnectedBaseNewPlan;
