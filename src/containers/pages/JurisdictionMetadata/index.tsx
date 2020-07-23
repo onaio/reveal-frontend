@@ -9,7 +9,6 @@ import { Card, CardBody, Col, Row } from 'reactstrap';
 import JurisdictionHierachyDownload, {
   defaultInitialValues as defaultHierachyValues,
   JurisdictionHierachyDownloadFormProps,
-  submitJurisdictionHierachyForm,
 } from '../../../components/forms/JurisdictionHierachyDownload';
 import JurisdictionMetadata, {
   defaultInitialValues,
@@ -134,11 +133,9 @@ const JurisdictionMetadataImportView = () => {
   };
 
   /** props for the Jurisdiction Hierarchy form */
-  const jurisdictionMetadataDownloadFormProp: JurisdictionHierachyDownloadFormProps | any = {
-    disabledFields: [],
+  const jurisdictionMetadataDownloadFormProp: JurisdictionHierachyDownloadFormProps = {
     initialValues: defaultHierachyValues,
     serviceClass: new OpenSRPService(OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT),
-    submitForm: submitJurisdictionHierachyForm,
   };
 
   return (
