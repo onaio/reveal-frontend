@@ -1,12 +1,15 @@
 /** Jurisdiction Metadata page
  * Displays Jurisdiction Metadata import form
  */
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
 import { toast } from 'react-toastify';
-import { Button, Card, CardBody, Col, Row } from 'reactstrap';
+import { Card, CardBody, Col, Row } from 'reactstrap';
+import JurisdictionHierachyDownload, {
+  defaultInitialValues as defaultHierachyValues,
+  JurisdictionHierachyDownloadFormProps,
+} from '../../../components/forms/JurisdictionHierachyDownload';
 import JurisdictionMetadata, {
   defaultInitialValues,
   JurisdictionMetadataFormProps,
@@ -38,6 +41,7 @@ import {
   JURISDICTION_CSV_FILE_NAME,
   JURISDICTION_CSV_TEMPLATE,
   JURISDICTION_METADATA_URL,
+  OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT,
   OPENSRP_LOCATION,
   OPENSRP_V1_SETTINGS_ENDPOINT,
   OPENSRP_V2_SETTINGS,
@@ -128,6 +132,12 @@ const JurisdictionMetadataImportView = () => {
     submitForm: formSubmit,
   };
 
+  /** props for the Jurisdiction Hierarchy form */
+  const jurisdictionMetadataDownloadFormProp: JurisdictionHierachyDownloadFormProps = {
+    initialValues: defaultHierachyValues,
+    serviceClass: new OpenSRPService(OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT),
+  };
+
   return (
     <div>
       <Helmet>
@@ -147,14 +157,7 @@ const JurisdictionMetadataImportView = () => {
                 <li>{JURISDICTION_UPLOAD_STEP_4}</li>
                 <li>{JURISDICTION_UPLOAD_STEP_5}</li>
               </ol>
-              <Button
-                color="link"
-                // tslint:disable-next-line: jsx-no-lambda
-                onClick={() => downloadCsvTemplate()}
-              >
-                <FontAwesomeIcon icon="download" />
-                &nbsp;Download Template CSV
-              </Button>
+              <JurisdictionHierachyDownload {...jurisdictionMetadataDownloadFormProp} />
             </CardBody>
           </Card>
         </Col>
