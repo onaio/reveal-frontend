@@ -5,6 +5,7 @@
  *  - the hierarchy
  */
 
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
@@ -15,15 +16,23 @@ import { COULD_NOT_LOAD_JURISDICTION, COULD_NOT_LOAD_PLAN } from '../../../../co
 import { PlanDefinition } from '../../../../configs/settings';
 import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { OpenSRPService } from '../../../../services/opensrp';
-import { FetchedTreeAction, fetchTree } from '../../../../store/ducks/opensrp/hierarchies';
-import {
+import hierarchyReducer, {
+  FetchedTreeAction,
+  fetchTree,
+  reducerName as hierarchyReducerName,
+} from '../../../../store/ducks/opensrp/hierarchies';
+import planDefinitionReducer, {
   addPlanDefinition,
   AddPlanDefinitionAction,
   getPlanDefinitionById,
+  reducerName as planReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionAssignmentReRouting } from './JurisdictionAssignmentReRouting';
 import { useGetJurisdictionTree, useGetRootJurisdictionId, usePlanEffect } from './utils';
+
+reducerRegistry.register(planReducerName, planDefinitionReducer);
+reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
 interface EntryViewProps {
   plan: PlanDefinition | null;
@@ -89,6 +98,7 @@ const EntryView = (props: FullEntryViewProps) => {
   if (!rootJurisdictionId) {
     return <ErrorPage errorMessage={COULD_NOT_LOAD_JURISDICTION} />;
   }
+
   if (broken) {
     return <ErrorPage errorMessage={errorMessage} />;
   }
