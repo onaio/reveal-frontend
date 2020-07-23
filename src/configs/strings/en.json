@@ -1178,5 +1178,9 @@
   "DEFINITION_URI": {
     "message": "Definition Uri",
     "description": "label, column header: name Definition Uri"
+  },
+  "CANNOT_ASSIGN_TEAM_LABEL": {
+    "message": "Cannot assign teams for expired plans",
+    "description": "label, on team assignment button when plan end date is past"
   }
 }
