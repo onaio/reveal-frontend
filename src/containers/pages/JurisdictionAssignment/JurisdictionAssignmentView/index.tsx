@@ -1,4 +1,4 @@
-/** the Jurisdiction Selection view
+/** the Manual Jurisdiction Selection view
  * Responsibilities:
  *  load plan given a url with the planId
  *  pending : render map.
@@ -6,6 +6,7 @@
  */
 
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { Result } from '@onaio/utils';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -14,24 +15,31 @@ import { ActionCreator, Store } from 'redux';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Ripple from '../../../../components/page/Loading';
-import { getAncestors } from '../../../../components/TreeWalker/helpers';
 import { JURISDICTION_METADATA_RISK } from '../../../../configs/env';
 import {
   ASSIGN_JURISDICTIONS,
   COULD_NOT_LOAD_JURISDICTION,
+  COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
   COULD_NOT_LOAD_PLAN,
   PLANNING_PAGE_TITLE,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { ASSIGN_JURISDICTIONS_URL, PLANNING_VIEW_URL } from '../../../../constants';
 import {
-  loadJurisdiction,
   loadJurisdictionsMetadata,
+  LoadOpenSRPHierarchy,
 } from '../../../../helpers/dataLoading/jurisdictions';
-import { loadOpenSRPPlan } from '../../../../helpers/dataLoading/plans';
 import { displayError } from '../../../../helpers/errors';
 import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { OpenSRPService } from '../../../../services/opensrp';
+import {
+  autoSelectNodes,
+  AutoSelectNodesAction,
+  FetchedTreeAction,
+  fetchTree,
+} from '../../../../store/ducks/opensrp/hierarchies';
+import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
+import { SelectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
   FetchJurisdictionsMetadataAction,
@@ -47,6 +55,8 @@ import plansReducer, {
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 import { ConnectedAssignmentMapWrapper } from '../../AssigmentMapWrapper/';
 import { useHandleBrokenPage } from '../helpers/utils';
+import { useGetRootJurisdictionId, usePlanEffect } from '../JurisdictionAssignmentEntryView/utils';
+import { useGetRootJurisdictionId, usePlanEffect } from '../JurisdictionAssignmentEntryView/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
 
 reducerRegistry.register(reducerName, plansReducer);
@@ -59,14 +69,18 @@ export interface JurisdictionAssignmentViewProps {
   jurisdictionsMetadata: JurisdictionsMetadata[];
   plan: PlanDefinition | null;
   serviceClass: typeof OpenSRPService;
+  treeFetchedCreator: ActionCreator<FetchedTreeAction>;
+  autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
 }
 
 export const defaultProps = {
+  autoSelectNodesCreator: autoSelectNodes,
   fetchJurisdictionsMetadataCreator: fetchJurisdictionsMetadata,
   fetchPlanCreator: addPlanDefinition,
   jurisdictionsMetadata: [],
   plan: null,
   serviceClass: OpenSRPService,
+  treeFetchedCreator: fetchTree,
 };
 
 /** view will require a planId from the url */
@@ -94,10 +108,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     jurisdictionsMetadata,
   } = props;
 
-  const [rootJurisdictionId, setRootJurisdictionId] = React.useState<string>('');
-  const planLoadingKey = 'plan';
-  const { startLoading, stopLoading, loading } = useLoadingReducer(planLoadingKey, !plan);
-
+  const { startLoading, stopLoading, loading } = useLoadingReducer(!plan);
   const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
 
   React.useEffect(() => {
@@ -118,78 +129,44 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       });
   }, []);
 
-  React.useEffect(() => {
-    startLoading(planLoadingKey);
-    const planId = props.match.params.planId;
-    loadOpenSRPPlan(planId, serviceClass, fetchPlanCreator)
-      .then(() => {
-        stopLoading(planLoadingKey);
-      })
-      .catch((_: Error) => {
-        handleBrokenPage(COULD_NOT_LOAD_PLAN);
-        stopLoading(planLoadingKey);
-      });
-  }, []);
+  usePlanEffect(
+    props.match.params.planId,
+    plan,
+    serviceClass,
+    fetchPlanCreator,
+    handleBrokenPage,
+    stopLoading,
+    startLoading
+  );
+
+  const rootJurisdictionId = useGetRootJurisdictionId(
+    plan,
+    serviceClass,
+    handleBrokenPage,
+    stopLoading,
+    startLoading
+  );
 
   React.useEffect(() => {
-    // getRoot jurisdiction of plan
-    if (plan) {
-      const oneOfJurisdictions = plan.jurisdiction.map(
-        jurisdictionCode => jurisdictionCode.code
-      )[0];
-      const jurisdictionLoadingKey = 'jurisdictions';
-      startLoading(jurisdictionLoadingKey);
-      loadJurisdiction(oneOfJurisdictions, OpenSRPService)
-        .then(result => {
-          if (!result || result.error) {
-            throw new Error('could not load single jurisdiction');
-          }
-          if (result.value) {
-            // TODO: review this - we already have the entire hierarchy in
-            // the hierarchy reducer module, do we need to always call OpenSRP?
-            getAncestors(result.value)
-              .then(ancestors => {
-                if (ancestors.value) {
-                  // get the first ancestor
-                  const rootJurisdiction = ancestors.value[0];
-                  setRootJurisdictionId(rootJurisdiction.id);
-                  stopLoading(jurisdictionLoadingKey);
-                } else {
-                  throw new Error(COULD_NOT_LOAD_JURISDICTION);
-                }
-              })
-              .catch(e => {
-                return e;
-              });
-          }
-        })
-        .catch(error => {
-          handleBrokenPage(error.message);
-          stopLoading(jurisdictionLoadingKey);
-        });
+    if (!plan || !rootJurisdictionId) {
+      return;
     }
-
-    
-  }, [plan]);
-
-  React.useEffect(() => {
-    /** will move this to the calling component.
-     * that means This component will only be responsible for callbacks on user clicks and rendering the data.
-     * What about customization of the ui.
-     */
+    const callback = (node: TreeNode) => {
+      const existingAssignments = plan.jurisdiction;
+      return existingAssignments.includes(node.model.id);
+    };
     const params = {
       return_structure_count: true,
     };
-    if (!autoSelectionFlow) {
+    if (rootJurisdictionId) {
+      startLoading(rootJurisdictionId);
       LoadOpenSRPHierarchy(rootJurisdictionId, OpenSRPService, params)
         .then((apiResponse: Result<RawOpenSRPHierarchy>) => {
           if (apiResponse.value) {
             const responseData = apiResponse.value;
-            treeFetchedCreator(responseData);
-            // TODO: should this be in both this useEffect and the next one?
-
-            autoSelectNodesCreator(rootJurisdictionId, callback, SelectionReason.USER_CHANGE);
-            setLoading(false);
+            props.treeFetchedCreator(responseData);
+            props.autoSelectNodesCreator(rootJurisdictionId, callback, SelectionReason.NOT_CHANGED);
+            stopLoading(rootJurisdictionId);
           }
           if (apiResponse.error) {
             throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
@@ -197,14 +174,12 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
         })
         .catch(() => {
           handleBrokenPage(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-          setLoading(false);
+          stopLoading(rootJurisdictionId);
         });
-    } else {
-      setLoading(false);
     }
-  }, []);
+  }, [rootJurisdictionId]);
 
-  if (loading) {
+  if (loading()) {
     return <Ripple />;
   }
   if (!plan) {
@@ -219,15 +194,15 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
   }
 
   const JurisdictionTableProps = {
+    autoSelectionFlow: false,
     currentParentId: props.match.params.parentId,
     jurisdictionsMetadata,
     plan,
     rootJurisdictionId,
     serviceClass,
-    autoSelectionFlow: false,
   };
 
-  const AssignmentWraperProps = {
+  const AssignmentWrapperProps = {
     currentParentId: props.match.params.parentId,
     rootJurisdictionId,
     serviceClass,
@@ -254,7 +229,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
-      <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />
+      <ConnectedAssignmentMapWrapper {...AssignmentWrapperProps} />
       <ConnectedJurisdictionTable {...JurisdictionTableProps} />
     </>
   );
