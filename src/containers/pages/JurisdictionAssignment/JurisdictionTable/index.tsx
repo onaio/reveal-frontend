@@ -9,7 +9,6 @@ import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb, {
   Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import Ripple from '../../../../components/page/Loading';
 import {
   JURISDICTION_ASSIGNMENT_SUCCESSFUL,
   NAME,
@@ -24,19 +23,19 @@ import {
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import {
-  ASSIGN_JURISDICTIONS_URL,
+  ASSIGN_PLAN_URL,
   AUTO_ASSIGN_JURISDICTIONS_URL,
-  INTERVENTION_TYPE_CODE,
+  MANUAL_ASSIGN_JURISDICTIONS_URL,
 } from '../../../../constants';
-import {
-  putJurisdictionsToPlan,
-} from '../../../../helpers/dataLoading/jurisdictions';
+import { putJurisdictionsToPlan } from '../../../../helpers/dataLoading/jurisdictions';
 import { displayError } from '../../../../helpers/errors';
-import { successGrowl } from '../../../../helpers/utils';
+import { isPlanDefinitionOfType, successGrowl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import hierarchyReducer, {
   autoSelectNodes,
   AutoSelectNodesAction,
+  deselectAllNodes,
+  DeselectAllNodesAction,
   deselectNode,
   DeselectNodeAction,
   FetchedTreeAction,
@@ -53,7 +52,11 @@ import hierarchyReducer, {
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected, SelectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
-import { InterventionType } from '../../../../store/ducks/plans';
+import {
+  addPlanDefinition,
+  AddPlanDefinitionAction,
+} from '../../../../store/ducks/opensrp/PlanDefinition';
+import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
 import { RiskLabel } from '../helpers/RiskLabel';
 import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
@@ -79,13 +82,16 @@ export interface JurisdictionSelectorTableProps {
   selectedLeafNodes: TreeNode[];
   leafNodes: TreeNode[];
   autoSelectionFlow: boolean;
+  deselectAllNodesCreator: ActionCreator<DeselectAllNodesAction>;
 }
 
 const defaultProps = {
   autoSelectNodesCreator: autoSelectNodes,
+  autoSelectionFlow: false,
   currentChildren: [],
   currentParentId: undefined,
   currentParentNode: undefined,
+  deselectAllNodesCreator: deselectAllNodes,
   deselectNodeCreator: deselectNode,
   fetchPlanCreator: addPlanDefinition,
   jurisdictionsMetadata: [],
@@ -94,12 +100,12 @@ const defaultProps = {
   selectNodeCreator: selectNode,
   selectedLeafNodes: [],
   serviceClass: OpenSRPService,
+  tree: undefined,
   treeFetchedCreator: fetchTree,
-  autoselectionFlow: false,
 };
 
 /** JurisdictionTable responsibilities,
- * 1). 
+ * 1).
  * 2). also gets the locations that are already assigned to plan
  *    - that's why I passed the plan as a prop
  * 3). render the drill down table.
@@ -113,87 +119,70 @@ const defaultProps = {
  *    when autoselection is disabled autoSelect previously selected jurisdictions i.e. if plan is still draft.
  */
 /** the business logic involved around the action handlers should remain in this component.
- * This compoent will effectively be a HOC that specifies what the action handlers are 
+ * This compoent will effectively be a HOC that specifies what the action handlers are
  * and passes those on to the table. The table should be thought of as the presentational
  * component.
  */
 const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const {
-    tree
     rootJurisdictionId,
-    treeFetchedCreator,
     currentParentNode,
     currentChildren,
     selectNodeCreator,
     deselectNodeCreator,
-    autoSelectNodesCreator,
     fetchPlanCreator,
     selectedLeafNodes,
-    leafNodes,
     plan,
     jurisdictionsMetadata,
     serviceClass,
     autoSelectionFlow,
+    deselectAllNodesCreator,
   } = props;
+
+  /** function for determining whether the jurisdiction assignment table allows for
+   * multiple selection or single selection based on the plan intervention type
+   *
+   * for planTypes that require single jurisdiction we will :
+   *  enabling a checkbox will be bound by these rules
+   *    1) if checkbox is a parent checkbox(i.e. if not belonging to a leaf node) disable.
+   */
+  const isSingleSelect = (thePlan: PlanDefinition) => {
+    const interventionTypes = [
+      InterventionType.DynamicFI,
+      InterventionType.FI,
+      InterventionType.MDA,
+      InterventionType.MDAPoint,
+      InterventionType.DynamicMDA,
+    ];
+    interventionTypes.forEach(interventionType => {
+      if (isPlanDefinitionOfType(thePlan, interventionType)) {
+        return true;
+      }
+    });
+    return false;
+  };
+
+  const history = useHistory();
+  const { broken, errorMessage, handleBrokenPage } = useHandleBrokenPage();
+  const baseUrl = !autoSelectionFlow
+    ? `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
+    : `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
+  const singleSelect = isSingleSelect(plan);
+
   /** helper function that decides which action creator to call when
    * changing the selected status of a node
    * @param nodId - id of the node of interest
    * @param value - change selected status of node with said id to value
    */
   function applySelectedToNode(nodeId: string, value: boolean) {
+    if (singleSelect) {
+      deselectAllNodesCreator();
+    }
     if (value) {
       selectNodeCreator(rootJurisdictionId, nodeId, SelectionReason.USER_CHANGE);
     } else {
       deselectNodeCreator(rootJurisdictionId, nodeId, SelectionReason.USER_CHANGE);
     }
-  }
-
-  /** function for determining whether the jurisdiction assignment table allows for
-   * multiple selection or single selection based on the plan intervention type
-   */
-  /** new computation for this: 
-   * for FI and dynamic-FI we will :
-   *  enabling a checkbox will be bound by these rules
-   *    1) if checkbox is a parent checkbox(i.e. if not leaf node) disable.
-   */
-  const isSingleSelect = () => {
-    const interventionType = plan.useContext.find(
-      element => element.code === INTERVENTION_TYPE_CODE
-    );
-    if (
-      interventionType &&
-      (interventionType.valueCodableConcept === InterventionType.FI ||
-        interventionType.valueCodableConcept === InterventionType.DynamicFI)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const [loading, setLoading] = React.useState<boolean>(true);
-  // const [isLeafNodesLoaded, setLeafNodeLoaded] = React.useState<boolean>(false);
-  const [singleSelect] = React.useState<boolean>(isSingleSelect);
-  const { broken, errorMessage, handleBrokenPage } = useHandleBrokenPage();
-  const baseUrl = !autoSelectionFlow
-    ? `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
-    : `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
-
-  /** TODO - this is domain logic that should not belong here. 
-   * the tree should be in a proper state before it gets here 
-   * What we could probably do is add a prop that tells this component if the we think data is 
-   * now fully updated before rendering.
-   * */
-  /** this is used for auto-selecting existing assigned jurisdictions
-   * it will be invoked when auto-selection is turned off.
-   */
-  const callback = (node: TreeNode) => {
-    const existingAssignments = plan.jurisdiction;
-    return existingAssignments.includes(node.model.id);
-  };
-
-  if (loading) {
-    return <Ripple />;
   }
 
   if (broken) {
@@ -248,10 +237,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         key={`${node.model.id}-check-jurisdiction`}
         type="checkbox"
         checked={nodeIsSelected(node)}
-        disabled={
-          singleSelect &&
-          (node.hasChildren() || (selectedLeafNodes.length > 0 && !nodeIsSelected(node)))
-        }
+        disabled={singleSelect}
         // tslint:disable-next-line: jsx-no-lambda
         onChange={e => {
           const newSelectedValue = e.target.checked;
@@ -263,13 +249,13 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       ...(autoSelectionFlow
         ? [
             <RiskLabel
-              key={node.model.id + 'sdfasd'}
+              key={`${node.model.id}-risk-label`}
               node={node}
               metadata={jurisdictionsMetadata}
             />,
           ]
         : []),
-      nodeIsSelected(node) ? 'Targeted' : 'NotTargeted', // this too makes sense for the leaf nodes
+      node.hasChildren() ? '' : nodeIsSelected(node) ? 'Targeted' : 'Not Targeted',
       node.model.meta.selectedBy,
       <ConnectedSelectedJurisdictionsCount
         key={`selected-jurisdictions-txt`}
@@ -412,6 +398,7 @@ type DispatchToProps = Pick<
   | 'deselectNodeCreator'
   | 'autoSelectNodesCreator'
   | 'fetchPlanCreator'
+  | 'deselectAllNodesCreator'
 >;
 
 const childrenSelector = getCurrentChildren();
@@ -440,6 +427,7 @@ const mapStateToProps = (
 /** maps action creators */
 const mapDispatchToProps: DispatchToProps = {
   autoSelectNodesCreator: autoSelectNodes,
+  deselectAllNodesCreator: deselectAllNodes,
   deselectNodeCreator: deselectNode,
   fetchPlanCreator: addPlanDefinition,
   selectNodeCreator: selectNode,
