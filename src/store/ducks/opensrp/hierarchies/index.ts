@@ -536,18 +536,20 @@ export const getSelectedHierarchy = () => {
     if (allSelectedLeafNodes.length === 0) {
       return;
     }
-    let allNodesInPaths = keyBy(allSelectedLeafNodes, node => node.model.id);
+    let allNodesInPaths = keyBy<TreeNode>(allSelectedLeafNodes, node => node.model.id);
 
     // create an object with uniq jurisdiction entries for all jurisdictions that exist
     // in a path that has a selected leaf node.
     allSelectedLeafNodes.forEach(node => {
-      allNodesInPaths = { ...allNodesInPaths, ...keyBy(node.getPath(), nd => nd.model.id) };
+      allNodesInPaths = {
+        ...allNodesInPaths,
+        ...keyBy<TreeNode>(node.getPath(), nd => nd.model.id),
+      };
     });
 
     // flatten it into an array in preparation of creating a nested structure
-    // TODO - any
     const normalNodes: TreeNode[] = [];
-    values(allNodesInPaths).forEach((node: any) => {
+    values(allNodesInPaths).forEach(node => {
       const data = node.model;
       // remove the existing children field, we will add it later with the computed children
       delete data.children;
@@ -555,6 +557,7 @@ export const getSelectedHierarchy = () => {
     });
 
     // nest them normal nodes into a hierarchy
+    // TODO - add a type declaration file.
     const flatToNested = new (FlatToNested as any)({
       children: 'children',
       id: 'id',
