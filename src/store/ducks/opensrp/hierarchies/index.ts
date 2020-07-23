@@ -5,15 +5,25 @@
  */
 
 import { Dictionary } from '@onaio/utils/dist/types/types';
+import FlatToNested from 'flat-to-nested';
+import { keyBy } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
+import TreeModel from 'tree-model';
 import { USER_CHANGE } from '../../../../configs/lang';
-import { AutoSelectCallback, RawOpenSRPHierarchy, TreeNode } from './types';
+import {
+  AutoSelectCallback,
+  ParsedHierarchySingleNode,
+  RawOpenSRPHierarchy,
+  TreeNode,
+} from './types';
 import {
   autoSelectNodesAndCascade,
   computeParentNodesSelection,
   computeSelectedNodes,
+  findAParentNode,
   generateJurisdictionTree,
+  getChildrenForNode,
   nodeHasChildren,
   SELECT_KEY,
   SetSelectAttrToNode,
@@ -38,6 +48,7 @@ export const DEFOREST = 'opensrp/locations/hierarchy/DEFOREST';
  */
 export const SELECT_NODE = 'opensrp/locations/hierarchy/SELECT_NODE';
 export const DESELECT_NODE = 'opensrp/locations/hierarchy/DESELECT_NODE';
+export const DESELECT_ALL_NODES = 'opensrp/locations/hierarchy/DESELECT_ALL_NODES';
 
 /** action to auto-append/ auto-modify the selected attribute of nodes in a tree */
 export const AUTO_SELECT_NODES = 'opensrp/locations/hierarchy/AUTO_SELECT_NODES';
@@ -76,12 +87,18 @@ export interface AutoSelectNodesAction extends AnyAction {
   selectedBy: string; // TODO: types
 }
 
+export interface DeselectAllNodesAction extends AnyAction {
+  type: typeof DESELECT_ALL_NODES;
+  rootJurisdictionId: string;
+}
+
 /** combined full action types | its a union */
 export type TreeActionTypes =
   | FetchedTreeAction
   | SelectNodeAction
   | DeforestAction
   | DeselectNodeAction
+  | DeselectAllNodesAction
   | AnyAction;
 
 // **************************** action creators ****************************
@@ -168,6 +185,14 @@ export function autoSelectNodes(
   };
 }
 
+/** deselects all nodes in a tree */
+export function deselectAllNodes(rootId: string): DeselectAllNodesAction {
+  return {
+    rootJurisdictionId: rootId,
+    type: DESELECT_ALL_NODES,
+  };
+}
+
 // **************************** medusa ****************************
 
 /** The store's slice state */
@@ -251,6 +276,26 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
       return {
         ...state,
         treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: treeResponse },
+      };
+
+    case DESELECT_ALL_NODES:
+      // get the tree of interest.
+      const fullForest = state.treeByRootId;
+      const interestingTree = (fullForest as Dictionary<TreeNode>)[action.rootJurisdictionId];
+
+      // set the attr on the root node and cascade
+      const res = SetSelectAttrToNode(
+        interestingTree,
+        action.rootJurisdictionId,
+        SELECT_KEY,
+        false,
+        true,
+        true,
+        action.selectedBy
+      );
+      return {
+        ...state,
+        treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: res.treeClone },
       };
 
     default:
@@ -391,29 +436,14 @@ export const getAncestors = () =>
  * @param props -  the filterProps
  */
 export const getCurrentParentNode = () =>
-  createSelector(getTreeById(), getCurrentParentId, (tree, parentId) => {
-    if (!tree) {
-      return;
-    }
-    if (parentId === undefined) {
-      return tree;
-    }
-    return tree.first(node => node.model.id === parentId);
-  });
+  createSelector(getTreeById(), getCurrentParentId, findAParentNode);
 
 /** returns an array of current children
  * @param state - the store
  * @param props -  the filterProps
  */
 export const getCurrentChildren = () => {
-  return createSelector(getCurrentParentNode(), getTreeById(), (currentParentNode, tree) => {
-    if (currentParentNode) {
-      return currentParentNode.children;
-    } else if (tree) {
-      return [tree];
-    }
-    return [];
-  });
+  return createSelector(getCurrentParentNode(), getChildrenForNode);
 };
 
 /** retrieves an array of all the selected nodes
@@ -500,3 +530,64 @@ export const getStructuresCount = () =>
       .map(node => node.model.node.attributes.structureCount)
       .reduce(reducingFn, 0);
   });
+
+/** we might need to reconstruct a tree whose hierarchy includes only the
+ * jurisdiction objects that are selected.
+ * how will this be saved. -> not saved computed
+ *
+ * Process:
+ *  - so we have an option to converting flat data into a nested model.
+ */
+// TODO - is this algol acceptable O()
+export const getSelectedHierarchy = () => {
+  return createSelector(getTreeById(), tree => {
+    const allSelectedLeafNodes = computeSelectedNodes(tree, false);
+    if (allSelectedLeafNodes.length === 0) {
+      return;
+    }
+    let allNodesInPaths = keyBy(allSelectedLeafNodes, node => node.model.id);
+
+    allSelectedLeafNodes.forEach(node => {
+      allNodesInPaths = { ...allNodesInPaths, ...keyBy(node.getPath(), node => node.model.id) };
+    });
+    const normalNodes = allSelectedLeafNodes.map(node => node.model);
+
+    // nest them normal nodes into a hierarchy
+    // console.log(normalNodes);
+    const flatToNested = new (FlatToNested as any)({
+      id: 'id',
+      parent: 'parent',
+      children: 'children',
+    });
+
+    const nestedNormalNodes = flatToNested.convert(normalNodes);
+    const model = new TreeModel();
+    const root = model.parse<ParsedHierarchySingleNode>(nestedNormalNodes);
+    return root;
+  });
+};
+
+/** this is getting very dangerous now */
+/** so this selector will get  */
+/** this will select at any level the currentChildren whose path has
+ * selected children
+ */
+export const getParentNodeInSelectedTree = () => {
+  return createSelector(getSelectedHierarchy(), getCurrentParentId, findAParentNode);
+};
+
+export const getCurrentChildrenInSelectedTre = () => {
+  return createSelector(getParentNodeInSelectedTree(), getChildrenForNode);
+};
+
+/** a combines selector for the computed selected hierarchy tree slice
+ * this will make use of the same filters
+ */
+export const getNodesInSelectedTree = () =>
+  createSelector(
+    getParentNodeInSelectedTree(),
+    getCurrentChildrenInSelectedTre(),
+    (parentNode, childrenNodes) => {
+      return { parentNode, childrenNodes };
+    }
+  );
