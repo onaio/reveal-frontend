@@ -10,7 +10,6 @@ import { keyBy } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import TreeModel from 'tree-model';
-import { USER_CHANGE } from '../../../../configs/lang';
 import {
   AutoSelectCallback,
   ParsedHierarchySingleNode,
@@ -26,6 +25,7 @@ import {
   getChildrenForNode,
   nodeHasChildren,
   SELECT_KEY,
+  selectionReason,
   SetSelectAttrToNode,
 } from './utils';
 
@@ -84,9 +84,10 @@ export interface AutoSelectNodesAction extends AnyAction {
   type: typeof AUTO_SELECT_NODES;
   rootJurisdictionId: string;
   callback: AutoSelectCallback;
-  selectedBy: string; // TODO: types
+  selectedBy: string;
 }
 
+/** describes an action to deselect or selected nodes in a tree */
 export interface DeselectAllNodesAction extends AnyAction {
   type: typeof DESELECT_ALL_NODES;
   rootJurisdictionId: string;
@@ -127,7 +128,7 @@ export function fetchTree(
 export function selectNode(
   rootJurisdictionId: string,
   nodeId: string,
-  selectedBy: string
+  selectedBy: string = selectionReason.USER_CHANGE
 ): SelectNodeAction {
   return {
     nodeId,
@@ -152,7 +153,7 @@ export function deforest(): DeforestAction {
 export function deselectNode(
   rootJurisdictionId: string,
   nodeId: string,
-  selectedBy: string
+  selectedBy: string = selectionReason.USER_CHANGE
 ): DeselectNodeAction {
   return {
     nodeId,
@@ -162,12 +163,6 @@ export function deselectNode(
   };
 }
 
-/** can autoselect jurisdictions for several reasons one such reason is that you loaded
- * autoselecting already assigned jurisdictions(for a plan that is still in draft)
- * autoselecting jurisdictions based on a plan-risk metric
- */
-/** should be possible to add an entry on the reason of auto-selection to each node. */
-
 /** sets nodes to selected based on calculation that you provide
  * @param rootJurisdictionId - to know what tree to target
  * @param callback - a function that dictates which nodes to be selected
@@ -175,12 +170,12 @@ export function deselectNode(
 export function autoSelectNodes(
   rootJurisdictionId: string,
   callback: AutoSelectCallback,
-  selectedBy: string = USER_CHANGE
+  selectedBy: string = selectionReason.USER_CHANGE
 ): AutoSelectNodesAction {
   return {
     callback,
     rootJurisdictionId,
-    selectedBy, // TODO : types
+    selectedBy,
     type: AUTO_SELECT_NODES,
   };
 }
@@ -245,8 +240,6 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
       };
 
     case DESELECT_NODE:
-      // typescript or sth forced me to used different variables names, it thinks declaring
-      // the same variable name in different case is a mistake, or maybe it is I should look into it
       const allTrees = state.treeByRootId;
       const wantedTree = (allTrees as Dictionary<TreeNode>)[action.rootJurisdictionId];
       if (!wantedTree) {
@@ -532,34 +525,36 @@ export const getStructuresCount = () =>
   });
 
 /** we might need to reconstruct a tree whose hierarchy includes only the
- * jurisdiction objects that are selected.
- * how will this be saved. -> not saved computed
- *
- * Process:
- *  - so we have an option to converting flat data into a nested model.
+ * jurisdiction objects that have selected leaf nodes.(calling this the selected hierarchy)
+ * @param state - the store state
+ * @param props - the Filters
  */
-// TODO - is this algol acceptable O()
 export const getSelectedHierarchy = () => {
   return createSelector(getTreeById(), tree => {
+    // get selected leaf nodes.
     const allSelectedLeafNodes = computeSelectedNodes(tree, false);
     if (allSelectedLeafNodes.length === 0) {
       return;
     }
     let allNodesInPaths = keyBy(allSelectedLeafNodes, node => node.model.id);
 
+    // create an object with uniq jurisdiction entries for all jurisdictions that exist
+    // in a path that has a selected leaf node.
     allSelectedLeafNodes.forEach(node => {
-      allNodesInPaths = { ...allNodesInPaths, ...keyBy(node.getPath(), node => node.model.id) };
+      allNodesInPaths = { ...allNodesInPaths, ...keyBy(node.getPath(), nd => nd.model.id) };
     });
+
+    // flatten it into an array in preparation of creating a nested structure
     const normalNodes = allSelectedLeafNodes.map(node => node.model);
 
     // nest them normal nodes into a hierarchy
-    // console.log(normalNodes);
     const flatToNested = new (FlatToNested as any)({
+      children: 'children',
       id: 'id',
       parent: 'parent',
-      children: 'children',
     });
 
+    // create a new tree based on the new structure.
     const nestedNormalNodes = flatToNested.convert(normalNodes);
     const model = new TreeModel();
     const root = model.parse<ParsedHierarchySingleNode>(nestedNormalNodes);
@@ -567,21 +562,26 @@ export const getSelectedHierarchy = () => {
   });
 };
 
-/** this is getting very dangerous now */
-/** so this selector will get  */
-/** this will select at any level the currentChildren whose path has
- * selected children
+/** gets the parent node from the selectedHierarchy
+ * @param state - the store state
+ * @param props - the filters
  */
 export const getParentNodeInSelectedTree = () => {
   return createSelector(getSelectedHierarchy(), getCurrentParentId, findAParentNode);
 };
 
+/** gets the children nodes from the selectedHierarchy
+ * @param state - the store state
+ * @param props - the filters
+ */
 export const getCurrentChildrenInSelectedTre = () => {
   return createSelector(getParentNodeInSelectedTree(), getChildrenForNode);
 };
 
-/** a combines selector for the computed selected hierarchy tree slice
- * this will make use of the same filters
+/** a combined selector that gets the parent node and the currentChildren
+ * from the selectedHierarchy
+ * @param state - the store state
+ * @param props - the filters
  */
 export const getNodesInSelectedTree = () =>
   createSelector(
