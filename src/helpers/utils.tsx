@@ -876,7 +876,7 @@ export const extractPlanRecordResponseFromPlanPayload = (
   return null;
 };
 
-/** a util to check if plan of type PlanDefinition is of the specified intervention type
+/** a util to check if plan of type PlanDefinition is of the specified intervention type(s)
  * @param {PlanDefinition} plan - the plan of interest
  * @param {InterventionType} interventionType if plan is of specified intervention type we return true
  *
@@ -884,14 +884,16 @@ export const extractPlanRecordResponseFromPlanPayload = (
  */
 export const isPlanDefinitionOfType = (
   plan: PlanDefinition,
-  interventionType: InterventionType
+  interventionType: InterventionType | InterventionType[]
 ) => {
-  return (
-    plan.useContext.filter(
-      (f: UseContext) => f.code === 'interventionType' && f.valueCodableConcept === interventionType
-    ).length > 0
-  );
+  // if plan intervention is in intervention Types
+  const allowedTypes = Array.isArray(interventionType) ? interventionType : [interventionType];
+  const plansType = plan.useContext
+    .filter((f: UseContext) => f.code === 'interventionType')
+    .map(context => context.valueCodableConcept)[0];
+  return allowedTypes.includes(plansType as InterventionType);
 };
+
 /**
  * If error exists return item and error message else return percentage value
  * Research on Declaring number only within certain range e.g in decimalPoints case (0 - 100)
