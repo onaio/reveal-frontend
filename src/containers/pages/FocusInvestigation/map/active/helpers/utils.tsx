@@ -514,10 +514,10 @@ export const buildMouseMoveHandler = (map: Map, event: EventData) => {
     closeButton: false,
   });
   // Added this part to remove duplicate popup containers showing on map when hovering
-  const nodes = document.getElementsByClassName('mapboxgl-popup');
+  const nodes: any = document.getElementsByClassName('mapboxgl-popup');
   let node: any;
   if (nodes && nodes.length) {
-    for (node in nodes) {
+    for (node of nodes) {
       if (node.style) {
         node.style.display = 'none';
       }

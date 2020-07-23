@@ -22,7 +22,10 @@ import jurisdictionReducer, {
   getJurisdictionsFC,
   reducerName as jurisdictionReducerName,
 } from '../../../store/ducks/opensrp/jurisdictions';
-import { buildStructureLayers } from '../FocusInvestigation/map/active/helpers/utils';
+import {
+  buildMouseMoveHandler,
+  buildStructureLayers,
+} from '../FocusInvestigation/map/active/helpers/utils';
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** props for Plan jurisdiction and team assignment higher order component */
@@ -124,6 +127,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
           zoom={zoom}
           mapCenter={mapCenter}
           mapBounds={mapBounds}
+          onMouseMoveHandler={buildMouseMoveHandler}
         />
       ) : (
         <div>{MAP_LOAD_ERROR}</div>
