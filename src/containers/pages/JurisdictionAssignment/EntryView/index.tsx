@@ -1,10 +1,8 @@
 /** this is the view that will be served on assignJurisdictions route
- * it will decide based on the below metrics whether to use the auto-selection functionality
- * or the manual jurisdiction selection.
- *  for manual jurisdiction selection:
- *      - plan has more than one assigned jurisdiction.
- *      - if plan has one assigned jurisdiction that is not the rootNodes id.
- *  otherwise redirect to autoSelection url for autoSelection flow.
+ * it makes service calls for the information that is required to make a decision on whether
+ * to got to autoSelection or manual jurisdiction selection. This are:
+ *  - the plan
+ *  - the hierarchy
  */
 
 import React from 'react';
@@ -27,7 +25,7 @@ import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionAssignmentReRouting } from './JurisdictionAssignmentReRouting';
 import { useGetJurisdictionTree, useGetRootJurisdictionId, usePlanEffect } from './utils';
 
-interface JurisdictionAssignmentEntryProps {
+interface EntryViewProps {
   plan: PlanDefinition | null;
   serviceClass: typeof OpenSRPService;
   treeFetchedCreator: ActionCreator<FetchedTreeAction>;
@@ -41,15 +39,14 @@ const defaultProps = {
   treeFetchedCreator: fetchTree,
 };
 
-export interface JurisdictionEntryRouteParams {
+export interface EntryViewRouteParams {
   planId: string;
 }
 
-export type FullHierarchyWrapperProps = JurisdictionAssignmentEntryProps &
-  RouteComponentProps<JurisdictionEntryRouteParams>;
+export type FullEntryViewProps = EntryViewProps & RouteComponentProps<EntryViewRouteParams>;
 
 /** retrieves the info from the api and  puts in the store. */
-const JurisdictionAssignmentEntry = (props: FullHierarchyWrapperProps) => {
+const EntryView = (props: FullEntryViewProps) => {
   const { serviceClass, plan, treeFetchedCreator, fetchPlanCreator } = props;
 
   const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
@@ -102,23 +99,17 @@ const JurisdictionAssignmentEntry = (props: FullHierarchyWrapperProps) => {
   return <ConnectedJurisdictionAssignmentReRouting {...reRoutingProps} />;
 };
 
-JurisdictionAssignmentEntry.defaultProps = defaultProps;
-export { JurisdictionAssignmentEntry };
+EntryView.defaultProps = defaultProps;
+export { EntryView as JurisdictionAssignmentEntry };
 
 /** map state to props interface  */
-type MapStateToProps = Pick<JurisdictionAssignmentEntryProps, 'plan'>;
+type MapStateToProps = Pick<EntryViewProps, 'plan'>;
 
 /** map action creators interface */
-type DispatchToProps = Pick<
-  JurisdictionAssignmentEntryProps,
-  'treeFetchedCreator' | 'fetchPlanCreator'
->;
+type DispatchToProps = Pick<EntryViewProps, 'treeFetchedCreator' | 'fetchPlanCreator'>;
 
 /** maps props to store state */
-const mapStateToProps = (
-  state: Partial<Store>,
-  ownProps: FullHierarchyWrapperProps
-): MapStateToProps => {
+const mapStateToProps = (state: Partial<Store>, ownProps: FullEntryViewProps): MapStateToProps => {
   const planId = ownProps.match.params.planId;
   const planObj = getPlanDefinitionById(state, planId);
 
@@ -133,7 +124,4 @@ const mapDispatchToProps: DispatchToProps = {
   treeFetchedCreator: fetchTree,
 };
 
-export const ConnectedJurisdictionAssignmentEntry = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(JurisdictionAssignmentEntry);
+export const ConnectedEntryView = connect(mapStateToProps, mapDispatchToProps)(EntryView);
