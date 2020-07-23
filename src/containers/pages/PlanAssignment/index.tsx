@@ -259,7 +259,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
 
   return (
     <>
-      {isMapDisabled(plan) ? '' : <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />}
+      {!isMapDisabled(plan) && <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />}
       <WrappedJurisdictionTable {...wrappedProps} />
     </>
   );
