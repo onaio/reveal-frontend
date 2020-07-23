@@ -180,6 +180,7 @@ export function getIRSPlansArray(
 /** This interface represents the structure of IRS plan filter options/params */
 export interface IRSPlanFilters {
   plan_title?: string /** IRS plan title */;
+  statusList?: string[] /** array of plan statuses */;
 }
 
 /** IRSPlansArrayBaseSelector select an array of all plans
@@ -196,6 +197,13 @@ export const IRSPlansArrayBaseSelector = (planKey?: string) => (
  */
 export const getTitle = (_: Partial<Store>, props: IRSPlanFilters) => props.plan_title;
 
+/** getStatusList
+ * Gets statusList from PlanFilters
+ * @param state - the redux store
+ * @param props - the plan filters object
+ */
+export const getStatusList = (_: Partial<Store>, props: IRSPlanFilters) => props.statusList;
+
 /** getPlansArrayByTitle
  * Gets an array of Plan objects filtered by plan title
  * @param {Partial<Store>} state - the redux store
@@ -205,6 +213,18 @@ export const getIRSPlansArrayByTitle = (planKey?: string) =>
   createSelector([IRSPlansArrayBaseSelector(planKey), getTitle], (plans, title) =>
     title
       ? plans.filter(plan => plan.plan_title.toLowerCase().includes(title.toLowerCase()))
+      : plans
+  );
+
+/** getIRSPlansArrayByStatus
+ * Gets an array of Plan objects filtered by plan status
+ * @param {Partial<Store>} state - the redux store
+ * @param {PlanDefinitionFilters} props - the plan defintion filters object
+ */
+export const getIRSPlansArrayByStatus = (planKey?: string) =>
+  createSelector([IRSPlansArrayBaseSelector(planKey), getStatusList], (plans, statusList) =>
+    statusList
+      ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
       : plans
   );
 
@@ -225,7 +245,8 @@ export const getIRSPlansArrayByTitle = (planKey?: string) =>
  * @param {string} sortField - sort by field
  */
 export const makeIRSPlansArraySelector = (planKey?: string) => {
-  return createSelector([getIRSPlansArrayByTitle(planKey)], plans =>
-    intersect([plans], JSON.stringify)
+  return createSelector(
+    [getIRSPlansArrayByTitle(planKey), getIRSPlansArrayByStatus(planKey)],
+    (plan1, plan2) => intersect([plan1, plan2], JSON.stringify)
   );
 };
