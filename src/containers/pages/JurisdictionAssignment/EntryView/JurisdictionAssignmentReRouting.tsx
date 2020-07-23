@@ -46,13 +46,19 @@ const defaultProps = {
  * @param plan - the plan
  * @param tree - the tree starting from the rootJurisdiction that the plan is in
  */
-export const getNextUrl = (plan: PlanDefinition, tree: TreeNode) => {
+export const getNextUrl = (
+  plan: PlanDefinition,
+  tree: TreeNode,
+  enableAutoSelection: boolean,
+  enabledForPlanTypes: string[]
+) => {
   // if autoSelection is disabled we do not need any more checks
-  if (!ENABLE_JURISDICTIONS_AUTO_SELECTION) {
+  if (!enableAutoSelection) {
     return MANUAL_ASSIGN_JURISDICTIONS_URL;
   }
+
   // auto selection could be disabled for some plan types. if plan type is not in the whitelist
-  const whitelistedTypes: InterventionType[] = ENABLE_JURISDICTION_AUTO_SELECTION_FOR_PLAN_TYPES as InterventionType[];
+  const whitelistedTypes: InterventionType[] = enabledForPlanTypes as InterventionType[];
   if (!isPlanDefinitionOfType(plan, whitelistedTypes)) {
     return MANUAL_ASSIGN_JURISDICTIONS_URL;
   }
@@ -65,8 +71,8 @@ export const getNextUrl = (plan: PlanDefinition, tree: TreeNode) => {
 
   // for the single jurisdiction, is it the rootNode? coz if not then we manual select
   const jurisdiction = plan.jurisdiction[0];
-  const jurisdictionIsNotRoot = jurisdiction !== tree.model.id;
-  if (!jurisdictionIsNotRoot) {
+  const jurisdictionIsNotRoot = jurisdiction.code !== tree.model.id;
+  if (jurisdictionIsNotRoot) {
     return MANUAL_ASSIGN_JURISDICTIONS_URL;
   }
 
@@ -81,7 +87,12 @@ const JurisdictionAssignmentReRouting = (props: JurisdictionAssignmentReRoutingP
     return null;
   }
 
-  const nextBaseUrl = getNextUrl(plan, tree);
+  const nextBaseUrl = getNextUrl(
+    plan,
+    tree,
+    ENABLE_JURISDICTIONS_AUTO_SELECTION,
+    ENABLE_JURISDICTION_AUTO_SELECTION_FOR_PLAN_TYPES
+  );
 
   return <Redirect to={`${nextBaseUrl}/${plan.identifier}/${rootJurisdictionId}`} />;
 };
