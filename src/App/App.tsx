@@ -116,7 +116,7 @@ import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsRe
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
-import { ConnectedJurisdictionAssignmentEntry } from '../containers/pages/JurisdictionAssignment/JurisdictionAssignmentEntryView';
+import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
 import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/JurisdictionAssignmentView';
 import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
 import ConnectedChildReports from '../containers/pages/MDAPoint/ChildReports';
@@ -604,7 +604,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${ASSIGN_JURISDICTIONS_URL}/:planId`}
-                  component={ConnectedJurisdictionAssignmentEntry}
+                  component={ConnectedEntryView}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
