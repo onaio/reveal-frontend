@@ -788,3 +788,5 @@ export const REFINE_SELECTED_JURISDICTIONS = translate(
   'REFINE_SELECTED_JURISDICTIONS',
   'Refine selected jurisdictions'
 );
+
+export const CONTINUE_TO_NEXT_STEP = translate('CONTINUE_TO_NEXT_STEP', 'Continue to next step');
