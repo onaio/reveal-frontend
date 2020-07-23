@@ -40,3 +40,6 @@ export const useHandleBrokenPage = () => {
 
   return { broken, errorMessage, handleBrokenPage };
 };
+
+/** type of handle broken page helper */
+export type HandleBrokenPage = (message: string) => void;
