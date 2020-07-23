@@ -131,7 +131,7 @@ describe('PlanAssignment', () => {
     });
 
     expect(fetch.mock.calls[0][0]).toEqual(
-      'https://test.smartregister.org/opensrp/rest/location/getHierarchy/plan/356b6b84-fc36-4389-a44a-2b038ed2f38d?return_structure_count=false'
+      'https://test.smartregister.org/opensrp/rest/location/hierarchy/plan/356b6b84-fc36-4389-a44a-2b038ed2f38d?return_structure_count=false'
     );
     expect(fetch.mock.calls[1][0]).toEqual(
       'https://test.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?plan=356b6b84-fc36-4389-a44a-2b038ed2f38d'
