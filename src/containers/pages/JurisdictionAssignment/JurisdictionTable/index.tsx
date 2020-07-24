@@ -26,6 +26,7 @@ import {
   ASSIGN_PLAN_URL,
   AUTO_ASSIGN_JURISDICTIONS_URL,
   MANUAL_ASSIGN_JURISDICTIONS_URL,
+  PLANNING_VIEW_URL,
 } from '../../../../constants';
 import { putJurisdictionsToPlan } from '../../../../helpers/dataLoading/jurisdictions';
 import { displayError } from '../../../../helpers/errors';
@@ -35,7 +36,6 @@ import hierarchyReducer, {
   autoSelectNodes,
   AutoSelectNodesAction,
   deselectAllNodes,
-  DeselectAllNodesAction,
   deselectNode,
   DeselectNodeAction,
   FetchedTreeAction,
@@ -50,7 +50,7 @@ import hierarchyReducer, {
   SelectNodeAction,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
-import { nodeIsSelected, SelectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
+import { nodeIsSelected, selectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import {
   addPlanDefinition,
@@ -82,7 +82,7 @@ export interface JurisdictionSelectorTableProps {
   selectedLeafNodes: TreeNode[];
   leafNodes: TreeNode[];
   autoSelectionFlow: boolean;
-  deselectAllNodesCreator: ActionCreator<DeselectAllNodesAction>;
+  deselectAllNodesCreator: typeof deselectAllNodes;
 }
 
 const defaultProps = {
@@ -109,19 +109,6 @@ const defaultProps = {
  * 2). also gets the locations that are already assigned to plan
  *    - that's why I passed the plan as a prop
  * 3). render the drill down table.
- */
-/** 2 cases for this:
- * 1). used as part of the autoSelection process.
- *    when autoselection is enabled we finish the workflow in the plan assignment view,otherwise one would have to start all over.
- *    for the time being there will not be auto-selecting existing jurisdiction assignments.
- * 2). used when autoSelection is disabled.
- *    here we have to show previous selections.
- *    when autoselection is disabled autoSelect previously selected jurisdictions i.e. if plan is still draft.
- */
-/** the business logic involved around the action handlers should remain in this component.
- * This compoent will effectively be a HOC that specifies what the action handlers are
- * and passes those on to the table. The table should be thought of as the presentational
- * component.
  */
 const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const {
@@ -154,12 +141,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       InterventionType.MDAPoint,
       InterventionType.DynamicMDA,
     ];
-    interventionTypes.forEach(interventionType => {
-      if (isPlanDefinitionOfType(thePlan, interventionType)) {
-        return true;
-      }
-    });
-    return false;
+    return isPlanDefinitionOfType(thePlan, interventionTypes);
   };
 
   const history = useHistory();
@@ -175,13 +157,13 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
    * @param value - change selected status of node with said id to value
    */
   function applySelectedToNode(nodeId: string, value: boolean) {
-    if (singleSelect) {
-      deselectAllNodesCreator();
-    }
     if (value) {
-      selectNodeCreator(rootJurisdictionId, nodeId, SelectionReason.USER_CHANGE);
+      if (singleSelect) {
+        deselectAllNodesCreator(rootJurisdictionId);
+      }
+      selectNodeCreator(rootJurisdictionId, nodeId, selectionReason.USER_CHANGE);
     } else {
-      deselectNodeCreator(rootJurisdictionId, nodeId, SelectionReason.USER_CHANGE);
+      deselectNodeCreator(rootJurisdictionId, nodeId, selectionReason.USER_CHANGE);
     }
   }
 
@@ -237,7 +219,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         key={`${node.model.id}-check-jurisdiction`}
         type="checkbox"
         checked={nodeIsSelected(node)}
-        disabled={singleSelect}
+        disabled={node.hasChildren() && singleSelect}
         // tslint:disable-next-line: jsx-no-lambda
         onChange={e => {
           const newSelectedValue = e.target.checked;
@@ -328,6 +310,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     return putJurisdictionsToPlan(thePlan, jurisdictionIds, serviceClass, fetchPlanCreator)
       .then(() => {
         successGrowl(`${selectedLeafNodes.length} ${JURISDICTION_ASSIGNMENT_SUCCESSFUL}`);
+        history.push(PLANNING_VIEW_URL);
       })
       .catch(error => displayError(error));
   };
@@ -340,6 +323,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     commitJurisdictions(planPayload)
       .then(() => {
         // redirect to this plans assignment page
+        successGrowl(`${selectedLeafNodes.length} ${JURISDICTION_ASSIGNMENT_SUCCESSFUL}`);
         history.push(teamAssignmentUrl);
       })
       .catch(err => displayError(err));
