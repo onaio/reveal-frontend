@@ -9,6 +9,7 @@ import App from '../App';
 
 jest.mock('../../configs/env', () => ({
   BACKEND_ACTIVE: false,
+  HIDDEN_PLAN_STATUSES: ['retired'],
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES: '11, 12',
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES: '12',
 }));

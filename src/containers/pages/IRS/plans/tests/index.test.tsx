@@ -107,6 +107,49 @@ describe('components/IRS Reports/IRSPlansList', () => {
     wrapper.unmount();
   });
 
+  it('renders plans correctly when connected to store', async () => {
+    store.dispatch(fetchIRSPlans(fixtures.plans as GenericPlan[]));
+
+    const props = {
+      fetchPlans: jest.fn(),
+      history,
+      location: {
+        hash: '',
+        pathname: REPORT_IRS_PLAN_URL,
+        search: '',
+        state: undefined,
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: `${REPORT_IRS_PLAN_URL}`,
+        url: `${REPORT_IRS_PLAN_URL}`,
+      },
+      service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIRSPlansList {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+    expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot(
+      'breadcrumbs: connected to store'
+    );
+    expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title: connected to store');
+
+    expect(wrapper.find('.tbody .tr').length).toEqual(2);
+    expect(wrapper.find('GenericPlansList').length).toBe(1);
+    expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot(
+      'GenericPlansList props: connected to store'
+    );
+  });
+
   it('handles search correctly', async () => {
     store.dispatch(fetchIRSPlans(fixtures.plans as GenericPlan[]));
 
@@ -114,8 +157,10 @@ describe('components/IRS Reports/IRSPlansList', () => {
       fetchPlans: jest.fn(),
       history,
       location: {
+        hash: '',
         pathname: REPORT_IRS_PLAN_URL,
         search: '?title=Berg',
+        state: undefined,
       },
       match: {
         isExact: true,
@@ -155,8 +200,10 @@ describe('components/IRS Reports/IRSPlansList', () => {
       fetchPlans: jest.fn(),
       history,
       location: {
+        hash: '',
         pathname: REPORT_IRS_PLAN_URL,
         search: '?title=BERG',
+        state: undefined,
       },
       match: {
         isExact: true,
@@ -190,8 +237,10 @@ describe('components/IRS Reports/IRSPlansList', () => {
       fetchPlans: jest.fn(),
       history,
       location: {
+        hash: '',
         pathname: REPORT_IRS_PLAN_URL,
         search: '?title=Amazon',
+        state: undefined,
       },
       match: {
         isExact: true,

@@ -67,6 +67,7 @@ import {
   PlanPayload,
   PlanRecord,
   PlanRecordResponse,
+  PlanStatus,
 } from '../store/ducks/plans';
 import { InitialTask } from '../store/ducks/tasks';
 import { displayError } from './errors';
@@ -1022,3 +1023,11 @@ export type DefaultDrillDownPropsType = Pick<
   | 'useDrillDown'
   | 'renderNullDataComponent'
 >;
+
+/**
+ * Eliminates provided status and returns a list of remaining plans
+ * @param {string[]} planStatuses  - array of plans status to be eliminated
+ */
+export const getPlanStatusToDisplay = (planStatuses: string[]): string[] => {
+  return Object.values(PlanStatus).filter(status => !planStatuses.includes(status));
+};
