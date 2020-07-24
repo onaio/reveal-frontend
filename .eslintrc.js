@@ -62,4 +62,3 @@ module.exports = {
     ecmaVersion: 2015,
   },
 };
-t;
