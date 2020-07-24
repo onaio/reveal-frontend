@@ -68,7 +68,7 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   // functions/methods
 
   /** props to pass to the headerBreadCrumb */
-  const breadcrumbProps: BreadCrumbProps = {
+  const breadcrumbProps: Partial<BreadCrumbProps> = {
     currentPage: {
       label: ORGANIZATIONS_LABEL,
       url: ORGANIZATIONS_LIST_URL,

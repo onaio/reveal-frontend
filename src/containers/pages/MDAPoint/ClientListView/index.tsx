@@ -109,7 +109,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
     return <ClientUpload />;
   }
   /** props to pass to the headerBreadCrumb */
-  const breadcrumbProps: BreadCrumbProps = {
+  const breadcrumbProps: Partial<BreadCrumbProps> = {
     currentPage: {
       label: clientLabel === STUDENTS_TITLE ? STUDENTS_TITLE : CLIENTS_TITLE,
       url: CLIENTS_LIST_URL,

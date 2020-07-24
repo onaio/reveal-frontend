@@ -75,7 +75,7 @@ export const OpenSRPPlansList = (props: RouteComponentProps) => {
     label: HOME,
     url: HOME_URL,
   };
-  const breadCrumbProps: BreadCrumbProps = {
+  const breadCrumbProps: Partial<BreadCrumbProps> = {
     currentPage: {
       label: pageTitle,
       url: ASSIGN_PLAN_URL,
@@ -84,7 +84,7 @@ export const OpenSRPPlansList = (props: RouteComponentProps) => {
   };
 
   const renderBody = draftPlansPageBodyFactory({
-    breadCrumbProps,
+    breadCrumbProps: breadCrumbProps as BreadCrumbProps,
     newPlanUrl: '',
     pageTitle,
   });

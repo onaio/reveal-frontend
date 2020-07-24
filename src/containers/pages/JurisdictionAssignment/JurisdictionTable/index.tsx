@@ -49,6 +49,9 @@ import hierarchyReducer, {
   getCurrentParentNode,
   reducerName as hierarchyReducerName,
   selectNode,
+  SelectNodeAction,
+  getMapCurrentParentId,
+  fetchUpdatedCurrentParentId,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
@@ -75,10 +78,11 @@ export interface JurisdictionSelectorTableProps {
   treeFetchedCreator: typeof fetchTree;
   currentParentNode?: TreeNode;
   currentChildren: TreeNode[];
-  selectNodeCreator: typeof selectNode;
-  deselectNodeCreator: typeof deselectNode;
-  autoSelectNodesCreator: typeof autoSelectNodes;
-  fetchPlanCreator: typeof addPlanDefinition;
+  selectNodeCreator: ActionCreator<SelectNodeAction>;
+  deselectNodeCreator: ActionCreator<DeselectNodeAction>;
+  autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
+  fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
+  fetchUpdatedCurrentParentIdActionCreator: typeof fetchUpdatedCurrentParentId;
   selectedLeafNodes: TreeNode[];
   leafNodes: TreeNode[];
   autoSelectionFlow: boolean;
@@ -92,6 +96,7 @@ const defaultProps = {
   deselectAllNodesCreator: deselectAllNodes,
   deselectNodeCreator: deselectNode,
   fetchPlanCreator: addPlanDefinition,
+  fetchUpdatedCurrentParentIdActionCreator: fetchUpdatedCurrentParentId,
   jurisdictionsMetadata: [],
   leafNodes: [],
   rootJurisdictionId: '',
@@ -118,6 +123,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     selectedLeafNodes,
     plan,
     jurisdictionsMetadata,
+    fetchUpdatedCurrentParentIdActionCreator,
     serviceClass,
     autoSelectionFlow,
     deselectAllNodesCreator,
@@ -411,6 +417,7 @@ type DispatchToProps = Pick<
   | 'autoSelectNodesCreator'
   | 'fetchPlanCreator'
   | 'deselectAllNodesCreator'
+  | 'fetchUpdatedCurrentParentIdActionCreator'
 >;
 
 const childrenSelector = getCurrentChildren();
@@ -423,11 +430,14 @@ const mapStateToProps = (
   ownProps: JurisdictionSelectorTableProps
 ): MapStateToProps => {
   const filters: Filters = {
-    currentParentId: ownProps.currentParentId,
+    currentParentId: getMapCurrentParentId(state).length
+      ? getMapCurrentParentId(state)
+      : ownProps.currentParentId,
     leafNodesOnly: true,
     planId: ownProps.plan.identifier,
     rootJurisdictionId: ownProps.rootJurisdictionId,
   };
+
   return {
     currentChildren: childrenSelector(state, filters),
     currentParentNode: parentNodeSelector(state, filters),
@@ -443,6 +453,7 @@ const mapDispatchToProps: DispatchToProps = {
   fetchPlanCreator: addPlanDefinition,
   selectNodeCreator: selectNode,
   treeFetchedCreator: fetchTree,
+  fetchUpdatedCurrentParentIdActionCreator: fetchUpdatedCurrentParentId,
 };
 
 export const ConnectedJurisdictionTable = connect(

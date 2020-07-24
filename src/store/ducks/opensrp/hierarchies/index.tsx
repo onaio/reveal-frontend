@@ -55,6 +55,9 @@ export const DESELECT_ALL_NODES = 'opensrp/locations/hierarchy/DESELECT_ALL_NODE
 // /** action to auto-append/ auto-modify the selected attribute of nodes in a tree */
 export const AUTO_SELECT_NODES = 'opensrp/locations/hierarchy/AUTO_SELECT_NODES';
 
+/** action to fetch updated children to ensure map and jurisdiction table are in sync */
+export const FETCH_MAP_CURRENT_PARENT = 'opensrp/locations/hierarchy/FETCH_MAP_CURRENT_PARENT';
+
 /** describes action that adds a tree to store */
 export interface FetchedTreeAction extends AnyAction {
   type: typeof TREE_FETCHED;
@@ -65,6 +68,11 @@ export interface FetchedTreeAction extends AnyAction {
 export interface DeforestAction extends AnyAction {
   type: typeof DEFOREST;
   treeByRootId: {};
+}
+
+export interface FetchUpdatedCurrentParentId extends AnyAction {
+  type: typeof FETCH_MAP_CURRENT_PARENT;
+  mapCurrentParentId: string;
 }
 
 /** action to select a node  */
@@ -109,6 +117,7 @@ export type TreeActionTypes =
   | DeselectNodeAction
   | AutoSelectNodesAction
   | DeselectAllNodesAction
+  | FetchUpdatedCurrentParentId
   | AnyAction;
 
 // **************************** action creators ****************************
@@ -130,6 +139,12 @@ export function fetchTree(
   };
 }
 
+export function fetchUpdatedCurrentParentId(currentParentId: string): FetchUpdatedCurrentParentId {
+  return {
+    mapCurrentParentId: currentParentId,
+    type: FETCH_MAP_CURRENT_PARENT,
+  };
+}
 /** action creator for when selecting a node
  * @param rootJurisdictionId - need to know the tree that should be modified
  * @param nodeId - the id of the node whose selected status should be changed
@@ -221,6 +236,7 @@ export function deselectAllNodes(
 export interface TreeState {
   metaData: Dictionary<Dictionary<Dictionary<Meta>>>;
   treeByRootId: Dictionary<TreeNode> | {};
+  mapCurrentParentId: string;
 }
 
 /** Create an immutable tree state */
@@ -248,7 +264,11 @@ export default function reducer(state: ImmutableTreeState = initialState, action
         ...state,
         treeByRootId: { ...state.treeByRootId, ...action.treeByRootId },
       };
-
+    case FETCH_MAP_CURRENT_PARENT:
+      return {
+        ...state,
+        mapCurrentParentId: action.mapCurrentParentId,
+      };
     case DEFOREST:
       return {
         ...state,
@@ -355,6 +375,9 @@ export interface Filters {
   leafNodesOnly?: boolean /** specified when requesting for selected nodes, truthy returns leaf nodes */;
   currentParentId?: string /** to use when filtering current children */;
 }
+
+export const getMapCurrentParentId = (state: Partial<Store>) =>
+  (state as any)[reducerName].mapCurrentParentId;
 
 /** retrieve the rootJurisdiction value
  * @param state - the store

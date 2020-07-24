@@ -8,6 +8,7 @@ import Loading from '../../components/page/Loading';
 import { GISIDA_MAPBOX_TOKEN } from '../../configs/env';
 import { imgArr } from '../../configs/settings';
 import { gsLiteStyle } from './helpers';
+import { TreeNode } from '../../store/ducks/opensrp/hierarchies/types';
 
 /** single map icon description */
 interface MapIcon {
@@ -28,6 +29,7 @@ export interface GisidaLiteProps {
   mapIcons: MapIcon[];
   onClickHandler?: (map: Map, event: EventData) => void;
   onMouseMoveHandler?: (map: Map, event: EventData) => void;
+  currentChildren: TreeNode[];
 }
 
 /** Default props for GisidaLite */
@@ -71,6 +73,7 @@ const GisidaLite = (props: GisidaLiteProps) => {
     zoom,
     mapBounds,
     onMouseMoveHandler,
+    currentChildren,
   } = props;
 
   if (mapCenter === undefined) {

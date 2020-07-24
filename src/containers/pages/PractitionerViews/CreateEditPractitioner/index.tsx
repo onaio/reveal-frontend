@@ -60,7 +60,7 @@ const CreateEditPractitionerView = (props: PropsTypes) => {
     label: PRACTITIONERS,
     url: PRACTITIONERS_LIST_URL,
   };
-  const breadcrumbProps: BreadCrumbProps = {
+  const breadcrumbProps: Partial<BreadCrumbProps> = {
     currentPage: {
       label: editing ? EDIT_PRACTITIONER : NEW_PRACTITIONER,
       url: editing

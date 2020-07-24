@@ -144,7 +144,7 @@ const SingleOrganizationView = (props: SingleOrgViewPropsType) => {
     label: ORGANIZATIONS_LABEL,
     url: ORGANIZATIONS_LIST_URL,
   };
-  const breadcrumbProps: BreadCrumbProps = {
+  const breadcrumbProps: Partial<BreadCrumbProps> = {
     currentPage: {
       label: organization.name,
       url: `${SINGLE_ORGANIZATION_URL}/${organization.identifier}`,

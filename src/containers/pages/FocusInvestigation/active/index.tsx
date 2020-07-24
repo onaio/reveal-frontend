@@ -78,6 +78,7 @@ import plansReducer, {
 } from '../../../../store/ducks/plans';
 import './style.css';
 import { createTableProps } from './utils';
+import { fetchUpdatedCurrentParentId } from '../../../../store/ducks/opensrp/hierarchies';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);
@@ -170,7 +171,7 @@ class ActiveFocusInvestigation extends React.Component<
   }
 
   public render() {
-    const breadcrumbProps: BreadCrumbProps = {
+    const breadcrumbProps: Partial<BreadCrumbProps> = {
       currentPage: {
         label: `${FOCUS_INVESTIGATIONS}`,
         url: `${FI_URL}`,
