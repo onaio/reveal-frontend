@@ -10,38 +10,38 @@ jobs:
       - image: circleci/node:12.16.1
 
         environment:
-          SKIP_PREFLIGHT_CHECK: "true"
-          REACT_APP_WEBSITE_NAME: "Reveal"
-          REACT_APP_DOMAIN_NAME: "http://localhost:3000"
-          REACT_APP_THEME_COLOR: "000000"
-          REACT_APP_ENABLE_IRS: "true"
-          REACT_APP_ENABLE_FI: "true"
-          REACT_APP_ENABLE_USERS: "true"
-          REACT_APP_ENABLE_ASSIGN: "true"
-          REACT_APP_ENABLE_ABOUT: "true"
-          REACT_APP_ENABLE_TEAMS: "true"
-          REACT_APP_ENABLE_PRACTITIONERS: "true"
-          REACT_APP_DISABLE_LOGIN_PROTECTION: "false"
-          REACT_APP_GA_CODE: "UA-0000000-0"
-          REACT_APP_GA_ENV: "test"
+          SKIP_PREFLIGHT_CHECK: 'true'
+          REACT_APP_WEBSITE_NAME: 'Reveal'
+          REACT_APP_DOMAIN_NAME: 'http://localhost:3000'
+          REACT_APP_THEME_COLOR: '000000'
+          REACT_APP_ENABLE_IRS: 'true'
+          REACT_APP_ENABLE_FI: 'true'
+          REACT_APP_ENABLE_USERS: 'true'
+          REACT_APP_ENABLE_ASSIGN: 'true'
+          REACT_APP_ENABLE_ABOUT: 'true'
+          REACT_APP_ENABLE_TEAMS: 'true'
+          REACT_APP_ENABLE_PRACTITIONERS: 'true'
+          REACT_APP_DISABLE_LOGIN_PROTECTION: 'false'
+          REACT_APP_GA_CODE: 'UA-0000000-0'
+          REACT_APP_GA_ENV: 'test'
           REACT_APP_GISIDA_ONADATA_API_TOKEN: hunter2
           REACT_APP_GISIDA_MAPBOX_TOKEN: hunter2
           REACT_APP_DIGITAL_GLOBE_CONNECT_ID: hunter2
-          REACT_APP_SUPERSET_API_BASE: "https://superset.reveal-stage.smartregister.org/"
-          REACT_APP_SUPERSET_API_ENDPOINT: "slice"
-          REACT_APP_OPENSRP_CLIENT_ID: "hunter2"
+          REACT_APP_SUPERSET_API_BASE: 'https://superset.reveal-stage.smartregister.org/'
+          REACT_APP_SUPERSET_API_ENDPOINT: 'slice'
+          REACT_APP_OPENSRP_CLIENT_ID: 'hunter2'
           REACT_APP_OPENSRP_ACCESS_TOKEN_URL: https://reveal-stage.smartregister.org/opensrp/oauth/token
           REACT_APP_OPENSRP_AUTHORIZATION_URL: https://reveal-stage.smartregister.org/opensrp/oauth/authorize
           REACT_APP_OPENSRP_USER_URL: https://reveal-stage.smartregister.org/opensrp/user-details
           REACT_APP_REACT_APP_OPENSRP_OAUTH_STATE: opensrp
-          REACT_APP_ONADATA_ACCESS_TOKEN_URL: "https://stage-api.ona.io/o/token/"
-          REACT_APP_ONADATA_AUTHORIZATION_URL: "https://stage-api.ona.io/o/authorize/"
-          REACT_APP_ONADATA_USER_URL: "https://stage-api.ona.io/api/v1/user.json"
-          REACT_APP_ONADATA_OAUTH_STATE: "onadata"
-          REACT_APP_ONADATA_CLIENT_ID: "hunter2"
-          REACT_APP_IRS_PLAN_COUNTRIES: "NA,TH"
-          REACT_APP_EXPRESS_OAUTH_GET_STATE_URL: "http://localhost:3000/oauth/state"
-          REACT_APP_EXPRESS_OAUTH_LOGOUT_URL: "http://localhost:3000/logout"
+          REACT_APP_ONADATA_ACCESS_TOKEN_URL: 'https://stage-api.ona.io/o/token/'
+          REACT_APP_ONADATA_AUTHORIZATION_URL: 'https://stage-api.ona.io/o/authorize/'
+          REACT_APP_ONADATA_USER_URL: 'https://stage-api.ona.io/api/v1/user.json'
+          REACT_APP_ONADATA_OAUTH_STATE: 'onadata'
+          REACT_APP_ONADATA_CLIENT_ID: 'hunter2'
+          REACT_APP_IRS_PLAN_COUNTRIES: 'NA,TH'
+          REACT_APP_EXPRESS_OAUTH_GET_STATE_URL: 'http://localhost:3000/oauth/state'
+          REACT_APP_EXPRESS_OAUTH_LOGOUT_URL: 'http://localhost:3000/logout'
           REACT_APP_BACKEND_ACTIVE: true
           REACT_APP_ENABLE_MDA_POINT: true
 
@@ -57,7 +57,7 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: 
+      - run:
           name: Install dependencies
           command: yarn install
 
@@ -66,14 +66,18 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: 
-          name: Run linter
+      - run:
+          name: Run ts linter
           command: yarn lint-ts
 
-      - run: 
+      - run:
+        name: Run snap linter
+        command: yarn lint-snap
+
+      - run:
           name: Run tests
           command: yarn test --runInBand --verbose --coverage=true --forceExit --detectOpenHandles
-     
-      - run: 
+
+      - run:
           name: Run coveralls
           command: yarn coveralls
