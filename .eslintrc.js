@@ -8,6 +8,9 @@ const allowedSnapshots = {
   'src/containers/pages/AssigmentMapWrapper/tests/__snapshots__/index.test.tsx.snap': [
     'containers/pages/AssigmentMapWrapper renders jurisdictions assignment map 1',
   ],
+  'src/components/DatePickerWrapper/tests/__snapshots__/index.test.tsx.snap': [
+    'components/DatePickerWrapper matches snapshot 1',
+  ],
 };
 const whitelistedSnapshots = mapKeys(allowedSnapshots, (val, file) =>
   path.resolve(__dirname, file)
@@ -25,7 +28,7 @@ module.exports = {
     'jest/no-large-snapshots': [
       'error',
       {
-        maxSize: 1000,
+        maxSize: 308,
         whitelistedSnapshots,
       },
     ],
