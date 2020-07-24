@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { ActionCreator, Store } from 'redux';
 import Loading from '../../../components/page/Loading';
 import { withTreeWalker } from '../../../components/TreeWalker';
+import { MAP_DISABLED_PLAN_TYPES } from '../../../configs/env';
 import {
   AN_ERROR_OCURRED,
   COULD_NOT_LOAD_ASSIGNMENTS,
@@ -17,6 +18,7 @@ import {
 } from '../../../configs/lang';
 import { PlanDefinition } from '../../../configs/settings';
 import {
+  INTERVENTION_TYPE_CODE,
   OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
   OPENSRP_PLAN_HIERARCHY_ENDPOINT,
@@ -71,6 +73,19 @@ interface PlanAssignmentProps extends JurisdictionTableProps {
   fetchTreeActionCreator: ActionCreator<FetchedTreeAction>;
   tree: TreeNode | null;
 }
+
+/**
+ * Check if map should be visible based on plan type
+ */
+export const isMapDisabled = (plan: PlanDefinition | null): boolean => {
+  if (plan) {
+    const type = plan.useContext.find(element => element.code === INTERVENTION_TYPE_CODE);
+    if (type) {
+      return MAP_DISABLED_PLAN_TYPES.includes(type.valueCodableConcept);
+    }
+  }
+  return false;
+};
 
 /**
  * PlanAssignment
@@ -245,7 +260,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
 
   return (
     <>
-      <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />
+      {!isMapDisabled(plan) && <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />}
       <WrappedJurisdictionTable {...wrappedProps} />
     </>
   );

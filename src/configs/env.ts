@@ -360,6 +360,12 @@ export const JURISDICTION_METADATA_RISK_PERCENTAGE =
   process.env.REACT_APP_JURISDICTION_METADATA_RISK_PERCENTAGE || '90';
 export type JURISDICTION_METADATA_RISK_PERCENTAGE = typeof JURISDICTION_METADATA_RISK_PERCENTAGE;
 
+/** plan types with map disabled during plan assignment */
+export const MAP_DISABLED_PLAN_TYPES = String(
+  process.env.REACT_APP_MAP_DISABLED_PLAN_TYPES || ''
+).split(',');
+export type MAP_DISABLED_PLAN_TYPES = typeof MAP_DISABLED_PLAN_TYPES;
+
 /** list of plan statuses enabled on Manage plans and reporting pages */
 export const HIDDEN_PLAN_STATUSES = String(
   process.env.REACT_APP_HIDDEN_PLAN_STATUSES || 'retired'
