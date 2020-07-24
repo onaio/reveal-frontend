@@ -1,20 +1,23 @@
-/** shows the risk label */
+/** Rendered as a table cell and shows the risk label for a given jurisdiction node */
 import React from 'react';
 import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
 
-interface Props {
+export interface RiskLabelProps {
   metadata: any[];
   node: TreeNode;
 }
 
-export const RiskLabel = (props: Props) => {
+/** finds the nodes risk label from the fetched metadata and displays it */
+export const RiskLabel = (props: RiskLabelProps) => {
   const { metadata, node } = props;
+
+  // could get more that one meta objects
   const metasOfInterest = metadata.filter(meta => meta.key === node.model.id);
 
   // pick the first one with a value
-  const metaOfInterest = metasOfInterest.filter(meta => meta.value);
-
+  const metaOfInterest = metasOfInterest.filter(meta => meta.value !== undefined);
   const theSingleMeta = metaOfInterest[0];
+
   if (theSingleMeta && theSingleMeta.value) {
     return <>{theSingleMeta.value}</>;
   }
