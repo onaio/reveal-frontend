@@ -21,6 +21,7 @@ jest.mock('../../../../configs/env');
 describe('containers/forms/PlanForm', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    fetch.resetMocks();
   });
 
   it('renders without crashing', () => {
@@ -1014,5 +1015,178 @@ describe('containers/forms/PlanForm - Submission', () => {
     });
 
     wrapper.unmount();
+  });
+
+  it('Updated plan is added to store if addPlan prop is available and call to api is 200', async () => {
+    // ensure that we are logged in so that we can get the OpenSRP token from Redux
+    const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
+    store.dispatch(authenticateUser(authenticated, user, extraData));
+
+    fetch.mockResponseOnce(JSON.stringify({}));
+
+    const addPlanMock = jest.fn();
+
+    const props = {
+      addPlan: addPlanMock,
+      ...propsForUpdatingPlans(),
+      initialValues: getPlanFormValues(plans[1]),
+    };
+
+    const wrapper = mount(<PlanForm {...props} />);
+
+    wrapper.find('form').simulate('submit');
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    const payload = {
+      ...generatePlanDefinition(getPlanFormValues(plans[1])),
+      version: 2,
+    };
+
+    expect(addPlanMock).toHaveBeenCalledWith(payload);
+  });
+
+  it('Updated plan is not added to store if addPlan is available and status is not 200', async () => {
+    // ensure that we are logged in so that we can get the OpenSRP token from Redux
+    const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
+    store.dispatch(authenticateUser(authenticated, user, extraData));
+
+    fetch.mockRejectOnce(() => Promise.reject('API is down'));
+
+    const addPlanMock = jest.fn();
+
+    const props = {
+      addPlan: addPlanMock,
+      ...propsForUpdatingPlans(),
+      initialValues: getPlanFormValues(plans[1]),
+    };
+
+    const wrapper = mount(<PlanForm {...props} />);
+
+    wrapper.find('form').simulate('submit');
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    expect(addPlanMock.mock.calls.length).toEqual(0);
+  });
+
+  it('New plan is added to store if addPlan prop is available and status is 200', async () => {
+    // ensure that we are logged in so that we can get the OpenSRP token from Redux
+    const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
+    store.dispatch(authenticateUser(authenticated, user, extraData));
+
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+
+    const addPlanMock = jest.fn();
+    const props = {
+      addPlan: addPlanMock,
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...props} />
+      </MemoryRouter>
+    );
+
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+    // Set fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'Routine' } });
+    // Set fiStatus field value
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
+
+    wrapper.find('form').simulate('submit');
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    // the expected payload
+    const payload = generatePlanDefinition(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values
+    );
+
+    expect(addPlanMock).toHaveBeenCalledWith(payload);
+  });
+
+  it('New plan is NOT added to store if addPlan prop is available and status is NOT 200', async () => {
+    // ensure that we are logged in so that we can get the OpenSRP token from Redux
+    const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
+    store.dispatch(authenticateUser(authenticated, user, extraData));
+
+    fetch.mockReject(() => Promise.reject('APi is down'));
+
+    const addPlanMock = jest.fn();
+    const props = {
+      addPlan: addPlanMock,
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...props} />
+      </MemoryRouter>
+    );
+
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+    // Set fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'Routine' } });
+    // Set fiStatus field value
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
+
+    wrapper.find('form').simulate('submit');
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    expect(addPlanMock.mock.calls.length).toEqual(0);
   });
 });
