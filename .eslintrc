@@ -7,7 +7,7 @@
   "extends": ["airbnb", "plugin:prettier/recommended"],
   "rules": {
     "strict": 0,
-    "jest/no-large-snapshots": ["error", { "maxSize": 1000 }]
+    "jest/no-large-snapshots": ["error", { "maxSize": 3225 }]
   },
   "plugins": ["jest"],
   "parserOptions": {
