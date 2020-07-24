@@ -37,9 +37,10 @@ import {
   AutoSelectNodesAction,
   FetchedTreeAction,
   fetchTree,
+  getTreeById,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
-import { SelectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
+import { selectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
   FetchJurisdictionsMetadataAction,
@@ -54,9 +55,8 @@ import plansReducer, {
   reducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 import { ConnectedAssignmentMapWrapper } from '../../AssigmentMapWrapper/';
+import { useGetRootJurisdictionId, usePlanEffect } from '../EntryView/utils';
 import { useHandleBrokenPage } from '../helpers/utils';
-import { useGetRootJurisdictionId, usePlanEffect } from '../JurisdictionAssignmentEntryView/utils';
-import { useGetRootJurisdictionId, usePlanEffect } from '../JurisdictionAssignmentEntryView/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
 
 reducerRegistry.register(reducerName, plansReducer);
@@ -71,6 +71,7 @@ export interface JurisdictionAssignmentViewProps {
   serviceClass: typeof OpenSRPService;
   treeFetchedCreator: ActionCreator<FetchedTreeAction>;
   autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
+  tree: TreeNode | undefined;
 }
 
 export const defaultProps = {
@@ -80,6 +81,7 @@ export const defaultProps = {
   jurisdictionsMetadata: [],
   plan: null,
   serviceClass: OpenSRPService,
+  tree: undefined,
   treeFetchedCreator: fetchTree,
 };
 
@@ -106,9 +108,11 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     fetchPlanCreator,
     fetchJurisdictionsMetadataCreator,
     jurisdictionsMetadata,
+    tree,
   } = props;
 
-  const { startLoading, stopLoading, loading } = useLoadingReducer(!plan);
+  const initialLoadingState = !tree || !plan;
+  const { startLoading, stopLoading, loading } = useLoadingReducer(initialLoadingState);
   const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
 
   React.useEffect(() => {
@@ -144,7 +148,8 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     serviceClass,
     handleBrokenPage,
     stopLoading,
-    startLoading
+    startLoading,
+    tree
   );
 
   React.useEffect(() => {
@@ -165,7 +170,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
           if (apiResponse.value) {
             const responseData = apiResponse.value;
             props.treeFetchedCreator(responseData);
-            props.autoSelectNodesCreator(rootJurisdictionId, callback, SelectionReason.NOT_CHANGED);
+            props.autoSelectNodesCreator(rootJurisdictionId, callback, selectionReason.NOT_CHANGED);
             stopLoading(rootJurisdictionId);
           }
           if (apiResponse.error) {
@@ -182,6 +187,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
   if (loading()) {
     return <Ripple />;
   }
+
   if (!plan) {
     return <ErrorPage errorMessage={COULD_NOT_LOAD_PLAN} />;
   }
@@ -237,12 +243,16 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
 
 JurisdictionAssignmentView.defaultProps = defaultProps;
 
-type MapStateToProps =
-  | Pick<JurisdictionAssignmentViewProps, 'plan'>
-  | Pick<JurisdictionAssignmentViewProps, 'jurisdictionsMetadata'>;
-type DispatchToProps =
-  | Pick<JurisdictionAssignmentViewProps, 'fetchPlanCreator'>
-  | Pick<JurisdictionAssignmentViewProps, 'fetchJurisdictionsMetadataCreator'>;
+type MapStateToProps = Pick<
+  JurisdictionAssignmentViewProps,
+  'plan' | 'jurisdictionsMetadata' | 'tree'
+>;
+type DispatchToProps = Pick<
+  JurisdictionAssignmentViewProps,
+  'fetchPlanCreator' | 'fetchJurisdictionsMetadataCreator'
+>;
+
+const treeByIdSelector = getTreeById();
 
 const mapStateToProps = (
   state: Partial<Store>,
@@ -253,6 +263,7 @@ const mapStateToProps = (
   return {
     jurisdictionsMetadata: getJurisdictionsMetadata(state),
     plan: planObj,
+    tree: treeByIdSelector(state, { rootJurisdictionId: ownProps.match.params.rootId || '' }),
   };
 };
 
