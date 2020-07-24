@@ -131,6 +131,9 @@
     "*.{json,css,md}": [
       "prettier --write",
       "git add"
+    ],
+    "*.{snap, test.tsx}": [
+      "eslint"
     ]
   },
   "eslintConfig": {
