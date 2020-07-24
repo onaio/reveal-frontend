@@ -1,6 +1,6 @@
 {
   "name": "reveal-frontend",
-  "version": "v0.5.1-rc6",
+  "version": "v0.5.1-rc7",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.14",
