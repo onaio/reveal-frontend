@@ -37,12 +37,14 @@ import {
   organization3,
 } from '../../../../store/ducks/tests/fixtures';
 import { assignments } from '../helpers/JurisdictionAssignmentForm/tests/fixtures';
-import { PlanAssignment } from '../index';
+import { isMapDisabled, PlanAssignment } from '../index';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
-jest.mock('../../../../configs/env');
+jest.mock('../../../../configs/env', () => ({
+  MAP_DISABLED_PLAN_TYPES: ['FI'],
+}));
 
 jest.mock('../../AssigmentMapWrapper', () => {
   const mockComponent = (_: any) => <div id="mockComponent">Assignment wrapperv</div>;
@@ -131,7 +133,7 @@ describe('PlanAssignment', () => {
     });
 
     expect(fetch.mock.calls[0][0]).toEqual(
-      'https://test.smartregister.org/opensrp/rest/location/getHierarchy/plan/356b6b84-fc36-4389-a44a-2b038ed2f38d?return_structure_count=false'
+      'https://test.smartregister.org/opensrp/rest/location/hierarchy/plan/356b6b84-fc36-4389-a44a-2b038ed2f38d?return_structure_count=false'
     );
     expect(fetch.mock.calls[1][0]).toEqual(
       'https://test.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?plan=356b6b84-fc36-4389-a44a-2b038ed2f38d'
@@ -296,5 +298,10 @@ describe('PlanAssignment', () => {
     });
 
     expect(toJson(wrapper.find('.global-error-container'))).toMatchSnapshot('no orgs');
+  });
+
+  it('map disabled returns true', () => {
+    const disabled = isMapDisabled(baseProps.plan);
+    expect(disabled).toEqual(true);
   });
 });
