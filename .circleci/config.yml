@@ -71,8 +71,8 @@ jobs:
           command: yarn lint-ts
 
       - run:
-        name: Run snap linter
-        command: yarn lint-snap
+          name: Run snap linter
+          command: yarn lint-snap
 
       - run:
           name: Run tests
