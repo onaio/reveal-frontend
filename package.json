@@ -91,7 +91,7 @@
     "test": "TZ=UTC react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
     "lint-js": "eslint 'src/**/*.{js,jsx,snap}'",
-    "lint-ts": "tslint -c tslint.json --project ./tsconfig.json --format stylish 'src/**/*.{ts,tsx}'",
+    "lint-ts": "tslint -c tslint.json --project ./tsconfig.json --format stylish 'src/**/*.{ts,tsx,snap}'",
     "test:coverage": "set CI=true && react-scripts test --coverage",
     "coveralls": "set CI=true && yarn test --runInBand --verbose --coverage=true --forceExit --detectOpenHandles && cat ./coverage/lcov.info | coveralls"
   },
@@ -124,7 +124,7 @@
       "tslint --fix -c tslint.json --project ./tsconfig.json",
       "git add"
     ],
-    "*.{js,jsx,snap}": [
+    "*.{js,jsx}": [
       "eslint"
     ],
     "*.{json,css,md}": [
