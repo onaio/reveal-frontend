@@ -456,10 +456,15 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         <ActiveFocusInvestigation {...props} />
       </Router>
     );
+    // shows ripple here
+    expect(wrapper.find('Ripple').length).toEqual(1);
 
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
     expect(props.fetchPlansActionCreator).not.toHaveBeenCalled();
     expect(displayErrorMock).toHaveBeenCalled();
+    // now you dont see the ripple
+    expect(wrapper.find('Ripple').length).toEqual(0);
+    wrapper.unmount();
   });
 });
