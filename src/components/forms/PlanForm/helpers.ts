@@ -67,6 +67,7 @@ import {
   TRIGGER,
 } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
+import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import {
   ActionReasonType,
@@ -760,3 +761,24 @@ export function getGoalUnitFromActionCode(actionCode: PlanActionCodesType): Goal
  */
 export const isPlanTypeEnabled = (planType: InterventionType): boolean =>
   ENABLED_PLAN_TYPES.includes(planType);
+
+/**
+ * Handle after form successful submission to the api
+ * @param setSubmitting
+ * @param setAreWeDoneHere
+ * @param payload
+ * @param addPlan
+ */
+export const onSubmitSuccess = (
+  setSubmitting: (isSubmitting: boolean) => void,
+  setAreWeDoneHere: React.Dispatch<React.SetStateAction<boolean>>,
+  payload: PlanDefinition,
+  addPlan?: typeof addPlanDefinition
+) => {
+  if (addPlan) {
+    addPlan(payload);
+  }
+
+  setSubmitting(false);
+  setAreWeDoneHere(true);
+};

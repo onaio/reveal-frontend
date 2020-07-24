@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { connect } from 'react-redux';
 import { Col, Row } from 'reactstrap';
 import PlanForm, {
   defaultInitialValues,
@@ -26,11 +27,13 @@ import {
   PLAN_LIST_URL,
   PLANNING_VIEW_URL,
 } from '../../../../../constants';
+import { addPlanDefinition } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType } from '../../../../../store/ducks/plans';
 import { JurisdictionDetails } from './JurisdictionDetails';
 
 /** expose props that would enable one to customize the underlying planForm props */
 interface BaseNewPlanProps {
+  addPlan: typeof addPlanDefinition;
   extraPlanFormProps: Partial<PlanFormProps>;
   breadCrumbParentPage: Page;
   showJurisdictionDetails: boolean;
@@ -38,6 +41,7 @@ interface BaseNewPlanProps {
 
 /** the default props */
 export const defaultBasePlanProps = {
+  addPlan: addPlanDefinition,
   breadCrumbParentPage: {
     label: PLANS,
     url: PLAN_LIST_URL,
@@ -102,6 +106,7 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
     ...{ ...lookedUpPlanFormProps, initialValues: formValues, ...props.extraPlanFormProps },
     formHandler: formValuesHandler,
   };
+  const { addPlan } = props;
 
   return (
     <div>
@@ -112,7 +117,7 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <Row>
         <Col md={8} id="planform-col-container">
-          <PlanForm {...planFormProps} key={formValues.interventionType} />
+          <PlanForm {...planFormProps} key={formValues.interventionType} addPlan={addPlan} />
         </Col>
         {props.showJurisdictionDetails && (
           <Col md={4}>
@@ -129,6 +134,12 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
 
 BaseNewPlan.defaultProps = defaultBasePlanProps;
 
+/** map dispatch to props */
+const mapDispatchToProps = { addPlan: addPlanDefinition };
+
+/** Connected component */
+const ConnectedBaseNewPlan = connect(null, mapDispatchToProps)(BaseNewPlan);
+
 /** form used in the planning tool */
 export const NewPlanForPlanning = () => {
   const baseNewPlanProps = {
@@ -144,7 +155,7 @@ export const NewPlanForPlanning = () => {
     },
     showJurisdictionDetails: false,
   };
-  return <BaseNewPlan {...baseNewPlanProps} />;
+  return <ConnectedBaseNewPlan {...baseNewPlanProps} />;
 };
 
 /** NewIRSPlan can and will be removed once the irs planning module is removed
@@ -171,7 +182,7 @@ export const NewIRSPlan = () => {
       redirectAfterAction: INTERVENTION_IRS_DRAFTS_URL,
     },
   };
-  return <BaseNewPlan {...baseNewPlanProps} />;
+  return <ConnectedBaseNewPlan {...baseNewPlanProps} />;
 };
 
-export default BaseNewPlan;
+export default ConnectedBaseNewPlan;

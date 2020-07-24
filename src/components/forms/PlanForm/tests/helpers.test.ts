@@ -13,6 +13,7 @@ import {
   getGoalUnitFromActionCode,
   getNameTitle,
   getPlanFormValues,
+  onSubmitSuccess,
 } from '../helpers';
 import { GoalUnit, PlanActionCodesType, PlanActivities, PlanFormFields } from '../types';
 import {
@@ -187,5 +188,33 @@ describe('containers/forms/PlanForm/helpers', () => {
       expect(getGoalUnitFromActionCode(PlanActionCodes[index])).toEqual(expectedUnits[index]);
     }
     expect(getGoalUnitFromActionCode('mosh' as PlanActionCodesType)).toEqual(GoalUnit.UNKNOWN);
+  });
+
+  it('onSubmitSuccess works if', () => {
+    const setSubmittingMock = jest.fn();
+    const addPlanMock = jest.fn();
+    const setAreWeDoneHereMock = jest.fn();
+    const payload = {
+      ...generatePlanDefinition(getPlanFormValues(plans[1])),
+      version: '2',
+    };
+
+    onSubmitSuccess(setSubmittingMock, setAreWeDoneHereMock, payload, addPlanMock);
+    expect(addPlanMock).toHaveBeenLastCalledWith(payload);
+    expect(setAreWeDoneHereMock).toHaveBeenLastCalledWith(true);
+    expect(setSubmittingMock).toHaveBeenLastCalledWith(false);
+  });
+
+  it('onSubmitSuccess works correctly if addPlan is undefined', () => {
+    const setSubmittingMock = jest.fn();
+    const setAreWeDoneHereMock = jest.fn();
+    const payload = {
+      ...generatePlanDefinition(getPlanFormValues(plans[1])),
+      version: '2',
+    };
+
+    onSubmitSuccess(setSubmittingMock, setAreWeDoneHereMock, payload);
+    expect(setAreWeDoneHereMock).toHaveBeenLastCalledWith(true);
+    expect(setSubmittingMock).toHaveBeenLastCalledWith(false);
   });
 });

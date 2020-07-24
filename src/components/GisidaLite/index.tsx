@@ -17,6 +17,10 @@ interface MapIcon {
 
 /** interface for  GisidaLite props */
 export interface GisidaLiteProps {
+  accessToken: string;
+  attributionControl: boolean;
+  customAttribution: string;
+  injectCSS: boolean;
   layers: JSX.Element[];
   mapCenter: [number, number] | undefined;
   mapBounds?: FitBounds;
@@ -31,6 +35,10 @@ export interface GisidaLiteProps {
 
 /** Default props for GisidaLite */
 const gisidaLiteDefaultProps: GisidaLiteProps = {
+  accessToken: GISIDA_MAPBOX_TOKEN,
+  attributionControl: true,
+  customAttribution: '&copy; Reveal',
+  injectCSS: true,
   layers: [],
   mapCenter: undefined,
   mapHeight: '800px',
@@ -40,13 +48,6 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   scrollZoom: true,
   zoom: 17,
 };
-
-const Mapbox = ReactMapboxGl({
-  accessToken: GISIDA_MAPBOX_TOKEN,
-  attributionControl: true,
-  customAttribution: '&copy; Reveal',
-  injectCSS: true,
-});
 
 /**
  * Really simple Gisida :)
@@ -60,6 +61,10 @@ const GisidaLite = (props: GisidaLiteProps) => {
   const [renderLayers, setRenderLayers] = React.useState<boolean>(false);
 
   const {
+    accessToken,
+    attributionControl,
+    customAttribution,
+    injectCSS,
     layers,
     mapCenter,
     mapHeight,
@@ -74,6 +79,13 @@ const GisidaLite = (props: GisidaLiteProps) => {
   if (mapCenter === undefined) {
     return <Loading />;
   }
+
+  const Mapbox = ReactMapboxGl({
+    accessToken,
+    attributionControl,
+    customAttribution,
+    injectCSS,
+  });
 
   const runAfterMapLoaded = React.useCallback(
     (map: Map) => {
