@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../configs/lang';
 import { FI_URL, REACTIVE_QUERY_PARAM, ROUTINE_QUERY_PARAM } from '../../../../../constants';
+import * as helperErrors from '../../../../../helpers/errors';
 import store from '../../../../../store';
 import * as planDefFixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { fetchPlansByUser } from '../../../../../store/ducks/opensrp/planIdsByUser';
@@ -433,5 +434,32 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         .at(1)
         .prop('data')
     ).toEqual([selectedPlan1]);
+  });
+
+  it('should handle falsy result correctly', async () => {
+    const supersetServiceMock: any = jest
+      .fn(() => Promise.resolve(fixtures.plans))
+      .mockImplementationOnce(async () => null);
+    const displayErrorMock = jest.spyOn(helperErrors, 'displayError');
+    const mock: any = jest.fn();
+    const props = {
+      caseTriggeredPlans: [fixtures.plan2],
+      fetchPlansActionCreator: jest.fn(),
+      history,
+      location: mock,
+      match: mock,
+      routinePlans: [fixtures.plan1],
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <ActiveFocusInvestigation {...props} />
+      </Router>
+    );
+
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+    expect(props.fetchPlansActionCreator).not.toHaveBeenCalled();
+    expect(displayErrorMock).toHaveBeenCalled();
   });
 });
