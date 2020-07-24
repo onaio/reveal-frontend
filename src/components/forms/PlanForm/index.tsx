@@ -435,6 +435,7 @@ const PlanForm = (props: PlanFormProps) => {
                             <FormGroup
                               className={
                                 errors.jurisdictions &&
+                                touched.jurisdictions &&
                                 doesFieldHaveErrors('id', index, errors.jurisdictions)
                                   ? 'is-invalid async-select-container'
                                   : 'async-select-container'
@@ -576,7 +577,11 @@ const PlanForm = (props: PlanFormProps) => {
                 name="title"
                 id="title"
                 disabled={disabledFields.includes('title')}
-                className={errors.name || errors.title ? 'form-control is-invalid' : 'form-control'}
+                className={
+                  (errors.name && touched.name) || (errors.title && touched.title)
+                    ? 'form-control is-invalid'
+                    : 'form-control'
+                }
               />
               <ErrorMessage
                 name="title"

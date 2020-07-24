@@ -37,12 +37,14 @@ import {
   organization3,
 } from '../../../../store/ducks/tests/fixtures';
 import { assignments } from '../helpers/JurisdictionAssignmentForm/tests/fixtures';
-import { PlanAssignment } from '../index';
+import { isMapDisabled, PlanAssignment } from '../index';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
-jest.mock('../../../../configs/env');
+jest.mock('../../../../configs/env', () => ({
+  MAP_DISABLED_PLAN_TYPES: ['FI'],
+}));
 
 jest.mock('../../AssigmentMapWrapper', () => {
   const mockComponent = (_: any) => <div id="mockComponent">Assignment wrapperv</div>;
@@ -296,5 +298,10 @@ describe('PlanAssignment', () => {
     });
 
     expect(toJson(wrapper.find('.global-error-container'))).toMatchSnapshot('no orgs');
+  });
+
+  it('map disabled returns true', () => {
+    const disabled = isMapDisabled(baseProps.plan);
+    expect(disabled).toEqual(true);
   });
 });
