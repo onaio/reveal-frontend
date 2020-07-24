@@ -124,7 +124,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <Row>
         <Col md={8}>
-          <PlanForm {...planFormProps} />
+          <PlanForm {...planFormProps} addPlan={fetchPlan} />
         </Col>
         <Col md={4}>
           {/* Only show case details if plan is reactive */}
@@ -157,6 +157,7 @@ interface DispatchedStateProps {
 // /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planObj = getPlanDefinitionById(state, ownProps.match.params.id);
+
   return {
     plan: planObj,
   };
