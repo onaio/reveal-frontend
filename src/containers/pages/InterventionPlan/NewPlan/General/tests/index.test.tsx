@@ -2,27 +2,45 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import configureMockStore from 'redux-mock-store';
 import { defaultProps as defaultPlanFormProps } from '../../../../../../components/forms/PlanForm';
+import { generatePlanDefinition } from '../../../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb from '../../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import BaseNewPlan, { NewIRSPlan, NewPlanForPlanning } from '../index';
+import store from '../../../../../../store';
+import {
+  addPlanDefinition,
+  removePlanDefinitions,
+} from '../../../../../../store/ducks/opensrp/PlanDefinition';
+import ConnectedBaseNewPlan, { NewIRSPlan, NewPlanForPlanning } from '../index';
+
+/* tslint:disable-next-line no-var-requires */
+const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
+const middlewares: any = [];
+const mockStore = configureMockStore(middlewares);
 
 describe('containers/pages/NewPlan', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    fetch.resetMocks();
+    jest.clearAllMocks();
+    store.dispatch(removePlanDefinitions());
   });
 
   it('renders without crashing', () => {
-    shallow(<BaseNewPlan />);
+    shallow(<ConnectedBaseNewPlan />);
   });
 
   it('renders correctly', () => {
     const wrapper = mount(
-      <Router history={history}>
-        <BaseNewPlan />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedBaseNewPlan />
+        </Router>
+      </Provider>
     );
 
     // check that page title is displayed
@@ -30,6 +48,7 @@ describe('containers/pages/NewPlan', () => {
 
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...defaultPlanFormProps,
+      addPlan: expect.any(Function),
       formHandler: expect.any(Function),
     });
 
@@ -72,13 +91,16 @@ describe('containers/pages/NewPlan', () => {
 
   it('renders text correctly for New Plan in planning tool ', () => {
     const wrapper = mount(
-      <Router history={history}>
-        <NewPlanForPlanning />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <NewPlanForPlanning />
+        </Router>
+      </Provider>
     );
 
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...defaultPlanFormProps,
+      addPlan: expect.any(Function),
       allowMoreJurisdictions: false,
       cascadingSelect: false,
       formHandler: expect.any(Function),
@@ -97,13 +119,16 @@ describe('containers/pages/NewPlan', () => {
   });
   it('render correctly for New IRS plan', () => {
     const wrapper = mount(
-      <Router history={history}>
-        <NewIRSPlan />
-      </Router>
+      <Provider store={store}>
+        <Router history={history}>
+          <NewIRSPlan />
+        </Router>
+      </Provider>
     );
 
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...defaultPlanFormProps,
+      addPlan: expect.any(Function),
       allowMoreJurisdictions: false,
       cascadingSelect: false,
       disabledFields: ['interventionType', 'status'],
@@ -127,5 +152,303 @@ describe('containers/pages/NewPlan', () => {
     expect(wrapper.find('JurisdictionDetails').length).toEqual(0);
 
     wrapper.unmount();
+  });
+
+  it('New plan is added to store if API status is 200', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+
+    const initialState = {};
+    const mockedStore = mockStore(initialState);
+    mockedStore.dispatch = jest.fn();
+
+    const wrapper = mount(
+      <Provider store={mockedStore}>
+        <Router history={history}>
+          <ConnectedBaseNewPlan />
+        </Router>
+      </Provider>
+    );
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+    // Set fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'Routine' } });
+    // Set fiStatus field value
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
+
+    wrapper.find('form').simulate('submit');
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    // the expected payload
+    const payload = generatePlanDefinition(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values
+    );
+
+    expect(mockedStore.dispatch).toHaveBeenLastCalledWith(addPlanDefinition(payload));
+  });
+
+  it('New plan is NOT added to store if API status is NOT 200', async () => {
+    fetch.mockReject(() => Promise.reject('API is down'));
+
+    const initialState = {};
+    const mockedStore = mockStore(initialState);
+    mockedStore.dispatch = jest.fn();
+
+    const wrapper = mount(
+      <Provider store={mockedStore}>
+        <Router history={history}>
+          <ConnectedBaseNewPlan />
+        </Router>
+      </Provider>
+    );
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+    // Set fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'Routine' } });
+    // Set fiStatus field value
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
+
+    wrapper.find('form').simulate('submit');
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    expect(mockedStore.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('New plan in planning tool is added to store if API status is 200', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+
+    const initialState = {};
+    const mockedStore = mockStore(initialState);
+    mockedStore.dispatch = jest.fn();
+
+    const wrapper = mount(
+      <Provider store={mockedStore}>
+        <Router history={history}>
+          <NewPlanForPlanning />
+        </Router>
+      </Provider>
+    );
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'IRS' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+
+    wrapper.find('form').simulate('submit');
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    // the expected payload
+    const payload = generatePlanDefinition(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values
+    );
+
+    expect(mockedStore.dispatch).toHaveBeenLastCalledWith(addPlanDefinition(payload));
+  });
+
+  it('New plan in planning tool is NOT added to store if API status is NOT 200', async () => {
+    fetch.mockReject(() => Promise.reject('API is down'));
+
+    const initialState = {};
+    const mockedStore = mockStore(initialState);
+    mockedStore.dispatch = jest.fn();
+
+    const wrapper = mount(
+      <Provider store={mockedStore}>
+        <Router history={history}>
+          <NewPlanForPlanning />
+        </Router>
+      </Provider>
+    );
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+
+    wrapper.find('form').simulate('submit');
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    expect(mockedStore.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('New IRS plan is added to store if API status is 200', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+
+    const initialState = {};
+    const mockedStore = mockStore(initialState);
+    mockedStore.dispatch = jest.fn();
+
+    const wrapper = mount(
+      <Provider store={mockedStore}>
+        <Router history={history}>
+          <NewIRSPlan />
+        </Router>
+      </Provider>
+    );
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'IRS' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+
+    wrapper.find('form').simulate('submit');
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    // the expected payload
+    const payload = generatePlanDefinition(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values
+    );
+
+    expect(mockedStore.dispatch).toHaveBeenLastCalledWith(addPlanDefinition(payload));
+  });
+
+  it('New IRS plan is NOT added to store if API status is NOT 200', async () => {
+    fetch.mockReject(() => Promise.reject('API is down'));
+
+    const initialState = {};
+    const mockedStore = mockStore(initialState);
+    mockedStore.dispatch = jest.fn();
+
+    const wrapper = mount(
+      <Provider store={mockedStore}>
+        <Router history={history}>
+          <NewIRSPlan />
+        </Router>
+      </Provider>
+    );
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+
+    wrapper.find('form').simulate('submit');
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    expect(mockedStore.dispatch).not.toHaveBeenCalled();
   });
 });

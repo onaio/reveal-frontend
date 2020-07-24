@@ -75,6 +75,7 @@ import {
 } from '../../../configs/settings';
 import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constants';
 import { OpenSRPService } from '../../../services/opensrp';
+import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
 import JurisdictionSelect from '../JurisdictionSelect';
@@ -86,6 +87,7 @@ import {
   getGoalUnitFromActionCode,
   getNameTitle,
   isPlanTypeEnabled,
+  onSubmitSuccess,
   planActivitiesMap,
   PlanSchema,
   showDefinitionUriFor,
@@ -154,6 +156,7 @@ export interface PlanFormProps {
     child?: LocationChildRenderProp /** nested render content for each location name */
   ) => JSX.Element;
   /** a render prop that renders the plan's location names */
+  addPlan?: typeof addPlanDefinition /** Add new/update plan to redux store */;
 }
 
 /** Plan Form component */
@@ -174,6 +177,7 @@ const PlanForm = (props: PlanFormProps) => {
     initialValues,
     jurisdictionLabel,
     redirectAfterAction,
+    addPlan,
   } = props;
 
   useEffect(() => {
@@ -257,8 +261,7 @@ const PlanForm = (props: PlanFormProps) => {
             apiService
               .update(payload)
               .then(() => {
-                setSubmitting(false);
-                setAreWeDoneHere(true);
+                onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);
@@ -267,8 +270,7 @@ const PlanForm = (props: PlanFormProps) => {
             apiService
               .create(payload)
               .then(() => {
-                setSubmitting(false);
-                setAreWeDoneHere(true);
+                onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
               })
               .catch((e: Error) => {
                 setGlobalError(e.message);
