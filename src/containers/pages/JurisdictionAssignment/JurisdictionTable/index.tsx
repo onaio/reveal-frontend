@@ -1,6 +1,6 @@
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { Fragment } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import Button from 'reactstrap/lib/Button';
@@ -330,28 +330,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   };
 
   return (
-    <Fragment>
-      <Button
-        id="save-draft"
-        className="float-right"
-        color="primary"
-        // tslint:disable-next-line: jsx-no-lambda
-        onClick={() => commitJurisdictions(plan)}
-        size="xs"
-      >
-        {SAVE_DRAFT}
-      </Button>
-
-      <Button
-        id="save-and-activate"
-        className="float-right mr-3"
-        color="primary"
-        onClick={onSaveAndActivate}
-        size="xs"
-      >
-        {SAVE_AND_ACTIVATE}
-      </Button>
-
+    <div>
       <HeaderBreadcrumb {...breadCrumbProps} />
       <ListView {...listViewProps} />
       {!data.length && (
@@ -360,7 +339,33 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           <hr />
         </div>
       )}
-    </Fragment>
+      {!!data.length && (
+        <>
+          <hr />
+
+          <Button
+            id="save-draft"
+            className="float-right"
+            color="primary"
+            // tslint:disable-next-line: jsx-no-lambda
+            onClick={() => commitJurisdictions(plan)}
+            size="xs"
+          >
+            {SAVE_DRAFT}
+          </Button>
+
+          <Button
+            id="save-and-activate"
+            className="float-right mr-3"
+            color="success"
+            onClick={onSaveAndActivate}
+            size="xs"
+          >
+            {SAVE_AND_ACTIVATE}
+          </Button>
+        </>
+      )}
+    </div>
   );
 };
 
