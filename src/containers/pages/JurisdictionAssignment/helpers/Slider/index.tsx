@@ -1,6 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { Result } from '@onaio/utils/dist/types/types';
 import React, { useState } from 'react';
 import InputRange, { Range } from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
@@ -9,16 +8,13 @@ import { Button } from 'reactstrap';
 import Col from 'reactstrap/lib/Col';
 import Row from 'reactstrap/lib/Row';
 import { ActionCreator, Store } from 'redux';
-import { ErrorPage } from '../../../../../components/page/ErrorPage';
 import {
   ADJUST_SLIDER_MESSAGE,
-  COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
+  CONTINUE_TO_NEXT_STEP,
   NUMBER_OF_STRUCTURES_IN_JURISDICTIONS,
 } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL, RISK_LABEL } from '../../../../../constants';
-import { LoadOpenSRPHierarchy } from '../../../../../helpers/dataLoading/jurisdictions';
-import { OpenSRPService } from '../../../../../services/opensrp';
+import { RISK_LABEL } from '../../../../../constants';
 import hierarchyReducer, {
   autoSelectNodes,
   AutoSelectNodesAction,
@@ -28,11 +24,8 @@ import hierarchyReducer, {
   getTreeById,
   reducerName as hierarchyReducerName,
 } from '../../../../../store/ducks/opensrp/hierarchies';
-import {
-  RawOpenSRPHierarchy,
-  TreeNode,
-} from '../../../../../store/ducks/opensrp/hierarchies/types';
-import { SelectionReason } from '../../../../../store/ducks/opensrp/hierarchies/utils';
+import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
+import { selectionReason } from '../../../../../store/ducks/opensrp/hierarchies/utils';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
   FetchJurisdictionsMetadataAction,
@@ -44,18 +37,11 @@ import './slider.css';
 reducerRegistry.register(reducerName, jurisdictionMetadataReducer);
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
-/** what else does it need:
- * the tree and auto selection functionalities
- * we need a way to tell the tree we auto-selected this jurisdictions
- * in an auto-selection step
- * and a structures count
- */
-
+/** props for JurisdictionSelectionSlider */
 interface Props {
   rootJurisdictionId: string;
   tree: TreeNode | undefined;
   structuresCount: number;
-  serviceClass: typeof OpenSRPService;
   fetchJurisdictionsMetadataCreator: ActionCreator<FetchJurisdictionsMetadataAction>;
   jurisdictionsMetadata: any[];
   autoSelectCreator: ActionCreator<AutoSelectNodesAction>;
@@ -65,31 +51,32 @@ interface Props {
 }
 
 const defaultProps = {
-  rootJurisdictionId: '',
-  tree: undefined,
-  structuresCount: 0,
-  serviceClass: OpenSRPService,
-  fetchJurisdictionsMetadataCreator: fetchJurisdictionsMetadata,
-  jurisdictionsMetadata: [],
   autoSelectCreator: autoSelectNodes,
+  fetchJurisdictionsMetadataCreator: fetchJurisdictionsMetadata,
   fetchTreeCreator: fetchTree,
-  plan: null,
+  jurisdictionsMetadata: [],
   onClickNext: () => {
     return;
   },
+  plan: null,
+  rootJurisdictionId: '',
+  structuresCount: 0,
+  tree: undefined,
 };
 
+/** renders a draggable slider that sets a value used as the
+ * threshold for autoSelecting jurisdictions.
+ */
 export const JurisdictionSelectionsSlider = (props: Props) => {
   const [value, setValue] = useState<number | Range>(0);
-  const [loading, setLoading] = useState<boolean>(false);
 
   const {
-    serviceClass,
     rootJurisdictionId,
     structuresCount,
     autoSelectCreator,
     jurisdictionsMetadata,
     plan,
+    tree,
   } = props;
 
   const onChangeComplete = (val: number | Range) => {
@@ -100,37 +87,17 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
         !node.hasChildren() && jurisdictionsIdsMeta.includes(node.model.id);
       return isLeafNodePastThreshHold;
     };
-    autoSelectCreator(rootJurisdictionId, callback, SelectionReason.AUTO_SELECTION);
+    autoSelectCreator(rootJurisdictionId, callback, selectionReason.AUTO_SELECTION);
   };
 
   React.useEffect(() => {
-    const params = {
-      return_structure_count: true,
-    };
-    LoadOpenSRPHierarchy(rootJurisdictionId, serviceClass, params)
-      .then((apiResponse: Result<RawOpenSRPHierarchy>) => {
-        if (apiResponse.value) {
-          const responseData = apiResponse.value;
-          props.fetchTreeCreator(responseData);
-          onChangeComplete(value);
-          setLoading(false);
-        }
-        if (apiResponse.error) {
-          throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-        }
-      })
-      .catch(() => {
-        // handleBrokenPage(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-        setLoading(false);
-      });
+    onChangeComplete(value);
   }, []);
 
   const onChange = (val: number | Range) => setValue(val);
 
-  /** takes you to the jurisdictions refinement page. */
-
-  if (!plan) {
-    return <ErrorPage errorMessage={'Could not load plan'} />;
+  if (!plan || !tree) {
+    return null;
   }
 
   return (
@@ -164,7 +131,7 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
       </Row>
       <hr />
       <Button className="btn btn-success float-right mt-3" onClick={props.onClickNext}>
-        Continue to next step
+        {CONTINUE_TO_NEXT_STEP}
       </Button>
     </div>
   );
