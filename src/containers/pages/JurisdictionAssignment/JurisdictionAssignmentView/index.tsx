@@ -32,12 +32,13 @@ import {
 import { displayError } from '../../../../helpers/errors';
 import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { OpenSRPService } from '../../../../services/opensrp';
-import {
+import hierarchyReducer, {
   autoSelectNodes,
   AutoSelectNodesAction,
   FetchedTreeAction,
   fetchTree,
   getTreeById,
+  reducerName as hierarchyReducerName,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { selectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
@@ -61,6 +62,7 @@ import { ConnectedJurisdictionTable } from '../JurisdictionTable';
 
 reducerRegistry.register(reducerName, plansReducer);
 reducerRegistry.register(jurisdictionMetadataReducerName, jurisdictionMetadataReducer);
+reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
 /** this component's props */
 export interface JurisdictionAssignmentViewProps {
@@ -71,7 +73,7 @@ export interface JurisdictionAssignmentViewProps {
   serviceClass: typeof OpenSRPService;
   treeFetchedCreator: ActionCreator<FetchedTreeAction>;
   autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
-  tree: TreeNode | undefined;
+  tree?: TreeNode;
 }
 
 export const defaultProps = {
@@ -81,7 +83,7 @@ export const defaultProps = {
   jurisdictionsMetadata: [],
   plan: null,
   serviceClass: OpenSRPService,
-  tree: undefined,
+
   treeFetchedCreator: fetchTree,
 };
 
@@ -192,6 +194,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     return <ErrorPage errorMessage={COULD_NOT_LOAD_PLAN} />;
   }
 
+  // TODO - consider: can we have the tree in this condition
   if (!rootJurisdictionId) {
     return <ErrorPage errorMessage={COULD_NOT_LOAD_JURISDICTION} />;
   }
@@ -249,7 +252,7 @@ type MapStateToProps = Pick<
 >;
 type DispatchToProps = Pick<
   JurisdictionAssignmentViewProps,
-  'fetchPlanCreator' | 'fetchJurisdictionsMetadataCreator'
+  'fetchPlanCreator' | 'fetchJurisdictionsMetadataCreator' | 'treeFetchedCreator'
 >;
 
 const treeByIdSelector = getTreeById();
@@ -270,6 +273,7 @@ const mapStateToProps = (
 const mapDispatchToProps: DispatchToProps = {
   fetchJurisdictionsMetadataCreator: fetchJurisdictionsMetadata,
   fetchPlanCreator: addPlanDefinition,
+  treeFetchedCreator: fetchTree,
 };
 
 const ConnectedJurisdictionAssignmentView = connect(
