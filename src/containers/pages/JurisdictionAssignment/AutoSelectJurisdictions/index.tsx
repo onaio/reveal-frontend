@@ -1,4 +1,4 @@
-/** the Jurisdiction Selection view
+/** the Jurisdiction auto Selection view
  * Responsibilities:
  *  load plan given a url with the planId
  *  pending : render map.
@@ -26,10 +26,17 @@ import {
 import { PlanDefinition } from '../../../../configs/settings';
 import { AUTO_ASSIGN_JURISDICTIONS_URL, PLANNING_VIEW_URL } from '../../../../constants';
 import { loadJurisdictionsMetadata } from '../../../../helpers/dataLoading/jurisdictions';
-import { loadOpenSRPPlan } from '../../../../helpers/dataLoading/plans';
+import { displayError } from '../../../../helpers/errors';
 import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { OpenSRPService } from '../../../../services/opensrp';
-import { FetchedTreeAction, fetchTree } from '../../../../store/ducks/opensrp/hierarchies';
+import hierarchyReducer, {
+  FetchedTreeAction,
+  fetchTree,
+  getTreeById,
+  reducerName as hierarchyReducerName,
+} from '../../../../store/ducks/opensrp/hierarchies';
+// import { ConnectedSelectedStructuresTable } from '../JurisdictionTable/structureSummary';
+import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
   FetchJurisdictionsMetadataAction,
@@ -43,17 +50,18 @@ import plansReducer, {
   getPlanDefinitionById,
   reducerName as planReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
-import { ConnectedJurisdictionSelectionsSlider } from '../helpers/Slider';
-import { useHandleBrokenPage } from '../helpers/utils';
 import {
   useGetJurisdictionTree,
   useGetRootJurisdictionId,
-} from '../JurisdictionAssignmentEntryView/utils';
+  usePlanEffect,
+} from '../EntryView/utils';
+import { ConnectedJurisdictionSelectionsSlider } from '../helpers/Slider';
+import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
-import { ConnectedSelectedStructuresTable } from '../JurisdictionTable/structureSummary';
 
 reducerRegistry.register(planReducerName, plansReducer);
 reducerRegistry.register(jurisdictionMetadataReducerName, jurisdictionMetadataReducer);
+reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
 /** this component's props */
 export interface JurisdictionAssignmentViewProps {
@@ -63,7 +71,7 @@ export interface JurisdictionAssignmentViewProps {
   plan: PlanDefinition | null;
   serviceClass: typeof OpenSRPService;
   treeFetchedCreator: ActionCreator<FetchedTreeAction>;
-  // tree: TreeNode | undefined;
+  tree?: TreeNode;
 }
 
 export const defaultProps = {
@@ -72,15 +80,15 @@ export const defaultProps = {
   jurisdictionsMetadata: [],
   plan: null,
   serviceClass: OpenSRPService,
+
   treeFetchedCreator: fetchTree,
-  // tree: undefined,
 };
 
 /** view will require a planId from the url */
 export interface RouteParams {
   planId: string;
-  rootId: string;
-  parentId: string;
+  rootId?: string;
+  parentId?: string;
 }
 
 /** full props with route props added for JurisdictionAssignmentView */
@@ -103,6 +111,7 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     fetchJurisdictionsMetadataCreator,
     jurisdictionsMetadata,
     treeFetchedCreator,
+    tree,
   } = props;
 
   const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
@@ -111,28 +120,32 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
   const { startLoading, stopLoading, loading } = useLoadingReducer(initialLoadingState);
 
   React.useEffect(() => {
-    /** during mount get metadata and load the plan given the planId from the url props */
-    const planAndMetaLoadingKey = 'planMetadata';
-    startLoading(planAndMetaLoadingKey, !plan || !jurisdictionsMetadata.length);
-    // create promise to fetch metadata promise
-    const metaDataPromise = loadJurisdictionsMetadata(
+    const metadataLoadingKey = startLoading('metadata');
+    loadJurisdictionsMetadata(
       JURISDICTION_METADATA_RISK,
       OpenSRPService,
       fetchJurisdictionsMetadataCreator
-    ).catch(e => handleBrokenPage(e.message));
-
-    // create promise to fetch the plan
-    const planId = props.match.params.planId;
-    const planDataPromise = loadOpenSRPPlan(planId, serviceClass, fetchPlanCreator).catch(_ => {
-      handleBrokenPage(COULD_NOT_LOAD_PLAN);
-    });
-
-    Promise.all([metaDataPromise, planDataPromise])
-      .finally(() => {
-        stopLoading(planAndMetaLoadingKey);
+    )
+      .then(() => {
+        stopLoading(metadataLoadingKey);
       })
-      .catch(e => handleBrokenPage(e.message));
+      .finally(() => {
+        stopLoading(metadataLoadingKey);
+      })
+      .catch(error => {
+        displayError(error);
+      });
   }, []);
+
+  usePlanEffect(
+    props.match.params.planId,
+    plan,
+    serviceClass,
+    fetchPlanCreator,
+    handleBrokenPage,
+    stopLoading,
+    startLoading
+  );
 
   const rootJurisdictionId = useGetRootJurisdictionId(
     plan,
@@ -147,19 +160,23 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     startLoading,
     treeFetchedCreator,
     stopLoading,
-    handleBrokenPage
+    handleBrokenPage,
+    tree
   );
 
   if (loading()) {
     return <Ripple />;
   }
+
   if (!plan) {
     return <ErrorPage errorMessage={COULD_NOT_LOAD_PLAN} />;
   }
 
+  // TODO - can we use the tree here instead.
   if (!rootJurisdictionId) {
     return <ErrorPage errorMessage={COULD_NOT_LOAD_JURISDICTION} />;
   }
+
   if (broken) {
     return <ErrorPage errorMessage={errorMessage} />;
   }
@@ -172,20 +189,12 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
   };
 
   const jurisdictionTableProps = {
-    // tree,
     autoSelectionFlow: true,
     currentParentId: props.match.params.parentId,
     jurisdictionsMetadata,
     plan,
     rootJurisdictionId,
     serviceClass,
-  };
-
-  const structureTableProps = {
-    ...props,
-    currentParentId: props.match.params.parentId,
-    onClickNext: () => setStep(step + 1),
-    rootJurisdictionId,
   };
 
   const breadcrumbProps = {
@@ -227,19 +236,23 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <TimelineSlider {...timelineSliderProps} />
       {step === 1 && <ConnectedJurisdictionSelectionsSlider {...sliderProps} />}
-      {step === 2 && <ConnectedSelectedStructuresTable {...structureTableProps} />}
-      {step === 3 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
+      {step === 2 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
     </>
   );
 };
 
 AutoSelectView.defaultProps = defaultProps;
 
-type MapStateToProps = Pick<JurisdictionAssignmentViewProps, 'plan' | 'jurisdictionsMetadata'>;
+type MapStateToProps = Pick<
+  JurisdictionAssignmentViewProps,
+  'plan' | 'jurisdictionsMetadata' | 'tree'
+>;
 type DispatchToProps = Pick<
   JurisdictionAssignmentViewProps,
   'fetchPlanCreator' | 'fetchJurisdictionsMetadataCreator' | 'treeFetchedCreator'
 >;
+
+const treeByIdSelector = getTreeById();
 
 const mapStateToProps = (
   state: Partial<Store>,
@@ -251,6 +264,7 @@ const mapStateToProps = (
   return {
     jurisdictionsMetadata: getJurisdictionsMetadata(state),
     plan: planObj,
+    tree: treeByIdSelector(state, { rootJurisdictionId: ownProps.match.params.rootId || '' }),
   };
 };
 
