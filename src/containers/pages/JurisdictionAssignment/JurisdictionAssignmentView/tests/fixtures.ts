@@ -95,4 +95,15 @@ export const fetchCalls = [
       method: 'GET',
     },
   ],
+  [
+    'https://reveal-stage.smartregister.org/opensrp/rest/location/hierarchy/2942?return_structure_count=true',
+    {
+      headers: {
+        accept: 'application/json',
+        authorization: 'Bearer null',
+        'content-type': 'application/json;charset=UTF-8',
+      },
+      method: 'GET',
+    },
+  ],
 ];
