@@ -356,6 +356,26 @@ describe('helpers/utils', () => {
     result = isPlanDefinitionOfType(sampleIRSPlan, InterventionType.IRS);
     expect(result).toBeTruthy();
   });
+
+  it('computes the interventionType of a planDefinition correctly with many interventionTypes', () => {
+    const sampleFIPlan = planDefinitionFixtures.plans[0];
+    let result = isPlanDefinitionOfType(sampleFIPlan, [InterventionType.FI, InterventionType.IRS]);
+    expect(result).toBeTruthy();
+    result = isPlanDefinitionOfType(sampleFIPlan, [
+      InterventionType.IRS,
+      InterventionType.DynamicFI,
+    ]);
+    expect(result).toBeFalsy();
+    const sampleIRSPlan = planDefinitionFixtures.plans[1];
+    result = isPlanDefinitionOfType(sampleIRSPlan, [
+      InterventionType.FI,
+      InterventionType.DynamicMDA,
+    ]);
+    expect(result).toBeFalsy();
+    result = isPlanDefinitionOfType(sampleIRSPlan, InterventionType.IRS);
+    expect(result).toBeTruthy();
+  });
+
   it('Returns percentage value', () => {
     const result = IndicatorThresholdItemPercentage(Item);
     expect(result).toEqual('60%');
