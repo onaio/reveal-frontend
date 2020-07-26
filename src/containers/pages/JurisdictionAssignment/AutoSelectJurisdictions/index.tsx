@@ -58,6 +58,7 @@ import {
 import { ConnectedJurisdictionSelectionsSlider } from '../helpers/Slider';
 import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
+import { ConnectedSelectedStructuresTable } from '../JurisdictionTable/structureSummary';
 
 reducerRegistry.register(planReducerName, plansReducer);
 reducerRegistry.register(jurisdictionMetadataReducerName, jurisdictionMetadataReducer);
@@ -234,7 +235,8 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <TimelineSlider {...timelineSliderProps} />
       {step === 1 && <ConnectedJurisdictionSelectionsSlider {...sliderProps} />}
-      {step === 2 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
+      {step === 2 && <ConnectedSelectedStructuresTable {...jurisdictionTableProps} />}
+      {step === 3 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
     </>
   );
 };
