@@ -5,17 +5,9 @@
  */
 
 import { Dictionary } from '@onaio/utils/dist/types/types';
-import FlatToNested from 'flat-to-nested';
-import { keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
-import TreeModel from 'tree-model';
-import {
-  AutoSelectCallback,
-  ParsedHierarchySingleNode,
-  RawOpenSRPHierarchy,
-  TreeNode,
-} from './types';
+import { AutoSelectCallback, RawOpenSRPHierarchy, TreeNode } from './types';
 import {
   autoSelectNodesAndCascade,
   computeParentNodesSelection,
@@ -523,81 +515,3 @@ export const getStructuresCount = () =>
       .map(node => node.model.node.attributes.structureCount)
       .reduce(reducingFn, 0);
   });
-
-/** we might need to reconstruct a tree whose hierarchy includes only the
- * jurisdiction objects that have selected leaf nodes.(calling this the selected hierarchy)
- * @param state - the store state
- * @param props - the Filters
- */
-export const getSelectedHierarchy = () => {
-  return createSelector(getTreeById(), tree => {
-    // get selected leaf nodes.
-    const allSelectedLeafNodes = computeSelectedNodes(tree, true);
-    if (allSelectedLeafNodes.length === 0) {
-      return;
-    }
-    let allNodesInPaths = keyBy<TreeNode>(allSelectedLeafNodes, node => node.model.id);
-
-    // create an object with uniq jurisdiction entries for all jurisdictions that exist
-    // in a path that has a selected leaf node.
-    allSelectedLeafNodes.forEach(node => {
-      allNodesInPaths = {
-        ...allNodesInPaths,
-        ...keyBy<TreeNode>(node.getPath(), nd => nd.model.id),
-      };
-    });
-
-    // flatten it into an array in preparation of creating a nested structure
-    const normalNodes: TreeNode[] = [];
-    values(allNodesInPaths).forEach(node => {
-      const data = node.model;
-      // remove the existing children field, we will add it later with the computed children
-      delete data.children;
-      normalNodes.push(data);
-    });
-
-    // nest them normal nodes into a hierarchy
-    // TODO - add a type declaration file.
-    const flatToNested = new (FlatToNested as any)({
-      children: 'children',
-      id: 'id',
-      parent: 'parent',
-    });
-
-    // create a new tree based on the new structure.
-    const nestedNormalNodes = flatToNested.convert(normalNodes);
-    const model = new TreeModel();
-    const root = model.parse<ParsedHierarchySingleNode>(nestedNormalNodes);
-    return root;
-  });
-};
-
-/** gets the parent node from the selectedHierarchy
- * @param state - the store state
- * @param props - the filters
- */
-export const getParentNodeInSelectedTree = () => {
-  return createSelector(getSelectedHierarchy(), getCurrentParentId, findAParentNode);
-};
-
-/** gets the children nodes from the selectedHierarchy
- * @param state - the store state
- * @param props - the filters
- */
-export const getCurrentChildrenInSelectedTre = () => {
-  return createSelector(getParentNodeInSelectedTree(), getChildrenForNode);
-};
-
-/** a combined selector that gets the parent node and the currentChildren
- * from the selectedHierarchy
- * @param state - the store state
- * @param props - the filters
- */
-export const getNodesInSelectedTree = () =>
-  createSelector(
-    getParentNodeInSelectedTree(),
-    getCurrentChildrenInSelectedTre(),
-    (parentNode, childrenNodes) => {
-      return { parentNode, childrenNodes };
-    }
-  );
