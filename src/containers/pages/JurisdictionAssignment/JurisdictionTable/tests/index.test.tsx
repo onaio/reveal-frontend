@@ -8,8 +8,9 @@ import { Provider } from 'react-redux';
 import { Route, Router, Switch } from 'react-router';
 import { MemoryRouter, RouteComponentProps } from 'react-router-dom';
 import { ConnectedJurisdictionTable } from '..';
-import { ASSIGN_JURISDICTIONS_URL, ASSIGN_PLAN_URL } from '../../../../../constants';
+import { ASSIGN_PLAN_URL, MANUAL_ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
 import store from '../../../../../store';
+import { fetchTree } from '../../../../../store/ducks/opensrp/hierarchies';
 import { sampleHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
 import { irsPlans, plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { PlanStatus } from '../../../../../store/ducks/plans';
@@ -35,8 +36,9 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     fetch.resetMocks();
   });
 
-  it('works correctly through a full render cycle', async () => {
+  it('works correctly through a full render cycle', () => {
     const plan = irsPlans[0];
+    store.dispatch(fetchTree(sampleHierarchy));
 
     /** current architecture does not use the Jurisdiction table as a view
      * it is seen as a controlled component that is feed some data from controlling component
@@ -44,6 +46,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
      */
     const CustomView = (props: RouteComponentProps<Dictionary>) => {
       const mockProps = {
+        autoSelectionFlow: false,
         currentParentId: props.match.params.parentId,
         plan,
         rootJurisdictionId: '2942',
@@ -56,15 +59,17 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         <Switch>
           <Route
             exact={true}
-            path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
+            path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
             component={CustomView}
           />
-          <Route exact={true} path={`${ASSIGN_JURISDICTIONS_URL}/:planId`} component={CustomView} />
+          <Route
+            exact={true}
+            path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId`}
+            component={CustomView}
+          />
         </Switch>
       );
     };
-
-    fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
 
     const wrapper = mount(
       <Provider store={store}>
@@ -72,7 +77,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
           initialEntries={[
             {
               hash: '',
-              pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+              pathname: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
               search: '',
               state: {},
             },
@@ -86,12 +91,6 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     const div = document.createElement('div');
     div.setAttribute('id', 'jurisdiction-tooltip-2942');
     document.body.appendChild(div);
-
-    // first flush promises
-    await act(async () => {
-      await new Promise(resolve => setImmediate(resolve));
-      wrapper.update();
-    });
 
     renderTable(wrapper, 'should have single node(parent node)');
     const tbodyRow = wrapper.find('tbody tr');
@@ -155,7 +154,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     );
   });
 
-  it('selects and deselect nodes', async () => {
+  it('selects and deselect nodes', () => {
     const div = document.createElement('div');
     div.setAttribute('id', 'jurisdiction-tooltip-2942');
     document.body.appendChild(div);
@@ -176,12 +175,6 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         </Router>
       </Provider>
     );
-
-    // first flush promises
-    await act(async () => {
-      await new Promise(resolve => setImmediate(resolve));
-      wrapper.update();
-    });
 
     const parentNodeRow = wrapper.find('tbody tr').at(0);
     // create snapshot of checkbox before getting checked
@@ -219,57 +212,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     ).toMatchSnapshot('should be now deselected');
   });
 
-  it('shows loader', async () => {
-    fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
-    const plan = irsPlans[0];
-    const props = {
-      plan,
-      rootJurisdictionId: '2942',
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedJurisdictionTable {...props} />
-        </Router>
-      </Provider>
-    );
-
-    // first flush promises
-    await act(async () => {
-      wrapper.update();
-    });
-
-    expect(wrapper.find('Ripple').length).toEqual(1);
-  });
-
-  it('shows errorMessage', async () => {
-    fetch.once(JSON.stringify({}), { status: 500 });
-    const plan = irsPlans[0];
-    const props = {
-      plan,
-      rootJurisdictionId: '2942',
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedJurisdictionTable {...props} />
-        </Router>
-      </Provider>
-    );
-
-    // first flush promises
-    await act(async () => {
-      await new Promise(resolve => setImmediate(resolve));
-      wrapper.update();
-    });
-
-    // here we see the error message in snapshot
-    expect(wrapper.find('ErrorPage').text()).toMatchSnapshot(
-      'should have jurisdiction hierarchy error message'
-    );
-  });
-
-  it('disables and enables checkbox for FI plans', async () => {
+  it('disables and enables checkbox for FI plans', () => {
     const plan = plans[0];
     const CustomView = (props: RouteComponentProps<Dictionary>) => {
       const mockProps = {
@@ -285,15 +228,17 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         <Switch>
           <Route
             exact={true}
-            path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
+            path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
             component={CustomView}
           />
-          <Route exact={true} path={`${ASSIGN_JURISDICTIONS_URL}/:planId`} component={CustomView} />
+          <Route
+            exact={true}
+            path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId`}
+            component={CustomView}
+          />
         </Switch>
       );
     };
-
-    fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
 
     const wrapper = mount(
       <Provider store={store}>
@@ -301,7 +246,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
           initialEntries={[
             {
               hash: '',
-              pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+              pathname: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
               search: '',
               state: {},
             },
@@ -311,12 +256,6 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         </MemoryRouter>
       </Provider>
     );
-
-    // first flush promises
-    await act(async () => {
-      await new Promise(resolve => setImmediate(resolve));
-      wrapper.update();
-    });
 
     const tbodyRow = wrapper.find('tbody tr');
     expect(
@@ -378,15 +317,17 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         <Switch>
           <Route
             exact={true}
-            path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
+            path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
             component={CustomView}
           />
-          <Route exact={true} path={`${ASSIGN_JURISDICTIONS_URL}/:planId`} component={CustomView} />
+          <Route
+            exact={true}
+            path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId`}
+            component={CustomView}
+          />
         </Switch>
       );
     };
-
-    fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
 
     const wrapper = mount(
       <Provider store={store}>
@@ -394,7 +335,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
           initialEntries={[
             {
               hash: '',
-              pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+              pathname: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
               search: '',
               state: {},
             },
@@ -405,12 +346,6 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       </Provider>
     );
 
-    // first flush promises
-    await act(async () => {
-      await new Promise(resolve => setImmediate(resolve));
-      wrapper.update();
-    });
-
     // simulate a click on draft
     wrapper.find('#save-draft button').simulate('click');
 
@@ -420,7 +355,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     });
 
     // check fetch request
-    expect(fetch.mock.calls[1]).toEqual(afterDraftSave);
+    expect(fetch.mock.calls[0]).toEqual(afterDraftSave);
   });
 
   it('makes correct calls after clicking save and activate', async () => {
@@ -440,10 +375,14 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         <Switch>
           <Route
             exact={true}
-            path={`${ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
+            path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
             component={CustomView}
           />
-          <Route exact={true} path={`${ASSIGN_JURISDICTIONS_URL}/:planId`} component={CustomView} />
+          <Route
+            exact={true}
+            path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId`}
+            component={CustomView}
+          />
         </Switch>
       );
     };
@@ -456,7 +395,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
           initialEntries={[
             {
               hash: '',
-              pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+              pathname: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
               search: '',
               state: {},
             },
@@ -483,7 +422,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     });
 
     // check fetch request
-    expect(fetch.mock.calls[1]).toEqual(afterSaveAndActivate);
+    expect(fetch.mock.calls[0]).toEqual(afterSaveAndActivate);
 
     // check redirection
     expect((wrapper.find('Router').props() as any).history.location.pathname).toEqual(
