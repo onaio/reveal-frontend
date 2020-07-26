@@ -1,0 +1,781 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JurisdictionAssignment/Slider slider works correctly: asdfasdf 1`] = `
+<Provider
+  store={
+    Object {
+      "dispatch": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+      Symbol(observable): [Function],
+    }
+  }
+>
+  <Connect(JurisdictionSelectionsSlider)
+    plan={
+      Object {
+        "action": Array [
+          Object {
+            "code": "BCC",
+            "description": "Perform BCC for the operational area",
+            "goalId": "BCC_complete",
+            "identifier": "3f2eef38-38fe-4108-abb3-4e896b880302",
+            "prefix": 1,
+            "reason": "Routine",
+            "subjectCodableConcept": Object {
+              "text": "Operational_Area",
+            },
+            "taskTemplate": "Action1_Perform_BCC",
+            "timingPeriod": Object {
+              "end": "2019-07-30",
+              "start": "2019-07-10",
+            },
+            "title": "Perform BCC",
+          },
+          Object {
+            "code": "IRS",
+            "description": "Visit each structure in the operational area and attempt to spray",
+            "goalId": "90_percent_of_structures_sprayed",
+            "identifier": "95a5a00f-a411-4fe5-bd9c-460a856239c9",
+            "prefix": 2,
+            "reason": "Routine",
+            "subjectCodableConcept": Object {
+              "text": "Residential_Structure",
+            },
+            "taskTemplate": "Action2_Spray_Structures",
+            "timingPeriod": Object {
+              "end": "2019-07-30",
+              "start": "2019-07-10",
+            },
+            "title": "Spray Structures",
+          },
+        ],
+        "date": "2019-07-10",
+        "effectivePeriod": Object {
+          "end": "2019-07-30",
+          "start": "2019-07-10",
+        },
+        "goal": Array [
+          Object {
+            "description": "Complete BCC for the operational area",
+            "id": "BCC_complete",
+            "priority": "medium-priority",
+            "target": Array [
+              Object {
+                "detail": Object {
+                  "detailQuantity": Object {
+                    "comparator": ">=",
+                    "unit": "each",
+                    "value": 1,
+                  },
+                },
+                "due": "2019-07-10",
+                "measure": "Number of BCC communication activities that happened",
+              },
+            ],
+          },
+          Object {
+            "description": "Spray 90 % of structures in the operational area",
+            "id": "90_percent_of_structures_sprayed",
+            "priority": "medium-priority",
+            "target": Array [
+              Object {
+                "detail": Object {
+                  "detailQuantity": Object {
+                    "comparator": ">=",
+                    "unit": "percent",
+                    "value": 90,
+                  },
+                },
+                "due": "2019-07-30",
+                "measure": "Percent of structures sprayed",
+              },
+            ],
+          },
+        ],
+        "identifier": "8fa7eb32-99d7-4b49-8332-9ecedd6d51ae",
+        "jurisdiction": Array [
+          Object {
+            "code": "35968df5-f335-44ae-8ae5-25804caa2d86",
+          },
+          Object {
+            "code": "3952",
+          },
+          Object {
+            "code": "ac7ba751-35e8-4b46-9e53-3cbaad193697",
+          },
+        ],
+        "name": "TwoTwoOne_01_IRS_2019-07-10",
+        "serverVersion": 1563303151426,
+        "status": "active",
+        "title": "TwoTwoOne_01 IRS 2019-07-10",
+        "useContext": Array [
+          Object {
+            "code": "interventionType",
+            "valueCodableConcept": "IRS",
+          },
+        ],
+        "version": "1",
+      }
+    }
+    rootJurisdictionId="2942"
+  >
+    <JurisdictionSelectionsSlider
+      autoSelectCreator={[Function]}
+      fetchJurisdictionsMetadataCreator={[Function]}
+      fetchTreeCreator={[Function]}
+      jurisdictionsMetadata={
+        Array [
+          Object {
+            "description": "Jurisdiction Metadata for test1 id 79b139c-3a20-4656-b684-d2d9ed83c94e",
+            "documentId": "bc15c480-0319-4711-8bfe-6e0a64b297e3",
+            "key": "3951",
+            "label": "test1 metadata",
+            "locationId": "",
+            "providerId": "onatest",
+            "resolveSettings": false,
+            "serverVersion": 1592833111093,
+            "settingIdentifier": "jurisdiction_metadata-risk",
+            "settingMetadataId": "92",
+            "settingsId": "33",
+            "teamId": "",
+            "uuid": "e56ce640-38ee-444a-9f06-a53d64a96116",
+            "v1Settings": false,
+            "value": "80",
+          },
+          Object {
+            "description": "Jurisdiction Metadata for test2 id 02ebbc84-5e29-4cd5-9b79-c594058923e9",
+            "documentId": "bc15c480-0319-4711-8bfe-6e0a64b297e3",
+            "key": "02ebbc84-5e29-4cd5-9b79-c594058923e9",
+            "label": "test2 metadata",
+            "locationId": "",
+            "providerId": "onatest",
+            "resolveSettings": false,
+            "serverVersion": 1592833111093,
+            "settingIdentifier": "jurisdiction_metadata-risk",
+            "settingMetadataId": "93",
+            "settingsId": "33",
+            "teamId": "",
+            "uuid": "fd8dfc3e-7202-4ceb-97ce-13c0b7966e61",
+            "v1Settings": false,
+            "value": "70",
+          },
+        ]
+      }
+      onClickNext={[Function]}
+      plan={
+        Object {
+          "action": Array [
+            Object {
+              "code": "BCC",
+              "description": "Perform BCC for the operational area",
+              "goalId": "BCC_complete",
+              "identifier": "3f2eef38-38fe-4108-abb3-4e896b880302",
+              "prefix": 1,
+              "reason": "Routine",
+              "subjectCodableConcept": Object {
+                "text": "Operational_Area",
+              },
+              "taskTemplate": "Action1_Perform_BCC",
+              "timingPeriod": Object {
+                "end": "2019-07-30",
+                "start": "2019-07-10",
+              },
+              "title": "Perform BCC",
+            },
+            Object {
+              "code": "IRS",
+              "description": "Visit each structure in the operational area and attempt to spray",
+              "goalId": "90_percent_of_structures_sprayed",
+              "identifier": "95a5a00f-a411-4fe5-bd9c-460a856239c9",
+              "prefix": 2,
+              "reason": "Routine",
+              "subjectCodableConcept": Object {
+                "text": "Residential_Structure",
+              },
+              "taskTemplate": "Action2_Spray_Structures",
+              "timingPeriod": Object {
+                "end": "2019-07-30",
+                "start": "2019-07-10",
+              },
+              "title": "Spray Structures",
+            },
+          ],
+          "date": "2019-07-10",
+          "effectivePeriod": Object {
+            "end": "2019-07-30",
+            "start": "2019-07-10",
+          },
+          "goal": Array [
+            Object {
+              "description": "Complete BCC for the operational area",
+              "id": "BCC_complete",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "each",
+                      "value": 1,
+                    },
+                  },
+                  "due": "2019-07-10",
+                  "measure": "Number of BCC communication activities that happened",
+                },
+              ],
+            },
+            Object {
+              "description": "Spray 90 % of structures in the operational area",
+              "id": "90_percent_of_structures_sprayed",
+              "priority": "medium-priority",
+              "target": Array [
+                Object {
+                  "detail": Object {
+                    "detailQuantity": Object {
+                      "comparator": ">=",
+                      "unit": "percent",
+                      "value": 90,
+                    },
+                  },
+                  "due": "2019-07-30",
+                  "measure": "Percent of structures sprayed",
+                },
+              ],
+            },
+          ],
+          "identifier": "8fa7eb32-99d7-4b49-8332-9ecedd6d51ae",
+          "jurisdiction": Array [
+            Object {
+              "code": "35968df5-f335-44ae-8ae5-25804caa2d86",
+            },
+            Object {
+              "code": "3952",
+            },
+            Object {
+              "code": "ac7ba751-35e8-4b46-9e53-3cbaad193697",
+            },
+          ],
+          "name": "TwoTwoOne_01_IRS_2019-07-10",
+          "serverVersion": 1563303151426,
+          "status": "active",
+          "title": "TwoTwoOne_01 IRS 2019-07-10",
+          "useContext": Array [
+            Object {
+              "code": "interventionType",
+              "valueCodableConcept": "IRS",
+            },
+          ],
+          "version": "1",
+        }
+      }
+      rootJurisdictionId="2942"
+      structuresCount={159}
+      tree={
+        Node {
+          "children": Array [
+            Node {
+              "children": Array [
+                Node {
+                  "children": Array [],
+                  "config": Object {
+                    "childrenPropertyName": "children",
+                    "modelComparatorFn": undefined,
+                  },
+                  "model": Object {
+                    "id": "3951",
+                    "label": "Akros_1",
+                    "meta": Object {
+                      "selected": true,
+                      "selectedBy": "Auto-selection",
+                    },
+                    "node": Object {
+                      "attributes": Object {
+                        "geographicLevel": 2,
+                        "structureCount": 159,
+                      },
+                      "locationId": "3951",
+                      "name": "Akros_1",
+                      "parentLocation": Object {
+                        "locationId": "3019",
+                        "voided": false,
+                      },
+                      "voided": false,
+                    },
+                    "parent": "3019",
+                  },
+                  "parent": [Circular],
+                },
+              ],
+              "config": Object {
+                "childrenPropertyName": "children",
+                "modelComparatorFn": undefined,
+              },
+              "model": Object {
+                "children": Array [
+                  Object {
+                    "id": "3951",
+                    "label": "Akros_1",
+                    "meta": Object {
+                      "selected": true,
+                      "selectedBy": "Auto-selection",
+                    },
+                    "node": Object {
+                      "attributes": Object {
+                        "geographicLevel": 2,
+                        "structureCount": 159,
+                      },
+                      "locationId": "3951",
+                      "name": "Akros_1",
+                      "parentLocation": Object {
+                        "locationId": "3019",
+                        "voided": false,
+                      },
+                      "voided": false,
+                    },
+                    "parent": "3019",
+                  },
+                ],
+                "id": "3019",
+                "label": "Mtendere",
+                "meta": Object {
+                  "selected": true,
+                  "selectedBy": "Auto-selection",
+                },
+                "node": Object {
+                  "attributes": Object {
+                    "geographicLevel": 1,
+                    "structureCount": 1,
+                  },
+                  "locationId": "3019",
+                  "name": "Mtendere",
+                  "parentLocation": Object {
+                    "locationId": "2942",
+                    "voided": false,
+                  },
+                  "voided": false,
+                },
+                "parent": "2942",
+              },
+              "parent": [Circular],
+            },
+          ],
+          "config": Object {
+            "childrenPropertyName": "children",
+            "modelComparatorFn": undefined,
+          },
+          "model": Object {
+            "children": Array [
+              Object {
+                "children": Array [
+                  Object {
+                    "id": "3951",
+                    "label": "Akros_1",
+                    "meta": Object {
+                      "selected": true,
+                      "selectedBy": "Auto-selection",
+                    },
+                    "node": Object {
+                      "attributes": Object {
+                        "geographicLevel": 2,
+                        "structureCount": 159,
+                      },
+                      "locationId": "3951",
+                      "name": "Akros_1",
+                      "parentLocation": Object {
+                        "locationId": "3019",
+                        "voided": false,
+                      },
+                      "voided": false,
+                    },
+                    "parent": "3019",
+                  },
+                ],
+                "id": "3019",
+                "label": "Mtendere",
+                "meta": Object {
+                  "selected": true,
+                  "selectedBy": "Auto-selection",
+                },
+                "node": Object {
+                  "attributes": Object {
+                    "geographicLevel": 1,
+                    "structureCount": 1,
+                  },
+                  "locationId": "3019",
+                  "name": "Mtendere",
+                  "parentLocation": Object {
+                    "locationId": "2942",
+                    "voided": false,
+                  },
+                  "voided": false,
+                },
+                "parent": "2942",
+              },
+            ],
+            "id": "2942",
+            "label": "Lusaka",
+            "meta": Object {
+              "selected": true,
+              "selectedBy": "Auto-selection",
+            },
+            "node": Object {
+              "attributes": Object {
+                "geographicLevel": 0,
+              },
+              "locationId": "2942",
+              "name": "Lusaka",
+              "voided": false,
+            },
+          },
+        }
+      }
+    >
+      <div
+        className="mt-3"
+      >
+        <hr />
+        <Row
+          tag="div"
+        >
+          <div
+            className="row"
+          >
+            <Col
+              md={
+                Object {
+                  "offset": 2,
+                  "size": 8,
+                }
+              }
+              style={
+                Object {
+                  "textAlign": "center",
+                }
+              }
+              tag="div"
+              widths={
+                Array [
+                  "xs",
+                  "sm",
+                  "md",
+                  "lg",
+                  "xl",
+                ]
+              }
+              xs="12"
+            >
+              <div
+                className="col-12 col-md-8 offset-md-2"
+                style={
+                  Object {
+                    "textAlign": "center",
+                  }
+                }
+              >
+                <h4
+                  className="mb-5 font-weight-bold"
+                >
+                  Adjust slider to auto-target jurisdictions
+                </h4>
+                <Row
+                  className="auto-target-row mb-3"
+                  tag="div"
+                >
+                  <div
+                    className="auto-target-row mb-3 row"
+                  >
+                    <Col
+                      className="slider-section py-3 px-5"
+                      md={6}
+                      tag="div"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                      xs="12"
+                    >
+                      <div
+                        className="slider-section py-3 px-5 col-12 col-md-6"
+                      >
+                        <p>
+                          Risk Label
+                            
+                          <span
+                            className="risk-label"
+                          >
+                            0%
+                          </span>
+                        </p>
+                        <InputRange
+                          allowSameValues={false}
+                          classNames={
+                            Object {
+                              "activeTrack": "input-range__track input-range__track--active",
+                              "disabledInputRange": "input-range input-range--disabled",
+                              "inputRange": "input-range",
+                              "labelContainer": "input-range__label-container",
+                              "maxLabel": "input-range__label input-range__label--max",
+                              "minLabel": "input-range__label input-range__label--min",
+                              "slider": "input-range__slider",
+                              "sliderContainer": "input-range__slider-container",
+                              "track": "input-range__track input-range__track--background",
+                              "valueLabel": "input-range__label input-range__label--value",
+                            }
+                          }
+                          disabled={false}
+                          maxValue={100}
+                          minValue={0}
+                          onChange={[Function]}
+                          onChangeComplete={[Function]}
+                          step={1}
+                          value={0}
+                        >
+                          <div
+                            aria-disabled={false}
+                            className="input-range"
+                            onKeyDown={[Function]}
+                            onKeyUp={[Function]}
+                            onMouseDown={[Function]}
+                            onTouchStart={[Function]}
+                          >
+                            <Label
+                              classNames={
+                                Object {
+                                  "activeTrack": "input-range__track input-range__track--active",
+                                  "disabledInputRange": "input-range input-range--disabled",
+                                  "inputRange": "input-range",
+                                  "labelContainer": "input-range__label-container",
+                                  "maxLabel": "input-range__label input-range__label--max",
+                                  "minLabel": "input-range__label input-range__label--min",
+                                  "slider": "input-range__slider",
+                                  "sliderContainer": "input-range__slider-container",
+                                  "track": "input-range__track input-range__track--background",
+                                  "valueLabel": "input-range__label input-range__label--value",
+                                }
+                              }
+                              type="min"
+                            >
+                              <span
+                                className="input-range__label input-range__label--min"
+                              >
+                                <span
+                                  className="input-range__label-container"
+                                >
+                                  0
+                                </span>
+                              </span>
+                            </Label>
+                            <Track
+                              classNames={
+                                Object {
+                                  "activeTrack": "input-range__track input-range__track--active",
+                                  "disabledInputRange": "input-range input-range--disabled",
+                                  "inputRange": "input-range",
+                                  "labelContainer": "input-range__label-container",
+                                  "maxLabel": "input-range__label input-range__label--max",
+                                  "minLabel": "input-range__label input-range__label--min",
+                                  "slider": "input-range__slider",
+                                  "sliderContainer": "input-range__slider-container",
+                                  "track": "input-range__track input-range__track--background",
+                                  "valueLabel": "input-range__label input-range__label--value",
+                                }
+                              }
+                              onTrackDrag={[Function]}
+                              onTrackMouseDown={[Function]}
+                              percentages={
+                                Object {
+                                  "max": 0,
+                                  "min": 0,
+                                }
+                              }
+                            >
+                              <div
+                                className="input-range__track input-range__track--background"
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              >
+                                <div
+                                  className="input-range__track input-range__track--active"
+                                  style={
+                                    Object {
+                                      "left": "0%",
+                                      "width": "0%",
+                                    }
+                                  }
+                                />
+                                <Slider
+                                  classNames={
+                                    Object {
+                                      "activeTrack": "input-range__track input-range__track--active",
+                                      "disabledInputRange": "input-range input-range--disabled",
+                                      "inputRange": "input-range",
+                                      "labelContainer": "input-range__label-container",
+                                      "maxLabel": "input-range__label input-range__label--max",
+                                      "minLabel": "input-range__label input-range__label--min",
+                                      "slider": "input-range__slider",
+                                      "sliderContainer": "input-range__slider-container",
+                                      "track": "input-range__track input-range__track--background",
+                                      "valueLabel": "input-range__label input-range__label--value",
+                                    }
+                                  }
+                                  key="max"
+                                  maxValue={100}
+                                  minValue={0}
+                                  onSliderDrag={[Function]}
+                                  onSliderKeyDown={[Function]}
+                                  percentage={0}
+                                  type="max"
+                                  value={0}
+                                >
+                                  <span
+                                    className="input-range__slider-container"
+                                    style={
+                                      Object {
+                                        "left": "0%",
+                                        "position": "absolute",
+                                      }
+                                    }
+                                  >
+                                    <Label
+                                      classNames={
+                                        Object {
+                                          "activeTrack": "input-range__track input-range__track--active",
+                                          "disabledInputRange": "input-range input-range--disabled",
+                                          "inputRange": "input-range",
+                                          "labelContainer": "input-range__label-container",
+                                          "maxLabel": "input-range__label input-range__label--max",
+                                          "minLabel": "input-range__label input-range__label--min",
+                                          "slider": "input-range__slider",
+                                          "sliderContainer": "input-range__slider-container",
+                                          "track": "input-range__track input-range__track--background",
+                                          "valueLabel": "input-range__label input-range__label--value",
+                                        }
+                                      }
+                                      type="value"
+                                    >
+                                      <span
+                                        className="input-range__label input-range__label--value"
+                                      >
+                                        <span
+                                          className="input-range__label-container"
+                                        >
+                                          0
+                                        </span>
+                                      </span>
+                                    </Label>
+                                    <div
+                                      aria-valuemax={100}
+                                      aria-valuemin={0}
+                                      aria-valuenow={0}
+                                      className="input-range__slider"
+                                      draggable="false"
+                                      onKeyDown={[Function]}
+                                      onMouseDown={[Function]}
+                                      onTouchStart={[Function]}
+                                      role="slider"
+                                      tabIndex="0"
+                                    />
+                                  </span>
+                                </Slider>
+                              </div>
+                            </Track>
+                            <Label
+                              classNames={
+                                Object {
+                                  "activeTrack": "input-range__track input-range__track--active",
+                                  "disabledInputRange": "input-range input-range--disabled",
+                                  "inputRange": "input-range",
+                                  "labelContainer": "input-range__label-container",
+                                  "maxLabel": "input-range__label input-range__label--max",
+                                  "minLabel": "input-range__label input-range__label--min",
+                                  "slider": "input-range__slider",
+                                  "sliderContainer": "input-range__slider-container",
+                                  "track": "input-range__track input-range__track--background",
+                                  "valueLabel": "input-range__label input-range__label--value",
+                                }
+                              }
+                              type="max"
+                            >
+                              <span
+                                className="input-range__label input-range__label--max"
+                              >
+                                <span
+                                  className="input-range__label-container"
+                                >
+                                  100
+                                </span>
+                              </span>
+                            </Label>
+                          </div>
+                        </InputRange>
+                      </div>
+                    </Col>
+                    <Col
+                      className="info-section p-3"
+                      md={6}
+                      tag="div"
+                      widths={
+                        Array [
+                          "xs",
+                          "sm",
+                          "md",
+                          "lg",
+                          "xl",
+                        ]
+                      }
+                      xs="12"
+                    >
+                      <div
+                        className="info-section p-3 col-12 col-md-6"
+                      >
+                        <p>
+                          <FontAwesomeIcon
+                            icon="home"
+                          >
+                            <i
+                              className="fa"
+                            />
+                          </FontAwesomeIcon>
+                        </p>
+                        <p>
+                          NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS
+                        </p>
+                        <p>
+                          159
+                        </p>
+                      </div>
+                    </Col>
+                  </div>
+                </Row>
+              </div>
+            </Col>
+          </div>
+        </Row>
+        <hr />
+        <Button
+          className="btn btn-success float-right mt-3"
+          color="secondary"
+          onClick={[Function]}
+          tag="button"
+        >
+          <button
+            aria-label={null}
+            className="btn btn-success float-right mt-3 btn btn-secondary"
+            onClick={[Function]}
+            type="button"
+          >
+            Continue to next step
+          </button>
+        </Button>
+      </div>
+    </JurisdictionSelectionsSlider>
+  </Connect(JurisdictionSelectionsSlider)>
+</Provider>
+`;
