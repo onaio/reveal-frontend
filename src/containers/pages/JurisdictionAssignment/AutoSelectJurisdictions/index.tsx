@@ -111,7 +111,6 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     fetchJurisdictionsMetadataCreator,
     jurisdictionsMetadata,
     treeFetchedCreator,
-    tree,
   } = props;
 
   const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
@@ -160,8 +159,7 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     startLoading,
     treeFetchedCreator,
     stopLoading,
-    handleBrokenPage,
-    tree
+    handleBrokenPage
   );
 
   if (loading()) {
