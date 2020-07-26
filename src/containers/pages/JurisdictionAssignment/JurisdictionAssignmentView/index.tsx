@@ -83,7 +83,6 @@ export const defaultProps = {
   jurisdictionsMetadata: [],
   plan: null,
   serviceClass: OpenSRPService,
-
   treeFetchedCreator: fetchTree,
 };
 
@@ -150,8 +149,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     serviceClass,
     handleBrokenPage,
     stopLoading,
-    startLoading,
-    tree
+    startLoading
   );
 
   React.useEffect(() => {
