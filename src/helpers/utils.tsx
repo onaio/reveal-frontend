@@ -876,6 +876,15 @@ export const extractPlanRecordResponseFromPlanPayload = (
   return null;
 };
 
+/** helper to retrieve the plan Type from a plan definition object
+ * @param aPlan - the plan object
+ */
+export const getPlanType = (aPlan: PlanDefinition) => {
+  return aPlan.useContext
+    .filter((f: UseContext) => f.code === 'interventionType')
+    .map(context => context.valueCodableConcept)[0];
+};
+
 /** a util to check if plan of type PlanDefinition is of the specified intervention type(s)
  * @param {PlanDefinition} plan - the plan of interest
  * @param {InterventionType} interventionType if plan is of specified intervention type we return true
@@ -888,9 +897,7 @@ export const isPlanDefinitionOfType = (
 ) => {
   // if plan intervention is in intervention Types
   const allowedTypes = Array.isArray(interventionType) ? interventionType : [interventionType];
-  const plansType = plan.useContext
-    .filter((f: UseContext) => f.code === 'interventionType')
-    .map(context => context.valueCodableConcept)[0];
+  const plansType = getPlanType(plan);
   return allowedTypes.includes(plansType as InterventionType);
 };
 

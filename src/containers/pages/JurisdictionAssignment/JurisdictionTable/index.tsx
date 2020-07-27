@@ -9,6 +9,7 @@ import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb, {
   Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { PLAN_TYPES_WITH_MULTI_JURISDICTIONS } from '../../../../configs/env';
 import {
   JURISDICTION_ASSIGNMENT_SUCCESSFUL,
   NAME,
@@ -30,7 +31,7 @@ import {
 } from '../../../../constants';
 import { putJurisdictionsToPlan } from '../../../../helpers/dataLoading/jurisdictions';
 import { displayError } from '../../../../helpers/errors';
-import { isPlanDefinitionOfType, successGrowl } from '../../../../helpers/utils';
+import { getPlanType, successGrowl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import hierarchyReducer, {
   autoSelectNodes,
@@ -56,7 +57,7 @@ import {
   addPlanDefinition,
   AddPlanDefinitionAction,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
-import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
+import { PlanStatus } from '../../../../store/ducks/plans';
 import { RiskLabel } from '../helpers/RiskLabel';
 import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
@@ -134,14 +135,8 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
    *    1) if checkbox is a parent checkbox(i.e. if not belonging to a leaf node) disable.
    */
   const isSingleSelect = (thePlan: PlanDefinition) => {
-    const interventionTypes = [
-      InterventionType.DynamicFI,
-      InterventionType.FI,
-      InterventionType.MDA,
-      InterventionType.MDAPoint,
-      InterventionType.DynamicMDA,
-    ];
-    return isPlanDefinitionOfType(thePlan, interventionTypes);
+    const thePlanType = getPlanType(thePlan);
+    return !PLAN_TYPES_WITH_MULTI_JURISDICTIONS.includes(thePlanType);
   };
 
   const history = useHistory();
