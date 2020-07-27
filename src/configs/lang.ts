@@ -795,3 +795,6 @@ export const REFINE_SELECTED_JURISDICTIONS = translate(
 );
 
 export const CONTINUE_TO_NEXT_STEP = translate('CONTINUE_TO_NEXT_STEP', 'Continue to next step');
+
+export const TIMELINE_SLIDER_STOP1_LABEL = translate('ONE_STR', '1');
+export const TIMELINE_SLIDER_STOP2_LABEL = translate('TWO_STR', '2');

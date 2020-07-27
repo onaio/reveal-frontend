@@ -59,6 +59,9 @@ export const DAYS = 'days';
 export const CONDITION = 'condition';
 export const TRIGGER = 'trigger';
 export const RISK_LABEL = 'Risk';
+export const TIMELINE_SLIDER_STEP1 = '1';
+export const TIMELINE_SLIDER_STEP2 = '2';
+export const TIMELINE_SLIDER_STEP3 = '3';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
