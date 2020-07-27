@@ -58,6 +58,14 @@ export const AUTO_SELECT_NODES = 'opensrp/locations/hierarchy/AUTO_SELECT_NODES'
 /** action to fetch updated children to ensure map and jurisdiction table are in sync */
 export const FETCH_MAP_CURRENT_PARENT = 'opensrp/locations/hierarchy/FETCH_MAP_CURRENT_PARENT';
 
+/**
+ * Interface for map parent info
+ */
+export interface MapCurrentParentInfo {
+  currentParentId: string;
+  isRootJurisdiction: boolean;
+}
+
 /** describes action that adds a tree to store */
 export interface FetchedTreeAction extends AnyAction {
   type: typeof TREE_FETCHED;
@@ -70,9 +78,9 @@ export interface DeforestAction extends AnyAction {
   treeByRootId: {};
 }
 
-export interface FetchUpdatedCurrentParentId extends AnyAction {
+export interface FetchUpdatedCurrentParent extends AnyAction {
   type: typeof FETCH_MAP_CURRENT_PARENT;
-  mapCurrentParentId: string;
+  mapCurrentParent: MapCurrentParentInfo;
 }
 
 /** action to select a node  */
@@ -117,7 +125,7 @@ export type TreeActionTypes =
   | DeselectNodeAction
   | AutoSelectNodesAction
   | DeselectAllNodesAction
-  | FetchUpdatedCurrentParentId
+  | FetchUpdatedCurrentParent
   | AnyAction;
 
 // **************************** action creators ****************************
@@ -139,9 +147,15 @@ export function fetchTree(
   };
 }
 
-export function fetchUpdatedCurrentParentId(currentParentId: string): FetchUpdatedCurrentParentId {
+export function fetchUpdatedCurrentParent(
+  currentParentId: string,
+  isRootJurisdiction: boolean
+): FetchUpdatedCurrentParent {
   return {
-    mapCurrentParentId: currentParentId,
+    mapCurrentParent: {
+      currentParentId,
+      isRootJurisdiction,
+    },
     type: FETCH_MAP_CURRENT_PARENT,
   };
 }
@@ -236,7 +250,7 @@ export function deselectAllNodes(
 export interface TreeState {
   metaData: Dictionary<Dictionary<Dictionary<Meta>>>;
   treeByRootId: Dictionary<TreeNode> | {};
-  mapCurrentParentId: string;
+  mapCurrentParent: MapCurrentParentInfo;
 }
 
 /** Create an immutable tree state */
@@ -246,7 +260,11 @@ export type ImmutableTreeState = TreeState & SeamlessImmutable.ImmutableObject<T
 export const initialState: ImmutableTreeState = SeamlessImmutable({
   metaData: {} as Dictionary<Dictionary<Dictionary<Meta>>>,
   treeByRootId: {},
-});
+  mapCurrentParent: {
+    currentParentId: '',
+    isRootJurisdiction: false,
+  },
+};
 
 // the reducer function
 export default function reducer(state: ImmutableTreeState = initialState, action: TreeActionTypes) {
@@ -267,7 +285,10 @@ export default function reducer(state: ImmutableTreeState = initialState, action
     case FETCH_MAP_CURRENT_PARENT:
       return {
         ...state,
-        mapCurrentParentId: action.mapCurrentParentId,
+        mapCurrentParent: {
+          currentParentId: action.mapCurrentParentId,
+          isRootJurisdiction: action.isRootJurisdiction,
+        },
       };
     case DEFOREST:
       return {
@@ -376,8 +397,8 @@ export interface Filters {
   currentParentId?: string /** to use when filtering current children */;
 }
 
-export const getMapCurrentParentId = (state: Partial<Store>) =>
-  (state as any)[reducerName].mapCurrentParentId;
+export const getMapCurrentParent = (state: Partial<Store>) =>
+  (state as any)[reducerName].mapCurrentParent;
 
 /** retrieve the rootJurisdiction value
  * @param state - the store
