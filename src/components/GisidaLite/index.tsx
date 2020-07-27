@@ -7,8 +7,8 @@ import { FitBounds } from 'react-mapbox-gl/lib/map';
 import Loading from '../../components/page/Loading';
 import { GISIDA_MAPBOX_TOKEN } from '../../configs/env';
 import { imgArr } from '../../configs/settings';
-import { gsLiteStyle } from './helpers';
 import { TreeNode } from '../../store/ducks/opensrp/hierarchies/types';
+import { gsLiteStyle } from './helpers';
 
 /** single map icon description */
 interface MapIcon {

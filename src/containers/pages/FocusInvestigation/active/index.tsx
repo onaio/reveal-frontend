@@ -78,7 +78,6 @@ import plansReducer, {
 } from '../../../../store/ducks/plans';
 import './style.css';
 import { createTableProps } from './utils';
-import { fetchUpdatedCurrentParentId } from '../../../../store/ducks/opensrp/hierarchies';
 
 /** register the plans reducer */
 reducerRegistry.register(plansReducerName, plansReducer);

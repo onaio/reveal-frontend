@@ -43,15 +43,16 @@ import hierarchyReducer, {
   deselectAllNodes,
   deselectNode,
   fetchTree,
+  fetchUpdatedCurrentParent,
   Filters,
   getAllSelectedNodes,
   getCurrentChildren,
   getCurrentParentNode,
+  getLeafNodes,
+  getMapCurrentParent,
   reducerName as hierarchyReducerName,
   selectNode,
   SelectNodeAction,
-  getMapCurrentParentId,
-  fetchUpdatedCurrentParentId,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
@@ -82,7 +83,7 @@ export interface JurisdictionSelectorTableProps {
   deselectNodeCreator: ActionCreator<DeselectNodeAction>;
   autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
   fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
-  fetchUpdatedCurrentParentIdActionCreator: typeof fetchUpdatedCurrentParentId;
+  fetchUpdatedCurrentParentActionCreator: typeof fetchUpdatedCurrentParent;
   selectedLeafNodes: TreeNode[];
   leafNodes: TreeNode[];
   autoSelectionFlow: boolean;
@@ -96,7 +97,7 @@ const defaultProps = {
   deselectAllNodesCreator: deselectAllNodes,
   deselectNodeCreator: deselectNode,
   fetchPlanCreator: addPlanDefinition,
-  fetchUpdatedCurrentParentIdActionCreator: fetchUpdatedCurrentParentId,
+  fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
   jurisdictionsMetadata: [],
   leafNodes: [],
   rootJurisdictionId: '',
@@ -123,7 +124,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     selectedLeafNodes,
     plan,
     jurisdictionsMetadata,
-    fetchUpdatedCurrentParentIdActionCreator,
+    fetchUpdatedCurrentParentActionCreator,
     serviceClass,
     autoSelectionFlow,
     deselectAllNodesCreator,
@@ -213,6 +214,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const breadCrumbProps = {
     currentPage,
     pages,
+    fetchUpdatedCurrentParentActionCreator,
   };
   const data = derivedChildrenNodes.map(node => {
     return [
@@ -227,7 +229,12 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           applySelectedToNode(node.model.id, plan.identifier, newSelectedValue);
         }}
       />,
-      <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
+      <NodeCell
+        key={`${node.model.id}-jurisdiction`}
+        node={node}
+        baseUrl={baseUrl}
+        fetchUpdatedCurrentParent={fetchUpdatedCurrentParentActionCreator}
+      />,
       node.model.node.attributes.structureCount,
       ...(autoSelectionFlow
         ? [
@@ -417,7 +424,7 @@ type DispatchToProps = Pick<
   | 'autoSelectNodesCreator'
   | 'fetchPlanCreator'
   | 'deselectAllNodesCreator'
-  | 'fetchUpdatedCurrentParentIdActionCreator'
+  | 'fetchUpdatedCurrentParentActionCreator'
 >;
 
 const childrenSelector = getCurrentChildren();
@@ -430,8 +437,8 @@ const mapStateToProps = (
   ownProps: JurisdictionSelectorTableProps
 ): MapStateToProps => {
   const filters: Filters = {
-    currentParentId: getMapCurrentParentId(state).length
-      ? getMapCurrentParentId(state)
+    currentParentId: getMapCurrentParent(state).currentParentId.length
+      ? getMapCurrentParent(state).currentParentId
       : ownProps.currentParentId,
     leafNodesOnly: true,
     planId: ownProps.plan.identifier,
@@ -453,7 +460,7 @@ const mapDispatchToProps: DispatchToProps = {
   fetchPlanCreator: addPlanDefinition,
   selectNodeCreator: selectNode,
   treeFetchedCreator: fetchTree,
-  fetchUpdatedCurrentParentIdActionCreator: fetchUpdatedCurrentParentId,
+  fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
 };
 
 export const ConnectedJurisdictionTable = connect(

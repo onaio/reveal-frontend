@@ -1,12 +1,12 @@
 import { viewport } from '@mapbox/geo-viewport';
 import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { Dictionary } from '@onaio/utils';
 import { FeatureCollection } from '@turf/turf';
+import { EventData, Map } from 'mapbox-gl';
 import React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
-import { EventData, Map } from 'mapbox-gl';
-import { Dictionary } from '@onaio/utils';
 import { CountriesAdmin0 } from '../../../../src/configs/settings';
 import { MemoizedGisidaLite } from '../../../components/GisidaLite';
 import Loading from '../../../components/page/Loading';
@@ -15,10 +15,10 @@ import { MAP_LOAD_ERROR } from '../../../configs/lang';
 import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import {
+  fetchUpdatedCurrentParent,
   Filters,
   getCurrentChildren,
-  fetchUpdatedCurrentParentId,
-  getMapCurrentParentId,
+  getMapCurrentParent,
 } from '../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../store/ducks/opensrp/hierarchies/utils';
@@ -42,7 +42,7 @@ export interface AssignmentMapWrapperProps {
   currentChildren: TreeNode[];
   serviceClass: typeof OpenSRPService;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
-  fetchUpdatedCurrentParentIdActionCreator: typeof fetchUpdatedCurrentParentId;
+  fetchUpdatedCurrentParentActionCreator: typeof fetchUpdatedCurrentParent;
   getJurisdictionsFeatures: FeatureCollection;
   currentState: any;
   mapCurrentParentId: string;
@@ -52,7 +52,7 @@ const defaultProps = {
   currentChildren: [],
   currentParentId: undefined,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
-  fetchUpdatedCurrentParentIdActionCreator: fetchUpdatedCurrentParentId,
+  fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
   getJurisdictionsFeatures: undefined,
   rootJurisdictionId: '',
   serviceClass: OpenSRPService,
@@ -63,19 +63,29 @@ const defaultProps = {
 export const onJurisdictionClick = (map: Map, e: EventData, props: any, state: any) => {
   // Destructure event data
   const { point, originalEvent, target } = e;
-  const { fetchUpdatedCurrentParentIdActionCreator } = props;
+  const { fetchUpdatedCurrentParentActionCreator } = props;
   // grab underlying features from map
   const features: any = target.queryRenderedFeatures(point) as Dictionary[];
   if (!features.length) {
     return false;
   }
   if (features[0]) {
-    fetchUpdatedCurrentParentIdActionCreator(
+    fetchUpdatedCurrentParentActionCreator(
       (features[0].id && features[0].id.toString()) ||
         (features[0] && features[0].properties && features[0].properties.externalId) ||
-        ''
+        '',
+      features[0].properties && !features[0].properties.parentId
     );
   }
+};
+
+export const fetchUpdatedCurrentParentHandler = (
+  currentParentId: string,
+  isRootJurisdiction: boolean,
+  props: any
+) => {
+  const { fetchUpdatedCurrentParentActionCreator } = props;
+  fetchUpdatedCurrentParentActionCreator(currentParentId, isRootJurisdiction);
 };
 
 const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
@@ -92,6 +102,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     ? currentChildren.map(node => node.model.id)
     : [];
   const [loading, setLoading] = React.useState(true);
+  const [isMapParent, setIsMapParent] = React.useState(false);
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   React.useEffect(() => {
     if (!getJurisdictionsFeatures.features.length) {
@@ -189,7 +200,7 @@ type MapStateToProps = Pick<
 /** map action creators interface */
 type DispatchToProps = Pick<
   AssignmentMapWrapperProps,
-  'fetchJurisdictionsActionCreator' | 'fetchUpdatedCurrentParentIdActionCreator'
+  'fetchJurisdictionsActionCreator' | 'fetchUpdatedCurrentParentActionCreator'
 >;
 
 /** map state to props
@@ -202,8 +213,8 @@ const mapStateToProps = (
   ownProps: AssignmentMapWrapperProps
 ): MapStateToProps => {
   const filters: Filters = {
-    currentParentId: getMapCurrentParentId(state).length
-      ? getMapCurrentParentId(state)
+    currentParentId: getMapCurrentParent(state).currentParentId.length
+      ? getMapCurrentParent(state)
       : ownProps.currentParentId,
     leafNodesOnly: true,
     rootJurisdictionId: ownProps.rootJurisdictionId,
@@ -212,21 +223,20 @@ const mapStateToProps = (
   const childJurisdictions = getCurrentChildren()(state, filters);
   const jurisdictionFilters: JurisdictionGeomFilters = {
     filterGeom: true,
-    jurisdictionId: getMapCurrentParentId(state).length
-      ? getMapCurrentParentId(state)
+    jurisdictionId: getMapCurrentParent(state).length
+      ? getMapCurrentParent(state)
       : ownProps.currentParentId || ownProps.rootJurisdictionId,
-    jurisdictionIdsArray: !ownProps.currentParentId
-      ? getMapCurrentParentId(state).length
-        ? [getMapCurrentParentId(state)]
-        : [ownProps.rootJurisdictionId]
-      : childJurisdictions.map((node: TreeNode) => node.model.id),
+    jurisdictionIdsArray:
+      !ownProps.currentParentId && getMapCurrentParent(state).isRootJurisdiction
+        ? [ownProps.rootJurisdictionId]
+        : childJurisdictions.map((node: TreeNode) => node.model.id),
     parentId:
       ownProps.currentParentId === ownProps.rootJurisdictionId ||
-      getMapCurrentParentId(state) === ownProps.rootJurisdictionId ||
+      getMapCurrentParent(state) === ownProps.rootJurisdictionId ||
       !ownProps.currentParentId
         ? undefined
-        : getMapCurrentParentId(state).length
-        ? getMapCurrentParentId(state)
+        : getMapCurrentParent(state).length
+        ? getMapCurrentParent(state)
         : ownProps.currentParentId || ownProps.rootJurisdictionId,
   };
 
@@ -234,14 +244,14 @@ const mapStateToProps = (
     'childern from map>>',
     getCurrentChildren()(state, {
       ...filters,
-      currentParentId: getMapCurrentParentId(state),
+      currentParentId: getMapCurrentParent(state),
     })
   );
 
   return {
     currentChildren: childJurisdictions,
-    currentParentId: getMapCurrentParentId(state).length
-      ? getMapCurrentParentId(state)
+    currentParentId: getMapCurrentParent(state).length
+      ? getMapCurrentParent(state)
       : ownProps.currentParentId,
     getJurisdictionsFeatures: getJurisdictionsFC()(
       state,
@@ -250,14 +260,14 @@ const mapStateToProps = (
     ),
     rootJurisdictionId: ownProps.rootJurisdictionId,
     currentState: state,
-    mapCurrentParentId: getMapCurrentParentId(state),
+    mapCurrentParentId: getMapCurrentParent(state),
   };
 };
 
 /** map props to actions that may be dispatched by component */
 const mapDispatchToProps: DispatchToProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
-  fetchUpdatedCurrentParentIdActionCreator: fetchUpdatedCurrentParentId,
+  fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
 };
 
 export const ConnectedAssignmentMapWrapper = connect(

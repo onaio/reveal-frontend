@@ -4,9 +4,9 @@
  */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { fetchUpdatedCurrentParent } from '../../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeHasChildren } from '../../../../store/ducks/opensrp/hierarchies/utils';
-import { fetchUpdatedCurrentParentId } from '../../../../store/ducks/opensrp/hierarchies';
 
 /**
  * Props for NodeCell
@@ -14,7 +14,7 @@ import { fetchUpdatedCurrentParentId } from '../../../../store/ducks/opensrp/hie
 export interface NodeCellProps {
   node: TreeNode /** the current jurisdiction */;
   baseUrl: string;
-  fetchUpdatedCurrentParentId: typeof fetchUpdatedCurrentParentId;
+  fetchUpdatedCurrentParent: typeof fetchUpdatedCurrentParent;
 }
 
 /**
@@ -26,7 +26,7 @@ export interface NodeCellProps {
  * @param props - the props
  */
 const NodeCell = (props: NodeCellProps) => {
-  const { node, baseUrl, fetchUpdatedCurrentParentId } = props;
+  const { node, baseUrl, fetchUpdatedCurrentParent } = props;
 
   // isLeafNode if node does not have children
   const isLeafNode = !node.hasChildren();
@@ -39,7 +39,7 @@ const NodeCell = (props: NodeCellProps) => {
     <Link
       to={`${baseUrl}/${node.model.id}`}
       key={`${node.model.id}-span`}
-      onClick={() => fetchUpdatedCurrentParentId('')}
+      onClick={() => fetchUpdatedCurrentParent('', false)}
     >
       {node.model.label}
     </Link>
