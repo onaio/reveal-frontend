@@ -1,5 +1,4 @@
 import { mount } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import { cloneDeep } from 'lodash';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -39,16 +38,13 @@ describe('JurisdictionAssignment/Slider', () => {
     wrapper.update();
 
     // Akros_1 is selected by default during mount since it has a threshold of 80 > 0
-    expect(wrapper.find('div.slider-section').text()).toMatchInlineSnapshot(
-      `"Risk Label  0%00100"`
-    );
+    expect(wrapper.find('div.slider-section').text()).toMatchInlineSnapshot(`"Risk  0%00100"`);
     expect(wrapper.find('div.info-section').text()).toMatchInlineSnapshot(
       `"NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS159"`
     );
 
     // simulate a change on the input slider. will set a thresh-hold value
     // that will not select any of the jurisdictions
-    expect(toJson(wrapper)).toMatchSnapshot('asdfasdf');
 
     /** we really should not be doing this, but I am currently unable to simulate
      * the change event
