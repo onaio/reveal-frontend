@@ -1,9 +1,10 @@
 /** Rendered as a table cell and shows the risk label for a given jurisdiction node */
 import React from 'react';
 import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
+import { JurisdictionsMetadata } from '../../../../../store/ducks/opensrp/jurisdictionsMetadata';
 
 export interface RiskLabelProps {
-  metadata: any[];
+  metadata: JurisdictionsMetadata[];
   node: TreeNode;
 }
 
