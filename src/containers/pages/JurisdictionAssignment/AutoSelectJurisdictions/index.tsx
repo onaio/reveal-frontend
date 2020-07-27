@@ -38,7 +38,6 @@ import {
   PLANNING_VIEW_URL,
   TIMELINE_SLIDER_STEP1,
   TIMELINE_SLIDER_STEP2,
-  TIMELINE_SLIDER_STEP3,
 } from '../../../../constants';
 import { loadJurisdictionsMetadata } from '../../../../helpers/dataLoading/jurisdictions';
 import { displayError } from '../../../../helpers/errors';
@@ -73,7 +72,6 @@ import {
 import { ConnectedJurisdictionSelectionsSlider } from '../helpers/Slider';
 import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
-import { ConnectedSelectedStructuresTable } from '../JurisdictionTable/structureSummary';
 
 reducerRegistry.register(planReducerName, plansReducer);
 reducerRegistry.register(jurisdictionMetadataReducerName, jurisdictionMetadataReducer);
@@ -254,10 +252,7 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
       each of this components gets a callback that is called that modifies the state of this 
       container to know what is the next component to be rendered in the below section */}
       {step === TIMELINE_SLIDER_STEP1 && <ConnectedJurisdictionSelectionsSlider {...sliderProps} />}
-      {step === TIMELINE_SLIDER_STEP2 && (
-        <ConnectedSelectedStructuresTable {...jurisdictionTableProps} />
-      )}
-      {step === TIMELINE_SLIDER_STEP3 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
+      {step === TIMELINE_SLIDER_STEP2 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
     </>
   );
 };
