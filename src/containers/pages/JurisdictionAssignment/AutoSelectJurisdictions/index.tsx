@@ -22,9 +22,17 @@ import {
   COULD_NOT_LOAD_PLAN,
   PLANNING_PAGE_TITLE,
   REFINE_SELECTED_JURISDICTIONS,
+  TIMELINE_SLIDER_STOP1_LABEL,
+  TIMELINE_SLIDER_STOP2_LABEL,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
-import { AUTO_ASSIGN_JURISDICTIONS_URL, PLANNING_VIEW_URL } from '../../../../constants';
+import {
+  AUTO_ASSIGN_JURISDICTIONS_URL,
+  PLANNING_VIEW_URL,
+  TIMELINE_SLIDER_STEP1,
+  TIMELINE_SLIDER_STEP2,
+  TIMELINE_SLIDER_STEP3,
+} from '../../../../constants';
 import { loadJurisdictionsMetadata } from '../../../../helpers/dataLoading/jurisdictions';
 import { displayError } from '../../../../helpers/errors';
 import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
@@ -115,7 +123,7 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
   } = props;
 
   const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
-  const [step, setStep] = React.useState<number>(1);
+  const [step, setStep] = React.useState<string>(TIMELINE_SLIDER_STEP1);
   const initialLoadingState = !jurisdictionsMetadata || !plan;
   const { startLoading, stopLoading, loading } = useLoadingReducer(initialLoadingState);
 
@@ -181,7 +189,7 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
   }
 
   const sliderProps = {
-    onClickNext: () => setStep(step + 1),
+    onClickNext: () => setStep(TIMELINE_SLIDER_STEP2),
     plan,
     rootJurisdictionId,
     serviceClass,
@@ -215,12 +223,12 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
       {
         keys: '1',
         labelBelowStop: AUTO_TARGET_JURISDICTIONS_BY_RISK,
-        labelInStop: '1',
+        labelInStop: TIMELINE_SLIDER_STOP1_LABEL,
       },
       {
         keys: ['2', '3'],
         labelBelowStop: REFINE_SELECTED_JURISDICTIONS,
-        labelInStop: '2',
+        labelInStop: TIMELINE_SLIDER_STOP2_LABEL,
       },
     ],
   };
@@ -234,9 +242,11 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <TimelineSlider {...timelineSliderProps} />
-      {step === 1 && <ConnectedJurisdictionSelectionsSlider {...sliderProps} />}
-      {step === 2 && <ConnectedSelectedStructuresTable {...jurisdictionTableProps} />}
-      {step === 3 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
+      {step === TIMELINE_SLIDER_STEP1 && <ConnectedJurisdictionSelectionsSlider {...sliderProps} />}
+      {step === TIMELINE_SLIDER_STEP2 && (
+        <ConnectedSelectedStructuresTable {...jurisdictionTableProps} />
+      )}
+      {step === TIMELINE_SLIDER_STEP3 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
     </>
   );
 };
