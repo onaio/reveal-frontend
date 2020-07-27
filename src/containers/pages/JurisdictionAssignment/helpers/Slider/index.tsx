@@ -44,7 +44,7 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 /** props for JurisdictionSelectionSlider */
 interface Props {
   rootJurisdictionId: string;
-  tree: TreeNode | undefined;
+  tree?: TreeNode;
   structuresCount: number;
   fetchJurisdictionsMetadataCreator: ActionCreator<FetchJurisdictionsMetadataAction>;
   jurisdictionsMetadata: any[];
@@ -65,7 +65,6 @@ const defaultProps = {
   plan: null,
   rootJurisdictionId: '',
   structuresCount: 0,
-  tree: undefined,
 };
 
 /** renders a draggable slider that sets a value used as the
