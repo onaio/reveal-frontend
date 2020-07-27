@@ -1,8 +1,15 @@
-/** the Jurisdiction auto Selection view
- * Responsibilities:
+/** the Jurisdiction auto Selection view.
+ * Takes the user through the process of auto-selecting jurisdictions based
+ * or uploaded risks.
+ * the first step is using a slider to set the threshold
+ * the second step is using a drill-down table to see the number of structures in the selected nodes
+ * the third step is using another drill-down to refine the selected.
+ *
+ *  Responsibilities:
  *  load plan given a url with the planId
+ *  also requires the hierarchy
+ *
  *  pending : render map.
- *  render table from which a user can assign jurisdictions to the active plan
  */
 
 import reducerRegistry from '@onaio/redux-reducer-registry';
