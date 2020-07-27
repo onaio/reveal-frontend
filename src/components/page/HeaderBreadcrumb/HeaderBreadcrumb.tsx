@@ -1,9 +1,6 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import { fetchUpdatedCurrentParentId } from '../../../store/ducks/opensrp/hierarchies';
-import { connect } from 'react-redux';
-import { Store } from 'redux';
 
 /** interface describing page object for use in breadcrumbs */
 export interface Page {
@@ -11,18 +8,14 @@ export interface Page {
   label: string;
 }
 
-export interface ActionCreator {
-  fetchUpdatedCurrentParentIdAction: typeof fetchUpdatedCurrentParentId;
-}
-
 /** interface for breadcrumb items */
-export interface BreadCrumbProps extends ActionCreator {
+export interface BreadCrumbProps {
   currentPage: Page;
   pages: Page[];
-  fetchUpdatedCurrentParentIdAction: typeof fetchUpdatedCurrentParentId;
+  fetchUpdatedCurrentParentHandler: (currentParentId: string, isRootJurisdiction: boolean) => void;
 }
 
-export const defaultBreadCrumbProps: BreadCrumbProps = {
+export const defaultBreadCrumbProps: Partial<BreadCrumbProps> = {
   currentPage: {
     url: '',
     label: '',
@@ -33,25 +26,24 @@ export const defaultBreadCrumbProps: BreadCrumbProps = {
       label: '',
     },
   ],
-  fetchUpdatedCurrentParentIdAction: fetchUpdatedCurrentParentId,
 };
 
 /** Configurable Breadcrumbs Component */
-class HeaderBreadcrumbComponent extends React.Component<BreadCrumbProps, {}> {
+class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
   public static defaultProps = defaultBreadCrumbProps;
   constructor(props: BreadCrumbProps) {
     super(props);
   }
 
   public render() {
-    const { currentPage, pages, fetchUpdatedCurrentParentIdAction } = this.props;
+    const { currentPage, pages, fetchUpdatedCurrentParentHandler } = this.props;
 
     const linkList = pages.map((page, key) => {
       // render breadcrumb items with urls as links or without urls as text nodes
       let breadCrumbItem: string | JSX.Element;
       if (page.url && page.url.trim()) {
         breadCrumbItem = (
-          <Link to={page.url} key={key} onClick={() => fetchUpdatedCurrentParentIdAction('')}>
+          <Link to={page.url} key={key} onClick={() => fetchUpdatedCurrentParentHandler('', false)}>
             {page.label}
           </Link>
         );
@@ -71,17 +63,5 @@ class HeaderBreadcrumbComponent extends React.Component<BreadCrumbProps, {}> {
     );
   }
 }
-
-const mapStateToProps = (state: any, ownProps: any): any => {
-  return {
-    ...ownProps,
-  };
-};
-
-const mapDispatchToProps = {
-  fetchUpdatedCurrentParentIdAction: fetchUpdatedCurrentParentId,
-};
-
-const HeaderBreadcrumb = connect(mapStateToProps, mapDispatchToProps)(HeaderBreadcrumbComponent);
 
 export default HeaderBreadcrumb;
