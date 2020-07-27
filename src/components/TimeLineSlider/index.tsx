@@ -1,3 +1,8 @@
+/** think of this as a progress bar with more pronounced stops
+ * its being used here like a read only navigational mechanism  but within
+ * the same react-router route. Its being used in the autoSelection view for
+ * jurisdiction Assignment.
+ */
 import { findIndex } from 'lodash';
 import React from 'react';
 import './index.css';
