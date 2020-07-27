@@ -1,3 +1,7 @@
+/** renders the range slider component that is uesd to set the
+ * threshold from which we can filter out the jurisdictions to be
+ * auto-targeted based on their risk value
+ */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { useState } from 'react';
@@ -139,8 +143,9 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
 
 JurisdictionSelectionsSlider.defaultProps = defaultProps;
 
+/** map state to props */
 export type MapStateToProps = Pick<Props, 'structuresCount' | 'tree' | 'jurisdictionsMetadata'>;
-
+/** map dispatch to action creators */
 export type MapDispatchToProps = Pick<
   Props,
   'autoSelectCreator' | 'fetchJurisdictionsMetadataCreator' | 'fetchTreeCreator'
