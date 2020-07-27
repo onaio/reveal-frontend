@@ -1,3 +1,6 @@
+/** collection of hooks that are used in the jurisdiction Assignment pages
+ * these hooks majorly focus on abstracting the opensrp service calls.
+ */
 import { Result } from '@onaio/utils/dist/types/types';
 import React from 'react';
 import { ActionCreator } from 'redux';
