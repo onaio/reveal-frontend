@@ -34,6 +34,7 @@ import { useGetJurisdictionTree, useGetRootJurisdictionId, usePlanEffect } from 
 reducerRegistry.register(planReducerName, planDefinitionReducer);
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
+/** props for this component */
 interface EntryViewProps {
   plan: PlanDefinition | null;
   serviceClass: typeof OpenSRPService;
@@ -48,6 +49,7 @@ const defaultProps = {
   treeFetchedCreator: fetchTree,
 };
 
+/** this component must be served on a route with a planId param */
 export interface EntryViewRouteParams {
   planId: string;
 }
