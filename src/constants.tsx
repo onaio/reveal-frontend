@@ -58,7 +58,7 @@ export const VALIDATOR_UPLOAD_TYPE = 'validator-upload';
 export const DAYS = 'days';
 export const CONDITION = 'condition';
 export const TRIGGER = 'trigger';
-export const RISK_LABEL = 'Risk Label';
+export const RISK_LABEL = 'Risk';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
