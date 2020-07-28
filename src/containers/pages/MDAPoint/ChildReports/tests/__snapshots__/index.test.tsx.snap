@@ -7,11 +7,13 @@ Array [
   >
     <Link
       key="0"
+      onClick={[Function]}
       to="/"
     >
       <LinkAnchor
         href="/"
         navigate={[Function]}
+        onClick={[Function]}
       >
         <a
           href="/"
@@ -27,11 +29,13 @@ Array [
   >
     <Link
       key="1"
+      onClick={[Function]}
       to="/intervention/mda-point/report"
     >
       <LinkAnchor
         href="/intervention/mda-point/report"
         navigate={[Function]}
+        onClick={[Function]}
       >
         <a
           href="/intervention/mda-point/report"
@@ -47,11 +51,13 @@ Array [
   >
     <Link
       key="2"
+      onClick={[Function]}
       to="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c"
     >
       <LinkAnchor
         href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c"
         navigate={[Function]}
+        onClick={[Function]}
       >
         <a
           href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c"
@@ -67,11 +73,13 @@ Array [
   >
     <Link
       key="3"
+      onClick={[Function]}
       to="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/2942"
     >
       <LinkAnchor
         href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/2942"
         navigate={[Function]}
+        onClick={[Function]}
       >
         <a
           href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/2942"
@@ -87,11 +95,13 @@ Array [
   >
     <Link
       key="4"
+      onClick={[Function]}
       to="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/3019"
     >
       <LinkAnchor
         href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/3019"
         navigate={[Function]}
+        onClick={[Function]}
       >
         <a
           href="/intervention/mda-point/report/40357eff-81b6-4e32-bd3d-484019689f7c/3019"

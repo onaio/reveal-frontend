@@ -1,3 +1,4 @@
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Dictionary } from '@onaio/utils/dist/types/types';
 import { mount, ReactWrapper } from 'enzyme';
 import toJson from 'enzyme-to-json';

@@ -4,7 +4,6 @@
  */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { fetchUpdatedCurrentParent } from '../../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeHasChildren } from '../../../../store/ducks/opensrp/hierarchies/utils';
 
@@ -14,7 +13,7 @@ import { nodeHasChildren } from '../../../../store/ducks/opensrp/hierarchies/uti
 export interface NodeCellProps {
   node: TreeNode /** the current jurisdiction */;
   baseUrl: string;
-  fetchUpdatedCurrentParent: typeof fetchUpdatedCurrentParent;
+  fetchUpdatedCurrentParent: (currentParentId: string, isRootJurisdiction: boolean) => void;
 }
 
 /**
@@ -22,7 +21,6 @@ export interface NodeCellProps {
  *
  * Displays the jurisdiction.  If the jurisdiction is not a leaf node, then it is
  * displayed as a link, so that one can traverse down the tree.
- *
  * @param props - the props
  */
 const NodeCell = (props: NodeCellProps) => {
@@ -39,6 +37,7 @@ const NodeCell = (props: NodeCellProps) => {
     <Link
       to={`${baseUrl}/${node.model.id}`}
       key={`${node.model.id}-span`}
+      // tslint:disable-next-line: jsx-no-lambda
       onClick={() => fetchUpdatedCurrentParent('', false)}
     >
       {node.model.label}

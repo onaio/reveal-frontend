@@ -8,6 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
 import { CountriesAdmin0 } from '../../../../src/configs/settings';
+import { BLUE, DARK_RED, RED, WHITE } from '../../../colors';
 import { MemoizedGisidaLite } from '../../../components/GisidaLite';
 import Loading from '../../../components/page/Loading';
 import { getJurisdictions } from '../../../components/TreeWalker/helpers';
@@ -44,8 +45,6 @@ export interface AssignmentMapWrapperProps {
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchUpdatedCurrentParentActionCreator: typeof fetchUpdatedCurrentParent;
   getJurisdictionsFeatures: FeatureCollection;
-  currentState: any;
-  mapCurrentParentId: string;
 }
 
 const defaultProps = {
@@ -56,13 +55,11 @@ const defaultProps = {
   getJurisdictionsFeatures: undefined,
   rootJurisdictionId: '',
   serviceClass: OpenSRPService,
-  currentState: {},
-  mapCurrentParentId: '',
 };
 
-export const onJurisdictionClick = (map: Map, e: EventData, props: any, state: any) => {
+export const onJurisdictionClick = (_: Map, e: EventData, props: any) => {
   // Destructure event data
-  const { point, originalEvent, target } = e;
+  const { point, target } = e;
   const { fetchUpdatedCurrentParentActionCreator } = props;
   // grab underlying features from map
   const features: any = target.queryRenderedFeatures(point) as Dictionary[];
@@ -79,6 +76,13 @@ export const onJurisdictionClick = (map: Map, e: EventData, props: any, state: a
   }
 };
 
+/**
+ * Handler for dispatching current parent ID from map
+ * @param currentParentId - clicked jurisdiction on map
+ * @param isRootJurisdiction - boolean to know whether cicker jurisdiction is root
+ * @param props - component props
+ */
+
 export const fetchUpdatedCurrentParentHandler = (
   currentParentId: string,
   isRootJurisdiction: boolean,
@@ -88,6 +92,13 @@ export const fetchUpdatedCurrentParentHandler = (
   fetchUpdatedCurrentParentActionCreator(currentParentId, isRootJurisdiction);
 };
 
+/**
+ * This is a map HOC for the plan and jurisdiction assignment pages
+ * It is responsuble for fetching jurisdiction geojson and wiring down to
+ * GisidaLite map
+ * @param props - component props
+ */
+
 const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   const {
     serviceClass,
@@ -96,13 +107,11 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     getJurisdictionsFeatures,
     currentParentId,
     rootJurisdictionId,
-    currentState,
   } = props;
   const currentChildIds: string[] = currentChildren.length
     ? currentChildren.map(node => node.model.id)
     : [];
   const [loading, setLoading] = React.useState(true);
-  const [isMapParent, setIsMapParent] = React.useState(false);
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   React.useEffect(() => {
     if (!getJurisdictionsFeatures.features.length) {
@@ -127,9 +136,9 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
                 ...val,
                 properties: {
                   ...val.properties,
-                  fillColor: nodeIsSelected(getNode) ? '#f14423' : '#792b16',
-                  fillOutlineColor: nodeIsSelected(getNode) ? '#22bcfb' : '#ffffff',
-                  lineColor: nodeIsSelected(getNode) ? '#22bcfb' : '#ffffff',
+                  fillColor: nodeIsSelected(getNode) ? RED : DARK_RED,
+                  fillOutlineColor: nodeIsSelected(getNode) ? BLUE : WHITE,
+                  lineColor: nodeIsSelected(getNode) ? BLUE : WHITE,
                 },
               };
             });
@@ -171,7 +180,8 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
           mapCenter={mapCenter}
           mapBounds={mapBounds}
           onMouseMoveHandler={buildMouseMoveHandler}
-          onClickHandler={(map, e) => onJurisdictionClick(map, e, props, currentState)}
+          // tslint:disable-next-line: jsx-no-lambda
+          onClickHandler={(map, e) => onJurisdictionClick(map, e, props)}
         />
       ) : (
         <div>{MAP_LOAD_ERROR}</div>
@@ -189,12 +199,7 @@ export { AssignmentMapWrapper };
 /** Map state to props */
 type MapStateToProps = Pick<
   AssignmentMapWrapperProps,
-  | 'currentParentId'
-  | 'rootJurisdictionId'
-  | 'currentChildren'
-  | 'getJurisdictionsFeatures'
-  | 'currentState'
-  | 'mapCurrentParentId'
+  'currentParentId' | 'rootJurisdictionId' | 'currentChildren' | 'getJurisdictionsFeatures'
 >;
 
 /** map action creators interface */
@@ -240,14 +245,6 @@ const mapStateToProps = (
         : ownProps.currentParentId || ownProps.rootJurisdictionId,
   };
 
-  console.log(
-    'childern from map>>',
-    getCurrentChildren()(state, {
-      ...filters,
-      currentParentId: getMapCurrentParent(state),
-    })
-  );
-
   return {
     currentChildren: childJurisdictions,
     currentParentId: getMapCurrentParent(state).length
@@ -259,8 +256,6 @@ const mapStateToProps = (
       getJurisdictionsById(state, jurisdictionFilters)
     ),
     rootJurisdictionId: ownProps.rootJurisdictionId,
-    currentState: state,
-    mapCurrentParentId: getMapCurrentParent(state),
   };
 };
 

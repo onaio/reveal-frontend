@@ -5,6 +5,7 @@ exports[`containers/pages/AssigmentMapWrapper renders jurisdictions assignment m
   currentChildren={Array []}
   currentParentId="07b09ec1-0589-4a98-9480-4c403ac24d59"
   fetchJurisdictionsActionCreator={[Function]}
+  fetchUpdatedCurrentParentActionCreator={[Function]}
   getJurisdictionsFeatures={
     Object {
       "features": Array [

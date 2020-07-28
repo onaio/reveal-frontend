@@ -23,11 +23,13 @@ exports[`src/containers/TeamAssignment/OrganizationListView/ renders a dumb Team
         >
           <Link
             key="0"
+            onClick={[Function]}
             to="/"
           >
             <LinkAnchor
               href="/"
               navigate={[Function]}
+              onClick={[Function]}
             >
               <a
                 href="/"

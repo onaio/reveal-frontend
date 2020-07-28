@@ -23,11 +23,13 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
         >
           <Link
             key="0"
+            onClick={[Function]}
             to="/"
           >
             <LinkAnchor
               href="/"
               navigate={[Function]}
+              onClick={[Function]}
             >
               <a
                 href="/"
@@ -48,11 +50,13 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
         >
           <Link
             key="1"
+            onClick={[Function]}
             to="/teams"
           >
             <LinkAnchor
               href="/teams"
               navigate={[Function]}
+              onClick={[Function]}
             >
               <a
                 href="/teams"
@@ -73,11 +77,13 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
         >
           <Link
             key="2"
+            onClick={[Function]}
             to="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
           >
             <LinkAnchor
               href="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
               navigate={[Function]}
+              onClick={[Function]}
             >
               <a
                 href="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"

@@ -31,11 +31,13 @@ exports[`components/InterventionPlan/UpdatePlan renders plan definition list cor
         >
           <Link
             key="0"
+            onClick={[Function]}
             to="/"
           >
             <LinkAnchor
               href="/"
               navigate={[Function]}
+              onClick={[Function]}
             >
               <a
                 href="/"
@@ -56,11 +58,13 @@ exports[`components/InterventionPlan/UpdatePlan renders plan definition list cor
         >
           <Link
             key="1"
+            onClick={[Function]}
             to="/plans/list"
           >
             <LinkAnchor
               href="/plans/list"
               navigate={[Function]}
+              onClick={[Function]}
             >
               <a
                 href="/plans/list"

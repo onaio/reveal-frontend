@@ -7,7 +7,6 @@ import { FitBounds } from 'react-mapbox-gl/lib/map';
 import Loading from '../../components/page/Loading';
 import { GISIDA_MAPBOX_TOKEN } from '../../configs/env';
 import { imgArr } from '../../configs/settings';
-import { TreeNode } from '../../store/ducks/opensrp/hierarchies/types';
 import { gsLiteStyle } from './helpers';
 
 /** single map icon description */
@@ -29,7 +28,6 @@ export interface GisidaLiteProps {
   mapIcons: MapIcon[];
   onClickHandler?: (map: Map, event: EventData) => void;
   onMouseMoveHandler?: (map: Map, event: EventData) => void;
-  currentChildren: TreeNode[];
 }
 
 /** Default props for GisidaLite */
@@ -73,7 +71,6 @@ const GisidaLite = (props: GisidaLiteProps) => {
     zoom,
     mapBounds,
     onMouseMoveHandler,
-    currentChildren,
   } = props;
 
   if (mapCenter === undefined) {

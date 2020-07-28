@@ -77,11 +77,13 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         >
           <Link
             key="0"
+            onClick={[Function]}
             to="/"
           >
             <LinkAnchor
               href="/"
               navigate={[Function]}
+              onClick={[Function]}
             >
               <a
                 href="/"
@@ -102,11 +104,13 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         >
           <Link
             key="1"
+            onClick={[Function]}
             to="/focus-investigation"
           >
             <LinkAnchor
               href="/focus-investigation"
               navigate={[Function]}
+              onClick={[Function]}
             >
               <a
                 href="/focus-investigation"
@@ -127,11 +131,13 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         >
           <Link
             key="2"
+            onClick={[Function]}
             to="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
           >
             <LinkAnchor
               href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
               navigate={[Function]}
+              onClick={[Function]}
             >
               <a
                 href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
@@ -152,11 +158,13 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         >
           <Link
             key="3"
+            onClick={[Function]}
             to="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
           >
             <LinkAnchor
               href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
               navigate={[Function]}
+              onClick={[Function]}
             >
               <a
                 href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
@@ -177,11 +185,13 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         >
           <Link
             key="4"
+            onClick={[Function]}
             to="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
           >
             <LinkAnchor
               href="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
               navigate={[Function]}
+              onClick={[Function]}
             >
               <a
                 href="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"

@@ -95,6 +95,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
       currentChildren: [],
       currentParentId: '07b09ec1-0589-4a98-9480-4c403ac24d59',
       fetchJurisdictionsActionCreator: expect.any(Function),
+      fetchUpdatedCurrentParentActionCreator: expect.any(Function),
       getJurisdictionsFeatures: {
         features: [],
         type: 'FeatureCollection',

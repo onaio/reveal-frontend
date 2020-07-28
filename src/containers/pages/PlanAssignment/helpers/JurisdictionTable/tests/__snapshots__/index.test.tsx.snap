@@ -9,11 +9,13 @@ Array [
   >
     <Link
       key="0"
+      onClick={[Function]}
       to="/"
     >
       <LinkAnchor
         href="/"
         navigate={[Function]}
+        onClick={[Function]}
       >
         <a
           href="/"
@@ -29,11 +31,13 @@ Array [
   >
     <Link
       key="1"
+      onClick={[Function]}
       to="/assign"
     >
       <LinkAnchor
         href="/assign"
         navigate={[Function]}
+        onClick={[Function]}
       >
         <a
           href="/assign"
@@ -49,11 +53,13 @@ Array [
   >
     <Link
       key="2"
+      onClick={[Function]}
       to="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d"
     >
       <LinkAnchor
         href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d"
         navigate={[Function]}
+        onClick={[Function]}
       >
         <a
           href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d"
@@ -69,11 +75,13 @@ Array [
   >
     <Link
       key="3"
+      onClick={[Function]}
       to="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/0ddd9ad1-452b-4825-a92a-49cb9fc82d18"
     >
       <LinkAnchor
         href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/0ddd9ad1-452b-4825-a92a-49cb9fc82d18"
         navigate={[Function]}
+        onClick={[Function]}
       >
         <a
           href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/0ddd9ad1-452b-4825-a92a-49cb9fc82d18"
@@ -89,11 +97,13 @@ Array [
   >
     <Link
       key="4"
+      onClick={[Function]}
       to="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/cec79f21-33c3-43f5-a8af-59a47aa61b84"
     >
       <LinkAnchor
         href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/cec79f21-33c3-43f5-a8af-59a47aa61b84"
         navigate={[Function]}
+        onClick={[Function]}
       >
         <a
           href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/cec79f21-33c3-43f5-a8af-59a47aa61b84"
@@ -109,11 +119,13 @@ Array [
   >
     <Link
       key="5"
+      onClick={[Function]}
       to="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"
     >
       <LinkAnchor
         href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"
         navigate={[Function]}
+        onClick={[Function]}
       >
         <a
           href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"

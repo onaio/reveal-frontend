@@ -5,7 +5,7 @@ import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button, Tooltip } from 'reactstrap';
-import { Store } from 'redux';
+import { Store, ActionCreator } from 'redux';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb, {
   Page,
@@ -53,12 +53,17 @@ import hierarchyReducer, {
   reducerName as hierarchyReducerName,
   selectNode,
   SelectNodeAction,
+  DeselectNodeAction,
+  AutoSelectNodesAction,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
-import { addPlanDefinition } from '../../../../store/ducks/opensrp/PlanDefinition';
+import {
+  addPlanDefinition,
+  AddPlanDefinitionAction,
+} from '../../../../store/ducks/opensrp/PlanDefinition';
 import { PlanStatus } from '../../../../store/ducks/plans';
 import { RiskLabel } from '../helpers/RiskLabel';
 import { SelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
@@ -213,8 +218,8 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
 
   const breadCrumbProps = {
     currentPage,
-    pages,
     fetchUpdatedCurrentParentActionCreator,
+    pages,
   };
   const data = derivedChildrenNodes.map(node => {
     return [
@@ -437,9 +442,12 @@ const mapStateToProps = (
   ownProps: JurisdictionSelectorTableProps
 ): MapStateToProps => {
   const filters: Filters = {
-    currentParentId: getMapCurrentParent(state).currentParentId.length
-      ? getMapCurrentParent(state).currentParentId
-      : ownProps.currentParentId,
+    currentParentId:
+      getMapCurrentParent(state) &&
+      getMapCurrentParent(state).currentParentId &&
+      getMapCurrentParent(state).currentParentId.length
+        ? getMapCurrentParent(state).currentParentId
+        : ownProps.currentParentId,
     leafNodesOnly: true,
     planId: ownProps.plan.identifier,
     rootJurisdictionId: ownProps.rootJurisdictionId,
@@ -458,9 +466,9 @@ const mapDispatchToProps: DispatchToProps = {
   deselectAllNodesCreator: deselectAllNodes,
   deselectNodeCreator: deselectNode,
   fetchPlanCreator: addPlanDefinition,
+  fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
   selectNodeCreator: selectNode,
   treeFetchedCreator: fetchTree,
-  fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
 };
 
 export const ConnectedJurisdictionTable = connect(

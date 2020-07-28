@@ -17,11 +17,13 @@ exports[`src/pages/JurisdictionAssignment/JurisdictionCell renders correctly by 
 >
   <Link
     key="undefined-span"
+    onClick={[Function]}
     to="/example/undefined"
   >
     <LinkAnchor
       href="/example/undefined"
       navigate={[Function]}
+      onClick={[Function]}
     >
       <a
         href="/example/undefined"

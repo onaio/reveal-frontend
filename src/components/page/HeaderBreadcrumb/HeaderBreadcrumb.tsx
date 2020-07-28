@@ -17,13 +17,13 @@ export interface BreadCrumbProps {
 
 export const defaultBreadCrumbProps: Partial<BreadCrumbProps> = {
   currentPage: {
-    url: '',
     label: '',
+    url: '',
   },
   pages: [
     {
-      url: '',
       label: '',
+      url: '',
     },
   ],
 };
@@ -43,6 +43,7 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
       let breadCrumbItem: string | JSX.Element;
       if (page.url && page.url.trim()) {
         breadCrumbItem = (
+          // tslint:disable-next-line: jsx-no-lambda
           <Link to={page.url} key={key} onClick={() => fetchUpdatedCurrentParentHandler('', false)}>
             {page.label}
           </Link>
