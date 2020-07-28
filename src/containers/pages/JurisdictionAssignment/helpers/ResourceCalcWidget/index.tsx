@@ -5,28 +5,31 @@
  */
 
 import { Field, Form, Formik } from 'formik';
-import React, { useState } from 'react';
+import React from 'react';
+import { format } from 'util';
+import { RESOURCE_ESTIMATE_FOR } from '../../../../../configs/lang';
 import '/.index.css';
 
 export interface ResourceCalculationProps {
-  structuresCount: number /** structure count per level parentNode.metaStructureCount */;
   jurisdictionName: string;
+  structuresCount: number /** structure count per level parentNode.metaStructureCount */;
 }
 
+export const defaultCalculationProps = {
+  jurisdictionName: '',
+  structuresCount: 0,
+};
+
+export const computeEstimate = (structures: number, teams: number) => {
+  if (teams === 0) {
+    return 0;
+  }
+  return structures / teams;
+};
 export const ResourceCalculation = (props: ResourceCalculationProps) => {
-  const [numStructures, setNumStructures] = useState<number>(0);
-  const [numTeams, setNumTeams] = useState<number>(0);
-
-  const computeEstimate = (structures: number, teams: number) => {
-    if (teams === 0) {
-      return 0;
-    }
-    return structures / teams;
-  };
-
   return (
     <div id="resource-calc-widget">
-      <h3>Resource Estimate for {props.jurisdictionName}</h3>
+      <h3 className="section-title">{format(RESOURCE_ESTIMATE_FOR, props.jurisdictionName)}</h3>
 
       <Formik
         initialValues={{ structuresCount: 0, teamsCount: 0 }}
