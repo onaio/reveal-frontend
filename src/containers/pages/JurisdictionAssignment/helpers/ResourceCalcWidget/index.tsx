@@ -4,11 +4,13 @@
  * jurisdictions.
  */
 
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Input } from 'reactstrap';
+import { Field, Form, Formik } from 'formik';
+import React, { useState } from 'react';
+import '/.index.css';
 
 export interface ResourceCalculationProps {
-  structuresCount: number;
+  structuresCount: number /** structure count per level parentNode.metaStructureCount */;
+  jurisdictionName: string;
 }
 
 export const ResourceCalculation = (props: ResourceCalculationProps) => {
@@ -22,30 +24,35 @@ export const ResourceCalculation = (props: ResourceCalculationProps) => {
     return structures / teams;
   };
 
-  const numDays = computeEstimate(numStructures, numTeams);
-  const inputHandlerFactory = (callback: Dispatch<SetStateAction<number>>) => {
-    const handler = (event: React.ChangeEvent<HTMLInputElement>) => {
-      callback(event.target.value);
-    };
-    return handler;
-  };
-
-  const structuresInputHandler = inputHandlerFactory(setNumStructures);
-  const teamsInputHandler = inputHandlerFactory(setNumTeams);
-
   return (
-    <div>
-      <p>
-        {`${numDays} days`}
-        <br />
-        at a rate of <Input
-          id="r-c-structures"
-          type="number"
-          onInput={structuresInputHandler}
-        />{' '}
-        structures per team per day with{' '}
-        <Input id="r-c-teams" type="number" onInput={teamsInputHandler} /> teams
-      </p>
+    <div id="resource-calc-widget">
+      <h3>Resource Estimate for {props.jurisdictionName}</h3>
+
+      <Formik
+        initialValues={{ structuresCount: 0, teamsCount: 0 }}
+        // tslint:disable-next-line: jsx-no-lambda
+        onSubmit={() => {
+          return;
+        }}
+      >
+        {formikProps => {
+          const numDays = computeEstimate(
+            formikProps.values.structuresCount,
+            formikProps.values.teamsCount
+          );
+          return (
+            <Form>
+              <p>
+                {`${numDays} days`}
+                <br />
+                at a rate of <Field type="number" name="structuresCount" />
+                {'  '}
+                structures per team per day with <Field type="number" name="teamsCount" /> teams
+              </p>
+            </Form>
+          );
+        }}
+      </Formik>
     </div>
   );
 };
