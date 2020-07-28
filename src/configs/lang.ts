@@ -809,3 +809,6 @@ export const SELECT_JURISDICTION = translate(
   'SELECT_JURISDICTION',
   'Please select at least one jurisdiction'
 );
+export const DAYS = translate('DAYS', 'days');
+
+export const RESOURCE_ESTIMATE_FOR = translate('RESOURCE_ESTIMATE_FOR', 'Resource Estimate for %s');
