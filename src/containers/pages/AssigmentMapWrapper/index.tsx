@@ -57,23 +57,31 @@ const defaultProps = {
   serviceClass: OpenSRPService,
 };
 
-export const onJurisdictionClick = (_: Map, e: EventData, props: any) => {
-  // Destructure event data
-  const { point, target } = e;
-  const { fetchUpdatedCurrentParentActionCreator } = props;
-  // grab underlying features from map
-  const features: any = target.queryRenderedFeatures(point) as Dictionary[];
-  if (!features.length) {
-    return false;
+/**
+ * Handler to get current parent id from clicked jurisdiction on map
+ * @param props - AssignmentMapWrapper component props
+ */
+
+export const onJurisdictionClick = (props: any) => {
+  function handleJurisdictionClick(_: Map, e: EventData) {
+    // Destructure event data
+    const { point, target } = e;
+    const { fetchUpdatedCurrentParentActionCreator } = props;
+    // grab underlying features from map
+    const features: any = target.queryRenderedFeatures(point) as Dictionary[];
+    if (!features.length) {
+      return false;
+    }
+    if (features[0]) {
+      fetchUpdatedCurrentParentActionCreator(
+        (features[0].id && features[0].id.toString()) ||
+          (features[0] && features[0].properties && features[0].properties.externalId) ||
+          '',
+        features[0].properties && !features[0].properties.parentId
+      );
+    }
   }
-  if (features[0]) {
-    fetchUpdatedCurrentParentActionCreator(
-      (features[0].id && features[0].id.toString()) ||
-        (features[0] && features[0].properties && features[0].properties.externalId) ||
-        '',
-      features[0].properties && !features[0].properties.parentId
-    );
-  }
+  return handleJurisdictionClick;
 };
 
 /**
@@ -181,7 +189,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
           mapBounds={mapBounds}
           onMouseMoveHandler={buildMouseMoveHandler}
           // tslint:disable-next-line: jsx-no-lambda
-          onClickHandler={(map, e) => onJurisdictionClick(map, e, props)}
+          onClickHandler={onJurisdictionClick(props)}
         />
       ) : (
         <div>{MAP_LOAD_ERROR}</div>

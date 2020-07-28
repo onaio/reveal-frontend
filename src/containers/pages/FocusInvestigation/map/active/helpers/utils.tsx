@@ -509,54 +509,57 @@ export const buildOnClickHandler = (currentPlanId: string) => {
  * @param event - map event object
  */
 
-export const buildMouseMoveHandler = (map: Map, event: EventData) => {
-  const popup = new mapboxgl.Popup({
-    closeButton: false,
-  });
-  // Added this part to remove duplicate popup containers showing on map when hovering
-  const nodes: any = document.getElementsByClassName('mapboxgl-popup');
-  let node: any;
-  if (nodes && nodes.length) {
-    for (node of nodes) {
-      if (node.style) {
-        node.style.display = 'none';
+export const buildMouseMoveHandler = () => {
+  function mouseHoverHandler(map: Map, event: EventData) {
+    const popup = new mapboxgl.Popup({
+      closeButton: false,
+    });
+    // Added this part to remove duplicate popup containers showing on map when hovering
+    const nodes: any = document.getElementsByClassName('mapboxgl-popup');
+    let node: any;
+    if (nodes && nodes.length) {
+      for (node of nodes) {
+        if (node.style) {
+          node.style.display = 'none';
+        }
       }
     }
-  }
-  let content: string = '';
-  let feature: Feature | any = {};
-  popup.remove();
-  // grab underlying features from map
-  const features: any = event.target.queryRenderedFeatures(event.point) as Dictionary[];
-  //
-  if (!features.length) {
-    return;
-  }
-  // loop through features, setting the name property to content var
-  for (feature of features) {
-    if (feature && feature.properties && feature.properties.name) {
-      content += `<div><center>${feature.properties.name}</center></div>`;
+    let content: string = '';
+    let feature: Feature | any = {};
+    popup.remove();
+    // grab underlying features from map
+    const features: any = event.target.queryRenderedFeatures(event.point) as Dictionary[];
+    //
+    if (!features.length) {
+      return;
+    }
+    // loop through features, setting the name property to content var
+    for (feature of features) {
+      if (feature && feature.properties && feature.properties.name) {
+        content += `<div><center>${feature.properties.name}</center></div>`;
+      }
+      /**
+       * Break out of loop once content is set
+       * This helps in a case where we could have 2 or more identical features
+       */
+      if (content) {
+        break;
+      }
     }
     /**
-     * Break out of loop once content is set
-     * This helps in a case where we could have 2 or more identical features
+     * Add popup to map after content is set
      */
-    if (content) {
-      break;
+    if (content.length) {
+      popup
+        .setLngLat(map.unproject(event.point))
+        .setHTML(content)
+        .addTo(map);
+    } else {
+      // clear existing popups if content is empty
+      popup.remove();
+      return;
     }
+    return true;
   }
-  /**
-   * Add popup to map after content is set
-   */
-  if (content.length) {
-    popup
-      .setLngLat(map.unproject(event.point))
-      .setHTML(content)
-      .addTo(map);
-  } else {
-    // clear existing popups if content is empty
-    popup.remove();
-    return;
-  }
-  return true;
+  return mouseHoverHandler;
 };
