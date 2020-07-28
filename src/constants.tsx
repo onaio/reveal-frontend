@@ -233,3 +233,6 @@ export const APPLICATION_X_CSV = 'application/x-csv';
 export const TEXT_COMMA_SEPARATED_VALUES = 'text/comma-separated-values';
 export const TEXT_X_COMMA_SEPARATED_VALUES = 'text/x-comma-separated-values';
 export const TEXT_TAB_SEPARATED_VALUES = 'text/tab-separated-values';
+
+/** Superset API strings */
+export const SUPERSET_ACCESS_DENIED_MESSAGE = 'Access is Denied';
