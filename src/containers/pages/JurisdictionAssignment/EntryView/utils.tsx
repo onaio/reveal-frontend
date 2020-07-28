@@ -87,7 +87,6 @@ export function useGetRootJurisdictionId(
       loadJurisdiction(oneOfJurisdictions, serviceClass)
         .then(result => {
           if (!result || result.error) {
-            stopLoading(rootJurisdictionKey);
             throw new Error(COULD_NOT_LOAD_JURISDICTION);
           }
           if (result.value) {
@@ -101,7 +100,6 @@ export function useGetRootJurisdictionId(
                   // get the first ancestor
                   const rootJurisdiction = ancestors.value[0];
                   setRootJurisdictionId(rootJurisdiction.id);
-                  stopLoading(rootJurisdictionKey);
                 } else {
                   throw new Error(COULD_NOT_LOAD_JURISDICTION);
                 }
@@ -110,6 +108,9 @@ export function useGetRootJurisdictionId(
                 return e;
               });
           }
+        })
+        .finally(() => {
+          stopLoading(rootJurisdictionKey);
         })
         .catch(error => {
           handleBrokenPage(error.message);
@@ -147,15 +148,16 @@ export function useGetJurisdictionTree(
           if (apiResponse.value) {
             const responseData = apiResponse.value;
             treeFetchedCreator(responseData);
-            stopLoading(rootJurisdictionId);
           }
           if (apiResponse.error) {
             throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
           }
         })
+        .finally(() => {
+          stopLoading(rootJurisdictionId);
+        })
         .catch(() => {
           handleBrokenPage(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-          stopLoading(rootJurisdictionId);
         });
     }
   }, [rootJurisdictionId]);
