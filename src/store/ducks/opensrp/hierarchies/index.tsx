@@ -286,7 +286,7 @@ export default function reducer(state: ImmutableTreeState = initialState, action
       return {
         ...state,
         mapCurrentParent: {
-          currentParentId: action.mapCurrentParentId,
+          currentParentId: action.mapCurrentParentId || '',
           isRootJurisdiction: action.isRootJurisdiction,
         },
       };

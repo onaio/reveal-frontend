@@ -714,3 +714,15 @@ export const fetchCalls = [
     },
   ],
 ];
+
+export const jurisdiction1 = {
+  id: '07b09ec1-0589-4a98-9480-4c403ac24d59',
+  properties: {
+    geographicLevel: 3,
+    name: 'Two Two Two Release Village',
+    // parentId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
+    status: 'Active',
+    version: 0,
+  },
+  type: 'Feature',
+};

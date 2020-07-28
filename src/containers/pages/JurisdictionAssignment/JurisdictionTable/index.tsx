@@ -442,12 +442,9 @@ const mapStateToProps = (
   ownProps: JurisdictionSelectorTableProps
 ): MapStateToProps => {
   const filters: Filters = {
-    currentParentId:
-      getMapCurrentParent(state) &&
-      getMapCurrentParent(state).currentParentId &&
-      getMapCurrentParent(state).currentParentId.length
-        ? getMapCurrentParent(state).currentParentId
-        : ownProps.currentParentId,
+    currentParentId: getMapCurrentParent(state).currentParentId.length
+      ? getMapCurrentParent(state).currentParentId
+      : ownProps.currentParentId,
     leafNodesOnly: true,
     planId: ownProps.plan.identifier,
     rootJurisdictionId: ownProps.rootJurisdictionId,
