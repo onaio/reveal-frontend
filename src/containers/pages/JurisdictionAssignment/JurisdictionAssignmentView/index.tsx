@@ -110,6 +110,8 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     fetchJurisdictionsMetadataCreator,
     jurisdictionsMetadata,
     tree,
+    treeFetchedCreator,
+    autoSelectNodesCreator,
   } = props;
 
   const initialLoadingState = !tree || !plan;
@@ -123,9 +125,6 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       OpenSRPService,
       fetchJurisdictionsMetadataCreator
     )
-      .then(() => {
-        stopLoading(metadataLoadingKey);
-      })
       .finally(() => {
         stopLoading(metadataLoadingKey);
       })
@@ -169,17 +168,18 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
         .then((apiResponse: Result<RawOpenSRPHierarchy>) => {
           if (apiResponse.value) {
             const responseData = apiResponse.value;
-            props.treeFetchedCreator(responseData);
-            props.autoSelectNodesCreator(rootJurisdictionId, callback, selectionReason.NOT_CHANGED);
-            stopLoading(rootJurisdictionId);
+            treeFetchedCreator(responseData);
+            autoSelectNodesCreator(rootJurisdictionId, callback, selectionReason.NOT_CHANGED);
           }
           if (apiResponse.error) {
             throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
           }
         })
+        .finally(() => {
+          stopLoading(rootJurisdictionId);
+        })
         .catch(() => {
           handleBrokenPage(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-          stopLoading(rootJurisdictionId);
         });
     }
   }, [rootJurisdictionId]);
