@@ -1,3 +1,4 @@
+import ElementMap from '@onaio/element-map';
 import ListView from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React from 'react';
@@ -15,12 +16,15 @@ import {
   NAME,
   NO_DATA_FOUND,
   NO_ROWS_FOUND,
+  NOT_TARGETED,
   RISK_LABEL,
   SAVE_AND_ACTIVATE,
   SAVE_DRAFT,
   SELECTED_JURISDICTIONS,
   STATUS_SETTING,
   STRUCTURES_COUNT,
+  TARGETED,
+  TARGETED_STATUS,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import {
@@ -229,7 +233,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
             />,
           ]
         : []),
-      node.hasChildren() ? '' : nodeIsSelected(node) ? 'Targeted' : 'Not Targeted',
+      node.hasChildren() ? '' : nodeIsSelected(node) ? TARGETED : NOT_TARGETED,
       node.model.meta.selectedBy,
       <ConnectedSelectedJurisdictionsCount
         key={`selected-jurisdictions-txt`}
@@ -244,7 +248,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     NAME,
     STRUCTURES_COUNT,
     ...(autoSelectionFlow ? [RISK_LABEL] : []),
-    'Target Status',
+    TARGETED_STATUS,
     STATUS_SETTING,
     SELECTED_JURISDICTIONS,
   ];
@@ -264,7 +268,9 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     }
   };
 
-  const renderHeaders = () => {
+  const renderHeaders = (items: any) => {
+    const localItems = [...items];
+    localItems.shift();
     return (
       <thead className="thead-plan-orgs">
         <tr>
@@ -276,12 +282,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
               onChange={onParentCheckboxClick}
             />
           </th>
-          <th>{headerItems[1]}</th>
-          <th>{headerItems[2]}</th>
-          <th>{headerItems[3]}</th>
-          <th>{headerItems[4]}</th>
-          <th>{headerItems[5]}</th>
-          {autoSelectionFlow && <th>{headerItems[6]}</th>}
+          <ElementMap items={localItems} HTMLTag="th" />
         </tr>
       </thead>
     );

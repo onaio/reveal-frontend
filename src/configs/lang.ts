@@ -798,3 +798,9 @@ export const CONTINUE_TO_NEXT_STEP = translate('CONTINUE_TO_NEXT_STEP', 'Continu
 
 export const TIMELINE_SLIDER_STOP1_LABEL = translate('ONE_STR', '1');
 export const TIMELINE_SLIDER_STOP2_LABEL = translate('TWO_STR', '2');
+
+export const TARGETED_STATUS = translate('TARGETED_STATUS', 'Target Status');
+
+export const TARGETED = translate('TARGETED', 'Targeted');
+
+export const NOT_TARGETED = translate('NOT_TARGETED', 'targeted');
