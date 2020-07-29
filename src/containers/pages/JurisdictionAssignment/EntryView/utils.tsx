@@ -94,7 +94,7 @@ export function useGetRootJurisdictionId(
             // the hierarchy reducer module, do we need to always call OpenSRP?
             // -> this is where we add the hierarchy. we are getting a single jurisdiction from the plan
             // using that to get the root jurisdiction, and then requesting the hierarchy to save to store.
-            getAncestors(result.value)
+            return getAncestors(result.value)
               .then(ancestors => {
                 if (ancestors.value) {
                   // get the first ancestor
@@ -105,7 +105,7 @@ export function useGetRootJurisdictionId(
                 }
               })
               .catch(e => {
-                return e;
+                throw e;
               });
           }
         })
