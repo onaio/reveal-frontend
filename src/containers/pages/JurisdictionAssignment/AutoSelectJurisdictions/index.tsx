@@ -49,7 +49,6 @@ import hierarchyReducer, {
   getTreeById,
   reducerName as hierarchyReducerName,
 } from '../../../../store/ducks/opensrp/hierarchies';
-// import { ConnectedSelectedStructuresTable } from '../JurisdictionTable/structureSummary';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
@@ -139,9 +138,6 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
       OpenSRPService,
       fetchJurisdictionsMetadataCreator
     )
-      .then(() => {
-        stopLoading(metadataLoadingKey);
-      })
       .finally(() => {
         stopLoading(metadataLoadingKey);
       })
