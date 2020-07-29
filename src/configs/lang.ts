@@ -771,3 +771,7 @@ export const CANNOT_ASSIGN_TEAM_LABEL = translate(
   'CANNOT_ASSIGN_TEAM',
   'Cannot assign teams for expired plans'
 );
+export const ERROR_PERMISSION_DENIED = translate(
+  'ERROR_PERMISSION_DENIED',
+  'This user does not have permissions to access this page'
+);

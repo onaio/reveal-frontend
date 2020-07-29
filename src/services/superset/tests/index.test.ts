@@ -1,6 +1,8 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import fetchMock from 'fetch-mock';
 import { OPENSRP_OAUTH_STATE, SUPERSET_API_BASE } from '../../../configs/env';
+import { ERROR_PERMISSION_DENIED } from '../../../configs/lang';
+import * as helperErrors from '../../../helpers/errors';
 import supersetFetch from '../../../services/superset';
 import store from '../../../store';
 import supersetReducer, {
@@ -33,6 +35,7 @@ describe('services/superset', () => {
   });
 
   it('authZ should authorize superset when it works', async () => {
+    const displayErrorMock = jest.spyOn(helperErrors, 'displayError');
     fetchMock.get(
       `${SUPERSET_API_BASE}oauth-authorized/${OPENSRP_OAUTH_STATE}`,
       JSON.stringify({})
@@ -49,5 +52,25 @@ describe('services/superset', () => {
     store.dispatch(authorizeSuperset(false));
     await supersetFetch('1337');
     expect(isAuthorized(store.getState())).toEqual(true);
+    expect(displayErrorMock).not.toHaveBeenCalled();
+  });
+
+  it('Error message is dispayed if permission denied', async () => {
+    const displayErrorMock = jest.spyOn(helperErrors, 'displayError');
+
+    fetchMock.get(
+      `${SUPERSET_API_BASE}oauth-authorized/${OPENSRP_OAUTH_STATE}`,
+      JSON.stringify({})
+    );
+    fetchMock.get(
+      `${SUPERSET_API_BASE}superset/slice_json/1337`,
+      JSON.stringify({
+        message: 'Access is Denied',
+      })
+    );
+
+    store.dispatch(resetSuperset()); /** reset to null */
+    await supersetFetch('1337');
+    expect(displayErrorMock).toHaveBeenLastCalledWith(new Error(ERROR_PERMISSION_DENIED));
   });
 });
