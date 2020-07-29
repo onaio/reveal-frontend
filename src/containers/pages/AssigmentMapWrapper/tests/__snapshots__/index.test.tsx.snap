@@ -1266,10 +1266,11 @@ exports[`containers/pages/AssigmentMapWrapper renders jurisdictions assignment m
             ],
             "type": "Polygon",
           },
-          "id": "8fb28715-6c80-4e2c-980f-422798fe9f41",
+          "id": "3951",
           "properties": Object {
             "geographicLevel": 3,
             "name": "Two Three Two Release Village",
+            "parentId": "3019",
             "status": "Active",
             "version": 0,
           },

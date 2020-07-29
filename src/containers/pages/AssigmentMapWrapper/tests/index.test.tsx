@@ -10,13 +10,15 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { AssignmentMapWrapper, ConnectedAssignmentMapWrapper, onJurisdictionClick } from '..';
 import { getJurisdictions } from '../../../../components/TreeWalker/helpers';
-import { raKsh3Node } from '../../../../components/TreeWalker/tests/fixtures';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 import hierachyReducer, {
+  fetchTree,
   fetchUpdatedCurrentParent,
+  getCurrentChildren,
   reducerName as hierachyReducerName,
 } from '../../../../store/ducks/opensrp/hierarchies';
+import { sampleHierarchy } from '../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
 import jurisdictionsReducer, {
   fetchJurisdictions,
   reducerName as jurisdictionsReducerName,
@@ -92,11 +94,20 @@ describe('containers/pages/AssigmentMapWrapper', () => {
   });
   it('works correctly with store', async () => {
     fetch.mockResponseOnce(JSON.stringify([fixtures.jurisdiction1]), { status: 200 });
+    store.dispatch(fetchTree(sampleHierarchy, '2942'));
     store.dispatch(fetchJurisdictions(fixtures.payload as any));
+    const children = getCurrentChildren()(store.getState(), {
+      currentParentId: '2942',
+      leafNodesOnly: true,
+      rootJurisdictionId: '2942',
+    });
     const props = {
-      currentChildren: [raKsh3Node] as any,
-      currentParentId: '07b09ec1-0589-4a98-9480-4c403ac24d59',
-      rootJurisdictionId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
+      currentChildren: [children] as any,
+      currentParentId: '3019',
+      fetchJurisdictionsActionCreator: fetchJurisdictions,
+      fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
+      getJurisdictionsFeatures: fixtures.geoCollection as any,
+      rootJurisdictionId: '2942',
       serviceClass: OpenSRPService,
     };
     const wrapper = mount(
@@ -106,15 +117,17 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         </Router>
       </Provider>
     );
+    // wrapper.setProps({ getJurisdictionsFeatures: fixtures.geoCollection });
+    // expect(wrapper.find('AssignmentMapWrapper').props()).toEqual('');
     const params = {
       is_jurisdiction: true,
       return_geometry: true,
     };
-    const result = await getJurisdictions(['872cc59e-0bce-427a-bd1f-6ef674dba8e2'], params, 1);
+    const result = await getJurisdictions(['2942'], params, 1);
     await flushPromises();
     expect(fetch.mock.calls).toEqual([
       [
-        'https://test.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=true&jurisdiction_ids=872cc59e-0bce-427a-bd1f-6ef674dba8e2',
+        'https://test.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=true&jurisdiction_ids=2942',
         {
           headers: {
             accept: 'application/json',
@@ -125,18 +138,112 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         },
       ],
     ]);
-    expect(fetch.mock.calls).toHaveLength(1);
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
-      currentChildren: [],
-      currentParentId: '07b09ec1-0589-4a98-9480-4c403ac24d59',
+      currentChildren: [
+        {
+          children: [],
+          config: { childrenPropertyName: 'children', modelComparatorFn: undefined },
+          model: {
+            id: '3951',
+            label: 'Akros_1',
+            meta: {},
+            node: {
+              attributes: { geographicLevel: 2, structureCount: 159 },
+              locationId: '3951',
+              name: 'Akros_1',
+              parentLocation: { locationId: '3019', voided: false },
+              voided: false,
+            },
+            parent: '3019',
+          },
+          parent: {
+            children: expect.any(Array),
+            config: { childrenPropertyName: 'children', modelComparatorFn: undefined },
+            model: {
+              children: [
+                {
+                  id: '3951',
+                  label: 'Akros_1',
+                  meta: {},
+                  node: {
+                    attributes: { geographicLevel: 2, structureCount: 159 },
+                    locationId: '3951',
+                    name: 'Akros_1',
+                    parentLocation: { locationId: '3019', voided: false },
+                    voided: false,
+                  },
+                  parent: '3019',
+                },
+              ],
+              id: '3019',
+              label: 'Mtendere',
+              meta: {},
+              node: {
+                attributes: { geographicLevel: 1, structureCount: 1 },
+                locationId: '3019',
+                name: 'Mtendere',
+                parentLocation: { locationId: '2942', voided: false },
+                voided: false,
+              },
+              parent: '2942',
+            },
+            parent: {
+              children: expect.any(Array),
+              config: { childrenPropertyName: 'children', modelComparatorFn: undefined },
+              model: {
+                children: [
+                  {
+                    children: [
+                      {
+                        id: '3951',
+                        label: 'Akros_1',
+                        meta: {},
+                        node: {
+                          attributes: expect.any(Object),
+                          locationId: '3951',
+                          name: 'Akros_1',
+                          parentLocation: expect.any(Object),
+                          voided: false,
+                        },
+                        parent: '3019',
+                      },
+                    ],
+                    id: '3019',
+                    label: 'Mtendere',
+                    meta: {},
+                    node: {
+                      attributes: { geographicLevel: 1, structureCount: 1 },
+                      locationId: '3019',
+                      name: 'Mtendere',
+                      parentLocation: { locationId: '2942', voided: false },
+                      voided: false,
+                    },
+                    parent: '2942',
+                  },
+                ],
+                id: '2942',
+                label: 'Lusaka',
+                meta: {},
+                node: {
+                  attributes: { geographicLevel: 0 },
+                  locationId: '2942',
+                  name: 'Lusaka',
+                  voided: false,
+                },
+              },
+            },
+          },
+        },
+      ],
+      currentParentId: '3019',
       fetchJurisdictionsActionCreator: expect.any(Function),
       fetchUpdatedCurrentParentActionCreator: expect.any(Function),
       getJurisdictionsFeatures: {
-        features: [],
+        features: [fixtures.geoCollection.features[1]],
         type: 'FeatureCollection',
       },
-      rootJurisdictionId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
+      rootJurisdictionId: '2942',
       serviceClass: OpenSRPService,
     });
     expect(result).toEqual({ error: null, value: [fixtures.jurisdiction1] });

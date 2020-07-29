@@ -245,7 +245,7 @@ const mapStateToProps = (
         : childJurisdictions.map((node: TreeNode) => node.model.id),
     parentId:
       ownProps.currentParentId === ownProps.rootJurisdictionId ||
-      getMapCurrentParent(state) === ownProps.rootJurisdictionId ||
+      getMapCurrentParent(state).currentParentId === ownProps.rootJurisdictionId ||
       !ownProps.currentParentId
         ? undefined
         : getMapCurrentParent(state).length
