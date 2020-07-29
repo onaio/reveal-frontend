@@ -67,14 +67,14 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
 /** props for the Jurisdiction selector table component */
 export interface JurisdictionSelectorTableProps {
-  tree: TreeNode;
+  tree?: TreeNode;
   plan: PlanDefinition;
   rootJurisdictionId: string;
-  currentParentId: string | undefined;
+  currentParentId?: string;
   jurisdictionsMetadata: JurisdictionsMetadata[];
   serviceClass: typeof OpenSRPService;
   treeFetchedCreator: ActionCreator<FetchedTreeAction>;
-  currentParentNode: TreeNode | undefined;
+  currentParentNode?: TreeNode;
   currentChildren: TreeNode[];
   selectNodeCreator: ActionCreator<SelectNodeAction>;
   deselectNodeCreator: ActionCreator<DeselectNodeAction>;
@@ -90,8 +90,6 @@ const defaultProps = {
   autoSelectNodesCreator: autoSelectNodes,
   autoSelectionFlow: false,
   currentChildren: [],
-  currentParentId: undefined,
-  currentParentNode: undefined,
   deselectAllNodesCreator: deselectAllNodes,
   deselectNodeCreator: deselectNode,
   fetchPlanCreator: addPlanDefinition,
@@ -101,7 +99,6 @@ const defaultProps = {
   selectNodeCreator: selectNode,
   selectedLeafNodes: [],
   serviceClass: OpenSRPService,
-  tree: undefined,
   treeFetchedCreator: fetchTree,
 };
 
