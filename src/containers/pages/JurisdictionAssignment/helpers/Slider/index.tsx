@@ -1,4 +1,4 @@
-/** renders the range slider component that is uesd to set the
+/** renders the range slider component that is used to set the
  * threshold from which we can filter out the jurisdictions to be
  * auto-targeted based on their risk value
  */
