@@ -34,7 +34,7 @@ export interface JurisdictionSelectorTableProps {
   rootJurisdictionId: string;
   currentParentNode: TreeNode | undefined;
   currentChildren: TreeNode[];
-  onClickNext: any;
+  onClickNext: () => void;
 }
 
 const defaultProps = {
