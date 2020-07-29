@@ -28,7 +28,7 @@ describe('', () => {
     // select Akros_1   3951
     store.dispatch(selectNode('0ddd9ad1-452b-4825-a92a-49cb9fc82d18', '3951'));
 
-    /** current architecture does not use the Jurisdiction table as a view
+    /** current architecture does not use the structureSummary table as a view
      * it is seen as a controlled component that is feed some data from controlling component
      * That's why there was a need to have this custom view and a mock routing system.
      */
@@ -84,11 +84,6 @@ describe('', () => {
         .text()
         .includes('Zambia')
     ).toBeTruthy();
-
-    // simulate click on checkbox to check
-    // tbodyRow.find('input').simulate('change', { target: { name: '', checked: true } });
-    // wrapper.update();
-    // renderTable(wrapper, 'input checked');
 
     expect(
       wrapper

@@ -13,7 +13,6 @@ import {
   CONTINUE_TO_NEXT_STEP,
   NAME,
   NO_ROWS_FOUND,
-  SELECTED_JURISDICTIONS,
   STRUCTURES_COUNT,
 } from '../../../../configs/lang';
 import { AUTO_ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
@@ -30,7 +29,7 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
 /** props for the Jurisdiction selector table component */
 export interface JurisdictionSelectorTableProps {
-  tree: TreeNode | undefined;
+  tree?: TreeNode;
   currentParentId: string | undefined;
   rootJurisdictionId: string;
   currentParentNode: TreeNode | undefined;
@@ -46,7 +45,6 @@ const defaultProps = {
     return;
   },
   rootJurisdictionId: '',
-  tree: undefined,
 };
 
 /** This component should provide a summary of the structures  */
@@ -100,7 +98,7 @@ const SelectedStructuresTable = (props: JurisdictionSelectorTableProps) => {
       node.model.meta.metaStructureCount,
     ];
   });
-  const headerItems = [NAME, STRUCTURES_COUNT, SELECTED_JURISDICTIONS];
+  const headerItems = [NAME, STRUCTURES_COUNT];
   const tableClass = 'table table-bordered';
 
   const listViewProps = {
