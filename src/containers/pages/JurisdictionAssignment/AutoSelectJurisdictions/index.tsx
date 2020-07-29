@@ -133,7 +133,8 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
   const { startLoading, stopLoading, loading } = useLoadingReducer(initialLoadingState);
 
   React.useEffect(() => {
-    const metadataLoadingKey = startLoading('metadata');
+    const metadataLoadingKey = 'metadata';
+    startLoading(metadataLoadingKey);
     loadJurisdictionsMetadata(
       JURISDICTION_METADATA_RISK,
       OpenSRPService,
