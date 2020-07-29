@@ -138,6 +138,43 @@ Array [
 ]
 `;
 
+exports[`components/IRS Reports/IRSReportingMap renders correctly: No sprayed reasons 1`] = `
+<ul
+  className="list-unstyled"
+>
+  <li
+    className="indicator-breakdown"
+    key="locked"
+  >
+    locked
+     - 
+    13
+     
+    structure(s)
+  </li>
+  <li
+    className="indicator-breakdown"
+    key="refused"
+  >
+    refused
+     - 
+    2
+     
+    structure(s)
+  </li>
+  <li
+    className="indicator-breakdown"
+    key="other"
+  >
+    other
+     - 
+    1
+     
+    structure(s)
+  </li>
+</ul>
+`;
+
 exports[`components/IRS Reports/IRSReportingMap renders correctly: Response item ProgressBar 1`] = `
 Array [
   <ProgressBar
