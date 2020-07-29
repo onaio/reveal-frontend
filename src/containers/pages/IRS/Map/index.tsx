@@ -1,5 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
+import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -255,6 +256,20 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
 
   const gisidaWrapperProps = getGisidaWrapperProps(jurisdiction, structures, indicatorStops);
 
+  /**
+   * Create list elements from dictionary
+   * @param {Dictionary} dict
+   */
+  const processListDisplay = (dict: Dictionary | string) => {
+    const createList = (obj: Dictionary) =>
+      Object.keys(obj).map(key => (
+        <li key={key} className="indicator-breakdown">
+          {key} - {obj[key]} {STRUCTURES}
+        </li>
+      ));
+    return typeof dict === 'string' ? createList(JSON.parse(dict)) : createList(dict);
+  };
+
   return (
     <div>
       <Helmet>
@@ -304,21 +319,26 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
               sidebarIndicatorRows.map((row, i) => (
                 <div className="responseItem" key={i}>
                   <h6>{row.title}</h6>
-                  <p className="indicator-description">{row.description}</p>
-                  <ProgressBar
-                    indicatorThresholds={indicatorThresholdsIRS || null}
-                    value={row.value}
-                  />
+                  {!row.listDisplay && <p className="indicator-description">{row.description}</p>}
+                  {!row.listDisplay && (
+                    <ProgressBar
+                      indicatorThresholds={indicatorThresholdsIRS || null}
+                      value={row.value}
+                    />
+                  )}
                   <p className="indicator-breakdown">
-                    {PROGRESS}:{' '}
+                    {!row.listDisplay && `${PROGRESS}: `}
                     {format(
                       NUMERATOR_OF_DENOMINATOR_UNITS,
                       row.numerator,
                       row.denominator,
                       row.unit || STRUCTURES
                     )}{' '}
-                    ({row.value}%)
+                    {!row.listDisplay && `(${row.value}%)`}
                   </p>
+                  {row.listDisplay && (
+                    <ul className="list-unstyled">{processListDisplay(row.listDisplay)}</ul>
+                  )}
                 </div>
               ))}
           </div>

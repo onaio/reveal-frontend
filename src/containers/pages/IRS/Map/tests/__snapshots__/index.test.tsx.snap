@@ -5,50 +5,40 @@ Array [
   <p
     className="indicator-breakdown"
   >
-    Progress
-    :
-     
+    Progress: 
     7 of 14 structure(s)
      
-    (
-    50
-    %)
+    (50%)
   </p>,
   <p
     className="indicator-breakdown"
   >
-    Progress
-    :
-     
+    Progress: 
     14 of 14 structure(s)
      
-    (
-    100
-    %)
+    (100%)
   </p>,
   <p
     className="indicator-breakdown"
   >
-    Progress
-    :
-     
+    Progress: 
     7 of 14 structure(s)
      
-    (
-    50
-    %)
+    (50%)
   </p>,
   <p
     className="indicator-breakdown"
   >
-    Progress
-    :
-     
+    Progress: 
     19 of 22 room(s)
      
-    (
-    86
-    %)
+    (86%)
+  </p>,
+  <p
+    className="indicator-breakdown"
+  >
+    7 of 14 structures not sprayed
+     
   </p>,
 ]
 `;
@@ -419,6 +409,9 @@ Array [
   </h6>,
   <h6>
     Spray Coverage (Rooms)
+  </h6>,
+  <h6>
+    Reasons for not-sprayed structures
   </h6>,
 ]
 `;
