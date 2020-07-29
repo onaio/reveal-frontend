@@ -1182,5 +1182,9 @@
   "CANNOT_ASSIGN_TEAM_LABEL": {
     "message": "Cannot assign teams for expired plans",
     "description": "label, on team assignment button when plan end date is past"
+  },
+  "ERROR_PERMISSION_DENIED": {
+    "message": "This user does not have permissions to access this page",
+    "description": "Error message displayed if user does not have permission to access the page"
   }
 }

@@ -2,6 +2,9 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetConnectorConfig } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
 import { OPENSRP_OAUTH_STATE, SUPERSET_API_BASE, SUPERSET_API_ENDPOINT } from '../../configs/env';
+import { ERROR_PERMISSION_DENIED } from '../../configs/lang';
+import { SUPERSET_ACCESS_DENIED_MESSAGE } from '../../constants';
+import { displayError } from '../../helpers/errors';
 import store from '../../store';
 import supersetReducer, {
   authorizeSuperset,
@@ -15,6 +18,11 @@ reducerRegistry.register(supersetReducerName, supersetReducer);
 
 /** middleware for fetching from Superset */
 export const fetchMiddleware = (res: { [key: string]: any }) => {
+  const { message } = res;
+
+  if (message === SUPERSET_ACCESS_DENIED_MESSAGE) {
+    displayError(new Error(ERROR_PERMISSION_DENIED));
+  }
   return res;
 };
 

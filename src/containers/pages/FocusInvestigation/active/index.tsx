@@ -22,7 +22,6 @@ import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
   ADD_FOCUS_INVESTIGATION,
-  AN_ERROR_OCCURRED,
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
   CURRENT_FOCUS_INVESTIGATION,
@@ -147,8 +146,6 @@ class ActiveFocusInvestigation extends React.Component<
       .then((result: Plan[]) => {
         if (result) {
           fetchPlansActionCreator(result);
-        } else {
-          displayError(new Error(AN_ERROR_OCCURRED));
         }
       })
       .finally(() => {
