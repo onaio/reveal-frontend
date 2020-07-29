@@ -34,13 +34,9 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 /** props for the Jurisdiction selector table component */
 export interface JurisdictionAssignmentReRoutingProps {
   rootJurisdictionId: string;
-  tree: TreeNode | undefined;
+  tree?: TreeNode;
   plan: PlanDefinition;
 }
-
-const defaultProps = {
-  tree: undefined,
-};
 
 /** decide which url to go to next
  * @param plan - the plan
@@ -97,7 +93,6 @@ const JurisdictionAssignmentReRouting = (props: JurisdictionAssignmentReRoutingP
   return <Redirect to={`${nextBaseUrl}/${plan.identifier}/${rootJurisdictionId}`} />;
 };
 
-JurisdictionAssignmentReRouting.defaultProps = defaultProps;
 export { JurisdictionAssignmentReRouting };
 
 /** describe props mapped to store */

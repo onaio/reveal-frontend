@@ -38,6 +38,7 @@ import {
   PLANNING_VIEW_URL,
   TIMELINE_SLIDER_STEP1,
   TIMELINE_SLIDER_STEP2,
+  TIMELINE_SLIDER_STEP3,
 } from '../../../../constants';
 import { loadJurisdictionsMetadata } from '../../../../helpers/dataLoading/jurisdictions';
 import { displayError } from '../../../../helpers/errors';
@@ -222,12 +223,12 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     keyOfCurrentStop: step.toString(),
     stops: [
       {
-        keys: '1',
+        keys: TIMELINE_SLIDER_STEP1,
         labelBelowStop: AUTO_TARGET_JURISDICTIONS_BY_RISK,
         labelInStop: TIMELINE_SLIDER_STOP1_LABEL,
       },
       {
-        keys: ['2', '3'],
+        keys: [TIMELINE_SLIDER_STEP2, TIMELINE_SLIDER_STEP3],
         labelBelowStop: REFINE_SELECTED_JURISDICTIONS,
         labelInStop: TIMELINE_SLIDER_STOP2_LABEL,
       },
