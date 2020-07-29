@@ -221,7 +221,7 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
   };
 
   const timelineSliderProps: TimelineSliderProps = {
-    keyOfCurrentStop: step.toString(),
+    keyOfCurrentStop: step,
     stops: [
       {
         keys: TIMELINE_SLIDER_STEP1,
