@@ -220,7 +220,7 @@ export const SETTINGS_CONFIGURATION = 'SettingConfiguration';
 export const JURISDICTION_METADATA_RISK = 'jurisdiction_metadata-risk';
 export const JURISDICTION_METADATA_COVERAGE = 'jurisdiction_metadata-coverage';
 export const JURISDICTION_CSV_TEMPLATE = 'jurisdiction_id,jurisdiction_name,risk,coverage';
-export const JURISDICTION_CSV_FILE_NAME = 'jurisdiction-metadata';
+export const JURISDICTION_CSV_FILE_NAME = 'jurisdiction-metadata.csv';
 export const GET_ALL = 'getAll';
 
 /** CSV File MIME Types */
