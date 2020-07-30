@@ -16,6 +16,7 @@ describe('helpers/errors', () => {
     displayError(new Error('I love oov'));
 
     expect(mockGrowl).toHaveBeenCalledWith('I love oov', {
+      autoClose: 5000,
       type: toast.TYPE.ERROR,
     });
   });
@@ -27,6 +28,19 @@ describe('helpers/errors', () => {
     displayError(new Error('I love oov'), 'insert custom message');
 
     expect(mockGrowl).toHaveBeenCalledWith('insert custom message', {
+      autoClose: 5000,
+      type: toast.TYPE.ERROR,
+    });
+  });
+
+  it('displayError works with false autoClose', () => {
+    const mockGrowl: any = jest.fn();
+    (helperUtils as any).growl = mockGrowl;
+
+    displayError(new Error('Task failed successfully'), '', false);
+
+    expect(mockGrowl).toHaveBeenCalledWith('Task failed successfully', {
+      autoClose: false,
       type: toast.TYPE.ERROR,
     });
   });
@@ -40,6 +54,7 @@ describe('helpers/errors', () => {
     displayError(error);
 
     expect(mockGrowl).toHaveBeenCalledWith(ACCESS_DENIED, {
+      autoClose: 5000,
       type: toast.TYPE.ERROR,
     });
   });
@@ -53,6 +68,7 @@ describe('helpers/errors', () => {
     displayError(error);
 
     expect(mockGrowl).toHaveBeenCalledWith(USER_HAS_NO_VALID_ASSIGNMENTS, {
+      autoClose: 5000,
       type: toast.TYPE.ERROR,
     });
   });
@@ -65,6 +81,7 @@ describe('helpers/errors', () => {
     displayError(error);
 
     expect(mockGrowl).toHaveBeenCalledWith(NETWORK_ERROR, {
+      autoClose: 5000,
       type: toast.TYPE.ERROR,
     });
   });
