@@ -379,7 +379,7 @@ export const getTreeById = () =>
 
 export const getMetaForTree = () => {
   return createSelector(getMetaData, getRootJurisdictionId, (metaData, rootId) => {
-    return metaData[rootId];
+    return metaData[rootId] || {};
   });
 };
 
