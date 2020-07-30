@@ -89,6 +89,10 @@ export const ZambiaJurisdictionsColumns = [
     accessor: 'targareas',
   },
   {
+    Header: 'Spray areas visited',
+    accessor: 'visitedareas',
+  },
+  {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: '% visited Spray Areas Effectively sprayed',
     accessor: 'perctvisareaseffect',
@@ -111,9 +115,18 @@ export const ZambiaJurisdictionsColumns = [
     accessor: 'spraycovtarg',
   },
   {
+    Header: 'Structures Found',
+    accessor: 'foundstruct',
+  },
+  {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: 'Room coverage of structures sprayed',
-    accessor: 'roomcov',
+    Header: 'Found Coverage',
+    accessor: 'foundcoverage',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Success Rate',
+    accessor: 'spraysuccess',
   },
 ];
 
@@ -197,8 +210,12 @@ export const ZambiaFocusAreasColumns = [
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: 'Room coverage of structures sprayed',
-    accessor: 'roomcov',
+    Header: 'Structures remaining to spray to reach 90% SE',
+    accessor: 'structures_remaining_to_90_se',
+  },
+  {
+    Header: 'Reviewed with decision',
+    accessor: 'reviewed_with_decision',
   },
 ];
 
