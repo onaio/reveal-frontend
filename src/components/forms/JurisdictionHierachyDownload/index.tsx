@@ -12,7 +12,7 @@ import {
   JURISDICTION_HIERARCHY_TEMPLATE,
   SELECT_COUNTRY,
 } from '../../../configs/lang';
-import { OPENSRP_V2_SETTINGS, TEXT_CSV } from '../../../constants';
+import { OPENSRP_V2_SETTINGS, TEXT_PLAIN } from '../../../constants';
 import { downloadFile, successGrowl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import { RawOpenSRPHierarchy, TreeNode } from '../../../store/ducks/opensrp/hierarchies/types';
@@ -53,7 +53,7 @@ const createCsv = (entries: JurisdictionHierachyFile[], fileName: string): void 
     header: true,
   });
   // Export csv file
-  downloadFile(csv, fileName, TEXT_CSV);
+  downloadFile(csv, fileName, TEXT_PLAIN);
 };
 
 export const submitJurisdictionHierachyForm = (
@@ -80,7 +80,7 @@ export const submitJurisdictionHierachyForm = (
             } as JurisdictionHierachyFile);
             return true;
           });
-          createCsv(records, JURISDICTION_HIERARCHY_TEMPLATE);
+          createCsv(records, `${JURISDICTION_HIERARCHY_TEMPLATE}.csv`);
           successGrowl(FILE_DOWNLOADED_SUCCESSFULLY);
           setSubmitting(false);
         }
