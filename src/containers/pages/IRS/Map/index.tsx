@@ -262,9 +262,9 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
    */
   const processListDisplay = (dict: Dictionary | string) => {
     const createList = (obj: Dictionary) =>
-      Object.keys(obj).map(key => (
-        <li key={key} className="indicator-breakdown">
-          {key} - {obj[key]} {STRUCTURES}
+      Object.entries(obj).map(keyVal => (
+        <li key={keyVal[0]} className="indicator-breakdown">
+          {keyVal[0]} - {keyVal[1]} {STRUCTURES}
         </li>
       ));
     return typeof dict === 'string' ? createList(JSON.parse(dict)) : createList(dict);
