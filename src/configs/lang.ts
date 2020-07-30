@@ -771,7 +771,36 @@ export const CANNOT_ASSIGN_TEAM_LABEL = translate(
   'CANNOT_ASSIGN_TEAM',
   'Cannot assign teams for expired plans'
 );
+
+export const NUMBER_OF_STRUCTURES_IN_JURISDICTIONS = translate(
+  'NUMBER_OF_STRUCTURES_IN_JURISDICTIONS',
+  'NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS'
+);
+export const ADJUST_SLIDER_MESSAGE = translate(
+  'ADJUST_SLIDER_MESSAGE',
+  'Adjust slider to auto-target jurisdictions'
+);
 export const ERROR_PERMISSION_DENIED = translate(
   'ERROR_PERMISSION_DENIED',
   'This user does not have permissions to access this page'
 );
+
+export const AUTO_TARGET_JURISDICTIONS_BY_RISK = translate(
+  'AUTO_TARGET_JURISDICTIONS_BY_RISK',
+  'Auto target jurisdictions by risk'
+);
+export const REFINE_SELECTED_JURISDICTIONS = translate(
+  'REFINE_SELECTED_JURISDICTIONS',
+  'Refine selected jurisdictions'
+);
+
+export const CONTINUE_TO_NEXT_STEP = translate('CONTINUE_TO_NEXT_STEP', 'Continue to next step');
+
+export const TIMELINE_SLIDER_STOP1_LABEL = translate('ONE_STR', '1');
+export const TIMELINE_SLIDER_STOP2_LABEL = translate('TWO_STR', '2');
+
+export const TARGETED_STATUS = translate('TARGETED_STATUS', 'Target Status');
+
+export const TARGETED = translate('TARGETED', 'Targeted');
+
+export const NOT_TARGETED = translate('NOT_TARGETED', 'Not Targeted');
