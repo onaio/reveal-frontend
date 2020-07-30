@@ -6,7 +6,7 @@ describe('helpers/useLoadingReducer', () => {
     // create a wrapper component to help us test the hook
 
     const Sample = () => {
-      const { startLoading, stopLoading, loading } = useLoadingReducer();
+      const { startLoading, stopLoading, loading } = useLoadingReducer(true);
 
       return (
         <>
@@ -23,7 +23,7 @@ describe('helpers/useLoadingReducer', () => {
 
     const wrapper = mount(<Sample />);
     // should not be loading
-    expect(wrapper.text()).toMatchInlineSnapshot(`"not Loading"`);
+    expect(wrapper.text()).toMatchInlineSnapshot(`"isLoading"`);
 
     // simulate start of a single load sequence
     wrapper.find('#button1-start').simulate('click');

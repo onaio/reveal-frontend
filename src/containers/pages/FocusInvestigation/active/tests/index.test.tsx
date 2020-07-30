@@ -13,7 +13,6 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../configs/lang';
 import { FI_URL, REACTIVE_QUERY_PARAM, ROUTINE_QUERY_PARAM } from '../../../../../constants';
-import * as helperErrors from '../../../../../helpers/errors';
 import store from '../../../../../store';
 import * as planDefFixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { fetchPlansByUser } from '../../../../../store/ducks/opensrp/planIdsByUser';
@@ -440,7 +439,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     const supersetServiceMock: any = jest
       .fn(() => Promise.resolve(fixtures.plans))
       .mockImplementationOnce(async () => null);
-    const displayErrorMock = jest.spyOn(helperErrors, 'displayError');
+
     const mock: any = jest.fn();
     const props = {
       caseTriggeredPlans: [fixtures.plan2],
@@ -462,7 +461,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
     expect(props.fetchPlansActionCreator).not.toHaveBeenCalled();
-    expect(displayErrorMock).toHaveBeenCalled();
+
     // now you dont see the ripple
     expect(wrapper.find('Ripple').length).toEqual(0);
     wrapper.unmount();

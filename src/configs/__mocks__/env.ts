@@ -160,3 +160,7 @@ export const SHOW_MDA_SCHOOL_REPORT_LABEL = true;
 export const HIDDEN_MAP_LEGEND_ITEMS = [];
 
 export const HIDDEN_PLAN_STATUSES = ['retired'];
+
+export const ENABLE_JURISDICTIONS_AUTO_SELECTION = true;
+
+export const ENABLE_JURISDICTION_AUTO_SELECTION_FOR_PLAN_TYPES = 'IRS,Dynamic-IRS'.split(',');

@@ -1,12 +1,18 @@
-/** the Manual Jurisdiction Selection view
- * Responsibilities:
+/** the Jurisdiction auto Selection view.
+ * Takes the user through the process of auto-selecting jurisdictions based
+ * on uploaded risks.
+ * the first step is using a slider to set the threshold
+ * the second step is using a drill-down table to see the number of structures in the selected nodes
+ * the third step is using another drill-down to refine the selected.
+ *
+ *  Responsibilities:
  *  load plan given a url with the planId
+ *  also requires the hierarchy
+ *
  *  pending : render map.
- *  render table from which a user can assign jurisdictions to the active plan
  */
 
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { Result } from '@onaio/utils';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -15,33 +21,36 @@ import { ActionCreator, Store } from 'redux';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Ripple from '../../../../components/page/Loading';
+import { TimelineSlider, TimelineSliderProps } from '../../../../components/TimeLineSlider';
 import { JURISDICTION_METADATA_RISK } from '../../../../configs/env';
 import {
-  ASSIGN_JURISDICTIONS,
+  AUTO_TARGET_JURISDICTIONS_BY_RISK,
   COULD_NOT_LOAD_JURISDICTION,
-  COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
   COULD_NOT_LOAD_PLAN,
   PLANNING_PAGE_TITLE,
+  REFINE_SELECTED_JURISDICTIONS,
+  TIMELINE_SLIDER_STOP1_LABEL,
+  TIMELINE_SLIDER_STOP2_LABEL,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL, PLANNING_VIEW_URL } from '../../../../constants';
 import {
-  loadJurisdictionsMetadata,
-  LoadOpenSRPHierarchy,
-} from '../../../../helpers/dataLoading/jurisdictions';
+  AUTO_ASSIGN_JURISDICTIONS_URL,
+  PLANNING_VIEW_URL,
+  TIMELINE_SLIDER_STEP1,
+  TIMELINE_SLIDER_STEP2,
+  TIMELINE_SLIDER_STEP3,
+} from '../../../../constants';
+import { loadJurisdictionsMetadata } from '../../../../helpers/dataLoading/jurisdictions';
 import { displayError } from '../../../../helpers/errors';
 import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { OpenSRPService } from '../../../../services/opensrp';
 import hierarchyReducer, {
-  autoSelectNodes,
-  AutoSelectNodesAction,
   FetchedTreeAction,
   fetchTree,
   getTreeById,
   reducerName as hierarchyReducerName,
 } from '../../../../store/ducks/opensrp/hierarchies';
-import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
-import { selectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
+import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
   FetchJurisdictionsMetadataAction,
@@ -53,14 +62,18 @@ import plansReducer, {
   addPlanDefinition,
   AddPlanDefinitionAction,
   getPlanDefinitionById,
-  reducerName,
+  reducerName as planReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
-import { ConnectedAssignmentMapWrapper } from '../../AssigmentMapWrapper/';
-import { useGetRootJurisdictionId, usePlanEffect } from '../EntryView/utils';
+import {
+  useGetJurisdictionTree,
+  useGetRootJurisdictionId,
+  usePlanEffect,
+} from '../EntryView/utils';
+import { ConnectedJurisdictionSelectionsSlider } from '../helpers/Slider';
 import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
 
-reducerRegistry.register(reducerName, plansReducer);
+reducerRegistry.register(planReducerName, plansReducer);
 reducerRegistry.register(jurisdictionMetadataReducerName, jurisdictionMetadataReducer);
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
@@ -72,17 +85,16 @@ export interface JurisdictionAssignmentViewProps {
   plan: PlanDefinition | null;
   serviceClass: typeof OpenSRPService;
   treeFetchedCreator: ActionCreator<FetchedTreeAction>;
-  autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
   tree?: TreeNode;
 }
 
 export const defaultProps = {
-  autoSelectNodesCreator: autoSelectNodes,
   fetchJurisdictionsMetadataCreator: fetchJurisdictionsMetadata,
   fetchPlanCreator: addPlanDefinition,
   jurisdictionsMetadata: [],
   plan: null,
   serviceClass: OpenSRPService,
+
   treeFetchedCreator: fetchTree,
 };
 
@@ -100,26 +112,29 @@ export type JurisdictionAssignmentViewFullProps = JurisdictionAssignmentViewProp
 /**
  * Responsibilities:
  *  1). get plan from api
- *  2). render drillDown table where, user can select assignments
+ *  2). pull metadata
+ *  3). pull rootJurisdiction after getting plan in 1
+ *      -> Each of the above calls are needed for this component to work
+ *  4). render drillDown table where, user can select assignments
  */
-export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFullProps) => {
+export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
   const {
     plan,
     serviceClass,
     fetchPlanCreator,
     fetchJurisdictionsMetadataCreator,
     jurisdictionsMetadata,
-    tree,
     treeFetchedCreator,
-    autoSelectNodesCreator,
   } = props;
 
-  const initialLoadingState = !tree || !plan;
-  const { startLoading, stopLoading, loading } = useLoadingReducer(initialLoadingState);
   const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
+  const [step, setStep] = React.useState<string>(TIMELINE_SLIDER_STEP1);
+  const initialLoadingState = !jurisdictionsMetadata || !plan;
+  const { startLoading, stopLoading, loading } = useLoadingReducer(initialLoadingState);
 
   React.useEffect(() => {
-    const metadataLoadingKey = startLoading('metadata');
+    const metadataLoadingKey = 'metadata';
+    startLoading(metadataLoadingKey);
     loadJurisdictionsMetadata(
       JURISDICTION_METADATA_RISK,
       OpenSRPService,
@@ -151,38 +166,13 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     startLoading
   );
 
-  React.useEffect(() => {
-    if (!plan || !rootJurisdictionId) {
-      return;
-    }
-    const callback = (node: TreeNode) => {
-      const existingAssignments = plan.jurisdiction;
-      return existingAssignments.includes(node.model.id);
-    };
-    const params = {
-      return_structure_count: true,
-    };
-    if (rootJurisdictionId) {
-      startLoading(rootJurisdictionId);
-      LoadOpenSRPHierarchy(rootJurisdictionId, OpenSRPService, params)
-        .then((apiResponse: Result<RawOpenSRPHierarchy>) => {
-          if (apiResponse.value) {
-            const responseData = apiResponse.value;
-            treeFetchedCreator(responseData);
-            autoSelectNodesCreator(rootJurisdictionId, callback, selectionReason.NOT_CHANGED);
-          }
-          if (apiResponse.error) {
-            throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-          }
-        })
-        .finally(() => {
-          stopLoading(rootJurisdictionId);
-        })
-        .catch(() => {
-          handleBrokenPage(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-        });
-    }
-  }, [rootJurisdictionId]);
+  useGetJurisdictionTree(
+    rootJurisdictionId,
+    startLoading,
+    treeFetchedCreator,
+    stopLoading,
+    handleBrokenPage
+  );
 
   if (loading()) {
     return <Ripple />;
@@ -192,16 +182,24 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     return <ErrorPage errorMessage={COULD_NOT_LOAD_PLAN} />;
   }
 
-  // TODO - consider: can we have the tree in this condition
+  // TODO - can we use the tree here instead.
   if (!rootJurisdictionId) {
     return <ErrorPage errorMessage={COULD_NOT_LOAD_JURISDICTION} />;
   }
+
   if (broken) {
     return <ErrorPage errorMessage={errorMessage} />;
   }
 
-  const JurisdictionTableProps = {
-    autoSelectionFlow: false,
+  const sliderProps = {
+    onClickNext: () => setStep(TIMELINE_SLIDER_STEP2),
+    plan,
+    rootJurisdictionId,
+    serviceClass,
+  };
+
+  const jurisdictionTableProps = {
+    autoSelectionFlow: true,
     currentParentId: props.match.params.parentId,
     jurisdictionsMetadata,
     plan,
@@ -209,16 +207,10 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     serviceClass,
   };
 
-  const AssignmentWrapperProps = {
-    currentParentId: props.match.params.parentId,
-    rootJurisdictionId,
-    serviceClass,
-  };
-
   const breadcrumbProps = {
     currentPage: {
       label: plan.title,
-      url: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+      url: `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
     },
     pages: [
       {
@@ -228,7 +220,23 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     ],
   };
 
-  const pageTitle = ASSIGN_JURISDICTIONS;
+  const timelineSliderProps: TimelineSliderProps = {
+    keyOfCurrentStop: step,
+    stops: [
+      {
+        keys: TIMELINE_SLIDER_STEP1,
+        labelBelowStop: AUTO_TARGET_JURISDICTIONS_BY_RISK,
+        labelInStop: TIMELINE_SLIDER_STOP1_LABEL,
+      },
+      {
+        keys: [TIMELINE_SLIDER_STEP2, TIMELINE_SLIDER_STEP3],
+        labelBelowStop: REFINE_SELECTED_JURISDICTIONS,
+        labelInStop: TIMELINE_SLIDER_STOP2_LABEL,
+      },
+    ],
+  };
+
+  const pageTitle = plan.title;
   return (
     <>
       <Helmet>
@@ -236,13 +244,18 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
-      <ConnectedAssignmentMapWrapper {...AssignmentWrapperProps} />
-      <ConnectedJurisdictionTable {...JurisdictionTableProps} />
+      <TimelineSlider {...timelineSliderProps} />
+      {/* each of this components is a step in the auto selection journey, we start
+      at the slider and go through a few tables and we should ideally end at plan assignment
+      each of this components gets a callback that is called that modifies the state of this 
+      container to know what is the next component to be rendered in the below section */}
+      {step === TIMELINE_SLIDER_STEP1 && <ConnectedJurisdictionSelectionsSlider {...sliderProps} />}
+      {step === TIMELINE_SLIDER_STEP2 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
     </>
   );
 };
 
-JurisdictionAssignmentView.defaultProps = defaultProps;
+AutoSelectView.defaultProps = defaultProps;
 
 type MapStateToProps = Pick<
   JurisdictionAssignmentViewProps,
@@ -261,6 +274,7 @@ const mapStateToProps = (
 ): MapStateToProps => {
   const planId = ownProps.match.params.planId;
   const planObj = getPlanDefinitionById(state, planId);
+
   return {
     jurisdictionsMetadata: getJurisdictionsMetadata(state),
     plan: planObj,
@@ -274,9 +288,6 @@ const mapDispatchToProps: DispatchToProps = {
   treeFetchedCreator: fetchTree,
 };
 
-const ConnectedJurisdictionAssignmentView = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(JurisdictionAssignmentView);
+const ConnectedAutoSelectView = connect(mapStateToProps, mapDispatchToProps)(AutoSelectView);
 
-export default ConnectedJurisdictionAssignmentView;
+export default ConnectedAutoSelectView;
