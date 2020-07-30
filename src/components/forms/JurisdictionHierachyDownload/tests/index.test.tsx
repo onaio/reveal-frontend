@@ -8,7 +8,7 @@ import {
   FILE_DOWNLOADED_SUCCESSFULLY,
   JURISDICTION_HIERARCHY_TEMPLATE,
 } from '../../../../configs/lang';
-import { OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT, TEXT_CSV } from '../../../../constants';
+import { OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT, TEXT_PLAIN } from '../../../../constants';
 import * as helperUtils from '../../../../helpers/utils';
 import { sampleHierarchy } from '../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
 import { csvData } from './fixtures/csvData';
@@ -50,7 +50,7 @@ describe('components/forms/JurisdictionMetadata', () => {
     (helperUtils as any).successGrowl = mockGrowl;
     (helperUtils as any).downloadFile = mockDownload;
     const csv: string = Papaparse.unparse(csvData, { header: true });
-    const fileName = JURISDICTION_HIERARCHY_TEMPLATE;
+    const fileName = `${JURISDICTION_HIERARCHY_TEMPLATE}.csv`;
     const mockedOpenSRPservice = jest.fn().mockImplementation(() => {
       return {
         read: () => {
@@ -71,7 +71,7 @@ describe('components/forms/JurisdictionMetadata', () => {
       expect(mockGrowl).toBeCalled();
       expect(mockGrowl).toBeCalledWith(FILE_DOWNLOADED_SUCCESSFULLY);
       expect(mockDownload).toBeCalled();
-      expect(mockDownload).toBeCalledWith(csv, fileName, TEXT_CSV);
+      expect(mockDownload).toBeCalledWith(csv, fileName, TEXT_PLAIN);
     });
   });
 });

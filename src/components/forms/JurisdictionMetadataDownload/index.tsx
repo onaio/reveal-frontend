@@ -92,7 +92,7 @@ export const download = (response: JurisdictionMetadataResponse[]) => {
     };
     entries.push(entry);
   });
-  createCsv(entries, response[0].settingIdentifier);
+  createCsv(entries, `${response[0].settingIdentifier}.csv`);
 };
 
 /**
