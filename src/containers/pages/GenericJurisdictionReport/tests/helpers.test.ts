@@ -18,19 +18,12 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
     );
   });
 
-  it('should return the correct columns for Zambia lower jurisdiction', () => {
-    expect(JSON.stringify(helpers.ZambiaLowerJurisdictionsColumns)).toEqual(
-      JSON.stringify(fixtures.ZambiaLowerJurisdictionsColumns)
-    );
-  });
-
   it('should return the correct keys for plansTableColumns', () => {
     expect(Object.keys(helpers.plansTableColumns)).toEqual([
       'mdaJurisdictionsColumns',
       'namibia2019',
       'zambiaFocusArea2019',
       'zambiaJurisdictions2019',
-      'zambiaLowerJurisdictions2019',
     ]);
   });
   it('it should return the correct table columns for plansTableColumns namibia2019', () => {
@@ -48,12 +41,6 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
   it('should return the correct columns for plansTableColumns zambiaJurisdictions2019', () => {
     expect(JSON.stringify(helpers.plansTableColumns.zambiaJurisdictions2019)).toEqual(
       JSON.stringify(fixtures.ZambiaJurisdictionsColumns)
-    );
-  });
-
-  it('should return the correct columns for plansTableColumns zambiaJurisdictions2019', () => {
-    expect(JSON.stringify(helpers.plansTableColumns.zambiaLowerJurisdictions2019)).toEqual(
-      JSON.stringify(fixtures.ZambiaLowerJurisdictionsColumns)
     );
   });
 

@@ -11,7 +11,6 @@ import {
   SUPERSET_IRS_REPORTING_JURISDICTIONS_COLUMNS,
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
-  SUPERSET_IRS_REPORTING_LOWER_JURISDICTIONS_COLUMNS,
   SUPERSET_IRS_REPORTING_PLANS_SLICE,
 } from '../../../../configs/env';
 import { IRS_REPORTING_TITLE } from '../../../../configs/lang';
@@ -73,7 +72,6 @@ export { JurisdictionReport };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps extends RouteComponentProps<RouteParams> {
-  jurisdictionColumn: string;
   jurisdictions: GenericJurisdiction[] | null;
   plan: GenericPlan | null;
 }
@@ -83,7 +81,6 @@ const mapStateToProps = (
   state: Partial<Store>,
   ownProps: GenericJurisdictionProps & RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
-  const jurisdictionId = ownProps.match.params.jurisdictionId || null;
   const planId = ownProps.match.params.planId || null;
   const plan = planId ? getIRSPlanById(state, planId) : null;
 
@@ -92,19 +89,9 @@ const mapStateToProps = (
     slice =>
       (jurisdictions = jurisdictions.concat(getGenericJurisdictionsArray(state, slice, planId)))
   );
-  let jurisdictionColumn = defaultProps.jurisdictionColumn;
-
-  if (jurisdictionId && jurisdictions.length) {
-    const juris = jurisdictions.filter(jur => jur.jurisdiction_id === jurisdictionId)[0];
-    jurisdictionColumn =
-      juris.jurisdiction_path.length > 0
-        ? SUPERSET_IRS_REPORTING_LOWER_JURISDICTIONS_COLUMNS
-        : jurisdictionColumn;
-  }
 
   return {
     ...ownProps,
-    jurisdictionColumn,
     jurisdictions,
     plan,
   };

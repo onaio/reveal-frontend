@@ -89,50 +89,6 @@ export const ZambiaJurisdictionsColumns = [
     accessor: 'targareas',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: '% visited Spray Areas Effectively sprayed',
-    accessor: 'perctvisareaseffect',
-  },
-  {
-    Header: 'Total Structures',
-    accessor: 'totstruct',
-  },
-  {
-    Header: 'Targeted Structures',
-    accessor: 'targstruct',
-  },
-  {
-    Header: 'Sprayed Structures',
-    accessor: 'sprayedstruct',
-  },
-  {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: 'Spray coverage of targeted (Progress)',
-    accessor: 'spraycovtarg',
-  },
-  {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: 'Room coverage of structures sprayed',
-    accessor: 'roomcov',
-  },
-];
-
-/** columns for Zambia IRS jurisdictions districts and Catchment Area */
-export const ZambiaLowerJurisdictionsColumns = [
-  {
-    Header: 'Name',
-    accessor: 'jurisdiction_name',
-    minWidth: 180,
-  },
-  {
-    Header: 'Total Spray Areas',
-    accessor: 'totareas',
-  },
-  {
-    Header: 'Targeted Spray Areas',
-    accessor: 'targareas',
-  },
-  {
     Header: 'Spray areas visited',
     accessor: 'visitedareas',
   },
@@ -271,7 +227,6 @@ export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionar
   namibia2019: NamibiaColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
   zambiaJurisdictions2019: ZambiaJurisdictionsColumns,
-  zambiaLowerJurisdictions2019: ZambiaLowerJurisdictionsColumns,
 };
 
 export type TableProps = Pick<

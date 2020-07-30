@@ -18,47 +18,29 @@ exports[`components/IRS Reports/JurisdictionReport display correct headers when 
 
 exports[`components/IRS Reports/JurisdictionReport display correct headers when Spray Areas are loaded: header on Spray Areas display 8 1`] = `"Reviewed with decision"`;
 
-exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 0 1`] = `"Name"`;
-
-exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 1 1`] = `"Total Spray Areas"`;
-
-exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 2 1`] = `"Targeted Spray Areas"`;
-
-exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 3 1`] = `"Spray areas visited"`;
-
-exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 4 1`] = `"% visited Spray Areas Effectively sprayed"`;
-
-exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 5 1`] = `"Total Structures"`;
-
-exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 6 1`] = `"Targeted Structures"`;
-
-exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 7 1`] = `"Sprayed Structures"`;
-
-exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 8 1`] = `"Spray coverage of targeted (Progress)"`;
-
-exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 9 1`] = `"Structures Found"`;
-
-exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 10 1`] = `"Found Coverage"`;
-
-exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 11 1`] = `"Success Rate"`;
-
 exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 0 1`] = `"Name"`;
 
 exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 1 1`] = `"Total Spray Areas"`;
 
 exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 2 1`] = `"Targeted Spray Areas"`;
 
-exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 3 1`] = `"% visited Spray Areas Effectively sprayed"`;
+exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 3 1`] = `"Spray areas visited"`;
 
-exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 4 1`] = `"Total Structures"`;
+exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 4 1`] = `"% visited Spray Areas Effectively sprayed"`;
 
-exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 5 1`] = `"Targeted Structures"`;
+exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 5 1`] = `"Total Structures"`;
 
-exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 6 1`] = `"Sprayed Structures"`;
+exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 6 1`] = `"Targeted Structures"`;
 
-exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 7 1`] = `"Spray coverage of targeted (Progress)"`;
+exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 7 1`] = `"Sprayed Structures"`;
 
-exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 8 1`] = `"Room coverage of structures sprayed"`;
+exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 8 1`] = `"Spray coverage of targeted (Progress)"`;
+
+exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 9 1`] = `"Structures Found"`;
+
+exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 10 1`] = `"Found Coverage"`;
+
+exports[`components/IRS Reports/JurisdictionReport display correct headers when provinces are loaded: header on provinces display 11 1`] = `"Success Rate"`;
 
 exports[`components/IRS Reports/JurisdictionReport drills down correctly 1`] = `
 Object {

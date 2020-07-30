@@ -164,5 +164,3 @@ export const HIDDEN_PLAN_STATUSES = ['retired'];
 export const ENABLE_JURISDICTIONS_AUTO_SELECTION = true;
 
 export const ENABLE_JURISDICTION_AUTO_SELECTION_FOR_PLAN_TYPES = 'IRS,Dynamic-IRS'.split(',');
-
-export const SUPERSET_IRS_REPORTING_LOWER_JURISDICTIONS_COLUMNS = 'zambiaLowerJurisdictions2019';

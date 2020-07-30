@@ -491,50 +491,6 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     wrapper
       .find('.thead .th')
       .map((node, i) => expect(node.text()).toMatchSnapshot(`header on provinces display ${i}`));
-    expect(wrapper.find('.thead .th').length).toEqual(9);
-  });
-
-  it('display correct headers when districts are loaded', async () => {
-    fetch.mockResponseOnce(JSON.stringify({}));
-    const supersetServiceMock: any = jest.fn();
-    supersetServiceMock.mockImplementation(async () => []);
-    store.dispatch(fetchGenericJurisdictions('11', jurisdictionData));
-    store.dispatch(fetchGenericJurisdictions('12', focusAreaData));
-    const props = {
-      history,
-      location: {
-        hash: '',
-        pathname: REPORT_IRS_PLAN_URL,
-        search: '',
-        state: undefined,
-      },
-      match: {
-        isExact: true,
-        params: {
-          jurisdictionId: 'fd5a22ba-fa0e-4fdc-ae1c-1db8965b7b43', // Lusaka jurisdiction Id
-          planId: '9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d',
-        },
-        path: `${REPORT_IRS_PLAN_URL}/:planId`,
-        url: `${REPORT_IRS_PLAN_URL}/9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d`,
-      },
-      service: supersetServiceMock,
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedJurisdictionReport {...props} />
-        </Router>
-      </Provider>
-    );
-
-    await act(async () => {
-      await flushPromises();
-      wrapper.update();
-    });
-
-    wrapper
-      .find('.thead .th')
-      .map((node, i) => expect(node.text()).toMatchSnapshot(`header on districts display ${i}`));
     expect(wrapper.find('.thead .th').length).toEqual(12);
   });
 

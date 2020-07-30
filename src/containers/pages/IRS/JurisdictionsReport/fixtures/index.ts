@@ -139,50 +139,6 @@ export const ZambiaJurisdictionsColumns: Array<DrillDownColumn<Dictionary>> = [
     accessor: 'targareas',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: '% visited Spray Areas Effectively sprayed',
-    accessor: 'perctvisareaseffect',
-  },
-  {
-    Header: 'Total Structures',
-    accessor: 'totstruct',
-  },
-  {
-    Header: 'Targeted Structures',
-    accessor: 'targstruct',
-  },
-  {
-    Header: 'Sprayed Structures',
-    accessor: 'sprayedstruct',
-  },
-
-  {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: 'Spray coverage of targeted (Progress)',
-    accessor: 'spraycovtarg',
-  },
-  {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: 'Room coverage of structures sprayed',
-    accessor: 'roomcov',
-  },
-];
-
-export const ZambiaLowerJurisdictionsColumns: Array<DrillDownColumn<Dictionary>> = [
-  {
-    Header: 'Name',
-    accessor: 'jurisdiction_name',
-    minWidth: 180,
-  },
-  {
-    Header: 'Total Spray Areas',
-    accessor: 'totareas',
-  },
-  {
-    Header: 'Targeted Spray Areas',
-    accessor: 'targareas',
-  },
-  {
     Header: 'Spray areas visited',
     accessor: 'visitedareas',
   },
