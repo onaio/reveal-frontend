@@ -537,4 +537,48 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       .map((node, i) => expect(node.text()).toMatchSnapshot(`header on districts display ${i}`));
     expect(wrapper.find('.thead .th').length).toEqual(12);
   });
+
+  it('display correct headers when Spray Areas are loaded', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+    store.dispatch(fetchGenericJurisdictions('11', jurisdictionData));
+    store.dispatch(fetchGenericJurisdictions('12', focusAreaData));
+    const props = {
+      history,
+      location: {
+        hash: '',
+        pathname: REPORT_IRS_PLAN_URL,
+        search: '',
+        state: undefined,
+      },
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: '2bf9915d-8725-4061-983d-5938802ac0f0', // Lusaka HFC jurisdiction Id (spray area parent)
+          planId: '9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d',
+        },
+        path: `${REPORT_IRS_PLAN_URL}/:planId`,
+        url: `${REPORT_IRS_PLAN_URL}/9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d`,
+      },
+      service: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedJurisdictionReport {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    wrapper
+      .find('.thead .th')
+      .map((node, i) => expect(node.text()).toMatchSnapshot(`header on Spray Areas display ${i}`));
+    expect(wrapper.find('.thead .th').length).toEqual(9);
+  });
 });

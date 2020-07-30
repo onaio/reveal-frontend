@@ -1,5 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/IRS Reports/JurisdictionReport display correct headers when Spray Areas are loaded: header on Spray Areas display 0 1`] = `"Name"`;
+
+exports[`components/IRS Reports/JurisdictionReport display correct headers when Spray Areas are loaded: header on Spray Areas display 1 1`] = `"Structures on the ground"`;
+
+exports[`components/IRS Reports/JurisdictionReport display correct headers when Spray Areas are loaded: header on Spray Areas display 2 1`] = `"Found"`;
+
+exports[`components/IRS Reports/JurisdictionReport display correct headers when Spray Areas are loaded: header on Spray Areas display 3 1`] = `"Sprayed"`;
+
+exports[`components/IRS Reports/JurisdictionReport display correct headers when Spray Areas are loaded: header on Spray Areas display 4 1`] = `"Spray Coverage (Effectiveness)"`;
+
+exports[`components/IRS Reports/JurisdictionReport display correct headers when Spray Areas are loaded: header on Spray Areas display 5 1`] = `"Found Coverage"`;
+
+exports[`components/IRS Reports/JurisdictionReport display correct headers when Spray Areas are loaded: header on Spray Areas display 6 1`] = `"Spray Success Rate (PMI SC)"`;
+
+exports[`components/IRS Reports/JurisdictionReport display correct headers when Spray Areas are loaded: header on Spray Areas display 7 1`] = `"Structures remaining to spray to reach 90% SE"`;
+
+exports[`components/IRS Reports/JurisdictionReport display correct headers when Spray Areas are loaded: header on Spray Areas display 8 1`] = `"Reviewed with decision"`;
+
 exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 0 1`] = `"Name"`;
 
 exports[`components/IRS Reports/JurisdictionReport display correct headers when districts are loaded: header on districts display 1 1`] = `"Total Spray Areas"`;

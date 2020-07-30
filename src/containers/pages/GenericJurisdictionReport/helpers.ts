@@ -255,7 +255,7 @@ export const ZambiaFocusAreasColumns = [
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Structures remaining to spray to reach 90% SE',
-    accessor: 'structures_remaining_to_90%_se',
+    accessor: 'structures_remaining_to_90_se',
   },
   {
     Header: 'Reviewed with decision',
