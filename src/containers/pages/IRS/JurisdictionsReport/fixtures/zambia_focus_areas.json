@@ -91,7 +91,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "434912aa-0a3f-5245-a822-a337cc622ea5",
@@ -112,7 +114,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "6b5838ac-b79e-504b-bfea-253972023187",
@@ -133,7 +137,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "91175758-19d9-51d3-adfa-c41533d349e5",
@@ -154,7 +160,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "0b833f68-19e2-5015-aa79-804d73b8e782",
@@ -175,7 +183,9 @@
         "spraycov": 0.8055555555555556,
         "spraytarg": 1.0,
         "spraysuccess": 0.8055555555555556,
-        "roomcov": 0.8671875
+        "roomcov": 0.8671875,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "57ea51a5-00f0-5c2a-b180-eea3be70449f",
@@ -196,7 +206,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "93f68ed2-d5f6-5b6e-bbe0-99e4264885ef",
@@ -217,7 +229,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "80f0b68b-682f-5d6e-8d0d-a8fd6525d3b9",
@@ -238,7 +252,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "68d19169-f986-5821-a605-23e2bf136c42",
@@ -280,7 +296,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "40104e6c-7448-5a54-8a41-becf4483c813",
@@ -322,7 +340,9 @@
         "spraycov": 1.0,
         "spraytarg": 1.0,
         "spraysuccess": 1.0,
-        "roomcov": 1.0
+        "roomcov": 1.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "14e4d4a5-540d-588c-8ed0-52033fd2d94c",
@@ -343,7 +363,9 @@
         "spraycov": 0.0,
         "spraytarg": 1.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "2553a8b9-3c87-5f15-8cb0-8f8a04815db4",
@@ -364,7 +386,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "cad65605-2662-57e3-aa11-9500007a339b",
@@ -1057,7 +1081,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "4722e820-8c06-5d9c-9b78-70e163c955bc",
@@ -1078,7 +1104,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "2dc84412-2e41-5bbe-9b1e-60abd155742a",
@@ -1099,7 +1127,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "8c5faefe-9aef-57d5-b537-556ac94b815d",
@@ -1120,7 +1150,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "e3c24b92-9609-52ba-b712-8f39d9249f34",
@@ -1141,7 +1173,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "a3ccbc51-6787-55a5-8497-92f1540cfddb",
@@ -1162,7 +1196,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "2bfeb227-01da-5bfd-bcbd-b87bc3545ad8",
@@ -1183,7 +1219,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "15f20096-54a4-50a4-8c1b-cae856a7bc99",
@@ -1204,7 +1242,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "47f0381f-5d54-5bac-9018-cab790aeeb79",
@@ -1225,7 +1265,9 @@
         "spraycov": 0.7777777777777778,
         "spraytarg": 1.0,
         "spraysuccess": 0.7777777777777778,
-        "roomcov": 0.9354838709677419
+        "roomcov": 0.9354838709677419,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "48ccc8ca-cbd1-53c7-9a2a-790a3c54fc63",
@@ -1246,7 +1288,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "ab19a412-c506-5e30-824b-d238435dd0f7",
@@ -1267,7 +1311,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "bfd3e940-b748-57f0-9545-a7377820cf5c",
@@ -1288,7 +1334,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "fb92803c-c8e9-512b-bc7c-42f758a14232",
@@ -1309,7 +1357,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "6616da56-ad1a-59c7-8ab5-3dc7adf9507f",
@@ -1330,7 +1380,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "0a639a2b-7e80-5b60-bcf8-6237f8f9db9b",
@@ -1351,7 +1403,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "dffa0d68-2565-5ec8-8689-78f46cb97231",
@@ -1372,7 +1426,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "2f2aca12-49b6-5d2f-9bbb-ac7ff45e7ec9",
@@ -1393,7 +1449,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "c82ba2ff-29c5-505d-b301-3abc30b48617",
@@ -1414,7 +1472,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "8808bb2f-84f7-5a72-9d61-22b673941e3c",
@@ -1435,7 +1495,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "03b149e8-1d4c-5b8a-a544-bf8c4533d819",
@@ -1456,7 +1518,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "1021204c-5459-5994-8381-8d39be1828be",
@@ -1477,7 +1541,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "d30c127c-6995-5219-8afc-6dc1a8c9c0b4",
@@ -1498,7 +1564,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "409228ff-5120-5f5a-858c-d969636effe7",
@@ -1519,7 +1587,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "e0f4e9ff-31f4-5b21-a8b1-f70508fdc37c",
@@ -1540,7 +1610,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "02221820-da7c-5a18-b29a-f4546938b36d",
@@ -1561,7 +1633,9 @@
         "spraycov": 0.5,
         "spraytarg": 1.0,
         "spraysuccess": 0.5,
-        "roomcov": 0.8636363636363636
+        "roomcov": 0.8636363636363636,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "52fc67f0-53a6-517a-a351-fa014ffd6f7b",
@@ -1582,7 +1656,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "21d0730f-2ab3-5b0d-8e3d-5591348adce7",
@@ -1603,7 +1679,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "cf6d8c76-8477-59c6-8a6c-eca694eb2498",
@@ -1624,7 +1702,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "f6d14b6d-a505-5752-a818-bbc87df0cf8d",
@@ -1645,7 +1725,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "aef0a08b-ee3e-5539-a8e8-6c24ae152d7a",
@@ -1666,7 +1748,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "4ea99dbb-f5dd-5bef-82fe-eeb0b682efef",
@@ -1687,7 +1771,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "04b06bc6-67b4-53b1-9058-9f65fd93259c",
@@ -1708,7 +1794,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "b161baa0-2bba-5097-ac95-76262753f9d5",
@@ -1729,7 +1817,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "2a37cbb8-3821-52a1-ac84-c8b178b43827",
@@ -1750,7 +1840,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "b5386889-2d02-5b7d-b463-78a07a098ab7",
@@ -1771,7 +1863,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "f9141a34-8500-55e7-b78d-a385ec85ca06",
@@ -1792,7 +1886,9 @@
         "spraycov": 0.7157894736842105,
         "spraytarg": 1.0,
         "spraysuccess": 0.7157894736842105,
-        "roomcov": 0.8666666666666667
+        "roomcov": 0.8666666666666667,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "f2be7f9f-a681-5576-8aad-57b6baceb3cb",
@@ -1813,7 +1909,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "d1303525-0f51-5b2b-a999-b6c95296c277",
@@ -1834,7 +1932,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "d4cd109c-50bc-5338-9d79-9922c5d2c46b",
@@ -1855,7 +1955,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "4bd31ab5-a2e7-5e27-b4c6-38558f1113d9",
@@ -1876,7 +1978,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "3e7fcbe8-bc6c-503d-98e8-2b0c300d8fec",
@@ -1897,7 +2001,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "02756743-f2bd-5f2f-85fc-31a4b6720c9c",
@@ -1918,7 +2024,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "1e2fc473-b49d-5726-a961-79640460b281",
@@ -1939,7 +2047,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "f5e50de3-b026-5091-b425-e5c722b345da",
@@ -1960,7 +2070,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "0c34e6a8-16be-54c1-9195-bd785ea1b7df",
@@ -1981,7 +2093,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "9c7aef61-eb63-54fa-b447-c137c3ad0425",
@@ -2002,7 +2116,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "8a5444a8-eb36-5753-a32d-98b2c842391a",
@@ -2023,7 +2139,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "316a237d-bc98-57e7-b762-1b6ca0b029cb",
@@ -2044,7 +2162,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "5948ebb1-f99d-5230-981f-f8340d75f8f5",
@@ -2065,7 +2185,9 @@
         "spraycov": 0.25,
         "spraytarg": 1.0,
         "spraysuccess": 0.25,
-        "roomcov": 0.5714285714285714
+        "roomcov": 0.5714285714285714,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "63986ff7-9d12-52ed-a0ec-71dc3767e760",
@@ -2086,7 +2208,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "05225ef1-b9af-5ee1-9439-bd40edb47564",
@@ -2107,7 +2231,9 @@
         "spraycov": 0.875,
         "spraytarg": 1.0,
         "spraysuccess": 0.875,
-        "roomcov": 0.9142857142857143
+        "roomcov": 0.9142857142857143,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "0d4e4b1e-9951-557e-82ca-e055c0367220",
@@ -2128,7 +2254,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "3a32e553-4b93-51d4-9859-50f228739fec",
@@ -2149,7 +2277,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "a5f94f6b-76e8-5fcf-afa2-e40e9933cb4e",
@@ -2170,7 +2300,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "c33c9551-2571-5151-a1eb-8e4ff4bc94f5",
@@ -2191,7 +2323,9 @@
         "spraycov": 0.0,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
-        "roomcov": 0.0
+        "roomcov": 0.0,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
       {
         "id": "6175c594-44da-5d05-b39c-06bfc0ea921c",
@@ -2212,7 +2346,9 @@
         "spraycov": 0.6222222222222222,
         "spraytarg": 0.8,
         "spraysuccess": 0.7777777777777778,
-        "roomcov": 0.8840579710144928
+        "roomcov": 0.8840579710144928,
+        "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
+        "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       }
     ],
     "columns": [

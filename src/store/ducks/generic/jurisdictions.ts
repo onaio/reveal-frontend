@@ -1,3 +1,4 @@
+import { Dictionary } from '@onaio/utils';
 import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
@@ -58,6 +59,8 @@ export interface ZambiaIRSFocusArea extends GenericJurisdiction {
   spraytarg: number;
   spraysuccess: number;
   roomcov: number;
+  notsprayed_reasons: string[];
+  notsprayed_reasons_counts: Dictionary<number>;
 }
 
 // actions
