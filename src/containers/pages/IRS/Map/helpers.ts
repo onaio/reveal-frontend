@@ -35,6 +35,7 @@ export const IRSIndicatorStops: { [key: string]: string[][] } = {
 export interface IndicatorRowItem {
   denominator: string | number;
   description: string;
+  listDisplay?: Dictionary | string;
   numerator: string | number;
   title: string;
   unit?: string;
@@ -95,6 +96,15 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
       title: 'Spray Coverage (Rooms)',
       unit: 'room(s)',
       value: 'roomcov',
+    },
+    {
+      denominator: 'foundstruct',
+      description: 'reasons given for not sprayed structures',
+      listDisplay: 'notsprayed_reasons_counts',
+      numerator: 'sprayedstruct',
+      title: 'Reasons for not-sprayed structures',
+      unit: 'structures not sprayed',
+      value: 'spraysuccess',
     },
   ],
 };
@@ -292,6 +302,10 @@ export const getIndicatorRows = (defaultRows: IndicatorRows, focusArea: Dictiona
       ...row,
       ...{
         denominator: focusArea ? (focusArea as any)[row.denominator] || 0 : 0,
+        listDisplay:
+          focusArea && row.listDisplay
+            ? (focusArea as any)[row.listDisplay as string] || undefined
+            : undefined,
         numerator: focusArea ? (focusArea as any)[row.numerator] || 0 : 0,
         value: Math.round(value * 100),
       },

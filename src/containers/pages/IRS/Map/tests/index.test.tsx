@@ -205,6 +205,8 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     expect(toJson(wrapper.find('.responseItem ProgressBar'))).toMatchSnapshot(
       'Response item ProgressBar'
     );
+    expect(toJson(wrapper.find('.list-unstyled'))).toMatchSnapshot('No sprayed reasons');
+    expect(wrapper.find('.list-unstyled li').length).toEqual(3);
 
     const indicatorStops = IRSIndicatorStops[SUPERSET_IRS_REPORTING_INDICATOR_STOPS];
     expect(wrapper.find('GisidaWrapper').props()).toEqual(
