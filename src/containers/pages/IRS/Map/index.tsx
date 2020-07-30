@@ -330,7 +330,9 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
                     {!row.listDisplay && `${PROGRESS}: `}
                     {format(
                       NUMERATOR_OF_DENOMINATOR_UNITS,
-                      row.numerator,
+                      row.listDisplay
+                        ? Number(row.denominator) - Number(row.numerator)
+                        : row.numerator,
                       row.denominator,
                       row.unit || STRUCTURES
                     )}{' '}
