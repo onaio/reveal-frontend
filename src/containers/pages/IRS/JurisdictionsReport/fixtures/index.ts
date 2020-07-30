@@ -184,7 +184,7 @@ export const ZambiaLowerJurisdictionsColumns: Array<DrillDownColumn<Dictionary>>
   },
   {
     Header: 'Spray areas visited',
-    accessor: 'sprayAreasVisited',
+    accessor: 'visitedareas',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
@@ -210,17 +210,17 @@ export const ZambiaLowerJurisdictionsColumns: Array<DrillDownColumn<Dictionary>>
   },
   {
     Header: 'Structures Found',
-    accessor: 'structures_found',
+    accessor: 'foundstruct',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
-    accessor: 'found_coverage',
+    accessor: 'foundcoverage',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Success Rate',
-    accessor: 'success_rate',
+    accessor: 'spraysuccess',
   },
 ];
 

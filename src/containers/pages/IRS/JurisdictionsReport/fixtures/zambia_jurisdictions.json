@@ -697,10 +697,9 @@
         "perctvisareaseffect": 2.0,
         "spraycovtarg": 0.5882352941176471,
         "roomcov": 0.8709677419354839,
-        "sprayAreasVisited": 33,
-        "structures_found": 40,
-        "found_coverage": 0.8,
-        "success_rate": 0.7
+        "visitedareas": 33,
+        "foundcoverage": 0.8,
+        "spraysuccess": 0.7
       },
       {
         "id": "3234514b-6a1b-56f5-9fff-3a54f05e03c3",
