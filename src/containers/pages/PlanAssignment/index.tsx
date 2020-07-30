@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { ActionCreator, Store } from 'redux';
 import Loading from '../../../components/page/Loading';
 import { withTreeWalker } from '../../../components/TreeWalker';
-import { MAP_DISABLED_PLAN_TYPES } from '../../../configs/env';
+import { ASSIGNMENT_PAGE_SHOW_MAP, MAP_DISABLED_PLAN_TYPES } from '../../../configs/env';
 import {
   AN_ERROR_OCURRED,
   COULD_NOT_LOAD_ASSIGNMENTS,
@@ -81,7 +81,9 @@ export const isMapDisabled = (plan: PlanDefinition | null): boolean => {
   if (plan) {
     const type = plan.useContext.find(element => element.code === INTERVENTION_TYPE_CODE);
     if (type) {
-      return MAP_DISABLED_PLAN_TYPES.includes(type.valueCodableConcept);
+      return (
+        !ASSIGNMENT_PAGE_SHOW_MAP && MAP_DISABLED_PLAN_TYPES.includes(type.valueCodableConcept)
+      );
     }
   }
   return false;
