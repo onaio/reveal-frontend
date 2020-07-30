@@ -55,7 +55,7 @@ interface Props {
   onClickNext: () => void;
 }
 
-const defaultProps = {
+const defaultProps: Props = {
   autoSelectCreator: autoSelectNodes,
   fetchJurisdictionsMetadataCreator: fetchJurisdictionsMetadata,
   fetchTreeCreator: fetchTree,
