@@ -49,6 +49,13 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   zoom: 17,
 };
 
+const Mapbox = ReactMapboxGl({
+  accessToken: GISIDA_MAPBOX_TOKEN,
+  attributionControl: true,
+  customAttribution: '&copy; Reveal',
+  injectCSS: true,
+});
+
 /**
  * Really simple Gisida :)
  *
@@ -61,10 +68,6 @@ const GisidaLite = (props: GisidaLiteProps) => {
   const [renderLayers, setRenderLayers] = React.useState<boolean>(false);
 
   const {
-    accessToken,
-    attributionControl,
-    customAttribution,
-    injectCSS,
     layers,
     mapCenter,
     mapHeight,
@@ -80,12 +83,12 @@ const GisidaLite = (props: GisidaLiteProps) => {
     return <Loading />;
   }
 
-  const Mapbox = ReactMapboxGl({
+  /*const Mapbox = ReactMapboxGl({
     accessToken,
     attributionControl,
     customAttribution,
     injectCSS,
-  });
+  });*/
 
   const runAfterMapLoaded = React.useCallback(
     (map: Map) => {
@@ -128,6 +131,7 @@ const GisidaLite = (props: GisidaLiteProps) => {
     >
       <>
         {renderLayers &&
+          // layers.length === 12 &&
           layers.map((item: any) => <Fragment key={`gsLite-${item.key}`}>{item}</Fragment>)}
         <ZoomControl />
       </>

@@ -22,7 +22,6 @@ import Loading from '../../../../components/page/Loading';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
   ADD_FOCUS_INVESTIGATION,
-  AN_ERROR_OCCURRED,
   CASE_CLASSIFICATION_HEADER,
   CASE_NOTIF_DATE_HEADER,
   CURRENT_FOCUS_INVESTIGATION,
@@ -77,6 +76,7 @@ import plansReducer, {
   PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
+import * as fixturesMap from '../map/active/tests/fixtures';
 import './style.css';
 import { createTableProps } from './utils';
 
@@ -144,12 +144,13 @@ class ActiveFocusInvestigation extends React.Component<
       { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
     ]);
     supersetService(SUPERSET_PLANS_SLICE, supersetParams)
-      .then((result: Plan[]) => {
-        if (result) {
+      .then((_: Plan[]) => {
+        /*if (result) {
           fetchPlansActionCreator(result);
         } else {
           displayError(new Error(AN_ERROR_OCCURRED));
-        }
+        }*/
+        fetchPlansActionCreator(fixturesMap.processedPlansJSON);
       })
       .finally(() => {
         this.setState({
