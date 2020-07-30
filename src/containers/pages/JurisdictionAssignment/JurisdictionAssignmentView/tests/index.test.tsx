@@ -139,7 +139,7 @@ describe('src/containers/JurisdictionView', () => {
     });
 
     expect(wrapper.text()).toMatchInlineSnapshot(
-      `"Planning toolA2-Lusaka Akros Test Focus 2Assign JurisdictionsAssignment WrapperI love oov"`
+      `"Planning toolA2-Lusaka Akros Test Focus 2Assign JurisdictionsI love oov"`
     );
 
     // check props given to mock component

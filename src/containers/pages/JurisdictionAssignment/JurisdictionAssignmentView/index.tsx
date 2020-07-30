@@ -15,7 +15,7 @@ import { ActionCreator, Store } from 'redux';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Ripple from '../../../../components/page/Loading';
-import { JURISDICTION_METADATA_RISK } from '../../../../configs/env';
+import { ASSIGNMENT_PAGE_SHOW_MAP, JURISDICTION_METADATA_RISK } from '../../../../configs/env';
 import {
   ASSIGN_JURISDICTIONS,
   COULD_NOT_LOAD_JURISDICTION,
@@ -236,7 +236,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
-      <ConnectedAssignmentMapWrapper {...AssignmentWrapperProps} />
+      {ASSIGNMENT_PAGE_SHOW_MAP && <ConnectedAssignmentMapWrapper {...AssignmentWrapperProps} />}
       <ConnectedJurisdictionTable {...JurisdictionTableProps} />
     </>
   );

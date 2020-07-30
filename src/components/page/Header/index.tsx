@@ -41,7 +41,6 @@ import {
   FORM_DRAFT_FILES,
   HOME,
   IRS_REPORTING_TITLE,
-  IRS_TITLE,
   JSON_VALIDATORS,
   JURISDICTION_METADATA,
   LOGIN,
@@ -64,8 +63,6 @@ import {
   CLIENTS_LIST_URL,
   EDIT_SERVER_SETTINGS_URL,
   FI_URL,
-  INTERVENTION_IRS_DRAFTS_URL,
-  INTERVENTION_IRS_URL,
   JSON_VALIDATORS_URL,
   JURISDICTION_METADATA_URL,
   LOGOUT_URL,
@@ -142,11 +139,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
 
               {(ENABLE_IRS || ENABLE_FI) && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
-                  <DropdownToggle
-                    nav={true}
-                    caret={true}
-                    className={path === INTERVENTION_IRS_URL ? 'nav-link active' : 'nav-link'}
-                  >
+                  <DropdownToggle nav={true} caret={true} className={'nav-link'}>
                     {PLAN_TITLE}
                   </DropdownToggle>
                   <DropdownMenu right={true}>
@@ -155,17 +148,6 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                         {PLANS}
                       </NavLink>
                     </DropdownItem>
-                    {ENABLE_IRS && (
-                      <DropdownItem>
-                        <NavLink
-                          to={INTERVENTION_IRS_DRAFTS_URL}
-                          className="nav-link"
-                          activeClassName="active"
-                        >
-                          {IRS_TITLE}
-                        </NavLink>
-                      </DropdownItem>
-                    )}
                     {ENABLE_PLANNING && (
                       <DropdownItem>
                         <NavLink

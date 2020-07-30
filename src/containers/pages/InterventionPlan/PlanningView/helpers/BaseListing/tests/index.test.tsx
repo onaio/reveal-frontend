@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 import React from 'react';
 import { BaseListComponent } from '..';
 import { PlanRecord } from '../../../../../../../store/ducks/plans';
-import { irsDraftPageColumns } from '../../utils';
+import { draftPageColumns } from '../../utils';
 
 describe('src/../pages/InterventionPlan/PlanningView/helpers', () => {
   it('base list is renders correctly', () => {
@@ -24,7 +24,7 @@ describe('src/../pages/InterventionPlan/PlanningView/helpers', () => {
     const noDataMessage = 'just blank';
     const getTableProps = (loading: boolean, data: PlanRecord[]) => {
       return {
-        columns: irsDraftPageColumns,
+        columns: draftPageColumns,
         data,
         loading,
         loadingComponent: () => <>Loading...</>,
