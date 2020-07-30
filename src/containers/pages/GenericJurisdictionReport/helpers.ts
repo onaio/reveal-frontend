@@ -117,6 +117,63 @@ export const ZambiaJurisdictionsColumns = [
   },
 ];
 
+/** columns for Zambia IRS jurisdictions districts and Catchment Area */
+export const ZambiaLowerJurisdictionsColumns = [
+  {
+    Header: 'Name',
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
+  },
+  {
+    Header: 'Total Spray Areas',
+    accessor: 'totareas',
+  },
+  {
+    Header: 'Targeted Spray Areas',
+    accessor: 'targareas',
+  },
+  {
+    Header: 'Spray areas visited',
+    accessor: 'sprayAreasVisited',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: '% visited Spray Areas Effectively sprayed',
+    accessor: 'perctvisareaseffect',
+  },
+  {
+    Header: 'Total Structures',
+    accessor: 'totstruct',
+  },
+  {
+    Header: 'Targeted Structures',
+    accessor: 'targstruct',
+  },
+  {
+    Header: 'Sprayed Structures',
+    accessor: 'sprayedstruct',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Spray coverage of targeted (Progress)',
+    accessor: 'spraycovtarg',
+  },
+  {
+    Header: 'Structures Found',
+    accessor: 'structures_found',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Found Coverage',
+    accessor: 'found_coverage',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Success Rate',
+    accessor: 'success_rate',
+  },
+];
+
 /** columns for  mda point jurisdictions */
 export const mdaJurisdictionsColumns = [
   {
@@ -197,8 +254,12 @@ export const ZambiaFocusAreasColumns = [
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: 'Room coverage of structures sprayed',
-    accessor: 'roomcov',
+    Header: 'Structures remaining to spray to reach 90% SE',
+    accessor: 'structures_remaining_to_90%_se',
+  },
+  {
+    Header: 'Reviewed with decision',
+    accessor: 'reviewed_with_decision',
   },
 ];
 
@@ -210,6 +271,7 @@ export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionar
   namibia2019: NamibiaColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
   zambiaJurisdictions2019: ZambiaJurisdictionsColumns,
+  zambiaLowerJurisdictions2019: ZambiaLowerJurisdictionsColumns,
 };
 
 export type TableProps = Pick<
