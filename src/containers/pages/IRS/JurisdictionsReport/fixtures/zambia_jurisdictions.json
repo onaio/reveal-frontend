@@ -558,7 +558,8 @@
         "targstruct": 10,
         "perctvisareaseffect": 3.0,
         "spraycovtarg": 0.6111111111111112,
-        "roomcov": 0.8787878787878788
+        "roomcov": 0.8787878787878788,
+        "visitedareas": 12
       },
       {
         "id": "446457c9-1aae-5d85-8e07-90c67e6f6683",

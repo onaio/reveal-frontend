@@ -93,6 +93,7 @@ const mapStateToProps = (
       (jurisdictions = jurisdictions.concat(getGenericJurisdictionsArray(state, slice, planId)))
   );
   let jurisdictionColumn = defaultProps.jurisdictionColumn;
+
   if (jurisdictionId && jurisdictions.length) {
     const juris = jurisdictions.filter(jur => jur.jurisdiction_id === jurisdictionId)[0];
     jurisdictionColumn =
