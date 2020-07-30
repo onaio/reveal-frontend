@@ -4,10 +4,20 @@
  * - provide the selectors
  */
 
-import { Dictionary } from '@onaio/utils/dist/types/types';
+import { Dictionary } from '@onaio/utils';
+import FlatToNested from 'flat-to-nested';
+import { cloneDeep, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
-import { AutoSelectCallback, RawOpenSRPHierarchy, TreeNode } from './types';
+import TreeModel from 'tree-model';
+import { SELECTION_REASON } from './constants';
+import {
+  AutoSelectCallback,
+  Meta,
+  ParsedHierarchySingleNode,
+  RawOpenSRPHierarchy,
+  TreeNode,
+} from './types';
 import {
   autoSelectNodesAndCascade,
   computeParentNodesSelection,
@@ -15,10 +25,8 @@ import {
   findAParentNode,
   generateJurisdictionTree,
   getChildrenForNode,
-  nodeHasChildren,
-  SELECT_KEY,
-  selectionReason,
-  SetSelectAttrToNode,
+  preOrderStructureCountComputation,
+  setSelectOnNode,
 } from './utils';
 
 /** reducer name for hierarchy reducer */
@@ -42,7 +50,7 @@ export const SELECT_NODE = 'opensrp/locations/hierarchy/SELECT_NODE';
 export const DESELECT_NODE = 'opensrp/locations/hierarchy/DESELECT_NODE';
 export const DESELECT_ALL_NODES = 'opensrp/locations/hierarchy/DESELECT_ALL_NODES';
 
-/** action to auto-append/ auto-modify the selected attribute of nodes in a tree */
+// /** action to auto-append/ auto-modify the selected attribute of nodes in a tree */
 export const AUTO_SELECT_NODES = 'opensrp/locations/hierarchy/AUTO_SELECT_NODES';
 
 /** describes action that adds a tree to store */
@@ -51,17 +59,18 @@ export interface FetchedTreeAction extends AnyAction {
   treeByRootId: Dictionary<TreeNode>;
 }
 
+/** describes action to remove all trees */
+export interface DeforestAction extends AnyAction {
+  type: typeof DEFOREST;
+  treeByRootId: {};
+}
+
 /** action to select a node  */
 export interface SelectNodeAction extends AnyAction {
   type: typeof SELECT_NODE;
   nodeId: string;
   rootJurisdictionId: string;
-}
-
-/** describes action to remove all trees */
-export interface DeforestAction extends AnyAction {
-  type: typeof DEFOREST;
-  treeByRootId: {};
+  actionBy: string;
 }
 
 /** describes action to set the selected attribute of a node to false */
@@ -69,6 +78,7 @@ export interface DeselectNodeAction extends AnyAction {
   type: typeof DESELECT_NODE;
   nodeId: string;
   rootJurisdictionId: string;
+  actionBy: string;
 }
 
 /** describes action to automate the node selection process */
@@ -76,13 +86,14 @@ export interface AutoSelectNodesAction extends AnyAction {
   type: typeof AUTO_SELECT_NODES;
   rootJurisdictionId: string;
   callback: AutoSelectCallback;
-  selectedBy: string;
+  actionBy: string;
 }
 
 /** describes an action to deselect or selected nodes in a tree */
 export interface DeselectAllNodesAction extends AnyAction {
   type: typeof DESELECT_ALL_NODES;
   rootJurisdictionId: string;
+  actionBy: string;
 }
 
 /** combined full action types | its a union */
@@ -91,6 +102,7 @@ export type TreeActionTypes =
   | SelectNodeAction
   | DeforestAction
   | DeselectNodeAction
+  | AutoSelectNodesAction
   | DeselectAllNodesAction
   | AnyAction;
 
@@ -120,12 +132,12 @@ export function fetchTree(
 export function selectNode(
   rootJurisdictionId: string,
   nodeId: string,
-  selectedBy: string = selectionReason.USER_CHANGE
+  actionBy: string = SELECTION_REASON.USER_CHANGE
 ): SelectNodeAction {
   return {
+    actionBy,
     nodeId,
     rootJurisdictionId,
-    selectedBy,
     type: SELECT_NODE,
   };
 }
@@ -145,12 +157,12 @@ export function deforest(): DeforestAction {
 export function deselectNode(
   rootJurisdictionId: string,
   nodeId: string,
-  selectedBy: string = selectionReason.USER_CHANGE
+  actionBy: string = SELECTION_REASON.USER_CHANGE
 ): DeselectNodeAction {
   return {
+    actionBy,
     nodeId,
     rootJurisdictionId,
-    selectedBy,
     type: DESELECT_NODE,
   };
 }
@@ -162,19 +174,23 @@ export function deselectNode(
 export function autoSelectNodes(
   rootJurisdictionId: string,
   callback: AutoSelectCallback,
-  selectedBy: string = selectionReason.USER_CHANGE
+  actionBy: string = SELECTION_REASON.USER_CHANGE
 ): AutoSelectNodesAction {
   return {
+    actionBy,
     callback,
     rootJurisdictionId,
-    selectedBy,
     type: AUTO_SELECT_NODES,
   };
 }
 
 /** deselects all nodes in a tree */
-export function deselectAllNodes(rootId: string): DeselectAllNodesAction {
+export function deselectAllNodes(
+  rootId: string,
+  actionBy: string = SELECTION_REASON.NOT_CHANGED
+): DeselectAllNodesAction {
   return {
+    actionBy,
     rootJurisdictionId: rootId,
     type: DESELECT_ALL_NODES,
   };
@@ -184,19 +200,26 @@ export function deselectAllNodes(rootId: string): DeselectAllNodesAction {
 
 /** The store's slice state */
 export interface TreeState {
-  currentParentIdsByRootId: Dictionary<string | undefined>;
+  metaData: Dictionary<Dictionary<Meta>>;
   treeByRootId: Dictionary<TreeNode> | {};
 }
 
 /** TODO - make immutable */
 /** starting state */
 export const initialState: TreeState = {
-  currentParentIdsByRootId: {},
+  metaData: {},
   treeByRootId: {},
 };
 
 // the reducer function
 export default function reducer(state = initialState, action: TreeActionTypes) {
+  const treesByIds = state.treeByRootId;
+  const treeOfInterest = (treesByIds as Dictionary<TreeNode>)[action.rootJurisdictionId];
+
+  const thisRootsMetaData = state.metaData[action.rootJurisdictionId] || {};
+
+  const { nodeId, actionBy, callback } = action;
+
   switch (action.type) {
     case TREE_FETCHED:
       return {
@@ -211,76 +234,80 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
       };
 
     case SELECT_NODE:
-      const treesByIds = state.treeByRootId;
-      const treeOfInterest = (treesByIds as Dictionary<TreeNode>)[action.rootJurisdictionId];
       if (!treeOfInterest) {
         return state;
       }
-      const { treeClone: alteredTree, argNode } = SetSelectAttrToNode(
-        treeOfInterest,
-        action.nodeId,
-        SELECT_KEY,
-        true,
-        true,
-        false,
-        action.selectedBy
+      // compute and populate the metaData field
+      const response = setSelectOnNode(treeOfInterest, nodeId, actionBy, true, false, true);
+
+      if (!response.nodeOfInterest) {
+        return state;
+      }
+
+      const extraMeta = computeParentNodesSelection(
+        response.nodeOfInterest,
+        action.actionBy,
+        thisRootsMetaData
       );
-      computeParentNodesSelection(argNode, action.selectedBy);
+
       return {
         ...state,
-        treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: alteredTree },
+        metaData: {
+          ...state.metaData,
+          [action.rootJurisdictionId]: {
+            ...state.metaData[action.rootJurisdictionId],
+            ...response.metaByJurisdiction,
+            ...extraMeta,
+          },
+        },
       };
 
     case DESELECT_NODE:
-      const allTrees = state.treeByRootId;
-      const wantedTree = (allTrees as Dictionary<TreeNode>)[action.rootJurisdictionId];
-      if (!wantedTree) {
+      if (!treeOfInterest) {
         return state;
       }
-      const response = SetSelectAttrToNode(
-        wantedTree,
-        action.nodeId,
-        SELECT_KEY,
-        false,
-        true,
-        true,
-        action.selectedBy
-      );
+      const res = setSelectOnNode(treeOfInterest, nodeId, actionBy, false, true, true);
+
       return {
         ...state,
-        treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: response.treeClone },
+        metaData: {
+          ...state.metaData,
+          [action.rootJurisdictionId]: {
+            ...state.metaData[action.rootJurisdictionId],
+            ...res.metaByJurisdiction,
+          },
+        },
       };
 
     case AUTO_SELECT_NODES:
-      const theForest = state.treeByRootId;
-      const theTree = (theForest as Dictionary<TreeNode>)[action.rootJurisdictionId];
-      if (!theTree) {
+      if (!treeOfInterest) {
         return state;
       }
-      const treeResponse = autoSelectNodesAndCascade(theTree, action.callback, action.selectedBy);
+      const metaByJurisdictionId = autoSelectNodesAndCascade(
+        treeOfInterest,
+        callback,
+        actionBy,
+        thisRootsMetaData
+      );
+
       return {
         ...state,
-        treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: treeResponse },
+        metaData: {
+          ...state.metaData,
+          [action.rootJurisdictionId]: {
+            ...state.metaData[action.rootJurisdictionId],
+            ...metaByJurisdictionId,
+          },
+        },
       };
 
     case DESELECT_ALL_NODES:
-      // get the tree of interest.
-      const fullForest = state.treeByRootId;
-      const interestingTree = (fullForest as Dictionary<TreeNode>)[action.rootJurisdictionId];
-
-      // set the attr on the root node and cascade
-      const res = SetSelectAttrToNode(
-        interestingTree,
-        action.rootJurisdictionId,
-        SELECT_KEY,
-        false,
-        true,
-        true,
-        selectionReason.NOT_CHANGED
-      );
       return {
         ...state,
-        treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: res.treeClone },
+        metaData: {
+          ...state.metaData,
+          [action.rootJurisdictionId]: {},
+        },
       };
 
     default:
@@ -336,8 +363,8 @@ export const getTreesByIds = (state: Partial<Store>, _: Filters): Dictionary<Tre
  * @param state - the store
  * @param _ -  the filterProps
  */
-export const getParentIdsByRootId = (state: Partial<Store>, _: Filters): Dictionary<string> =>
-  (state as any)[reducerName].currentParentIdsByRootId;
+export const getMetaData = (state: Partial<Store>, _: Filters): Dictionary<Dictionary<Meta>> =>
+  (state as any)[reducerName].metaData;
 
 /** retrieve the tree using a rootNodes id
  * @param state - the store
@@ -350,12 +377,35 @@ export const getTreeById = () =>
     return treesByIds[rootId];
   });
 
+export const getMetaForTree = () => {
+  return createSelector(getMetaData, getRootJurisdictionId, (metaData, rootId) => {
+    return metaData[rootId];
+  });
+};
+
+/** combine tree with metaData */
+export const getTreeWithMeta = () => {
+  return createSelector(getTreeById(), getMetaForTree(), (origTree, metaForTree) => {
+    // walk the tree and update meta field.
+    if (!origTree) {
+      return;
+    }
+    const treeClone = cloneDeep(origTree);
+    treeClone.walk(node => {
+      node.model.meta = metaForTree[node.model.id] ? metaForTree[node.model.id] : {};
+      return true;
+    });
+
+    return treeClone;
+  });
+};
+
 /** retrieve a node given the id
  * @param state - the store
  * @param props -  the filterProps
  */
 export const getNodeById = () =>
-  createSelector(getTreeById(), getNodeId, (tree, nodeId) => {
+  createSelector(getTreeWithMeta(), getNodeId, (tree, nodeId) => {
     if (!tree || !nodeId) {
       return;
     }
@@ -421,7 +471,7 @@ export const getAncestors = () =>
  * @param props -  the filterProps
  */
 export const getCurrentParentNode = () =>
-  createSelector(getTreeById(), getCurrentParentId, findAParentNode);
+  createSelector(getTreeWithMeta(), getCurrentParentId, findAParentNode);
 
 /** returns an array of current children
  * @param state - the store
@@ -436,20 +486,20 @@ export const getCurrentChildren = () => {
  * @param props -  the filterProps
  */
 export const getAllSelectedNodes = () =>
-  createSelector(getTreeById(), getLeafNodesOnly, computeSelectedNodes);
+  createSelector(getTreeWithMeta(), getLeafNodesOnly, computeSelectedNodes);
 
 /** returns an array of all leaf nodes for a particular jurisdiction
  * @param state - the store
  * @param props -  the filterProps
  */
 export const getLeafNodes = () =>
-  createSelector(getTreeById(), tree => {
+  createSelector(getTreeWithMeta(), tree => {
     const nodesList: TreeNode[] = [];
     if (!tree) {
       return [];
     }
     tree.walk(node => {
-      const shouldAddNode = !nodeHasChildren(node);
+      const shouldAddNode = !node.hasChildren();
       if (shouldAddNode) {
         nodesList.push(node);
       }
@@ -508,10 +558,91 @@ export const getSelectedNodesUnderParentNode = () =>
  * @param {Pick<Filters, 'rootJurisdictionId'>} filters
  */
 export const getStructuresCount = () =>
-  createSelector(getTreeById(), tree => {
+  createSelector(getTreeWithMeta(), tree => {
     const allSelectedLeafNodes = computeSelectedNodes(tree, true);
     const reducingFn = (acc: number, value: number) => acc + value;
     return allSelectedLeafNodes
       .map(node => node.model.node.attributes.structureCount)
       .reduce(reducingFn, 0);
   });
+
+/** we might need to reconstruct a tree whose hierarchy includes only the
+ * jurisdiction objects that have selected leaf nodes.(calling this the selected hierarchy)
+ * @param state - the store state
+ * @param props - the Filters
+ */
+export const getSelectedHierarchy = () => {
+  return createSelector(getTreeWithMeta(), origTree => {
+    // need to be very keen not tu mutate the original tree.
+    const tree = cloneDeep(origTree);
+    // get selected leaf nodes.
+    const allSelectedLeafNodes = computeSelectedNodes(tree, true);
+    if (allSelectedLeafNodes.length === 0) {
+      return;
+    }
+
+    let allNodesInPaths = keyBy<TreeNode>(allSelectedLeafNodes, node => node.model.id);
+
+    // create an object with uniq jurisdiction entries for all jurisdictions that exist
+    // in a path that has a selected leaf node.
+    allSelectedLeafNodes.forEach(node => {
+      allNodesInPaths = {
+        ...allNodesInPaths,
+        ...keyBy<TreeNode>(node.getPath(), nd => nd.model.id),
+      };
+    });
+
+    // flatten it into an array in preparation of creating a nested structure
+    const normalNodes: TreeNode[] = [];
+    values(allNodesInPaths).forEach(node => {
+      const data = node.model;
+      // remove the existing children field, we will add it later with the computed children
+      delete data.children;
+      normalNodes.push(data);
+    });
+
+    // nest them normal nodes into a hierarchy
+    // TODO - add a type declaration file.
+    const flatToNested = new (FlatToNested as any)({
+      id: 'id',
+      parent: 'parent',
+    });
+
+    // create a new tree based on the new structure.
+    const nestedNormalNodes = flatToNested.convert(normalNodes);
+    const model = new TreeModel();
+    const root = model.parse<ParsedHierarchySingleNode>(nestedNormalNodes);
+    preOrderStructureCountComputation(root);
+    return root;
+  });
+};
+
+/** gets the parent node from the selectedHierarchy
+ * @param state - the store state
+ * @param props - the filters
+ */
+export const getParentNodeInSelectedTree = () => {
+  return createSelector(getSelectedHierarchy(), getCurrentParentId, findAParentNode);
+};
+
+/** gets the children nodes from the selectedHierarchy
+ * @param state - the store state
+ * @param props - the filters
+ */
+export const getCurrentChildrenInSelectedTre = () => {
+  return createSelector(getParentNodeInSelectedTree(), getChildrenForNode);
+};
+
+/** a combined selector that gets the parent node and the currentChildren
+ * from the selectedHierarchy
+ * @param state - the store state
+ * @param props - the filters
+ */
+export const getNodesInSelectedTree = () =>
+  createSelector(
+    getParentNodeInSelectedTree(),
+    getCurrentChildrenInSelectedTre(),
+    (parentNode, childrenNodes) => {
+      return { parentNode, childrenNodes };
+    }
+  );

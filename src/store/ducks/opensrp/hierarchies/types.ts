@@ -21,12 +21,18 @@ export interface HierarchySingleNode<TChild> {
   children?: TChild;
   parent?: string;
 }
+/** properties that will be added to meta field */
+export interface Meta {
+  selected?: boolean;
+  actionBy?: string;
+  metaStructureCount?: number;
+}
 
 /** field that we will use to add ad-hoc information to a node
  * this field will be added to each node during parsing the raw data from the api
  */
 export interface MetaField {
-  meta: { selected: boolean };
+  meta: Meta;
 }
 
 /** single node description after coming in from the api */
