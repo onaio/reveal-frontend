@@ -1,5 +1,5 @@
 import ElementMap from '@onaio/element-map';
-import ListView from '@onaio/list-view';
+import ListView, { renderHeadersFuncType } from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -268,8 +268,8 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     }
   };
 
-  const renderHeaders = (items: any) => {
-    const localItems = [...items];
+  const renderHeaders: renderHeadersFuncType = items => {
+    const localItems = items ? [...items] : [];
     localItems.shift();
     return (
       <thead className="thead-plan-orgs">

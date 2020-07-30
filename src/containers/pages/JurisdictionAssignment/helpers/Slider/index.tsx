@@ -34,6 +34,7 @@ import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
   FetchJurisdictionsMetadataAction,
   getJurisdictionsMetadata,
+  JurisdictionsMetadata,
   reducerName,
 } from '../../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import './slider.css';
@@ -47,11 +48,11 @@ interface Props {
   tree?: TreeNode;
   structuresCount: number;
   fetchJurisdictionsMetadataCreator: ActionCreator<FetchJurisdictionsMetadataAction>;
-  jurisdictionsMetadata: any[];
+  jurisdictionsMetadata: JurisdictionsMetadata[];
   autoSelectCreator: ActionCreator<AutoSelectNodesAction>;
   fetchTreeCreator: ActionCreator<FetchedTreeAction>;
   plan: PlanDefinition | null;
-  onClickNext: any;
+  onClickNext: () => void;
 }
 
 const defaultProps = {
@@ -83,7 +84,9 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
   } = props;
 
   const onChangeComplete = (val: number | Range) => {
-    const metaJurOfInterest = jurisdictionsMetadata.filter(metaObject => metaObject.value > val);
+    const metaJurOfInterest = jurisdictionsMetadata.filter(
+      metaObject => parseInt(metaObject.value, 10) > val
+    );
     const jurisdictionsIdsMeta = metaJurOfInterest.map(meta => meta.key);
     const callback = (node: TreeNode) => {
       const isLeafNodePastThreshHold =
