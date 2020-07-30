@@ -434,6 +434,23 @@ export const getMetaForPlanInTree = () => {
   });
 };
 
+/** combine tree with metaData */
+export const getTreeWithMeta = () => {
+  return createSelector(getTreeById(), getMetaForTree(), (origTree, metaForTree) => {
+    // walk the tree and update meta field.
+    if (!origTree) {
+      return;
+    }
+    const treeClone = cloneDeep(origTree);
+    treeClone.walk(node => {
+      node.model.meta = metaForTree[node.model.id] ? metaForTree[node.model.id] : {};
+      return true;
+    });
+
+    return treeClone;
+  });
+};
+
 /** retrieve a node given the id
  * @param state - the store
  * @param props -  the filterProps
