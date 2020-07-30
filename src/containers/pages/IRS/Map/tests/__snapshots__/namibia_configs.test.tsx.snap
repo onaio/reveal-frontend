@@ -5,26 +5,18 @@ Array [
   <p
     className="indicator-breakdown"
   >
-    Progress
-    :
-     
+    Progress: 
     7 of 14 room(s)
      
-    (
-    50
-    %)
+    (50%)
   </p>,
   <p
     className="indicator-breakdown"
   >
-    Progress
-    :
-     
+    Progress: 
     7 of 14 room(s)
      
-    (
-    50
-    %)
+    (50%)
   </p>,
 ]
 `;
