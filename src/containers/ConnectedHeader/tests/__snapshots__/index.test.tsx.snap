@@ -86,18 +86,6 @@ Object {
                 Manage Plans
               </NavLink>
             </DropdownItem>
-            <DropdownItem
-              tag="button"
-              toggle={true}
-            >
-              <NavLink
-                activeClassName="active"
-                className="nav-link"
-                to="/intervention/irs/drafts"
-              >
-                IRS
-              </NavLink>
-            </DropdownItem>
           </DropdownMenu>
         </UncontrolledDropdown>
         <NavItem
@@ -361,18 +349,6 @@ Object {
                 to="/plans/list"
               >
                 Manage Plans
-              </NavLink>
-            </DropdownItem>
-            <DropdownItem
-              tag="button"
-              toggle={true}
-            >
-              <NavLink
-                activeClassName="active"
-                className="nav-link"
-                to="/intervention/irs/drafts"
-              >
-                IRS
               </NavLink>
             </DropdownItem>
           </DropdownMenu>
