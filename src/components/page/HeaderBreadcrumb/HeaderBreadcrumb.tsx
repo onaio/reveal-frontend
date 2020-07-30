@@ -43,8 +43,18 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
       let breadCrumbItem: string | JSX.Element;
       if (page.url && page.url.trim()) {
         breadCrumbItem = (
-          // tslint:disable-next-line: jsx-no-lambda
-          <Link to={page.url} key={key} onClick={() => fetchUpdatedCurrentParentHandler('', false)}>
+          <Link
+            to={page.url}
+            key={key}
+            // tslint:disable-next-line: jsx-no-lambda
+            onClick={() => {
+              // add this check because not all components are passing this handler function
+              // as a prop to this component
+              if (!!fetchUpdatedCurrentParentHandler) {
+                fetchUpdatedCurrentParentHandler('', false);
+              }
+            }}
+          >
             {page.label}
           </Link>
         );

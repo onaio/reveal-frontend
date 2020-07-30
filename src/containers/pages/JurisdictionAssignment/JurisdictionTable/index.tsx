@@ -50,6 +50,7 @@ import hierarchyReducer, {
   getCurrentParentNode,
   getLeafNodes,
   getMapCurrentParent,
+  MapCurrentParentInfo,
   reducerName as hierarchyReducerName,
   selectNode,
   SelectNodeAction,
@@ -93,6 +94,7 @@ export interface JurisdictionSelectorTableProps {
   leafNodes: TreeNode[];
   autoSelectionFlow: boolean;
   deselectAllNodesCreator: typeof deselectAllNodes;
+  mapCurrentParent: MapCurrentParentInfo;
 }
 
 const defaultProps = {
@@ -105,6 +107,10 @@ const defaultProps = {
   fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
   jurisdictionsMetadata: [],
   leafNodes: [],
+  mapCurrentParent: {
+    currentParentId: '',
+    isRootJurisdiction: false,
+  },
   rootJurisdictionId: '',
   selectNodeCreator: selectNode,
   selectedLeafNodes: [],
@@ -129,6 +135,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     selectedLeafNodes,
     plan,
     jurisdictionsMetadata,
+    mapCurrentParent,
     fetchUpdatedCurrentParentActionCreator,
     serviceClass,
     autoSelectionFlow,
@@ -186,7 +193,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   // been set, if drilling down has begun.
   let derivedParentNode = currentParentNode;
   let derivedChildrenNodes = currentChildren;
-  if (!props.currentParentId) {
+  if (!props.currentParentId && !mapCurrentParent.currentParentId.length) {
     derivedParentNode = undefined;
     derivedChildrenNodes = currentParentNode ? [currentParentNode] : [];
   }
@@ -417,7 +424,7 @@ export { JurisdictionTable };
 /** map state to props interface  */
 type MapStateToProps = Pick<
   JurisdictionSelectorTableProps,
-  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes'
+  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes' | 'leafNodes' | 'mapCurrentParent'
 >;
 
 /** map action creators interface */
@@ -453,6 +460,8 @@ const mapStateToProps = (
   return {
     currentChildren: childrenSelector(state, filters),
     currentParentNode: parentNodeSelector(state, filters),
+    leafNodes: leafNodesSelector(state, filters),
+    mapCurrentParent: getMapCurrentParent(state),
     selectedLeafNodes: selectedLeafNodesSelector(state, filters),
   };
 };

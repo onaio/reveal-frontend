@@ -96,7 +96,6 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     serviceClass,
     currentChildren,
     fetchJurisdictionsActionCreator,
-    fetchUpdatedCurrentParentActionCreator,
     getJurisdictionsFeatures,
     currentParentId,
     rootJurisdictionId,
@@ -107,9 +106,6 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   const [loading, setLoading] = React.useState(true);
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   React.useEffect(() => {
-    if (!currentParentId) {
-      fetchUpdatedCurrentParentActionCreator('', true);
-    }
     if (!getJurisdictionsFeatures.features.length) {
       setLoading(true);
       const params = {
@@ -228,7 +224,7 @@ const mapStateToProps = (
       ? getMapCurrentParent(state).currentParentId
       : ownProps.currentParentId || ownProps.rootJurisdictionId,
     jurisdictionIdsArray:
-      !ownProps.currentParentId && getMapCurrentParent(state).isRootJurisdiction
+      !ownProps.currentParentId && !getMapCurrentParent(state).currentParentId.length
         ? [ownProps.rootJurisdictionId]
         : childJurisdictions.map((node: TreeNode) => node.model.id),
     parentId:
