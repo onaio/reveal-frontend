@@ -94,6 +94,57 @@ describe('containers/pages/AssigmentMapWrapper', () => {
   });
   it('works correctly with store', async () => {
     fetch.mockResponseOnce(JSON.stringify([fixtures.jurisdiction1]), { status: 200 });
+    store.dispatch(fetchJurisdictions(fixtures.payload as any));
+    const props = {
+      currentParentId: '2492',
+      rootJurisdictionId: '2492',
+      serviceClass: OpenSRPService,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedAssignmentMapWrapper {...props} />
+        </Router>
+      </Provider>
+    );
+    const params = {
+      is_jurisdiction: true,
+      return_geometry: true,
+    };
+    const result = await getJurisdictions(['2492'], params, 1);
+    await flushPromises();
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://test.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=true&jurisdiction_ids=2492',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+    ]);
+    expect(fetch.mock.calls).toHaveLength(1);
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
+      currentChildren: [],
+      currentParentId: '2492',
+      fetchJurisdictionsActionCreator: expect.any(Function),
+      fetchUpdatedCurrentParentActionCreator: expect.any(Function),
+      getJurisdictionsFeatures: {
+        features: [],
+        type: 'FeatureCollection',
+      },
+      rootJurisdictionId: '2492',
+      serviceClass: OpenSRPService,
+    });
+    expect(result).toEqual({ error: null, value: [fixtures.jurisdiction1] });
+    wrapper.unmount();
+  });
+  it('test that current children and geojson are dispatched in store correctly', async () => {
+    fetch.mockResponseOnce(JSON.stringify([fixtures.jurisdiction1]), { status: 200 });
     store.dispatch(fetchTree(sampleHierarchy, '2942'));
     store.dispatch(fetchJurisdictions(fixtures.payload as any));
     const children = getCurrentChildren()(store.getState(), {

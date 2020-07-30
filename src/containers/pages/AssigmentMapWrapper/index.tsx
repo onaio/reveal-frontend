@@ -85,22 +85,6 @@ export const onJurisdictionClick = (props: any) => {
 };
 
 /**
- * Handler for dispatching current parent ID from map
- * @param currentParentId - clicked jurisdiction on map
- * @param isRootJurisdiction - boolean to know whether cicker jurisdiction is root
- * @param props - component props
- */
-
-export const fetchUpdatedCurrentParentHandler = (
-  currentParentId: string,
-  isRootJurisdiction: boolean,
-  props: any
-) => {
-  const { fetchUpdatedCurrentParentActionCreator } = props;
-  fetchUpdatedCurrentParentActionCreator(currentParentId, isRootJurisdiction);
-};
-
-/**
  * This is a map HOC for the plan and jurisdiction assignment pages
  * It is responsuble for fetching jurisdiction geojson and wiring down to
  * GisidaLite map
@@ -112,6 +96,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     serviceClass,
     currentChildren,
     fetchJurisdictionsActionCreator,
+    fetchUpdatedCurrentParentActionCreator,
     getJurisdictionsFeatures,
     currentParentId,
     rootJurisdictionId,
@@ -122,6 +107,9 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   const [loading, setLoading] = React.useState(true);
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   React.useEffect(() => {
+    if (!currentParentId) {
+      fetchUpdatedCurrentParentActionCreator('', true);
+    }
     if (!getJurisdictionsFeatures.features.length) {
       setLoading(true);
       const params = {
@@ -227,7 +215,7 @@ const mapStateToProps = (
 ): MapStateToProps => {
   const filters: Filters = {
     currentParentId: getMapCurrentParent(state).currentParentId.length
-      ? getMapCurrentParent(state)
+      ? getMapCurrentParent(state).currentParentId
       : ownProps.currentParentId,
     leafNodesOnly: true,
     rootJurisdictionId: ownProps.rootJurisdictionId,
@@ -236,8 +224,8 @@ const mapStateToProps = (
   const childJurisdictions = getCurrentChildren()(state, filters);
   const jurisdictionFilters: JurisdictionGeomFilters = {
     filterGeom: true,
-    jurisdictionId: getMapCurrentParent(state).length
-      ? getMapCurrentParent(state)
+    jurisdictionId: getMapCurrentParent(state).currentParentId.length
+      ? getMapCurrentParent(state).currentParentId
       : ownProps.currentParentId || ownProps.rootJurisdictionId,
     jurisdictionIdsArray:
       !ownProps.currentParentId && getMapCurrentParent(state).isRootJurisdiction
@@ -249,14 +237,14 @@ const mapStateToProps = (
       !ownProps.currentParentId
         ? undefined
         : getMapCurrentParent(state).length
-        ? getMapCurrentParent(state)
+        ? getMapCurrentParent(state).currentParentId
         : ownProps.currentParentId || ownProps.rootJurisdictionId,
   };
 
   return {
     currentChildren: childJurisdictions,
-    currentParentId: getMapCurrentParent(state).length
-      ? getMapCurrentParent(state)
+    currentParentId: getMapCurrentParent(state).currentParentId.length
+      ? getMapCurrentParent(state).currentParentId
       : ownProps.currentParentId,
     getJurisdictionsFeatures: getJurisdictionsFC()(
       state,

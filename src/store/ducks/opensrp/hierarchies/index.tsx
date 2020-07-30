@@ -80,7 +80,8 @@ export interface DeforestAction extends AnyAction {
 
 export interface FetchUpdatedCurrentParent extends AnyAction {
   type: typeof FETCH_MAP_CURRENT_PARENT;
-  mapCurrentParent: MapCurrentParentInfo;
+  currentParentId: string;
+  isRootJurisdiction: boolean;
 }
 
 /** action to select a node  */
@@ -152,10 +153,8 @@ export function fetchUpdatedCurrentParent(
   isRootJurisdiction: boolean
 ): FetchUpdatedCurrentParent {
   return {
-    mapCurrentParent: {
-      currentParentId,
-      isRootJurisdiction,
-    },
+    currentParentId,
+    isRootJurisdiction,
     type: FETCH_MAP_CURRENT_PARENT,
   };
 }
@@ -286,7 +285,7 @@ export default function reducer(state: ImmutableTreeState = initialState, action
       return {
         ...state,
         mapCurrentParent: {
-          currentParentId: action.mapCurrentParentId || '',
+          currentParentId: action.currentParentId || '',
           isRootJurisdiction: action.isRootJurisdiction,
         },
       };
