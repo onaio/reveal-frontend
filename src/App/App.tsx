@@ -44,7 +44,6 @@ import { providers } from '../configs/settings';
 import '@onaio/drill-down-table/dist/table.css';
 import { Footer } from '../components/page/Footer';
 import {
-  ACTIVE_IRS_PLAN_URL,
   ASSIGN_JURISDICTIONS_URL,
   ASSIGN_PLAN_URL,
   ASSIGN_PRACTITIONERS_URL,
@@ -55,7 +54,6 @@ import {
   CLIENTS_LIST_URL,
   CREATE_ORGANIZATION_URL,
   CREATE_PRACTITIONER_URL,
-  DRAFT_IRS_PLAN_URL,
   EDIT_ORGANIZATION_URL,
   EDIT_PRACTITIONER_URL,
   EDIT_SERVER_SETTINGS_URL,
@@ -65,7 +63,6 @@ import {
   FI_URL,
   GA_ENV_TEST,
   HOME_URL,
-  INTERVENTION_IRS_DRAFTS_URL,
   JSON_VALIDATORS_URL,
   JURISDICTION_METADATA_URL,
   LOGOUT_URL,
@@ -75,7 +72,6 @@ import {
   MAP,
   MDA_POINT_CHILD_REPORT_URL,
   MDA_POINT_LOCATION_REPORT_URL,
-  NEW_IRS_PLAN_URL,
   NEW_PLAN_URL,
   NEW_PLANNING_PLAN_URL,
   ORGANIZATIONS_LIST_URL,
@@ -102,14 +98,11 @@ import FIJurisdiction from '../containers/pages/FocusInvestigation/jurisdiction'
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
 import ConnectedPlanCompletion from '../containers/pages/FocusInvestigation/map/planCompletion';
 import Home from '../containers/pages/Home/Home';
-import IrsPlan from '../containers/pages/InterventionPlan/IRSPlan';
 import BaseNewPlan, {
-  NewIRSPlan,
   NewPlanForPlanning,
 } from '../containers/pages/InterventionPlan/NewPlan/General';
 import { PlanDefinitionList } from '../containers/pages/InterventionPlan/PlanDefinitionList';
 import { DraftPlans } from '../containers/pages/InterventionPlan/PlanningView/DraftPlans';
-import { IRSPlans } from '../containers/pages/InterventionPlan/PlanningView/IRSPlans';
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import { OpenSRPPlansList } from '../containers/pages/IRS/assignments';
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
@@ -211,38 +204,6 @@ const App = (props: AppProps) => {
                   exact={true}
                   path="/"
                   component={Home}
-                />
-                {/* Draft IRS Plans list view */}
-                <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={INTERVENTION_IRS_DRAFTS_URL}
-                  component={IRSPlans}
-                />
-                {/* New IRS Plan form view */}
-                <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={NEW_IRS_PLAN_URL}
-                  component={NewIRSPlan}
-                />
-                {/* Draft IRS Plan Jurisdiction Selection view */}
-                <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={`${DRAFT_IRS_PLAN_URL}/:id`}
-                  component={IrsPlan}
-                />
-                {/* Draft IRS Plan Team Assignment view */}
-                <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={`${ACTIVE_IRS_PLAN_URL}/:id`}
-                  component={IrsPlan}
                 />
                 {/* MDA point Reporting plan table view */}
                 <ConnectedPrivateRoute

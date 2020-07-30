@@ -10,19 +10,10 @@ import { planActivitiesMap } from '../../../../../components/forms/PlanForm/help
 import HeaderBreadcrumb, {
   Page,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import {
-  COUNTRY,
-  CREATE_NEW_PLAN,
-  DRAFT_PLANS,
-  DRAFTS_PARENTHESIS,
-  HOME,
-  IRS_PLANS,
-  PLANS,
-} from '../../../../../configs/lang';
+import { COUNTRY, CREATE_NEW_PLAN, DRAFT_PLANS, HOME, PLANS } from '../../../../../configs/lang';
 import {
   ASSIGN_JURISDICTIONS_URL,
   HOME_URL,
-  INTERVENTION_IRS_DRAFTS_URL,
   NEW_PLAN_URL,
   PLAN_LIST_URL,
   PLANNING_VIEW_URL,
@@ -154,33 +145,6 @@ export const NewPlanForPlanning = () => {
       redirectAfterAction: PLANNING_VIEW_URL,
     },
     showJurisdictionDetails: false,
-  };
-  return <ConnectedBaseNewPlan {...baseNewPlanProps} />;
-};
-
-/** NewIRSPlan can and will be removed once the irs planning module is removed
- * at the moment it is retained so that the IRS planning module functionality for
- * creating a new plan remains the same
- */
-/** IRS-specific form for  creating a plan */
-export const NewIRSPlan = () => {
-  const baseNewPlanProps = {
-    breadCrumbParentPage: {
-      label: `${IRS_PLANS} ${DRAFTS_PARENTHESIS}`,
-      url: INTERVENTION_IRS_DRAFTS_URL,
-    },
-    extraPlanFormProps: {
-      allowMoreJurisdictions: false,
-      cascadingSelect: false,
-      disabledFields: ['interventionType', 'status'],
-      initialValues: {
-        ...defaultInitialValues,
-        activities: planActivitiesMap[InterventionType.IRS],
-        interventionType: InterventionType.IRS,
-      },
-      jurisdictionLabel: COUNTRY,
-      redirectAfterAction: INTERVENTION_IRS_DRAFTS_URL,
-    },
   };
   return <ConnectedBaseNewPlan {...baseNewPlanProps} />;
 };

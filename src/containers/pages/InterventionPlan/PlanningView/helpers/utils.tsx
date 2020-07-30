@@ -11,7 +11,7 @@ import HeaderBreadcrumbs, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { CREATE_NEW_PLAN, DATE_CREATED, NAME, STATUS_HEADER } from '../../../../../configs/lang';
 import { planStatusDisplay } from '../../../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL, DRAFT_IRS_PLAN_URL } from '../../../../../constants';
+import { ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
 import { PlanRecord } from '../../../../../store/ducks/plans';
 import { RenderProp } from './OpenSRPPlansList';
 
@@ -30,24 +30,6 @@ export const commonColumns: Array<DrillDownColumn<PlanRecord>> = [
     maxWidth: 50,
     minWidth: 20,
   },
-];
-
-/** columns for the irs draft plan page */
-export const irsDraftPageColumns: Array<DrillDownColumn<PlanRecord>> = [
-  {
-    Cell: (cell: Cell<PlanRecord>) => {
-      const original = cell.row.original;
-      return (
-        <div>
-          <Link to={`${DRAFT_IRS_PLAN_URL}/${original.id || original.plan_id}`}>{cell.value}</Link>
-        </div>
-      );
-    },
-    Header: NAME,
-    accessor: 'plan_title',
-    minWidth: 200,
-  },
-  ...commonColumns,
 ];
 
 /** columns for the draft plan page */
