@@ -60,7 +60,7 @@ export interface ZambiaIRSFocusArea extends GenericJurisdiction {
   spraysuccess: number;
   roomcov: number;
   notsprayed_reasons: string[];
-  notsprayed_reasons_counts: Dictionary;
+  notsprayed_reasons_counts: Dictionary<number>;
 }
 
 // actions
