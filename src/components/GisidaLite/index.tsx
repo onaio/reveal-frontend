@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash';
 import { EventData, Style } from 'mapbox-gl';
 import { Map } from 'mapbox-gl';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl';
 import { FitBounds } from 'react-mapbox-gl/lib/map';
 import Loading from '../../components/page/Loading';
@@ -17,10 +17,6 @@ interface MapIcon {
 
 /** interface for  GisidaLite props */
 export interface GisidaLiteProps {
-  accessToken: string;
-  attributionControl: boolean;
-  customAttribution: string;
-  injectCSS: boolean;
   layers: JSX.Element[];
   mapCenter: [number, number] | undefined;
   mapBounds?: FitBounds;
@@ -35,10 +31,6 @@ export interface GisidaLiteProps {
 
 /** Default props for GisidaLite */
 const gisidaLiteDefaultProps: GisidaLiteProps = {
-  accessToken: GISIDA_MAPBOX_TOKEN,
-  attributionControl: true,
-  customAttribution: '&copy; Reveal',
-  injectCSS: true,
   layers: [],
   mapCenter: undefined,
   mapHeight: '800px',
@@ -83,13 +75,6 @@ const GisidaLite = (props: GisidaLiteProps) => {
     return <Loading />;
   }
 
-  /*const Mapbox = ReactMapboxGl({
-    accessToken,
-    attributionControl,
-    customAttribution,
-    injectCSS,
-  });*/
-
   const runAfterMapLoaded = React.useCallback(
     (map: Map) => {
       if (mapIcons) {
@@ -105,9 +90,6 @@ const GisidaLite = (props: GisidaLiteProps) => {
                 | ImageData
             ) => {
               map.addImage(element.id, res);
-              if (!renderLayers) {
-                setRenderLayers(true);
-              }
             }
           );
         });
@@ -115,6 +97,24 @@ const GisidaLite = (props: GisidaLiteProps) => {
     },
     [mapIcons]
   );
+
+  /** Workaround to make sure each time layers change, we set renderLayers to false
+   * so that we can force the layers to be re-rendered
+   */
+  useEffect(() => {
+    if (renderLayers) {
+      setRenderLayers(false);
+    }
+  }, [layers]);
+
+  /**
+   * We want to make sure when layers GeoJSON change we set renderLayers to true
+   */
+  const onRender = (_: Map, __: React.SyntheticEvent<any>) => {
+    if (!renderLayers) {
+      setRenderLayers(true);
+    }
+  };
 
   return (
     <Mapbox
@@ -128,10 +128,10 @@ const GisidaLite = (props: GisidaLiteProps) => {
       fitBounds={mapBounds}
       onStyleLoad={runAfterMapLoaded}
       onClick={onClickHandler}
+      onRender={onRender}
     >
       <>
         {renderLayers &&
-          // layers.length === 12 &&
           layers.map((item: any) => <Fragment key={`gsLite-${item.key}`}>{item}</Fragment>)}
         <ZoomControl />
       </>
