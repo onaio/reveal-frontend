@@ -76,7 +76,6 @@ import plansReducer, {
   PlanStatus,
   reducerName as plansReducerName,
 } from '../../../../store/ducks/plans';
-import * as fixturesMap from '../map/active/tests/fixtures';
 import './style.css';
 import { createTableProps } from './utils';
 
@@ -144,13 +143,10 @@ class ActiveFocusInvestigation extends React.Component<
       { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
     ]);
     supersetService(SUPERSET_PLANS_SLICE, supersetParams)
-      .then((_: Plan[]) => {
-        /*if (result) {
+      .then((result: Plan[]) => {
+        if (result) {
           fetchPlansActionCreator(result);
-        } else {
-          displayError(new Error(AN_ERROR_OCCURRED));
-        }*/
-        fetchPlansActionCreator(fixturesMap.processedPlansJSON);
+        }
       })
       .finally(() => {
         this.setState({
