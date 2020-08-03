@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import Button from 'reactstrap/lib/Button';
-import { ActionCreator, Store } from 'redux';
+import { Store } from 'redux';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb, {
   Page,
@@ -39,29 +39,21 @@ import { getPlanType, successGrowl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import hierarchyReducer, {
   autoSelectNodes,
-  AutoSelectNodesAction,
   deselectAllNodes,
   deselectNode,
-  DeselectNodeAction,
-  FetchedTreeAction,
   fetchTree,
   Filters,
   getAllSelectedNodes,
   getCurrentChildren,
   getCurrentParentNode,
-  getLeafNodes,
   reducerName as hierarchyReducerName,
   selectNode,
-  SelectNodeAction,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
-import {
-  addPlanDefinition,
-  AddPlanDefinitionAction,
-} from '../../../../store/ducks/opensrp/PlanDefinition';
+import { addPlanDefinition } from '../../../../store/ducks/opensrp/PlanDefinition';
 import { PlanStatus } from '../../../../store/ducks/plans';
 import { RiskLabel } from '../helpers/RiskLabel';
 import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
@@ -78,13 +70,13 @@ export interface JurisdictionSelectorTableProps {
   currentParentId?: string;
   jurisdictionsMetadata: JurisdictionsMetadata[];
   serviceClass: typeof OpenSRPService;
-  treeFetchedCreator: ActionCreator<FetchedTreeAction>;
+  treeFetchedCreator: typeof fetchTree;
   currentParentNode?: TreeNode;
   currentChildren: TreeNode[];
-  selectNodeCreator: ActionCreator<SelectNodeAction>;
-  deselectNodeCreator: ActionCreator<DeselectNodeAction>;
-  autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
-  fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
+  selectNodeCreator: typeof selectNode;
+  deselectNodeCreator: typeof deselectNode;
+  autoSelectNodesCreator: typeof autoSelectNodes;
+  fetchPlanCreator: typeof addPlanDefinition;
   selectedLeafNodes: TreeNode[];
   leafNodes: TreeNode[];
   autoSelectionFlow: boolean;
@@ -153,14 +145,15 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
    * @param nodId - id of the node of interest
    * @param value - change selected status of node with said id to value
    */
-  function applySelectedToNode(nodeId: string, value: boolean) {
+  function applySelectedToNode(nodeId: string, planId: string, value: boolean) {
     if (value) {
       if (singleSelect) {
+        // TODO:  deselect only node selections belonging to this plan
         deselectAllNodesCreator(rootJurisdictionId);
       }
-      selectNodeCreator(rootJurisdictionId, nodeId, SELECTION_REASON.USER_CHANGE);
+      selectNodeCreator(rootJurisdictionId, nodeId, planId, SELECTION_REASON.USER_CHANGE);
     } else {
-      deselectNodeCreator(rootJurisdictionId, nodeId, SELECTION_REASON.USER_CHANGE);
+      deselectNodeCreator(rootJurisdictionId, nodeId, planId, SELECTION_REASON.USER_CHANGE);
     }
   }
 
@@ -220,7 +213,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         // tslint:disable-next-line: jsx-no-lambda
         onChange={e => {
           const newSelectedValue = e.target.checked;
-          applySelectedToNode(node.model.id, newSelectedValue);
+          applySelectedToNode(node.model.id, plan.identifier, newSelectedValue);
         }}
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
@@ -235,7 +228,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           ]
         : []),
       node.hasChildren() ? '' : nodeIsSelected(node) ? TARGETED : NOT_TARGETED,
-      node.model.meta.selectedBy,
+      node.model.meta.actionBy,
       <ConnectedSelectedJurisdictionsCount
         key={`selected-jurisdictions-txt`}
         parentNode={node}
@@ -261,10 +254,10 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const onParentCheckboxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSelectedValue = e.target.checked;
     if (currentParentNode) {
-      applySelectedToNode(currentParentNode.model.id, newSelectedValue);
+      applySelectedToNode(currentParentNode.model.id, plan.identifier, newSelectedValue);
     } else {
       currentChildren.forEach(child => {
-        applySelectedToNode(child.model.id, newSelectedValue);
+        applySelectedToNode(child.model.id, plan.identifier, newSelectedValue);
       });
     }
   };
@@ -370,7 +363,7 @@ export { JurisdictionTable };
 /** map state to props interface  */
 type MapStateToProps = Pick<
   JurisdictionSelectorTableProps,
-  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes' | 'leafNodes'
+  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes'
 >;
 
 /** map action creators interface */
@@ -386,7 +379,6 @@ type DispatchToProps = Pick<
 
 const childrenSelector = getCurrentChildren();
 const parentNodeSelector = getCurrentParentNode();
-const leafNodesSelector = getLeafNodes();
 const selectedLeafNodesSelector = getAllSelectedNodes();
 
 /** maps props to store state */
@@ -397,12 +389,12 @@ const mapStateToProps = (
   const filters: Filters = {
     currentParentId: ownProps.currentParentId,
     leafNodesOnly: true,
+    planId: ownProps.plan.identifier,
     rootJurisdictionId: ownProps.rootJurisdictionId,
   };
   return {
     currentChildren: childrenSelector(state, filters),
     currentParentNode: parentNodeSelector(state, filters),
-    leafNodes: leafNodesSelector(state, filters),
     selectedLeafNodes: selectedLeafNodesSelector(state, filters),
   };
 };
