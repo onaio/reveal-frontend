@@ -102,16 +102,16 @@ exports[`containers/pages/Home renders Home correctly & changes Title of page 1`
             >
               <Link
                 className="home-link"
-                to="/intervention/irs/drafts"
+                to="/plans/planning"
               >
                 <LinkAnchor
                   className="home-link"
-                  href="/intervention/irs/drafts"
+                  href="/plans/planning"
                   navigate={[Function]}
                 >
                   <a
                     className="home-link"
-                    href="/intervention/irs/drafts"
+                    href="/plans/planning"
                     onClick={[Function]}
                   >
                     <Button
@@ -124,7 +124,7 @@ exports[`containers/pages/Home renders Home correctly & changes Title of page 1`
                         className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
                         onClick={[Function]}
                       >
-                        IRS
+                        Planning tool
                       </button>
                     </Button>
                   </a>

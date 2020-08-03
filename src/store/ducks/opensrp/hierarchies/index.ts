@@ -11,11 +11,14 @@ import { AutoSelectCallback, RawOpenSRPHierarchy, TreeNode } from './types';
 import {
   autoSelectNodesAndCascade,
   computeParentNodesSelection,
+  computeSelectedNodes,
+  findAParentNode,
   generateJurisdictionTree,
+  getChildrenForNode,
   nodeHasChildren,
-  nodeIsSelected,
   SELECT_KEY,
-  setAttrsToNode,
+  selectionReason,
+  SetSelectAttrToNode,
 } from './utils';
 
 /** reducer name for hierarchy reducer */
@@ -37,6 +40,7 @@ export const DEFOREST = 'opensrp/locations/hierarchy/DEFOREST';
  */
 export const SELECT_NODE = 'opensrp/locations/hierarchy/SELECT_NODE';
 export const DESELECT_NODE = 'opensrp/locations/hierarchy/DESELECT_NODE';
+export const DESELECT_ALL_NODES = 'opensrp/locations/hierarchy/DESELECT_ALL_NODES';
 
 /** action to auto-append/ auto-modify the selected attribute of nodes in a tree */
 export const AUTO_SELECT_NODES = 'opensrp/locations/hierarchy/AUTO_SELECT_NODES';
@@ -72,6 +76,13 @@ export interface AutoSelectNodesAction extends AnyAction {
   type: typeof AUTO_SELECT_NODES;
   rootJurisdictionId: string;
   callback: AutoSelectCallback;
+  selectedBy: string;
+}
+
+/** describes an action to deselect or selected nodes in a tree */
+export interface DeselectAllNodesAction extends AnyAction {
+  type: typeof DESELECT_ALL_NODES;
+  rootJurisdictionId: string;
 }
 
 /** combined full action types | its a union */
@@ -80,6 +91,7 @@ export type TreeActionTypes =
   | SelectNodeAction
   | DeforestAction
   | DeselectNodeAction
+  | DeselectAllNodesAction
   | AnyAction;
 
 // **************************** action creators ****************************
@@ -105,10 +117,15 @@ export function fetchTree(
  * @param rootJurisdictionId - need to know the tree that should be modified
  * @param nodeId - the id of the node whose selected status should be changed
  */
-export function selectNode(rootJurisdictionId: string, nodeId: string): SelectNodeAction {
+export function selectNode(
+  rootJurisdictionId: string,
+  nodeId: string,
+  selectedBy: string = selectionReason.USER_CHANGE
+): SelectNodeAction {
   return {
     nodeId,
     rootJurisdictionId,
+    selectedBy,
     type: SELECT_NODE,
   };
 }
@@ -125,10 +142,15 @@ export function deforest(): DeforestAction {
  * @param rootJurisdictionId - so that we can know what tree to target
  * @param nodeId - the node whose selected status is going to be set to false
  */
-export function deselectNode(rootJurisdictionId: string, nodeId: string): DeselectNodeAction {
+export function deselectNode(
+  rootJurisdictionId: string,
+  nodeId: string,
+  selectedBy: string = selectionReason.USER_CHANGE
+): DeselectNodeAction {
   return {
     nodeId,
     rootJurisdictionId,
+    selectedBy,
     type: DESELECT_NODE,
   };
 }
@@ -139,12 +161,22 @@ export function deselectNode(rootJurisdictionId: string, nodeId: string): Desele
  */
 export function autoSelectNodes(
   rootJurisdictionId: string,
-  callback: AutoSelectCallback
+  callback: AutoSelectCallback,
+  selectedBy: string = selectionReason.USER_CHANGE
 ): AutoSelectNodesAction {
   return {
     callback,
     rootJurisdictionId,
+    selectedBy,
     type: AUTO_SELECT_NODES,
+  };
+}
+
+/** deselects all nodes in a tree */
+export function deselectAllNodes(rootId: string): DeselectAllNodesAction {
+  return {
+    rootJurisdictionId: rootId,
+    type: DESELECT_ALL_NODES,
   };
 }
 
@@ -184,28 +216,36 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
       if (!treeOfInterest) {
         return state;
       }
-      const { treeClone: alteredTree, argNode } = setAttrsToNode(
+      const { treeClone: alteredTree, argNode } = SetSelectAttrToNode(
         treeOfInterest,
         action.nodeId,
         SELECT_KEY,
         true,
-        true
+        true,
+        false,
+        action.selectedBy
       );
-      computeParentNodesSelection(argNode);
+      computeParentNodesSelection(argNode, action.selectedBy);
       return {
         ...state,
         treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: alteredTree },
       };
 
     case DESELECT_NODE:
-      // typescript or sth forced me to used different variables names, it thinks declaring
-      // the same variable name in different case is a mistake, or maybe it is I should look into it
       const allTrees = state.treeByRootId;
       const wantedTree = (allTrees as Dictionary<TreeNode>)[action.rootJurisdictionId];
       if (!wantedTree) {
         return state;
       }
-      const response = setAttrsToNode(wantedTree, action.nodeId, SELECT_KEY, false, true, true);
+      const response = SetSelectAttrToNode(
+        wantedTree,
+        action.nodeId,
+        SELECT_KEY,
+        false,
+        true,
+        true,
+        action.selectedBy
+      );
       return {
         ...state,
         treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: response.treeClone },
@@ -217,10 +257,30 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
       if (!theTree) {
         return state;
       }
-      const treeResponse = autoSelectNodesAndCascade(theTree, action.callback);
+      const treeResponse = autoSelectNodesAndCascade(theTree, action.callback, action.selectedBy);
       return {
         ...state,
         treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: treeResponse },
+      };
+
+    case DESELECT_ALL_NODES:
+      // get the tree of interest.
+      const fullForest = state.treeByRootId;
+      const interestingTree = (fullForest as Dictionary<TreeNode>)[action.rootJurisdictionId];
+
+      // set the attr on the root node and cascade
+      const res = SetSelectAttrToNode(
+        interestingTree,
+        action.rootJurisdictionId,
+        SELECT_KEY,
+        false,
+        true,
+        true,
+        selectionReason.NOT_CHANGED
+      );
+      return {
+        ...state,
+        treeByRootId: { ...state.treeByRootId, [action.rootJurisdictionId]: res.treeClone },
       };
 
     default:
@@ -361,29 +421,14 @@ export const getAncestors = () =>
  * @param props -  the filterProps
  */
 export const getCurrentParentNode = () =>
-  createSelector(getTreeById(), getCurrentParentId, (tree, parentId) => {
-    if (!tree) {
-      return;
-    }
-    if (parentId === undefined) {
-      return tree;
-    }
-    return tree.first(node => node.model.id === parentId);
-  });
+  createSelector(getTreeById(), getCurrentParentId, findAParentNode);
 
 /** returns an array of current children
  * @param state - the store
  * @param props -  the filterProps
  */
 export const getCurrentChildren = () => {
-  return createSelector(getCurrentParentNode(), getTreeById(), (currentParentNode, tree) => {
-    if (currentParentNode) {
-      return currentParentNode.children;
-    } else if (tree) {
-      return [tree];
-    }
-    return [];
-  });
+  return createSelector(getCurrentParentNode(), getChildrenForNode);
 };
 
 /** retrieves an array of all the selected nodes
@@ -391,20 +436,7 @@ export const getCurrentChildren = () => {
  * @param props -  the filterProps
  */
 export const getAllSelectedNodes = () =>
-  createSelector(getTreeById(), getLeafNodesOnly, (tree, leafNodesOnly) => {
-    const nodesList: TreeNode[] = [];
-    if (!tree) {
-      return [];
-    }
-    tree.walk(node => {
-      const shouldAddNode = nodeIsSelected(node) && !(leafNodesOnly && nodeHasChildren(node));
-      if (shouldAddNode) {
-        nodesList.push(node);
-      }
-      return true;
-    });
-    return nodesList;
-  });
+  createSelector(getTreeById(), getLeafNodesOnly, computeSelectedNodes);
 
 /** returns an array of all leaf nodes for a particular jurisdiction
  * @param state - the store
@@ -469,3 +501,17 @@ export const getSelectedNodesUnderParentNode = () =>
       return nodesList;
     }
   );
+
+/** returns the total structure count for all selected nodes in the entire tree
+ * requires only the rootJurisdiction id
+ * @param state -  the store state
+ * @param {Pick<Filters, 'rootJurisdictionId'>} filters
+ */
+export const getStructuresCount = () =>
+  createSelector(getTreeById(), tree => {
+    const allSelectedLeafNodes = computeSelectedNodes(tree, true);
+    const reducingFn = (acc: number, value: number) => acc + value;
+    return allSelectedLeafNodes
+      .map(node => node.model.node.attributes.structureCount)
+      .reduce(reducingFn, 0);
+  });

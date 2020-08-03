@@ -58,6 +58,10 @@ export const VALIDATOR_UPLOAD_TYPE = 'validator-upload';
 export const DAYS = 'days';
 export const CONDITION = 'condition';
 export const TRIGGER = 'trigger';
+export const RISK_LABEL = 'Risk';
+export const TIMELINE_SLIDER_STEP1 = '1';
+export const TIMELINE_SLIDER_STEP2 = '2';
+export const TIMELINE_SLIDER_STEP3 = '3';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
@@ -65,11 +69,6 @@ export const EXPRESS_LOGIN_URL = '/login';
 export const REACT_LOGIN_URL = '/login';
 export const LOGOUT_URL = '/logout';
 export const HOME_URL = '/';
-export const INTERVENTION_IRS_URL = '/intervention/irs';
-export const INTERVENTION_IRS_DRAFTS_URL = '/intervention/irs/drafts';
-export const NEW_IRS_PLAN_URL = '/intervention/irs/new';
-export const DRAFT_IRS_PLAN_URL = '/intervention/irs/draft';
-export const ACTIVE_IRS_PLAN_URL = `/intervention/irs/plan`;
 export const REPORT_IRS_PLAN_URL = `/intervention/irs/report`;
 export const REPORT_MDA_POINT_PLAN_URL = `/intervention/mda-point/report`;
 export const MDA_POINT_LOCATION_REPORT_URL = '/intervention/mda-point/location-report';
@@ -109,6 +108,8 @@ export const EDIT_SERVER_SETTINGS_URL = '/server-settings';
 export const PLANNING_VIEW_URL = '/plans/planning';
 export const NEW_PLANNING_PLAN_URL = `${PLANNING_VIEW_URL}/${NEW}`;
 export const ASSIGN_JURISDICTIONS_URL = '/assignJurisdictions';
+export const MANUAL_ASSIGN_JURISDICTIONS_URL = '/manualSelectJurisdictions';
+export const AUTO_ASSIGN_JURISDICTIONS_URL = '/auoSelectJurisdictions';
 /** how long after opening a logout window should we wait before redirecting to express' server logout
  * I am not sure the optimum value for this, mozilla firefox seems to take some
  * time loading up the logoutWindow and actually making the request.
@@ -220,7 +221,7 @@ export const SETTINGS_CONFIGURATION = 'SettingConfiguration';
 export const JURISDICTION_METADATA_RISK = 'jurisdiction_metadata-risk';
 export const JURISDICTION_METADATA_COVERAGE = 'jurisdiction_metadata-coverage';
 export const JURISDICTION_CSV_TEMPLATE = 'jurisdiction_id,jurisdiction_name,risk,coverage';
-export const JURISDICTION_CSV_FILE_NAME = 'jurisdiction-metadata';
+export const JURISDICTION_CSV_FILE_NAME = 'jurisdiction-metadata.csv';
 export const GET_ALL = 'getAll';
 
 /** CSV File MIME Types */
@@ -233,3 +234,6 @@ export const APPLICATION_X_CSV = 'application/x-csv';
 export const TEXT_COMMA_SEPARATED_VALUES = 'text/comma-separated-values';
 export const TEXT_X_COMMA_SEPARATED_VALUES = 'text/x-comma-separated-values';
 export const TEXT_TAB_SEPARATED_VALUES = 'text/tab-separated-values';
+
+/** Superset API strings */
+export const SUPERSET_ACCESS_DENIED_MESSAGE = 'Access is Denied';

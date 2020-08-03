@@ -13,7 +13,6 @@ import {
 } from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE, PLAN_UUID_NAMESPACE } from '../../configs/env';
 import { SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../constants';
-import { irsPlanDefinition1 } from '../../containers/pages/InterventionPlan/PlanningView/IRSPlans/tests/fixtures';
 import * as planDefinitionFixtures from '../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType, Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
@@ -339,7 +338,7 @@ describe('helpers/utils', () => {
   it('extractPlanRecordResponseFromPlanPayload shows error as expected', () => {
     const displayErrorMock = jest.fn();
     (helpers as any).displayError = displayErrorMock;
-    const result = extractPlanRecordResponseFromPlanPayload([irsPlanDefinition1] as any);
+    const result = extractPlanRecordResponseFromPlanPayload([fixtures.irsPlanDefinition1] as any);
     expect(result).toBeNull();
     expect(displayErrorMock).toHaveBeenCalledTimes(1);
   });
@@ -356,6 +355,26 @@ describe('helpers/utils', () => {
     result = isPlanDefinitionOfType(sampleIRSPlan, InterventionType.IRS);
     expect(result).toBeTruthy();
   });
+
+  it('computes the interventionType of a planDefinition correctly with many interventionTypes', () => {
+    const sampleFIPlan = planDefinitionFixtures.plans[0];
+    let result = isPlanDefinitionOfType(sampleFIPlan, [InterventionType.FI, InterventionType.IRS]);
+    expect(result).toBeTruthy();
+    result = isPlanDefinitionOfType(sampleFIPlan, [
+      InterventionType.IRS,
+      InterventionType.DynamicFI,
+    ]);
+    expect(result).toBeFalsy();
+    const sampleIRSPlan = planDefinitionFixtures.plans[1];
+    result = isPlanDefinitionOfType(sampleIRSPlan, [
+      InterventionType.FI,
+      InterventionType.DynamicMDA,
+    ]);
+    expect(result).toBeFalsy();
+    result = isPlanDefinitionOfType(sampleIRSPlan, InterventionType.IRS);
+    expect(result).toBeTruthy();
+  });
+
   it('Returns percentage value', () => {
     const result = IndicatorThresholdItemPercentage(Item);
     expect(result).toEqual('60%');

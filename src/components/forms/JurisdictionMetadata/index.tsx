@@ -8,9 +8,7 @@ import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
 import {
   CSV_FILE,
-  CSV_ONLY,
   FILE,
-  FILE_FORMAT,
   FILE_UPLOADED_SUCCESSFULLY,
   INVALID_CSV,
   REQUIRED,
@@ -18,19 +16,7 @@ import {
   UPLOAD_FILE,
   UPLOADING,
 } from '../../../configs/lang';
-import {
-  APPLICATION_CSV,
-  APPLICATION_VND_EXCEL,
-  APPLICATION_X_CSV,
-  HOME_URL,
-  OPENSRP_V1_SETTINGS_ENDPOINT,
-  TEXT_COMMA_SEPARATED_VALUES,
-  TEXT_CSV,
-  TEXT_PLAIN,
-  TEXT_TAB_SEPARATED_VALUES,
-  TEXT_X_COMMA_SEPARATED_VALUES,
-  TEXT_X_CSV,
-} from '../../../constants';
+import { HOME_URL, OPENSRP_V1_SETTINGS_ENDPOINT } from '../../../constants';
 import {
   creatSettingsPayloads,
   growl,
@@ -39,23 +25,9 @@ import {
 } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 
-const SUPPORTED_FORMATS = [
-  TEXT_CSV,
-  APPLICATION_CSV,
-  TEXT_PLAIN,
-  TEXT_X_CSV,
-  APPLICATION_VND_EXCEL,
-  APPLICATION_X_CSV,
-  TEXT_COMMA_SEPARATED_VALUES,
-  TEXT_X_COMMA_SEPARATED_VALUES,
-  TEXT_TAB_SEPARATED_VALUES,
-];
-
 /** yup validation schema for Jurisdiction Metadata Form input */
 export const JurisdictionSchema = Yup.object().shape({
-  file: Yup.mixed()
-    .required(REQUIRED)
-    .test(FILE_FORMAT, CSV_ONLY, value => value && SUPPORTED_FORMATS.includes(value.type)),
+  file: Yup.mixed().required(REQUIRED),
 });
 
 export interface JurisdictionMetadataFormFields {

@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/TimeLineSlider adds correct classNames  1`] = `
+<li
+  className="is-complete"
+  data-step="1"
+  key="0-step-slider-stop"
+>
+  AUTO_TARGET_JURISDICTIONS_BY_RISK
+</li>
+`;
+
+exports[`src/components/TimeLineSlider adds correct classNames  2`] = `
+<li
+  className="is-active"
+  data-step="2"
+  key="1-step-slider-stop"
+>
+  REFINE_SELECTED_JURISDICTIONS
+</li>
+`;
+
+exports[`src/components/TimeLineSlider edge case: key is not part of any stop  1`] = `
+<li
+  className=""
+  data-step="1"
+  key="0-step-slider-stop"
+>
+  AUTO_TARGET_JURISDICTIONS_BY_RISK
+</li>
+`;
+
+exports[`src/components/TimeLineSlider edge case: key is not part of any stop  2`] = `
+<li
+  className=""
+  data-step="2"
+  key="1-step-slider-stop"
+>
+  REFINE_SELECTED_JURISDICTIONS
+</li>
+`;
+
+exports[`src/components/TimeLineSlider works correctly 2`] = `
+<li
+  className="is-active"
+  data-step="1"
+  key="0-step-slider-stop"
+>
+  AUTO_TARGET_JURISDICTIONS_BY_RISK
+</li>
+`;
+
+exports[`src/components/TimeLineSlider works correctly 3`] = `
+<li
+  className=""
+  data-step="2"
+  key="1-step-slider-stop"
+>
+  REFINE_SELECTED_JURISDICTIONS
+</li>
+`;

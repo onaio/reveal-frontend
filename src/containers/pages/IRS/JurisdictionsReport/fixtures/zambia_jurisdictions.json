@@ -95,7 +95,10 @@
         "targstruct": 101,
         "perctvisareaseffect": 0.5555555555555556,
         "spraycovtarg": 0.7125,
-        "roomcov": 0.9030544488711819
+        "roomcov": 0.9030544488711819,
+        "spraysuccess": 0.74,
+        "foundcoverage": 0.5,
+        "visitedareas": 200
       },
       {
         "id": "292f605c-fd60-5c45-b517-04d3c539efa2",
@@ -558,7 +561,8 @@
         "targstruct": 10,
         "perctvisareaseffect": 3.0,
         "spraycovtarg": 0.6111111111111112,
-        "roomcov": 0.8787878787878788
+        "roomcov": 0.8787878787878788,
+        "visitedareas": 12
       },
       {
         "id": "446457c9-1aae-5d85-8e07-90c67e6f6683",
@@ -696,7 +700,10 @@
         "targstruct": 7,
         "perctvisareaseffect": 2.0,
         "spraycovtarg": 0.5882352941176471,
-        "roomcov": 0.8709677419354839
+        "roomcov": 0.8709677419354839,
+        "visitedareas": 33,
+        "foundcoverage": 0.8,
+        "spraysuccess": 0.7
       },
       {
         "id": "3234514b-6a1b-56f5-9fff-3a54f05e03c3",

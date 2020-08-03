@@ -100,7 +100,7 @@ const mapStateToProps = (
 /** map dispatch to props */
 const mapDispatchToProps = {
   fetchJurisdictions: fetchGenericJurisdictions,
-  fetchPlansIRS: fetchIRSPlans,
+  fetchPlans: fetchIRSPlans,
 };
 
 /** Connected ActiveFI component */
