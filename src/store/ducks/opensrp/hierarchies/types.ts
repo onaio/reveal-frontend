@@ -62,4 +62,5 @@ export interface RawOpenSRPHierarchy {
 /** helper type, shortened form */
 export type TreeNode = TreeModel.Node<ParsedHierarchySingleNode>;
 
+/** describes callback used by the autoSelect functionality */
 export type AutoSelectCallback = (node: TreeNode) => boolean;

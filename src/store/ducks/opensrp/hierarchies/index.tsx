@@ -377,13 +377,20 @@ export const getTreeById = () =>
     return treesByIds[rootId];
   });
 
+/** returns metaData for tree with the specified rootJurisdictionId
+ * @param state - the store
+ * @param props - the filterProps
+ */
 export const getMetaForTree = () => {
   return createSelector(getMetaData, getRootJurisdictionId, (metaData, rootId) => {
     return metaData[rootId] || {};
   });
 };
 
-/** combine tree with metaData */
+/** combine tree with metaData
+ * @param state - the store
+ * @param props - the filterProps
+ */
 export const getTreeWithMeta = () => {
   return createSelector(getTreeById(), getMetaForTree(), (origTree, metaForTree) => {
     // walk the tree and update meta field.

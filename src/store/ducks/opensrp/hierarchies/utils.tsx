@@ -1,5 +1,8 @@
 /** if you are a fan of properly typed code, whose types just fall in place,
  * this file might not be for you.
+ *
+ * Has utils to parse the raw hierarchy response from opensrp.
+ * A few other helpers that abstract the reducer(reducer and selectors) functionality
  */
 import { Dictionary } from '@onaio/utils';
 import { cloneDeep, uniqWith } from 'lodash';
@@ -73,21 +76,45 @@ export const generateJurisdictionTree = (apiResponse: RawOpenSRPHierarchy) => {
  * @param childrenNodes - an array of nodes
  * @param metaDataByJurisdiction - all meta keyed by their jurisdiction ids
  */
-export function areAllChildrenSelected(childrenNodes: TreeNode[], metaData: Dictionary<Meta>) {
+export function areAllChildrenSelected(
+  childrenNodes: TreeNode[],
+  metaDataByJurisdiction: Dictionary<Meta>
+) {
   let selected = true;
   childrenNodes.forEach(node => {
-    selected = selected && !!(metaData[node.model.id] && metaData[node.model.id][SELECTION_KEY]);
+    selected =
+      selected &&
+      !!(
+        metaDataByJurisdiction[node.model.id] &&
+        metaDataByJurisdiction[node.model.id][SELECTION_KEY]
+      );
   });
   return selected;
 }
 
-/** returns if node is selected
+/** returns true if node is selected
  * @param node - The node
  */
 export const nodeIsSelected = (node: TreeNode) => {
   return !!node.model.meta[SELECTION_KEY];
 };
 
+/** returns the Structure Count of a node
+ * @param node - The node
+ */
+export const getNodeStructureCount = (node: TreeNode) => {
+  // metaStructureCount is a frontend computed variable and thus we assume that to be 'truer'
+  // than the structure count returned as part of the jurisdiction's attributes.
+  const structureCount =
+    node.model.meta[META_STRUCTURE_COUNT] || node.model.node.attributes.structureCount || 0;
+  return structureCount;
+};
+
+/** wrapper for creating a metaData object for dryness purposes
+ * @param nodeId - the id of the node
+ * @param actionBy - who effected this action
+ * @param selected - whether node is selected or not.
+ */
 export const createSingleMetaData = (
   nodeId: string,
   actionBy: string,
@@ -101,6 +128,14 @@ export const createSingleMetaData = (
   };
 };
 
+/** Creates metaData objects that are records of which nodes are selected and which aren't
+ * @param tree - the tree
+ * @param nodeId - id of the selected node
+ * @param actionBy - how was this change effected
+ * @param selectValue - whether node should be selected or not
+ * @param cascadeUp - whether the selection should be applied on the parents of this node
+ * @param cascadeDown - whether the selection should be applied to the descendants of this node
+ */
 export const setSelectOnNode = (
   tree: TreeNode,
   nodeId: string,
@@ -245,7 +280,8 @@ export const computeSelectedNodes = (
   return nodesList;
 };
 
-/** will compute structure counts
+/** uses pre-order tree traversal to compute new structure counts for jurisdictions in the tree
+ * useful for instance after dropping a node from the tree
  * @param node - the root node of a tree or subtree
  */
 export const preOrderStructureCountComputation = (node: TreeNode) => {
