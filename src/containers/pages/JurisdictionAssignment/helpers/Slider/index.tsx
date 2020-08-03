@@ -28,9 +28,8 @@ import hierarchyReducer, {
   getTreeById,
   reducerName as hierarchyReducerName,
 } from '../../../../../store/ducks/opensrp/hierarchies';
-import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
-
 import { SELECTION_REASON } from '../../../../../store/ducks/opensrp/hierarchies/constants';
+import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
   FetchJurisdictionsMetadataAction,
