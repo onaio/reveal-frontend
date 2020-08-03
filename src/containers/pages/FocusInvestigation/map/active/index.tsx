@@ -99,12 +99,12 @@ import {
   buildJurisdictionLayers,
   buildOnClickHandler,
   buildStructureLayers,
+  fetchData,
   getDetailViewPlanInvestigationContainer,
   getMapBounds,
   supersetCall,
 } from './helpers/utils';
 import './style.css';
-import * as fixturesMap from './tests/fixtures';
 
 /** register reducers */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
@@ -197,7 +197,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
        * Plans present in state e.g when accesing this view from a list of plans or
        * when the plans are expilcity fetched as in the above if block
        */
-      /*fetchData(
+      fetchData(
         props.fetchGoalsActionCreator,
         props.fetchJurisdictionsActionCreator,
         props.fetchPlansActionCreator,
@@ -205,28 +205,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
         props.fetchTasksActionCreator,
         props.plan,
         props.supersetService
-      ).catch((error: Error) => displayError(error));*/
-      setTimeout(() => props.fetchPlansActionCreator(fixturesMap.processedPlansJSON), 3000);
-      setTimeout(
-        () => props.fetchJurisdictionsActionCreator(fixturesMap.processedJurisdictionJSON),
-        5000
-      );
-      setTimeout(
-        () => props.fetchStructuresActionCreator(fixturesMap.processedStructuresJSON),
-        6000
-      );
-      setTimeout(() => props.fetchGoalsActionCreator(fixturesMap.processedGoalsJSON), 7000);
-      setTimeout(() => props.fetchTasksActionCreator(fixturesMap.processedPlansTasksJson), 8000);
-      setTimeout(
-        () => props.fetchTasksActionCreator(fixturesMap.processedCaseConfirmationTasksJSON),
-        9000
-      );
-      /*props.fetchPlansActionCreator(fixturesMap.processedPlansJSON);
-      props.fetchJurisdictionsActionCreator(fixturesMap.processedJurisdictionJSON);
-      props.fetchStructuresActionCreator(fixturesMap.processedStructuresJSON);
-      props.fetchGoalsActionCreator(fixturesMap.processedGoalsJSON);
-      props.fetchTasksActionCreator(fixturesMap.processedPlansTasksJson);
-      props.fetchTasksActionCreator(fixturesMap.processedCaseConfirmationTasksJSON);*/
+      ).catch((error: Error) => displayError(error));
     }
     /**
      * Only re-run effect if props.plan.plan_id changes
@@ -525,7 +504,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     );
     structures = getStructuresFCByJurisdictionId(state, jurisdiction.jurisdiction_id);
   }
-
   return {
     currentGoal,
     currentPointIndexCases,
