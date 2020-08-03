@@ -2,7 +2,7 @@
  * it makes service calls for the information that is required to make a decision on whether
  * to got to autoSelection or manual jurisdiction selection. This are:
  *  - the plan
- *  - the hierarchy
+ *  - the rootJurisdiction id - this is used by the child component to service call for the hierarchy
  */
 
 import reducerRegistry from '@onaio/redux-reducer-registry';
@@ -29,7 +29,7 @@ import planDefinitionReducer, {
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionAssignmentReRouting } from './JurisdictionAssignmentReRouting';
-import { useGetJurisdictionTree, useGetRootJurisdictionId, usePlanEffect } from './utils';
+import { useGetRootJurisdictionId, usePlanEffect } from './utils';
 
 reducerRegistry.register(planReducerName, planDefinitionReducer);
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
@@ -82,13 +82,6 @@ const EntryView = (props: FullEntryViewProps) => {
     stopLoading,
     startLoading
   );
-  useGetJurisdictionTree(
-    rootJurisdictionId,
-    startLoading,
-    treeFetchedCreator,
-    stopLoading,
-    handleBrokenPage
-  );
 
   if (loading()) {
     return <Ripple />;
@@ -108,6 +101,7 @@ const EntryView = (props: FullEntryViewProps) => {
   const reRoutingProps = {
     plan,
     rootJurisdictionId,
+    treeFetchedCreator,
   };
 
   return <ConnectedJurisdictionAssignmentReRouting {...reRoutingProps} />;
