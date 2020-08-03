@@ -296,7 +296,7 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
           [rootJurisdictionId]: {
             ...state.metaData[rootJurisdictionId],
             [planId]: {
-              ...state.metaData[rootJurisdictionId][planId],
+              ...(state.metaData[rootJurisdictionId] || {})[planId],
               ...res.metaByJurisdiction,
             },
           },
@@ -321,7 +321,7 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
           [rootJurisdictionId]: {
             ...state.metaData[rootJurisdictionId],
             [planId]: {
-              ...state.metaData[rootJurisdictionId][planId],
+              ...(state.metaData[rootJurisdictionId] || {})[planId],
               ...metaByJurisdictionId,
             },
           },
