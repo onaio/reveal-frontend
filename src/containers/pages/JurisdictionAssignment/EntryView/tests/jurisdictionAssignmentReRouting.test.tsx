@@ -7,6 +7,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount } from 'enzyme';
 import { cloneDeep } from 'lodash';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Switch } from 'react-router';
 import {
@@ -32,7 +33,13 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
 jest.mock('../../../../../configs/env');
 
+// tslint:disable-next-line: no-var-requires
+const fetch = require('jest-fetch-mock');
+
 describe('jurisdictionView/EntryView', () => {
+  beforeEach(() => {
+    fetch.resetMocks();
+  });
   it('getNextUrl works ok', () => {
     // auto Selection is enabled/disabled
     let tree = generateJurisdictionTree(sampleHierarchy);
@@ -79,9 +86,9 @@ describe('jurisdictionView/EntryView', () => {
     expect(url).toEqual(MANUAL_ASSIGN_JURISDICTIONS_URL);
   });
 
-  it('jurisdictionAssignmentRouting works correctly', () => {
+  it('jurisdictionAssignmentRouting works correctly', async () => {
     // dispatch the plan and the tree
-    store.dispatch(fetchTree(sampleHierarchy));
+    fetch.once(JSON.stringify(sampleHierarchy));
     const irsPlan = cloneDeep(plans[1]);
     store.dispatch(addPlanDefinition(irsPlan));
 
@@ -114,7 +121,75 @@ describe('jurisdictionView/EntryView', () => {
         ;
       </Provider>
     );
-    wrapper.update();
+
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://test.smartregister.org/opensrp/rest/location/hierarchy/2942?return_structure_count=true',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+    ]);
+
+    const location = (wrapper.find('Router').props() as any).history.location;
+    expect(location.pathname).toEqual(
+      `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${irsPlan.identifier}/2942`
+    );
+  });
+
+  it('does not show loader when fetching tree that is in store', async () => {
+    // dispatch the plan and the tree
+    store.dispatch(fetchTree(sampleHierarchy));
+    fetch.once(JSON.stringify(sampleHierarchy));
+    const irsPlan = cloneDeep(plans[1]);
+    store.dispatch(addPlanDefinition(irsPlan));
+
+    const wrapperComponent = () => {
+      const props = {
+        plan: irsPlan,
+        rootJurisdictionId: '2942',
+      };
+      return <ConnectedJurisdictionAssignmentReRouting {...props} />;
+    };
+    // wrap with Memory Router and see if it redirects to the returned url
+    const App = () => {
+      return (
+        <Switch>
+          {/* tslint:disable-next-line: jsx-no-lambda */}
+          <Route path={MANUAL_ASSIGN_JURISDICTIONS_URL} component={() => <div id="manual" />} />
+          {/* tslint:disable-next-line: jsx-no-lambda */}
+          <Route path={AUTO_ASSIGN_JURISDICTIONS_URL} component={() => <div id="auto" />} />
+          {/* tslint:disable-next-line: jsx-no-lambda */}
+          <Route path="/" component={wrapperComponent} />
+        </Switch>
+      );
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <MemoryRouter initialEntries={[{ pathname: `/`, search: '', hash: '', state: {} }]}>
+          <App />
+        </MemoryRouter>
+        ;
+      </Provider>
+    );
+
+    await act(async () => {
+      wrapper.update();
+    });
+
+    // we are not showing loading despite the fact that we did not flush promises
+    expect(wrapper.find('Ripple').length).toEqual(0);
 
     const location = (wrapper.find('Router').props() as any).history.location;
     expect(location.pathname).toEqual(

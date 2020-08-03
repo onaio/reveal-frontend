@@ -1,10 +1,16 @@
 /** if you are a fan of properly typed code, whose types just fall in place,
  * this file might not be for you.
+ *
+ * Has utils to parse the raw hierarchy response from opensrp.
+ * A few other helpers that abstract the reducer(reducer and selectors) functionality
  */
 import { Dictionary } from '@onaio/utils';
 import { cloneDeep, uniqWith } from 'lodash';
 import TreeModel from 'tree-model';
-import { AUTO_SELECTION, USER_CHANGE } from '../../../../configs/lang';
+
+import { META_FIELD_NAME, META_STRUCTURE_COUNT, SELECTION_REASON } from './constants';
+import { SELECTION_KEY } from './constants';
+import { Meta } from './types';
 import {
   ParsedHierarchySingleNode,
   RawHierarchySingleNode,
@@ -12,17 +18,6 @@ import {
   RawOpenSRPHierarchy,
   TreeNode,
 } from './types';
-
-export const META_FIELD_NAME = 'meta';
-export const SELECT_KEY = 'selected';
-export const SELECT_REASON_KEY = 'selectedBy';
-export const META_STRUCTURE_COUNT = 'metaStructureCount';
-
-export const selectionReason = {
-  AUTO_SELECTION,
-  NOT_CHANGED: '',
-  USER_CHANGE,
-};
 
 /** mutates the structure of the children property in a single node
  * @param {RawHierarchySingleNode} rawSingleNode - single node i.e. part of rawOpensrp hierarchy
@@ -77,75 +72,115 @@ export const generateJurisdictionTree = (apiResponse: RawOpenSRPHierarchy) => {
   return root;
 };
 
-/** helper that sets attributes to a node such that the tree changes causing a re-render
- * @param aTree - the tree, usually the tree state variable
- * @param nodeId - id of the node of interest
- * @param attrAccessor - the key to use when assigning the value
- * @param attrValue - the value to assign to attrAccessor
- * @param cascadeDown - whether to do the value assignment on each of the node's descendants
- * @param cascadeUp - whether to do the value assignment on each of the node's ancestors
- */
-export function SetSelectAttrToNode(
-  aTree: TreeNode,
-  nodeId: string,
-  attrAccessor: string,
-  attrValue: string | number | boolean,
-  cascadeDown: boolean = false,
-  cascadeUp: boolean = false,
-  selectedBy: string = ''
-) {
-  const treeClone = cloneDeep(aTree);
-  const argNode = treeClone.first(nd => nd.model.id === nodeId);
-  if (!argNode) {
-    return treeClone;
-  }
-  argNode.model[META_FIELD_NAME][attrAccessor] = attrValue;
-  argNode.model[META_FIELD_NAME][SELECT_REASON_KEY] = selectedBy;
-  if (cascadeDown) {
-    // argNode is part of this walk.
-    argNode.walk(nd => {
-      nd.model[META_FIELD_NAME][attrAccessor] = attrValue;
-      nd.model[META_FIELD_NAME][SELECT_REASON_KEY] = selectedBy;
-      // removing this return cause a type error, that's its sole purpose
-      return true;
-    });
-  }
-  if (cascadeUp) {
-    const parentsPath = argNode.getPath();
-    // remove the node from path
-    parentsPath.pop();
-    parentsPath.forEach(parentNode => {
-      parentNode.model[META_FIELD_NAME][attrAccessor] = attrValue;
-      parentNode.model[META_FIELD_NAME][SELECT_REASON_KEY] = selectedBy;
-    });
-  }
-  return { treeClone, argNode };
-}
-
 /** given an array of the childrenNodes, return true if all of them are selected
  * @param childrenNodes - an array of nodes
+ * @param metaDataByJurisdiction - all meta keyed by their jurisdiction ids
  */
-export function areAllChildrenSelected(childrenNodes: TreeNode[]) {
+export function areAllChildrenSelected(
+  childrenNodes: TreeNode[],
+  metaDataByJurisdiction: Dictionary<Meta>
+) {
   let selected = true;
   childrenNodes.forEach(node => {
-    selected = selected && node.model.meta[SELECT_KEY];
+    selected =
+      selected &&
+      !!(
+        metaDataByJurisdiction[node.model.id] &&
+        metaDataByJurisdiction[node.model.id][SELECTION_KEY]
+      );
   });
   return selected;
 }
 
-/** returns if node is selected
+/** returns true if node is selected
  * @param node - The node
  */
 export const nodeIsSelected = (node: TreeNode) => {
-  return !!node.model.meta[SELECT_KEY];
+  return !!node.model.meta[SELECTION_KEY];
 };
 
-/** checks whether a node is a parent node or a leaf node
- * @param node - the node
- * @return true if node is a parent node, false if node is a leaf node
+/** returns the Structure Count of a node
+ * @param node - The node
  */
-export const nodeHasChildren = (node: TreeNode) => {
-  return node.children && node.children.length > 0;
+export const getNodeStructureCount = (node: TreeNode) => {
+  // metaStructureCount is a frontend computed variable and thus we assume that to be 'truer'
+  // than the structure count returned as part of the jurisdiction's attributes.
+  const structureCount =
+    node.model.meta[META_STRUCTURE_COUNT] || node.model.node.attributes.structureCount || 0;
+  return structureCount;
+};
+
+/** wrapper for creating a metaData object for dryness purposes
+ * @param nodeId - the id of the node
+ * @param actionBy - who effected this action
+ * @param selected - whether node is selected or not.
+ */
+export const createSingleMetaData = (
+  nodeId: string,
+  actionBy: string,
+  selected: boolean
+): Dictionary<Meta> => {
+  return {
+    [nodeId]: {
+      actionBy,
+      selected,
+    },
+  };
+};
+
+/** Creates metaData objects that are records of which nodes are selected and which aren't
+ * @param tree - the tree
+ * @param nodeId - id of the selected node
+ * @param actionBy - how was this change effected
+ * @param selectValue - whether node should be selected or not
+ * @param cascadeUp - whether the selection should be applied on the parents of this node
+ * @param cascadeDown - whether the selection should be applied to the descendants of this node
+ */
+export const setSelectOnNode = (
+  tree: TreeNode,
+  nodeId: string,
+  actionBy: string,
+  selectValue: boolean,
+  cascadeUp: boolean,
+  cascadeDown: boolean
+) => {
+  let metaByJurisdiction: Dictionary<any> = {};
+
+  // need to create Meta object for all other jurisdictions in tree that
+  // are potentially affected by this due to a cascade
+  const nodeOfInterest = tree.first(nd => nd.model.id === nodeId);
+  if (!nodeOfInterest) {
+    return {};
+  }
+  // add an entry for this node
+  const thisNodesMeta = createSingleMetaData(nodeId, actionBy, true);
+  metaByJurisdiction = {
+    ...metaByJurisdiction,
+    ...thisNodesMeta,
+  };
+
+  if (cascadeDown) {
+    // argNode is part of this walk.
+    nodeOfInterest.walk(nd => {
+      metaByJurisdiction = {
+        ...metaByJurisdiction,
+        ...createSingleMetaData(nd.model.id, actionBy, selectValue),
+      };
+      return true;
+    });
+  }
+  if (cascadeUp) {
+    const parentsPath = nodeOfInterest.getPath();
+    // remove the node from path
+    parentsPath.pop();
+    parentsPath.forEach(parentNode => {
+      metaByJurisdiction = {
+        ...metaByJurisdiction,
+        ...createSingleMetaData(parentNode.model.id, actionBy, selectValue),
+      };
+    });
+  }
+  return { metaByJurisdiction, nodeOfInterest };
 };
 
 /** traverse up and select the parent nodes where necessary
@@ -153,20 +188,29 @@ export const nodeHasChildren = (node: TreeNode) => {
  */
 export function computeParentNodesSelection(
   node: TreeNode,
-  selectedBy: string = selectionReason.NOT_CHANGED
+  actionBy: string = SELECTION_REASON.NOT_CHANGED,
+  metaDataByJurisdiction: Dictionary<Meta>
 ) {
+  let metaDataByJurisdictionId: Dictionary<Meta> = {};
+  // need to return state.metaData
   const parentsPath = node.getPath();
   const reversedParentSPath = parentsPath.reverse();
   // now for each of the parent if all the children are selected then label the parent as selected too
   for (const parentNode of reversedParentSPath) {
-    const allChildrenAreSelected = areAllChildrenSelected(parentNode.children);
+    const allChildrenAreSelected = areAllChildrenSelected(
+      parentNode.children,
+      metaDataByJurisdiction
+    );
     if (allChildrenAreSelected) {
-      parentNode.model[META_FIELD_NAME][SELECT_KEY] = allChildrenAreSelected;
-      parentNode.model[META_FIELD_NAME][SELECT_REASON_KEY] = selectedBy;
+      metaDataByJurisdictionId = {
+        ...metaDataByJurisdictionId,
+        ...createSingleMetaData(parentNode.model.id, actionBy, true),
+      };
     } else {
       break;
     }
   }
+  return metaDataByJurisdictionId;
 }
 
 /** any callback that will take a node and return whether we should select the node
@@ -175,20 +219,20 @@ export function computeParentNodesSelection(
 export const autoSelectNodesAndCascade = (
   tree: TreeNode,
   callback: (node: TreeNode) => boolean,
-  selectedBy: string = AUTO_SELECTION
+  actionBy: string = SELECTION_REASON.USER_CHANGE,
+  thisTreeMetaData: Dictionary<Meta>
 ) => {
-  let treeClone = cloneDeep(tree);
-  if (!treeClone) {
-    return;
-  }
+  let metaByJurisdictionId: Dictionary<Meta> = {};
   // deselect all
-  treeClone = SetSelectAttrToNode(tree, tree.model.id, SELECT_KEY, false, true).treeClone;
+  const { metaByJurisdiction } = setSelectOnNode(tree, tree.model.id, actionBy, false, true, true);
   const parentNodes: TreeNode[] = [];
-  treeClone.walk(node => {
+  tree.walk(node => {
     if (callback(node)) {
       node.walk(nd => {
-        nd.model[META_FIELD_NAME][SELECT_KEY] = true;
-        nd.model[META_FIELD_NAME][SELECT_REASON_KEY] = selectedBy;
+        metaByJurisdictionId = {
+          ...createSingleMetaData(nd.model.id, actionBy, true),
+          ...metaByJurisdictionId,
+        };
         // removing this return cause a type error, that's its sole purpose
         return true;
       });
@@ -202,9 +246,16 @@ export const autoSelectNodesAndCascade = (
 
   // now select parents accordingly
   parentNodesSet.forEach(node => {
-    computeParentNodesSelection(node, AUTO_SELECTION);
+    metaByJurisdictionId = {
+      ...metaByJurisdictionId,
+      ...computeParentNodesSelection(node, actionBy, thisTreeMetaData),
+    };
   });
-  return treeClone;
+
+  return {
+    ...metaByJurisdiction,
+    ...metaByJurisdictionId,
+  };
 };
 
 /** compute Selected nodes from the tree
@@ -220,7 +271,7 @@ export const computeSelectedNodes = (
     return [];
   }
   tree.walk(node => {
-    const shouldAddNode = nodeIsSelected(node) && !(leafNodesOnly && nodeHasChildren(node));
+    const shouldAddNode = nodeIsSelected(node) && !(leafNodesOnly && node.hasChildren());
     if (shouldAddNode) {
       nodesList.push(node);
     }
@@ -229,7 +280,8 @@ export const computeSelectedNodes = (
   return nodesList;
 };
 
-/** will compute structure counts
+/** uses pre-order tree traversal to compute new structure counts for jurisdictions in the tree
+ * useful for instance after dropping a node from the tree
  * @param node - the root node of a tree or subtree
  */
 export const preOrderStructureCountComputation = (node: TreeNode) => {

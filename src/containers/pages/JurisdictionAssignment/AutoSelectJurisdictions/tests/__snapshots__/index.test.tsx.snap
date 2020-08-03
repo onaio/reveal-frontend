@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`src/containers/JurisdictionView/AutoSelect View getting root jurisdiction error Message: should also be jurisdiction error page 1`] = `"An error ocurred. Please try and refresh the page.The specific error is: Could not load jurisdiction"`;
+exports[`src/containers/JurisdictionView/AutoSelect View getting root jurisdiction error Message: should also be jurisdiction error page 1`] = `"An error ocurred. Please try and refresh the page.The specific error is: Failed to load Jurisdiction hierarchy"`;
 
 exports[`src/containers/JurisdictionView/AutoSelect View plan error Message: should be plan error page 1`] = `"An error ocurred. Please try and refresh the page.The specific error is: Unable to load plan"`;
-
-exports[`src/containers/JurisdictionView/AutoSelect View single jurisdiction error Message: should be jurisdiction error page 1`] = `"An error ocurred. Please try and refresh the page.The specific error is: Could not load jurisdiction"`;
 
 exports[`src/containers/JurisdictionView/AutoSelect View works correctly with store: should be about oov 1`] = `"Planning toolA2-Lusaka Akros Test Focus 2A2-Lusaka Akros Test Focus 2Auto target jurisdictions by riskRefine selected jurisdictionsDraggable slider"`;
