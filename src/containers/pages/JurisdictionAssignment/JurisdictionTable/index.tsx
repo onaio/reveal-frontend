@@ -54,8 +54,9 @@ import hierarchyReducer, {
   selectNode,
   SelectNodeAction,
 } from '../../../../store/ducks/opensrp/hierarchies';
+import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
-import { nodeIsSelected, selectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
+import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import {
   addPlanDefinition,
@@ -157,9 +158,9 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       if (singleSelect) {
         deselectAllNodesCreator(rootJurisdictionId);
       }
-      selectNodeCreator(rootJurisdictionId, nodeId, selectionReason.USER_CHANGE);
+      selectNodeCreator(rootJurisdictionId, nodeId, SELECTION_REASON.USER_CHANGE);
     } else {
-      deselectNodeCreator(rootJurisdictionId, nodeId, selectionReason.USER_CHANGE);
+      deselectNodeCreator(rootJurisdictionId, nodeId, SELECTION_REASON.USER_CHANGE);
     }
   }
 

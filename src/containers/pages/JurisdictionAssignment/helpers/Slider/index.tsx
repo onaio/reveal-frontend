@@ -29,7 +29,8 @@ import hierarchyReducer, {
   reducerName as hierarchyReducerName,
 } from '../../../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
-import { selectionReason } from '../../../../../store/ducks/opensrp/hierarchies/utils';
+
+import { SELECTION_REASON } from '../../../../../store/ducks/opensrp/hierarchies/constants';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
   FetchJurisdictionsMetadataAction,
@@ -93,7 +94,7 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
         !node.hasChildren() && jurisdictionsIdsMeta.includes(node.model.id);
       return isLeafNodePastThreshHold;
     };
-    autoSelectCreator(rootJurisdictionId, callback, selectionReason.AUTO_SELECTION);
+    autoSelectCreator(rootJurisdictionId, callback, SELECTION_REASON.AUTO_SELECTION);
   };
 
   React.useEffect(() => {

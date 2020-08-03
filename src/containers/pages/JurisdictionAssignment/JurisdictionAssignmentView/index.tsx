@@ -40,8 +40,8 @@ import hierarchyReducer, {
   getTreeById,
   reducerName as hierarchyReducerName,
 } from '../../../../store/ducks/opensrp/hierarchies';
+import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
 import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
-import { selectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
   FetchJurisdictionsMetadataAction,
@@ -169,7 +169,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
           if (apiResponse.value) {
             const responseData = apiResponse.value;
             treeFetchedCreator(responseData);
-            autoSelectNodesCreator(rootJurisdictionId, callback, selectionReason.NOT_CHANGED);
+            autoSelectNodesCreator(rootJurisdictionId, callback, SELECTION_REASON.NOT_CHANGED);
           }
           if (apiResponse.error) {
             throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
