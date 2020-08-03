@@ -536,13 +536,6 @@ const App = (props: AppProps) => {
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
-                  path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId`}
-                  component={ConnectedJurisdictionAssignmentView}
-                />
-                <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
                   path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
                   component={ConnectedAutoSelectView}
                 />
@@ -551,13 +544,6 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId`}
-                  component={ConnectedAutoSelectView}
-                />
-                <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId`}
                   component={ConnectedAutoSelectView}
                 />
                 <ConnectedPrivateRoute
