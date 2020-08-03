@@ -1,6 +1,7 @@
 import { mount } from 'enzyme';
 import { cloneDeep } from 'lodash';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { ConnectedJurisdictionSelectionsSlider } from '..';
 import store from '../../../../../../store';
@@ -9,6 +10,7 @@ import { sampleHierarchy } from '../../../../../../store/ducks/opensrp/hierarchi
 import { fetchJurisdictionsMetadata } from '../../../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { jurisdictionsMetadataArray } from '../../../../../../store/ducks/tests/fixtures';
+
 /** tests for slider view
  * : need to know that changes on the slider are rendered on the ui
  * : need to know that changes on the slider cause the correct changes in the backend
@@ -49,7 +51,9 @@ describe('JurisdictionAssignment/Slider', () => {
     /** we really should not be doing this, but I am currently unable to simulate
      * the change event
      */
-    (wrapper.find('InputRange').props() as any).onChange(81);
+    act(() => {
+      (wrapper.find('InputRange').props() as any).onChange(81);
+    });
 
     // the risk value should be now different 2
     expect(wrapper.find('.risk-label').text()).toMatchInlineSnapshot(`"81%"`);
