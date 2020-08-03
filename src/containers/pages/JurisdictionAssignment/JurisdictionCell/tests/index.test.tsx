@@ -15,6 +15,7 @@ describe('src/pages/JurisdictionAssignment/JurisdictionCell', () => {
   it('renders correctly by default', () => {
     const mockNode: any = {
       children: { length: 1 },
+      hasChildren: () => true,
       model: { label: 'Gaz' },
     };
     const props = {
@@ -33,6 +34,7 @@ describe('src/pages/JurisdictionAssignment/JurisdictionCell', () => {
   it('renders correctly when node does not have children', () => {
     const mockNode: any = {
       children: { length: 0 },
+      hasChildren: () => false,
       model: { label: 'Gaz' },
     };
     const props = {
