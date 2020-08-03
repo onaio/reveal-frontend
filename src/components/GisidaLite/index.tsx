@@ -100,8 +100,8 @@ const GisidaLite = (props: GisidaLiteProps) => {
 
   /**
    * Workaround to make sure each time props.layers change, we set renderLayers to false
-   * so that we can re-create the map layers. The map jankiness having the ReactMapboxGl instance created
-   * outside the component to prevent new instances from being created when props change.
+   * so that we can re-create the map layers. The map jankiness solved by having the ReactMapboxGl
+   * instance created outside the component to prevent new instances from being created when props change.
    * However, the layers stopped being rendered correctly.
    * For instance, some structures that were to be rendered with a fill of yellow were being rendered as green.
    * Symbol layers were not showing correctly. A race condition appears to be happening.
