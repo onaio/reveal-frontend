@@ -58,3 +58,5 @@ exports[`PlanAssignment shows an error message if no plan: no orgs 1`] = `
   </p>
 </div>
 `;
+
+exports[`PlanAssignment works as expected: Should be about map wrapper mock 1`] = `""`;
