@@ -22,7 +22,7 @@ import reducer, {
 } from '..';
 import store from '../../../../index';
 import { TreeNode } from '../types';
-import { nodeIsSelected } from '../utils';
+import { generateJurisdictionTree, nodeIsSelected } from '../utils';
 import { anotherHierarchy, raZambiaHierarchy, sampleHierarchy } from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
@@ -49,6 +49,41 @@ describe('reducers/opensrp/hierarchies', () => {
     // what do we expect returned from selectors for an unpopulated store
     expect(childrenSelector(store.getState(), { rootJurisdictionId: '' })).toEqual([]);
     expect(parentNodeSelector(store.getState(), { rootJurisdictionId: '' })).toBeUndefined();
+  });
+
+  it('works with custom tree id', () => {
+    store.dispatch(fetchTree(sampleHierarchy, '1337'));
+    expect(treeByIdSelector(store.getState(), { rootJurisdictionId: '1337' })).toEqual(
+      generateJurisdictionTree(sampleHierarchy)
+    );
+  });
+
+  it('should fetch tree', () => {
+    // checking that dispatching actions has desired effect
+    let filters: Filters = {
+      rootJurisdictionId: '2942',
+    };
+    store.dispatch(fetchTree(sampleHierarchy));
+    // when the parent node is undefined; current children is set to an array of the rootNode
+    expect(childrenSelector(store.getState(), filters).length).toEqual(1);
+    const parentNode = parentNodeSelector(store.getState(), filters);
+    if (!parentNode) {
+      fail();
+    }
+    expect(parentNode.model.id).toEqual('2942');
+
+    filters = {
+      ...filters,
+      currentParentId: '2942',
+    };
+
+    expect(childrenSelector(store.getState(), filters).length).toEqual(1);
+
+    const node = parentNodeSelector(store.getState(), filters);
+    if (!node) {
+      fail();
+    }
+    expect(node.model.label).toEqual('Lusaka');
   });
 
   it('selecting & unselecting a node works', () => {
