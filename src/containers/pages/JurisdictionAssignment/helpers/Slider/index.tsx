@@ -21,8 +21,6 @@ import { PlanDefinition } from '../../../../../configs/settings';
 import { RISK_LABEL } from '../../../../../constants';
 import hierarchyReducer, {
   autoSelectNodes,
-  AutoSelectNodesAction,
-  FetchedTreeAction,
   fetchTree,
   getStructuresCount,
   getTreeById,
@@ -49,13 +47,13 @@ interface Props {
   structuresCount: number;
   fetchJurisdictionsMetadataCreator: ActionCreator<FetchJurisdictionsMetadataAction>;
   jurisdictionsMetadata: JurisdictionsMetadata[];
-  autoSelectCreator: ActionCreator<AutoSelectNodesAction>;
-  fetchTreeCreator: ActionCreator<FetchedTreeAction>;
-  plan: PlanDefinition | null;
+  autoSelectCreator: typeof autoSelectNodes;
+  fetchTreeCreator: typeof fetchTree;
+  plan: PlanDefinition;
   onClickNext: () => void;
 }
 
-const defaultProps: Props = {
+const defaultProps = {
   autoSelectCreator: autoSelectNodes,
   fetchJurisdictionsMetadataCreator: fetchJurisdictionsMetadata,
   fetchTreeCreator: fetchTree,
@@ -63,7 +61,6 @@ const defaultProps: Props = {
   onClickNext: () => {
     return;
   },
-  plan: null,
   rootJurisdictionId: '',
   structuresCount: 0,
 };
@@ -83,6 +80,8 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
     tree,
   } = props;
 
+  const planId = plan.identifier;
+
   const onChangeComplete = (val: number | Range) => {
     const metaJurOfInterest = jurisdictionsMetadata.filter(
       metaObject => parseInt(metaObject.value, 10) > val
@@ -93,7 +92,7 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
         !node.hasChildren() && jurisdictionsIdsMeta.includes(node.model.id);
       return isLeafNodePastThreshHold;
     };
-    autoSelectCreator(rootJurisdictionId, callback, SELECTION_REASON.AUTO_SELECTION);
+    autoSelectCreator(rootJurisdictionId, callback, planId, SELECTION_REASON.AUTO_SELECTION);
   };
 
   React.useEffect(() => {
@@ -158,6 +157,7 @@ const treeSelector = getTreeById();
 
 const mapStateToProps = (state: Partial<Store>, ownProps: Props): MapStateToProps => {
   const filters = {
+    planId: ownProps.plan.identifier,
     rootJurisdictionId: ownProps.rootJurisdictionId,
   };
   const structuresCount = structureCountSelector(state, filters);
