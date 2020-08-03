@@ -7,6 +7,7 @@
 import { Dictionary } from '@onaio/utils/dist/types/types';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
+import SeamlessImmutable from 'seamless-immutable';
 import { AutoSelectCallback, RawOpenSRPHierarchy, TreeNode } from './types';
 import {
   autoSelectNodesAndCascade,
@@ -184,19 +185,19 @@ export function deselectAllNodes(rootId: string): DeselectAllNodesAction {
 
 /** The store's slice state */
 export interface TreeState {
-  currentParentIdsByRootId: Dictionary<string | undefined>;
   treeByRootId: Dictionary<TreeNode> | {};
 }
 
-/** TODO - make immutable */
+/** Create an immutable tree state */
+export type ImmutableTreeState = TreeState & SeamlessImmutable.ImmutableObject<TreeState>;
+
 /** starting state */
-export const initialState: TreeState = {
-  currentParentIdsByRootId: {},
+export const initialState: ImmutableTreeState = SeamlessImmutable({
   treeByRootId: {},
-};
+});
 
 // the reducer function
-export default function reducer(state = initialState, action: TreeActionTypes) {
+export default function reducer(state: ImmutableTreeState = initialState, action: TreeActionTypes) {
   switch (action.type) {
     case TREE_FETCHED:
       return {
