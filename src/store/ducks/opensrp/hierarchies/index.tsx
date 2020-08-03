@@ -70,6 +70,7 @@ export interface SelectNodeAction extends AnyAction {
   type: typeof SELECT_NODE;
   nodeId: string;
   rootJurisdictionId: string;
+  planId: string;
   actionBy: string;
 }
 
@@ -78,6 +79,7 @@ export interface DeselectNodeAction extends AnyAction {
   type: typeof DESELECT_NODE;
   nodeId: string;
   rootJurisdictionId: string;
+  planId: string;
   actionBy: string;
 }
 
@@ -85,6 +87,7 @@ export interface DeselectNodeAction extends AnyAction {
 export interface AutoSelectNodesAction extends AnyAction {
   type: typeof AUTO_SELECT_NODES;
   rootJurisdictionId: string;
+  planId: string;
   callback: AutoSelectCallback;
   actionBy: string;
 }
@@ -128,15 +131,19 @@ export function fetchTree(
 /** action creator for when selecting a node
  * @param rootJurisdictionId - need to know the tree that should be modified
  * @param nodeId - the id of the node whose selected status should be changed
+ * @param planId - the plan under which the node was selected
+ * @param actionBy - action by which this node was selected
  */
 export function selectNode(
   rootJurisdictionId: string,
   nodeId: string,
+  planId: string,
   actionBy: string = SELECTION_REASON.USER_CHANGE
 ): SelectNodeAction {
   return {
     actionBy,
     nodeId,
+    planId,
     rootJurisdictionId,
     type: SELECT_NODE,
   };
@@ -153,15 +160,19 @@ export function deforest(): DeforestAction {
 /** set the selected status of a node to false
  * @param rootJurisdictionId - so that we can know what tree to target
  * @param nodeId - the node whose selected status is going to be set to false
+ * * @param planId - the plan under which the node was selected
+ * @param actionBy - action by which this node was selected
  */
 export function deselectNode(
   rootJurisdictionId: string,
   nodeId: string,
+  planId: string,
   actionBy: string = SELECTION_REASON.USER_CHANGE
 ): DeselectNodeAction {
   return {
     actionBy,
     nodeId,
+    planId,
     rootJurisdictionId,
     type: DESELECT_NODE,
   };
@@ -170,15 +181,19 @@ export function deselectNode(
 /** sets nodes to selected based on calculation that you provide
  * @param rootJurisdictionId - to know what tree to target
  * @param callback - a function that dictates which nodes to be selected
+ * * @param planId - the plan under which the node was selected
+ * @param actionBy - action by which this node was selected
  */
 export function autoSelectNodes(
   rootJurisdictionId: string,
   callback: AutoSelectCallback,
+  planId: string,
   actionBy: string = SELECTION_REASON.USER_CHANGE
 ): AutoSelectNodesAction {
   return {
     actionBy,
     callback,
+    planId,
     rootJurisdictionId,
     type: AUTO_SELECT_NODES,
   };
@@ -198,9 +213,11 @@ export function deselectAllNodes(
 
 // **************************** medusa ****************************
 
-/** The store's slice state */
+/** The store's slice state
+ * metaData is nested as follows: rootJurisdictionId.planId.jurisdictionId
+ */
 export interface TreeState {
-  metaData: Dictionary<Dictionary<Meta>>;
+  metaData: Dictionary<Dictionary<Dictionary<Meta>>>;
   treeByRootId: Dictionary<TreeNode> | {};
 }
 
@@ -217,8 +234,9 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
   const treeOfInterest = (treesByIds as Dictionary<TreeNode>)[action.rootJurisdictionId];
 
   const thisRootsMetaData = state.metaData[action.rootJurisdictionId] || {};
+  const thisPlansMetaData = thisRootsMetaData[action.planId] || {};
 
-  const { nodeId, actionBy, callback } = action;
+  const { nodeId, actionBy, callback, rootJurisdictionId, planId } = action;
 
   switch (action.type) {
     case TREE_FETCHED:
@@ -246,18 +264,21 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
 
       const extraMeta = computeParentNodesSelection(
         response.nodeOfInterest,
-        action.actionBy,
-        thisRootsMetaData
+        actionBy,
+        thisPlansMetaData
       );
 
       return {
         ...state,
         metaData: {
           ...state.metaData,
-          [action.rootJurisdictionId]: {
-            ...state.metaData[action.rootJurisdictionId],
-            ...response.metaByJurisdiction,
-            ...extraMeta,
+          [rootJurisdictionId]: {
+            ...state.metaData[rootJurisdictionId],
+            [planId]: {
+              ...(state.metaData[rootJurisdictionId] || {})[planId],
+              ...response.metaByJurisdiction,
+              ...extraMeta,
+            },
           },
         },
       };
@@ -272,9 +293,12 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
         ...state,
         metaData: {
           ...state.metaData,
-          [action.rootJurisdictionId]: {
-            ...state.metaData[action.rootJurisdictionId],
-            ...res.metaByJurisdiction,
+          [rootJurisdictionId]: {
+            ...state.metaData[rootJurisdictionId],
+            [planId]: {
+              ...state.metaData[rootJurisdictionId][planId],
+              ...res.metaByJurisdiction,
+            },
           },
         },
       };
@@ -287,16 +311,19 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
         treeOfInterest,
         callback,
         actionBy,
-        thisRootsMetaData
+        thisPlansMetaData
       );
 
       return {
         ...state,
         metaData: {
           ...state.metaData,
-          [action.rootJurisdictionId]: {
-            ...state.metaData[action.rootJurisdictionId],
-            ...metaByJurisdictionId,
+          [rootJurisdictionId]: {
+            ...state.metaData[rootJurisdictionId],
+            [planId]: {
+              ...state.metaData[rootJurisdictionId][planId],
+              ...metaByJurisdictionId,
+            },
           },
         },
       };
@@ -317,9 +344,15 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
 
 // **************************** selectors ****************************
 
+/** prop filters to customize selector queries that do not need metaData info */
+export interface WithoutMetaFilters {
+  rootJurisdictionId: string /** specify which tree to act upon */;
+}
+
 /** prop filters to customize selector queries */
 export interface Filters {
   rootJurisdictionId: string /** specify which tree to act upon */;
+  planId?: string /** get selections that are associated with this planId */;
   nodeId?: string /** target node with this id */;
   leafNodesOnly?: boolean /** specified when requesting for selected nodes, truthy returns leaf nodes */;
   currentParentId?: string /** to use when filtering current children */;
@@ -352,6 +385,12 @@ export const getNodeId = (_: Partial<Store>, props: Filters) => props.nodeId;
  */
 export const getLeafNodesOnly = (_: Partial<Store>, props: Filters) => props.leafNodesOnly;
 
+/** retrieve the leaf nodes only value
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getPlanId = (_: Partial<Store>, props: Filters) => props.planId;
+
 /** gets all trees key'd by the rootNodes id
  * @param state - the store
  * @param _ -  the filterProps
@@ -363,8 +402,10 @@ export const getTreesByIds = (state: Partial<Store>, _: Filters): Dictionary<Tre
  * @param state - the store
  * @param _ -  the filterProps
  */
-export const getMetaData = (state: Partial<Store>, _: Filters): Dictionary<Dictionary<Meta>> =>
-  (state as any)[reducerName].metaData;
+export const getMetaData = (
+  state: Partial<Store>,
+  _: Filters
+): Dictionary<Dictionary<Dictionary<Meta>>> => (state as any)[reducerName].metaData;
 
 /** retrieve the tree using a rootNodes id
  * @param state - the store
@@ -387,12 +428,22 @@ export const getMetaForTree = () => {
   });
 };
 
+/** returns metaData for tree with the specified rootJurisdictionId
+ * @param state - the store
+ * @param props - the filterProps
+ */
+export const getMetaForPlanInTree = () => {
+  return createSelector(getMetaForTree(), getPlanId, (metaData, planId) => {
+    return (planId && metaData[planId]) || {};
+  });
+};
+
 /** combine tree with metaData
  * @param state - the store
  * @param props - the filterProps
  */
 export const getTreeWithMeta = () => {
-  return createSelector(getTreeById(), getMetaForTree(), (origTree, metaForTree) => {
+  return createSelector(getTreeById(), getMetaForPlanInTree(), (origTree, metaForTree) => {
     // walk the tree and update meta field.
     if (!origTree) {
       return;
@@ -494,26 +545,6 @@ export const getCurrentChildren = () => {
  */
 export const getAllSelectedNodes = () =>
   createSelector(getTreeWithMeta(), getLeafNodesOnly, computeSelectedNodes);
-
-/** returns an array of all leaf nodes for a particular jurisdiction
- * @param state - the store
- * @param props -  the filterProps
- */
-export const getLeafNodes = () =>
-  createSelector(getTreeWithMeta(), tree => {
-    const nodesList: TreeNode[] = [];
-    if (!tree) {
-      return [];
-    }
-    tree.walk(node => {
-      const shouldAddNode = !node.hasChildren();
-      if (shouldAddNode) {
-        nodesList.push(node);
-      }
-      return true;
-    });
-    return nodesList;
-  });
 
 /** retrieve the parent node value
  * @param state - the store
