@@ -18,7 +18,7 @@ type ServiceError = HTTPError | Error | NetworkError;
 export const displayError = (
   error: ServiceError,
   customMessage: string = '',
-  autoClose: TOAST_AUTO_CLOSE_DELAY | false = TOAST_AUTO_CLOSE_DELAY
+  autoClose: number | false = TOAST_AUTO_CLOSE_DELAY
 ) => {
   const toastOptions: ToastOptions = { autoClose, type: toast.TYPE.ERROR };
 
