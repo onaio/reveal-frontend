@@ -6,16 +6,18 @@ import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedJurisdictionAssignmentView, { JurisdictionAssignmentView } from '..';
-import { ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
+import { ASSIGN_JURISDICTIONS_URL as MANUAL_JURISDICTIONS_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import hierarchiesReducer, {
+  deforest,
   reducerName as hierarchiesReducerName,
 } from '../../../../../store/ducks/opensrp/hierarchies';
 import { sampleHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
+import { generateJurisdictionTree } from '../../../../../store/ducks/opensrp/hierarchies/utils';
 import plansReducer, { reducerName } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import { plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { jurisdictionsMetadataArray } from '../../../../../store/ducks/tests/fixtures';
-import { akros2, fetchCalls, lusaka, mtendere } from './fixtures';
+import { fetchCalls } from './fixtures';
 
 reducerRegistry.register(reducerName, plansReducer);
 reducerRegistry.register(hierarchiesReducerName, hierarchiesReducer);
@@ -48,33 +50,33 @@ describe('src/containers/JurisdictionView', () => {
     jest.clearAllMocks();
     jest.resetAllMocks();
     fetch.resetMocks();
+    store.dispatch(deforest());
   });
 
   it('renders correctly', async () => {
     const plan = plans[0];
+    const rootId = '2942';
     fetch
-      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
       .once(JSON.stringify(plan), { status: 200 })
-      .once(JSON.stringify([akros2]), { status: 200 })
-      .once(JSON.stringify(mtendere), { status: 200 })
-      .once(JSON.stringify(lusaka), { status: 200 })
       .once(JSON.stringify(sampleHierarchy), { status: 200 });
+
     const props = {
       history,
       jurisdictionsMetadata: jurisdictionsMetadataArray,
       location: {
         hash: '',
-        pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+        pathname: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
         search: '',
         state: {},
       },
       match: {
         isExact: true,
-        params: { planId: plan.identifier },
-        path: `${ASSIGN_JURISDICTIONS_URL}/:planId`,
-        url: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+        params: { planId: plan.identifier, rootId },
+        path: `${MANUAL_JURISDICTIONS_URL}/:planId`,
+        url: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
       },
       plan: plans[0],
+      tree: generateJurisdictionTree(sampleHierarchy),
     };
 
     const wrapper = mount(
@@ -101,27 +103,24 @@ describe('src/containers/JurisdictionView', () => {
 
   it('works correctly with store', async () => {
     const plan = plans[0];
+    const rootId = '2942';
     fetch
-      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
       .once(JSON.stringify(plan), { status: 200 })
-      .once(JSON.stringify([akros2]), { status: 200 })
-      .once(JSON.stringify(mtendere), { status: 200 })
-      .once(JSON.stringify(lusaka), { status: 200 })
-      .once(JSON.stringify(sampleHierarchy), { status: 200 })
-      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 });
+      .once(JSON.stringify(sampleHierarchy), { status: 200 });
+
     const props = {
       history,
       location: {
         hash: '',
-        pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+        pathname: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
         search: '',
         state: {},
       },
       match: {
         isExact: true,
-        params: { planId: plan.identifier },
-        path: `${ASSIGN_JURISDICTIONS_URL}/:planId`,
-        url: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+        params: { planId: plan.identifier, rootId },
+        path: `${MANUAL_JURISDICTIONS_URL}/:planId`,
+        url: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
       },
     };
 
@@ -138,10 +137,6 @@ describe('src/containers/JurisdictionView', () => {
       wrapper.update();
     });
 
-    expect(wrapper.text()).toMatchInlineSnapshot(
-      `"Planning toolA2-Lusaka Akros Test Focus 2Assign JurisdictionsI love oov"`
-    );
-
     // check props given to mock component
     const passedProps: any = wrapper.find('mockComponent').props();
     expect(passedProps.plan.identifier).toEqual(plan.identifier);
@@ -153,26 +148,24 @@ describe('src/containers/JurisdictionView', () => {
 
   it('shows loader', async () => {
     const plan = plans[0];
+    const rootId = '2942';
     fetch
-      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
       .once(JSON.stringify(plan), { status: 200 })
-      .once(JSON.stringify([akros2]), { status: 200 })
-      .once(JSON.stringify(mtendere), { status: 200 })
-      .once(JSON.stringify(lusaka), { status: 200 })
       .once(JSON.stringify(sampleHierarchy), { status: 200 });
+
     const props = {
       history,
       location: {
         hash: '',
-        pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+        pathname: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
         search: '',
         state: {},
       },
       match: {
         isExact: true,
-        params: { planId: plan.identifier },
-        path: `${ASSIGN_JURISDICTIONS_URL}/:planId`,
-        url: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+        params: { planId: plan.identifier, rootId },
+        path: `${MANUAL_JURISDICTIONS_URL}/:planId`,
+        url: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
       },
     };
 
@@ -193,26 +186,24 @@ describe('src/containers/JurisdictionView', () => {
 
   it('plan error Message', async () => {
     const plan = plans[0];
+    const rootId = '2942';
     fetch
-      .once(JSON.stringify([]), { status: 500 })
-      .once(JSON.stringify({}), { status: 500 })
-      .once(JSON.stringify([akros2]), { status: 200 })
-      .once(JSON.stringify(mtendere), { status: 200 })
-      .once(JSON.stringify(lusaka), { status: 200 })
+      .once(JSON.stringify(plan), { status: 500 })
       .once(JSON.stringify(sampleHierarchy), { status: 200 });
+
     const props = {
       history,
       location: {
         hash: '',
-        pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+        pathname: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
         search: '',
         state: {},
       },
       match: {
         isExact: true,
-        params: { planId: plan.identifier },
-        path: `${ASSIGN_JURISDICTIONS_URL}/:planId`,
-        url: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+        params: { planId: plan.identifier, rootId },
+        path: `${MANUAL_JURISDICTIONS_URL}/:planId`,
+        url: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
       },
     };
 
@@ -232,71 +223,28 @@ describe('src/containers/JurisdictionView', () => {
     // check renderer error message
     expect(wrapper.text()).toMatchSnapshot('should be plan error page');
   });
-  it('single jurisdiction error Message', async () => {
+
+  it('getting hierarchy error Message', async () => {
     const plan = plans[0];
+    const rootId = '2942';
+
     fetch
-      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
       .once(JSON.stringify(plan), { status: 200 })
-      .once(JSON.stringify([]), { status: 500 })
-      .once(JSON.stringify(mtendere), { status: 200 })
-      .once(JSON.stringify(lusaka), { status: 200 })
-      .once(JSON.stringify(sampleHierarchy), { status: 200 });
-    const props = {
-      history,
-      location: {
-        hash: '',
-        pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
-        search: '',
-        state: {},
-      },
-      match: {
-        isExact: true,
-        params: { planId: plan.identifier },
-        path: `${ASSIGN_JURISDICTIONS_URL}/:planId`,
-        url: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
-      },
-    };
-
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedJurisdictionAssignmentView {...props} />
-        </Router>
-      </Provider>
-    );
-
-    await act(async () => {
-      await new Promise(resolve => setImmediate(resolve));
-      wrapper.update();
-    });
-
-    // check renderer error message
-    expect(wrapper.text()).toMatchSnapshot('should be jurisdiction error page');
-  });
-
-  it('getting root jurisdiction error Message', async () => {
-    const plan = plans[0];
-    fetch
-      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
-      .once(JSON.stringify(plan), { status: 200 })
-      .once(JSON.stringify([akros2]), { status: 200 })
-      .once(JSON.stringify(mtendere), { status: 200 })
-      .once(JSON.stringify({}), { status: 500 })
-      .once(JSON.stringify(sampleHierarchy), { status: 200 });
+      .once(JSON.stringify(sampleHierarchy), { status: 500 });
 
     const props = {
       history,
       location: {
         hash: '',
-        pathname: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+        pathname: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
         search: '',
         state: {},
       },
       match: {
         isExact: true,
-        params: { planId: plan.identifier },
-        path: `${ASSIGN_JURISDICTIONS_URL}/:planId`,
-        url: `${ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+        params: { planId: plan.identifier, rootId },
+        path: `${MANUAL_JURISDICTIONS_URL}/:planId`,
+        url: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
       },
     };
 

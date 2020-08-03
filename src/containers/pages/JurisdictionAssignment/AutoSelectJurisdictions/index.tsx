@@ -17,7 +17,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
-import { ActionCreator, Store } from 'redux';
+import { Store } from 'redux';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Ripple from '../../../../components/page/Loading';
@@ -25,7 +25,7 @@ import { TimelineSlider, TimelineSliderProps } from '../../../../components/Time
 import { JURISDICTION_METADATA_RISK } from '../../../../configs/env';
 import {
   AUTO_TARGET_JURISDICTIONS_BY_RISK,
-  COULD_NOT_LOAD_JURISDICTION,
+  COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
   COULD_NOT_LOAD_PLAN,
   PLANNING_PAGE_TITLE,
   REFINE_SELECTED_JURISDICTIONS,
@@ -45,7 +45,6 @@ import { displayError } from '../../../../helpers/errors';
 import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { OpenSRPService } from '../../../../services/opensrp';
 import hierarchyReducer, {
-  FetchedTreeAction,
   fetchTree,
   getTreeById,
   reducerName as hierarchyReducerName,
@@ -53,22 +52,16 @@ import hierarchyReducer, {
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import jurisdictionMetadataReducer, {
   fetchJurisdictionsMetadata,
-  FetchJurisdictionsMetadataAction,
   getJurisdictionsMetadata,
   JurisdictionsMetadata,
   reducerName as jurisdictionMetadataReducerName,
 } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import plansReducer, {
   addPlanDefinition,
-  AddPlanDefinitionAction,
   getPlanDefinitionById,
   reducerName as planReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
-import {
-  useGetJurisdictionTree,
-  useGetRootJurisdictionId,
-  usePlanEffect,
-} from '../EntryView/utils';
+import { useGetJurisdictionTree, usePlanEffect } from '../EntryView/utils';
 import { ConnectedJurisdictionSelectionsSlider } from '../helpers/Slider';
 import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
@@ -79,12 +72,12 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
 /** this component's props */
 export interface JurisdictionAssignmentViewProps {
-  fetchJurisdictionsMetadataCreator: ActionCreator<FetchJurisdictionsMetadataAction>;
-  fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
+  fetchJurisdictionsMetadataCreator: typeof fetchJurisdictionsMetadata;
+  fetchPlanCreator: typeof addPlanDefinition;
   jurisdictionsMetadata: JurisdictionsMetadata[];
   plan: PlanDefinition | null;
   serviceClass: typeof OpenSRPService;
-  treeFetchedCreator: ActionCreator<FetchedTreeAction>;
+  treeFetchedCreator: typeof fetchTree;
   tree?: TreeNode;
 }
 
@@ -94,14 +87,13 @@ export const defaultProps = {
   jurisdictionsMetadata: [],
   plan: null,
   serviceClass: OpenSRPService,
-
   treeFetchedCreator: fetchTree,
 };
 
 /** view will require a planId from the url */
 export interface RouteParams {
   planId: string;
-  rootId?: string;
+  rootId: string;
   parentId?: string;
 }
 
@@ -125,12 +117,14 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     fetchJurisdictionsMetadataCreator,
     jurisdictionsMetadata,
     treeFetchedCreator,
+    tree,
   } = props;
 
   const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
   const [step, setStep] = React.useState<string>(TIMELINE_SLIDER_STEP1);
-  const initialLoadingState = !jurisdictionsMetadata || !plan;
+  const initialLoadingState = jurisdictionsMetadata.length === 0 || !plan;
   const { startLoading, stopLoading, loading } = useLoadingReducer(initialLoadingState);
+  const { rootId: rootJurisdictionId, planId } = props.match.params;
 
   React.useEffect(() => {
     const metadataLoadingKey = 'metadata';
@@ -149,18 +143,10 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
   }, []);
 
   usePlanEffect(
-    props.match.params.planId,
+    planId,
     plan,
     serviceClass,
     fetchPlanCreator,
-    handleBrokenPage,
-    stopLoading,
-    startLoading
-  );
-
-  const rootJurisdictionId = useGetRootJurisdictionId(
-    plan,
-    serviceClass,
     handleBrokenPage,
     stopLoading,
     startLoading
@@ -171,7 +157,8 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     startLoading,
     treeFetchedCreator,
     stopLoading,
-    handleBrokenPage
+    handleBrokenPage,
+    tree
   );
 
   if (loading()) {
@@ -182,9 +169,8 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     return <ErrorPage errorMessage={COULD_NOT_LOAD_PLAN} />;
   }
 
-  // TODO - can we use the tree here instead.
-  if (!rootJurisdictionId) {
-    return <ErrorPage errorMessage={COULD_NOT_LOAD_JURISDICTION} />;
+  if (!tree) {
+    return <ErrorPage errorMessage={COULD_NOT_LOAD_JURISDICTION_HIERARCHY} />;
   }
 
   if (broken) {
@@ -274,11 +260,12 @@ const mapStateToProps = (
 ): MapStateToProps => {
   const planId = ownProps.match.params.planId;
   const planObj = getPlanDefinitionById(state, planId);
+  const tree = treeByIdSelector(state, { rootJurisdictionId: ownProps.match.params.rootId });
 
   return {
     jurisdictionsMetadata: getJurisdictionsMetadata(state),
     plan: planObj,
-    tree: treeByIdSelector(state, { rootJurisdictionId: ownProps.match.params.rootId || '' }),
+    tree,
   };
 };
 

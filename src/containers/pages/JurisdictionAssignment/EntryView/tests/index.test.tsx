@@ -11,7 +11,6 @@ import store from '../../../../../store';
 import hierarchyReducer, {
   reducerName as hierarchyReducerName,
 } from '../../../../../store/ducks/opensrp/hierarchies';
-import { sampleHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
 import planDefinitionReducer, {
   reducerName as planDefinitionReducerName,
 } from '../../../../../store/ducks/opensrp/PlanDefinition';
@@ -47,8 +46,7 @@ describe('JurisdictionAssignment/JurisdictionEntry', () => {
       .once(JSON.stringify(plan), { status: 200 })
       .once(JSON.stringify([akros2]), { status: 200 })
       .once(JSON.stringify(mtendere), { status: 200 })
-      .once(JSON.stringify(lusaka), { status: 200 })
-      .once(JSON.stringify(sampleHierarchy));
+      .once(JSON.stringify(lusaka), { status: 200 });
 
     const props = {
       history,
@@ -125,17 +123,6 @@ describe('JurisdictionAssignment/JurisdictionEntry', () => {
           method: 'GET',
         },
       ],
-      [
-        'https://reveal-stage.smartregister.org/opensrp/rest/location/hierarchy/2942?return_structure_count=true',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
-      ],
     ]);
 
     expect(wrapper.text()).toMatchInlineSnapshot(`"I love oov"`);
@@ -148,8 +135,7 @@ describe('JurisdictionAssignment/JurisdictionEntry', () => {
       .once(JSON.stringify(plan), { status: 500 })
       .once(JSON.stringify([akros2]), { status: 200 })
       .once(JSON.stringify(mtendere), { status: 200 })
-      .once(JSON.stringify(lusaka), { status: 200 })
-      .once(JSON.stringify(sampleHierarchy));
+      .once(JSON.stringify(lusaka), { status: 200 });
 
     const props = {
       history,
@@ -192,8 +178,7 @@ describe('JurisdictionAssignment/JurisdictionEntry', () => {
       .once(JSON.stringify(plan), { status: 200 })
       .once(JSON.stringify([akros2]), { status: 500 })
       .once(JSON.stringify(mtendere), { status: 200 })
-      .once(JSON.stringify(lusaka), { status: 200 })
-      .once(JSON.stringify(sampleHierarchy));
+      .once(JSON.stringify(lusaka), { status: 200 });
 
     const props = {
       history,
@@ -236,9 +221,7 @@ describe('JurisdictionAssignment/JurisdictionEntry', () => {
       .once(JSON.stringify(plan), { status: 200 })
       .once(JSON.stringify([akros2]), { status: 200 })
       .once(JSON.stringify(mtendere), { status: 200 })
-      .once(JSON.stringify(lusaka), { status: 200 })
-      .once(JSON.stringify(sampleHierarchy), { status: 500 });
-
+      .once(JSON.stringify(lusaka), { status: 200 });
     const props = {
       history,
       location: {
