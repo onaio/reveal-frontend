@@ -56,6 +56,44 @@ describe('src/containers/JurisdictionView/AutoSelect View', () => {
     fetch.resetMocks();
   });
 
+  it('shows loader', async () => {
+    const plan = plans[0];
+    fetch
+      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
+      .once(JSON.stringify(plan), { status: 200 })
+      .once(JSON.stringify(sampleHierarchy), { status: 200 });
+
+    const props = {
+      history,
+      location: {
+        hash: '',
+        pathname: `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+        search: '',
+        state: {},
+      },
+      match: {
+        isExact: true,
+        params: { planId: plan.identifier, rootId: '2942' },
+        path: `${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId`,
+        url: `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
+      },
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedAutoSelectView {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      wrapper.update();
+    });
+
+    expect(wrapper.find('Ripple').length).toEqual(1);
+  });
+
   it('works correctly with store', async () => {
     const plan = plans[0];
     fetch
@@ -103,44 +141,6 @@ describe('src/containers/JurisdictionView/AutoSelect View', () => {
 
     // rendered component
     expect(wrapper.text()).toMatchSnapshot('should be about oov');
-  });
-
-  it('shows loader', async () => {
-    const plan = plans[0];
-    fetch
-      .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
-      .once(JSON.stringify(plan), { status: 200 })
-      .once(JSON.stringify(sampleHierarchy), { status: 200 });
-
-    const props = {
-      history,
-      location: {
-        hash: '',
-        pathname: `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
-        search: '',
-        state: {},
-      },
-      match: {
-        isExact: true,
-        params: { planId: plan.identifier, rootId: '2942' },
-        path: `${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId`,
-        url: `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
-      },
-    };
-
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedAutoSelectView {...props} />
-        </Router>
-      </Provider>
-    );
-
-    await act(async () => {
-      wrapper.update();
-    });
-
-    expect(wrapper.find('Ripple').length).toEqual(1);
   });
 
   it('plan error Message', async () => {
