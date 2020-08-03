@@ -4,9 +4,13 @@ import { ACCESS_DENIED, NETWORK_ERROR, USER_HAS_NO_VALID_ASSIGNMENTS } from '../
 import { apiPlansErrorObject, displayError } from '../errors';
 import * as helperUtils from '../utils';
 
+jest.mock('../../configs/env');
+
 describe('helpers/errors', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    const envModule = require('../../configs/env');
+    envModule.TOAST_AUTO_CLOSE_DELAY = 5000;
   });
 
   it('displayError works with error object', () => {

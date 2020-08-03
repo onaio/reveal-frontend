@@ -1,13 +1,11 @@
 import { HTTPError, NetworkError } from '@opensrp/server-service';
 import { toast, ToastOptions } from 'react-toastify';
+import { TOAST_AUTO_CLOSE_DELAY } from '../configs/env';
 import { ACCESS_DENIED, NETWORK_ERROR, USER_HAS_NO_VALID_ASSIGNMENTS } from '../configs/lang';
 import { growl } from './utils';
 
 /** union of all ErrorTypes that we are working with */
 type ServiceError = HTTPError | Error | NetworkError;
-
-/** autoClose types */
-type AutoClose = 5000 | false;
 
 /**
  * Display error message using growl
@@ -20,11 +18,8 @@ type AutoClose = 5000 | false;
 export const displayError = (
   error: ServiceError,
   customMessage: string = '',
-  autoClose: AutoClose = 5000
+  autoClose: TOAST_AUTO_CLOSE_DELAY | false = TOAST_AUTO_CLOSE_DELAY
 ) => {
-  /** opensrp error object for plans after filtering plans by a user when the assignments are expired
-   * unfortunately putting this in constants does not work; it has a value of undefined during runtime.
-   */
   const toastOptions: ToastOptions = { autoClose, type: toast.TYPE.ERROR };
 
   if (error instanceof HTTPError) {
