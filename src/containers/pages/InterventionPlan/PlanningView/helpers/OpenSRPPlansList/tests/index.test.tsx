@@ -7,7 +7,7 @@ import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { createConnectedOpenSRPPlansList } from '..';
-import { INTERVENTION_IRS_DRAFTS_URL, QUERY_PARAM_TITLE } from '../../../../../../../constants';
+import { PLANNING_VIEW_URL, QUERY_PARAM_TITLE } from '../../../../../../../constants';
 import store from '../../../../../../../store';
 import { plansJSON } from '../../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import plansReducer, {
@@ -124,8 +124,8 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
       match: {
         isExact: true,
         params: {},
-        path: INTERVENTION_IRS_DRAFTS_URL,
-        url: INTERVENTION_IRS_DRAFTS_URL,
+        path: PLANNING_VIEW_URL,
+        url: PLANNING_VIEW_URL,
       },
       planStatuses: ['draft'],
       tableColumns: draftPageColumns,

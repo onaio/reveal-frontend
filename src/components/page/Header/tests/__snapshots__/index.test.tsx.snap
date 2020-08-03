@@ -81,43 +81,6 @@ exports[`components/page/Header renders header correctly 3`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
-  to="/intervention/irs/drafts"
->
-  <Link
-    aria-current={null}
-    className="nav-link"
-    to={
-      Object {
-        "hash": "",
-        "pathname": "/intervention/irs/drafts",
-        "search": "",
-        "state": null,
-      }
-    }
-  >
-    <LinkAnchor
-      aria-current={null}
-      className="nav-link"
-      href="/intervention/irs/drafts"
-      navigate={[Function]}
-    >
-      <a
-        aria-current={null}
-        className="nav-link"
-        href="/intervention/irs/drafts"
-        onClick={[Function]}
-      >
-        IRS
-      </a>
-    </LinkAnchor>
-  </Link>
-</NavLink>
-`;
-
-exports[`components/page/Header renders header correctly 4`] = `
-<NavLink
-  activeClassName="active"
-  className="nav-link"
   to="/assign"
 >
   <Link
@@ -151,7 +114,7 @@ exports[`components/page/Header renders header correctly 4`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 5`] = `
+exports[`components/page/Header renders header correctly 4`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -188,7 +151,7 @@ exports[`components/page/Header renders header correctly 5`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 6`] = `
+exports[`components/page/Header renders header correctly 5`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -225,7 +188,7 @@ exports[`components/page/Header renders header correctly 6`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 7`] = `
+exports[`components/page/Header renders header correctly 6`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -262,7 +225,7 @@ exports[`components/page/Header renders header correctly 7`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 8`] = `
+exports[`components/page/Header renders header correctly 7`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -299,7 +262,7 @@ exports[`components/page/Header renders header correctly 8`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 9`] = `
+exports[`components/page/Header renders header correctly 8`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -336,7 +299,7 @@ exports[`components/page/Header renders header correctly 9`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 10`] = `
+exports[`components/page/Header renders header correctly 9`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -373,7 +336,7 @@ exports[`components/page/Header renders header correctly 10`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 11`] = `
+exports[`components/page/Header renders header correctly 10`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -410,7 +373,7 @@ exports[`components/page/Header renders header correctly 11`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 12`] = `
+exports[`components/page/Header renders header correctly 11`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -447,7 +410,7 @@ exports[`components/page/Header renders header correctly 12`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 13`] = `
+exports[`components/page/Header renders header correctly 12`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -565,43 +528,6 @@ exports[`components/page/Header renders header correctly when authenticated 3`] 
 <NavLink
   activeClassName="active"
   className="nav-link"
-  to="/intervention/irs/drafts"
->
-  <Link
-    aria-current={null}
-    className="nav-link"
-    to={
-      Object {
-        "hash": "",
-        "pathname": "/intervention/irs/drafts",
-        "search": "",
-        "state": null,
-      }
-    }
-  >
-    <LinkAnchor
-      aria-current={null}
-      className="nav-link"
-      href="/intervention/irs/drafts"
-      navigate={[Function]}
-    >
-      <a
-        aria-current={null}
-        className="nav-link"
-        href="/intervention/irs/drafts"
-        onClick={[Function]}
-      >
-        IRS
-      </a>
-    </LinkAnchor>
-  </Link>
-</NavLink>
-`;
-
-exports[`components/page/Header renders header correctly when authenticated 4`] = `
-<NavLink
-  activeClassName="active"
-  className="nav-link"
   to="/assign"
 >
   <Link
@@ -635,7 +561,7 @@ exports[`components/page/Header renders header correctly when authenticated 4`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 5`] = `
+exports[`components/page/Header renders header correctly when authenticated 4`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -672,7 +598,7 @@ exports[`components/page/Header renders header correctly when authenticated 5`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 6`] = `
+exports[`components/page/Header renders header correctly when authenticated 5`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -709,7 +635,7 @@ exports[`components/page/Header renders header correctly when authenticated 6`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 7`] = `
+exports[`components/page/Header renders header correctly when authenticated 6`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -746,7 +672,7 @@ exports[`components/page/Header renders header correctly when authenticated 7`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 8`] = `
+exports[`components/page/Header renders header correctly when authenticated 7`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -783,7 +709,7 @@ exports[`components/page/Header renders header correctly when authenticated 8`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 9`] = `
+exports[`components/page/Header renders header correctly when authenticated 8`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -820,7 +746,7 @@ exports[`components/page/Header renders header correctly when authenticated 9`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 10`] = `
+exports[`components/page/Header renders header correctly when authenticated 9`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -857,7 +783,7 @@ exports[`components/page/Header renders header correctly when authenticated 10`]
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 11`] = `
+exports[`components/page/Header renders header correctly when authenticated 10`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -894,7 +820,7 @@ exports[`components/page/Header renders header correctly when authenticated 11`]
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 12`] = `
+exports[`components/page/Header renders header correctly when authenticated 11`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -931,7 +857,7 @@ exports[`components/page/Header renders header correctly when authenticated 12`]
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 13`] = `
+exports[`components/page/Header renders header correctly when authenticated 12`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"

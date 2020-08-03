@@ -115,8 +115,12 @@ export const ZambiaFocusAreasColumns: Array<DrillDownColumn<Dictionary>> = [
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: 'Room coverage of structures sprayed',
-    accessor: 'roomcov',
+    Header: 'Structures remaining to spray to reach 90% SE',
+    accessor: 'structures_remaining_to_90_se',
+  },
+  {
+    Header: 'Reviewed with decision',
+    accessor: 'reviewed_with_decision',
   },
 ];
 
@@ -135,6 +139,10 @@ export const ZambiaJurisdictionsColumns: Array<DrillDownColumn<Dictionary>> = [
     accessor: 'targareas',
   },
   {
+    Header: 'Spray areas visited',
+    accessor: 'visitedareas',
+  },
+  {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: '% visited Spray Areas Effectively sprayed',
     accessor: 'perctvisareaseffect',
@@ -151,16 +159,24 @@ export const ZambiaJurisdictionsColumns: Array<DrillDownColumn<Dictionary>> = [
     Header: 'Sprayed Structures',
     accessor: 'sprayedstruct',
   },
-
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray coverage of targeted (Progress)',
     accessor: 'spraycovtarg',
   },
   {
+    Header: 'Structures Found',
+    accessor: 'foundstruct',
+  },
+  {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: 'Room coverage of structures sprayed',
-    accessor: 'roomcov',
+    Header: 'Found Coverage',
+    accessor: 'foundcoverage',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Success Rate',
+    accessor: 'spraysuccess',
   },
 ];
 

@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { DraftPlans } from '..';
 import { DRAFT_PLANS } from '../../../../../../configs/lang';
-import { INTERVENTION_IRS_DRAFTS_URL } from '../../../../../../constants';
+import { PLANNING_VIEW_URL } from '../../../../../../constants';
 import store from '../../../../../../store';
 import plansReducer, { reducerName as plansReducerName } from '../../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
@@ -36,8 +36,8 @@ describe('src/containers/../PlanningView/DraftPlans', () => {
       match: {
         isExact: true,
         params: {},
-        path: INTERVENTION_IRS_DRAFTS_URL,
-        url: INTERVENTION_IRS_DRAFTS_URL,
+        path: PLANNING_VIEW_URL,
+        url: PLANNING_VIEW_URL,
       },
       plansArray: [fixtures.plan1],
     };
