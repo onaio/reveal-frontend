@@ -15,7 +15,6 @@ import { sampleHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/
 import plansReducer, { reducerName } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import { plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { jurisdictionsMetadataArray } from '../../../../../store/ducks/tests/fixtures';
-import { akros2, lusaka, mtendere } from '../../JurisdictionAssignmentView/tests/fixtures';
 
 reducerRegistry.register(reducerName, plansReducer);
 reducerRegistry.register(hierarchiesReducerName, hierarchiesReducer);
@@ -111,10 +110,8 @@ describe('src/containers/JurisdictionView/AutoSelect View', () => {
     fetch
       .once(JSON.stringify(jurisdictionsMetadataArray), { status: 200 })
       .once(JSON.stringify(plan), { status: 200 })
-      .once(JSON.stringify([akros2]), { status: 200 })
-      .once(JSON.stringify(mtendere), { status: 200 })
-      .once(JSON.stringify(lusaka), { status: 200 })
       .once(JSON.stringify(sampleHierarchy), { status: 200 });
+
     const props = {
       history,
       location: {
