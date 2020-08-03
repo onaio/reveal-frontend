@@ -12,6 +12,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Store } from 'redux';
+import { ErrorPage } from '../../../../components/page/ErrorPage';
+import Ripple from '../../../../components/page/Loading';
 import {
   ENABLE_JURISDICTION_AUTO_SELECTION_FOR_PLAN_TYPES,
   ENABLE_JURISDICTIONS_AUTO_SELECTION,
@@ -21,13 +23,17 @@ import {
   AUTO_ASSIGN_JURISDICTIONS_URL,
   MANUAL_ASSIGN_JURISDICTIONS_URL,
 } from '../../../../constants';
+import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { isPlanDefinitionOfType } from '../../../../helpers/utils';
 import hierarchyReducer, {
+  fetchTree,
   getTreeById,
   reducerName as hierarchyReducerName,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { InterventionType } from '../../../../store/ducks/plans';
+import { useHandleBrokenPage } from '../helpers/utils';
+import { useGetJurisdictionTree } from './utils';
 
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
@@ -36,7 +42,12 @@ export interface JurisdictionAssignmentReRoutingProps {
   rootJurisdictionId: string;
   tree?: TreeNode;
   plan: PlanDefinition;
+  treeFetchedCreator: typeof fetchTree;
 }
+
+const defaultProps = {
+  treeFetchedCreator: fetchTree,
+};
 
 /** decide which url to go to next
  * @param plan - the plan
@@ -77,10 +88,30 @@ export const getNextUrl = (
 
 /** redirects to either manual jurisdiction selection or auto-jurisdiction selection */
 const JurisdictionAssignmentReRouting = (props: JurisdictionAssignmentReRoutingProps) => {
-  const { plan, tree, rootJurisdictionId } = props;
+  const { plan, tree, rootJurisdictionId, treeFetchedCreator } = props;
+  const { errorMessage, handleBrokenPage, broken } = useHandleBrokenPage();
+  const initialLoadingState = !tree;
+  const { startLoading, stopLoading, loading } = useLoadingReducer(initialLoadingState);
+
+  useGetJurisdictionTree(
+    rootJurisdictionId,
+    startLoading,
+    treeFetchedCreator,
+    stopLoading,
+    handleBrokenPage,
+    tree
+  );
+
+  if (loading()) {
+    return <Ripple />;
+  }
 
   if (!tree) {
     return null;
+  }
+
+  if (broken) {
+    return <ErrorPage errorMessage={errorMessage} />;
   }
 
   const nextBaseUrl = getNextUrl(
@@ -93,10 +124,14 @@ const JurisdictionAssignmentReRouting = (props: JurisdictionAssignmentReRoutingP
   return <Redirect to={`${nextBaseUrl}/${plan.identifier}/${rootJurisdictionId}`} />;
 };
 
+JurisdictionAssignmentReRouting.defaultProps = defaultProps;
 export { JurisdictionAssignmentReRouting };
 
 /** describe props mapped to store */
 type MapStateToProps = Pick<JurisdictionAssignmentReRoutingProps, 'tree'>;
+
+/** map action creators interface */
+type DispatchToProps = Pick<JurisdictionAssignmentReRoutingProps, 'treeFetchedCreator'>;
 
 const treeSelector = getTreeById();
 
@@ -113,6 +148,12 @@ const mapStateToProps = (
   };
 };
 
-export const ConnectedJurisdictionAssignmentReRouting = connect(mapStateToProps)(
-  JurisdictionAssignmentReRouting
-);
+/** maps action creators */
+const mapDispatchToProps: DispatchToProps = {
+  treeFetchedCreator: fetchTree,
+};
+
+export const ConnectedJurisdictionAssignmentReRouting = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(JurisdictionAssignmentReRouting);

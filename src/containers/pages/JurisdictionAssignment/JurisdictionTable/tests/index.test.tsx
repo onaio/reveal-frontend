@@ -36,9 +36,12 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     fetch.resetMocks();
   });
 
+  beforeAll(() => {
+    store.dispatch(fetchTree(sampleHierarchy));
+  });
+
   it('works correctly through a full render cycle', () => {
     const plan = irsPlans[0];
-    store.dispatch(fetchTree(sampleHierarchy));
 
     /** current architecture does not use the Jurisdiction table as a view
      * it is seen as a controlled component that is feed some data from controlling component
