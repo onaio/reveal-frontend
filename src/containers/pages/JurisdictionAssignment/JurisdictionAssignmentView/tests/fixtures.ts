@@ -41,51 +41,7 @@ export const lusaka = {
 
 export const fetchCalls = [
   [
-    'https://reveal-stage.smartregister.org/opensrp/rest/v2/settings//?serverVersion=0&identifier=jurisdiction_metadata-risk',
-    {
-      headers: {
-        accept: 'application/json',
-        authorization: 'Bearer null',
-        'content-type': 'application/json;charset=UTF-8',
-      },
-      method: 'GET',
-    },
-  ],
-  [
     'https://reveal-stage.smartregister.org/opensrp/rest/plans/356b6b84-fc36-4389-a44a-2b038ed2f38d',
-    {
-      headers: {
-        accept: 'application/json',
-        authorization: 'Bearer null',
-        'content-type': 'application/json;charset=UTF-8',
-      },
-      method: 'GET',
-    },
-  ],
-  [
-    'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=false&jurisdiction_ids=3952',
-    {
-      headers: {
-        accept: 'application/json',
-        authorization: 'Bearer null',
-        'content-type': 'application/json;charset=UTF-8',
-      },
-      method: 'GET',
-    },
-  ],
-  [
-    'https://reveal-stage.smartregister.org/opensrp/rest/location/3019?is_jurisdiction=true&return_geometry=false',
-    {
-      headers: {
-        accept: 'application/json',
-        authorization: 'Bearer null',
-        'content-type': 'application/json;charset=UTF-8',
-      },
-      method: 'GET',
-    },
-  ],
-  [
-    'https://reveal-stage.smartregister.org/opensrp/rest/location/2942?is_jurisdiction=true&return_geometry=false',
     {
       headers: {
         accept: 'application/json',

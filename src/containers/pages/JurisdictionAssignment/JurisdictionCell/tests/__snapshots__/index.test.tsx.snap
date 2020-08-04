@@ -8,6 +8,7 @@ exports[`src/pages/JurisdictionAssignment/JurisdictionCell renders correctly by 
       "children": Object {
         "length": 1,
       },
+      "hasChildren": [Function],
       "model": Object {
         "label": "Gaz",
       },
@@ -41,6 +42,7 @@ exports[`src/pages/JurisdictionAssignment/JurisdictionCell renders correctly whe
       "children": Object {
         "length": 0,
       },
+      "hasChildren": [Function],
       "model": Object {
         "label": "Gaz",
       },

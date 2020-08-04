@@ -5,7 +5,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
-import { nodeHasChildren } from '../../../../store/ducks/opensrp/hierarchies/utils';
 
 /**
  * Props for NodeCell
@@ -27,7 +26,7 @@ const NodeCell = (props: NodeCellProps) => {
   const { node, baseUrl } = props;
 
   // isLeafNode if node does not have children
-  const isLeafNode = !nodeHasChildren(node);
+  const isLeafNode = !node.hasChildren();
 
   if (isLeafNode) {
     return <span key={`${node.model.id}-span`}>{node.model.label}</span>;
