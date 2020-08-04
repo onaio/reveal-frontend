@@ -187,7 +187,7 @@ describe('PlanAssignment', () => {
       tree: locationTree,
       useJurisdictionNodeType: false,
     });
-    expect(wrapper.text()).toMatchSnapshot('Should be about map wrapper mock');
+    expect(wrapper.text()).toMatchSnapshot('map is disabled: should not show mock map text');
     wrapper.unmount();
   });
 
