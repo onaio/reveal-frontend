@@ -209,7 +209,15 @@ export const ZambiaFocusAreasColumns = [
     accessor: 'spraysuccess',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => {
+      const { value } = cell;
+      const intValue = Number(value);
+      if (isNaN(intValue)) {
+        return intValue;
+      } else {
+        return Math.ceil(intValue);
+      }
+    },
     Header: 'Structures remaining to spray to reach 90% SE',
     accessor: 'structures_remaining_to_90_se',
   },

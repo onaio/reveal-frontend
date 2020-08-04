@@ -373,7 +373,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const structures = getGenericStructures(
     state,
     SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
-    jurisdictionId
+    jurisdictionId,
+    planId
   );
   let focusArea = null;
   if (focusAreaSlice && jurisdictionId) {
