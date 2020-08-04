@@ -58,5 +58,3 @@ exports[`PlanAssignment shows an error message if no plan: no orgs 1`] = `
   </p>
 </div>
 `;
-
-exports[`PlanAssignment works as expected: map is disabled: should not show mock map text 1`] = `""`;

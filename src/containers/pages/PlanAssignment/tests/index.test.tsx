@@ -48,7 +48,7 @@ jest.mock('../../../../configs/env', () => ({
 }));
 
 jest.mock('../../AssigmentMapWrapper', () => {
-  const mockComponent = (_: any) => <div id="mockComponent">Assignment Map wrapperv</div>;
+  const mockComponent = (_: any) => <div id="mockComponent">Assignment Map wrapper</div>;
   return {
     ConnectedAssignmentMapWrapper: mockComponent,
   };
@@ -187,7 +187,9 @@ describe('PlanAssignment', () => {
       tree: locationTree,
       useJurisdictionNodeType: false,
     });
-    expect(wrapper.text()).toMatchSnapshot('map is disabled: should not show mock map text');
+
+    expect(wrapper.find('#mockComponent').length).toEqual(0);
+
     wrapper.unmount();
   });
 
