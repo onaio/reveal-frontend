@@ -2,8 +2,10 @@
 
 exports[`containers/pages/AssigmentMapWrapper renders jurisdictions assignment map 1`] = `
 <AssignmentMapWrapper
+  autoSelectNodesActionCreator={[Function]}
   currentChildren={Array []}
   currentParentId="07b09ec1-0589-4a98-9480-4c403ac24d59"
+  deselectNodeCreator={[Function]}
   fetchJurisdictionsActionCreator={[Function]}
   fetchUpdatedCurrentParentActionCreator={[Function]}
   getJurisdictionsFeatures={
@@ -1281,6 +1283,7 @@ exports[`containers/pages/AssigmentMapWrapper renders jurisdictions assignment m
     }
   }
   rootJurisdictionId="872cc59e-0bce-427a-bd1f-6ef674dba8e2"
+  selectNodeCreator={[Function]}
   serviceClass={[Function]}
 >
   <Ripple

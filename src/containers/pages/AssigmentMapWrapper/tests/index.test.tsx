@@ -13,10 +13,12 @@ import { getJurisdictions } from '../../../../components/TreeWalker/helpers';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 import hierachyReducer, {
+  deselectNode,
   fetchTree,
   fetchUpdatedCurrentParent,
   getCurrentChildren,
   reducerName as hierachyReducerName,
+  selectNode,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { sampleHierarchy } from '../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
 import jurisdictionsReducer, {
@@ -40,9 +42,6 @@ reducerRegistry.register(jurisdictionMetadataReducerName, jurisdictionMetadataRe
 reducerRegistry.register(plansReducerName, plansReducer);
 
 const history = createBrowserHistory();
-const onJurisdictionClickHandler = onJurisdictionClick({
-  fetchUpdatedCurrentParentActionCreator: jest.fn(),
-});
 
 jest.mock('../../../../components/GisidaLite', () => {
   const MemoizedGisidaLiteMock = () => <div>I love oov</div>;
@@ -129,8 +128,11 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     expect(fetch.mock.calls).toHaveLength(1);
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
+      autoSelectNodesActionCreator: expect.any(Function),
       currentChildren: [],
       currentParentId: '2492',
+      currentParentNode: undefined,
+      deselectNodeCreator: expect.any(Function),
       fetchJurisdictionsActionCreator: expect.any(Function),
       fetchUpdatedCurrentParentActionCreator: expect.any(Function),
       getJurisdictionsFeatures: {
@@ -138,6 +140,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         type: 'FeatureCollection',
       },
       rootJurisdictionId: '2492',
+      selectNodeCreator: expect.any(Function),
       serviceClass: OpenSRPService,
     });
     expect(result).toEqual({ error: null, value: [fixtures.jurisdiction1] });
@@ -168,8 +171,6 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         </Router>
       </Provider>
     );
-    // wrapper.setProps({ getJurisdictionsFeatures: fixtures.geoCollection });
-    // expect(wrapper.find('AssignmentMapWrapper').props()).toEqual('');
     const params = {
       is_jurisdiction: true,
       return_geometry: true,
@@ -191,103 +192,11 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     ]);
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
-      currentChildren: [
-        {
-          children: [],
-          config: { childrenPropertyName: 'children', modelComparatorFn: undefined },
-          model: {
-            id: '3951',
-            label: 'Akros_1',
-            meta: {},
-            node: {
-              attributes: { geographicLevel: 2, structureCount: 159 },
-              locationId: '3951',
-              name: 'Akros_1',
-              parentLocation: { locationId: '3019', voided: false },
-              voided: false,
-            },
-            parent: '3019',
-          },
-          parent: {
-            children: expect.any(Array),
-            config: { childrenPropertyName: 'children', modelComparatorFn: undefined },
-            model: {
-              children: [
-                {
-                  id: '3951',
-                  label: 'Akros_1',
-                  meta: {},
-                  node: {
-                    attributes: { geographicLevel: 2, structureCount: 159 },
-                    locationId: '3951',
-                    name: 'Akros_1',
-                    parentLocation: { locationId: '3019', voided: false },
-                    voided: false,
-                  },
-                  parent: '3019',
-                },
-              ],
-              id: '3019',
-              label: 'Mtendere',
-              meta: {},
-              node: {
-                attributes: { geographicLevel: 1, structureCount: 1 },
-                locationId: '3019',
-                name: 'Mtendere',
-                parentLocation: { locationId: '2942', voided: false },
-                voided: false,
-              },
-              parent: '2942',
-            },
-            parent: {
-              children: expect.any(Array),
-              config: { childrenPropertyName: 'children', modelComparatorFn: undefined },
-              model: {
-                children: [
-                  {
-                    children: [
-                      {
-                        id: '3951',
-                        label: 'Akros_1',
-                        meta: {},
-                        node: {
-                          attributes: expect.any(Object),
-                          locationId: '3951',
-                          name: 'Akros_1',
-                          parentLocation: expect.any(Object),
-                          voided: false,
-                        },
-                        parent: '3019',
-                      },
-                    ],
-                    id: '3019',
-                    label: 'Mtendere',
-                    meta: {},
-                    node: {
-                      attributes: { geographicLevel: 1, structureCount: 1 },
-                      locationId: '3019',
-                      name: 'Mtendere',
-                      parentLocation: { locationId: '2942', voided: false },
-                      voided: false,
-                    },
-                    parent: '2942',
-                  },
-                ],
-                id: '2942',
-                label: 'Lusaka',
-                meta: {},
-                node: {
-                  attributes: { geographicLevel: 0 },
-                  locationId: '2942',
-                  name: 'Lusaka',
-                  voided: false,
-                },
-              },
-            },
-          },
-        },
-      ],
+      autoSelectNodesActionCreator: expect.any(Function),
+      currentChildren: expect.any(Array),
       currentParentId: '3019',
+      currentParentNode: expect.any(Object),
+      deselectNodeCreator: expect.any(Function),
       fetchJurisdictionsActionCreator: expect.any(Function),
       fetchUpdatedCurrentParentActionCreator: expect.any(Function),
       getJurisdictionsFeatures: {
@@ -295,13 +204,18 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         type: 'FeatureCollection',
       },
       rootJurisdictionId: '2942',
+      selectNodeCreator: expect.any(Function),
       serviceClass: OpenSRPService,
     });
     expect(result).toEqual({ error: null, value: [fixtures.jurisdiction1] });
     wrapper.unmount();
   });
-  it('handles jurisdiction click on map', () => {
+  it('handles jurisdiction click on map', async () => {
+    await flushPromises();
     const event = {
+      originalEvent: {
+        altKey: true,
+      },
       point: {
         x: 463.5,
         y: 477.1875,
@@ -345,8 +259,56 @@ describe('containers/pages/AssigmentMapWrapper', () => {
       },
     };
     const mockMapObj: any = {};
-    onJurisdictionClickHandler(mockMapObj, event as EventData);
-    const fetchUpdatedCurrentParentMock = jest.fn(args => fetchUpdatedCurrentParent(args, false));
-    expect(fetchUpdatedCurrentParentMock).toEqual(expect.any(Function));
+    const selectNodeCreatorMock = jest.fn(selectNode);
+    const deselectNodeCreatorMock = jest.fn(deselectNode);
+    const mockProps = {
+      currentParentNode: {
+        model: {
+          id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+          meta: { selected: false },
+        },
+      },
+      deselectNodeCreator: deselectNodeCreatorMock,
+      rootJurisdictionId: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+      selectNodeCreator: selectNodeCreatorMock,
+    };
+    const onJurisdictionClickMock1 = onJurisdictionClick(mockProps, () => jest.fn());
+    onJurisdictionClickMock1(mockMapObj, event as EventData);
+    // test that selected node action is created when node is selected on map
+    expect(selectNodeCreatorMock).toBeCalledTimes(1);
+    expect(deselectNodeCreatorMock).toBeCalledTimes(0);
+    await flushPromises();
+    // test that deselect node action is created when node is selected on map
+    const mockProps2 = {
+      currentChildren: [
+        {
+          model: {
+            id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+            meta: { selected: true },
+          },
+        },
+      ],
+      currentParentNode: {
+        children: [
+          {
+            model: {
+              id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+              meta: { selected: true },
+            },
+          },
+        ],
+        model: {
+          id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+          meta: { selected: true },
+        },
+      },
+      deselectNodeCreator: deselectNodeCreatorMock,
+      rootJurisdictionId: '2942',
+      selectNodeCreator: selectNodeCreatorMock,
+    };
+    const onJurisdictionClickMock2 = onJurisdictionClick(mockProps2, () => jest.fn());
+    onJurisdictionClickMock2(mockMapObj, event as EventData);
+    expect(selectNodeCreatorMock).toBeCalledTimes(1);
+    expect(deselectNodeCreatorMock).toBeCalledTimes(1);
   });
 });
