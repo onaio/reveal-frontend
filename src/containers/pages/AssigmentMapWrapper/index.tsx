@@ -24,7 +24,6 @@ import {
   Filters,
   getCurrentChildren,
   getCurrentParentNode,
-  getLeafNodes,
   getMapCurrentParent,
   selectNode,
   SelectNodeAction,
@@ -54,7 +53,6 @@ export interface AssignmentMapWrapperProps {
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchUpdatedCurrentParentActionCreator: typeof fetchUpdatedCurrentParent;
   getJurisdictionsFeatures: FeatureCollection;
-  leafNodes: TreeNode[];
   autoSelectNodesActionCreator: ActionCreator<AutoSelectNodesAction>;
   selectNodeCreator: ActionCreator<SelectNodeAction>;
   deselectNodeCreator: ActionCreator<DeselectNodeAction>;
@@ -70,7 +68,6 @@ const defaultProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
   getJurisdictionsFeatures: undefined,
-  leafNodes: [],
   rootJurisdictionId: '',
   selectNodeCreator: selectNode,
   serviceClass: OpenSRPService,
@@ -87,22 +84,15 @@ export const onJurisdictionClick = (props: any, setMapParent: any) => {
     const { point, target, originalEvent } = e;
     const {
       fetchUpdatedCurrentParentActionCreator,
-      leafNodes,
       currentParentNode,
       rootJurisdictionId,
       selectNodeCreator,
       deselectNodeCreator,
     } = props;
-    const leafNodeIds = leafNodes.map((node: TreeNode) => node.model.id);
     // grab underlying features from map
     const features: any = target.queryRenderedFeatures(point) as Dictionary[];
     // dont drill down map if current jurisdiction is leafNode
-    if (
-      !features.length ||
-      leafNodeIds.includes(
-        features[0].id || (features[0].properties && features[0].properties.externalId)
-      )
-    ) {
+    if (!features.length) {
       return false;
     }
     if (features[0]) {
@@ -209,6 +199,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
         .catch(error => displayError(error));
     }
   }, [getJurisdictionsFeatures, currentParentId]);
+
   React.useEffect(() => {
     if (mapParent.length) {
       fetchJurisdictionsActionCreator(
@@ -217,6 +208,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
       setMapParent('');
     }
   }, [getJurisdictionsFeatures, mapParent]);
+
   let structures: JSX.Element[] = [];
   let mapCenter;
   let mapBounds;
@@ -269,7 +261,6 @@ type MapStateToProps = Pick<
   | 'rootJurisdictionId'
   | 'currentChildren'
   | 'getJurisdictionsFeatures'
-  | 'leafNodes'
   | 'currentParentNode'
 >;
 
@@ -331,7 +322,6 @@ const mapStateToProps = (
       jurisdictionFilters,
       getJurisdictionsById(state, jurisdictionFilters)
     ),
-    leafNodes: getLeafNodes()(state, filters),
     rootJurisdictionId: ownProps.rootJurisdictionId,
   };
 };

@@ -247,9 +247,9 @@ export function deselectAllNodes(
  * metaData is nested as follows: rootJurisdictionId.planId.jurisdictionId
  */
 export interface TreeState {
+  mapCurrentParent: MapCurrentParentInfo;
   metaData: Dictionary<Dictionary<Dictionary<Meta>>>;
   treeByRootId: Dictionary<TreeNode> | {};
-  mapCurrentParent: MapCurrentParentInfo;
 }
 
 /** Create an immutable tree state */
@@ -257,13 +257,13 @@ export type ImmutableTreeState = TreeState & SeamlessImmutable.ImmutableObject<T
 
 /** starting state */
 export const initialState: ImmutableTreeState = SeamlessImmutable({
-  metaData: {} as Dictionary<Dictionary<Dictionary<Meta>>>,
-  treeByRootId: {},
   mapCurrentParent: {
     currentParentId: '',
     isRootJurisdiction: false,
   },
-};
+  metaData: {} as Dictionary<Dictionary<Dictionary<Meta>>>,
+  treeByRootId: {},
+});
 
 // the reducer function
 export default function reducer(state: ImmutableTreeState = initialState, action: TreeActionTypes) {

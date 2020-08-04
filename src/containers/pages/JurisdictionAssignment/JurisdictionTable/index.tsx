@@ -40,22 +40,21 @@ import { getPlanType, successGrowl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import hierarchyReducer, {
   autoSelectNodes,
+  AutoSelectNodesAction,
   deselectAllNodes,
   deselectNode,
+  DeselectNodeAction,
   fetchTree,
   fetchUpdatedCurrentParent,
   Filters,
   getAllSelectedNodes,
   getCurrentChildren,
   getCurrentParentNode,
-  getLeafNodes,
   getMapCurrentParent,
   MapCurrentParentInfo,
   reducerName as hierarchyReducerName,
   selectNode,
   SelectNodeAction,
-  DeselectNodeAction,
-  AutoSelectNodesAction,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
@@ -91,7 +90,7 @@ export interface JurisdictionSelectorTableProps {
   fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
   fetchUpdatedCurrentParentActionCreator: typeof fetchUpdatedCurrentParent;
   selectedLeafNodes: TreeNode[];
-  leafNodes: TreeNode[];
+  leafNodes: TreeNode[] | undefined;
   autoSelectionFlow: boolean;
   deselectAllNodesCreator: typeof deselectAllNodes;
   mapCurrentParent: MapCurrentParentInfo;
@@ -424,7 +423,7 @@ export { JurisdictionTable };
 /** map state to props interface  */
 type MapStateToProps = Pick<
   JurisdictionSelectorTableProps,
-  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes' | 'leafNodes' | 'mapCurrentParent'
+  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes' | 'mapCurrentParent'
 >;
 
 /** map action creators interface */
@@ -460,7 +459,6 @@ const mapStateToProps = (
   return {
     currentChildren: childrenSelector(state, filters),
     currentParentNode: parentNodeSelector(state, filters),
-    leafNodes: leafNodesSelector(state, filters),
     mapCurrentParent: getMapCurrentParent(state),
     selectedLeafNodes: selectedLeafNodesSelector(state, filters),
   };
