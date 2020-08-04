@@ -23,13 +23,24 @@
 
 /** Hack to remove padding from Mda-reporting tds */
 .generic-report-table .td[datatd='pm-0'] {
-  padding: 0 !important;
-  line-height: 3em;
-  height: 3em;
+  line-height: normal;
+  padding: 10px !important;
+  height: auto !important;
+  display: flex;
 }
 
 .generic-report-table .td[datatd='pm-0'] div {
   padding: 0 5px !important;
   line-height: inherit;
   height: initial;
+}
+
+.generic-report-table .irs-report-indicator-container {
+  flex-grow: 1 !important;
+  margin: -10px;
+}
+
+.generic-report-table {
+  max-width: 100vw !important;
+  overflow-y: scroll;
 }

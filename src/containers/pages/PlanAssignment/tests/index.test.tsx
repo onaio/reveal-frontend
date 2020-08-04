@@ -43,11 +43,12 @@ import { isMapDisabled, PlanAssignment } from '../index';
 const fetch = require('jest-fetch-mock');
 
 jest.mock('../../../../configs/env', () => ({
+  ASSIGNMENT_PAGE_SHOW_MAP: false,
   MAP_DISABLED_PLAN_TYPES: ['FI'],
 }));
 
 jest.mock('../../AssigmentMapWrapper', () => {
-  const mockComponent = (_: any) => <div id="mockComponent">Assignment wrapperv</div>;
+  const mockComponent = (_: any) => <div id="mockComponent">Assignment Map wrapper</div>;
   return {
     ConnectedAssignmentMapWrapper: mockComponent,
   };
@@ -186,6 +187,9 @@ describe('PlanAssignment', () => {
       tree: locationTree,
       useJurisdictionNodeType: false,
     });
+
+    expect(wrapper.find('#mockComponent').length).toEqual(0);
+
     wrapper.unmount();
   });
 
@@ -302,6 +306,12 @@ describe('PlanAssignment', () => {
 
   it('map disabled returns true', () => {
     const disabled = isMapDisabled(baseProps.plan);
+    expect(disabled).toEqual(true);
+  });
+
+  it('is map disabled helper when team assignment map env is disabled', () => {
+    const mockPlan = { ...plans[1] }; // plan-type is whitelisted to show map
+    const disabled = isMapDisabled(mockPlan);
     expect(disabled).toEqual(true);
   });
 });
