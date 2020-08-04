@@ -224,7 +224,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
 
   const breadCrumbProps = {
     currentPage,
-    fetchUpdatedCurrentParentActionCreator,
+    fetchUpdatedCurrentParentHandler,
     pages,
   };
   const data = derivedChildrenNodes.map(node => {
