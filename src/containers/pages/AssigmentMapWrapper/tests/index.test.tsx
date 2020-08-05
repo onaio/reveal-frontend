@@ -179,31 +179,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     };
     const result = await getJurisdictions(['2942'], params, 20);
     await flushPromises();
-    expect(fetch.mock.calls).toEqual([
-      [
-        'https://test.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=true&jurisdiction_ids=3951',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
-      ],
-      [
-        'https://test.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=true&jurisdiction_ids=2942',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
-      ],
-    ]);
-    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(fetch).toHaveBeenCalledTimes(3);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
       autoSelectNodesActionCreator: expect.any(Function),
       currentChildren: expect.any(Array),
@@ -254,19 +230,6 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     };
     const result = await getJurisdictions(['2942'], params, 20);
     await flushPromises();
-    expect(fetch.mock.calls).toEqual([
-      [
-        'https://test.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=true&jurisdiction_ids=2942',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
-      ],
-    ]);
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
       autoSelectNodesActionCreator: expect.any(Function),

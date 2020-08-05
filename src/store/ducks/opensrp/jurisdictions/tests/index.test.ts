@@ -80,5 +80,33 @@ describe('reducers/opensrp/hierarchies', () => {
       features: [raKsh3],
       type: 'FeatureCollection',
     });
+    // test new feature properties exist in feature collection
+    expect(
+      fcSelector(store.getState(), {
+        currentChildren: [
+          {
+            model: {
+              id: raKsh3.id,
+              meta: { selected: true },
+            },
+          },
+        ] as any,
+        jurisdictionIdsArray: [raKsh3.id],
+        newFeatureProps: true,
+      })
+    ).toEqual({
+      features: [
+        {
+          ...raKsh3,
+          properties: {
+            ...raKsh3.properties,
+            fillColor: '#ff5c33',
+            fillOutlineColor: '#22bcfb',
+            lineColor: '#22bcfb',
+          },
+        },
+      ],
+      type: 'FeatureCollection',
+    });
   });
 });

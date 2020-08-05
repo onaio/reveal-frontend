@@ -8,7 +8,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ActionCreator, Store } from 'redux';
 import { CountriesAdmin0 } from '../../../../src/configs/settings';
-import { BLUE, DARK_RED, RED, WHITE } from '../../../colors';
 import { MemoizedGisidaLite } from '../../../components/GisidaLite';
 import Loading from '../../../components/page/Loading';
 import { getJurisdictions } from '../../../components/TreeWalker/helpers';
@@ -35,7 +34,6 @@ import jurisdictionReducer, {
   Filters as JurisdictionGeomFilters,
   getJurisdictionsById,
   getJurisdictionsFC,
-  Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../store/ducks/opensrp/jurisdictions';
 import {
@@ -154,26 +152,6 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   const [mapParent, setMapParent] = React.useState('');
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   onJurisdictionClick(props, setMapParent);
-  /**
-   *
-   * @param data - Jurisdiction data with geometries
-   */
-  function buildCollectionWithNewProps(data: Jurisdiction[]) {
-    return data.map(val => {
-      const getNode: TreeNode | any = currentChildren.find(
-        node => node.model.id === val.id || node.parent.model.id === val.id
-      );
-      return {
-        ...val,
-        properties: {
-          ...val.properties,
-          fillColor: nodeIsSelected(getNode) ? RED : DARK_RED,
-          fillOutlineColor: nodeIsSelected(getNode) ? BLUE : WHITE,
-          lineColor: nodeIsSelected(getNode) ? BLUE : WHITE,
-        },
-      };
-    });
-  }
 
   React.useEffect(() => {
     if (!getJurisdictionsFeatures.features.length) {
@@ -190,7 +168,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
       )
         .then(res => {
           if (res.value && res.value.length && currentChildren.length) {
-            fetchJurisdictionsActionCreator(buildCollectionWithNewProps(res.value));
+            fetchJurisdictionsActionCreator(res.value);
           }
         })
         .finally(() => {
@@ -202,9 +180,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
 
   React.useEffect(() => {
     if (mapParent.length) {
-      fetchJurisdictionsActionCreator(
-        buildCollectionWithNewProps(getJurisdictionsFeatures.features as any)
-      );
+      fetchJurisdictionsActionCreator(getJurisdictionsFeatures.features as any);
       setMapParent('');
     }
   }, [getJurisdictionsFeatures, mapParent]);
@@ -293,6 +269,7 @@ const mapStateToProps = (
 
   const childJurisdictions = getCurrentChildren()(state, filters);
   const jurisdictionFilters: JurisdictionGeomFilters = {
+    currentChildren: childJurisdictions,
     filterGeom: true,
     jurisdictionId: getMapCurrentParent(state).currentParentId.length
       ? getMapCurrentParent(state).currentParentId

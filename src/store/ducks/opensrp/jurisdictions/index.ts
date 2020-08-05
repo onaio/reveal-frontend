@@ -8,6 +8,9 @@ import { Feature, FeatureCollection, Geometry } from '@turf/turf';
 import { get, values } from 'lodash';
 import { Store } from 'redux';
 import { createSelector } from 'reselect';
+import { BLUE, DARK_RED, RED, WHITE } from '../../../../colors';
+import { TreeNode } from '../hierarchies/types';
+import { nodeIsSelected } from '../hierarchies/utils';
 
 /** The shape of a jurisdiction received from the OpenSRP API */
 export interface Jurisdiction {
@@ -41,9 +44,11 @@ export const removeJurisdictions = removeActionCreatorFactory(reducerName);
 // selectors
 /** prop filters to customize selector queries */
 export interface Filters {
+  currentChildren?: TreeNode[] /** used when getting node of interest whose features need new properties */;
   filterGeom?: boolean /** whether to filter jurisdictions that have geometry field */;
   jurisdictionId?: string /** jurisdiction id */;
   jurisdictionIdsArray?: string[] /** array of jurisdiction ids */;
+  newFeatureProps?: boolean /** whether to add new fields to feature properties */;
   parentId?: string /** parent id */;
 }
 
@@ -71,6 +76,20 @@ export const getJurisdictionIdsArray = (_: Partial<Store>, props: Filters) =>
  * @param props -  the filterProps
  */
 export const getFilterGeom = (_: Partial<Store>, props: Filters) => props.filterGeom;
+
+/**
+ * get newFeatureProps value from filterProps
+ * @param _ - the store
+ * @param props - filterProps
+ */
+export const getNewFeatureProps = (_: Partial<Store>, props: Filters) => props.newFeatureProps;
+
+/**
+ * get current child jurisdictions from filterProps
+ * @param _ - store
+ * @param props - filterProps
+ */
+export const getChildJurisdictions = (_: Partial<Store>, props: Filters) => props.currentChildren;
 
 /** gets all jurisdictions keyed by id
  * @param state - the store
@@ -146,10 +165,27 @@ export const getJurisdictionsArray = () =>
  */
 export const getJurisdictionsFC = () =>
   createSelector(
-    [getJurisdictionsArray()],
-    (jurisdictionsArray): FeatureCollection => {
+    [getJurisdictionsArray(), getNewFeatureProps, getChildJurisdictions],
+    (jurisdictionsArray, newFeatureProps, currentChildren): FeatureCollection => {
+      const validFeatures = jurisdictionsArray.filter(item => 'geometry' in item) as Feature[];
       return {
-        features: jurisdictionsArray.filter(item => 'geometry' in item) as Feature[],
+        features: validFeatures.map((feature: Feature) => {
+          if (newFeatureProps) {
+            const getNode: TreeNode | any = currentChildren.find(
+              (node: any) => node.model.id === feature.id || node.parent.model.id === feature.id
+            );
+            return {
+              ...feature,
+              properties: {
+                ...feature.properties,
+                fillColor: nodeIsSelected(getNode) ? RED : DARK_RED,
+                fillOutlineColor: nodeIsSelected(getNode) ? BLUE : WHITE,
+                lineColor: nodeIsSelected(getNode) ? BLUE : WHITE,
+              },
+            };
+          }
+          return feature;
+        }),
         type: 'FeatureCollection',
       };
     }
