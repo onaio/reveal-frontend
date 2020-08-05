@@ -154,18 +154,15 @@ export const setSelectOnNode = (
   }
   // add an entry for this node
   const thisNodesMeta = createSingleMetaData(nodeId, actionBy, true);
-  metaByJurisdiction = {
-    ...metaByJurisdiction,
-    ...thisNodesMeta,
-  };
+  metaByJurisdiction = Object.assign(metaByJurisdiction, thisNodesMeta);
 
   if (cascadeDown) {
     // argNode is part of this walk.
     nodeOfInterest.walk(nd => {
-      metaByJurisdiction = {
-        ...metaByJurisdiction,
-        ...createSingleMetaData(nd.model.id, actionBy, selectValue),
-      };
+      metaByJurisdiction = Object.assign(
+        metaByJurisdiction,
+        createSingleMetaData(nd.model.id, actionBy, selectValue)
+      );
       return true;
     });
   }
@@ -174,10 +171,10 @@ export const setSelectOnNode = (
     // remove the node from path
     parentsPath.pop();
     parentsPath.forEach(parentNode => {
-      metaByJurisdiction = {
-        ...metaByJurisdiction,
-        ...createSingleMetaData(parentNode.model.id, actionBy, selectValue),
-      };
+      metaByJurisdiction = Object.assign(
+        metaByJurisdiction,
+        createSingleMetaData(parentNode.model.id, actionBy, selectValue)
+      );
     });
   }
   return { metaByJurisdiction, nodeOfInterest };
@@ -202,10 +199,10 @@ export function computeParentNodesSelection(
       metaDataByJurisdiction
     );
     if (allChildrenAreSelected) {
-      metaDataByJurisdictionId = {
-        ...metaDataByJurisdictionId,
-        ...createSingleMetaData(parentNode.model.id, actionBy, true),
-      };
+      metaDataByJurisdictionId = Object.assign(
+        metaDataByJurisdictionId,
+        createSingleMetaData(parentNode.model.id, actionBy, true)
+      );
     } else {
       break;
     }
@@ -229,10 +226,10 @@ export const autoSelectNodesAndCascade = (
   tree.walk(node => {
     if (callback(node)) {
       node.walk(nd => {
-        metaByJurisdictionId = {
-          ...createSingleMetaData(nd.model.id, actionBy, true),
-          ...metaByJurisdictionId,
-        };
+        metaByJurisdictionId = Object.assign(
+          metaByJurisdictionId,
+          createSingleMetaData(nd.model.id, actionBy, true)
+        );
         // removing this return cause a type error, that's its sole purpose
         return true;
       });
@@ -246,16 +243,13 @@ export const autoSelectNodesAndCascade = (
 
   // now select parents accordingly
   parentNodesSet.forEach(node => {
-    metaByJurisdictionId = {
-      ...metaByJurisdictionId,
-      ...computeParentNodesSelection(node, actionBy, thisTreeMetaData),
-    };
+    metaByJurisdictionId = Object.assign(
+      metaByJurisdictionId,
+      computeParentNodesSelection(node, actionBy, thisTreeMetaData)
+    );
   });
 
-  return {
-    ...metaByJurisdiction,
-    ...metaByJurisdictionId,
-  };
+  return Object.assign({}, metaByJurisdiction, metaByJurisdictionId);
 };
 
 /** compute Selected nodes from the tree
