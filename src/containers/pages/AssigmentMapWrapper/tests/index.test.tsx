@@ -1,11 +1,10 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { FeatureCollection } from '@turf/turf';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import { EventData } from 'mapbox-gl';
-import React from 'react';
+import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { AssignmentMapWrapper, ConnectedAssignmentMapWrapper, onJurisdictionClick } from '..';
@@ -72,27 +71,6 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         <AssignmentMapWrapper />
       </Router>
     );
-  });
-  it('renders jurisdictions assignment map', () => {
-    store.dispatch(fetchJurisdictions(fixtures.payload as any));
-    const props = {
-      currentParentId: '07b09ec1-0589-4a98-9480-4c403ac24d59',
-      getJurisdictionsFeatures: fixtures.geoCollection as FeatureCollection,
-      rootJurisdictionId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
-    };
-
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <AssignmentMapWrapper {...props} />
-        </Router>
-      </Provider>
-    );
-    expect(toJson(wrapper.find('MemoizedGisidaLiteMock div'))).toMatchSnapshot(
-      'MemoizedGisidaLiteMock div'
-    );
-    expect(toJson(wrapper.find('AssignmentMapWrapper'))).toMatchSnapshot();
-    wrapper.unmount();
   });
   it('works correctly with store', async () => {
     fetch.mockResponseOnce(JSON.stringify([fixtures.jurisdiction1]), { status: 200 });
@@ -247,6 +225,9 @@ describe('containers/pages/AssigmentMapWrapper', () => {
       selectNodeCreator: expect.any(Function),
       serviceClass: OpenSRPService,
     });
+    expect(toJson(wrapper.find('MemoizedGisidaLiteMock div'))).toMatchSnapshot(
+      'map renders correctly'
+    );
     expect(result).toEqual({ error: null, value: expect.any(Array) });
     wrapper.unmount();
   });

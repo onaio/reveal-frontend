@@ -148,7 +148,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   const currentChildIds: string[] = currentChildren.length
     ? currentChildren.map(node => node.model.id)
     : [];
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = React.useState(false);
   const [mapParent, setMapParent] = React.useState('');
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   onJurisdictionClick(props, setMapParent);
@@ -169,6 +169,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
         .then(res => {
           if (res.value && res.value.length && currentChildren.length) {
             fetchJurisdictionsActionCreator(res.value);
+            setLoading(false);
           }
         })
         .finally(() => {
