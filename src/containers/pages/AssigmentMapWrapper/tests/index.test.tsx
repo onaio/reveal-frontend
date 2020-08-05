@@ -24,6 +24,7 @@ import { sampleHierarchy } from '../../../../store/ducks/opensrp/hierarchies/tes
 import jurisdictionsReducer, {
   fetchJurisdictions,
   reducerName as jurisdictionsReducerName,
+  removeJurisdictions,
 } from '../../../../store/ducks/opensrp/jurisdictions';
 import jurisdictionMetadataReducer, {
   reducerName as jurisdictionMetadataReducerName,
@@ -61,8 +62,10 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     jest.resetAllMocks();
     fetchMock.mockClear();
     fetchMock.resetMocks();
-    store.dispatch(fetchJurisdictions(fixtures.payload as any));
   });
+
+  afterEach(() => store.dispatch(removeJurisdictions()));
+
   it('renders successfully', () => {
     shallow(
       <Router history={history}>
@@ -146,7 +149,81 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     expect(result).toEqual({ error: null, value: [fixtures.jurisdiction1] });
     wrapper.unmount();
   });
-  it('test that current children and geojson are dispatched in store correctly', async () => {
+  it('test that jurisdictions are fetched correctly', async () => {
+    fetch.mockResponseOnce(JSON.stringify([fixtures.jurisdiction1]), { status: 200 });
+    store.dispatch(fetchTree(sampleHierarchy, '2942'));
+    const children = getCurrentChildren()(store.getState(), {
+      currentParentId: '2942',
+      leafNodesOnly: true,
+      rootJurisdictionId: '2942',
+    });
+    const props = {
+      currentChildren: [children] as any,
+      currentParentId: '3019',
+      fetchJurisdictionsActionCreator: fetchJurisdictions,
+      fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
+      getJurisdictionsFeatures: fixtures.geoCollection as any,
+      rootJurisdictionId: '2942',
+      serviceClass: OpenSRPService,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedAssignmentMapWrapper {...props} />
+        </Router>
+      </Provider>
+    );
+    const params = {
+      is_jurisdiction: true,
+      return_geometry: true,
+    };
+    const result = await getJurisdictions(['2942'], params, 20);
+    await flushPromises();
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://test.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=true&jurisdiction_ids=3951',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+      [
+        'https://test.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=true&jurisdiction_ids=2942',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+    ]);
+    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
+      autoSelectNodesActionCreator: expect.any(Function),
+      currentChildren: expect.any(Array),
+      currentParentId: '3019',
+      currentParentNode: expect.any(Object),
+      deselectNodeCreator: expect.any(Function),
+      fetchJurisdictionsActionCreator: expect.any(Function),
+      fetchUpdatedCurrentParentActionCreator: expect.any(Function),
+      getJurisdictionsFeatures: {
+        features: [],
+        type: 'FeatureCollection',
+      },
+      rootJurisdictionId: '2942',
+      selectNodeCreator: expect.any(Function),
+      serviceClass: OpenSRPService,
+    });
+    expect(result).toEqual({ error: null, value: expect.any(Array) });
+    wrapper.unmount();
+  });
+  it('tests that geojson is loaded correctly in store', async () => {
     fetch.mockResponseOnce(JSON.stringify([fixtures.jurisdiction1]), { status: 200 });
     store.dispatch(fetchTree(sampleHierarchy, '2942'));
     store.dispatch(fetchJurisdictions(fixtures.payload as any));
@@ -175,7 +252,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
       is_jurisdiction: true,
       return_geometry: true,
     };
-    const result = await getJurisdictions(['2942'], params, 1);
+    const result = await getJurisdictions(['2942'], params, 20);
     await flushPromises();
     expect(fetch.mock.calls).toEqual([
       [
@@ -207,7 +284,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
       selectNodeCreator: expect.any(Function),
       serviceClass: OpenSRPService,
     });
-    expect(result).toEqual({ error: null, value: [fixtures.jurisdiction1] });
+    expect(result).toEqual({ error: null, value: expect.any(Array) });
     wrapper.unmount();
   });
   it('handles jurisdiction click on map', async () => {
