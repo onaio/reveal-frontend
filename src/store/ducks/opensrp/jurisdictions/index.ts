@@ -171,9 +171,9 @@ export const getJurisdictionsFC = () =>
       return {
         features: validFeatures.map((feature: Feature) => {
           if (newFeatureProps) {
-            const getNode: TreeNode | any = currentChildren.find(
+            const getNode = (currentChildren as TreeNode[]).find(
               (node: any) => node.model.id === feature.id || node.parent.model.id === feature.id
-            );
+            ) as TreeNode;
             return {
               ...feature,
               properties: {
@@ -187,7 +187,7 @@ export const getJurisdictionsFC = () =>
           return feature;
         }),
         type: 'FeatureCollection',
-      };
+      } as FeatureCollection;
     }
   );
 

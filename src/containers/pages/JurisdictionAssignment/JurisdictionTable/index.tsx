@@ -90,7 +90,6 @@ export interface JurisdictionSelectorTableProps {
   fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
   fetchUpdatedCurrentParentActionCreator: typeof fetchUpdatedCurrentParent;
   selectedLeafNodes: TreeNode[];
-  leafNodes: TreeNode[] | undefined;
   autoSelectionFlow: boolean;
   deselectAllNodesCreator: typeof deselectAllNodes;
   mapCurrentParent: MapCurrentParentInfo;
@@ -105,7 +104,6 @@ const defaultProps = {
   fetchPlanCreator: addPlanDefinition,
   fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
   jurisdictionsMetadata: [],
-  leafNodes: [],
   mapCurrentParent: {
     currentParentId: '',
     isRootJurisdiction: false,

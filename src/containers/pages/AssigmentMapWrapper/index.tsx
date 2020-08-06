@@ -1,8 +1,7 @@
 import { viewport } from '@mapbox/geo-viewport';
 import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { Dictionary } from '@onaio/utils';
-import { FeatureCollection } from '@turf/turf';
+import { Feature, FeatureCollection } from '@turf/turf';
 import { EventData, Map } from 'mapbox-gl';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -40,12 +39,13 @@ import {
   buildMouseMoveHandler,
   buildStructureLayers,
 } from '../FocusInvestigation/map/active/helpers/utils';
+
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** props for Plan jurisdiction and team assignment higher order component */
 export interface AssignmentMapWrapperProps {
   rootJurisdictionId: string;
-  currentParentId: string | undefined;
+  currentParentId?: string;
   currentChildren: TreeNode[];
   serviceClass: typeof OpenSRPService;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
@@ -54,10 +54,16 @@ export interface AssignmentMapWrapperProps {
   autoSelectNodesActionCreator: ActionCreator<AutoSelectNodesAction>;
   selectNodeCreator: ActionCreator<SelectNodeAction>;
   deselectNodeCreator: ActionCreator<DeselectNodeAction>;
-  currentParentNode: TreeNode | undefined;
+  currentParentNode?: TreeNode;
 }
 
-const defaultProps = {
+/** default value for feature Collection */
+const defaultFeatureCollection: FeatureCollection = {
+  features: [],
+  type: 'FeatureCollection',
+};
+
+const defaultProps: AssignmentMapWrapperProps = {
   autoSelectNodesActionCreator: autoSelectNodes,
   currentChildren: [],
   currentParentId: undefined,
@@ -65,7 +71,7 @@ const defaultProps = {
   deselectNodeCreator: deselectNode,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
-  getJurisdictionsFeatures: undefined,
+  getJurisdictionsFeatures: defaultFeatureCollection,
   rootJurisdictionId: '',
   selectNodeCreator: selectNode,
   serviceClass: OpenSRPService,
@@ -76,7 +82,7 @@ const defaultProps = {
  * @param props - AssignmentMapWrapper component props
  */
 
-export const onJurisdictionClick = (props: any, setMapParent: any) => {
+export const onJurisdictionClick = (props: any, setMapParent: (currentId: string) => void) => {
   function handleJurisdictionClick(_: Map, e: EventData) {
     // Destructure event data
     const { point, target, originalEvent } = e;
@@ -88,8 +94,7 @@ export const onJurisdictionClick = (props: any, setMapParent: any) => {
       deselectNodeCreator,
     } = props;
     // grab underlying features from map
-    const features: any = target.queryRenderedFeatures(point) as Dictionary[];
-    // dont drill down map if current jurisdiction is leafNode
+    const features: Feature[] = target.queryRenderedFeatures(point);
     if (!features.length) {
       return false;
     }
@@ -119,10 +124,12 @@ export const onJurisdictionClick = (props: any, setMapParent: any) => {
         }
         setMapParent(currentId);
       } else {
-        fetchUpdatedCurrentParentActionCreator(
-          currentId || '',
-          features[0].properties && !features[0].properties.parentId
-        );
+        if (!currentParentNode.hasChildren()) {
+          fetchUpdatedCurrentParentActionCreator(
+            currentId || '',
+            features[0].properties && !features[0].properties.parentId
+          );
+        }
       }
     }
   }
@@ -148,8 +155,8 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   const currentChildIds: string[] = currentChildren.length
     ? currentChildren.map(node => node.model.id)
     : [];
-  const [loading, setLoading] = React.useState(false);
-  const [mapParent, setMapParent] = React.useState('');
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [mapParent, setMapParent] = React.useState<string>('');
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   onJurisdictionClick(props, setMapParent);
 
