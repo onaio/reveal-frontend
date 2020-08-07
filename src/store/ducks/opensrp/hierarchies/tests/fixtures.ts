@@ -1,6 +1,9 @@
 // tslint:disable: object-literal-sort-keys
 import { RawOpenSRPHierarchy } from '../types';
 
+// tslint:disable-next-line: no-var-requires
+export const zambiaHierarchy = require('./ZambiaHierarchy.json');
+
 export const sampleHierarchy: RawOpenSRPHierarchy = {
   locationsHierarchy: {
     map: {
