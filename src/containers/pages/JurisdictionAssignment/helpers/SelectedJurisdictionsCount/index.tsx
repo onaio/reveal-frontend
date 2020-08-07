@@ -70,6 +70,7 @@ const mapStateToProps = (
 ): MapStateToProps => {
   const filters: Filters = {
     currentParentId: ownProps.parentNode.model.id,
+    leafNodesOnly: true,
     planId: ownProps.planId,
     rootJurisdictionId: ownProps.rootId,
   };
