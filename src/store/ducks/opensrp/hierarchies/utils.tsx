@@ -258,14 +258,16 @@ export const autoSelectNodesAndCascade = (
  */
 export const computeSelectedNodes = (
   tree: TreeNode | undefined,
-  leafNodesOnly: boolean | undefined
+  leafNodesOnly: boolean | undefined,
+  metaByJurisdiction: Dictionary<Meta>
 ) => {
   const nodesList: TreeNode[] = [];
   if (!tree) {
     return [];
   }
   tree.walk(node => {
-    const shouldAddNode = nodeIsSelected(node) && !(leafNodesOnly && node.hasChildren());
+    const shouldAddNode =
+      !!metaByJurisdiction[node.model.id] && !(leafNodesOnly && node.hasChildren());
     if (shouldAddNode) {
       nodesList.push(node);
     }
@@ -294,27 +296,62 @@ export const preOrderStructureCountComputation = (node: TreeNode) => {
   return thisNodesSelectedStructs;
 };
 
+/** helper util that helps add metaData from the metaData state slice to the respective node
+ * that owns the metaData
+ * @param nodes - a node or a list of nodes to apply the metadata to
+ * @param meta - meta object by jurisdiction
+ */
+export const applyMeta = (nodes: TreeNode[] | TreeNode | undefined, meta: Dictionary<Meta>) => {
+  if (!nodes) {
+    return [];
+  }
+  const localNodes = Array.isArray(nodes) ? [...nodes] : [nodes];
+
+  localNodes.forEach(node => {
+    const thisNodesMeta = Object.assign({}, node.model.meta, meta[node.model.id]);
+    node.model.meta = thisNodesMeta;
+  });
+
+  return localNodes;
+};
+
 /** find the parent node in a tree given the parentId
  * @param tree - the tree
  * @param parentId - id of the parent node
  */
-export const findAParentNode = (tree: TreeNode | undefined, parentId: string | undefined) => {
+export const findAParentNode = (
+  tree: TreeNode | undefined,
+  parentId: string | undefined,
+  metaData?: Dictionary<Meta>
+) => {
   if (!tree) {
     return;
   }
   if (parentId === undefined) {
     return tree;
   }
-  return tree.first(node => node.model.id === parentId);
+  const ss: TreeNode | undefined = tree.first(node => node.model.id === parentId);
+
+  if (metaData) {
+    return applyMeta(ss, metaData)[0];
+  }
+
+  return ss;
 };
 
 /** find the current children from  a parent node. This is defined here to avoid repetition
  * @param parentNode -  the parent Node
  */
-export const getChildrenForNode = (parentNode: TreeNode | undefined) => {
+export const getChildrenForNode = (
+  parentNode: TreeNode | undefined,
+  metaData?: Dictionary<Meta>
+) => {
   let children = [];
   if (parentNode) {
     children = parentNode.children;
+  }
+  if (metaData) {
+    return applyMeta(children, metaData);
   }
   return children;
 };
