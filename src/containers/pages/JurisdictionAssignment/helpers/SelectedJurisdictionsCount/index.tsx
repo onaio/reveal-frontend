@@ -10,17 +10,14 @@ import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
 
 /** Props for SelectedJurisdictionsCount  */
 export interface SelectedJurisdictionsCountProps {
-  id: string;
-  jurisdictions: TreeNode[] /** array of jurisdictions */;
-  parentNode: TreeNode | undefined;
+  rootId: string;
+  planId: string;
+  parentNode: TreeNode;
   selectedNodesUnderParent: TreeNode[];
 }
 
 /** default props for SelectedJurisdictionsCount */
-const defaultProps: SelectedJurisdictionsCountProps = {
-  id: '',
-  jurisdictions: [],
-  parentNode: undefined,
+const defaultProps: Partial<SelectedJurisdictionsCountProps> = {
   selectedNodesUnderParent: [],
 };
 
@@ -32,11 +29,8 @@ const defaultProps: SelectedJurisdictionsCountProps = {
  * @param props - the props!
  */
 const SelectedJurisdictionsCount = (props: SelectedJurisdictionsCountProps) => {
-  const { id, jurisdictions, selectedNodesUnderParent } = props;
+  const { parentNode, selectedNodesUnderParent } = props;
 
-  if (!jurisdictions || jurisdictions.length < 1) {
-    return null;
-  }
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
   const nodeJurisdictions = selectedNodesUnderParent;
@@ -45,16 +39,18 @@ const SelectedJurisdictionsCount = (props: SelectedJurisdictionsCountProps) => {
   );
   const toolTipDisplay = jurisdictionNames.join(', ');
 
+  const nodeId = parentNode.model.id;
+
   return (
     <Fragment>
-      <span id={`jurisdiction-tooltip-${id}`}>{nodeJurisdictions.length}</span>
+      <span id={`jurisdiction-tooltip-${nodeId}`}>{nodeJurisdictions.length}</span>
       <Tooltip
         placement="top"
         isOpen={tooltipOpen}
-        target={`jurisdiction-tooltip-${id}`}
+        target={`jurisdiction-tooltip-${nodeId}`}
         toggle={toggleTooltip}
       >
-        <span id={`jurisdiction-span-${id}`}>{toolTipDisplay}</span>;
+        <span id={`jurisdiction-span-${nodeId}`}>{toolTipDisplay}</span>;
       </Tooltip>
     </Fragment>
   );
@@ -73,9 +69,9 @@ const mapStateToProps = (
   ownProps: SelectedJurisdictionsCountProps
 ): MapStateToProps => {
   const filters: Filters = {
-    parentNode: ownProps.parentNode,
-    rootJurisdictionId: ownProps.id,
-    selectedLeafNodes: ownProps.jurisdictions,
+    currentParentId: ownProps.parentNode.model.id,
+    planId: ownProps.planId,
+    rootJurisdictionId: ownProps.rootId,
   };
   return {
     selectedNodesUnderParent: getSelectedNodesUnderParentNode()(state, filters),

@@ -230,10 +230,10 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       node.hasChildren() ? '' : nodeIsSelected(node) ? TARGETED : NOT_TARGETED,
       node.model.meta.actionBy,
       <ConnectedSelectedJurisdictionsCount
-        key={`selected-jurisdictions-txt`}
+        key={`${node.model.id}-selected-jurisdictions-txt`}
         parentNode={node}
-        id={node.model.id}
-        jurisdictions={selectedLeafNodes}
+        planId={plan.identifier}
+        rootId={rootJurisdictionId}
       />,
     ];
   });
