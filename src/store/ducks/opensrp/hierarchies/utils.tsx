@@ -267,7 +267,8 @@ export const computeSelectedNodes = (
   }
   tree.walk(node => {
     const shouldAddNode =
-      !!metaByJurisdiction[node.model.id] && !(leafNodesOnly && node.hasChildren());
+      !!(metaByJurisdiction[node.model.id] && metaByJurisdiction[node.model.id][SELECTION_KEY]) &&
+      !(leafNodesOnly && node.hasChildren());
     if (shouldAddNode) {
       nodesList.push(node);
     }
