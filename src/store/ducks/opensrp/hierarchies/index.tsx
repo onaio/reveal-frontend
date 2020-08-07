@@ -553,12 +553,7 @@ export const getStructuresCount = () =>
  */
 export const getSelectedHierarchy = () => {
   return createSelector(getTreeById(), getMetaForPlanInTree(), (origTree, metaByJurisdiction) => {
-    /** what if we did a merge sort kind of think */
-    /** bear in mind we have to recompute the structures count */
-
-    /** */
-
-    // need to be very keen not tu mutate the original tree.
+    // need to be very keen not t0 mutate the original tree.
     const tree = cloneDeep(origTree);
     // get selected leaf nodes.
     const allSelectedLeafNodes = computeSelectedNodes(tree, true, metaByJurisdiction);
