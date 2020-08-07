@@ -414,7 +414,7 @@ export const getTreeById = () =>
   createSelector(getTreesByIds, getRootJurisdictionId, (treesByIds, rootId):
     | TreeNode
     | undefined => {
-    return treesByIds[rootId];
+    return cloneDeep(treesByIds[rootId]);
   });
 
 /** returns metaData for tree with the specified rootJurisdictionId
@@ -530,7 +530,12 @@ export const getAllSelectedNodes = () =>
  * @param props -  the filterProps
  */
 export const getSelectedNodesUnderParentNode = () =>
-  createSelector(getCurrentParentNode(), () => false, getMetaForPlanInTree(), computeSelectedNodes);
+  createSelector(
+    getCurrentParentNode(),
+    getLeafNodesOnly,
+    getMetaForPlanInTree(),
+    computeSelectedNodes
+  );
 
 /** returns the total structure count for all selected nodes in the entire tree
  * requires only the rootJurisdiction id

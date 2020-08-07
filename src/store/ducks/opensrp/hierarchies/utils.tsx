@@ -309,7 +309,8 @@ export const applyMeta = (nodes: TreeNode[] | TreeNode | undefined, meta: Dictio
   const localNodes = Array.isArray(nodes) ? [...nodes] : [nodes];
 
   localNodes.forEach(node => {
-    const thisNodesMeta = Object.assign({}, node.model.meta, meta[node.model.id]);
+    const thisNodesMeta = Object.assign({}, meta[node.model.id]);
+    thisNodesMeta[META_STRUCTURE_COUNT] = node.model.meta[META_STRUCTURE_COUNT];
     node.model.meta = thisNodesMeta;
   });
 
@@ -331,13 +332,13 @@ export const findAParentNode = (
   if (parentId === undefined) {
     return tree;
   }
-  const ss: TreeNode | undefined = tree.first(node => node.model.id === parentId);
+  const finalNode: TreeNode | undefined = tree.first(node => node.model.id === parentId);
 
   if (metaData) {
-    return applyMeta(ss, metaData)[0];
+    return applyMeta(finalNode, metaData)[0];
   }
 
-  return ss;
+  return finalNode;
 };
 
 /** find the current children from  a parent node. This is defined here to avoid repetition

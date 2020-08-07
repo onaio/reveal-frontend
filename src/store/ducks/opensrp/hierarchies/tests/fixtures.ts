@@ -15,6 +15,7 @@ export const sampleHierarchy: RawOpenSRPHierarchy = {
           name: 'Lusaka',
           attributes: {
             geographicLevel: 0,
+            structureCount: 159,
           },
           voided: false,
         },
@@ -30,7 +31,7 @@ export const sampleHierarchy: RawOpenSRPHierarchy = {
                 voided: false,
               },
               attributes: {
-                structureCount: 1,
+                structureCount: 159,
                 geographicLevel: 1,
               },
               voided: false,
