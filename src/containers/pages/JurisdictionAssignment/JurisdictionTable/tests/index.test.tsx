@@ -10,7 +10,11 @@ import { MemoryRouter, RouteComponentProps } from 'react-router-dom';
 import { ConnectedJurisdictionTable } from '..';
 import { ASSIGN_PLAN_URL, MANUAL_ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
 import store from '../../../../../store';
-import { fetchTree } from '../../../../../store/ducks/opensrp/hierarchies';
+import {
+  deforest,
+  deselectAllNodes,
+  fetchTree,
+} from '../../../../../store/ducks/opensrp/hierarchies';
 import { sampleHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
 import { irsPlans, plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { PlanStatus } from '../../../../../store/ducks/plans';
@@ -20,6 +24,11 @@ import { afterDraftSave, afterSaveAndActivate } from './fixtures';
 const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
+
+jest.mock('reactstrap', () => {
+  const original = require.requireActual('reactstrap');
+  return { ...original, Tooltip: () => null };
+});
 
 /** will use this to render table rows */
 const renderTable = (wrapper: ReactWrapper, message: string) => {
@@ -36,8 +45,13 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     fetch.resetMocks();
   });
 
-  beforeAll(() => {
+  beforeEach(() => {
     store.dispatch(fetchTree(sampleHierarchy));
+  });
+
+  afterEach(() => {
+    store.dispatch(deselectAllNodes('2942'));
+    store.dispatch(deforest());
   });
 
   it('works correctly through a full render cycle', () => {
@@ -90,10 +104,6 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         </MemoryRouter>
       </Provider>
     );
-
-    const div = document.createElement('div');
-    div.setAttribute('id', 'jurisdiction-tooltip-2942');
-    document.body.appendChild(div);
 
     renderTable(wrapper, 'should have single node(parent node)');
     const tbodyRow = wrapper.find('tbody tr');
@@ -158,14 +168,6 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
   });
 
   it('selects and deselect nodes', () => {
-    const div = document.createElement('div');
-    div.setAttribute('id', 'jurisdiction-tooltip-2942');
-    document.body.appendChild(div);
-
-    const div1 = document.createElement('div');
-    div1.setAttribute('id', 'jurisdiction-tooltip-3951');
-    document.body.appendChild(div1);
-    fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
     const plan = irsPlans[0];
     const props = {
       plan,
