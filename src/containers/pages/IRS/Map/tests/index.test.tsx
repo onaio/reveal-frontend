@@ -19,6 +19,7 @@ import { INTERVENTION_IRS_URL, MAIN_PLAN, MAP, STRUCTURE_LAYER } from '../../../
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
+  GenericJurisdiction,
   getGenericJurisdictionByJurisdictionId,
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../../store/ducks/generic/jurisdictions';
@@ -283,6 +284,92 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       ],
     ]);
     expect(supersetServiceMock).toHaveBeenCalledTimes(4);
+    wrapper.unmount();
+  });
+
+  it('does not show not sprayed reasons count if they are not', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const mock: any = jest.fn();
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+
+    const focusArea = getGenericJurisdictionByJurisdictionId(
+      store.getState(),
+      'zm-focusAreas',
+      '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
+    );
+
+    const focusAreaClone = {
+      ...focusArea,
+      targstruct: 0,
+      totstruct: 0,
+      // tslint:disable-next-line: object-literal-sort-keys
+      rooms_eligible: 0,
+      rooms_sprayed: 0,
+      sprayed_rooms_eligible: 0,
+      sprayed_rooms_sprayed: 0,
+      foundstruct: 0,
+      notsprayed: 0,
+      noteligible: 0,
+      notasks: 0,
+      sprayedstruct: 0,
+      duplicates: 0,
+      sprayed_duplicates: 0,
+      notsprayed_reasons: '[]',
+      notsprayed_reasons_counts: '{}',
+      spraycov: 0,
+      spraytarg: 0,
+      spraysuccess: 0,
+      structures_remaining_to_90_se: 0,
+      roomcov: 0,
+      reviewed_with_decision: 'n/a',
+    };
+
+    const structures = getGenericStructures(
+      store.getState(),
+      'zm-structures',
+      '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
+    );
+
+    const jurisdiction = getJurisdictionById(
+      store.getState(),
+      '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
+    );
+
+    const props = {
+      focusArea: focusAreaClone as GenericJurisdiction,
+      history,
+      jurisdiction,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
+          planId: (plans[0] as GenericPlan).plan_id,
+        },
+        path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${INTERVENTION_IRS_URL}/${
+          (plans[0] as GenericPlan).plan_id
+        }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
+      },
+      plan: plans[0] as GenericPlan,
+      service: supersetServiceMock,
+      structures,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSReportingMap {...props} />
+      </Router>
+    );
+
+    await flushPromises();
+
+    // not sprayed should not be response item titles
+    expect(toJson(wrapper.find('.responseItem h6'))).toMatchSnapshot('Response item titles');
+    expect(toJson(wrapper.find('.list-unstyled'))).toMatchSnapshot('No sprayed reasons');
+    expect(wrapper.find('.list-unstyled li').length).toEqual(0);
+
     wrapper.unmount();
   });
 

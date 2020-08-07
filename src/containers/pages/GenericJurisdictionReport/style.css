@@ -38,6 +38,9 @@
 .generic-report-table .irs-report-indicator-container {
   flex-grow: 1 !important;
   margin: -10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .generic-report-table {
