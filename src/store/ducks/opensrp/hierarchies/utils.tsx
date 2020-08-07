@@ -95,8 +95,18 @@ export function areAllChildrenSelected(
 /** returns true if node is selected
  * @param node - The node
  */
-export const nodeIsSelected = (node: TreeNode) => {
-  return !!node.model.meta[SELECTION_KEY];
+export const nodeIsSelected = (
+  nodeId: string,
+  rootJurisdictionId: string,
+  planId: string,
+  metaDataByJurisdiction: Dictionary<Dictionary<Dictionary<Meta>>>
+) => {
+  return !!(
+    metaDataByJurisdiction[rootJurisdictionId] &&
+    metaDataByJurisdiction[rootJurisdictionId][planId] &&
+    metaDataByJurisdiction[rootJurisdictionId][planId][nodeId] &&
+    metaDataByJurisdiction[rootJurisdictionId][planId][nodeId][SELECTION_KEY]
+  );
 };
 
 /** returns the Structure Count of a node

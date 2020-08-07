@@ -9,6 +9,7 @@ import { get, values } from 'lodash';
 import { Store } from 'redux';
 import { createSelector } from 'reselect';
 import { BLUE, DARK_RED, RED, WHITE } from '../../../../colors';
+import { getMetaData, getRootJurisdictionId } from '../hierarchies';
 import { TreeNode } from '../hierarchies/types';
 import { nodeIsSelected } from '../hierarchies/utils';
 
@@ -50,7 +51,15 @@ export interface Filters {
   jurisdictionIdsArray?: string[] /** array of jurisdiction ids */;
   newFeatureProps?: boolean /** whether to add new fields to feature properties */;
   parentId?: string /** parent id */;
+  planId: string /** plan identifier */;
+  rootJurisdictionId: string /** root jurisdiction id */;
 }
+
+/** retrieve the planId value
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getPlanId = (_: Partial<Store>, props: Filters) => props.planId;
 
 /** retrieve the jurisdictionId value
  * @param state - the store
@@ -165,8 +174,22 @@ export const getJurisdictionsArray = () =>
  */
 export const getJurisdictionsFC = () =>
   createSelector(
-    [getJurisdictionsArray(), getNewFeatureProps, getChildJurisdictions],
-    (jurisdictionsArray, newFeatureProps, currentChildren): FeatureCollection => {
+    [
+      getJurisdictionsArray(),
+      getNewFeatureProps,
+      getChildJurisdictions,
+      getRootJurisdictionId,
+      getPlanId,
+      getMetaData,
+    ],
+    (
+      jurisdictionsArray,
+      newFeatureProps,
+      currentChildren,
+      rootJurisdictionId,
+      planId,
+      metaDataByJurisdiction
+    ): FeatureCollection => {
       const validFeatures = jurisdictionsArray.filter(item => 'geometry' in item) as Feature[];
       return {
         features: validFeatures.map((feature: Feature) => {
@@ -178,9 +201,30 @@ export const getJurisdictionsFC = () =>
               ...feature,
               properties: {
                 ...feature.properties,
-                fillColor: nodeIsSelected(getNode) ? RED : DARK_RED,
-                fillOutlineColor: nodeIsSelected(getNode) ? BLUE : WHITE,
-                lineColor: nodeIsSelected(getNode) ? BLUE : WHITE,
+                fillColor: nodeIsSelected(
+                  getNode.model.id,
+                  rootJurisdictionId,
+                  planId,
+                  metaDataByJurisdiction
+                )
+                  ? RED
+                  : DARK_RED,
+                fillOutlineColor: nodeIsSelected(
+                  getNode.model.id,
+                  rootJurisdictionId,
+                  planId,
+                  metaDataByJurisdiction
+                )
+                  ? BLUE
+                  : WHITE,
+                lineColor: nodeIsSelected(
+                  getNode.model.id,
+                  rootJurisdictionId,
+                  planId,
+                  metaDataByJurisdiction
+                )
+                  ? BLUE
+                  : WHITE,
               },
             };
           }

@@ -297,7 +297,10 @@ const mapStateToProps = (
 ): MapStateToProps => {
   const planId = ownProps.match.params.planId;
   const planObj = getPlanDefinitionById(state, planId);
-  const tree = treeByIdSelector(state, { rootJurisdictionId: ownProps.match.params.rootId });
+  const tree = treeByIdSelector(state, {
+    planId,
+    rootJurisdictionId: ownProps.match.params.rootId,
+  });
 
   return {
     jurisdictionsMetadata: getJurisdictionsMetadata(state),

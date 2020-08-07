@@ -1,6 +1,7 @@
+import { Dictionary } from '@onaio/utils';
 import { useState } from 'react';
 import { displayError } from '../../../../helpers/errors';
-import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
+import { Meta, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
 
 /** tells whether we should select the parent checkbox in the table header
@@ -9,16 +10,28 @@ import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/util
  */
 export const checkParentCheckbox = (
   currentParentNode: TreeNode | undefined,
-  currentChildren: TreeNode[]
+  currentChildren: TreeNode[],
+  rootJurisdictionId: string,
+  planId: string,
+  metaDataByJurisdiction: Dictionary<Dictionary<Dictionary<Meta>>>
 ) => {
   let selected = true;
   if (currentParentNode) {
-    selected = selected && nodeIsSelected(currentParentNode);
+    selected =
+      selected &&
+      nodeIsSelected(
+        currentParentNode.model.id,
+        rootJurisdictionId,
+        planId,
+        metaDataByJurisdiction
+      );
   } else {
     // when currentParent node is undefined but there are currentChildren usually at the top level
     if (currentChildren.length > 0) {
       currentChildren.forEach(node => {
-        selected = selected && nodeIsSelected(node);
+        selected =
+          selected &&
+          nodeIsSelected(node.model.id, rootJurisdictionId, planId, metaDataByJurisdiction);
       });
     } else {
       selected = false;

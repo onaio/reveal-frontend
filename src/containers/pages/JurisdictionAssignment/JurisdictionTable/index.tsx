@@ -51,13 +51,14 @@ import hierarchyReducer, {
   getCurrentChildren,
   getCurrentParentNode,
   getMapCurrentParent,
+  getMetaData,
   MapCurrentParentInfo,
   reducerName as hierarchyReducerName,
   selectNode,
   SelectNodeAction,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
-import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
+import { Meta, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import {
@@ -78,6 +79,7 @@ export interface JurisdictionSelectorTableProps {
   tree?: TreeNode;
   plan: PlanDefinition;
   rootJurisdictionId: string;
+  getJurisdictionsMetadata: Dictionary<Dictionary<Dictionary<Meta>>>;
   currentParentId?: string;
   jurisdictionsMetadata: JurisdictionsMetadata[];
   serviceClass: typeof OpenSRPService;
@@ -103,6 +105,7 @@ const defaultProps = {
   deselectNodeCreator: deselectNode,
   fetchPlanCreator: addPlanDefinition,
   fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
+  getJurisdictionsMetadata: {},
   jurisdictionsMetadata: [],
   mapCurrentParent: {
     currentParentId: '',
@@ -137,6 +140,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     serviceClass,
     autoSelectionFlow,
     deselectAllNodesCreator,
+    getJurisdictionsMetadata,
   } = props;
 
   const [activateTooltipOpen, setActivateTooltipOpen] = useState(false);
@@ -222,7 +226,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
 
   const breadCrumbProps = {
     currentPage,
-    fetchUpdatedCurrentParentHandler,
     pages,
   };
   const data = derivedChildrenNodes.map(node => {
@@ -230,7 +233,12 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       <input
         key={`${node.model.id}-check-jurisdiction`}
         type="checkbox"
-        checked={nodeIsSelected(node)}
+        checked={nodeIsSelected(
+          node.model.id,
+          rootJurisdictionId,
+          plan.identifier,
+          getJurisdictionsMetadata
+        )}
         disabled={node.hasChildren() && singleSelect}
         // tslint:disable-next-line: jsx-no-lambda
         onChange={e => {
@@ -254,7 +262,16 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
             />,
           ]
         : []),
-      node.hasChildren() ? '' : nodeIsSelected(node) ? TARGETED : NOT_TARGETED,
+      node.hasChildren()
+        ? ''
+        : nodeIsSelected(
+            node.model.id,
+            rootJurisdictionId,
+            plan.identifier,
+            getJurisdictionsMetadata
+          )
+        ? TARGETED
+        : NOT_TARGETED,
       node.model.meta.actionBy,
       <SelectedJurisdictionsCount
         key={`${node.model.id}-selected-jurisdictions-txt`}
@@ -297,7 +314,13 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           <th style={{ width: '5%' }}>
             <input
               type="checkbox"
-              checked={checkParentCheckbox(currentParentNode, currentChildren)}
+              checked={checkParentCheckbox(
+                currentParentNode,
+                currentChildren,
+                rootJurisdictionId,
+                plan.identifier,
+                getJurisdictionsMetadata
+              )}
               disabled={singleSelect}
               onChange={onParentCheckboxClick}
             />
@@ -421,7 +444,11 @@ export { JurisdictionTable };
 /** map state to props interface  */
 type MapStateToProps = Pick<
   JurisdictionSelectorTableProps,
-  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes' | 'mapCurrentParent'
+  | 'currentChildren'
+  | 'currentParentNode'
+  | 'selectedLeafNodes'
+  | 'mapCurrentParent'
+  | 'getJurisdictionsMetadata'
 >;
 
 /** map action creators interface */
@@ -457,6 +484,7 @@ const mapStateToProps = (
   return {
     currentChildren: childrenSelector(state, filters),
     currentParentNode: parentNodeSelector(state, filters),
+    getJurisdictionsMetadata: getMetaData(state),
     mapCurrentParent: getMapCurrentParent(state),
     selectedLeafNodes: selectedLeafNodesSelector(state, filters),
   };

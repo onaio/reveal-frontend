@@ -169,7 +169,9 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
   };
 
   const AssignmentWrapperProps = {
+    autoSelectionFlow: false,
     currentParentId: props.match.params.parentId,
+    plan,
     rootJurisdictionId: rootId,
     serviceClass,
   };
@@ -219,7 +221,7 @@ const mapStateToProps = (
   const planObj = getPlanDefinitionById(state, planId);
   return {
     plan: planObj,
-    tree: treeByIdSelector(state, { rootJurisdictionId: ownProps.match.params.rootId }),
+    tree: treeByIdSelector(state, { rootJurisdictionId: ownProps.match.params.rootId, planId }),
   };
 };
 

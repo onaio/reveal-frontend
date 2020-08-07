@@ -390,7 +390,7 @@ export interface WithoutMetaFilters {
 /** prop filters to customize selector queries */
 export interface Filters {
   rootJurisdictionId: string /** specify which tree to act upon */;
-  planId?: string /** get selections that are associated with this planId */;
+  planId: string /** get selections that are associated with this planId */;
   nodeId?: string /** target node with this id */;
   leafNodesOnly?: boolean /** specified when requesting for selected nodes, truthy returns leaf nodes */;
   currentParentId?: string /** to use when filtering current children */;
@@ -441,10 +441,8 @@ export const getTreesByIds = (state: Partial<Store>, _: Filters): Dictionary<Tre
  * @param state - the store
  * @param _ -  the filterProps
  */
-export const getMetaData = (
-  state: Partial<Store>,
-  _: Filters
-): Dictionary<Dictionary<Dictionary<Meta>>> => (state as any)[reducerName].metaData;
+export const getMetaData = (state: Partial<Store>): Dictionary<Dictionary<Dictionary<Meta>>> =>
+  (state as any)[reducerName].metaData;
 
 /** retrieve the tree using a rootNodes id
  * @param state - the store
@@ -463,7 +461,7 @@ export const getTreeById = () =>
  */
 export const getMetaForTree = () => {
   return createSelector(getMetaData, getRootJurisdictionId, (metaData, rootId) => {
-    return metaData[rootId] || {};
+    return metaData[rootId as string] || {};
   });
 };
 
@@ -641,6 +639,33 @@ export const getSelectedHierarchy = () => {
     const flatToNested = new (FlatToNested as any)({
       id: 'id',
       options: { deleteParent: false },
+      parent: 'parent',
+    });
+
+    let allNodesInPaths = keyBy<TreeNode>(allSelectedLeafNodes, node => node.model.id);
+
+    // create an object with uniq jurisdiction entries for all jurisdictions that exist
+    // in a path that has a selected leaf node.
+    allSelectedLeafNodes.forEach(node => {
+      allNodesInPaths = {
+        ...allNodesInPaths,
+        ...keyBy<TreeNode>(node.getPath(), nd => nd.model.id),
+      };
+    });
+
+    // flatten it into an array in preparation of creating a nested structure
+    const normalNodes: TreeNode[] = [];
+    values(allNodesInPaths).forEach(node => {
+      const data = node.model;
+      // remove the existing children field, we will add it later with the computed children
+      delete data.children;
+      normalNodes.push(data);
+    });
+
+    // nest them normal nodes into a hierarchy
+    // TODO - add a type declaration file.
+    const flatToNested = new (FlatToNested as any)({
+      id: 'id',
       parent: 'parent',
     });
 
