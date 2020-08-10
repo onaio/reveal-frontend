@@ -30,13 +30,11 @@ Array [
   >
     <Link
       key="0"
-      onClick={[Function]}
       to="/"
     >
       <LinkAnchor
         href="/"
         navigate={[Function]}
-        onClick={[Function]}
       >
         <a
           href="/"
@@ -52,13 +50,11 @@ Array [
   >
     <Link
       key="1"
-      onClick={[Function]}
       to="/intervention/irs/report"
     >
       <LinkAnchor
         href="/intervention/irs/report"
         navigate={[Function]}
-        onClick={[Function]}
       >
         <a
           href="/intervention/irs/report"

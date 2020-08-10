@@ -79,7 +79,9 @@ const defaultProps: AssignmentMapWrapperProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   getJurisdictionsFeatures: defaultFeatureCollection,
   getJurisdictionsMetadata: {},
-  plan: {} as PlanDefinition,
+  plan: {
+    identifier: '',
+  } as PlanDefinition,
   rootJurisdictionId: '',
   selectNodeCreator: selectNode,
   serviceClass: OpenSRPService,

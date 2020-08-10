@@ -336,7 +336,10 @@ export const geoCollection = {
       },
       id: '3951',
       properties: {
+        fillColor: '#792b16',
+        fillOutlineColor: '#ffffff',
         geographicLevel: 3,
+        lineColor: '#ffffff',
         name: 'Two Three Two Release Village',
         parentId: '3019',
         status: 'Active',

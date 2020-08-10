@@ -9,13 +9,14 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { AssignmentMapWrapper, ConnectedAssignmentMapWrapper, onJurisdictionClick } from '..';
 import { getJurisdictions } from '../../../../components/TreeWalker/helpers';
+import { PlanDefinition } from '../../../../configs/settings';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 import hierachyReducer, {
   deselectNode,
   fetchTree,
-  fetchUpdatedCurrentParent,
   getCurrentChildren,
+  getMetaData,
   reducerName as hierachyReducerName,
   selectNode,
 } from '../../../../store/ducks/opensrp/hierarchies';
@@ -76,7 +77,11 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     fetch.mockResponseOnce(JSON.stringify([fixtures.jurisdiction1]), { status: 200 });
     store.dispatch(fetchJurisdictions(fixtures.payload as any));
     const props = {
+      autoSelectionFlow: false,
       currentParentId: '2492',
+      plan: {
+        identifier: '2493',
+      } as PlanDefinition,
       rootJurisdictionId: '2492',
       serviceClass: OpenSRPService,
     };
@@ -110,15 +115,19 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
       autoSelectNodesActionCreator: expect.any(Function),
+      autoSelectionFlow: false,
       currentChildren: [],
       currentParentId: '2492',
       currentParentNode: undefined,
       deselectNodeCreator: expect.any(Function),
       fetchJurisdictionsActionCreator: expect.any(Function),
-      fetchUpdatedCurrentParentActionCreator: expect.any(Function),
       getJurisdictionsFeatures: {
         features: [],
         type: 'FeatureCollection',
+      },
+      getJurisdictionsMetadata: {},
+      plan: {
+        identifier: '2493',
       },
       rootJurisdictionId: '2492',
       selectNodeCreator: expect.any(Function),
@@ -133,14 +142,17 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     const children = getCurrentChildren()(store.getState(), {
       currentParentId: '2942',
       leafNodesOnly: true,
+      planId: '2942',
       rootJurisdictionId: '2942',
     });
     const props = {
       currentChildren: [children] as any,
       currentParentId: '3019',
       fetchJurisdictionsActionCreator: fetchJurisdictions,
-      fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
       getJurisdictionsFeatures: fixtures.geoCollection as any,
+      plan: {
+        identifier: '2493',
+      } as PlanDefinition,
       rootJurisdictionId: '2942',
       serviceClass: OpenSRPService,
     };
@@ -160,15 +172,19 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     expect(fetch).toHaveBeenCalledTimes(3);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
       autoSelectNodesActionCreator: expect.any(Function),
+      autoSelectionFlow: false,
       currentChildren: expect.any(Array),
       currentParentId: '3019',
       currentParentNode: expect.any(Object),
       deselectNodeCreator: expect.any(Function),
       fetchJurisdictionsActionCreator: expect.any(Function),
-      fetchUpdatedCurrentParentActionCreator: expect.any(Function),
       getJurisdictionsFeatures: {
         features: [],
         type: 'FeatureCollection',
+      },
+      getJurisdictionsMetadata: {},
+      plan: {
+        identifier: '2493',
       },
       rootJurisdictionId: '2942',
       selectNodeCreator: expect.any(Function),
@@ -181,17 +197,21 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     fetch.mockResponseOnce(JSON.stringify([fixtures.jurisdiction1]), { status: 200 });
     store.dispatch(fetchTree(sampleHierarchy, '2942'));
     store.dispatch(fetchJurisdictions(fixtures.payload as any));
+    store.dispatch(selectNode('2942', '2942', '2943'));
     const children = getCurrentChildren()(store.getState(), {
       currentParentId: '2942',
       leafNodesOnly: true,
+      planId: '2953',
       rootJurisdictionId: '2942',
     });
     const props = {
       currentChildren: [children] as any,
       currentParentId: '3019',
       fetchJurisdictionsActionCreator: fetchJurisdictions,
-      fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
       getJurisdictionsFeatures: fixtures.geoCollection as any,
+      plan: {
+        identifier: '2493',
+      } as PlanDefinition,
       rootJurisdictionId: '2942',
       serviceClass: OpenSRPService,
     };
@@ -211,15 +231,36 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
       autoSelectNodesActionCreator: expect.any(Function),
+      autoSelectionFlow: false,
       currentChildren: expect.any(Array),
       currentParentId: '3019',
       currentParentNode: expect.any(Object),
       deselectNodeCreator: expect.any(Function),
       fetchJurisdictionsActionCreator: expect.any(Function),
-      fetchUpdatedCurrentParentActionCreator: expect.any(Function),
       getJurisdictionsFeatures: {
         features: [fixtures.geoCollection.features[1]],
         type: 'FeatureCollection',
+      },
+      getJurisdictionsMetadata: {
+        '2942': {
+          '2943': {
+            '2942': {
+              actionBy: 'User Change',
+              selected: true,
+            },
+            '3019': {
+              actionBy: 'User Change',
+              selected: true,
+            },
+            '3951': {
+              actionBy: 'User Change',
+              selected: true,
+            },
+          },
+        },
+      },
+      plan: {
+        identifier: '2493',
       },
       rootJurisdictionId: '2942',
       selectNodeCreator: expect.any(Function),
@@ -232,6 +273,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     wrapper.unmount();
   });
   it('handles jurisdiction click on map', async () => {
+    store.dispatch(selectNode('8fb28715-6c80-4e2c-980f-422798fe9f41', '2942', '3019'));
     await flushPromises();
     const event = {
       originalEvent: {
@@ -284,16 +326,34 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     const deselectNodeCreatorMock = jest.fn(deselectNode);
     const mockProps = {
       currentParentNode: {
+        children: [
+          {
+            model: {
+              id: '2942',
+              meta: { selected: true },
+            },
+          },
+          {
+            model: {
+              id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+              meta: { selected: true },
+            },
+          },
+        ],
         model: {
-          id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+          id: '2943',
           meta: { selected: false },
         },
       },
       deselectNodeCreator: deselectNodeCreatorMock,
-      rootJurisdictionId: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+      getJurisdictionsMetadata: getMetaData(store.getState()),
+      plan: {
+        identifier: '2493',
+      } as PlanDefinition,
+      rootJurisdictionId: '2942',
       selectNodeCreator: selectNodeCreatorMock,
     };
-    const onJurisdictionClickMock1 = onJurisdictionClick(mockProps, () => jest.fn());
+    const onJurisdictionClickMock1 = onJurisdictionClick(mockProps, () => jest.fn(), history);
     onJurisdictionClickMock1(mockMapObj, event as EventData);
     // test that selected node action is created when node is selected on map
     expect(selectNodeCreatorMock).toBeCalledTimes(1);
@@ -313,8 +373,14 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         children: [
           {
             model: {
-              id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+              id: '2943',
               meta: { selected: true },
+            },
+          },
+          {
+            model: {
+              id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+              meta: { selected: false },
             },
           },
         ],
@@ -324,12 +390,15 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         },
       },
       deselectNodeCreator: deselectNodeCreatorMock,
+      getJurisdictionsMetadata: getMetaData(store.getState()),
+      plan: {
+        identifier: '2493',
+      } as PlanDefinition,
       rootJurisdictionId: '2942',
       selectNodeCreator: selectNodeCreatorMock,
     };
-    const onJurisdictionClickMock2 = onJurisdictionClick(mockProps2, () => jest.fn());
+    const onJurisdictionClickMock2 = onJurisdictionClick(mockProps2, () => jest.fn(), history);
     onJurisdictionClickMock2(mockMapObj, event as EventData);
-    expect(selectNodeCreatorMock).toBeCalledTimes(1);
-    expect(deselectNodeCreatorMock).toBeCalledTimes(1);
+    expect(selectNodeCreatorMock).toBeCalledTimes(2);
   });
 });

@@ -13,13 +13,11 @@ Array [
   >
     <Link
       key="0"
-      onClick={[Function]}
       to="/"
     >
       <LinkAnchor
         href="/"
         navigate={[Function]}
-        onClick={[Function]}
       >
         <a
           href="/"

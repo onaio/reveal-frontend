@@ -485,13 +485,11 @@ Array [
   >
     <Link
       key="0"
-      onClick={[Function]}
       to="/"
     >
       <LinkAnchor
         href="/"
         navigate={[Function]}
-        onClick={[Function]}
       >
         <a
           href="/"
@@ -507,13 +505,11 @@ Array [
   >
     <Link
       key="1"
-      onClick={[Function]}
       to="/intervention/irs/report"
     >
       <LinkAnchor
         href="/intervention/irs/report"
         navigate={[Function]}
-        onClick={[Function]}
       >
         <a
           href="/intervention/irs/report"
@@ -529,13 +525,11 @@ Array [
   >
     <Link
       key="2"
-      onClick={[Function]}
       to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce"
     >
       <LinkAnchor
         href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce"
         navigate={[Function]}
-        onClick={[Function]}
       >
         <a
           href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce"
@@ -551,13 +545,11 @@ Array [
   >
     <Link
       key="3"
-      onClick={[Function]}
       to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/22bc44dd-752d-4c20-8761-617361b4f1e7"
     >
       <LinkAnchor
         href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/22bc44dd-752d-4c20-8761-617361b4f1e7"
         navigate={[Function]}
-        onClick={[Function]}
       >
         <a
           href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/22bc44dd-752d-4c20-8761-617361b4f1e7"
@@ -573,13 +565,11 @@ Array [
   >
     <Link
       key="4"
-      onClick={[Function]}
       to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/fd5a22ba-fa0e-4fdc-ae1c-1db8965b7b43"
     >
       <LinkAnchor
         href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/fd5a22ba-fa0e-4fdc-ae1c-1db8965b7b43"
         navigate={[Function]}
-        onClick={[Function]}
       >
         <a
           href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/fd5a22ba-fa0e-4fdc-ae1c-1db8965b7b43"
@@ -595,13 +585,11 @@ Array [
   >
     <Link
       key="5"
-      onClick={[Function]}
       to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/8f1fd4cf-264d-4ed6-8838-e538c5845d46"
     >
       <LinkAnchor
         href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/8f1fd4cf-264d-4ed6-8838-e538c5845d46"
         navigate={[Function]}
-        onClick={[Function]}
       >
         <a
           href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/8f1fd4cf-264d-4ed6-8838-e538c5845d46"
@@ -617,13 +605,11 @@ Array [
   >
     <Link
       key="6"
-      onClick={[Function]}
       to="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/2bf9915d-8725-4061-983d-5938802ac0f0"
     >
       <LinkAnchor
         href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/2bf9915d-8725-4061-983d-5938802ac0f0"
         navigate={[Function]}
-        onClick={[Function]}
       >
         <a
           href="/intervention/irs/report/727c3d40-e118-564a-b231-aac633e6abce/2bf9915d-8725-4061-983d-5938802ac0f0"

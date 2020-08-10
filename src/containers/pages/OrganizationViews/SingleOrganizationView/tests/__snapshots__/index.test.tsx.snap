@@ -33,13 +33,11 @@ exports[`src/containers/pages/OrganizationViews renders SingleTeamView correctly
         >
           <Link
             key="0"
-            onClick={[Function]}
             to="/"
           >
             <LinkAnchor
               href="/"
               navigate={[Function]}
-              onClick={[Function]}
             >
               <a
                 href="/"
@@ -60,13 +58,11 @@ exports[`src/containers/pages/OrganizationViews renders SingleTeamView correctly
         >
           <Link
             key="1"
-            onClick={[Function]}
             to="/teams"
           >
             <LinkAnchor
               href="/teams"
               navigate={[Function]}
-              onClick={[Function]}
             >
               <a
                 href="/teams"
