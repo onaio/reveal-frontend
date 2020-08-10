@@ -164,9 +164,9 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         // TODO:  deselect only node selections belonging to this plan
         deselectAllNodesCreator(rootJurisdictionId);
       }
-      selectNodeCreator(rootJurisdictionId, nodeId, planId, SELECTION_REASON.USER_CHANGE);
+      selectNodeCreator(nodeId, rootJurisdictionId, planId, SELECTION_REASON.USER_CHANGE);
     } else {
-      deselectNodeCreator(rootJurisdictionId, nodeId, planId, SELECTION_REASON.USER_CHANGE);
+      deselectNodeCreator(nodeId, rootJurisdictionId, planId, SELECTION_REASON.USER_CHANGE);
     }
   }
 

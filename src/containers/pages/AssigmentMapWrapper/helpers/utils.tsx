@@ -2,6 +2,7 @@ import { Feature } from '@turf/turf';
 import { History } from 'history';
 import { EventData, Map } from 'mapbox-gl';
 import { AssignmentMapWrapperProps } from '..';
+import { PLAN_TYPES_WITH_MULTI_JURISDICTIONS } from '../../../../configs/env';
 import {
   AUTO_ASSIGN_JURISDICTIONS_URL,
   MANUAL_ASSIGN_JURISDICTIONS_URL,
@@ -9,6 +10,7 @@ import {
 import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
+import { UseContext } from '../../../../store/ducks/plans';
 
 /**
  * Handler to get current parent id from clicked jurisdiction on map
@@ -35,6 +37,11 @@ export const onJurisdictionClick = (
       getJurisdictionsMetadata,
     } = props;
 
+    const { useContext } = plan;
+    const getInterventionType = useContext.find(
+      context => context.code === 'interventionType'
+    ) as UseContext;
+
     const baseUrl = !autoSelectionFlow
       ? `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
       : `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
@@ -47,21 +54,28 @@ export const onJurisdictionClick = (
       const currentId =
         (features[0].id && features[0].id.toString()) ||
         (features[0] && features[0].properties && features[0].properties.externalId);
-      if (originalEvent.altKey) {
+      if (
+        originalEvent.altKey &&
+        PLAN_TYPES_WITH_MULTI_JURISDICTIONS.includes(getInterventionType.valueCodableConcept)
+      ) {
         let activeCurrentNode: TreeNode | any = {};
-        // Handle selection for admin level 0
-        if (
-          currentParentNode &&
-          currentParentNode.model.id === rootJurisdictionId &&
-          currentId === currentParentNode.model.id
-        ) {
-          activeCurrentNode = currentParentNode;
-        } else {
-          // Handle selection for admin > 0
-          activeCurrentNode = currentParentNode.children.find(
-            (node: TreeNode) => node.model.id === currentId
-          );
+
+        if (currentParentNode) {
+          // ensure currentparentnode is not undefined first
+          // Handle selection for admin level 0
+          if (
+            currentParentNode.model.id === rootJurisdictionId &&
+            currentId === currentParentNode.model.id
+          ) {
+            activeCurrentNode = currentParentNode;
+          } else {
+            // Handle selection for admin > 0
+            activeCurrentNode = currentParentNode.children.find(
+              (node: TreeNode) => node.model.id === currentId
+            );
+          }
         }
+
         if (
           !nodeIsSelected(
             activeCurrentNode.model.id,
@@ -86,7 +100,7 @@ export const onJurisdictionClick = (
         }
         setMapParent(currentId);
       } else {
-        if (currentParentNode.hasChildren()) {
+        if (currentParentNode && currentParentNode.hasChildren()) {
           history.push(`${baseUrl}/${currentId}`);
         }
       }

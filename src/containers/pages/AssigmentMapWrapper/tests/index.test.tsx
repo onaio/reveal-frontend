@@ -51,7 +51,9 @@ jest.mock('../../../../components/GisidaLite', () => {
     MemoizedGisidaLite: MemoizedGisidaLiteMock,
   };
 });
-jest.mock('../../../../configs/env');
+jest.mock('../../../../configs/env', () => ({
+  PLAN_TYPES_WITH_MULTI_JURISDICTIONS: ['IRS'],
+}));
 
 describe('containers/pages/AssigmentMapWrapper', () => {
   /** renders correctly, a full render cycle
@@ -353,6 +355,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
       getJurisdictionsMetadata: getMetaData(store.getState()),
       plan: {
         identifier: '2493',
+        useContext: [{ code: 'interventionType', valueCodableConcept: 'IRS' }],
       } as PlanDefinition,
       rootJurisdictionId: '2942',
       selectNodeCreator: selectNodeCreatorMock,
@@ -397,6 +400,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
       getJurisdictionsMetadata: getMetaData(store.getState()),
       plan: {
         identifier: '2493',
+        useContext: [{ code: 'interventionType', valueCodableConcept: 'IRS' }],
       } as PlanDefinition,
       rootJurisdictionId: '2942',
       selectNodeCreator: selectNodeCreatorMock,
