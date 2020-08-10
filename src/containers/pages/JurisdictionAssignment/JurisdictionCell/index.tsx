@@ -12,7 +12,6 @@ import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 export interface NodeCellProps {
   node: TreeNode /** the current jurisdiction */;
   baseUrl: string;
-  fetchUpdatedCurrentParent: (currentParentId: string, isRootJurisdiction: boolean) => void;
 }
 
 /**
@@ -23,7 +22,7 @@ export interface NodeCellProps {
  * @param props - the props
  */
 const NodeCell = (props: NodeCellProps) => {
-  const { node, baseUrl, fetchUpdatedCurrentParent } = props;
+  const { node, baseUrl } = props;
 
   // isLeafNode if node does not have children
   const isLeafNode = !node.hasChildren();
@@ -33,12 +32,7 @@ const NodeCell = (props: NodeCellProps) => {
   }
 
   return (
-    <Link
-      to={`${baseUrl}/${node.model.id}`}
-      key={`${node.model.id}-span`}
-      // tslint:disable-next-line: jsx-no-lambda
-      onClick={() => fetchUpdatedCurrentParent('', false)}
-    >
+    <Link to={`${baseUrl}/${node.model.id}`} key={`${node.model.id}-span`}>
       {node.model.label}
     </Link>
   );

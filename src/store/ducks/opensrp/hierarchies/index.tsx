@@ -58,14 +58,6 @@ export const AUTO_SELECT_NODES = 'opensrp/locations/hierarchy/AUTO_SELECT_NODES'
 /** action to fetch updated children to ensure map and jurisdiction table are in sync */
 export const FETCH_MAP_CURRENT_PARENT = 'opensrp/locations/hierarchy/FETCH_MAP_CURRENT_PARENT';
 
-/**
- * Interface for map parent info
- */
-export interface MapCurrentParentInfo {
-  currentParentId: string;
-  isRootJurisdiction: boolean;
-}
-
 /** describes action that adds a tree to store */
 export interface FetchedTreeAction extends AnyAction {
   type: typeof TREE_FETCHED;
@@ -126,7 +118,6 @@ export type TreeActionTypes =
   | DeselectNodeAction
   | AutoSelectNodesAction
   | DeselectAllNodesAction
-  | FetchUpdatedCurrentParent
   | AnyAction;
 
 // **************************** action creators ****************************
@@ -148,16 +139,6 @@ export function fetchTree(
   };
 }
 
-export function fetchUpdatedCurrentParent(
-  currentParentId: string,
-  isRootJurisdiction: boolean
-): FetchUpdatedCurrentParent {
-  return {
-    currentParentId,
-    isRootJurisdiction,
-    type: FETCH_MAP_CURRENT_PARENT,
-  };
-}
 /** action creator for when selecting a node
  * @param rootJurisdictionId - need to know the tree that should be modified
  * @param nodeId - the id of the node whose selected status should be changed
@@ -247,7 +228,6 @@ export function deselectAllNodes(
  * metaData is nested as follows: rootJurisdictionId.planId.jurisdictionId
  */
 export interface TreeState {
-  mapCurrentParent: MapCurrentParentInfo;
   metaData: Dictionary<Dictionary<Dictionary<Meta>>>;
   treeByRootId: Dictionary<TreeNode> | {};
 }
@@ -257,10 +237,6 @@ export type ImmutableTreeState = TreeState & SeamlessImmutable.ImmutableObject<T
 
 /** starting state */
 export const initialState: ImmutableTreeState = SeamlessImmutable({
-  mapCurrentParent: {
-    currentParentId: '',
-    isRootJurisdiction: false,
-  },
   metaData: {} as Dictionary<Dictionary<Dictionary<Meta>>>,
   treeByRootId: {},
 });
@@ -280,14 +256,6 @@ export default function reducer(state: ImmutableTreeState = initialState, action
       return {
         ...state,
         treeByRootId: { ...state.treeByRootId, ...action.treeByRootId },
-      };
-    case FETCH_MAP_CURRENT_PARENT:
-      return {
-        ...state,
-        mapCurrentParent: {
-          currentParentId: action.currentParentId || '',
-          isRootJurisdiction: action.isRootJurisdiction,
-        },
       };
     case DEFOREST:
       return {
@@ -396,9 +364,6 @@ export interface Filters {
   currentParentId?: string /** to use when filtering current children */;
 }
 
-export const getMapCurrentParent = (state: Partial<Store>) =>
-  (state as any)[reducerName].mapCurrentParent;
-
 /** retrieve the rootJurisdiction value
  * @param state - the store
  * @param props -  the filterProps
@@ -461,7 +426,7 @@ export const getTreeById = () =>
  */
 export const getMetaForTree = () => {
   return createSelector(getMetaData, getRootJurisdictionId, (metaData, rootId) => {
-    return metaData[rootId as string] || {};
+    return metaData[rootId] || {};
   });
 };
 

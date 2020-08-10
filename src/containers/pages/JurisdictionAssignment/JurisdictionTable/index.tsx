@@ -45,14 +45,11 @@ import hierarchyReducer, {
   deselectNode,
   DeselectNodeAction,
   fetchTree,
-  fetchUpdatedCurrentParent,
   Filters,
   getAllSelectedNodes,
   getCurrentChildren,
   getCurrentParentNode,
-  getMapCurrentParent,
   getMetaData,
-  MapCurrentParentInfo,
   reducerName as hierarchyReducerName,
   selectNode,
   SelectNodeAction,
@@ -90,11 +87,9 @@ export interface JurisdictionSelectorTableProps {
   deselectNodeCreator: ActionCreator<DeselectNodeAction>;
   autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
   fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
-  fetchUpdatedCurrentParentActionCreator: typeof fetchUpdatedCurrentParent;
   selectedLeafNodes: TreeNode[];
   autoSelectionFlow: boolean;
   deselectAllNodesCreator: typeof deselectAllNodes;
-  mapCurrentParent: MapCurrentParentInfo;
 }
 
 const defaultProps = {
@@ -104,13 +99,8 @@ const defaultProps = {
   deselectAllNodesCreator: deselectAllNodes,
   deselectNodeCreator: deselectNode,
   fetchPlanCreator: addPlanDefinition,
-  fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
   getJurisdictionsMetadata: {},
   jurisdictionsMetadata: [],
-  mapCurrentParent: {
-    currentParentId: '',
-    isRootJurisdiction: false,
-  },
   rootJurisdictionId: '',
   selectNodeCreator: selectNode,
   selectedLeafNodes: [],
@@ -135,8 +125,6 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     selectedLeafNodes,
     plan,
     jurisdictionsMetadata,
-    mapCurrentParent,
-    fetchUpdatedCurrentParentActionCreator,
     serviceClass,
     autoSelectionFlow,
     deselectAllNodesCreator,
@@ -194,7 +182,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   // been set, if drilling down has begun.
   let derivedParentNode = currentParentNode;
   let derivedChildrenNodes = currentChildren;
-  if (!props.currentParentId && !mapCurrentParent.currentParentId.length) {
+  if (!props.currentParentId) {
     derivedParentNode = undefined;
     derivedChildrenNodes = currentParentNode ? [currentParentNode] : [];
   }
@@ -246,12 +234,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           applySelectedToNode(node.model.id, plan.identifier, newSelectedValue);
         }}
       />,
-      <NodeCell
-        key={`${node.model.id}-jurisdiction`}
-        node={node}
-        baseUrl={baseUrl}
-        fetchUpdatedCurrentParent={fetchUpdatedCurrentParentActionCreator}
-      />,
+      <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
       node.model.node.attributes.structureCount,
       ...(autoSelectionFlow
         ? [
@@ -444,11 +427,7 @@ export { JurisdictionTable };
 /** map state to props interface  */
 type MapStateToProps = Pick<
   JurisdictionSelectorTableProps,
-  | 'currentChildren'
-  | 'currentParentNode'
-  | 'selectedLeafNodes'
-  | 'mapCurrentParent'
-  | 'getJurisdictionsMetadata'
+  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes' | 'getJurisdictionsMetadata'
 >;
 
 /** map action creators interface */
@@ -460,7 +439,6 @@ type DispatchToProps = Pick<
   | 'autoSelectNodesCreator'
   | 'fetchPlanCreator'
   | 'deselectAllNodesCreator'
-  | 'fetchUpdatedCurrentParentActionCreator'
 >;
 
 const childrenSelector = getCurrentChildren();
@@ -473,9 +451,7 @@ const mapStateToProps = (
   ownProps: JurisdictionSelectorTableProps
 ): MapStateToProps => {
   const filters: Filters = {
-    currentParentId: getMapCurrentParent(state).currentParentId.length
-      ? getMapCurrentParent(state).currentParentId
-      : ownProps.currentParentId,
+    currentParentId: ownProps.currentParentId,
     leafNodesOnly: true,
     planId: ownProps.plan.identifier,
     rootJurisdictionId: ownProps.rootJurisdictionId,
@@ -485,7 +461,6 @@ const mapStateToProps = (
     currentChildren: childrenSelector(state, filters),
     currentParentNode: parentNodeSelector(state, filters),
     getJurisdictionsMetadata: getMetaData(state),
-    mapCurrentParent: getMapCurrentParent(state),
     selectedLeafNodes: selectedLeafNodesSelector(state, filters),
   };
 };
@@ -496,7 +471,6 @@ const mapDispatchToProps: DispatchToProps = {
   deselectAllNodesCreator: deselectAllNodes,
   deselectNodeCreator: deselectNode,
   fetchPlanCreator: addPlanDefinition,
-  fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
   selectNodeCreator: selectNode,
   treeFetchedCreator: fetchTree,
 };

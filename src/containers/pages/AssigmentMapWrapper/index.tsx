@@ -22,11 +22,9 @@ import {
   AutoSelectNodesAction,
   deselectNode,
   DeselectNodeAction,
-  fetchUpdatedCurrentParent,
   Filters,
   getCurrentChildren,
   getCurrentParentNode,
-  getMapCurrentParent,
   getMetaData,
   selectNode,
   SelectNodeAction,
@@ -58,7 +56,6 @@ export interface AssignmentMapWrapperProps {
   currentChildren: TreeNode[];
   serviceClass: typeof OpenSRPService;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
-  fetchUpdatedCurrentParentActionCreator: typeof fetchUpdatedCurrentParent;
   getJurisdictionsFeatures: FeatureCollection;
   autoSelectNodesActionCreator: ActionCreator<AutoSelectNodesAction>;
   selectNodeCreator: ActionCreator<SelectNodeAction>;
@@ -80,7 +77,6 @@ const defaultProps: AssignmentMapWrapperProps = {
   currentParentNode: undefined,
   deselectNodeCreator: deselectNode,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
-  fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
   getJurisdictionsFeatures: defaultFeatureCollection,
   getJurisdictionsMetadata: {},
   plan: {} as PlanDefinition,
@@ -286,7 +282,6 @@ type MapStateToProps = Pick<
 type DispatchToProps = Pick<
   AssignmentMapWrapperProps,
   | 'fetchJurisdictionsActionCreator'
-  | 'fetchUpdatedCurrentParentActionCreator'
   | 'autoSelectNodesActionCreator'
   | 'deselectNodeCreator'
   | 'selectNodeCreator'
@@ -302,9 +297,7 @@ const mapStateToProps = (
   ownProps: AssignmentMapWrapperProps
 ): MapStateToProps => {
   const filters: Filters = {
-    currentParentId: getMapCurrentParent(state).currentParentId.length
-      ? getMapCurrentParent(state).currentParentId
-      : ownProps.currentParentId,
+    currentParentId: ownProps.currentParentId,
     leafNodesOnly: true,
     planId: ownProps.plan.identifier,
     rootJurisdictionId: ownProps.rootJurisdictionId,
@@ -314,21 +307,14 @@ const mapStateToProps = (
   const jurisdictionFilters: JurisdictionGeomFilters = {
     currentChildren: childJurisdictions,
     filterGeom: true,
-    jurisdictionId: getMapCurrentParent(state).currentParentId.length
-      ? getMapCurrentParent(state).currentParentId
-      : ownProps.currentParentId || ownProps.rootJurisdictionId,
-    jurisdictionIdsArray:
-      !ownProps.currentParentId && !getMapCurrentParent(state).currentParentId.length
-        ? [ownProps.rootJurisdictionId]
-        : childJurisdictions.map((node: TreeNode) => node.model.id),
+    jurisdictionId: ownProps.currentParentId || ownProps.rootJurisdictionId,
+    jurisdictionIdsArray: !ownProps.currentParentId
+      ? [ownProps.rootJurisdictionId]
+      : childJurisdictions.map((node: TreeNode) => node.model.id),
     newFeatureProps: true,
     parentId:
-      ownProps.currentParentId === ownProps.rootJurisdictionId ||
-      getMapCurrentParent(state).currentParentId === ownProps.rootJurisdictionId ||
-      !ownProps.currentParentId
+      ownProps.currentParentId === ownProps.rootJurisdictionId || !ownProps.currentParentId
         ? undefined
-        : getMapCurrentParent(state).length
-        ? getMapCurrentParent(state).currentParentId
         : ownProps.currentParentId || ownProps.rootJurisdictionId,
     planId: ownProps.plan.identifier,
     rootJurisdictionId: ownProps.rootJurisdictionId,
@@ -336,9 +322,7 @@ const mapStateToProps = (
 
   return {
     currentChildren: childJurisdictions,
-    currentParentId: getMapCurrentParent(state).currentParentId.length
-      ? getMapCurrentParent(state).currentParentId
-      : ownProps.currentParentId,
+    currentParentId: ownProps.currentParentId,
     currentParentNode: getCurrentParentNode()(state, filters),
     getJurisdictionsFeatures: getJurisdictionsFC()(
       state,
@@ -355,7 +339,6 @@ const mapDispatchToProps: DispatchToProps = {
   autoSelectNodesActionCreator: autoSelectNodes,
   deselectNodeCreator: deselectNode,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
-  fetchUpdatedCurrentParentActionCreator: fetchUpdatedCurrentParent,
   selectNodeCreator: selectNode,
 };
 
