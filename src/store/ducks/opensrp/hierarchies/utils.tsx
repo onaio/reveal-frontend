@@ -5,7 +5,7 @@
  * A few other helpers that abstract the reducer(reducer and selectors) functionality
  */
 import { Dictionary } from '@onaio/utils';
-import { cloneDeep, uniqWith } from 'lodash';
+import { cloneDeep } from 'lodash';
 import TreeModel from 'tree-model';
 
 import { META_FIELD_NAME, META_STRUCTURE_COUNT, SELECTION_REASON } from './constants';
@@ -210,48 +210,6 @@ export function computeParentNodesSelection(
   return metaDataByJurisdictionId;
 }
 
-/** any callback that will take a node and return whether we should select the node
- * @param callback - callback is given each node in a walk and decides whether that node should be selected by returning true or false
- */
-export const autoSelectNodesAndCascade = (
-  tree: TreeNode,
-  callback: (node: TreeNode) => boolean,
-  actionBy: string = SELECTION_REASON.USER_CHANGE,
-  thisTreeMetaData: Dictionary<Meta>
-) => {
-  let metaByJurisdictionId: Dictionary<Meta> = {};
-  // deselect all
-  const { metaByJurisdiction } = setSelectOnNode(tree, tree.model.id, actionBy, false, true, true);
-  const parentNodes: TreeNode[] = [];
-  tree.walk(node => {
-    if (callback(node)) {
-      node.walk(nd => {
-        metaByJurisdictionId = Object.assign(
-          metaByJurisdictionId,
-          createSingleMetaData(nd.model.id, actionBy, true)
-        );
-        // removing this return cause a type error, that's its sole purpose
-        return true;
-      });
-      parentNodes.push(node);
-    }
-    return true;
-  });
-
-  // remove duplicates
-  const parentNodesSet = uniqWith(parentNodes, (nodeA, nodeB) => nodeA.model.id === nodeB.model.id);
-
-  // now select parents accordingly
-  parentNodesSet.forEach(node => {
-    metaByJurisdictionId = Object.assign(
-      metaByJurisdictionId,
-      computeParentNodesSelection(node, actionBy, thisTreeMetaData)
-    );
-  });
-
-  return Object.assign({}, metaByJurisdiction, metaByJurisdictionId);
-};
-
 /** compute Selected nodes from the tree
  * @param tree - the whole tree or undefined
  * @param leafNodesOnly - whether to include the leaf nodes only
@@ -275,6 +233,43 @@ export const computeSelectedNodes = (
     return true;
   });
   return nodesList;
+};
+
+/** any callback that will take a node and return whether we should select the node
+ * @param callback - callback is given each node in a walk and decides whether that node should be selected by returning true or false
+ */
+export const autoSelectNodesAndCascade = (
+  tree: TreeNode,
+  callback: (node: TreeNode) => boolean,
+  actionBy: string = SELECTION_REASON.USER_CHANGE,
+  thisTreeMetaData: Dictionary<Meta>
+) => {
+  let metaByJurisdictionId: Dictionary<Meta> = {};
+
+  tree.walk(node => {
+    if (callback(node)) {
+      node.walk(nd => {
+        metaByJurisdictionId = Object.assign(
+          metaByJurisdictionId,
+          createSingleMetaData(nd.model.id, actionBy, true)
+        );
+        // removing this return cause a type error, that's its sole purpose
+        return true;
+      });
+    }
+    return true;
+  });
+
+  const selectedChildren = computeSelectedNodes(tree, true, metaByJurisdictionId);
+
+  selectedChildren.forEach(node => {
+    metaByJurisdictionId = Object.assign(
+      metaByJurisdictionId,
+      computeParentNodesSelection(node, actionBy, thisTreeMetaData)
+    );
+  });
+
+  return Object.assign({}, metaByJurisdictionId);
 };
 
 /** uses pre-order tree traversal to compute new structure counts for jurisdictions in the tree
@@ -307,13 +302,14 @@ export const applyMeta = (nodes: TreeNode[] | TreeNode | undefined, meta: Dictio
     return [];
   }
   const localNodes = Array.isArray(nodes) ? [...nodes] : [nodes];
-
-  localNodes.forEach(node => {
-    const thisNodesMeta = Object.assign({}, meta[node.model.id]);
+  for (let i = 0, len = localNodes.length; i < len; i++) {
+    const node = localNodes[i];
+    const thisNodesMeta = Object.assign(meta[node.model.id] || {}, {
+      META_STRUCTURE_COUNT: node.model.meta[META_STRUCTURE_COUNT],
+    });
     thisNodesMeta[META_STRUCTURE_COUNT] = node.model.meta[META_STRUCTURE_COUNT];
     node.model.meta = thisNodesMeta;
-  });
-
+  }
   return localNodes;
 };
 
@@ -330,7 +326,11 @@ export const findAParentNode = (
     return;
   }
   if (parentId === undefined) {
-    return tree;
+    const toReturnTree = tree;
+    if (metaData) {
+      return applyMeta(toReturnTree, metaData)[0];
+    }
+    return toReturnTree;
   }
   const finalNode: TreeNode | undefined = tree.first(node => node.model.id === parentId);
 
