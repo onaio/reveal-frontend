@@ -13,6 +13,7 @@ import store from '../../../../index';
 import { SELECTION_REASON } from '../constants';
 import { TreeNode } from '../types';
 import {
+  applyMeta,
   generateJurisdictionTree,
   preOrderStructureCountComputation,
   setSelectOnNode,
@@ -135,6 +136,13 @@ describe('reducer/hierarchies#stress', () => {
       selectedHierarchySelector(store.getState(), filters);
     };
 
+    const meta = store.getState()[reducerName].metaData[zambiaId][planId];
+    const nodes = selectedHierarchySelector(store.getState(), filters)!.all(() => true);
+    const applyMetaAction = () => {
+      applyMeta(nodes, meta);
+    };
+
+    benchmark(applyMetaAction, `Applying meta to ${nodes.length}`);
     benchmark(selectedHierarchySelectorAction, 'recreating tree');
     benchmark(selectorsAction, 'allSelectedNodes');
   });
