@@ -16,8 +16,10 @@ import {
   raKsh3,
 } from '../../../../../components/TreeWalker/tests/fixtures';
 import store from '../../../../index';
+import hierarchyReducer, { reducerName as hierarchyReducerName } from '../../hierarchies';
 
 reducerRegistry.register(reducerName, reducer);
+reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
 const arraySelector = getJurisdictionsArray();
 const jurisdictionSelector = getJurisdictionById();
@@ -69,14 +71,30 @@ describe('reducers/opensrp/hierarchies', () => {
       raKsh3,
     ]);
     expect(
-      arraySelector(store.getState(), { jurisdictionIdsArray: [raKashikishiHAHC.id, raKsh3.id] })
+      arraySelector(store.getState(), {
+        jurisdictionIdsArray: [raKashikishiHAHC.id, raKsh3.id],
+        planId: '2943',
+        rootJurisdictionId: '2942',
+      })
     ).toEqual([raKashikishiHAHC, raKsh3]);
     // fcSelector
-    expect(fcSelector(store.getState(), { parentId: raKashikishiHAHC.id })).toEqual({
+    expect(
+      fcSelector(store.getState(), {
+        parentId: raKashikishiHAHC.id,
+        planId: '2943',
+        rootJurisdictionId: '2942',
+      })
+    ).toEqual({
       features: [raKsh2, raKsh3],
       type: 'FeatureCollection',
     });
-    expect(fcSelector(store.getState(), { jurisdictionIdsArray: [raKsh3.id] })).toEqual({
+    expect(
+      fcSelector(store.getState(), {
+        jurisdictionIdsArray: [raKsh3.id],
+        planId: '2943',
+        rootJurisdictionId: '2942',
+      })
+    ).toEqual({
       features: [raKsh3],
       type: 'FeatureCollection',
     });
@@ -93,6 +111,8 @@ describe('reducers/opensrp/hierarchies', () => {
         ] as any,
         jurisdictionIdsArray: [raKsh3.id],
         newFeatureProps: true,
+        planId: '2943',
+        rootJurisdictionId: '2942',
       })
     ).toEqual({
       features: [
@@ -100,9 +120,9 @@ describe('reducers/opensrp/hierarchies', () => {
           ...raKsh3,
           properties: {
             ...raKsh3.properties,
-            fillColor: '#ff5c33',
-            fillOutlineColor: '#22bcfb',
-            lineColor: '#22bcfb',
+            fillColor: '#792b16',
+            fillOutlineColor: '#ffffff',
+            lineColor: '#ffffff',
           },
         },
       ],
