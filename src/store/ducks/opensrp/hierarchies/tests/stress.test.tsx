@@ -137,7 +137,11 @@ describe('reducer/hierarchies#stress', () => {
     };
 
     const meta = store.getState()[reducerName].metaData[zambiaId][planId];
-    const nodes = selectedHierarchySelector(store.getState(), filters)!.all(() => true);
+    const selectedHierarchy = selectedHierarchySelector(store.getState(), filters);
+    if (!selectedHierarchy) {
+      fail();
+    }
+    const nodes = selectedHierarchy.all(() => true);
     const applyMetaAction = () => {
       applyMeta(nodes, meta);
     };
