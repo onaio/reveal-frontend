@@ -7,7 +7,7 @@ import { EventData } from 'mapbox-gl';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { AssignmentMapWrapper, ConnectedAssignmentMapWrapper, onJurisdictionClick } from '..';
+import { AssignmentMapWrapper, ConnectedAssignmentMapWrapper } from '..';
 import { getJurisdictions } from '../../../../components/TreeWalker/helpers';
 import { PlanDefinition } from '../../../../configs/settings';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -32,6 +32,7 @@ import jurisdictionMetadataReducer, {
 import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
+import { onJurisdictionClick } from '../helpers/utils';
 import * as fixtures from './fixtures';
 
 // tslint:disable-next-line: no-var-requires

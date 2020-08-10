@@ -2,9 +2,7 @@ import { viewport } from '@mapbox/geo-viewport';
 import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Dictionary } from '@onaio/utils';
-import { Feature, FeatureCollection } from '@turf/turf';
-import { History } from 'history';
-import { EventData, Map } from 'mapbox-gl';
+import { FeatureCollection } from '@turf/turf';
 import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -14,7 +12,6 @@ import { MemoizedGisidaLite } from '../../../components/GisidaLite';
 import Loading from '../../../components/page/Loading';
 import { getJurisdictions } from '../../../components/TreeWalker/helpers';
 import { MAP_LOAD_ERROR } from '../../../configs/lang';
-import { AUTO_ASSIGN_JURISDICTIONS_URL, MANUAL_ASSIGN_JURISDICTIONS_URL } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import {
@@ -29,9 +26,7 @@ import {
   selectNode,
   SelectNodeAction,
 } from '../../../store/ducks/opensrp/hierarchies';
-import { SELECTION_REASON } from '../../../store/ducks/opensrp/hierarchies/constants';
 import { Meta, TreeNode } from '../../../store/ducks/opensrp/hierarchies/types';
-import { nodeIsSelected } from '../../../store/ducks/opensrp/hierarchies/utils';
 import jurisdictionReducer, {
   fetchJurisdictions,
   Filters as JurisdictionGeomFilters,
@@ -43,6 +38,7 @@ import {
   buildMouseMoveHandler,
   buildStructureLayers,
 } from '../FocusInvestigation/map/active/helpers/utils';
+import { onJurisdictionClick } from './helpers/utils';
 
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
@@ -87,85 +83,6 @@ const defaultProps: AssignmentMapWrapperProps = {
   rootJurisdictionId: '',
   selectNodeCreator: selectNode,
   serviceClass: OpenSRPService,
-};
-
-/**
- * Handler to get current parent id from clicked jurisdiction on map
- * @param props - AssignmentMapWrapper component props
- */
-
-export const onJurisdictionClick = (props: any, setMapParent: any, history: History) => {
-  function handleJurisdictionClick(_: Map, e: EventData) {
-    // Destructure event data
-    const { point, target, originalEvent } = e;
-    const {
-      currentParentNode,
-      rootJurisdictionId,
-      selectNodeCreator,
-      deselectNodeCreator,
-      plan,
-      autoSelectionFlow,
-      getJurisdictionsMetadata,
-    } = props;
-
-    const baseUrl = !autoSelectionFlow
-      ? `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
-      : `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
-    // grab underlying features from map
-    const features: Feature[] = target.queryRenderedFeatures(point);
-    if (!features.length) {
-      return false;
-    }
-    if (features[0]) {
-      const currentId =
-        (features[0].id && features[0].id.toString()) ||
-        (features[0] && features[0].properties && features[0].properties.externalId);
-      if (originalEvent.altKey) {
-        let activeCurrentNode: TreeNode | any = {};
-        // Handle selection for admin level 0
-        if (
-          currentParentNode &&
-          currentParentNode.model.id === rootJurisdictionId &&
-          currentId === currentParentNode.model.id
-        ) {
-          activeCurrentNode = currentParentNode;
-        } else {
-          // Handle selection for admin > 0
-          activeCurrentNode = currentParentNode.children.find(
-            (node: TreeNode) => node.model.id === currentId
-          );
-        }
-        if (
-          !nodeIsSelected(
-            activeCurrentNode.model.id,
-            rootJurisdictionId,
-            plan.identifier,
-            getJurisdictionsMetadata
-          )
-        ) {
-          selectNodeCreator(
-            rootJurisdictionId,
-            activeCurrentNode.model.id,
-            plan.identifier,
-            SELECTION_REASON.USER_CHANGE
-          );
-        } else {
-          deselectNodeCreator(
-            rootJurisdictionId,
-            activeCurrentNode.model.id,
-            plan.identifier,
-            SELECTION_REASON.USER_CHANGE
-          );
-        }
-        setMapParent(currentId);
-      } else {
-        if (currentParentNode.hasChildren()) {
-          history.push(`${baseUrl}/${currentId}`);
-        }
-      }
-    }
-  }
-  return handleJurisdictionClick;
 };
 
 /**
