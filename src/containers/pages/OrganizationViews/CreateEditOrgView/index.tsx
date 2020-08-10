@@ -61,7 +61,7 @@ const CreateEditOrgView = (props: CreateEditTeamViewTypes) => {
     label: ORGANIZATIONS_LABEL,
     url: ORGANIZATIONS_LIST_URL,
   };
-  const breadcrumbProps: Partial<BreadCrumbProps> = {
+  const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
       label: editing ? EDIT_TEAM : NEW_TEAM,
       url: editing

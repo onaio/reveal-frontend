@@ -102,7 +102,7 @@ export const downloadCsvTemplate = (service: typeof OpenSRPService = OpenSRPServ
 /** JurisdictionMetadataImportView component */
 const JurisdictionMetadataImportView = () => {
   //  props for breadcrumbs
-  const breadcrumbProps: Partial<BreadCrumbProps> = {
+  const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
       label: JURISDICTION_METADATA,
       url: JURISDICTION_METADATA_URL,

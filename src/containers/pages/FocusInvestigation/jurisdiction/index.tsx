@@ -9,7 +9,6 @@ import { Col, Row } from 'reactstrap';
 import { format } from 'util';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
-  Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import NullDataTable from '../../../../components/Table/NullDataTable';
@@ -191,7 +190,7 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
     label: HOME,
     url: HOME_URL,
   };
-  const breadCrumbProps: Partial<BreadCrumbProps> = {
+  const breadCrumbProps: BreadCrumbProps = {
     currentPage: basePage,
     pages: [homePage, basePage],
   };
@@ -205,7 +204,7 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
 
     namePaths.forEach((namePath, i) => {
       if (onePlan) {
-        (breadCrumbProps.pages as Page[]).push({
+        breadCrumbProps.pages.push({
           label: namePath,
           url: getFilteredFIPlansURL(onePlan.jurisdiction_path[i], onePlan.id),
         });

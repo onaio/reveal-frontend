@@ -209,7 +209,7 @@ const AssignPractitioner = (props: PropsTypes) => {
     label: ORGANIZATIONS_LABEL,
     url: ORGANIZATIONS_LIST_URL,
   };
-  const breadcrumbProps: Partial<BreadCrumbProps> = {
+  const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
       label: ASSIGN_PRACTITIONERS,
       url: ASSIGN_PRACTITIONERS_URL,

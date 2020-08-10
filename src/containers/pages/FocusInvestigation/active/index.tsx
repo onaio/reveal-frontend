@@ -170,7 +170,7 @@ class ActiveFocusInvestigation extends React.Component<
   }
 
   public render() {
-    const breadcrumbProps: Partial<BreadCrumbProps> = {
+    const breadcrumbProps: BreadCrumbProps = {
       currentPage: {
         label: `${FOCUS_INVESTIGATIONS}`,
         url: `${FI_URL}`,

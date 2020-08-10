@@ -254,7 +254,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     label: plan.jurisdiction_name,
     url: `${FI_SINGLE_URL}/${plan.jurisdiction_id}`,
   };
-  const breadCrumbProps: Partial<BreadCrumbProps> = {
+  const breadCrumbProps: BreadCrumbProps = {
     currentPage: {
       label: plan.plan_title,
       url: `${FI_SINGLE_MAP_URL}/${plan.id}`,

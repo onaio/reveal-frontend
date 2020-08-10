@@ -12,49 +12,23 @@ export interface Page {
 export interface BreadCrumbProps {
   currentPage: Page;
   pages: Page[];
-  fetchUpdatedCurrentParentHandler: (currentParentId: string, isRootJurisdiction: boolean) => void;
 }
-
-export const defaultBreadCrumbProps: Partial<BreadCrumbProps> = {
-  currentPage: {
-    label: '',
-    url: '',
-  },
-  pages: [
-    {
-      label: '',
-      url: '',
-    },
-  ],
-};
 
 /** Configurable Breadcrumbs Component */
 class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
-  public static defaultProps = defaultBreadCrumbProps;
   constructor(props: BreadCrumbProps) {
     super(props);
   }
 
   public render() {
-    const { currentPage, pages, fetchUpdatedCurrentParentHandler } = this.props;
+    const { currentPage, pages } = this.props;
 
     const linkList = pages.map((page, key) => {
       // render breadcrumb items with urls as links or without urls as text nodes
       let breadCrumbItem: string | JSX.Element;
       if (page.url && page.url.trim()) {
         breadCrumbItem = (
-          <Link
-            to={page.url}
-            key={key}
-            // tslint:disable-next-line: jsx-no-lambda
-            onClick={() => {
-              // add this check because not all components are passing this handler function
-              // as a prop to this component
-              if (!!fetchUpdatedCurrentParentHandler) {
-                fetchUpdatedCurrentParentHandler('', false);
-              }
-            }}
-          >
+          <Link to={page.url} key={key}>
             {page.label}
           </Link>
         );

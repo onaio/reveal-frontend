@@ -20,7 +20,7 @@ export const DraftPlans = (props: RouteComponentProps) => {
     label: HOME,
     url: HOME_URL,
   };
-  const breadCrumbProps: Partial<BreadCrumbProps> = {
+  const breadCrumbProps: BreadCrumbProps = {
     currentPage: {
       label: DRAFT_PLANS,
       url: PLANNING_VIEW_URL,
@@ -29,7 +29,7 @@ export const DraftPlans = (props: RouteComponentProps) => {
   };
 
   const renderBody = draftPlansPageBodyFactory({
-    breadCrumbProps: breadCrumbProps as BreadCrumbProps,
+    breadCrumbProps,
     newPlanUrl: NEW_PLANNING_PLAN_URL,
     pageTitle,
   });

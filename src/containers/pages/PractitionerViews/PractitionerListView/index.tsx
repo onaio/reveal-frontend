@@ -69,7 +69,7 @@ const PractitionersListView = (props: PropsTypes) => {
   // functions/methods
 
   /** props to pass to the headerBreadCrumb */
-  const breadcrumbProps: Partial<BreadCrumbProps> = {
+  const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
       label: PRACTITIONERS,
       url: PRACTITIONERS_LIST_URL,
