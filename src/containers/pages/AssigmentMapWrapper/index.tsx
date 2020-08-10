@@ -52,6 +52,7 @@ export interface AssignmentMapWrapperProps {
   plan: PlanDefinition;
   rootJurisdictionId: string;
   currentParentId?: string;
+  jurisdictionsChunkSize: number;
   getJurisdictionsMetadata: Dictionary<Dictionary<Dictionary<Meta>>>;
   currentChildren: TreeNode[];
   serviceClass: typeof OpenSRPService;
@@ -79,6 +80,7 @@ const defaultProps: AssignmentMapWrapperProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   getJurisdictionsFeatures: defaultFeatureCollection,
   getJurisdictionsMetadata: {},
+  jurisdictionsChunkSize: 30,
   plan: {
     identifier: '',
   } as PlanDefinition,
@@ -181,6 +183,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     getJurisdictionsFeatures,
     currentParentId,
     rootJurisdictionId,
+    jurisdictionsChunkSize,
   } = props;
   const currentChildIds: string[] = currentChildren.length
     ? currentChildren.map(node => node.model.id)
@@ -201,7 +204,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
       getJurisdictions(
         !currentParentId ? [rootJurisdictionId] : currentChildIds,
         params,
-        30,
+        jurisdictionsChunkSize,
         serviceClass
       )
         .then(res => {

@@ -171,6 +171,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
   const AssignmentWrapperProps = {
     autoSelectionFlow: false,
     currentParentId: props.match.params.parentId,
+    jurisdictionsChunkSize: 30,
     plan,
     rootJurisdictionId: rootId,
     serviceClass,

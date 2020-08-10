@@ -126,6 +126,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         type: 'FeatureCollection',
       },
       getJurisdictionsMetadata: {},
+      jurisdictionsChunkSize: 30,
       plan: {
         identifier: '2493',
       },
@@ -183,6 +184,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         type: 'FeatureCollection',
       },
       getJurisdictionsMetadata: {},
+      jurisdictionsChunkSize: 30,
       plan: {
         identifier: '2493',
       },
@@ -259,6 +261,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
           },
         },
       },
+      jurisdictionsChunkSize: 30,
       plan: {
         identifier: '2493',
       },
