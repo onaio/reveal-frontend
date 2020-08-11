@@ -301,7 +301,7 @@ export const preOrderStructureCountComputation = (node: TreeNode) => {
  * @param nodes - a node or a list of nodes to apply the metadata to
  * @param meta - meta object by jurisdiction
  */
-export const applyMeta = (nodes: TreeNode[] | TreeNode | undefined, meta: Dictionary<Meta>) => {
+export const applyMeta = (nodes?: TreeNode[] | TreeNode, meta: Dictionary<Meta> = {}) => {
   if (!nodes) {
     return [];
   }
@@ -323,8 +323,8 @@ export const applyMeta = (nodes: TreeNode[] | TreeNode | undefined, meta: Dictio
  * @param metaData - the tree's metaData - used to know which nodes to selected
  */
 export const findAParentNode = (
-  tree: TreeNode | undefined,
-  parentId: string | undefined,
+  tree?: TreeNode,
+  parentId?: string,
   metaData?: Dictionary<Meta>
 ) => {
   if (!tree) {
@@ -350,10 +350,7 @@ export const findAParentNode = (
  * @param parentNode -  the parent Node
  * @param metaData - the tree's metadata; used to know which nodes to select
  */
-export const getChildrenForNode = (
-  parentNode: TreeNode | undefined,
-  metaData?: Dictionary<Meta>
-) => {
+export const getChildrenForNode = (parentNode?: TreeNode, metaData?: Dictionary<Meta>) => {
   let children = [];
   if (parentNode) {
     children = parentNode.children;
