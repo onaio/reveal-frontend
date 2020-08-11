@@ -21,6 +21,7 @@ import { TASK_YELLOW } from '../colors';
 import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
 import { FIReasonType, FIStatusType } from '../components/forms/PlanForm/types';
 import NewRecordBadge from '../components/NewRecordBadge';
+import { NoDataComponent } from '../components/Table/NoDataComponent';
 import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
 import {
   ACTION,
@@ -30,6 +31,7 @@ import {
   JURISDICTION_METADATA,
   JURISDICTION_NAME,
   NAME,
+  NO_INVESTIGATIONS_FOUND,
   NO_OPTIONS,
 } from '../configs/lang';
 import {
@@ -651,6 +653,7 @@ export type TablePropsType = Pick<
   | 'parentIdentifierField'
   | 'rootParentId'
   | 'useDrillDown'
+  | 'renderNullDataComponent'
 >;
 
 /** Default table props config */
@@ -662,6 +665,7 @@ export const defaultTableProps: TablePropsType = {
   linkerField: 'id',
   paginate: false,
   parentIdentifierField: 'parent',
+  renderNullDataComponent: () => <NoDataComponent message={NO_INVESTIGATIONS_FOUND} />,
   rootParentId: null,
   useDrillDown: false,
 };
