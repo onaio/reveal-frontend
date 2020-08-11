@@ -182,6 +182,8 @@ export const setSelectOnNode = (
 
 /** traverse up and select the parent nodes where necessary
  * @param node a node
+ * @param actionBy - reason by which select changed
+ * @param metaDataByJurisdiction - meta object key'd by jurisdictionId
  */
 export function computeParentNodesSelection(
   node: TreeNode,
@@ -213,6 +215,7 @@ export function computeParentNodesSelection(
 /** compute Selected nodes from the tree
  * @param tree - the whole tree or undefined
  * @param leafNodesOnly - whether to include the leaf nodes only
+ * @param metaByJurisdiction - MetaData object
  */
 export const computeSelectedNodes = (
   tree: TreeNode | undefined,
@@ -236,13 +239,14 @@ export const computeSelectedNodes = (
 };
 
 /** any callback that will take a node and return whether we should select the node
+ * @param tree - the tree
  * @param callback - callback is given each node in a walk and decides whether that node should be selected by returning true or false
+ * @param actionBy - selected by
  */
 export const autoSelectNodesAndCascade = (
   tree: TreeNode,
   callback: (node: TreeNode) => boolean,
-  actionBy: string = SELECTION_REASON.USER_CHANGE,
-  thisTreeMetaData: Dictionary<Meta>
+  actionBy: string = SELECTION_REASON.USER_CHANGE
 ) => {
   let metaByJurisdictionId: Dictionary<Meta> = {};
 
@@ -265,7 +269,7 @@ export const autoSelectNodesAndCascade = (
   selectedChildren.forEach(node => {
     metaByJurisdictionId = Object.assign(
       metaByJurisdictionId,
-      computeParentNodesSelection(node, actionBy, thisTreeMetaData)
+      computeParentNodesSelection(node, actionBy, metaByJurisdictionId)
     );
   });
 
@@ -316,6 +320,7 @@ export const applyMeta = (nodes: TreeNode[] | TreeNode | undefined, meta: Dictio
 /** find the parent node in a tree given the parentId
  * @param tree - the tree
  * @param parentId - id of the parent node
+ * @param metaData - the tree's metaData - used to know which nodes to selected
  */
 export const findAParentNode = (
   tree: TreeNode | undefined,
@@ -343,6 +348,7 @@ export const findAParentNode = (
 
 /** find the current children from  a parent node. This is defined here to avoid repetition
  * @param parentNode -  the parent Node
+ * @param metaData - the tree's metadata; used to know which nodes to select
  */
 export const getChildrenForNode = (
   parentNode: TreeNode | undefined,

@@ -308,12 +308,7 @@ export default function reducer(state = initialState, action: TreeActionTypes) {
       if (!treeOfInterest) {
         return state;
       }
-      const metaByJurisdictionId = autoSelectNodesAndCascade(
-        treeOfInterest,
-        callback,
-        actionBy,
-        thisPlansMetaData
-      );
+      const metaByJurisdictionId = autoSelectNodesAndCascade(treeOfInterest, callback, actionBy);
 
       return {
         ...state,
