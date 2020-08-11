@@ -20,6 +20,7 @@ import {
   TreeNode,
 } from './types';
 import {
+  applyMeta,
   autoSelectNodesAndCascade,
   computeParentNodesSelection,
   computeSelectedNodes,
@@ -310,12 +311,7 @@ export default function reducer(state: ImmutableTreeState = initialState, action
       if (!treeOfInterest) {
         return state;
       }
-      const metaByJurisdictionId = autoSelectNodesAndCascade(
-        treeOfInterest,
-        callback,
-        actionBy,
-        thisPlansMetaData
-      );
+      const metaByJurisdictionId = autoSelectNodesAndCascade(treeOfInterest, callback, actionBy);
 
       return {
         ...state,
@@ -324,7 +320,6 @@ export default function reducer(state: ImmutableTreeState = initialState, action
           [rootJurisdictionId]: {
             ...state.metaData[rootJurisdictionId],
             [planId]: {
-              ...(state.metaData[rootJurisdictionId] || {})[planId],
               ...metaByJurisdictionId,
             },
           },
@@ -359,8 +354,6 @@ export interface Filters {
   nodeId?: string /** target node with this id */;
   leafNodesOnly?: boolean /** specified when requesting for selected nodes, truthy returns leaf nodes */;
   currentParentId?: string /** to use when filtering current children */;
-  selectedLeafNodes?: TreeNode[] /** to use when filtering from the selected leaves */;
-  parentNode?: TreeNode /** to use when filtering from the selected leaves */;
 }
 
 /** retrieve the rootJurisdiction value
@@ -418,7 +411,7 @@ export const getTreeById = () =>
   createSelector(getTreesByIds, getRootJurisdictionId, (treesByIds, rootId):
     | TreeNode
     | undefined => {
-    return treesByIds[rootId];
+    return cloneDeep(treesByIds[rootId]);
   });
 
 /** returns metaData for tree with the specified rootJurisdictionId
@@ -441,37 +434,17 @@ export const getMetaForPlanInTree = () => {
   });
 };
 
-/** combine tree with metaData
- * @param state - the store
- * @param props - the filterProps
- */
-export const getTreeWithMeta = () => {
-  return createSelector(getTreeById(), getMetaForPlanInTree(), (origTree, metaForTree) => {
-    // walk the tree and update meta field.
-    if (!origTree) {
-      return;
-    }
-    const treeClone = cloneDeep(origTree);
-    treeClone.walk(node => {
-      node.model.meta = metaForTree[node.model.id] ? metaForTree[node.model.id] : {};
-      return true;
-    });
-
-    return treeClone;
-  });
-};
-
 /** retrieve a node given the id
  * @param state - the store
  * @param props -  the filterProps
  */
 export const getNodeById = () =>
-  createSelector(getTreeWithMeta(), getNodeId, (tree, nodeId) => {
+  createSelector(getTreeById(), getNodeId, getMetaForPlanInTree(), (tree, nodeId, metaData) => {
     if (!tree || !nodeId) {
       return;
     }
     const nodeOfInterest = tree.first(node => node.model.id === nodeId);
-    return nodeOfInterest;
+    return applyMeta(nodeOfInterest, metaData)[0];
   });
 
 /**
@@ -532,14 +505,14 @@ export const getAncestors = () =>
  * @param props -  the filterProps
  */
 export const getCurrentParentNode = () =>
-  createSelector(getTreeWithMeta(), getCurrentParentId, findAParentNode);
+  createSelector(getTreeById(), getCurrentParentId, getMetaForPlanInTree(), findAParentNode);
 
 /** returns an array of current children
  * @param state - the store
  * @param props -  the filterProps
  */
 export const getCurrentChildren = () => {
-  return createSelector(getCurrentParentNode(), getChildrenForNode);
+  return createSelector(getCurrentParentNode(), getMetaForPlanInTree(), getChildrenForNode);
 };
 
 /** retrieves an array of all the selected nodes
@@ -547,19 +520,7 @@ export const getCurrentChildren = () => {
  * @param props -  the filterProps
  */
 export const getAllSelectedNodes = () =>
-  createSelector(getTreeWithMeta(), getLeafNodesOnly, computeSelectedNodes);
-
-/** retrieve the parent node value
- * @param state - the store
- * @param props -  the filterProps
- */
-export const getParentNode = (_: Partial<Store>, props: Filters) => props.parentNode;
-
-/** retrieve the leaf nodes only value
- * @param state - the store
- * @param props -  the filterProps
- */
-export const getSelectedLeafNodes = (_: Partial<Store>, props: Filters) => props.selectedLeafNodes;
+  createSelector(getTreeById(), getLeafNodesOnly, getMetaForPlanInTree(), computeSelectedNodes);
 
 /** returns an array of all the selected nodes from a specified node on the tree
  * @param state - the store
@@ -567,30 +528,10 @@ export const getSelectedLeafNodes = (_: Partial<Store>, props: Filters) => props
  */
 export const getSelectedNodesUnderParentNode = () =>
   createSelector(
-    getParentNode,
-    getSelectedLeafNodes,
-    (tree: TreeNode | undefined, selectedLeafNodes: TreeNode[] | undefined): TreeNode[] => {
-      const nodesList: TreeNode[] = [];
-      if (!tree) {
-        if (!selectedLeafNodes) {
-          return nodesList;
-        }
-        return nodesList;
-      }
-
-      if (selectedLeafNodes) {
-        tree.walk(node => {
-          selectedLeafNodes.forEach(leaf => {
-            if (leaf.model.id === node.model.id) {
-              nodesList.push(leaf);
-            }
-          });
-          return true;
-        });
-      }
-
-      return nodesList;
-    }
+    getCurrentParentNode(),
+    getLeafNodesOnly,
+    getMetaForPlanInTree(),
+    computeSelectedNodes
   );
 
 /** returns the total structure count for all selected nodes in the entire tree
@@ -599,8 +540,8 @@ export const getSelectedNodesUnderParentNode = () =>
  * @param {Pick<Filters, 'rootJurisdictionId'>} filters
  */
 export const getStructuresCount = () =>
-  createSelector(getTreeWithMeta(), tree => {
-    const allSelectedLeafNodes = computeSelectedNodes(tree, true);
+  createSelector(getTreeById(), getMetaForPlanInTree(), (tree, metaByJurisdiction) => {
+    const allSelectedLeafNodes = computeSelectedNodes(tree, true, metaByJurisdiction);
     const reducingFn = (acc: number, value: number) => acc + value;
     return allSelectedLeafNodes
       .map(node => node.model.node.attributes.structureCount)
@@ -613,11 +554,11 @@ export const getStructuresCount = () =>
  * @param props - the Filters
  */
 export const getSelectedHierarchy = () => {
-  return createSelector(getTreeWithMeta(), origTree => {
-    // need to be very keen not tu mutate the original tree.
+  return createSelector(getTreeById(), getMetaForPlanInTree(), (origTree, metaByJurisdiction) => {
+    // need to be very keen not t0 mutate the original tree.
     const tree = cloneDeep(origTree);
     // get selected leaf nodes.
-    const allSelectedLeafNodes = computeSelectedNodes(tree, true);
+    const allSelectedLeafNodes = computeSelectedNodes(tree, true, metaByJurisdiction);
     if (allSelectedLeafNodes.length === 0) {
       return;
     }
@@ -626,12 +567,22 @@ export const getSelectedHierarchy = () => {
 
     // create an object with uniq jurisdiction entries for all jurisdictions that exist
     // in a path that has a selected leaf node.
-    allSelectedLeafNodes.forEach(node => {
-      allNodesInPaths = {
-        ...allNodesInPaths,
-        ...keyBy<TreeNode>(node.getPath(), nd => nd.model.id),
-      };
-    });
+    const temp = [];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < allSelectedLeafNodes.length; i++) {
+      const thisNode = allSelectedLeafNodes[i];
+      const nodesInPath = thisNode.getPath();
+
+      // tslint:disable-next-line: prefer-for-of
+      for (let idx = 0; idx < nodesInPath.length; idx++) {
+        temp.push(nodesInPath[idx]);
+      }
+    }
+    allNodesInPaths = Object.assign(
+      {},
+      allNodesInPaths,
+      keyBy(temp, nd => nd.model.id)
+    );
 
     // flatten it into an array in preparation of creating a nested structure
     const normalNodes: TreeNode[] = [];
@@ -646,6 +597,7 @@ export const getSelectedHierarchy = () => {
     // TODO - add a type declaration file.
     const flatToNested = new (FlatToNested as any)({
       id: 'id',
+      options: { deleteParent: false },
       parent: 'parent',
     });
 
@@ -663,7 +615,12 @@ export const getSelectedHierarchy = () => {
  * @param props - the filters
  */
 export const getParentNodeInSelectedTree = () => {
-  return createSelector(getSelectedHierarchy(), getCurrentParentId, findAParentNode);
+  return createSelector(
+    getSelectedHierarchy(),
+    getCurrentParentId,
+    getMetaForPlanInTree(),
+    findAParentNode
+  );
 };
 
 /** gets the children nodes from the selectedHierarchy
@@ -671,7 +628,7 @@ export const getParentNodeInSelectedTree = () => {
  * @param props - the filters
  */
 export const getCurrentChildrenInSelectedTre = () => {
-  return createSelector(getParentNodeInSelectedTree(), getChildrenForNode);
+  return createSelector(getParentNodeInSelectedTree(), getMetaForPlanInTree(), getChildrenForNode);
 };
 
 /** a combined selector that gets the parent node and the currentChildren

@@ -57,7 +57,7 @@ import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdict
 import { addPlanDefinition } from '../../../../store/ducks/opensrp/PlanDefinition';
 import { PlanStatus } from '../../../../store/ducks/plans';
 import { RiskLabel } from '../helpers/RiskLabel';
-import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
+import { SelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
 import './index.css';
@@ -234,11 +234,10 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         : []),
       node.hasChildren() ? '' : nodeIsSelected(node) ? TARGETED : NOT_TARGETED,
       node.model.meta.actionBy,
-      <ConnectedSelectedJurisdictionsCount
-        key={`selected-jurisdictions-txt`}
+      <SelectedJurisdictionsCount
+        key={`${node.model.id}-selected-jurisdictions-txt`}
         parentNode={node}
-        id={node.model.id}
-        jurisdictions={selectedLeafNodes}
+        selectedNodes={selectedLeafNodes}
       />,
     ];
   });

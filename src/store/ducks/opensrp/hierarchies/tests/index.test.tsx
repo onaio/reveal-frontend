@@ -12,10 +12,10 @@ import reducer, {
   getCurrentChildren,
   getCurrentParentNode,
   getNodeById,
+  getNodesInSelectedTree,
   getRootByNodeId,
   getSelectedHierarchy,
   getTreeById,
-  getTreeWithMeta,
   reducerName,
   selectNode,
 } from '..';
@@ -32,8 +32,8 @@ const nodeSelector = getNodeById();
 const rootSelector = getRootByNodeId();
 const ancestorSelector = getAncestors();
 const treeByIdSelector = getTreeById();
-const treeWithMetaSelector = getTreeWithMeta();
 const selectedHierarchySelector = getSelectedHierarchy();
+const selectedNodesSelector = getNodesInSelectedTree();
 const planId = 'randomPlanId';
 
 let flushThunks;
@@ -161,11 +161,8 @@ describe('reducers/opensrp/hierarchies', () => {
     if (!tree) {
       fail();
     }
-    tree.walk(node => {
-      expect(nodeIsSelected(node)).toBeTruthy();
-      // this is a matter of formality has nothing to do with the test
-      return true;
-    });
+
+    expect(nodeIsSelected(tree)).toBeTruthy();
 
     let allSelected = getAllSelectedNodes()(store.getState(), {
       ...filters,
@@ -282,27 +279,30 @@ describe('reducers/opensrp/hierarchies', () => {
     const rootJurisdictionId = '2942';
     const callback = () => true;
     const filters = {
+      currentParentId: rootJurisdictionId,
       planId,
       rootJurisdictionId,
     };
     store.dispatch(fetchTree(sampleHierarchy));
     store.dispatch(autoSelectNodes(rootJurisdictionId, callback, planId));
 
-    let tree = treeWithMetaSelector(store.getState(), filters);
+    const tree = selectedHierarchySelector(store.getState(), filters);
     if (!tree) {
       fail();
     }
-    let selectedNodesNum = tree.all(node => nodeIsSelected(node)).length;
-    expect(selectedNodesNum).toEqual(3);
+
+    const { parentNode, childrenNodes } = selectedNodesSelector(store.getState(), filters);
+
+    [parentNode, ...childrenNodes].forEach(node => {
+      expect(nodeIsSelected(node)).toBeTruthy();
+    });
 
     // dispatch deselect
     store.dispatch(deselectAllNodes(rootJurisdictionId));
 
-    tree = treeWithMetaSelector(store.getState(), filters);
-    if (!tree) {
-      fail();
-    }
-    selectedNodesNum = tree.all(node => nodeIsSelected(node)).length;
-    expect(selectedNodesNum).toEqual(0);
+    const res = selectedNodesSelector(store.getState(), filters);
+
+    expect(res.parentNode).toBeUndefined();
+    expect(res.childrenNodes).toEqual([]);
   });
 });

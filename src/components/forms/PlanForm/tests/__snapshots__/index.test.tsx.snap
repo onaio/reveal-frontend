@@ -4389,8 +4389,8 @@ exports[`containers/forms/PlanForm renders correctly: status label 1`] = `
 exports[`containers/forms/PlanForm renders correctly: submit button 1`] = `
 <button
   aria-label="Save Plan"
-  className="btn btn-block btn btn-primary"
-  disabled={false}
+  className="btn btn-block btn btn-primary disabled"
+  disabled={true}
   id="planform-submit-button"
   onClick={[Function]}
   type="submit"
