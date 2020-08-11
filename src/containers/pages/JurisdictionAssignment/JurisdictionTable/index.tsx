@@ -1,10 +1,11 @@
 import ElementMap from '@onaio/element-map';
 import ListView, { renderHeadersFuncType } from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import Button from 'reactstrap/lib/Button';
+import Tooltip from 'reactstrap/lib/Tooltip';
 import { Store } from 'redux';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb, {
@@ -20,6 +21,7 @@ import {
   RISK_LABEL,
   SAVE_AND_ACTIVATE,
   SAVE_DRAFT,
+  SELECT_JURISDICTION,
   SELECTED_JURISDICTIONS,
   STATUS_SETTING,
   STRUCTURES_COUNT,
@@ -120,6 +122,9 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     autoSelectionFlow,
     deselectAllNodesCreator,
   } = props;
+
+  const [activateTooltipOpen, setActivateTooltipOpen] = useState(false);
+  const [draftTooltipOpen, setDraftTooltipOpen] = useState(false);
 
   /** function for determining whether the jurisdiction assignment table allows for
    * multiple selection or single selection based on the plan intervention type
@@ -316,6 +321,11 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       .catch(err => displayError(err));
   };
 
+  /** toggle save & activate button tooltip */
+  const toggleActivateToolTip = () => setActivateTooltipOpen(!activateTooltipOpen);
+  /** toggle save draft button tooltip */
+  const toggleDraftToolTip = () => setDraftTooltipOpen(!draftTooltipOpen);
+
   // check if there is any selected node
   const hasSelectedNode: boolean = selectedLeafNodes.length > 0;
 
@@ -355,6 +365,26 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           >
             {SAVE_AND_ACTIVATE}
           </Button>
+        </>
+      )}
+      {!hasSelectedNode && (
+        <>
+          <Tooltip
+            placement="top"
+            isOpen={activateTooltipOpen}
+            target="save-and-activate"
+            toggle={toggleActivateToolTip}
+          >
+            {SELECT_JURISDICTION}
+          </Tooltip>
+          <Tooltip
+            placement="top"
+            isOpen={draftTooltipOpen}
+            target="save-draft"
+            toggle={toggleDraftToolTip}
+          >
+            {SELECT_JURISDICTION}
+          </Tooltip>
         </>
       )}
     </div>

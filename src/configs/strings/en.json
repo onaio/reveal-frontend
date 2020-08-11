@@ -1186,5 +1186,9 @@
   "ERROR_PERMISSION_DENIED": {
     "message": "This user does not have permissions to access this page",
     "description": "Error message displayed if user does not have permission to access the page"
+  },
+  "SELECT_JURISDICTION": {
+    "message": "Please select atleast one jurisdiction",
+    "description": "Popup message displayed when user tries to save plan without selecting a jurisdiction"
   }
 }
