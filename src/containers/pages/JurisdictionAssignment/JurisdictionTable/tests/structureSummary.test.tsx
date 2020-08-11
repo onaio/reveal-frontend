@@ -26,7 +26,7 @@ describe('', () => {
     // prepare store: should have a tree with  at-least one selected leaf node
     store.dispatch(fetchTree(raZambiaHierarchy));
     // select Akros_1   3951
-    store.dispatch(selectNode('0ddd9ad1-452b-4825-a92a-49cb9fc82d18', '3951'));
+    store.dispatch(selectNode('0ddd9ad1-452b-4825-a92a-49cb9fc82d18', '3951', plan.identifier));
 
     /** current architecture does not use the structureSummary table as a view
      * it is seen as a controlled component that is feed some data from controlling component
@@ -36,6 +36,7 @@ describe('', () => {
       const mockProps = {
         autoSelectionFlow: false,
         currentParentId: props.match.params.parentId,
+        planId: plan.identifier,
         rootJurisdictionId: '0ddd9ad1-452b-4825-a92a-49cb9fc82d18',
       };
       return <ConnectedSelectedStructuresTable {...mockProps} />;
