@@ -1,24 +1,29 @@
 import React, { Fragment, useState } from 'react';
-import { connect } from 'react-redux';
 import { Tooltip } from 'reactstrap';
-import { Store } from 'redux';
-import {
-  Filters,
-  getSelectedNodesUnderParentNode,
-} from '../../../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
 
 /** Props for SelectedJurisdictionsCount  */
 export interface SelectedJurisdictionsCountProps {
-  rootId: string;
-  planId: string;
   parentNode: TreeNode;
-  selectedNodesUnderParent: TreeNode[];
+  selectedNodes: TreeNode[];
 }
 
 /** default props for SelectedJurisdictionsCount */
 const defaultProps: Partial<SelectedJurisdictionsCountProps> = {
-  selectedNodesUnderParent: [],
+  selectedNodes: [],
+};
+
+/** computes the selected leaf nodes under the passed in parent node
+ * @param parent the parent node
+ * @param allSelected - a list of all selected leaf nodes
+ */
+const computeSelectedUnderParent = async (parent: TreeNode, allSelected: TreeNode[]) => {
+  return allSelected.filter(node => {
+    return node
+      .getPath()
+      .map(nd => nd.model.id)
+      .includes(parent.model.id);
+  });
 };
 
 /**
@@ -29,12 +34,23 @@ const defaultProps: Partial<SelectedJurisdictionsCountProps> = {
  * @param props - the props!
  */
 const SelectedJurisdictionsCount = (props: SelectedJurisdictionsCountProps) => {
-  const { parentNode, selectedNodesUnderParent } = props;
+  const { parentNode, selectedNodes } = props;
+  const [nodesUnderParent, setNodesUnderParent] = React.useState<TreeNode[]>([]);
 
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
-  const nodeJurisdictions = selectedNodesUnderParent;
-  const jurisdictionNames: string[] = nodeJurisdictions.map(
+
+  React.useEffect(() => {
+    computeSelectedUnderParent(parentNode, selectedNodes)
+      .then(res => {
+        setNodesUnderParent(res);
+      })
+      .catch(() => {
+        /** intentionally left blank */
+      });
+  }, [selectedNodes]);
+
+  const jurisdictionNames: string[] = nodesUnderParent.map(
     jurisdiction => jurisdiction.model.label
   );
   const toolTipDisplay = jurisdictionNames.join(', ');
@@ -43,7 +59,7 @@ const SelectedJurisdictionsCount = (props: SelectedJurisdictionsCountProps) => {
 
   return (
     <Fragment>
-      <span id={`jurisdiction-tooltip-${nodeId}`}>{nodeJurisdictions.length}</span>
+      <span id={`jurisdiction-tooltip-${nodeId}`}>{nodesUnderParent.length}</span>
       <Tooltip
         placement="top"
         isOpen={tooltipOpen}
@@ -59,26 +75,3 @@ const SelectedJurisdictionsCount = (props: SelectedJurisdictionsCountProps) => {
 SelectedJurisdictionsCount.defaultProps = defaultProps;
 
 export { SelectedJurisdictionsCount };
-
-/** map state to props interface  */
-type MapStateToProps = Pick<SelectedJurisdictionsCountProps, 'selectedNodesUnderParent'>;
-
-/** maps props to store state */
-const mapStateToProps = (
-  state: Partial<Store>,
-  ownProps: SelectedJurisdictionsCountProps
-): MapStateToProps => {
-  const filters: Filters = {
-    currentParentId: ownProps.parentNode.model.id,
-    leafNodesOnly: true,
-    planId: ownProps.planId,
-    rootJurisdictionId: ownProps.rootId,
-  };
-  return {
-    selectedNodesUnderParent: getSelectedNodesUnderParentNode()(state, filters),
-  };
-};
-
-export const ConnectedSelectedJurisdictionsCount = connect(mapStateToProps)(
-  SelectedJurisdictionsCount
-);
