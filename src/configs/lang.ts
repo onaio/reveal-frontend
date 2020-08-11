@@ -804,3 +804,8 @@ export const TARGETED_STATUS = translate('TARGETED_STATUS', 'Target Status');
 export const TARGETED = translate('TARGETED', 'Targeted');
 
 export const NOT_TARGETED = translate('NOT_TARGETED', 'Not Targeted');
+
+export const SELECT_JURISDICTION = translate(
+  'SELECT_JURISDICTION',
+  'Please select at least one jurisdiction'
+);

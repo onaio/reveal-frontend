@@ -1,10 +1,10 @@
 import ElementMap from '@onaio/element-map';
 import ListView, { renderHeadersFuncType } from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import Button from 'reactstrap/lib/Button';
+import { Button, Tooltip } from 'reactstrap';
 import { Store } from 'redux';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb, {
@@ -20,6 +20,7 @@ import {
   RISK_LABEL,
   SAVE_AND_ACTIVATE,
   SAVE_DRAFT,
+  SELECT_JURISDICTION,
   SELECTED_JURISDICTIONS,
   STATUS_SETTING,
   STRUCTURES_COUNT,
@@ -59,6 +60,7 @@ import { RiskLabel } from '../helpers/RiskLabel';
 import { SelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
+import './index.css';
 
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
@@ -120,6 +122,9 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     autoSelectionFlow,
     deselectAllNodesCreator,
   } = props;
+
+  const [activateTooltipOpen, setActivateTooltipOpen] = useState(false);
+  const [draftTooltipOpen, setDraftTooltipOpen] = useState(false);
 
   /** function for determining whether the jurisdiction assignment table allows for
    * multiple selection or single selection based on the plan intervention type
@@ -315,6 +320,14 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       .catch(err => displayError(err));
   };
 
+  /** toggle save & activate button tooltip */
+  const toggleActivateToolTip = () => setActivateTooltipOpen(!activateTooltipOpen);
+  /** toggle save draft button tooltip */
+  const toggleDraftToolTip = () => setDraftTooltipOpen(!draftTooltipOpen);
+
+  // check if there is any selected node
+  const hasSelectedNode: boolean = selectedLeafNodes.length > 0;
+
   return (
     <div>
       <HeaderBreadcrumb {...breadCrumbProps} />
@@ -326,30 +339,54 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         </div>
       )}
       {!!data.length && (
-        <>
+        <Fragment>
           <hr />
 
-          <Button
-            id="save-draft"
-            className="float-right"
-            color="primary"
-            // tslint:disable-next-line: jsx-no-lambda
-            onClick={() => commitJurisdictions(plan)}
-            size="xs"
-          >
-            {SAVE_DRAFT}
-          </Button>
+          <span id="save-draft-wrapper" className="float-right">
+            <Button
+              disabled={!hasSelectedNode}
+              id="save-draft"
+              color="primary"
+              // tslint:disable-next-line: jsx-no-lambda
+              onClick={() => commitJurisdictions(plan)}
+              size="xs"
+            >
+              {SAVE_DRAFT}
+            </Button>
+          </span>
 
-          <Button
-            id="save-and-activate"
-            className="float-right mr-3"
-            color="success"
-            onClick={onSaveAndActivate}
-            size="xs"
+          <span id="save-and-activate-wrapper" className="float-right mr-3">
+            <Button
+              disabled={!hasSelectedNode}
+              id="save-and-activate"
+              color="success"
+              onClick={onSaveAndActivate}
+              size="xs"
+            >
+              {SAVE_AND_ACTIVATE}
+            </Button>
+          </span>
+        </Fragment>
+      )}
+      {!hasSelectedNode && (
+        <Fragment>
+          <Tooltip
+            placement="top"
+            isOpen={activateTooltipOpen}
+            target="save-and-activate-wrapper"
+            toggle={toggleActivateToolTip}
           >
-            {SAVE_AND_ACTIVATE}
-          </Button>
-        </>
+            {SELECT_JURISDICTION}
+          </Tooltip>
+          <Tooltip
+            placement="top"
+            isOpen={draftTooltipOpen}
+            target="save-draft-wrapper"
+            toggle={toggleDraftToolTip}
+          >
+            {SELECT_JURISDICTION}
+          </Tooltip>
+        </Fragment>
       )}
     </div>
   );

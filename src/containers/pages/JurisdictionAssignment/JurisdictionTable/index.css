@@ -1,0 +1,4 @@
+/* allows tooltip to show on disabled button */
+.btn[disabled] {
+  pointer-events: none;
+}

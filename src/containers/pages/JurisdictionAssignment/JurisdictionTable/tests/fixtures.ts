@@ -8,7 +8,7 @@ export const afterDraftSave = [
   {
     'Cache-Control': 'no-cache',
     Pragma: 'no-cache',
-    body: JSON.stringify({ ...plan, jurisdiction: [], status: PlanStatus.DRAFT }),
+    body: JSON.stringify({ ...plan, jurisdiction: [{ code: '3951' }], status: PlanStatus.DRAFT }),
     headers: {
       accept: 'application/json',
       authorization: 'Bearer null',
@@ -23,7 +23,7 @@ export const afterSaveAndActivate = [
   {
     'Cache-Control': 'no-cache',
     Pragma: 'no-cache',
-    body: JSON.stringify({ ...plan, jurisdiction: [], status: PlanStatus.ACTIVE }),
+    body: JSON.stringify({ ...plan, jurisdiction: [{ code: '3951' }], status: PlanStatus.ACTIVE }),
     headers: {
       accept: 'application/json',
       authorization: 'Bearer null',
