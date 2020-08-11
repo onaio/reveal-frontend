@@ -807,5 +807,5 @@ export const NOT_TARGETED = translate('NOT_TARGETED', 'Not Targeted');
 
 export const SELECT_JURISDICTION = translate(
   'SELECT_JURISDICTION',
-  'Please select atleast one jurisdiction'
+  'Please select at least one jurisdiction'
 );

@@ -1188,7 +1188,7 @@
     "description": "Error message displayed if user does not have permission to access the page"
   },
   "SELECT_JURISDICTION": {
-    "message": "Please select atleast one jurisdiction",
+    "message": "Please select at least one jurisdiction",
     "description": "Popup message displayed when user tries to save plan without selecting a jurisdiction"
   }
 }

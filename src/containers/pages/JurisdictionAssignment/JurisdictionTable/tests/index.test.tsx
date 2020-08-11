@@ -43,6 +43,14 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
   it('works correctly through a full render cycle', () => {
     const plan = irsPlans[0];
 
+    const activateDiv = document.createElement('div');
+    activateDiv.setAttribute('id', 'save-and-activate-wrapper');
+    document.body.appendChild(activateDiv);
+
+    const draftDiv = document.createElement('div');
+    draftDiv.setAttribute('id', 'save-draft-wrapper');
+    document.body.appendChild(draftDiv);
+
     /** current architecture does not use the Jurisdiction table as a view
      * it is seen as a controlled component that is feed some data from controlling component
      * That's why there was a need to have this custom view and a mock routing system.
@@ -348,6 +356,13 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         </MemoryRouter>
       </Provider>
     );
+    // save draft button is disabled
+    expect(wrapper.find('#save-draft button').prop('disabled')).toEqual(true);
+    // select a jurisdiction
+    const tbodyRow = wrapper.find('tbody tr');
+    tbodyRow.find('input').simulate('change', { target: { name: '', checked: true } });
+    // save draft button is enabled
+    expect(wrapper.find('#save-draft button').prop('disabled')).toEqual(false);
 
     // simulate a click on draft
     wrapper.find('#save-draft button').simulate('click');

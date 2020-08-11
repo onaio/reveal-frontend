@@ -1,7 +1,7 @@
 import ElementMap from '@onaio/element-map';
 import ListView, { renderHeadersFuncType } from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button, Tooltip } from 'reactstrap';
@@ -340,7 +340,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         </div>
       )}
       {!!data.length && (
-        <>
+        <Fragment>
           <hr />
 
           <span id="save-draft-wrapper" className="float-right">
@@ -367,10 +367,10 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
               {SAVE_AND_ACTIVATE}
             </Button>
           </span>
-        </>
+        </Fragment>
       )}
       {!hasSelectedNode && (
-        <>
+        <Fragment>
           <Tooltip
             placement="top"
             isOpen={activateTooltipOpen}
@@ -387,7 +387,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           >
             {SELECT_JURISDICTION}
           </Tooltip>
-        </>
+        </Fragment>
       )}
     </div>
   );
