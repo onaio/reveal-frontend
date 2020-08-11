@@ -316,6 +316,9 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       .catch(err => displayError(err));
   };
 
+  // check if there is any selected node
+  const hasSelectedNode: boolean = selectedLeafNodes.length > 0;
+
   return (
     <div>
       <HeaderBreadcrumb {...breadCrumbProps} />
@@ -331,6 +334,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           <hr />
 
           <Button
+            disabled={!hasSelectedNode}
             id="save-draft"
             className="float-right"
             color="primary"
@@ -342,6 +346,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           </Button>
 
           <Button
+            disabled={!hasSelectedNode}
             id="save-and-activate"
             className="float-right mr-3"
             color="success"
