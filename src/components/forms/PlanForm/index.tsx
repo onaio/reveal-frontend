@@ -279,7 +279,7 @@ const PlanForm = (props: PlanFormProps) => {
         }}
         validationSchema={PlanSchema}
       >
-        {({ errors, handleChange, isSubmitting, setFieldValue, values, touched }) => (
+        {({ errors, handleChange, isSubmitting, setFieldValue, values, touched, isValid }) => (
           <Form
             /* tslint:disable-next-line jsx-no-lambda */
             onChange={(e: FormEvent) => {
@@ -1061,7 +1061,7 @@ const PlanForm = (props: PlanFormProps) => {
               className="btn btn-block"
               color="primary"
               aria-label={SAVE_PLAN}
-              disabled={isSubmitting || Object.keys(errors).length > 0}
+              disabled={isSubmitting || Object.keys(errors).length > 0 || !isValid}
             >
               {isSubmitting ? SAVING : SAVE_PLAN}
             </Button>
