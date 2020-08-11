@@ -60,6 +60,7 @@ import { RiskLabel } from '../helpers/RiskLabel';
 import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
+import './index.css';
 
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
@@ -342,28 +343,30 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         <>
           <hr />
 
-          <Button
-            disabled={!hasSelectedNode}
-            id="save-draft"
-            className="float-right"
-            color="primary"
-            // tslint:disable-next-line: jsx-no-lambda
-            onClick={() => commitJurisdictions(plan)}
-            size="xs"
-          >
-            {SAVE_DRAFT}
-          </Button>
+          <span id="save-draft-wrapper" className="float-right">
+            <Button
+              disabled={!hasSelectedNode}
+              id="save-draft"
+              color="primary"
+              // tslint:disable-next-line: jsx-no-lambda
+              onClick={() => commitJurisdictions(plan)}
+              size="xs"
+            >
+              {SAVE_DRAFT}
+            </Button>
+          </span>
 
-          <Button
-            disabled={!hasSelectedNode}
-            id="save-and-activate"
-            className="float-right mr-3"
-            color="success"
-            onClick={onSaveAndActivate}
-            size="xs"
-          >
-            {SAVE_AND_ACTIVATE}
-          </Button>
+          <span id="save-and-activate-wrapper" className="float-right mr-3">
+            <Button
+              disabled={!hasSelectedNode}
+              id="save-and-activate"
+              color="success"
+              onClick={onSaveAndActivate}
+              size="xs"
+            >
+              {SAVE_AND_ACTIVATE}
+            </Button>
+          </span>
         </>
       )}
       {!hasSelectedNode && (
@@ -371,7 +374,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           <Tooltip
             placement="top"
             isOpen={activateTooltipOpen}
-            target="save-and-activate"
+            target="save-and-activate-wrapper"
             toggle={toggleActivateToolTip}
           >
             {SELECT_JURISDICTION}
@@ -379,7 +382,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           <Tooltip
             placement="top"
             isOpen={draftTooltipOpen}
-            target="save-draft"
+            target="save-draft-wrapper"
             toggle={toggleDraftToolTip}
           >
             {SELECT_JURISDICTION}
