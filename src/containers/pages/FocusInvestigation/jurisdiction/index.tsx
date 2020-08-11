@@ -11,7 +11,6 @@ import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
 import NullDataTable from '../../../../components/Table/NullDataTable';
 import TableHeader from '../../../../components/Table/TableHeaders';
 import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
@@ -28,7 +27,6 @@ import {
   FOCUS_INVESTIGATIONS,
   HOME,
   JURISDICTION_LOADING_ERROR,
-  NO_INVESTIGATIONS_FOUND,
   PROVINCE,
   REACTIVE,
   ROUTINE_TITLE,
@@ -260,7 +258,6 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
           ...defaultTableProps,
           columns: allColumns,
           data: thePlans,
-          renderNullDataComponent: () => <NoDataComponent message={NO_INVESTIGATIONS_FOUND} />,
         };
         /** Push current tables and respective headers with data to be rendered */
         currentRoutineReactivePlans.push(
@@ -330,7 +327,6 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
           ...defaultTableProps,
           columns: allColumns,
           data: thePlans,
-          renderNullDataComponent: () => <NoDataComponent message={NO_INVESTIGATIONS_FOUND} />,
         };
         /** Push complete tables and respective headers with data to be rendered */
         completeRoutineReactivePlans.push(

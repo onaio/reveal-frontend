@@ -31,6 +31,7 @@ import {
   JURISDICTION_METADATA,
   JURISDICTION_NAME,
   NAME,
+  NO_INVESTIGATIONS_FOUND,
   NO_OPTIONS,
 } from '../configs/lang';
 import {
@@ -664,7 +665,7 @@ export const defaultTableProps: TablePropsType = {
   linkerField: 'id',
   paginate: false,
   parentIdentifierField: 'parent',
-  renderNullDataComponent: () => <NoDataComponent />,
+  renderNullDataComponent: () => <NoDataComponent message={NO_INVESTIGATIONS_FOUND} />,
   rootParentId: null,
   useDrillDown: false,
 };
