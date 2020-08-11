@@ -1,9 +1,9 @@
 /** gives a summary of the selected jurisdictions as well as their structures count */
-import ListView from '@onaio/list-view';
+import ElementMap from '@onaio/element-map';
+import ListView, { renderRowsFunc, renderRowsFuncType } from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import React from 'react';
 import { connect } from 'react-redux';
-import { useParams } from 'react-router';
 import Button from 'reactstrap/lib/Button';
 import { Store } from 'redux';
 import HeaderBreadcrumb, {
@@ -14,6 +14,7 @@ import {
   NAME,
   NO_ROWS_FOUND,
   STRUCTURES_COUNT,
+  TOTAL,
 } from '../../../../configs/lang';
 import { AUTO_ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
 import hierarchyReducer, {
@@ -23,6 +24,7 @@ import hierarchyReducer, {
   reducerName as hierarchyReducerName,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
+import { getNodeStructureCount } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { NodeCell } from '../JurisdictionCell';
 
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
@@ -30,6 +32,7 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 /** props for the Jurisdiction selector table component */
 export interface JurisdictionSelectorTableProps {
   tree?: TreeNode;
+  planId: string;
   currentParentId: string | undefined;
   rootJurisdictionId: string;
   currentParentNode: TreeNode | undefined;
@@ -49,9 +52,7 @@ const defaultProps = {
 
 /** This component should provide a summary of the structures  */
 const SelectedStructuresTable = (props: JurisdictionSelectorTableProps) => {
-  const { rootJurisdictionId, currentParentNode, currentChildren } = props;
-
-  const { planId } = useParams();
+  const { rootJurisdictionId, currentParentNode, currentChildren, planId } = props;
   const baseUrl = `${AUTO_ASSIGN_JURISDICTIONS_URL}/${planId}/${rootJurisdictionId}`;
 
   // we will use the currentParentId prop to know if the parent node has
@@ -95,15 +96,39 @@ const SelectedStructuresTable = (props: JurisdictionSelectorTableProps) => {
   const data = derivedChildrenNodes.map(node => {
     return [
       <NodeCell key={`${node.model.id}-structures-summary`} node={node} baseUrl={baseUrl} />,
-      node.model.meta.metaStructureCount,
+      getNodeStructureCount(node),
     ];
   });
   const headerItems = [NAME, STRUCTURES_COUNT];
   const tableClass = 'table table-bordered';
 
+  /** Adds a row in the footer that contains the total number of structures of all
+   * jurisdictions that are descendants of the current parent node
+   */
+  const renderRows: renderRowsFuncType = (...args) => {
+    const parentNodeStructureCount = currentParentNode
+      ? getNodeStructureCount(currentParentNode)
+      : 0;
+    const items = [TOTAL, parentNodeStructureCount];
+    const trClassName = args[3] ? args[3] : '';
+    const tdClassName = args[2] ? args[2] : '';
+    const tfootRow = (
+      <tr className={trClassName}>
+        <ElementMap items={items} HTMLTag="td" className={`${tdClassName} text-bold`} />
+      </tr>
+    );
+    return (
+      <>
+        {renderRowsFunc(...args)}
+        {parentNodeStructureCount !== 0 && <tfoot>{tfootRow}</tfoot>}
+      </>
+    );
+  };
+
   const listViewProps = {
     data,
     headerItems,
+    renderRows,
     tableClass,
   };
 
@@ -117,14 +142,12 @@ const SelectedStructuresTable = (props: JurisdictionSelectorTableProps) => {
           <hr />
         </div>
       )}
-      {!!data.length && (
-        <>
-          <hr />
-          <Button className="btn btn-success float-right mt-3" onClick={props.onClickNext}>
-            {CONTINUE_TO_NEXT_STEP}
-          </Button>
-        </>
-      )}
+      <>
+        <hr />
+        <Button className="btn btn-success float-right mt-3" onClick={props.onClickNext}>
+          {CONTINUE_TO_NEXT_STEP}
+        </Button>
+      </>
     </div>
   );
 };
@@ -149,6 +172,7 @@ const mapStateToProps = (
 ): MapStateToProps => {
   const filters: Filters = {
     currentParentId: ownProps.currentParentId,
+    planId: ownProps.planId,
     rootJurisdictionId: ownProps.rootJurisdictionId,
   };
   const tree = treeSelector(state, filters);

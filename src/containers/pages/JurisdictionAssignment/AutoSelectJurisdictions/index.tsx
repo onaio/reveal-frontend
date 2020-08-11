@@ -200,6 +200,7 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
   const structureSummaryProps = {
     currentParentId: props.match.params.parentId,
     onClickNext: () => setStep(TIMELINE_SLIDER_STEP3),
+    planId: plan.identifier,
     rootJurisdictionId,
   };
 
