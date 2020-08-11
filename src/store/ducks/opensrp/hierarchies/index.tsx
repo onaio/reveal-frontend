@@ -581,7 +581,7 @@ export const getSelectedHierarchy = () => {
       keyBy(temp, nd => nd.model.id)
     );
 
-    // // flatten it into an array in preparation of creating a nested structure
+    // flatten it into an array in preparation of creating a nested structure
     const normalNodes: TreeNode[] = [];
     values(allNodesInPaths).forEach(node => {
       const data = node.model;
