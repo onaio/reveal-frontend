@@ -16,13 +16,12 @@ import reducer, {
   getRootByNodeId,
   getSelectedHierarchy,
   getTreeById,
-  getTreeWithMeta,
   reducerName,
   selectNode,
 } from '..';
 import store from '../../../../index';
 import { TreeNode } from '../types';
-import { nodeIsSelected, generateJurisdictionTree } from '../utils';
+import { generateJurisdictionTree, nodeIsSelected } from '../utils';
 import { anotherHierarchy, raZambiaHierarchy, sampleHierarchy } from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
@@ -33,7 +32,6 @@ const nodeSelector = getNodeById();
 const rootSelector = getRootByNodeId();
 const ancestorSelector = getAncestors();
 const treeByIdSelector = getTreeById();
-const treeWithMetaSelector = getTreeWithMeta();
 const selectedHierarchySelector = getSelectedHierarchy();
 const selectedNodesSelector = getNodesInSelectedTree();
 const planId = 'randomPlanId';
