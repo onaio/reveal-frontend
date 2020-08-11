@@ -20,7 +20,6 @@ import { AUTO_ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
 import hierarchyReducer, {
   Filters,
   getNodesInSelectedTree,
-  getSelectedHierarchy,
   reducerName as hierarchyReducerName,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
@@ -31,19 +30,16 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
 /** props for the Jurisdiction selector table component */
 export interface JurisdictionSelectorTableProps {
-  tree?: TreeNode;
   planId: string;
-  currentParentId: string | undefined;
+  currentParentId?: string;
   rootJurisdictionId: string;
-  currentParentNode: TreeNode | undefined;
+  currentParentNode?: TreeNode;
   currentChildren: TreeNode[];
   onClickNext: () => void;
 }
 
 const defaultProps = {
   currentChildren: [],
-  currentParentId: undefined,
-  currentParentNode: undefined,
   onClickNext: () => {
     return;
   },
@@ -159,10 +155,9 @@ export { SelectedStructuresTable as JurisdictionTable };
 /** map state to props interface  */
 type MapStateToProps = Pick<
   JurisdictionSelectorTableProps,
-  'currentChildren' | 'currentParentNode' | 'tree'
+  'currentChildren' | 'currentParentNode'
 >;
 
-const treeSelector = getSelectedHierarchy();
 const nodeSelector = getNodesInSelectedTree();
 
 /** maps props to store state */
@@ -175,12 +170,10 @@ const mapStateToProps = (
     planId: ownProps.planId,
     rootJurisdictionId: ownProps.rootJurisdictionId,
   };
-  const tree = treeSelector(state, filters);
   const nodes = nodeSelector(state, filters);
   return {
     currentChildren: nodes.childrenNodes,
     currentParentNode: nodes.parentNode,
-    tree,
   };
 };
 
