@@ -10,7 +10,11 @@ import { MemoryRouter, RouteComponentProps } from 'react-router-dom';
 import { ConnectedJurisdictionTable } from '..';
 import { ASSIGN_PLAN_URL, MANUAL_ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
 import store from '../../../../../store';
-import { fetchTree } from '../../../../../store/ducks/opensrp/hierarchies';
+import {
+  deforest,
+  deselectAllNodes,
+  fetchTree,
+} from '../../../../../store/ducks/opensrp/hierarchies';
 import { sampleHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
 import { irsPlans, plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { PlanStatus } from '../../../../../store/ducks/plans';
@@ -20,6 +24,11 @@ import { afterDraftSave, afterSaveAndActivate } from './fixtures';
 const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
+
+jest.mock('reactstrap', () => {
+  const original = require.requireActual('reactstrap');
+  return { ...original, Tooltip: () => null };
+});
 
 /** will use this to render table rows */
 const renderTable = (wrapper: ReactWrapper, message: string) => {
@@ -36,11 +45,16 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     fetch.resetMocks();
   });
 
-  beforeAll(() => {
+  beforeEach(() => {
     store.dispatch(fetchTree(sampleHierarchy));
   });
 
-  it('works correctly through a full render cycle', () => {
+  afterEach(() => {
+    store.dispatch(deselectAllNodes('2942'));
+    store.dispatch(deforest());
+  });
+
+  it('works correctly through a full render cycle', async () => {
     const plan = irsPlans[0];
 
     /** current architecture does not use the Jurisdiction table as a view
@@ -91,9 +105,10 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       </Provider>
     );
 
-    const div = document.createElement('div');
-    div.setAttribute('id', 'jurisdiction-tooltip-2942');
-    document.body.appendChild(div);
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     renderTable(wrapper, 'should have single node(parent node)');
     const tbodyRow = wrapper.find('tbody tr');
@@ -107,7 +122,10 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
 
     // simulate click on checkbox to check
     tbodyRow.find('input').simulate('change', { target: { name: '', checked: true } });
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     renderTable(wrapper, 'input checked');
 
     expect(
@@ -124,7 +142,10 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       .find('NodeCell Link a')
       .simulate('click', { button: 0 });
 
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     renderTable(wrapper, 'after first click');
 
     expect(
@@ -141,7 +162,10 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       .find('NodeCell a')
       .simulate('click', { button: 0 });
 
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     renderTable(wrapper, 'after second click');
     expect(
       wrapper
@@ -157,15 +181,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     );
   });
 
-  it('selects and deselect nodes', () => {
-    const div = document.createElement('div');
-    div.setAttribute('id', 'jurisdiction-tooltip-2942');
-    document.body.appendChild(div);
-
-    const div1 = document.createElement('div');
-    div1.setAttribute('id', 'jurisdiction-tooltip-3951');
-    document.body.appendChild(div1);
-    fetch.once(JSON.stringify(sampleHierarchy), { status: 200 });
+  it('selects and deselect nodes', async () => {
     const plan = irsPlans[0];
     const props = {
       plan,
@@ -179,13 +195,21 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       </Provider>
     );
 
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
     const parentNodeRow = wrapper.find('tbody tr').at(0);
     // create snapshot of checkbox before getting checked
     expect(toJson(parentNodeRow.find('input'))).toMatchSnapshot('should be unchecked');
 
     // simulate click on checkbox to check
     parentNodeRow.find('input').simulate('change', { target: { name: '', checked: true } });
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     expect(
       toJson(
@@ -202,7 +226,11 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       .at(0)
       .find('input')
       .simulate('change', { target: { name: '', checked: false } });
-    wrapper.update();
+
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     // checkbox is now deselected again
     expect(
@@ -215,7 +243,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     ).toMatchSnapshot('should be now deselected');
   });
 
-  it('disables and enables checkbox for FI plans', () => {
+  it('disables and enables checkbox for FI plans', async () => {
     const plan = plans[0];
     const CustomView = (props: RouteComponentProps<Dictionary>) => {
       const mockProps = {
@@ -259,6 +287,10 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         </MemoryRouter>
       </Provider>
     );
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     const tbodyRow = wrapper.find('tbody tr');
     expect(
@@ -274,8 +306,10 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       .at(0)
       .find('NodeCell Link a')
       .simulate('click', { button: 0 });
-
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     expect(
       wrapper
@@ -291,8 +325,10 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       .at(0)
       .find('NodeCell a')
       .simulate('click', { button: 0 });
-
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     expect(
       wrapper
@@ -348,6 +384,10 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
         </MemoryRouter>
       </Provider>
     );
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     // simulate a click on draft
     wrapper.find('#save-draft button').simulate('click');
@@ -355,6 +395,7 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
     // flush promises
     await act(async () => {
       await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
     });
 
     // check fetch request
