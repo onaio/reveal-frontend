@@ -4,8 +4,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import Button from 'reactstrap/lib/Button';
-import Tooltip from 'reactstrap/lib/Tooltip';
+import { Button, Tooltip } from 'reactstrap';
 import { Store } from 'redux';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb, {
