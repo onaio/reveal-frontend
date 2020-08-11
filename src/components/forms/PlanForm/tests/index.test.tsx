@@ -835,6 +835,9 @@ describe('containers/forms/PlanForm - Submission', () => {
       </MemoryRouter>
     );
 
+    // submit button is disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeTruthy();
+
     // Set FI for interventionType
     wrapper
       .find('select[name="interventionType"]')
@@ -856,6 +859,9 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper
       .find('select[name="fiStatus"]')
       .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
+
+    // submit button should not be disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
 
     wrapper.find('form').simulate('submit');
 

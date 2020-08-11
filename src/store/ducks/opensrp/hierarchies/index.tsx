@@ -9,6 +9,7 @@ import FlatToNested from 'flat-to-nested';
 import { cloneDeep, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
+import SeamlessImmutable from 'seamless-immutable';
 import TreeModel from 'tree-model';
 import { SELECTION_REASON } from './constants';
 import {
@@ -222,15 +223,17 @@ export interface TreeState {
   treeByRootId: Dictionary<TreeNode> | {};
 }
 
-/** TODO - make immutable */
+/** Create an immutable tree state */
+export type ImmutableTreeState = TreeState & SeamlessImmutable.ImmutableObject<TreeState>;
+
 /** starting state */
-export const initialState: TreeState = {
-  metaData: {},
+export const initialState: ImmutableTreeState = SeamlessImmutable({
+  metaData: {} as Dictionary<Dictionary<Dictionary<Meta>>>,
   treeByRootId: {},
-};
+});
 
 // the reducer function
-export default function reducer(state = initialState, action: TreeActionTypes) {
+export default function reducer(state: ImmutableTreeState = initialState, action: TreeActionTypes) {
   const treesByIds = state.treeByRootId;
   const treeOfInterest = (treesByIds as Dictionary<TreeNode>)[action.rootJurisdictionId];
 

@@ -1,5 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/IRS Reports/IRSReportingMap does not show not sprayed reasons count if they are not: No sprayed reasons 1`] = `null`;
+
+exports[`components/IRS Reports/IRSReportingMap does not show not sprayed reasons count if they are not: Response item titles 1`] = `
+Array [
+  <h6>
+    Spray Coverage (Effectiveness)
+  </h6>,
+  <h6>
+    Found Coverage
+  </h6>,
+  <h6>
+    Spray Success Rate (PMI SC)
+  </h6>,
+  <h6>
+    Spray Coverage (Rooms)
+  </h6>,
+]
+`;
+
 exports[`components/IRS Reports/IRSReportingMap renders correctly: Indicator item breakdown 1`] = `
 Array [
   <p
