@@ -382,14 +382,14 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .find('.current-plans NullDataTable')
         .first()
         .text()
-    ).toMatchInlineSnapshot(`"Reactive    No Data Found"`);
+    ).toMatchInlineSnapshot(`"Reactive    No Investigations Found"`);
     expect(
       wrapper
         .find('.current-plans NullDataTable')
         .last()
         .text()
     ).toMatchInlineSnapshot(
-      `"RoutineNameFI StatusProvinceDistrictCantonVillageFocus AreaStatusStart DateEnd DateNo Data Found"`
+      `"RoutineNameFI StatusProvinceDistrictCantonVillageFocus AreaStatusStart DateEnd DateNo Investigations Found"`
     );
   });
 
