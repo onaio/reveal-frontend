@@ -4,6 +4,7 @@ import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
@@ -153,8 +154,10 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
     /** Show loading indicator */
     expect(wrapper.find('FIJurisdiction>Ripple').length).toEqual(1);
 
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     /** No longer show loading indicator */
     expect(wrapper.find('FIJurisdiction>Ripple').length).toEqual(0);
@@ -372,8 +375,10 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
       </Provider>
     );
 
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     expect(wrapper.find('.current-plans NullDataTable').length).toEqual(2);
 
@@ -428,8 +433,10 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
       </Provider>
     );
 
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     expect(mockDisplayError.mock.calls).toEqual([[error]]);
     expect(mockDisplayError).toHaveBeenCalledTimes(1);
@@ -470,8 +477,10 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
       </Provider>
     );
 
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     expect(mockDisplayError.mock.calls).toEqual([[new Error(AN_ERROR_OCCURRED)]]);
     expect(mockDisplayError).toHaveBeenCalledTimes(1);
