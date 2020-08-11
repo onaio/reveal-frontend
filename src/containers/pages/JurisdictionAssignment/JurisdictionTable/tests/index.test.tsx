@@ -473,6 +473,14 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       wrapper.update();
     });
 
+    // save & activate button is disabled
+    expect(wrapper.find('#save-and-activate button').prop('disabled')).toEqual(true);
+    // select a jurisdiction
+    const tbodyRow = wrapper.find('tbody tr');
+    tbodyRow.find('input').simulate('change', { target: { name: '', checked: true } });
+    // save & activate button is enabled
+    expect(wrapper.find('#save-and-activate button').prop('disabled')).toEqual(false);
+
     // simulate a click on draft
     wrapper.find('#save-and-activate button').simulate('click');
 
