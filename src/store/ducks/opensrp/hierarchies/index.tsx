@@ -70,12 +70,6 @@ export interface DeforestAction extends AnyAction {
   treeByRootId: {};
 }
 
-export interface FetchUpdatedCurrentParent extends AnyAction {
-  type: typeof FETCH_MAP_CURRENT_PARENT;
-  currentParentId: string;
-  isRootJurisdiction: boolean;
-}
-
 /** action to select a node  */
 export interface SelectNodeAction extends AnyAction {
   type: typeof SELECT_NODE;
@@ -358,7 +352,7 @@ export interface WithoutMetaFilters {
 /** prop filters to customize selector queries */
 export interface Filters {
   rootJurisdictionId: string /** specify which tree to act upon */;
-  planId: string /** get selections that are associated with this planId */;
+  planId?: string /** get selections that are associated with this planId */;
   nodeId?: string /** target node with this id */;
   leafNodesOnly?: boolean /** specified when requesting for selected nodes, truthy returns leaf nodes */;
   currentParentId?: string /** to use when filtering current children */;

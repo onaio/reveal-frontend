@@ -6,7 +6,7 @@ import { FeatureCollection } from '@turf/turf';
 import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import { ActionCreator, Store } from 'redux';
+import { Store } from 'redux';
 import { CountriesAdmin0, PlanDefinition } from '../../../../src/configs/settings';
 import { MemoizedGisidaLite } from '../../../components/GisidaLite';
 import Loading from '../../../components/page/Loading';
@@ -16,15 +16,12 @@ import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import {
   autoSelectNodes,
-  AutoSelectNodesAction,
   deselectNode,
-  DeselectNodeAction,
   Filters,
   getCurrentChildren,
   getCurrentParentNode,
   getMetaData,
   selectNode,
-  SelectNodeAction,
 } from '../../../store/ducks/opensrp/hierarchies';
 import { Meta, TreeNode } from '../../../store/ducks/opensrp/hierarchies/types';
 import jurisdictionReducer, {
@@ -54,9 +51,9 @@ export interface AssignmentMapWrapperProps {
   serviceClass: typeof OpenSRPService;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   getJurisdictionsFeatures: FeatureCollection;
-  autoSelectNodesActionCreator: ActionCreator<AutoSelectNodesAction>;
-  selectNodeCreator: ActionCreator<SelectNodeAction>;
-  deselectNodeCreator: ActionCreator<DeselectNodeAction>;
+  autoSelectNodesActionCreator: typeof autoSelectNodes;
+  selectNodeCreator: typeof selectNode;
+  deselectNodeCreator: typeof deselectNode;
   currentParentNode?: TreeNode;
 }
 
@@ -71,7 +68,6 @@ const defaultProps: AssignmentMapWrapperProps = {
   autoSelectionFlow: false,
   currentChildren: [],
   currentParentId: undefined,
-  currentParentNode: undefined,
   deselectNodeCreator: deselectNode,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   getJurisdictionsFeatures: defaultFeatureCollection,
@@ -102,9 +98,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     rootJurisdictionId,
     jurisdictionsChunkSize,
   } = props;
-  const currentChildIds: string[] = currentChildren.length
-    ? currentChildren.map(node => node.model.id)
-    : [];
+  const currentChildIds: string[] = currentChildren.map(node => node.model.id);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [mapParent, setMapParent] = React.useState<string>('');
   const jurisdictionLabels = currentChildren.map(d => d.model.label);

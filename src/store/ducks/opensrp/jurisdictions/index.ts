@@ -173,9 +173,15 @@ export const getJurisdictionsArray = () =>
  */
 export const getJurisdictionsFC = () =>
   createSelector(
-    [getJurisdictionsArray(), getNewFeatureProps, getChildJurisdictions],
-    (jurisdictionsArray, newFeatureProps, currentChildren): FeatureCollection => {
-      const validFeatures = jurisdictionsArray.filter(item => 'geometry' in item) as Feature[];
+    [getJurisdictionsArray(), getNewFeatureProps, getChildJurisdictions, getFilterGeom],
+    (jurisdictionsArray, newFeatureProps, currentChildren, filterGeom): FeatureCollection => {
+      let activeJurisdictionsArray = jurisdictionsArray;
+      if (filterGeom) {
+        activeJurisdictionsArray = activeJurisdictionsArray.filter(item => 'geometry' in item);
+      }
+      const validFeatures = activeJurisdictionsArray.filter(
+        item => 'geometry' in item
+      ) as Feature[];
       return {
         features: validFeatures.map((feature: Feature) => {
           if (newFeatureProps) {

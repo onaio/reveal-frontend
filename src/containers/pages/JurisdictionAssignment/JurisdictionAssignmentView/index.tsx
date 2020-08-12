@@ -222,7 +222,7 @@ const mapStateToProps = (
   const planObj = getPlanDefinitionById(state, planId);
   return {
     plan: planObj,
-    tree: treeByIdSelector(state, { rootJurisdictionId: ownProps.match.params.rootId, planId }),
+    tree: treeByIdSelector(state, { rootJurisdictionId: ownProps.match.params.rootId }),
   };
 };
 

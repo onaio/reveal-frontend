@@ -7,10 +7,10 @@ import {
   AUTO_ASSIGN_JURISDICTIONS_URL,
   MANUAL_ASSIGN_JURISDICTIONS_URL,
 } from '../../../../constants';
+import { getPlanType } from '../../../../helpers/utils';
 import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
-import { UseContext } from '../../../../store/ducks/plans';
 
 /**
  * Handler to get current parent id from clicked jurisdiction on map
@@ -36,11 +36,6 @@ export const onJurisdictionClick = (
       autoSelectionFlow,
     } = props;
 
-    const { useContext } = plan;
-    const getInterventionType = useContext.find(
-      context => context.code === 'interventionType'
-    ) as UseContext;
-
     const baseUrl = !autoSelectionFlow
       ? `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
       : `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
@@ -53,7 +48,7 @@ export const onJurisdictionClick = (
       const currentId =
         (features[0].id && features[0].id.toString()) ||
         (features[0] && features[0].properties && features[0].properties.externalId);
-      let activeCurrentNode: TreeNode | any = {};
+      let activeCurrentNode: TreeNode | undefined;
 
       if (currentParentNode) {
         // ensure currentparentnode is not undefined first
@@ -70,9 +65,11 @@ export const onJurisdictionClick = (
           );
         }
       }
+      const thePlanType = getPlanType(plan);
       if (
+        activeCurrentNode &&
         originalEvent.altKey &&
-        PLAN_TYPES_WITH_MULTI_JURISDICTIONS.includes(getInterventionType.valueCodableConcept)
+        PLAN_TYPES_WITH_MULTI_JURISDICTIONS.includes(thePlanType)
       ) {
         if (!nodeIsSelected(activeCurrentNode)) {
           selectNodeCreator(

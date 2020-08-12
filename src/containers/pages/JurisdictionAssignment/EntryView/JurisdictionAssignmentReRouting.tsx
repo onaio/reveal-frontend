@@ -145,7 +145,6 @@ const mapStateToProps = (
 ): MapStateToProps => {
   return {
     tree: treeSelector(state, {
-      planId: ownProps.plan.identifier,
       rootJurisdictionId: ownProps.rootJurisdictionId,
     }),
   };

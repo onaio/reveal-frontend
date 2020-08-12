@@ -309,7 +309,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const assignments = getAssignmentsArrayByPlanId(state, ownProps.match.params.planId);
 
   const tree = treeSelector(state, {
-    planId: (plan as PlanDefinition).identifier,
     rootJurisdictionId: ownProps.match.params.planId,
   });
 

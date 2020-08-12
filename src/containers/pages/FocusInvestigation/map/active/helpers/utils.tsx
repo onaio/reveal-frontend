@@ -516,7 +516,7 @@ export const buildMouseMoveHandler = () => {
     });
     // Added this part to remove duplicate popup containers showing on map when hovering
     const nodes: any = document.getElementsByClassName('mapboxgl-popup');
-    let node: any;
+    let node: HTMLDivElement;
     if (nodes && nodes.length) {
       for (node of nodes) {
         if (node.style) {
@@ -536,7 +536,7 @@ export const buildMouseMoveHandler = () => {
     // loop through features, setting the name property to content var
     for (feature of features) {
       if (feature && feature.properties && feature.properties.name) {
-        content += `<div><center>${feature.properties.name}</center></div>`;
+        content += `<div class="jurisdiction-name"><center>${feature.properties.name}</center></div>`;
       }
       /**
        * Break out of loop once content is set
