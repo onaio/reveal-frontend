@@ -84,7 +84,7 @@ describe('jurisdiction Assignment/Resource calculation', () => {
       .simulate('change', { target: { value: '', name: 'teamsCount' } });
     wrapper.update();
 
-    // see if there has been any change to the number of days, should start with 1 days
+    // see if there has been any change to the number of days, should start with 0 days
     expect(wrapper.find('form p').text()).toMatchInlineSnapshot(
       `"0 daysat a rate of   structures per team per day with  Teams"`
     );
