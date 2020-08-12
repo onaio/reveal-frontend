@@ -1,22 +1,43 @@
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import { cloneDeep } from 'lodash';
 import React from 'react';
-import { computeEstimate, ResourceCalculation } from '..';
+import { Provider } from 'react-redux';
+import { computeEstimate, ConnectedResourceWidget, ResourceCalculation } from '..';
+import store from '../../../../../../store';
+import { fetchTree, selectNode } from '../../../../../../store/ducks/opensrp/hierarchies';
+import { META_STRUCTURE_COUNT } from '../../../../../../store/ducks/opensrp/hierarchies/constants';
+import { raZambiaHierarchy } from '../../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
+import { generateJurisdictionTree } from '../../../../../../store/ducks/opensrp/hierarchies/utils';
+
+const rootId = '0ddd9ad1-452b-4825-a92a-49cb9fc82d18';
+const planId = 'randomPlanId';
+store.dispatch(fetchTree(raZambiaHierarchy));
+store.dispatch(selectNode(rootId, rootId, planId));
+
+const rootNode = generateJurisdictionTree(raZambiaHierarchy);
+
+const props = {
+  planId,
+  rootId,
+};
 
 describe('jurisdiction Assignment/Resource calculation', () => {
   it('renders without crashing', () => {
-    shallow(<ResourceCalculation />);
+    shallow(<ResourceCalculation {...props} />);
   });
 
   it('renders correctly', () => {
-    const props = {
-      jurisdictionName: 'Akros',
-      structuresCount: 908,
+    const currentParentNode = cloneDeep(rootNode);
+    currentParentNode.model.meta[META_STRUCTURE_COUNT] = 908;
+    const otherProps = {
+      ...props,
+      currentParentNode,
     };
-    const wrapper = mount(<ResourceCalculation {...props} />);
+    const wrapper = mount(<ResourceCalculation {...otherProps} />);
 
     expect(wrapper.find('h3.section-title').text()).toMatchInlineSnapshot(
-      `"Resource Estimate for Akros"`
+      `"Resource Estimate for ra Zambia"`
     );
 
     expect(wrapper.find('form').text()).toMatchInlineSnapshot(
@@ -44,11 +65,13 @@ describe('jurisdiction Assignment/Resource calculation', () => {
     // 2 cases:
     // - there is data.
     // user backspaces such that there is no data
-    const props = {
-      jurisdictionName: 'Akros1',
-      structuresCount: 30,
+    const currentParentNode = cloneDeep(rootNode);
+    currentParentNode.model.meta[META_STRUCTURE_COUNT] = 30;
+    const otherProps = {
+      ...props,
+      currentParentNode,
     };
-    const wrapper = mount(<ResourceCalculation {...props} />);
+    const wrapper = mount(<ResourceCalculation {...otherProps} />);
 
     // simulate structure count change so that we can have 10 structures per team
     expect(toJson(wrapper.find('input[name="structuresCount"]'))).toMatchSnapshot(
@@ -88,5 +111,19 @@ describe('jurisdiction Assignment/Resource calculation', () => {
     expect(wrapper.find('form p').text()).toMatchInlineSnapshot(
       `"0 daysat a rate of   structures per team per day with  Teams"`
     );
+  });
+
+  it('works with store', () => {
+    const otherProps = {
+      ...props,
+      currentParentId: rootId,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <ConnectedResourceWidget {...otherProps} />
+      </Provider>
+    );
+
+    expect(wrapper.text().includes(rootNode.model.label)).toBeTruthy();
   });
 });
