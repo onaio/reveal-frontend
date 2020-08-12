@@ -296,19 +296,31 @@ export const getJurisdictionBreadcrumbs = (
 
 /** Get indicator rows */
 export const getIndicatorRows = (defaultRows: IndicatorRows, focusArea: Dictionary) => {
-  return defaultRows.map((row: IndicatorRowItem) => {
+  const rows: Dictionary[] = [];
+  defaultRows.forEach((row: IndicatorRowItem) => {
     const value = focusArea ? (focusArea as any)[row.value] || 0 : 0;
-    return {
+    const listDisplay =
+      focusArea && row.listDisplay
+        ? (focusArea as any)[row.listDisplay as string] || undefined
+        : undefined;
+
+    // if focusArea. does not have notSprayed_reasons_counts; skip
+    if (listDisplay) {
+      const notSprayedCounts = JSON.parse(listDisplay);
+      if (Object.entries(notSprayedCounts).length === 0) {
+        return;
+      }
+    }
+
+    rows.push({
       ...row,
       ...{
         denominator: focusArea ? (focusArea as any)[row.denominator] || 0 : 0,
-        listDisplay:
-          focusArea && row.listDisplay
-            ? (focusArea as any)[row.listDisplay as string] || undefined
-            : undefined,
+        listDisplay,
         numerator: focusArea ? (focusArea as any)[row.numerator] || 0 : 0,
         value: Math.round(value * 100),
       },
-    };
+    });
   });
+  return rows;
 };

@@ -74,6 +74,7 @@ import {
   planStatusDisplay,
 } from '../../../configs/settings';
 import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constants';
+import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
@@ -161,7 +162,6 @@ export interface PlanFormProps {
 
 /** Plan Form component */
 const PlanForm = (props: PlanFormProps) => {
-  const [globalError, setGlobalError] = useState<string>('');
   const [areWeDoneHere, setAreWeDoneHere] = useState<boolean>(false);
   const [activityModal, setActivityModal] = useState<boolean>(false);
   const [actionConditions, setActionConditions] = useState<Dictionary>({});
@@ -264,7 +264,7 @@ const PlanForm = (props: PlanFormProps) => {
                 onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
               })
               .catch((e: Error) => {
-                setGlobalError(e.message);
+                displayError(e, AN_ERROR_OCCURRED, false);
               });
           } else {
             apiService
@@ -273,13 +273,13 @@ const PlanForm = (props: PlanFormProps) => {
                 onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
               })
               .catch((e: Error) => {
-                setGlobalError(e.message);
+                displayError(e, AN_ERROR_OCCURRED, false);
               });
           }
         }}
         validationSchema={PlanSchema}
       >
-        {({ errors, handleChange, isSubmitting, setFieldValue, values, touched }) => (
+        {({ errors, handleChange, isSubmitting, setFieldValue, values, touched, isValid }) => (
           <Form
             /* tslint:disable-next-line jsx-no-lambda */
             onChange={(e: FormEvent) => {
@@ -304,7 +304,6 @@ const PlanForm = (props: PlanFormProps) => {
           >
             {formHandler && <FormikEffect onChange={formHandler} />}
             <FormGroup className="non-field-errors">
-              {globalError !== '' && <p className="">{globalError}</p>}
               <ErrorMessage
                 name="name"
                 component="p"
@@ -1062,7 +1061,7 @@ const PlanForm = (props: PlanFormProps) => {
               className="btn btn-block"
               color="primary"
               aria-label={SAVE_PLAN}
-              disabled={isSubmitting || Object.keys(errors).length > 0}
+              disabled={isSubmitting || Object.keys(errors).length > 0 || !isValid}
             >
               {isSubmitting ? SAVING : SAVE_PLAN}
             </Button>

@@ -3,6 +3,7 @@ import { FlushThunks } from 'redux-testkit';
 import reducer, {
   autoSelectNodes,
   deforest,
+  deselectAllNodes,
   deselectNode,
   fetchTree,
   Filters,
@@ -10,9 +11,10 @@ import reducer, {
   getAncestors,
   getCurrentChildren,
   getCurrentParentNode,
-  getLeafNodes,
   getNodeById,
+  getNodesInSelectedTree,
   getRootByNodeId,
+  getSelectedHierarchy,
   getTreeById,
   reducerName,
   selectNode,
@@ -20,7 +22,7 @@ import reducer, {
 import store from '../../../../index';
 import { TreeNode } from '../types';
 import { generateJurisdictionTree, nodeIsSelected } from '../utils';
-import { anotherHierarchy, sampleHierarchy } from './fixtures';
+import { anotherHierarchy, raZambiaHierarchy, sampleHierarchy } from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
@@ -30,10 +32,13 @@ const nodeSelector = getNodeById();
 const rootSelector = getRootByNodeId();
 const ancestorSelector = getAncestors();
 const treeByIdSelector = getTreeById();
+const selectedHierarchySelector = getSelectedHierarchy();
+const selectedNodesSelector = getNodesInSelectedTree();
+const planId = 'randomPlanId';
+
+let flushThunks;
 
 describe('reducers/opensrp/hierarchies', () => {
-  let flushThunks;
-
   beforeEach(() => {
     flushThunks = FlushThunks.createMiddleware();
     jest.resetAllMocks();
@@ -42,13 +47,15 @@ describe('reducers/opensrp/hierarchies', () => {
 
   it('should have initial state', () => {
     // what do we expect returned from selectors for an unpopulated store
-    expect(childrenSelector(store.getState(), { rootJurisdictionId: '' })).toEqual([]);
-    expect(parentNodeSelector(store.getState(), { rootJurisdictionId: '' })).toBeUndefined();
+    expect(childrenSelector(store.getState(), { rootJurisdictionId: '', planId })).toEqual([]);
+    expect(
+      parentNodeSelector(store.getState(), { rootJurisdictionId: '', planId })
+    ).toBeUndefined();
   });
 
   it('works with custom tree id', () => {
     store.dispatch(fetchTree(sampleHierarchy, '1337'));
-    expect(treeByIdSelector(store.getState(), { rootJurisdictionId: '1337' })).toEqual(
+    expect(treeByIdSelector(store.getState(), { rootJurisdictionId: '1337', planId })).toEqual(
       generateJurisdictionTree(sampleHierarchy)
     );
   });
@@ -56,6 +63,7 @@ describe('reducers/opensrp/hierarchies', () => {
   it('should fetch tree', () => {
     // checking that dispatching actions has desired effect
     let filters: Filters = {
+      planId,
       rootJurisdictionId: '2942',
     };
     store.dispatch(fetchTree(sampleHierarchy));
@@ -85,17 +93,19 @@ describe('reducers/opensrp/hierarchies', () => {
     // checking that dispatching actions has desired effect
     const rootJurisdictionId = '2942';
     const filters = {
+      planId,
       rootJurisdictionId,
     };
     store.dispatch(fetchTree(sampleHierarchy));
-    store.dispatch(selectNode(rootJurisdictionId, '2942'));
+    store.dispatch(selectNode(rootJurisdictionId, '2942', planId));
     let node = nodeSelector(store.getState(), { ...filters, nodeId: '2942' });
     if (!node) {
       fail();
     }
+
     expect(nodeIsSelected(node)).toBeTruthy();
 
-    store.dispatch(deselectNode(rootJurisdictionId, '2942'));
+    store.dispatch(deselectNode(rootJurisdictionId, '2942', planId));
     node = nodeSelector(store.getState(), { ...filters, nodeId: '2942' });
     if (!node) {
       fail();
@@ -103,16 +113,46 @@ describe('reducers/opensrp/hierarchies', () => {
     expect(nodeIsSelected(node)).toBeFalsy();
   });
 
-  it('auto selecting nodes works', () => {
-    // checking that dispatching actions has desired effect
-    let rootJurisdictionId = '2942';
-    const nodeIdToAutoSelect = '2942';
-    const callback = (node: TreeNode) => node.model.id === nodeIdToAutoSelect;
+  it('selecting & unselecting a node works across plans', () => {
+    // select a node for a certain plan see if it will be selected for another plan
+    const rootJurisdictionId = '2942';
     const filters = {
+      planId: 'another plan',
       rootJurisdictionId,
     };
     store.dispatch(fetchTree(sampleHierarchy));
-    store.dispatch(autoSelectNodes(rootJurisdictionId, callback));
+    store.dispatch(selectNode(rootJurisdictionId, '2942', planId));
+    let node = nodeSelector(store.getState(), { ...filters, nodeId: '2942' });
+    if (!node) {
+      fail();
+    }
+
+    expect(nodeIsSelected(node)).toBeFalsy();
+
+    // lets change the selector filters back to the actual plan that we register selectNodes action under
+    const correctFilters = {
+      ...filters,
+      planId,
+    };
+
+    node = nodeSelector(store.getState(), { ...correctFilters, nodeId: '2942' });
+    if (!node) {
+      fail();
+    }
+    expect(nodeIsSelected(node)).toBeTruthy();
+  });
+
+  it('auto selecting nodes works', () => {
+    // checking that dispatching actions has desired effect
+    const rootJurisdictionId = '2942';
+    const nodeIdToAutoSelect = '2942';
+    const callback = (node: TreeNode) => node.model.id === nodeIdToAutoSelect;
+    const filters = {
+      planId,
+      rootJurisdictionId,
+    };
+    store.dispatch(fetchTree(sampleHierarchy));
+    store.dispatch(autoSelectNodes(rootJurisdictionId, callback, planId));
 
     // all nodes should be selected due cascade effect, there is only one path and the
     // child is selected
@@ -121,31 +161,19 @@ describe('reducers/opensrp/hierarchies', () => {
     if (!tree) {
       fail();
     }
-    tree.walk(node => {
-      expect(nodeIsSelected(node)).toBeTruthy();
-      // this is a matter of formality has nothing to do with the test
-      return true;
-    });
+
+    expect(nodeIsSelected(tree)).toBeTruthy();
 
     let allSelected = getAllSelectedNodes()(store.getState(), {
+      ...filters,
       leafNodesOnly: false,
-      rootJurisdictionId,
     });
     expect(allSelected.length).toEqual(3);
     allSelected = getAllSelectedNodes()(store.getState(), {
       leafNodesOnly: true,
-      rootJurisdictionId,
+      ...filters,
     });
     expect(allSelected.length).toEqual(1);
-    let leafNodes = getLeafNodes()(store.getState(), {
-      rootJurisdictionId,
-    });
-    rootJurisdictionId = '89898';
-    expect(leafNodes.length).toEqual(1);
-    leafNodes = getLeafNodes()(store.getState(), {
-      rootJurisdictionId,
-    });
-    expect(leafNodes.length).toEqual(0);
   });
 
   it('can hold multiple trees', () => {
@@ -157,7 +185,7 @@ describe('reducers/opensrp/hierarchies', () => {
   it('can find rootId given a node', () => {
     store.dispatch(fetchTree(sampleHierarchy));
     store.dispatch(fetchTree(anotherHierarchy));
-    const filters: Filters = {
+    const filters = {
       nodeId: '3951',
       rootJurisdictionId: '',
     };
@@ -193,5 +221,88 @@ describe('reducers/opensrp/hierarchies', () => {
         n => n.model.id
       )
     ).toEqual(['2942', '3019']);
+  });
+
+  it('can create a hierarchy of selected jurisdictions', () => {
+    // select a node and see if after computing the selected hierarchy it is as expected
+
+    store.dispatch(fetchTree(raZambiaHierarchy));
+
+    const rootJurisdictionId = '0ddd9ad1-452b-4825-a92a-49cb9fc82d18';
+    const raCDZ139AId = 'cd5ec29e-6be9-41a2-9b88-bc81fbc691c6';
+
+    // we will select a single node at the very bottom -> //ra_CDZ_139a
+    store.dispatch(selectNode(rootJurisdictionId, raCDZ139AId, planId, ''));
+
+    // get the selected hierarchy.
+    const selectedTree = selectedHierarchySelector(store.getState(), {
+      planId,
+      rootJurisdictionId,
+    });
+    if (!selectedTree) {
+      fail();
+    }
+
+    expect(selectedTree.model.id).toEqual(rootJurisdictionId);
+
+    // here we create a manual path of ids : we want to check that the
+    // ids of all jurisdictions in the ra_CDZ_139s path remain as they should be
+    const expected = [
+      '0ddd9ad1-452b-4825-a92a-49cb9fc82d18',
+      '615dcd30-cc67-4f6b-812f-90da37f4a911',
+      'd7d22c6d-f02f-4631-bebd-21fecc111ddc',
+      'a185de87-b77b-4b8a-9570-0cb3843fafde',
+      'cd5ec29e-6be9-41a2-9b88-bc81fbc691c6',
+    ];
+    const raCDZ139ANode = selectedTree.first(node => node.model.id === raCDZ139AId);
+    if (!raCDZ139ANode) {
+      fail();
+    }
+    const received = raCDZ139ANode.getPath().map(node => node.model.id);
+    expect(received).toEqual(expected);
+
+    // finally : how many nodes are there in the whole tree.
+    const numberOfNodes = selectedTree.all(node => !!node).length;
+    expect(numberOfNodes).toEqual(expected.length);
+
+    // also maybe check we have not mutated the existing tree in the process
+    const origTree = treeByIdSelector(store.getState(), { rootJurisdictionId });
+    if (!origTree) {
+      fail();
+    }
+    const nodesNumOriginally = origTree.all(node => !!node).length;
+    expect(nodesNumOriginally).toEqual(64);
+  });
+
+  it('deselects nodes correctly', () => {
+    // should be able to select then deselect using deselect action
+    const rootJurisdictionId = '2942';
+    const callback = () => true;
+    const filters = {
+      currentParentId: rootJurisdictionId,
+      planId,
+      rootJurisdictionId,
+    };
+    store.dispatch(fetchTree(sampleHierarchy));
+    store.dispatch(autoSelectNodes(rootJurisdictionId, callback, planId));
+
+    const tree = selectedHierarchySelector(store.getState(), filters);
+    if (!tree) {
+      fail();
+    }
+
+    const { parentNode, childrenNodes } = selectedNodesSelector(store.getState(), filters);
+
+    [parentNode, ...childrenNodes].forEach(node => {
+      expect(nodeIsSelected(node)).toBeTruthy();
+    });
+
+    // dispatch deselect
+    store.dispatch(deselectAllNodes(rootJurisdictionId));
+
+    const res = selectedNodesSelector(store.getState(), filters);
+
+    expect(res.parentNode).toBeUndefined();
+    expect(res.childrenNodes).toEqual([]);
   });
 });

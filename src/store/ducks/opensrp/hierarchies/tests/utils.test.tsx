@@ -1,12 +1,13 @@
+import { META_STRUCTURE_COUNT, SELECTION_REASON } from '../constants';
 import { TreeNode } from '../types';
 import {
   generateJurisdictionTree,
-  META_STRUCTURE_COUNT,
   preOrderStructureCountComputation,
+  setSelectOnNode,
 } from '../utils';
 import { raZambiaHierarchy, sampleHierarchy, sampleHierarchyWithoutStructures } from './fixtures';
 
-describe('hierarchyReducer.utils', () => {
+describe('reducer/hierarchies.utils', () => {
   it('generates a jurisdiction tree model correctly', () => {
     const root = generateJurisdictionTree(sampleHierarchy);
     expect(root.hasChildren()).toBeTruthy();
@@ -72,5 +73,55 @@ describe('hierarchyReducer.utils', () => {
       expect(node.model.meta[META_STRUCTURE_COUNT]).toEqual(0);
       return true;
     });
+  });
+  it('select node helper function works correctly', () => {
+    const tree = generateJurisdictionTree(sampleHierarchy);
+    const res = setSelectOnNode(tree, '3951', SELECTION_REASON.USER_CHANGE, true, false, false);
+    const expected = {
+      '3951': {
+        actionBy: 'User Change',
+        selected: true,
+      },
+    };
+    expect(res.metaByJurisdiction).toEqual(expected);
+  });
+  it('cascade up select node helper function works correctly', () => {
+    const tree = generateJurisdictionTree(sampleHierarchy);
+    const res = setSelectOnNode(tree, '3951', SELECTION_REASON.USER_CHANGE, true, true, false);
+    const expected = {
+      '2942': {
+        actionBy: 'User Change',
+        selected: true,
+      },
+      '3019': {
+        actionBy: 'User Change',
+        selected: true,
+      },
+      '3951': {
+        actionBy: 'User Change',
+        selected: true,
+      },
+    };
+    expect(res.metaByJurisdiction).toEqual(expected);
+  });
+
+  it('cascade down select node helper function works correctly', () => {
+    const tree = generateJurisdictionTree(sampleHierarchy);
+    const res = setSelectOnNode(tree, '2942', SELECTION_REASON.USER_CHANGE, true, false, true);
+    const expected = {
+      '2942': {
+        actionBy: 'User Change',
+        selected: true,
+      },
+      '3019': {
+        actionBy: 'User Change',
+        selected: true,
+      },
+      '3951': {
+        actionBy: 'User Change',
+        selected: true,
+      },
+    };
+    expect(res.metaByJurisdiction).toEqual(expected);
   });
 });

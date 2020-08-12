@@ -1,11 +1,11 @@
 import ElementMap from '@onaio/element-map';
 import ListView, { renderHeadersFuncType } from '@onaio/list-view';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React from 'react';
+import React, { Fragment, useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
-import Button from 'reactstrap/lib/Button';
-import { ActionCreator, Store } from 'redux';
+import { Button, Tooltip } from 'reactstrap';
+import { Store } from 'redux';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb, {
   Page,
@@ -20,6 +20,7 @@ import {
   RISK_LABEL,
   SAVE_AND_ACTIVATE,
   SAVE_DRAFT,
+  SELECT_JURISDICTION,
   SELECTED_JURISDICTIONS,
   STATUS_SETTING,
   STRUCTURES_COUNT,
@@ -39,33 +40,27 @@ import { getPlanType, successGrowl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import hierarchyReducer, {
   autoSelectNodes,
-  AutoSelectNodesAction,
   deselectAllNodes,
   deselectNode,
-  DeselectNodeAction,
-  FetchedTreeAction,
   fetchTree,
   Filters,
   getAllSelectedNodes,
   getCurrentChildren,
   getCurrentParentNode,
-  getLeafNodes,
   reducerName as hierarchyReducerName,
   selectNode,
-  SelectNodeAction,
 } from '../../../../store/ducks/opensrp/hierarchies';
+import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
-import { nodeIsSelected, selectionReason } from '../../../../store/ducks/opensrp/hierarchies/utils';
+import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
 import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
-import {
-  addPlanDefinition,
-  AddPlanDefinitionAction,
-} from '../../../../store/ducks/opensrp/PlanDefinition';
+import { addPlanDefinition } from '../../../../store/ducks/opensrp/PlanDefinition';
 import { PlanStatus } from '../../../../store/ducks/plans';
 import { RiskLabel } from '../helpers/RiskLabel';
-import { ConnectedSelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
+import { SelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
 import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
 import { NodeCell } from '../JurisdictionCell';
+import './index.css';
 
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 
@@ -77,13 +72,13 @@ export interface JurisdictionSelectorTableProps {
   currentParentId?: string;
   jurisdictionsMetadata: JurisdictionsMetadata[];
   serviceClass: typeof OpenSRPService;
-  treeFetchedCreator: ActionCreator<FetchedTreeAction>;
+  treeFetchedCreator: typeof fetchTree;
   currentParentNode?: TreeNode;
   currentChildren: TreeNode[];
-  selectNodeCreator: ActionCreator<SelectNodeAction>;
-  deselectNodeCreator: ActionCreator<DeselectNodeAction>;
-  autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
-  fetchPlanCreator: ActionCreator<AddPlanDefinitionAction>;
+  selectNodeCreator: typeof selectNode;
+  deselectNodeCreator: typeof deselectNode;
+  autoSelectNodesCreator: typeof autoSelectNodes;
+  fetchPlanCreator: typeof addPlanDefinition;
   selectedLeafNodes: TreeNode[];
   leafNodes: TreeNode[];
   autoSelectionFlow: boolean;
@@ -128,6 +123,9 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
     deselectAllNodesCreator,
   } = props;
 
+  const [activateTooltipOpen, setActivateTooltipOpen] = useState(false);
+  const [draftTooltipOpen, setDraftTooltipOpen] = useState(false);
+
   /** function for determining whether the jurisdiction assignment table allows for
    * multiple selection or single selection based on the plan intervention type
    *
@@ -152,14 +150,15 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
    * @param nodId - id of the node of interest
    * @param value - change selected status of node with said id to value
    */
-  function applySelectedToNode(nodeId: string, value: boolean) {
+  function applySelectedToNode(nodeId: string, planId: string, value: boolean) {
     if (value) {
       if (singleSelect) {
+        // TODO:  deselect only node selections belonging to this plan
         deselectAllNodesCreator(rootJurisdictionId);
       }
-      selectNodeCreator(rootJurisdictionId, nodeId, selectionReason.USER_CHANGE);
+      selectNodeCreator(rootJurisdictionId, nodeId, planId, SELECTION_REASON.USER_CHANGE);
     } else {
-      deselectNodeCreator(rootJurisdictionId, nodeId, selectionReason.USER_CHANGE);
+      deselectNodeCreator(rootJurisdictionId, nodeId, planId, SELECTION_REASON.USER_CHANGE);
     }
   }
 
@@ -219,7 +218,7 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         // tslint:disable-next-line: jsx-no-lambda
         onChange={e => {
           const newSelectedValue = e.target.checked;
-          applySelectedToNode(node.model.id, newSelectedValue);
+          applySelectedToNode(node.model.id, plan.identifier, newSelectedValue);
         }}
       />,
       <NodeCell key={`${node.model.id}-jurisdiction`} node={node} baseUrl={baseUrl} />,
@@ -234,12 +233,11 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
           ]
         : []),
       node.hasChildren() ? '' : nodeIsSelected(node) ? TARGETED : NOT_TARGETED,
-      node.model.meta.selectedBy,
-      <ConnectedSelectedJurisdictionsCount
-        key={`selected-jurisdictions-txt`}
+      node.model.meta.actionBy,
+      <SelectedJurisdictionsCount
+        key={`${node.model.id}-selected-jurisdictions-txt`}
         parentNode={node}
-        id={node.model.id}
-        jurisdictions={selectedLeafNodes}
+        selectedNodes={selectedLeafNodes}
       />,
     ];
   });
@@ -260,10 +258,10 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
   const onParentCheckboxClick = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newSelectedValue = e.target.checked;
     if (currentParentNode) {
-      applySelectedToNode(currentParentNode.model.id, newSelectedValue);
+      applySelectedToNode(currentParentNode.model.id, plan.identifier, newSelectedValue);
     } else {
       currentChildren.forEach(child => {
-        applySelectedToNode(child.model.id, newSelectedValue);
+        applySelectedToNode(child.model.id, plan.identifier, newSelectedValue);
       });
     }
   };
@@ -322,6 +320,14 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
       .catch(err => displayError(err));
   };
 
+  /** toggle save & activate button tooltip */
+  const toggleActivateToolTip = () => setActivateTooltipOpen(!activateTooltipOpen);
+  /** toggle save draft button tooltip */
+  const toggleDraftToolTip = () => setDraftTooltipOpen(!draftTooltipOpen);
+
+  // check if there is any selected node
+  const hasSelectedNode: boolean = selectedLeafNodes.length > 0;
+
   return (
     <div>
       <HeaderBreadcrumb {...breadCrumbProps} />
@@ -333,30 +339,54 @@ const JurisdictionTable = (props: JurisdictionSelectorTableProps) => {
         </div>
       )}
       {!!data.length && (
-        <>
+        <Fragment>
           <hr />
 
-          <Button
-            id="save-draft"
-            className="float-right"
-            color="primary"
-            // tslint:disable-next-line: jsx-no-lambda
-            onClick={() => commitJurisdictions(plan)}
-            size="xs"
-          >
-            {SAVE_DRAFT}
-          </Button>
+          <span id="save-draft-wrapper" className="float-right">
+            <Button
+              disabled={!hasSelectedNode}
+              id="save-draft"
+              color="primary"
+              // tslint:disable-next-line: jsx-no-lambda
+              onClick={() => commitJurisdictions(plan)}
+              size="xs"
+            >
+              {SAVE_DRAFT}
+            </Button>
+          </span>
 
-          <Button
-            id="save-and-activate"
-            className="float-right mr-3"
-            color="success"
-            onClick={onSaveAndActivate}
-            size="xs"
+          <span id="save-and-activate-wrapper" className="float-right mr-3">
+            <Button
+              disabled={!hasSelectedNode}
+              id="save-and-activate"
+              color="success"
+              onClick={onSaveAndActivate}
+              size="xs"
+            >
+              {SAVE_AND_ACTIVATE}
+            </Button>
+          </span>
+        </Fragment>
+      )}
+      {!hasSelectedNode && (
+        <Fragment>
+          <Tooltip
+            placement="top"
+            isOpen={activateTooltipOpen}
+            target="save-and-activate-wrapper"
+            toggle={toggleActivateToolTip}
           >
-            {SAVE_AND_ACTIVATE}
-          </Button>
-        </>
+            {SELECT_JURISDICTION}
+          </Tooltip>
+          <Tooltip
+            placement="top"
+            isOpen={draftTooltipOpen}
+            target="save-draft-wrapper"
+            toggle={toggleDraftToolTip}
+          >
+            {SELECT_JURISDICTION}
+          </Tooltip>
+        </Fragment>
       )}
     </div>
   );
@@ -369,7 +399,7 @@ export { JurisdictionTable };
 /** map state to props interface  */
 type MapStateToProps = Pick<
   JurisdictionSelectorTableProps,
-  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes' | 'leafNodes'
+  'currentChildren' | 'currentParentNode' | 'selectedLeafNodes'
 >;
 
 /** map action creators interface */
@@ -385,7 +415,6 @@ type DispatchToProps = Pick<
 
 const childrenSelector = getCurrentChildren();
 const parentNodeSelector = getCurrentParentNode();
-const leafNodesSelector = getLeafNodes();
 const selectedLeafNodesSelector = getAllSelectedNodes();
 
 /** maps props to store state */
@@ -396,12 +425,12 @@ const mapStateToProps = (
   const filters: Filters = {
     currentParentId: ownProps.currentParentId,
     leafNodesOnly: true,
+    planId: ownProps.plan.identifier,
     rootJurisdictionId: ownProps.rootJurisdictionId,
   };
   return {
     currentChildren: childrenSelector(state, filters),
     currentParentNode: parentNodeSelector(state, filters),
-    leafNodes: leafNodesSelector(state, filters),
     selectedLeafNodes: selectedLeafNodesSelector(state, filters),
   };
 };

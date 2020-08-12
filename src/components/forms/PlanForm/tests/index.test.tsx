@@ -6,6 +6,8 @@ import { cloneDeep } from 'lodash';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
 import PlanForm, { propsForUpdatingPlans } from '..';
+import { AN_ERROR_OCCURRED } from '../../../../configs/lang';
+import * as helperErrors from '../../../../helpers/errors';
 import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
@@ -833,6 +835,9 @@ describe('containers/forms/PlanForm - Submission', () => {
       </MemoryRouter>
     );
 
+    // submit button is disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeTruthy();
+
     // Set FI for interventionType
     wrapper
       .find('select[name="interventionType"]')
@@ -854,6 +859,9 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper
       .find('select[name="fiStatus"]')
       .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
+
+    // submit button should not be disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
 
     wrapper.find('form').simulate('submit');
 
@@ -1049,6 +1057,7 @@ describe('containers/forms/PlanForm - Submission', () => {
 
   it('Updated plan is not added to store if addPlan is available and status is not 200', async () => {
     // ensure that we are logged in so that we can get the OpenSRP token from Redux
+    const displayErrorMock = jest.spyOn(helperErrors, 'displayError');
     const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
     store.dispatch(authenticateUser(authenticated, user, extraData));
 
@@ -1070,6 +1079,7 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper.update();
 
     expect(addPlanMock.mock.calls.length).toEqual(0);
+    expect(displayErrorMock).toHaveBeenCalledWith('API is down', AN_ERROR_OCCURRED, false);
   });
 
   it('New plan is added to store if addPlan prop is available and status is 200', async () => {
@@ -1137,10 +1147,11 @@ describe('containers/forms/PlanForm - Submission', () => {
 
   it('New plan is NOT added to store if addPlan prop is available and status is NOT 200', async () => {
     // ensure that we are logged in so that we can get the OpenSRP token from Redux
+    const displayErrorMock = jest.spyOn(helperErrors, 'displayError');
     const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
     store.dispatch(authenticateUser(authenticated, user, extraData));
 
-    fetch.mockReject(() => Promise.reject('APi is down'));
+    fetch.mockReject(() => Promise.reject('API is down'));
 
     const addPlanMock = jest.fn();
     const props = {
@@ -1188,5 +1199,6 @@ describe('containers/forms/PlanForm - Submission', () => {
     ).toEqual({});
 
     expect(addPlanMock.mock.calls.length).toEqual(0);
+    expect(displayErrorMock).toHaveBeenCalledWith('API is down', AN_ERROR_OCCURRED, false);
   });
 });
