@@ -53,28 +53,27 @@ export const onJurisdictionClick = (
       const currentId =
         (features[0].id && features[0].id.toString()) ||
         (features[0] && features[0].properties && features[0].properties.externalId);
+      let activeCurrentNode: TreeNode | any = {};
+
+      if (currentParentNode) {
+        // ensure currentparentnode is not undefined first
+        // Handle selection for admin level 0
+        if (
+          currentParentNode.model.id === rootJurisdictionId &&
+          currentId === currentParentNode.model.id
+        ) {
+          activeCurrentNode = currentParentNode;
+        } else {
+          // Handle selection for admin level > 0
+          activeCurrentNode = currentParentNode.children.find(
+            (node: TreeNode) => node.model.id === currentId
+          );
+        }
+      }
       if (
         originalEvent.altKey &&
         PLAN_TYPES_WITH_MULTI_JURISDICTIONS.includes(getInterventionType.valueCodableConcept)
       ) {
-        let activeCurrentNode: TreeNode | any = {};
-
-        if (currentParentNode) {
-          // ensure currentparentnode is not undefined first
-          // Handle selection for admin level 0
-          if (
-            currentParentNode.model.id === rootJurisdictionId &&
-            currentId === currentParentNode.model.id
-          ) {
-            activeCurrentNode = currentParentNode;
-          } else {
-            // Handle selection for admin > 0
-            activeCurrentNode = currentParentNode.children.find(
-              (node: TreeNode) => node.model.id === currentId
-            );
-          }
-        }
-
         if (!nodeIsSelected(activeCurrentNode)) {
           selectNodeCreator(
             rootJurisdictionId,
@@ -92,7 +91,7 @@ export const onJurisdictionClick = (
         }
         setMapParent(currentId);
       } else {
-        if (currentParentNode && currentParentNode.hasChildren()) {
+        if (activeCurrentNode && activeCurrentNode.hasChildren()) {
           history.push(`${baseUrl}/${currentId}`);
         }
       }
