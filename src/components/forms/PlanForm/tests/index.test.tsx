@@ -1200,5 +1200,10 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     expect(addPlanMock.mock.calls.length).toEqual(0);
     expect(displayErrorMock).toHaveBeenCalledWith('API is down', AN_ERROR_OCCURRED, false);
+
+    // submit button is enabled after an error
+    wrapper.update();
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toEqual(false);
+    expect(wrapper.find('#planform-submit-button button').text()).toEqual('Save Plan');
   });
 });
