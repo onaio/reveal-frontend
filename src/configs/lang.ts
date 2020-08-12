@@ -819,3 +819,8 @@ export const STRUCTURES_PER_TEAM_PER_DAY = translate(
   'STRUCTURES_PER_TEAM_PER_DAY',
   'structures per team per day with'
 );
+
+export const NO_JURISDICTION_SELECTIONS_FOUND = translate(
+  'NO_JURISDICTION_SELECTIONS_FOUND',
+  'No Jurisdiction selections were found'
+);
