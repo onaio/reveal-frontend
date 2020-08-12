@@ -2,7 +2,6 @@ import { Popup } from 'mapbox-gl';
 import { buildMouseMoveHandler, buildOnClickHandler } from '../helpers/utils';
 
 const popupHandlerMock = buildOnClickHandler('');
-const mouseMoveHandlerMock = buildMouseMoveHandler();
 
 window.URL.createObjectURL = jest.fn();
 
@@ -145,7 +144,9 @@ describe('activeFIMap/helpers/utils.popup', () => {
         lng: 101.1799767158821,
       });
       e.setHTML = (f: string) => {
-        expect(f).toEqual('<div><center>Two Three Two Release Village</center></div>');
+        expect(f).toEqual(
+          '<div class="jurisdiction-name"><center>Two Three Two Release Village</center></div>'
+        );
         e.addTo = addToMock;
         return e;
       };
@@ -156,8 +157,19 @@ describe('activeFIMap/helpers/utils.popup', () => {
       Popup: mockedPopup,
     };
 
+    const mockStyle = {
+      cursor: 'pointer',
+    };
+
     const mockMap: any = {
       // mock unproject function
+      getCanvas: jest.fn().mockImplementation(() => {
+        return {
+          style: {
+            ...mockStyle,
+          },
+        };
+      }),
       unproject: () => {
         return {
           lat: 15.065355545319008,
@@ -166,9 +178,11 @@ describe('activeFIMap/helpers/utils.popup', () => {
       },
     };
 
-    mouseMoveHandlerMock(mockMap, event as any);
+    buildMouseMoveHandler(mockMap, event as any);
 
-    expect(addToMock.mock.calls).toEqual([[{ unproject: expect.any(Function) }]]);
+    expect(addToMock.mock.calls).toEqual([
+      [{ getCanvas: expect.any(Function), unproject: expect.any(Function) }],
+    ]);
     expect(addToMock).toBeCalledTimes(1);
   });
 });
