@@ -73,6 +73,10 @@ describe('jurisdiction Assignment/Resource calculation', () => {
     };
     const wrapper = mount(<ResourceCalculation {...otherProps} />);
 
+    // initial input values
+    expect(wrapper.find('input[name="structuresCount"]').props().value).toEqual(0);
+    expect(wrapper.find('input[name="teamsCount"]').props().value).toEqual(0);
+
     // simulate structure count change so that we can have 10 structures per team
     expect(toJson(wrapper.find('input[name="structuresCount"]'))).toMatchSnapshot(
       'structures count input'
@@ -81,6 +85,9 @@ describe('jurisdiction Assignment/Resource calculation', () => {
       .find('input[name="structuresCount"]')
       .simulate('change', { target: { value: 10, name: 'structuresCount' } });
     wrapper.update();
+
+    expect(wrapper.find('input[name="structuresCount"]').props().value).toEqual(10);
+    expect(wrapper.find('input[name="teamsCount"]').props().value).toEqual(0);
 
     // see if there has been any change to the number of days, should start with 0 days
     expect(wrapper.find('form p').text()).toMatchInlineSnapshot(
@@ -96,6 +103,9 @@ describe('jurisdiction Assignment/Resource calculation', () => {
       .simulate('change', { target: { value: 3, name: 'teamsCount' } });
     wrapper.update();
 
+    expect(wrapper.find('input[name="structuresCount"]').props().value).toEqual(10);
+    expect(wrapper.find('input[name="teamsCount"]').props().value).toEqual(3);
+
     // see if there has been any change to the number of days, should start with 1 days
     expect(wrapper.find('form p').text()).toMatchInlineSnapshot(
       `"1 daysat a rate of   structures per team per day with  Teams"`
@@ -106,6 +116,9 @@ describe('jurisdiction Assignment/Resource calculation', () => {
       .find('input[name="teamsCount"]')
       .simulate('change', { target: { value: '', name: 'teamsCount' } });
     wrapper.update();
+
+    expect(wrapper.find('input[name="structuresCount"]').props().value).toEqual(10);
+    expect(wrapper.find('input[name="teamsCount"]').props().value).toEqual('');
 
     // see if there has been any change to the number of days, should start with 0 days
     expect(wrapper.find('form p').text()).toMatchInlineSnapshot(
