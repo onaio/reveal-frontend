@@ -44,53 +44,55 @@ export const onJurisdictionClick = (
     if (!features.length) {
       return false;
     }
-    if (features[0]) {
-      const currentId =
-        (features[0].id && features[0].id.toString()) ||
-        (features[0] && features[0].properties && features[0].properties.externalId);
-      let activeCurrentNode: TreeNode | undefined;
 
-      if (currentParentNode) {
-        // ensure currentparentnode is not undefined first
-        // Handle selection for admin level 0
+    for (const feature of features) {
+      if (feature && feature.id) {
+        const currentId = feature.id.toString();
+        let activeCurrentNode: TreeNode | undefined;
+
+        if (currentParentNode) {
+          // ensure currentparentnode is not undefined first
+          // Handle selection for admin level 0
+          if (
+            currentParentNode.model.id === rootJurisdictionId &&
+            currentId === currentParentNode.model.id
+          ) {
+            activeCurrentNode = currentParentNode;
+          } else {
+            // Handle selection for admin level > 0
+            activeCurrentNode = currentParentNode.children.find(
+              (node: TreeNode) => node.model.id === currentId
+            );
+          }
+        }
+        const thePlanType = getPlanType(plan);
         if (
-          currentParentNode.model.id === rootJurisdictionId &&
-          currentId === currentParentNode.model.id
+          activeCurrentNode &&
+          originalEvent.altKey &&
+          PLAN_TYPES_WITH_MULTI_JURISDICTIONS.includes(thePlanType)
         ) {
-          activeCurrentNode = currentParentNode;
+          if (!nodeIsSelected(activeCurrentNode)) {
+            selectNodeCreator(
+              rootJurisdictionId,
+              activeCurrentNode.model.id,
+              plan.identifier,
+              SELECTION_REASON.USER_CHANGE
+            );
+          } else {
+            deselectNodeCreator(
+              rootJurisdictionId,
+              activeCurrentNode.model.id,
+              plan.identifier,
+              SELECTION_REASON.USER_CHANGE
+            );
+          }
+          setMapParent(currentId);
         } else {
-          // Handle selection for admin level > 0
-          activeCurrentNode = currentParentNode.children.find(
-            (node: TreeNode) => node.model.id === currentId
-          );
+          if (activeCurrentNode && activeCurrentNode.hasChildren()) {
+            history.push(`${baseUrl}/${currentId}`);
+          }
         }
-      }
-      const thePlanType = getPlanType(plan);
-      if (
-        activeCurrentNode &&
-        originalEvent.altKey &&
-        PLAN_TYPES_WITH_MULTI_JURISDICTIONS.includes(thePlanType)
-      ) {
-        if (!nodeIsSelected(activeCurrentNode)) {
-          selectNodeCreator(
-            rootJurisdictionId,
-            activeCurrentNode.model.id,
-            plan.identifier,
-            SELECTION_REASON.USER_CHANGE
-          );
-        } else {
-          deselectNodeCreator(
-            rootJurisdictionId,
-            activeCurrentNode.model.id,
-            plan.identifier,
-            SELECTION_REASON.USER_CHANGE
-          );
-        }
-        setMapParent(currentId);
-      } else {
-        if (activeCurrentNode && activeCurrentNode.hasChildren()) {
-          history.push(`${baseUrl}/${currentId}`);
-        }
+        break;
       }
     }
   }
