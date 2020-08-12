@@ -120,9 +120,9 @@ describe('reducers/opensrp/hierarchies', () => {
           ...raKsh3,
           properties: {
             ...raKsh3.properties,
-            fillColor: '#792b16',
-            fillOutlineColor: '#ffffff',
-            lineColor: '#ffffff',
+            fillColor: '#ff5c33',
+            fillOutlineColor: '#22bcfb',
+            lineColor: '#22bcfb',
           },
         },
       ],

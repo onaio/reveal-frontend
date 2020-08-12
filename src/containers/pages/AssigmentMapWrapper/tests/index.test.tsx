@@ -336,13 +336,13 @@ describe('containers/pages/AssigmentMapWrapper', () => {
           {
             model: {
               id: '2942',
-              meta: { selected: true },
+              meta: { selected: false },
             },
           },
           {
             model: {
               id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
-              meta: { selected: true },
+              meta: { selected: false },
             },
           },
         ],
