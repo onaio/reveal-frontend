@@ -264,6 +264,7 @@ const PlanForm = (props: PlanFormProps) => {
                 onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
               })
               .catch((e: Error) => {
+                setSubmitting(false);
                 displayError(e, AN_ERROR_OCCURRED, false);
               });
           } else {
@@ -273,6 +274,7 @@ const PlanForm = (props: PlanFormProps) => {
                 onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
               })
               .catch((e: Error) => {
+                setSubmitting(false);
                 displayError(e, AN_ERROR_OCCURRED, false);
               });
           }
