@@ -533,6 +533,9 @@ export const buildMouseMoveHandler = (map: Map, event: EventData) => {
     return;
   }
 
+  // Change the cursor style to pointer if features exist.
+  map.getCanvas().style.cursor = features.length ? 'pointer' : 'grab';
+
   // loop through features, setting the name property to content var
   for (feature of features) {
     if (feature && feature.properties && feature.properties.name) {
