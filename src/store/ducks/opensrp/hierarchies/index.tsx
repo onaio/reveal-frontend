@@ -607,33 +607,6 @@ export const getSelectedHierarchy = () => {
       parent: 'parent',
     });
 
-    let allNodesInPaths = keyBy<TreeNode>(allSelectedLeafNodes, node => node.model.id);
-
-    // create an object with uniq jurisdiction entries for all jurisdictions that exist
-    // in a path that has a selected leaf node.
-    allSelectedLeafNodes.forEach(node => {
-      allNodesInPaths = {
-        ...allNodesInPaths,
-        ...keyBy<TreeNode>(node.getPath(), nd => nd.model.id),
-      };
-    });
-
-    // flatten it into an array in preparation of creating a nested structure
-    const normalNodes: TreeNode[] = [];
-    values(allNodesInPaths).forEach(node => {
-      const data = node.model;
-      // remove the existing children field, we will add it later with the computed children
-      delete data.children;
-      normalNodes.push(data);
-    });
-
-    // nest them normal nodes into a hierarchy
-    // TODO - add a type declaration file.
-    const flatToNested = new (FlatToNested as any)({
-      id: 'id',
-      parent: 'parent',
-    });
-
     // create a new tree based on the new structure.
     const nestedNormalNodes = flatToNested.convert(normalNodes);
     const model = new TreeModel();

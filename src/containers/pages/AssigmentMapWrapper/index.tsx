@@ -160,6 +160,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
       zoom = centerAndZoom.zoom;
     }
   }
+
   if (loading) {
     return <Loading />;
   }

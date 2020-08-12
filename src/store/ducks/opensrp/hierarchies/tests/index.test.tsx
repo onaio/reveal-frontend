@@ -11,7 +11,6 @@ import reducer, {
   getAncestors,
   getCurrentChildren,
   getCurrentParentNode,
-  getMetaData,
   getNodeById,
   getNodesInSelectedTree,
   getRootByNodeId,
@@ -103,18 +102,14 @@ describe('reducers/opensrp/hierarchies', () => {
     if (!node) {
       fail();
     }
-    expect(
-      nodeIsSelected(node.model.id, rootJurisdictionId, planId, getMetaData(store.getState()))
-    ).toBeTruthy();
+    expect(nodeIsSelected(node)).toBeTruthy();
 
     store.dispatch(deselectNode(rootJurisdictionId, '2942', planId));
     node = nodeSelector(store.getState(), { ...filters, nodeId: '2942' });
     if (!node) {
       fail();
     }
-    expect(
-      nodeIsSelected(node.model.id, rootJurisdictionId, planId, getMetaData(store.getState()))
-    ).toBeFalsy();
+    expect(nodeIsSelected(node)).toBeFalsy();
   });
 
   it('selecting & unselecting a node works across plans', () => {
@@ -131,14 +126,7 @@ describe('reducers/opensrp/hierarchies', () => {
       fail();
     }
 
-    expect(
-      nodeIsSelected(
-        node.model.id,
-        rootJurisdictionId,
-        filters.planId,
-        getMetaData(store.getState())
-      )
-    ).toBeFalsy();
+    expect(nodeIsSelected(node)).toBeFalsy();
 
     // lets change the selector filters back to the actual plan that we register selectNodes action under
     const correctFilters = {
@@ -150,9 +138,7 @@ describe('reducers/opensrp/hierarchies', () => {
     if (!node) {
       fail();
     }
-    expect(
-      nodeIsSelected(node.model.id, rootJurisdictionId, planId, getMetaData(store.getState()))
-    ).toBeTruthy();
+    expect(nodeIsSelected(node)).toBeTruthy();
   });
 
   it('auto selecting nodes works', () => {

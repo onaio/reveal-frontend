@@ -34,7 +34,6 @@ export const onJurisdictionClick = (
       deselectNodeCreator,
       plan,
       autoSelectionFlow,
-      getJurisdictionsMetadata,
     } = props;
 
     const { useContext } = plan;
@@ -76,14 +75,7 @@ export const onJurisdictionClick = (
           }
         }
 
-        if (
-          !nodeIsSelected(
-            activeCurrentNode.model.id,
-            rootJurisdictionId,
-            plan.identifier,
-            getJurisdictionsMetadata
-          )
-        ) {
+        if (!nodeIsSelected(activeCurrentNode)) {
           selectNodeCreator(
             rootJurisdictionId,
             activeCurrentNode.model.id,
