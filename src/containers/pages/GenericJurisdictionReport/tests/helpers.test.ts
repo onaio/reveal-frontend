@@ -24,6 +24,8 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
       'namibia2019',
       'zambiaFocusArea2019',
       'zambiaJurisdictions2019',
+      'zambiaMDALower2020',
+      'zambiaMDAUpper2020',
     ]);
   });
   it('it should return the correct table columns for plansTableColumns namibia2019', () => {
