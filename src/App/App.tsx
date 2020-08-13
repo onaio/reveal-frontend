@@ -94,6 +94,7 @@ import { ManifestDraftFilesPage } from '../containers/pages/ConfigForm/manifest/
 import { ManifestFiles } from '../containers/pages/ConfigForm/manifest/filesList';
 import { ManifestReleasesPage } from '../containers/pages/ConfigForm/manifest/releases';
 import ConnectedUploadConfigFilePage from '../containers/pages/ConfigForm/manifest/uploadFile';
+import ConnectedMDAJurisdictionReport from '../containers/pages/DynamicMDA/JurisdictionsReport';
 import ConnectedMDAPLansList from '../containers/pages/DynamicMDA/plans';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
 import FIJurisdiction from '../containers/pages/FocusInvestigation/jurisdiction';
@@ -273,13 +274,27 @@ const App = (props: AppProps) => {
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedIRSReportingMap}
                 />
-                {/* IRS Reporting plan table view */}
+                {/* MDA Reporting plan table view */}
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={REPORT_MDA_PLAN_URL}
                   component={ConnectedMDAPLansList}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_PLAN_URL}/:planId`}
+                  component={ConnectedMDAJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedMDAJurisdictionReport}
                 />
                 {/* Plan Assignment views for Plan */}
                 <ConnectedPrivateRoute
