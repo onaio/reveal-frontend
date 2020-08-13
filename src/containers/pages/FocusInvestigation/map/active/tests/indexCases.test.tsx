@@ -98,4 +98,59 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       expect(localLayer).toMatchSnapshot();
     });
   });
+
+  it('displays historical indices for empty map', async () => {
+    // use dispatch
+    store.dispatch(fetchPlans(fixturesMap.processedPlansJSON));
+    store.dispatch(fetchJurisdictions(fixturesMap.processedJurisdictionJSON));
+    store.dispatch(structureDucks.setStructures(fixturesMap.processedStructuresJSON));
+    store.dispatch(fetchGoals(fixturesMap.processedGoalsJSON));
+    store.dispatch(fetchTasks(fixturesMap.processedPlansTasksJson));
+    store.dispatch(fetchTasks(fixturesMap.processedCaseConfirmationTasksJSON));
+    const mock = jest.fn();
+    const supersetServiceMock = jest.fn(async () => null);
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: '94af1ec6-52c9-5bbb-8453-0ff71d572400' },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/94af1ec6-52c9-5bbb-8453-0ff71d572400`,
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    const componentProps: any = wrapper.find('SingleActiveFIMap').props();
+
+    expect(componentProps.plan.id).toEqual('94af1ec6-52c9-5bbb-8453-0ff71d572400');
+    expect(componentProps.jurisdiction.jurisdiction_id).toEqual('3951');
+    expect(componentProps.pointFeatureCollection.features.length).toEqual(0);
+    expect(componentProps.polygonFeatureCollection.features.length).toEqual(0);
+    expect(componentProps.currentPointIndexCases).toEqual(null);
+    expect(componentProps.currentPolyIndexCases).toEqual(null);
+    expect(componentProps.historicalPointIndexCases.features.length).toEqual(1);
+    expect(componentProps.historicalPolyIndexCases.features.length).toEqual(2);
+
+    // gisida lite layers
+    const gisidaLiteProps: any = wrapper.find('MemoizedGisidaLiteMock').props();
+    const { layers } = gisidaLiteProps;
+
+    layers.forEach((layer: any) => {
+      const layerProps = layer.props;
+      // remove data so that we do not pollute the snapshot
+      const localLayer = cloneDeep(layerProps);
+      delete localLayer.data;
+      expect(localLayer).toMatchSnapshot();
+    });
+  });
 });
