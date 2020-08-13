@@ -58,6 +58,10 @@ export const ENABLE_MDA_POINT = process.env.REACT_APP_ENABLE_MDA_POINT === 'true
 export type ENABLE_MDA_POINT = typeof ENABLE_MDA_POINT;
 
 /** Do you want to enable the MDA Point plan features? */
+export const ENABLE_DYNAMIC_MDA = process.env.REACT_APP_ENABLE_DYNAMIC_MDA === 'true';
+export type ENABLE_DYNAMIC_MDA = typeof ENABLE_DYNAMIC_MDA;
+
+/** Do you want to enable the MDA Point plan features? */
 export const CLIENT_LABEL = process.env.REACT_APP_CLIENT_LABEL || 'client';
 export type CLIENT_LABEL = typeof CLIENT_LABEL;
 
@@ -168,6 +172,10 @@ export type SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE = typeof SUPERSET_MDA_
 export const SUPERSET_MDA_POINT_CHILD_REPORT_DATA_SLICE =
   process.env.REACT_APP_SUPERSET_MDA_POINT_CHILD_REPORT_DATA_SLICE || '';
 export type SUPERSET_MDA_POINT_CHILD_REPORT_DATA_SLICE = typeof SUPERSET_MDA_POINT_CHILD_REPORT_DATA_SLICE;
+
+export const SUPERSET_DYNAMIC_MDA_REPORTING_PLANS_SLICE =
+  process.env.REACT_APP_SUPERSET_DYNAMIC_MDA_REPORTING_PLANS_SLICE || '0';
+export type SUPERSET_DYNAMIC_MDA_REPORTING_PLANS_SLICE = typeof SUPERSET_DYNAMIC_MDA_REPORTING_PLANS_SLICE;
 
 /** OpenSRP oAuth2 settings */
 export const ENABLE_OPENSRP_OAUTH = process.env.REACT_APP_ENABLE_OPENSRP_OAUTH === 'true';
