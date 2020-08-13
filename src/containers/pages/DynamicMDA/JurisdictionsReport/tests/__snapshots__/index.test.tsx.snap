@@ -1,0 +1,92 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/MDA Reports/JurisdictionReport renders correctly 1`] = `
+Object {
+  "LegendIndicatorComp": null,
+  "baseURL": "/intervention/mda/report",
+  "cellComponent": [Function],
+  "fetchJurisdictions": [Function],
+  "fetchPlans": [Function],
+  "focusAreaColumn": "zambiaLowerUpper2020",
+  "focusAreaLevel": "2",
+  "hasChildren": [Function],
+  "history": Any<Object>,
+  "jurisdictionColumn": "zambiaMDAUpper2020",
+  "jurisdictions": Any<Array>,
+  "location": [MockFunction],
+  "match": Object {
+    "isExact": true,
+    "params": Object {
+      "planId": "40357eff-81b6-4e32-bd3d-484019689f7c",
+    },
+    "path": "/intervention/mda/report/:planId",
+    "url": "/intervention/mda/report/40357eff-81b6-4e32-bd3d-484019689f7c",
+  },
+  "pageTitle": "MDA Reporting",
+  "plan": Any<Object>,
+  "reportingPlanSlice": "1337",
+  "service": Any<Function>,
+  "slices": Array [
+    "1338",
+  ],
+}
+`;
+
+exports[`components/MDA Reports/JurisdictionReport renders correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      to="/"
+    >
+      <LinkAnchor
+        href="/"
+        navigate={[Function]}
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="1"
+      to="/intervention/mda/report"
+    >
+      <LinkAnchor
+        href="/intervention/mda/report"
+        navigate={[Function]}
+      >
+        <a
+          href="/intervention/mda/report"
+          onClick={[Function]}
+        >
+          MDA Reporting
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    Dynamic-MDA-2019-09-05 TEST
+  </li>,
+]
+`;
+
+exports[`components/MDA Reports/JurisdictionReport renders correctly: page title 1`] = `
+<h3
+  className="mb-3 page-title"
+>
+  MDA Reporting: Dynamic-MDA-2019-09-05 TEST
+</h3>
+`;
