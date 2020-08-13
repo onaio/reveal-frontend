@@ -19,7 +19,7 @@ import DynamicMDAPLansReducer, {
 import { GenericPlan } from '../../../../store/ducks/generic/plans';
 import { GenericPlanListProps, GenericPlansList } from '../../GenericPlansList';
 
-/** register the IRS plan definitions reducer */
+/** register the MDA plan definitions reducer */
 reducerRegistry.register(DynamicMDAPLansReducerName, DynamicMDAPLansReducer);
 
 /** a list of plan statuses to be displayed */

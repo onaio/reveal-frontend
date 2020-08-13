@@ -36,7 +36,7 @@ import {
 /** register the reducers */
 reducerRegistry.register(MDAPlansReducerName, MDAPlansReducer);
 
-/** Renders IRS Jurisdictions reports */
+/** Renders MDA Jurisdictions reports */
 const MDAJurisdictionReport = (
   props: GenericJurisdictionProps & RouteComponentProps<RouteParams>
 ) => {
