@@ -22,7 +22,7 @@ import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Ripple from '../../../../components/page/Loading';
 import { TimelineSlider, TimelineSliderProps } from '../../../../components/TimeLineSlider';
-import { JURISDICTION_METADATA_RISK } from '../../../../configs/env';
+import { ASSIGNMENT_PAGE_SHOW_MAP, JURISDICTION_METADATA_RISK } from '../../../../configs/env';
 import {
   AUTO_TARGET_JURISDICTIONS_BY_RISK,
   COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
@@ -61,10 +61,13 @@ import plansReducer, {
   getPlanDefinitionById,
   reducerName as planReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
+import { ConnectedAssignmentMapWrapper } from '../../AssigmentMapWrapper';
 import { useGetJurisdictionTree, usePlanEffect } from '../EntryView/utils';
+import { ConnectedResourceWidget } from '../helpers/ResourceCalcWidget';
 import { ConnectedJurisdictionSelectionsSlider } from '../helpers/Slider';
 import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
+import './index.css';
 
 reducerRegistry.register(planReducerName, plansReducer);
 reducerRegistry.register(jurisdictionMetadataReducerName, jurisdictionMetadataReducer);
@@ -222,6 +225,18 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     ],
   };
 
+  const resourceCalculationProps = {
+    currentParentId: props.match.params.parentId,
+    planId: plan.identifier,
+    rootId: rootJurisdictionId,
+  };
+
+  const AssignmentWrapperProps = {
+    currentParentId: props.match.params.parentId,
+    rootJurisdictionId,
+    serviceClass,
+  };
+
   const pageTitle = plan.title;
   return (
     <>
@@ -231,10 +246,21 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <TimelineSlider {...timelineSliderProps} />
+      <hr />
       {/* each of this components is a step in the auto selection journey, we start
       at the slider and go through a few tables and we should ideally end at plan assignment
       each of this components gets a callback that is called that modifies the state of this 
       container to know what is the next component to be rendered in the below section */}
+      {step !== TIMELINE_SLIDER_STEP1 && (
+        <div className="map-resource-widget">
+          <div className="map-wrapper">
+            {ASSIGNMENT_PAGE_SHOW_MAP && (
+              <ConnectedAssignmentMapWrapper {...AssignmentWrapperProps} />
+            )}
+          </div>
+          <ConnectedResourceWidget {...resourceCalculationProps} />
+        </div>
+      )}
       {step === TIMELINE_SLIDER_STEP1 && <ConnectedJurisdictionSelectionsSlider {...sliderProps} />}
       {step === TIMELINE_SLIDER_STEP2 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
     </>

@@ -1,0 +1,16 @@
+/* Chrome, Safari, Edge, Opera */
+
+#resource-calc-widget input::-webkit-outer-spin-button,
+#resource-calc-widget input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+#resource-calc-widget input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+#resource-calc-widget input {
+  width: 45px;
+}

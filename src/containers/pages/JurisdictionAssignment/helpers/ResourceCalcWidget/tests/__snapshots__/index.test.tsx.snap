@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`jurisdiction Assignment/Resource calculation uses user values to compute time estimates correctly: structures count input 1`] = `
+<input
+  name="structuresCount"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="number"
+  value={0}
+/>
+`;
+
+exports[`jurisdiction Assignment/Resource calculation uses user values to compute time estimates correctly: structures count input 2`] = `
+<input
+  name="teamsCount"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="number"
+  value={0}
+/>
+`;

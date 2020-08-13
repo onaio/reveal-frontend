@@ -308,7 +308,13 @@ describe('src/pages/*/AssignPractitioners', () => {
     wrapper.update();
 
     wrapper.find('button#discard-button').simulate('click');
+    wrapper.update();
     // confirm the option is no longer rendered
     expect(wrapper.text().includes('tak - Biophics')).toBeFalsy();
+
+    // check that on clicking discard changes it redirects to team view
+    wrapper.find('button#discard-button').simulate('click');
+    wrapper.update();
+    expect(history.location.pathname).toEqual('/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4');
   });
 });

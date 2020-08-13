@@ -199,6 +199,7 @@ const AssignPractitioner = (props: PropsTypes) => {
   /** handles clicks on the discard changes button */
   const discardChangesHandler = () => {
     setSelectedOptions([]);
+    props.history.replace(`${SINGLE_ORGANIZATION_URL}/${organization.identifier}`);
   };
 
   // Props
