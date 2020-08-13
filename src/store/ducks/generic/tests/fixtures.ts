@@ -239,6 +239,15 @@ export const MDAPointplans = [
   },
 ];
 
+export const DynamicMDAPlans = MDAPointplans.map(item => {
+  return {
+    ...item,
+    plan_intervention_type: 'Dynamic-MDA',
+    plan_name: item.plan_name.replace('MDA-Point', 'Dynamic-MDA'),
+    plan_title: item.plan_title.replace('MDA-Point', 'Dynamic-MDA'),
+  };
+});
+
 export const MDAPointSchoolReportData = [
   {
     plan_id: '40357eff-81b6-4e32-bd3d-484019689f7c',
