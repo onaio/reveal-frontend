@@ -9,7 +9,10 @@ import { Router } from 'react-router';
 import { createConnectedOpenSRPPlansList } from '..';
 import { PLANNING_VIEW_URL, QUERY_PARAM_TITLE } from '../../../../../../../constants';
 import store from '../../../../../../../store';
-import { plansJSON } from '../../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import {
+  plans,
+  plansJSON,
+} from '../../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import plansReducer, {
   fetchPlanRecords,
   PlanRecordResponse,
@@ -76,7 +79,10 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
   });
 
   it('Search works correctly', async () => {
-    fetch.mockResponse(plansJSON);
+    // the assertion for the undefined plan is that we do not get an error
+    const undefinedPlan = { ...plans[0], plan_title: undefined, identifier: 'planTitleWithout' };
+    const fullList = [...plans, undefinedPlan];
+    fetch.mockResponse(JSON.stringify(fullList));
     const props = {
       history,
       location: {
