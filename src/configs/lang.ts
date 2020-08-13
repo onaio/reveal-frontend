@@ -809,3 +809,18 @@ export const SELECT_JURISDICTION = translate(
   'SELECT_JURISDICTION',
   'Please select at least one jurisdiction'
 );
+export const DAYS = translate('DAYS', 'days');
+
+export const RESOURCE_ESTIMATE_FOR = translate('RESOURCE_ESTIMATE_FOR', 'Resource Estimate for %s');
+
+export const AT_A_RATE_OF = translate('AT_A_RATE_OF', 'at a rate of');
+
+export const STRUCTURES_PER_TEAM_PER_DAY = translate(
+  'STRUCTURES_PER_TEAM_PER_DAY',
+  'structures per team per day with'
+);
+
+export const NO_JURISDICTION_SELECTIONS_FOUND = translate(
+  'NO_JURISDICTION_SELECTIONS_FOUND',
+  'No Jurisdiction selections were found'
+);
