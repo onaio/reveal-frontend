@@ -251,6 +251,7 @@ export const zambiaMDALowerJurisdictions = [
 ];
 
 export const zambiaMDAUpperJurisdictions = zambiaMDALowerJurisdictions.slice();
+// add two columns after the first element in the array
 zambiaMDAUpperJurisdictions.splice(
   1,
   0,
