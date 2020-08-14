@@ -3,6 +3,7 @@ import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
 import JurisdictionMetadataForm, { submitForm } from '..';
+import { INVALID_CSV, UPLOAD_FILE, UPLOADING_FILE } from '../../../../configs/lang';
 
 describe('components/forms/JurisdictionMetadata', () => {
   beforeEach(() => {
@@ -48,15 +49,30 @@ describe('components/forms/JurisdictionMetadata', () => {
   });
 
   it('file type validation works', async () => {
-    const { getByText, getByTestId } = render(<JurisdictionMetadataForm />);
+    const { getByText, getByTestId, container } = render(<JurisdictionMetadataForm />);
     const file = new File(['(⌐□_□)'], 'chucknorris.png', { type: 'image/png' });
     const fileInput = getByText('Upload File');
     fireEvent.change(fileInput, { target: { file: [file] } });
     fireEvent.submit(getByTestId('form'));
+    // submit button text changes
+    expect((container.getElementsByClassName('btn-primary').item(0) as any).textContent).toEqual(
+      UPLOADING_FILE
+    );
     /** Assert Validation Response and Button disable */
     await waitFor(() => {
       expect(getByText('Upload File')).toBeDisabled();
+      expect((container.getElementsByClassName('btn-primary').item(0) as any).textContent).toEqual(
+        UPLOAD_FILE
+      );
     });
+    /** Assert uploaded csv is invalid */
+    expect(container.getElementsByClassName('text-danger').length).toEqual(1);
+    expect((container.getElementsByClassName('text-danger').item(0) as any).textContent).toEqual(
+      INVALID_CSV
+    );
+    fireEvent.click(getByTestId('file'));
+    // error is cleared on clicking to choose another file
+    expect(container.getElementsByClassName('text-danger').length).toEqual(0);
   });
 
   it('submitForm uploads CSV file', async () => {

@@ -1,0 +1,153 @@
+{
+  "cache_key": "6faac72bac6ea33ff60391cc09cfece7",
+  "cached_dttm": "2020-08-13T18:55:34",
+  "cache_timeout": 60,
+  "error": null,
+  "form_data": {
+    "datasource": "133__table",
+    "viz_type": "table",
+    "slice_id": 593,
+    "url_params": {},
+    "granularity_sqla": null,
+    "time_grain_sqla": "P1D",
+    "time_range": "No filter",
+    "groupby": [],
+    "metrics": [],
+    "percent_metrics": [],
+    "timeseries_limit_metric": null,
+    "row_limit": 10000,
+    "include_time": false,
+    "order_desc": true,
+    "all_columns": [
+      "id",
+      "plan_id",
+      "jurisdiction_id",
+      "jurisdiction_depth",
+      "jurisdiction_name_path",
+      "sacregistered",
+      "expectedchildren_found",
+      "expectedchildren_treated",
+      "structures_visited_per",
+      "registeredchildrentreated_per",
+      "total_pzqdistributed",
+      "jurisdiction_name",
+      "jurisdiction_parent_id",
+      "jurisdiction_path"
+    ],
+    "order_by_cols": ["[\"jurisdiction_depth\", true]", "[\"jurisdiction_name\", true]"],
+    "adhoc_filters": [
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": "40357eff-81b6-4e32-bd3d-484019689f7c",
+        "operator": "==",
+        "subject": "plan_id"
+      }
+    ],
+    "table_timestamp_format": "%Y-%m-%d %H:%M:%S",
+    "page_length": 0,
+    "include_search": false,
+    "table_filter": false,
+    "align_pn": false,
+    "color_pn": true,
+    "where": "",
+    "having": "",
+    "having_filters": [],
+    "filters": [
+      {
+        "col": "plan_id",
+        "op": "==",
+        "val": "40357eff-81b6-4e32-bd3d-484019689f7c"
+      }
+    ]
+  },
+  "is_cached": true,
+  "query": "SELECT id AS id,\n       plan_id AS plan_id,\n       jurisdiction_id AS jurisdiction_id,\n       jurisdiction_depth AS jurisdiction_depth,\n       jurisdiction_name_path AS jurisdiction_name_path,\n       sacregistered AS sacregistered,\n       expectedchildren_found AS expectedchildren_found,\n       expectedchildren_treated AS expectedchildren_treated,\n       structures_visited_per AS structures_visited_per,\n       registeredchildrentreated_per AS registeredchildrentreated_per,\n       total_pzqdistributed AS total_pzqdistributed,\n       jurisdiction_name AS jurisdiction_name,\n       jurisdiction_parent_id AS jurisdiction_parent_id,\n       jurisdiction_path AS jurisdiction_path\nFROM pending.ntd_dispense_task_jurisdiction_report\nWHERE plan_id = '40357eff-81b6-4e32-bd3d-484019689f7c'\nORDER BY jurisdiction_depth ASC,\n         jurisdiction_name ASC\nLIMIT 10000;",
+  "status": "success",
+  "stacktrace": null,
+  "rowcount": 4,
+  "data": {
+    "records": [
+      {
+        "id": "88360667-5efd-52a1-a608-52db26ad58b1",
+        "plan_id": "40357eff-81b6-4e32-bd3d-484019689f7c",
+        "jurisdiction_id": "ecfbf048-fb7a-47d8-a12b-61bf5d2a6e7b",
+        "jurisdiction_depth": 0,
+        "jurisdiction_name_path": "[]",
+        "sacregistered": 12,
+        "expectedchildren_found": 0.0,
+        "expectedchildren_treated": 0.0,
+        "structures_visited_per": 0.0,
+        "registeredchildrentreated_per": 0.4166666666666667,
+        "total_pzqdistributed": 7.5,
+        "jurisdiction_name": "Zambia(vl 2020)",
+        "jurisdiction_parent_id": "",
+        "jurisdiction_path": "[]"
+      },
+      {
+        "id": "123stx34-cfbb-5704-8d9d-36ebc2dff326",
+        "plan_id": "40357eff-81b6-4e32-bd3d-484019689f7c",
+        "jurisdiction_id": "b4d25f09-1365-41aa-ac37-f5768d9075bf",
+        "jurisdiction_depth": 1,
+        "jurisdiction_name_path": "[\"Zambia(vl 2020)\"]",
+        "sacregistered": 12,
+        "expectedchildren_found": 0.0,
+        "expectedchildren_treated": 0.0,
+        "structures_visited_per": 0.0,
+        "registeredchildrentreated_per": 0.4166666666666667,
+        "total_pzqdistributed": 7.5,
+        "jurisdiction_name": "Luapula Province (2020)",
+        "jurisdiction_parent_id": "ecfbf048-fb7a-47d8-a12b-61bf5d2a6e7b",
+        "jurisdiction_path": "[\"ecfbf048-fb7a-47d8-a12b-61bf5d2a6e7b\"]"
+      },
+      {
+        "id": "867uhj33-cfbb-5704-8d9d-36ebc2dff326",
+        "plan_id": "40357eff-81b6-4e32-bd3d-484019689f7c",
+        "jurisdiction_id": "a31047b0-0240-4ea5-af8b-d0418a4a099a",
+        "jurisdiction_depth": 2,
+        "jurisdiction_name_path": "[\"Zambia(vl 2020)\", \"Eastern Prov (2020)\"]",
+        "sacregistered": 0,
+        "expectedchildren_found": 0.0,
+        "expectedchildren_treated": 0.0,
+        "structures_visited_per": 0.0,
+        "registeredchildrentreated_per": 0.0,
+        "total_pzqdistributed": 0.0,
+        "jurisdiction_name": "Chadiza District (2020)",
+        "jurisdiction_parent_id": "4669b841-5f06-47bc-ac87-4282ca21ae6a",
+        "jurisdiction_path": "[\"ecfbf048-fb7a-47d8-a12b-61bf5d2a6e7b\", \"4669b841-5f06-47bc-ac87-4282ca21ae6a\"]"
+      },
+      {
+        "id": "785baa79-cfbb-5704-8d9d-36ebc2dff326",
+        "plan_id": "40357eff-81b6-4e32-bd3d-484019689f7c",
+        "jurisdiction_id": "044579e9-28c5-4f9a-b31e-2906c6f008fa",
+        "jurisdiction_depth": 2,
+        "jurisdiction_name_path": "[\"Zambia(vl 2020)\", \"Central Province VID\"]",
+        "sacregistered": 0,
+        "expectedchildren_found": 0.0,
+        "expectedchildren_treated": 0.0,
+        "structures_visited_per": 0.0,
+        "registeredchildrentreated_per": 0.0,
+        "total_pzqdistributed": 0.0,
+        "jurisdiction_name": "Mukushi",
+        "jurisdiction_parent_id": "f78196f0-8149-4c8a-83bd-7ac6257d0a93",
+        "jurisdiction_path": "[\"ecfbf048-fb7a-47d8-a12b-61bf5d2a6e7b\", \"f78196f0-8149-4c8a-83bd-7ac6257d0a93\"]"
+      }
+    ],
+    "columns": [
+      "id",
+      "plan_id",
+      "jurisdiction_id",
+      "jurisdiction_depth",
+      "jurisdiction_name_path",
+      "sacregistered",
+      "expectedchildren_found",
+      "expectedchildren_treated",
+      "structures_visited_per",
+      "registeredchildrentreated_per",
+      "total_pzqdistributed",
+      "jurisdiction_name",
+      "jurisdiction_parent_id",
+      "jurisdiction_path"
+    ]
+  }
+}

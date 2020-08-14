@@ -30,6 +30,8 @@ import {
   MAIN_PLAN,
   MOSQUITO_COLLECTION_ID,
   PLAN_ID,
+  REACT_MAPBOX_GL_ICON_IMAGE,
+  REACT_MAPBOX_GL_ICON_SIZE,
   STRUCTURES_FILL,
   STRUCTURES_LINE,
 } from '../../../../../../constants';
@@ -277,13 +279,13 @@ interface ExtraVars {
   useId?: string; // override the goalId to be used for the layer;
 }
 
-/** build layers for all other points , polygons and multi-polygons
+/** Build symbol layers for all other points , polygons and multi-polygons
  * @param {string | null} currentGoal - goal id for the layer that is being built
  * @param {FeatureCollection<TaskGeoJSON>} pointFeatureCollection- feature collection for points
  * @param {FeatureCollection<TaskGeoJSON>} polygonFeatureCollection - feature collection for polygons and multi-polygons
  * @param {ExtraVars} - some vars to help in if branches within the function
  */
-export const buildGsLiteLayers = (
+export const buildGsLiteSymbolLayers = (
   currentGoal: string | null,
   pointFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
@@ -311,6 +313,55 @@ export const buildGsLiteLayers = (
       break;
   }
 
+  const geojsonLayerProps = {
+    ...symbolLayerTemplate,
+    symbolLayout: {
+      ...symbolLayerTemplate.symbolLayout,
+      ...{ [REACT_MAPBOX_GL_ICON_IMAGE]: iconGoal },
+      [REACT_MAPBOX_GL_ICON_SIZE]: currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+    },
+  };
+
+  if (pointFeatureCollection && pointFeatureCollection.features.length && goalIsWithSymbol) {
+    gsLayers.push(
+      <GeoJSONLayer
+        {...geojsonLayerProps}
+        id={`${idToUse}-point-symbol`}
+        key={`${idToUse}-point-symbol`}
+        data={pointFeatureCollection}
+      />
+    );
+  }
+
+  if (polygonFeatureCollection && polygonFeatureCollection.features.length && goalIsWithSymbol) {
+    gsLayers.push(
+      <GeoJSONLayer
+        {...geojsonLayerProps}
+        id={`${idToUse}-poly-symbol`}
+        key={`${idToUse}-poly-symbol`}
+        data={polygonFeatureCollection}
+      />
+    );
+  }
+
+  return gsLayers;
+};
+
+/** build fill and line layers for all other points , polygons and multi-polygons
+ * @param {string | null} currentGoal - goal id for the layer that is being built
+ * @param {FeatureCollection<TaskGeoJSON>} pointFeatureCollection- feature collection for points
+ * @param {FeatureCollection<TaskGeoJSON>} polygonFeatureCollection - feature collection for polygons and multi-polygons
+ * @param {ExtraVars} - some vars to help in if branches within the function
+ */
+export const buildGsLiteLayers = (
+  currentGoal: string | null,
+  pointFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
+  polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
+  extraVars: ExtraVars
+) => {
+  const idToUse = extraVars.useId ? extraVars.useId : currentGoal;
+  const gsLayers = [];
+
   if (pointFeatureCollection && pointFeatureCollection.features.length) {
     gsLayers.push(
       <GeoJSONLayer
@@ -326,21 +377,6 @@ export const buildGsLiteLayers = (
         data={pointFeatureCollection}
       />
     );
-    if (goalIsWithSymbol) {
-      gsLayers.push(
-        <GeoJSONLayer
-          {...symbolLayerTemplate}
-          symbolLayout={{
-            ...symbolLayerTemplate.symbolLayout,
-            ...{ 'icon-image': iconGoal },
-            'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
-          }}
-          id={`${idToUse}-point-symbol`}
-          key={`${idToUse}-point-symbol`}
-          data={pointFeatureCollection}
-        />
-      );
-    }
   }
   if (polygonFeatureCollection && polygonFeatureCollection.features.length) {
     gsLayers.push(
@@ -371,21 +407,7 @@ export const buildGsLiteLayers = (
       />
     );
   }
-  if (goalIsWithSymbol) {
-    gsLayers.push(
-      <GeoJSONLayer
-        {...symbolLayerTemplate}
-        symbolLayout={{
-          ...symbolLayerTemplate.symbolLayout,
-          ...{ 'icon-image': iconGoal },
-          'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
-        }}
-        id={`${idToUse}-poly-symbol`}
-        key={`${idToUse}-poly-symbol`}
-        data={polygonFeatureCollection}
-      />
-    );
-  }
+
   return gsLayers;
 };
 

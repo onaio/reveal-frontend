@@ -96,6 +96,7 @@ import MarkCompleteLink, { MarkCompleteLinkProps } from './helpers/MarkCompleteL
 import StatusBadge, { StatusBadgeProps } from './helpers/StatusBadge';
 import {
   buildGsLiteLayers,
+  buildGsLiteSymbolLayers,
   buildJurisdictionLayers,
   buildOnClickHandler,
   buildStructureLayers,
@@ -279,6 +280,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
   const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
   const structureLayers = buildStructureLayers(structures);
 
+  /** Build line and fill layers */
   const historicalIndexLayers = buildGsLiteLayers(
     CASE_CONFIRMATION_GOAL_ID,
     historicalPointIndexCases,
@@ -298,12 +300,38 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     {}
   );
 
+  /** Build symbol layers */
+  const historicalIndexSymbolLayers = buildGsLiteSymbolLayers(
+    CASE_CONFIRMATION_GOAL_ID,
+    historicalPointIndexCases,
+    historicalPolyIndexCases,
+    { useId: HISTORICAL_INDEX_CASES }
+  );
+  const currentIndexSymbolLayers = buildGsLiteSymbolLayers(
+    CASE_CONFIRMATION_GOAL_ID,
+    currentPointIndexCases,
+    currentPolyIndexCases,
+    { useId: CURRENT_INDEX_CASES }
+  );
+  const otherSymbolLayers = buildGsLiteSymbolLayers(
+    currentGoal,
+    pointFeatureCollection,
+    polygonFeatureCollection,
+    {}
+  );
+
+  /** Symbol layers should appear over fill and line so we make sure symbol layers are last
+   * in the array
+   */
   const gsLayers = [
     ...jurisdictionLayers,
     ...structureLayers,
     ...historicalIndexLayers,
     ...currentIndexLayers,
     ...otherLayers,
+    ...otherSymbolLayers,
+    ...historicalIndexSymbolLayers,
+    ...currentIndexSymbolLayers,
   ];
 
   const mapCenter = getCenter({
@@ -453,8 +481,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     plansByFocusArea.sort((a: Plan, b: Plan) => Date.parse(b.plan_date) - Date.parse(a.plan_date));
   }
 
-  if (plan && jurisdiction && goals && goals.length > 1) {
-    /** include all complete index cases including current index case */
+  if (plan && jurisdiction) {
     historicalPointIndexCases = getTasksFCSelector(state, {
       actionCode: CASE_CONFIRMATION_CODE,
       excludePlanId: plan.plan_id,
@@ -469,7 +496,10 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       structureType: [POLYGON, MULTI_POLYGON],
       taskBusinessStatus: 'Complete',
     });
+  }
 
+  if (plan && jurisdiction && goals && goals.length > 1) {
+    /** include all complete index cases including current index case */
     currentPointIndexCases = getTasksFCSelector(state, {
       actionCode: CASE_CONFIRMATION_CODE,
       jurisdictionId: plan.jurisdiction_id,
