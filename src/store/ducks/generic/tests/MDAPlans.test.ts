@@ -54,9 +54,6 @@ describe('reducers/MDA/Dynami-MDAPlan', () => {
     expect(getPlansArrayByTitle()(store.getState(), titleUpperFilter)).toEqual([
       fixtures.DynamicMDAPlans[2],
     ]);
-    expect(plansArraySelector(store.getState(), { plan_title: 'Berg' })).toEqual([
-      fixtures.DynamicMDAPlans[2],
-    ]);
     expect(plansArraySelector(store.getState(), { statusList: ['retired'] })).toEqual([
       fixtures.DynamicMDAPlans[0],
     ]);
