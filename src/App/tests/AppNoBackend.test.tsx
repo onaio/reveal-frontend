@@ -10,6 +10,7 @@ import App from '../App';
 jest.mock('../../configs/env', () => ({
   BACKEND_ACTIVE: false,
   HIDDEN_PLAN_STATUSES: ['retired'],
+  SUPERSET_DYNAMIC_MDA_REPORTING_JURISDICTIONS_DATA_SLICES: '1338',
   SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES: '11, 12',
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES: '12',
 }));
@@ -18,10 +19,12 @@ const history = createBrowserHistory();
 
 describe('App no backend', () => {
   it('integration: renders App correctly', async () => {
+    const LogoutComponent = () => null;
+
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <App />
+          <App logoutComponent={LogoutComponent} />
         </Router>
       </Provider>
     );

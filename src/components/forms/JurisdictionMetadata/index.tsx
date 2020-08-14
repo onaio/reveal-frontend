@@ -8,13 +8,11 @@ import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
 import {
   CSV_FILE,
-  FILE,
   FILE_UPLOADED_SUCCESSFULLY,
   INVALID_CSV,
   REQUIRED,
-  UPLOAD,
   UPLOAD_FILE,
-  UPLOADING,
+  UPLOADING_FILE,
 } from '../../../configs/lang';
 import { HOME_URL, OPENSRP_V1_SETTINGS_ENDPOINT } from '../../../constants';
 import {
@@ -134,6 +132,8 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
                     event && event.target && event.target.files && event.target.files[0]
                   );
                 }}
+                // tslint:disable-next-line: jsx-no-lambda
+                onClick={() => (globalError ? setGlobalError('') : null)}
                 className={errors.file ? `form-control is-invalid` : `form-control`}
                 data-testid="file"
               />
@@ -151,7 +151,7 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
               aria-label={UPLOAD_FILE}
               disabled={isSubmitting || Object.keys(errors).length > 0 || disabled}
             >
-              {isSubmitting ? UPLOADING : `${UPLOAD} ${FILE}`}
+              {isSubmitting ? UPLOADING_FILE : UPLOAD_FILE}
             </Button>
           </Form>
         )}

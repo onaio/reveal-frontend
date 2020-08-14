@@ -71,6 +71,7 @@ export const LOGOUT_URL = '/logout';
 export const HOME_URL = '/';
 export const REPORT_IRS_PLAN_URL = `/intervention/irs/report`;
 export const REPORT_MDA_POINT_PLAN_URL = `/intervention/mda-point/report`;
+export const REPORT_MDA_PLAN_URL = `/intervention/mda/report`;
 export const MDA_POINT_LOCATION_REPORT_URL = '/intervention/mda-point/location-report';
 export const MDA_POINT_CHILD_REPORT_URL = '/intervention/mda-point/child-report';
 export const ASSIGN_PLAN_URL = `/assign`;
