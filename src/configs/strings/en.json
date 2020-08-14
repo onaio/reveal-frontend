@@ -35,6 +35,10 @@
     "message": "IRS Reporting",
     "description": "page title for IRS reporting page"
   },
+  "MDA_REPORTING_TITLE": {
+    "message": "MDA Reporting",
+    "description": "page title for MDA reporting page"
+  },
   "CONDITIONAL_FORMATTING_RULES": {
     "message": "Conditional formatting rules",
     "description": "legend title describing colors"
@@ -330,6 +334,10 @@
   "IRS_PLANS": {
     "message": "IRS Plans",
     "description": "page title: pages for Indoor Residual Sray plans"
+  },
+  "MDA_PLANS": {
+    "message": "MDA Plans",
+    "description": "page title: pages for Mass Drug Administration plans"
   },
   "CANCEL": {
     "message": "Cancel",

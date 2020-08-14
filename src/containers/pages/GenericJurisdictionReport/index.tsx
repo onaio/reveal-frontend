@@ -23,6 +23,7 @@ import GenericJurisdictionsReducer, {
   GenericJurisdiction,
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../store/ducks/generic/jurisdictions';
+import { genericFetchPlans } from '../../../store/ducks/generic/MDAPlans';
 import { fetchMDAPointPlans } from '../../../store/ducks/generic/MDAPointPlans';
 import { fetchIRSPlans, GenericPlan } from '../../../store/ducks/generic/plans';
 import { getJurisdictionBreadcrumbs } from '../IRS/Map/helpers';
@@ -42,7 +43,7 @@ export interface GenericJurisdictionProps {
   /** Action for dispatching jurisdictions to store */
   fetchJurisdictions: typeof fetchGenericJurisdictions;
   /** An action for dispatching  plans */
-  fetchPlans: typeof fetchMDAPointPlans | typeof fetchIRSPlans;
+  fetchPlans: typeof fetchMDAPointPlans | typeof fetchIRSPlans | typeof genericFetchPlans;
   /** Reporting focus area column */
   focusAreaColumn: string;
   /** Jurisdiction depth of the lowest level jurisdictions */
@@ -200,7 +201,7 @@ const GenericJurisdictionReport = (
 
   let columnsToUse = get(plansTableColumns, jurisdictionColumn, null);
   if (currLevelData && currLevelData.length > 0) {
-    if (currLevelData[0].jurisdiction_depth === +focusAreaLevel) {
+    if (currLevelData[0].jurisdiction_depth >= +focusAreaLevel) {
       columnsToUse = get(plansTableColumns, focusAreaColumn, null);
     }
   }

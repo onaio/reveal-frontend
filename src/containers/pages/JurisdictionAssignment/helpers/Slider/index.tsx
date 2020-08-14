@@ -107,7 +107,6 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
 
   return (
     <div className="mt-3">
-      <hr />
       <Row>
         <Col xs="12" md={{ size: 8, offset: 2 }} style={{ textAlign: 'center' }}>
           <h4 className="mb-5 font-weight-bold">{ADJUST_SLIDER_MESSAGE}</h4>

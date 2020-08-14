@@ -552,11 +552,17 @@ export const getPlansArrayByPlanIds = (planKey?: string) => {
  * @param {PlanFilters} props - the plan filters object
  */
 export const getPlansArrayByTitle = (planKey?: string) =>
-  createSelector([plansArrayBaseSelector(planKey), getTitle], (plans, title) =>
-    title
-      ? plans.filter(plan => plan.plan_title.toLowerCase().includes(title.toLowerCase()))
-      : plans
-  );
+  createSelector([plansArrayBaseSelector(planKey), getTitle], (plans, title) => {
+    return title
+      ? plans.filter(plan => {
+          const thisPlansTitle = plan.plan_title;
+          if (!thisPlansTitle) {
+            return false;
+          }
+          return plan.plan_title.toLowerCase().includes(title.toLowerCase());
+        })
+      : plans;
+  });
 
 /** makePlansArraySelector
  * Returns a selector that gets an array of Plan objects filtered by one or all
