@@ -25,7 +25,7 @@ reducerRegistry.register(DynamicMDAPLansReducerName, DynamicMDAPLansReducer);
 /** a list of plan statuses to be displayed */
 const allowedPlanStatusList = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
 
-/** Simple component that loads a preview list of IRS plans */
+/** Simple component that loads a list of MDA plans */
 const MDAPLansList = (props: GenericPlanListProps & RouteComponentProps) => {
   return (
     <div>
@@ -75,7 +75,7 @@ const mapStateToProps = (
 /** map dispatch to props */
 const mapDispatchToProps = { fetchPlans: genericFetchPlans };
 
-/** Connected ActiveFI component */
+/** Connected MDA Plans component */
 const ConnectedMDAPLansList = connect(mapStateToProps, mapDispatchToProps)(MDAPLansList);
 
 export default ConnectedMDAPLansList;
