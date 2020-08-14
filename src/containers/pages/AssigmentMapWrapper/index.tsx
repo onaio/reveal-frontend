@@ -31,11 +31,8 @@ import jurisdictionReducer, {
   getJurisdictionsFC,
   reducerName as jurisdictionReducerName,
 } from '../../../store/ducks/opensrp/jurisdictions';
-import {
-  buildMouseMoveHandler,
-  buildStructureLayers,
-} from '../FocusInvestigation/map/active/helpers/utils';
-import { onJurisdictionClick } from './helpers/utils';
+import { buildStructureLayers } from '../FocusInvestigation/map/active/helpers/utils';
+import { buildMouseMoveHandler, onJurisdictionClick } from './helpers/utils';
 
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
@@ -83,7 +80,7 @@ const defaultProps: AssignmentMapWrapperProps = {
 
 /**
  * This is a map HOC for the plan and jurisdiction assignment pages
- * It is responsuble for fetching jurisdiction geojson and wiring down to
+ * It is responsible for fetching jurisdiction geojson and wiring down to
  * GisidaLite map
  * @param props - component props
  */

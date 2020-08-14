@@ -3,7 +3,7 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
-import { EventData } from 'mapbox-gl';
+import { EventData, Popup } from 'mapbox-gl';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
@@ -32,7 +32,7 @@ import jurisdictionMetadataReducer, {
 import plansReducer, {
   reducerName as plansReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
-import { onJurisdictionClick } from '../helpers/utils';
+import { buildMouseMoveHandler, onJurisdictionClick } from '../helpers/utils';
 import * as fixtures from './fixtures';
 
 // tslint:disable-next-line: no-var-requires
@@ -331,6 +331,20 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     const selectNodeCreatorMock = jest.fn(selectNode);
     const deselectNodeCreatorMock = jest.fn(deselectNode);
     const mockProps = {
+      currentChildren: [
+        {
+          model: {
+            id: '2942',
+            meta: { selected: false },
+          },
+        },
+        {
+          model: {
+            id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+            meta: { selected: false },
+          },
+        },
+      ],
       currentParentNode: {
         children: [
           {
@@ -371,8 +385,14 @@ describe('containers/pages/AssigmentMapWrapper', () => {
       currentChildren: [
         {
           model: {
-            id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+            id: '2943',
             meta: { selected: true },
+          },
+        },
+        {
+          model: {
+            id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+            meta: { selected: false },
           },
         },
       ],
@@ -408,5 +428,105 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     const onJurisdictionClickMock2 = onJurisdictionClick(mockProps2, () => jest.fn(), history);
     onJurisdictionClickMock2(mockMapObj, event as EventData);
     expect(selectNodeCreatorMock).toBeCalledTimes(2);
+  });
+  it('shows popup on hover', () => {
+    const event = {
+      lngLat: {
+        lat: 15.065355545319008,
+        lng: 101.1799767158821,
+      },
+      originalEvent: {},
+      point: {
+        x: 463.5,
+        y: 477.1875,
+      },
+      target: {
+        queryRenderedFeatures: () => {
+          return [
+            {
+              geometry: {
+                coordinates: [
+                  [
+                    [101.16072535514832, 15.119824869285075],
+                    [101.15796539300004, 15.052626968000027],
+                    [101.16026588800008, 15.052683043000059],
+                    [101.16249336800007, 15.05279176700003],
+                    [101.16457351200006, 15.05287588400006],
+                    [101.16817184600006, 15.053010455000049],
+                    [101.16992435000009, 15.05309115600005],
+                    [101.16997576800009, 15.052226568000037],
+                    [101.17015797000005, 15.050841579000064],
+                    [101.17258921900009, 15.050799469000026],
+                    [101.17424499900005, 15.050698872000055],
+                    [101.17613469500009, 15.050485078000065],
+                    [101.17699562400009, 15.050437232000036],
+                  ],
+                ],
+                type: 'Polygon',
+              },
+              id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+              properties: {
+                geographicLevel: 3,
+                name: 'Two Three Two Release Village',
+                parentId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
+                status: 'Active',
+                version: 0,
+              },
+              type: 'Feature',
+            },
+          ];
+        },
+      },
+      type: 'fill',
+    };
+
+    const mockedPopup = Popup;
+    const addToMock = jest.fn();
+    mockedPopup.prototype.setLngLat = (e: any) => {
+      expect(e).toEqual({
+        lat: 15.065355545319008,
+        lng: 101.1799767158821,
+      });
+      e.setHTML = (f: string) => {
+        expect(f).toEqual(
+          '<div class="jurisdiction-name"><center>Two Three Two Release Village</center></div>'
+        );
+        e.addTo = addToMock;
+        return e;
+      };
+      return e;
+    };
+
+    (global as any).mapboxgl = {
+      Popup: mockedPopup,
+    };
+
+    const mockStyle = {
+      cursor: 'pointer',
+    };
+
+    const mockMap: any = {
+      // mock unproject function
+      getCanvas: jest.fn().mockImplementation(() => {
+        return {
+          style: {
+            ...mockStyle,
+          },
+        };
+      }),
+      unproject: () => {
+        return {
+          lat: 15.065355545319008,
+          lng: 101.1799767158821,
+        };
+      },
+    };
+
+    buildMouseMoveHandler(mockMap, event as any);
+
+    expect(addToMock.mock.calls).toEqual([
+      [{ getCanvas: expect.any(Function), unproject: expect.any(Function) }],
+    ]);
+    expect(addToMock).toBeCalledTimes(1);
   });
 });
