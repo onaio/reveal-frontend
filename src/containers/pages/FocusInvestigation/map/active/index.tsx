@@ -329,9 +329,9 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     ...historicalIndexLayers,
     ...currentIndexLayers,
     ...otherLayers,
+    ...otherSymbolLayers,
     ...historicalIndexSymbolLayers,
     ...currentIndexSymbolLayers,
-    ...otherSymbolLayers,
   ];
 
   const mapCenter = getCenter({
