@@ -30,6 +30,8 @@ import {
   MAIN_PLAN,
   MOSQUITO_COLLECTION_ID,
   PLAN_ID,
+  REACT_MAPBOX_GL_ICON_IMAGE,
+  REACT_MAPBOX_GL_ICON_SIZE,
   STRUCTURES_FILL,
   STRUCTURES_LINE,
 } from '../../../../../../constants';
@@ -315,8 +317,8 @@ export const buildGsLiteSymbolLayers = (
     ...symbolLayerTemplate,
     symbolLayout: {
       ...symbolLayerTemplate.symbolLayout,
-      ...{ 'icon-image': iconGoal },
-      'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+      ...{ [REACT_MAPBOX_GL_ICON_IMAGE]: iconGoal },
+      [REACT_MAPBOX_GL_ICON_SIZE]: currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
     },
   };
 
