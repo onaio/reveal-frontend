@@ -1,7 +1,7 @@
 import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { Cell } from 'react-table';
-import { getIRSThresholdAdherenceIndicator } from '../../../helpers/indicators';
+import { getIRSThresholdAdherenceIndicator, renderPercentage } from '../../../helpers/indicators';
 
 /** columns for Namibia IRS jurisdictions */
 export const NamibiaColumns = [
@@ -227,6 +227,46 @@ export const ZambiaFocusAreasColumns = [
   },
 ];
 
+/** columns for Namibia IRS focus (spray) areas */
+export const zambiaMDALowerJurisdictions = [
+  {
+    Header: 'Name',
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
+  },
+  {
+    Cell: (cell: Cell) => renderPercentage(cell),
+    Header: 'Registered Children Treated (%)',
+    accessor: 'registeredchildrentreated_per',
+  },
+  {
+    Cell: (cell: Cell) => renderPercentage(cell),
+    Header: 'Structured Visited (%)',
+    accessor: 'structures_visited_per',
+  },
+  {
+    Header: 'PZQ Tablets Distributed',
+    accessor: 'total_pzqdistributed',
+  },
+];
+
+export const zambiaMDAUpperJurisdictions = zambiaMDALowerJurisdictions.slice();
+// add two columns after the first element in the array
+zambiaMDAUpperJurisdictions.splice(
+  1,
+  0,
+  {
+    Cell: (cell: Cell) => renderPercentage(cell),
+    Header: 'Expected Children Found (%)',
+    accessor: 'expectedchildren_found',
+  },
+  {
+    Cell: (cell: Cell) => renderPercentage(cell),
+    Header: 'Expected Children Treated (%)',
+    accessor: 'expectedchildren_treated',
+  }
+);
+
 /** IRS Table Columns
  * These are all the table columns for IRS that we know about.
  */
@@ -235,6 +275,8 @@ export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionar
   namibia2019: NamibiaColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
   zambiaJurisdictions2019: ZambiaJurisdictionsColumns,
+  zambiaMDALower2020: zambiaMDALowerJurisdictions,
+  zambiaMDAUpper2020: zambiaMDAUpperJurisdictions,
 };
 
 export type TableProps = Pick<

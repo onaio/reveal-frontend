@@ -20,6 +20,7 @@ import {
   ENABLE_ABOUT,
   ENABLE_ASSIGN,
   ENABLE_CONFIG_FORM,
+  ENABLE_DYNAMIC_MDA,
   ENABLE_FI,
   ENABLE_IRS,
   ENABLE_JURISDICTION_METADATA_UPLOAD,
@@ -46,6 +47,7 @@ import {
   LOGIN,
   MANIFEST_RELEASES,
   MDA_POINT_REPORTING_TITLE,
+  MDA_REPORTING_TITLE,
   MONITOR,
   ORGANIZATIONS_LABEL,
   PLAN_TITLE,
@@ -73,6 +75,7 @@ import {
   PRACTITIONERS_LIST_URL,
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
+  REPORT_MDA_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
   VIEW_DRAFT_FILES_URL,
 } from '../../../constants';
@@ -171,7 +174,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                 </NavItem>
               )}
 
-              {(ENABLE_IRS || ENABLE_FI) && (
+              {(ENABLE_IRS || ENABLE_FI || ENABLE_DYNAMIC_MDA || ENABLE_MDA_POINT) && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle
                     nav={true}
@@ -212,6 +215,19 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                             activeClassName="active"
                           >
                             {MDA_POINT_REPORTING_TITLE}
+                          </NavLink>
+                        </DropdownItem>
+                      </div>
+                    )}
+                    {ENABLE_DYNAMIC_MDA && (
+                      <div>
+                        <DropdownItem>
+                          <NavLink
+                            to={REPORT_MDA_PLAN_URL}
+                            className="nav-link"
+                            activeClassName="active"
+                          >
+                            {MDA_REPORTING_TITLE}
                           </NavLink>
                         </DropdownItem>
                       </div>

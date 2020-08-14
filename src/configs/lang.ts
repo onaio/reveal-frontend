@@ -37,6 +37,7 @@ export const HOME_TITLE = translate('HOME_TITLE', 'Home page');
 export const IRS_TITLE = translate('IRS_TITLE', 'IRS');
 export const PLANNING_PAGE_TITLE = translate('PLANNING_PAGE_TITLE', 'Planning tool');
 export const IRS_REPORTING_TITLE = translate('IRS_REPORTING_TITLE', 'IRS Reporting');
+export const MDA_REPORTING_TITLE = translate('MDA_REPORTING_TITLE', 'MDA Reporting');
 export const CONDITIONAL_FORMATTING_RULES = translate(
   'CONDITIONAL_FORMATTING_RULES',
   'Conditional formatting rules'
@@ -143,6 +144,7 @@ export const REMOVE = translate('REMOVE', 'Remove');
 export const UPLOAD = translate('UPLOAD', 'Upload');
 
 export const IRS_PLANS = translate('IRS_PLANS', 'IRS Plans');
+export const MDA_PLANS = translate('MDA_PLANS', 'MDA Plans');
 export const MDA_POINT_PLANS = translate('MDA_POINT_PLANS', 'MDA Point Plans');
 export const COUNTRY = translate('COUNTRY', 'Country');
 export const JURISDICTION_HIERARCHY = translate('JURISDICTION_HIERARCHY', 'jurisdictionHierachy');
