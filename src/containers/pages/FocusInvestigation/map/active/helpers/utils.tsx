@@ -311,40 +311,35 @@ export const buildGsLiteSymbolLayers = (
       break;
   }
 
-  if (pointFeatureCollection && pointFeatureCollection.features.length) {
-    if (goalIsWithSymbol) {
-      gsLayers.push(
-        <GeoJSONLayer
-          {...symbolLayerTemplate}
-          symbolLayout={{
-            ...symbolLayerTemplate.symbolLayout,
-            ...{ 'icon-image': iconGoal },
-            'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
-          }}
-          id={`${idToUse}-point-symbol`}
-          key={`${idToUse}-point-symbol`}
-          data={pointFeatureCollection}
-        />
-      );
-    }
+  const geojsonLayerProps = {
+    ...symbolLayerTemplate,
+    symbolLayout: {
+      ...symbolLayerTemplate.symbolLayout,
+      ...{ 'icon-image': iconGoal },
+      'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+    },
+  };
+
+  if (pointFeatureCollection && pointFeatureCollection.features.length && goalIsWithSymbol) {
+    gsLayers.push(
+      <GeoJSONLayer
+        {...geojsonLayerProps}
+        id={`${idToUse}-point-symbol`}
+        key={`${idToUse}-point-symbol`}
+        data={pointFeatureCollection}
+      />
+    );
   }
 
-  if (polygonFeatureCollection && polygonFeatureCollection.features.length) {
-    if (goalIsWithSymbol) {
-      gsLayers.push(
-        <GeoJSONLayer
-          {...symbolLayerTemplate}
-          symbolLayout={{
-            ...symbolLayerTemplate.symbolLayout,
-            ...{ 'icon-image': iconGoal },
-            'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
-          }}
-          id={`${idToUse}-poly-symbol`}
-          key={`${idToUse}-poly-symbol`}
-          data={polygonFeatureCollection}
-        />
-      );
-    }
+  if (polygonFeatureCollection && polygonFeatureCollection.features.length && goalIsWithSymbol) {
+    gsLayers.push(
+      <GeoJSONLayer
+        {...geojsonLayerProps}
+        id={`${idToUse}-poly-symbol`}
+        key={`${idToUse}-poly-symbol`}
+        data={polygonFeatureCollection}
+      />
+    );
   }
 
   return gsLayers;
