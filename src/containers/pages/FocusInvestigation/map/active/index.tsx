@@ -453,8 +453,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     plansByFocusArea.sort((a: Plan, b: Plan) => Date.parse(b.plan_date) - Date.parse(a.plan_date));
   }
 
-  if (plan && jurisdiction && goals && goals.length > 1) {
-    /** include all complete index cases including current index case */
+  if (plan && jurisdiction) {
     historicalPointIndexCases = getTasksFCSelector(state, {
       actionCode: CASE_CONFIRMATION_CODE,
       excludePlanId: plan.plan_id,
@@ -469,7 +468,10 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       structureType: [POLYGON, MULTI_POLYGON],
       taskBusinessStatus: 'Complete',
     });
+  }
 
+  if (plan && jurisdiction && goals && goals.length > 1) {
+    /** include all complete index cases including current index case */
     currentPointIndexCases = getTasksFCSelector(state, {
       actionCode: CASE_CONFIRMATION_CODE,
       jurisdictionId: plan.jurisdiction_id,
