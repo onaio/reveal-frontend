@@ -277,13 +277,13 @@ interface ExtraVars {
   useId?: string; // override the goalId to be used for the layer;
 }
 
-/** build layers for all other points , polygons and multi-polygons
+/** Build symbol layers for all other points , polygons and multi-polygons
  * @param {string | null} currentGoal - goal id for the layer that is being built
  * @param {FeatureCollection<TaskGeoJSON>} pointFeatureCollection- feature collection for points
  * @param {FeatureCollection<TaskGeoJSON>} polygonFeatureCollection - feature collection for polygons and multi-polygons
  * @param {ExtraVars} - some vars to help in if branches within the function
  */
-export const buildGsLiteLayers = (
+export const buildGsLiteSymbolLayers = (
   currentGoal: string | null,
   pointFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
   polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
@@ -312,20 +312,6 @@ export const buildGsLiteLayers = (
   }
 
   if (pointFeatureCollection && pointFeatureCollection.features.length) {
-    gsLayers.push(
-      <GeoJSONLayer
-        {...circleLayerTemplate}
-        circlePaint={{
-          ...circleLayerTemplate.circlePaint,
-          'circle-color': ['get', 'color'],
-          'circle-stroke-color': ['get', 'color'],
-          'circle-stroke-opacity': 1,
-        }}
-        id={`${idToUse}-point`}
-        key={`${idToUse}-point`}
-        data={pointFeatureCollection}
-      />
-    );
     if (goalIsWithSymbol) {
       gsLayers.push(
         <GeoJSONLayer
@@ -341,6 +327,59 @@ export const buildGsLiteLayers = (
         />
       );
     }
+  }
+
+  if (polygonFeatureCollection && polygonFeatureCollection.features.length) {
+    if (goalIsWithSymbol) {
+      gsLayers.push(
+        <GeoJSONLayer
+          {...symbolLayerTemplate}
+          symbolLayout={{
+            ...symbolLayerTemplate.symbolLayout,
+            ...{ 'icon-image': iconGoal },
+            'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+          }}
+          id={`${idToUse}-poly-symbol`}
+          key={`${idToUse}-poly-symbol`}
+          data={polygonFeatureCollection}
+        />
+      );
+    }
+  }
+
+  return gsLayers;
+};
+
+/** build fill and line layers for all other points , polygons and multi-polygons
+ * @param {string | null} currentGoal - goal id for the layer that is being built
+ * @param {FeatureCollection<TaskGeoJSON>} pointFeatureCollection- feature collection for points
+ * @param {FeatureCollection<TaskGeoJSON>} polygonFeatureCollection - feature collection for polygons and multi-polygons
+ * @param {ExtraVars} - some vars to help in if branches within the function
+ */
+export const buildGsLiteLayers = (
+  currentGoal: string | null,
+  pointFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
+  polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
+  extraVars: ExtraVars
+) => {
+  const idToUse = extraVars.useId ? extraVars.useId : currentGoal;
+  const gsLayers = [];
+
+  if (pointFeatureCollection && pointFeatureCollection.features.length) {
+    gsLayers.push(
+      <GeoJSONLayer
+        {...circleLayerTemplate}
+        circlePaint={{
+          ...circleLayerTemplate.circlePaint,
+          'circle-color': ['get', 'color'],
+          'circle-stroke-color': ['get', 'color'],
+          'circle-stroke-opacity': 1,
+        }}
+        id={`${idToUse}-point`}
+        key={`${idToUse}-point`}
+        data={pointFeatureCollection}
+      />
+    );
   }
   if (polygonFeatureCollection && polygonFeatureCollection.features.length) {
     gsLayers.push(
@@ -371,21 +410,7 @@ export const buildGsLiteLayers = (
       />
     );
   }
-  if (goalIsWithSymbol) {
-    gsLayers.push(
-      <GeoJSONLayer
-        {...symbolLayerTemplate}
-        symbolLayout={{
-          ...symbolLayerTemplate.symbolLayout,
-          ...{ 'icon-image': iconGoal },
-          'icon-size': currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
-        }}
-        id={`${idToUse}-poly-symbol`}
-        key={`${idToUse}-poly-symbol`}
-        data={polygonFeatureCollection}
-      />
-    );
-  }
+
   return gsLayers;
 };
 
