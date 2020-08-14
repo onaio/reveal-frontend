@@ -238,3 +238,7 @@ export const TEXT_TAB_SEPARATED_VALUES = 'text/tab-separated-values';
 
 /** Superset API strings */
 export const SUPERSET_ACCESS_DENIED_MESSAGE = 'Access is Denied';
+
+/** React Mapbox GL strings */
+export const REACT_MAPBOX_GL_ICON_IMAGE = 'icon-image';
+export const REACT_MAPBOX_GL_ICON_SIZE = 'icon-size';
