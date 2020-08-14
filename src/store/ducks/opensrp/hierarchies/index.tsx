@@ -55,9 +55,6 @@ export const DESELECT_ALL_NODES = 'opensrp/locations/hierarchy/DESELECT_ALL_NODE
 // /** action to auto-append/ auto-modify the selected attribute of nodes in a tree */
 export const AUTO_SELECT_NODES = 'opensrp/locations/hierarchy/AUTO_SELECT_NODES';
 
-/** action to fetch updated children to ensure map and jurisdiction table are in sync */
-export const FETCH_MAP_CURRENT_PARENT = 'opensrp/locations/hierarchy/FETCH_MAP_CURRENT_PARENT';
-
 /** describes action that adds a tree to store */
 export interface FetchedTreeAction extends AnyAction {
   type: typeof TREE_FETCHED;
