@@ -170,7 +170,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
 
   const AssignmentWrapperProps = {
     currentParentId: props.match.params.parentId,
-    rootId,
+    rootJurisdictionId: rootId,
     serviceClass,
   };
 
