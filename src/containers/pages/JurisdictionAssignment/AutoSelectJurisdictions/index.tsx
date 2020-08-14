@@ -67,6 +67,7 @@ import { ConnectedResourceWidget } from '../helpers/ResourceCalcWidget';
 import { ConnectedJurisdictionSelectionsSlider } from '../helpers/Slider';
 import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
+import { ConnectedSelectedStructuresTable } from '../JurisdictionTable/structureSummary';
 import './index.css';
 
 reducerRegistry.register(planReducerName, plansReducer);
@@ -196,6 +197,13 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     serviceClass,
   };
 
+  const structureSummaryProps = {
+    currentParentId: props.match.params.parentId,
+    onClickNext: () => setStep(TIMELINE_SLIDER_STEP3),
+    planId: plan.identifier,
+    rootJurisdictionId,
+  };
+
   const breadcrumbProps = {
     currentPage: {
       label: plan.title,
@@ -262,7 +270,10 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
         </div>
       )}
       {step === TIMELINE_SLIDER_STEP1 && <ConnectedJurisdictionSelectionsSlider {...sliderProps} />}
-      {step === TIMELINE_SLIDER_STEP2 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
+      {step === TIMELINE_SLIDER_STEP2 && (
+        <ConnectedSelectedStructuresTable {...structureSummaryProps} />
+      )}
+      {step === TIMELINE_SLIDER_STEP3 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
     </>
   );
 };
