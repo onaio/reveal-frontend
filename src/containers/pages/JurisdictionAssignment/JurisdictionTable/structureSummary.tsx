@@ -101,21 +101,19 @@ const SelectedStructuresTable = (props: JurisdictionSelectorTableProps) => {
   /** Adds a row in the footer that contains the total number of structures of all
    * jurisdictions that are descendants of the current parent node
    */
-  const renderRows: renderRowsFuncType = (...args) => {
+  const renderRows: renderRowsFuncType = (rowData, tbClass, tdClass, trClass) => {
     const parentNodeStructureCount = currentParentNode
       ? getNodeStructureCount(currentParentNode)
       : 0;
     const items = [TOTAL, parentNodeStructureCount];
-    const trClassName = args[3] ? args[3] : '';
-    const tdClassName = args[2] ? args[2] : '';
     const tfootRow = (
-      <tr className={trClassName}>
-        <ElementMap items={items} HTMLTag="td" className={`${tdClassName} text-bold`} />
+      <tr className={trClass}>
+        <ElementMap items={items} HTMLTag="td" className={`${tdClass} text-bold`} />
       </tr>
     );
     return (
       <>
-        {renderRowsFunc(...args)}
+        {renderRowsFunc(rowData, tbClass, tdClass, trClass)}
         {parentNodeStructureCount !== 0 && <tfoot>{tfootRow}</tfoot>}
       </>
     );
