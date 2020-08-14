@@ -256,7 +256,10 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   };
 
   const AssignmentWraperProps = {
+    autoSelectionFlow: false,
     currentParentId: jurisdictionId,
+    jurisdictionsChunkSize: 30,
+    plan: plan as PlanDefinition,
     rootJurisdictionId: props.match.params.planId,
     serviceClass: OpenSRPServiceClass,
   };
@@ -308,7 +311,9 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const organizations = getOrganizationsArray(state);
   const assignments = getAssignmentsArrayByPlanId(state, ownProps.match.params.planId);
 
-  const tree = treeSelector(state, { rootJurisdictionId: ownProps.match.params.planId });
+  const tree = treeSelector(state, {
+    rootJurisdictionId: ownProps.match.params.planId,
+  });
 
   return {
     assignments,

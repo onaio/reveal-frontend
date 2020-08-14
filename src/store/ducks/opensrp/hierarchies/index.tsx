@@ -248,7 +248,6 @@ export default function reducer(state: ImmutableTreeState = initialState, action
         ...state,
         treeByRootId: { ...state.treeByRootId, ...action.treeByRootId },
       };
-
     case DEFOREST:
       return {
         ...state,
@@ -398,10 +397,8 @@ export const getTreesByIds = (state: Partial<Store>, _: Filters): Dictionary<Tre
  * @param state - the store
  * @param _ -  the filterProps
  */
-export const getMetaData = (
-  state: Partial<Store>,
-  _: Filters
-): Dictionary<Dictionary<Dictionary<Meta>>> => (state as any)[reducerName].metaData;
+export const getMetaData = (state: Partial<Store>): Dictionary<Dictionary<Dictionary<Meta>>> =>
+  (state as any)[reducerName].metaData;
 
 /** retrieve the tree using a rootNodes id
  * @param state - the store

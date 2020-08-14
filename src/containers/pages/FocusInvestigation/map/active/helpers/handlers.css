@@ -4,6 +4,10 @@
   background: #4a993b;
 }
 
+.mapboxgl-popup .jurisdiction-name {
+  padding: 5px;
+}
+
 .mapboxgl-popup-content {
   font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
   padding: 0 !important;

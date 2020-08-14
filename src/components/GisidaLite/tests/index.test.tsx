@@ -10,7 +10,7 @@ describe('components/GisidaLite/arePropsEqual', () => {
   it('returns false if layers length has changed', () => {
     const prevProps: GisidaLiteProps = {
       layers: [],
-      mapCenter: undefined,
+      mapCenter: [10, 10],
       mapHeight: '800px',
       mapIcons: imgArr,
       mapStyle: gsLiteStyle,
@@ -35,7 +35,7 @@ describe('components/GisidaLite/arePropsEqual', () => {
   it('returns true if length has not changed', () => {
     const prevProps: GisidaLiteProps = {
       layers: [],
-      mapCenter: undefined,
+      mapCenter: [10, 10],
       mapHeight: '800px',
       mapIcons: imgArr,
       mapStyle: gsLiteStyle,

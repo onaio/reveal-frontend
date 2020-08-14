@@ -102,7 +102,6 @@ describe('reducers/opensrp/hierarchies', () => {
     if (!node) {
       fail();
     }
-
     expect(nodeIsSelected(node)).toBeTruthy();
 
     store.dispatch(deselectNode(rootJurisdictionId, '2942', planId));

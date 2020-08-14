@@ -240,7 +240,10 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
   };
 
   const AssignmentWrapperProps = {
+    autoSelectionFlow: true,
     currentParentId: props.match.params.parentId,
+    jurisdictionsChunkSize: 30,
+    plan,
     rootJurisdictionId,
     serviceClass,
   };
@@ -297,7 +300,9 @@ const mapStateToProps = (
 ): MapStateToProps => {
   const planId = ownProps.match.params.planId;
   const planObj = getPlanDefinitionById(state, planId);
-  const tree = treeByIdSelector(state, { rootJurisdictionId: ownProps.match.params.rootId });
+  const tree = treeByIdSelector(state, {
+    rootJurisdictionId: ownProps.match.params.rootId,
+  });
 
   return {
     jurisdictionsMetadata: getJurisdictionsMetadata(state),

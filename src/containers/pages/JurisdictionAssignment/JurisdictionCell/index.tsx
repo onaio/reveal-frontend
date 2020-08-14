@@ -19,7 +19,6 @@ export interface NodeCellProps {
  *
  * Displays the jurisdiction.  If the jurisdiction is not a leaf node, then it is
  * displayed as a link, so that one can traverse down the tree.
- *
  * @param props - the props
  */
 const NodeCell = (props: NodeCellProps) => {
