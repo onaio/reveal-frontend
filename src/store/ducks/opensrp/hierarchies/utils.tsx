@@ -309,7 +309,7 @@ export const applyMeta = (nodes?: TreeNode[] | TreeNode, meta: Dictionary<Meta> 
   for (let i = 0, len = localNodes.length; i < len; i++) {
     const node = localNodes[i];
     const thisNodesMeta = Object.assign(meta[node.model.id] || {}, {
-      META_STRUCTURE_COUNT: node.model.meta[META_STRUCTURE_COUNT],
+      [META_STRUCTURE_COUNT]: node.model.meta[META_STRUCTURE_COUNT],
     });
     thisNodesMeta[META_STRUCTURE_COUNT] = node.model.meta[META_STRUCTURE_COUNT];
     node.model.meta = thisNodesMeta;

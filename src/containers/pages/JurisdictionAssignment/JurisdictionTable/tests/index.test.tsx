@@ -207,6 +207,21 @@ describe('src/containers/pages/jurisdictionView/jurisdictionTable', () => {
       await new Promise(resolve => setImmediate(resolve));
       wrapper.update();
     });
+    // simulate click on parent checkbox to check
+    wrapper
+      .find('.thead-plan-orgs input')
+      .simulate('change', { target: { name: '', checked: true } });
+
+    wrapper.update();
+    expect(toJson(wrapper.find('.thead-plan-orgs input'))).toMatchSnapshot('should now be checked');
+
+    // simulate click on parent checkbox to uncheck
+    wrapper
+      .find('.thead-plan-orgs input')
+      .simulate('change', { target: { name: '', checked: false } });
+
+    wrapper.update();
+    expect(toJson(wrapper.find('.thead-plan-orgs input'))).toMatchSnapshot('should be unchecked');
 
     const parentNodeRow = wrapper.find('tbody tr').at(0);
     // create snapshot of checkbox before getting checked

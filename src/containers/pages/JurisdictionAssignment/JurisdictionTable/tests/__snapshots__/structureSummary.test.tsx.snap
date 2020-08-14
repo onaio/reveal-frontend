@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`structure Summary works correctly : after first click 1`] = `"NameStructures Count"`;
+
+exports[`structure Summary works correctly : after first click 2`] = `"Lusaka13"`;
+
+exports[`structure Summary works correctly : after first click 3`] = `"Total13"`;
+
+exports[`structure Summary works correctly : after second click 1`] = `"NameStructures Count"`;
+
+exports[`structure Summary works correctly : after second click 2`] = `"Mtendere13"`;
+
+exports[`structure Summary works correctly : after second click 3`] = `"Total13"`;
+
+exports[`structure Summary works correctly : after third click 1`] = `"NameStructures Count"`;
+
+exports[`structure Summary works correctly : after third click 2`] = `"Akros_113"`;
+
+exports[`structure Summary works correctly : after third click 3`] = `"Total13"`;
+
+exports[`structure Summary works correctly : should have single node(parent node) 1`] = `"NameStructures Count"`;
+
+exports[`structure Summary works correctly : should have single node(parent node) 2`] = `"ra Zambia13"`;
+
+exports[`structure Summary works correctly : should have single node(parent node) 3`] = `"Total13"`;
+
+exports[`structure Summary works correctly : should not have btn-link or onClick handler 1`] = `
+<span
+  key="3951-span"
+>
+  Akros_1
+</span>
+`;

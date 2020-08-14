@@ -144,7 +144,9 @@ const mapStateToProps = (
   ownProps: JurisdictionAssignmentReRoutingProps
 ): MapStateToProps => {
   return {
-    tree: treeSelector(state, { rootJurisdictionId: ownProps.rootJurisdictionId }),
+    tree: treeSelector(state, {
+      rootJurisdictionId: ownProps.rootJurisdictionId,
+    }),
   };
 };
 

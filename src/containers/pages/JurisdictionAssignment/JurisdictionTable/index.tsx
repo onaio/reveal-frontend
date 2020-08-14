@@ -80,7 +80,6 @@ export interface JurisdictionSelectorTableProps {
   autoSelectNodesCreator: typeof autoSelectNodes;
   fetchPlanCreator: typeof addPlanDefinition;
   selectedLeafNodes: TreeNode[];
-  leafNodes: TreeNode[];
   autoSelectionFlow: boolean;
   deselectAllNodesCreator: typeof deselectAllNodes;
 }
@@ -93,7 +92,6 @@ const defaultProps = {
   deselectNodeCreator: deselectNode,
   fetchPlanCreator: addPlanDefinition,
   jurisdictionsMetadata: [],
-  leafNodes: [],
   rootJurisdictionId: '',
   selectNodeCreator: selectNode,
   selectedLeafNodes: [],
@@ -428,6 +426,7 @@ const mapStateToProps = (
     planId: ownProps.plan.identifier,
     rootJurisdictionId: ownProps.rootJurisdictionId,
   };
+
   return {
     currentChildren: childrenSelector(state, filters),
     currentParentNode: parentNodeSelector(state, filters),

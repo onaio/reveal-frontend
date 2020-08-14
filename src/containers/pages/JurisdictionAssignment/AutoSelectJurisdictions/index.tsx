@@ -67,6 +67,7 @@ import { ConnectedResourceWidget } from '../helpers/ResourceCalcWidget';
 import { ConnectedJurisdictionSelectionsSlider } from '../helpers/Slider';
 import { useHandleBrokenPage } from '../helpers/utils';
 import { ConnectedJurisdictionTable } from '../JurisdictionTable';
+import { ConnectedSelectedStructuresTable } from '../JurisdictionTable/structureSummary';
 import './index.css';
 
 reducerRegistry.register(planReducerName, plansReducer);
@@ -196,6 +197,13 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     serviceClass,
   };
 
+  const structureSummaryProps = {
+    currentParentId: props.match.params.parentId,
+    onClickNext: () => setStep(TIMELINE_SLIDER_STEP3),
+    planId: plan.identifier,
+    rootJurisdictionId,
+  };
+
   const breadcrumbProps = {
     currentPage: {
       label: plan.title,
@@ -232,7 +240,10 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
   };
 
   const AssignmentWrapperProps = {
+    autoSelectionFlow: true,
     currentParentId: props.match.params.parentId,
+    jurisdictionsChunkSize: 30,
+    plan,
     rootJurisdictionId,
     serviceClass,
   };
@@ -262,7 +273,10 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
         </div>
       )}
       {step === TIMELINE_SLIDER_STEP1 && <ConnectedJurisdictionSelectionsSlider {...sliderProps} />}
-      {step === TIMELINE_SLIDER_STEP2 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
+      {step === TIMELINE_SLIDER_STEP2 && (
+        <ConnectedSelectedStructuresTable {...structureSummaryProps} />
+      )}
+      {step === TIMELINE_SLIDER_STEP3 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
     </>
   );
 };
@@ -286,7 +300,9 @@ const mapStateToProps = (
 ): MapStateToProps => {
   const planId = ownProps.match.params.planId;
   const planObj = getPlanDefinitionById(state, planId);
-  const tree = treeByIdSelector(state, { rootJurisdictionId: ownProps.match.params.rootId });
+  const tree = treeByIdSelector(state, {
+    rootJurisdictionId: ownProps.match.params.rootId,
+  });
 
   return {
     jurisdictionsMetadata: getJurisdictionsMetadata(state),

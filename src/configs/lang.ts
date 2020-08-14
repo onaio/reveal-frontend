@@ -782,6 +782,7 @@ export const ADJUST_SLIDER_MESSAGE = translate(
   'ADJUST_SLIDER_MESSAGE',
   'Adjust slider to auto-target jurisdictions'
 );
+
 export const ERROR_PERMISSION_DENIED = translate(
   'ERROR_PERMISSION_DENIED',
   'This user does not have permissions to access this page'
@@ -826,3 +827,5 @@ export const NO_JURISDICTION_SELECTIONS_FOUND = translate(
   'NO_JURISDICTION_SELECTIONS_FOUND',
   'No Jurisdiction selections were found'
 );
+
+export const TOTAL = translate('TOTAL', 'Total');

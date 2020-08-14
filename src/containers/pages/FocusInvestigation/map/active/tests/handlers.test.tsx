@@ -1,7 +1,7 @@
 import { Popup } from 'mapbox-gl';
 import { buildOnClickHandler } from '../helpers/utils';
 
-const popupHandler = buildOnClickHandler('');
+const popupHandlerMock = buildOnClickHandler('');
 
 window.URL.createObjectURL = jest.fn();
 
@@ -81,7 +81,7 @@ describe('activeFIMap/helpers/utils.popup', () => {
 
     const mockMap: any = {};
 
-    popupHandler(mockMap, event as any);
+    popupHandlerMock(mockMap, event as any);
 
     expect(addToMock).toHaveBeenCalledWith({});
   });

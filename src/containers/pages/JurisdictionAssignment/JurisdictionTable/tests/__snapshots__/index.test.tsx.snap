@@ -24,7 +24,25 @@ exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and des
 <input
   checked={false}
   disabled={false}
+  onChange={[Function]}
+  type="checkbox"
+/>
+`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and deselect nodes: should be unchecked 2`] = `
+<input
+  checked={false}
+  disabled={false}
   key="2942-check-jurisdiction"
+  onChange={[Function]}
+  type="checkbox"
+/>
+`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and deselect nodes: should now be checked 1`] = `
+<input
+  checked={true}
+  disabled={false}
   onChange={[Function]}
   type="checkbox"
 />
