@@ -174,7 +174,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                 </NavItem>
               )}
 
-              {(ENABLE_IRS || ENABLE_FI) && (
+              {(ENABLE_IRS || ENABLE_FI || ENABLE_DYNAMIC_MDA || ENABLE_MDA_POINT) && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle
                     nav={true}
