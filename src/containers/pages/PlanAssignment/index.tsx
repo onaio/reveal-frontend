@@ -256,7 +256,10 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   };
 
   const AssignmentWraperProps = {
+    autoSelectionFlow: false,
     currentParentId: jurisdictionId,
+    jurisdictionsChunkSize: 30,
+    plan: plan as PlanDefinition,
     rootJurisdictionId: props.match.params.planId,
     serviceClass: OpenSRPServiceClass,
   };
