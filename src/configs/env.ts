@@ -57,7 +57,7 @@ export type ENABLE_TEAMS = typeof ENABLE_TEAMS;
 export const ENABLE_MDA_POINT = process.env.REACT_APP_ENABLE_MDA_POINT === 'true';
 export type ENABLE_MDA_POINT = typeof ENABLE_MDA_POINT;
 
-/** Do you want to enable the MDA Point plan features? */
+/** Do you want to enable the Dynamic MDA plan features? */
 export const ENABLE_DYNAMIC_MDA = process.env.REACT_APP_ENABLE_DYNAMIC_MDA === 'true';
 export type ENABLE_DYNAMIC_MDA = typeof ENABLE_DYNAMIC_MDA;
 
@@ -69,7 +69,7 @@ export type CLIENT_LABEL = typeof CLIENT_LABEL;
 export const DISABLE_LOGIN_PROTECTION = process.env.REACT_APP_DISABLE_LOGIN_PROTECTION === 'true';
 export type DISABLE_LOGIN_PROTECTION = typeof DISABLE_LOGIN_PROTECTION;
 
-/** Do you want to enable the MDA Point plan features? */
+/** Do you want to enable the Config Form plan features? */
 export const ENABLE_CONFIG_FORM = process.env.REACT_APP_ENABLE_CONFIG_FORM === 'true';
 export type ENABLE_CONFIG_FORM = typeof ENABLE_CONFIG_FORM;
 
