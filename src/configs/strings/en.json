@@ -1190,5 +1190,9 @@
   "SELECT_JURISDICTION": {
     "message": "Please select at least one jurisdiction",
     "description": "Popup message displayed when user tries to save plan without selecting a jurisdiction"
+  },
+  "UPLOADING_FILE": {
+    "message": "Uploading File",
+    "description": "text displayed when uploading a file"
   }
 }
