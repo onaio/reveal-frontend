@@ -103,7 +103,6 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   const [mapParent, setMapParent] = React.useState<string>('');
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   const history = useHistory();
-  onJurisdictionClick(props, setMapParent, history);
 
   React.useEffect(() => {
     if (!getJurisdictionsFeatures.features.length) {
@@ -134,6 +133,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   React.useEffect(() => {
     if (mapParent.length) {
       fetchJurisdictionsActionCreator(getJurisdictionsFeatures.features as any);
+      onJurisdictionClick(props, setMapParent, history);
       setMapParent('');
     }
   }, [getJurisdictionsFeatures, mapParent]);

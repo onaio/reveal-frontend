@@ -32,6 +32,7 @@ export const onJurisdictionClick = (
       rootJurisdictionId,
       selectNodeCreator,
       deselectNodeCreator,
+      currentChildren,
       plan,
       autoSelectionFlow,
     } = props;
@@ -46,8 +47,10 @@ export const onJurisdictionClick = (
     }
 
     for (const feature of features) {
-      if (feature && feature.id) {
-        const currentId = feature.id.toString();
+      const activeJurisdictionId =
+        (feature && feature.id) || (feature && feature.properties && feature.properties.externalId);
+      if (activeJurisdictionId) {
+        const currentId = activeJurisdictionId;
         let activeCurrentNode: TreeNode | undefined;
 
         if (currentParentNode) {
@@ -60,7 +63,7 @@ export const onJurisdictionClick = (
             activeCurrentNode = currentParentNode;
           } else {
             // Handle selection for admin level > 0
-            activeCurrentNode = currentParentNode.children.find(
+            activeCurrentNode = currentChildren.find(
               (node: TreeNode) => node.model.id === currentId
             );
           }
