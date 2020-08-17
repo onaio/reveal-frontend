@@ -22,6 +22,8 @@ const history = createBrowserHistory();
 const middlewares: any = [];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('../../../../../../configs/env');
+
 describe('containers/pages/NewPlan', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -61,6 +63,10 @@ describe('containers/pages/NewPlan', () => {
         .find('Col#planform-col-container')
         .find('PlanForm')
     ).toHaveLength(1);
+
+    // FI intervention type is loaded
+    expect(wrapper.find('#fiStatus').length).toBeTruthy();
+    expect(wrapper.find('#fiReason').length).toBeTruthy();
 
     // test that JurisdictionDetails are shown
     // set jurisdiction id ==> we use Formik coz React-Select is acting weird
