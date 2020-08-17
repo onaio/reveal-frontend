@@ -1,5 +1,4 @@
 import { mount, shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
@@ -41,7 +40,7 @@ describe('containers/pages/NewPlan: single enabled intervention type', () => {
     );
 
     // check that page title is displayed
-    expect(toJson(wrapper.find('h3.mb-3.page-title'))).toMatchSnapshot('page title');
+    expect(wrapper.find('h3.mb-3.page-title').text()).toEqual('Create New Plan');
     // jurisdictionLabel is contry for IRS
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...defaultPlanFormProps,
