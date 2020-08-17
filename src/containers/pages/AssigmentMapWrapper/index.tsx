@@ -52,7 +52,7 @@ export interface AssignmentMapWrapperProps {
   selectNodeCreator: typeof selectNode;
   deselectNodeCreator: typeof deselectNode;
   currentParentNode?: TreeNode;
-  isPlanAssignmentPage?: boolean;
+  baseAssignmentURL: string;
 }
 
 /** default value for feature Collection */
@@ -64,13 +64,13 @@ const defaultFeatureCollection: FeatureCollection = {
 const defaultProps: AssignmentMapWrapperProps = {
   autoSelectNodesActionCreator: autoSelectNodes,
   autoSelectionFlow: false,
+  baseAssignmentURL: '/',
   currentChildren: [],
   currentParentId: undefined,
   deselectNodeCreator: deselectNode,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   getJurisdictionsFeatures: defaultFeatureCollection,
   getJurisdictionsMetadata: {},
-  isPlanAssignmentPage: false,
   jurisdictionsChunkSize: 30,
   plan: {
     identifier: '',

@@ -18,6 +18,7 @@ import {
 } from '../../../configs/lang';
 import { PlanDefinition } from '../../../configs/settings';
 import {
+  ASSIGN_PLAN_URL,
   INTERVENTION_TYPE_CODE,
   OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
@@ -257,6 +258,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
 
   const AssignmentWraperProps = {
     autoSelectionFlow: false,
+    baseAssignmentURL: `${ASSIGN_PLAN_URL}/${(plan as PlanDefinition).identifier}`,
     currentParentId: jurisdictionId,
     isPlanAssignmentPage: true,
     jurisdictionsChunkSize: 30,

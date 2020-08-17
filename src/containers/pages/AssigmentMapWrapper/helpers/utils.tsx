@@ -4,11 +4,6 @@ import { History } from 'history';
 import { EventData, Map } from 'mapbox-gl';
 import { AssignmentMapWrapperProps } from '..';
 import { PLAN_TYPES_WITH_MULTI_JURISDICTIONS } from '../../../../configs/env';
-import {
-  ASSIGN_PLAN_URL,
-  AUTO_ASSIGN_JURISDICTIONS_URL,
-  MANUAL_ASSIGN_JURISDICTIONS_URL,
-} from '../../../../constants';
 import { getPlanType } from '../../../../helpers/utils';
 import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
 import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
@@ -36,14 +31,8 @@ export const onJurisdictionClick = (
       deselectNodeCreator,
       currentChildren,
       plan,
-      autoSelectionFlow,
-      isPlanAssignmentPage,
+      baseAssignmentURL,
     } = props;
-    const baseUrl = !isPlanAssignmentPage
-      ? !autoSelectionFlow
-        ? `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
-        : `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
-      : `${ASSIGN_PLAN_URL}/${plan.identifier}`;
     // grab underlying features from map
     const features: Feature[] = target.queryRenderedFeatures(point);
     if (!features.length) {
@@ -97,7 +86,7 @@ export const onJurisdictionClick = (
           setMapParent(currentId);
         } else {
           if (activeCurrentNode && activeCurrentNode.hasChildren()) {
-            history.push(`${baseUrl}/${currentId}`);
+            history.push(`${baseAssignmentURL}/${currentId}`);
           }
         }
         break;
