@@ -3,7 +3,9 @@ import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
 import JurisdictionMetadataDownloadForm, { Option, submitForm } from '..';
+import { ERROR_NO_JURISDICTION_METADATA_FOUND } from '../../../../configs/lang';
 import { JURISDICTION_METADATA_RISK } from '../../../../constants';
+import * as helperErrors from '../../../../helpers/errors';
 import * as helperUtils from '../../../../helpers/utils';
 import * as fixtures from '../../../../store/ducks/tests/fixtures';
 
@@ -66,6 +68,38 @@ describe('components/forms/JurisdictionMetadata', () => {
       expect(mockedOpenSRPservice).toHaveBeenCalledTimes(1);
       expect(mockGrowl).toBeCalled();
       expect(mockDownload).toBeCalled();
+    });
+  });
+
+  it('csv file is not download is response is empty', async () => {
+    const identifier: Option = { value: JURISDICTION_METADATA_RISK, label: 'Risk' };
+    const setSubmitting = jest.fn();
+    const setGlobalError = jest.fn();
+    const mockGrowl: any = jest.fn();
+    const mockDownload: any = jest.fn();
+    const mockDisplayError: any = jest.fn();
+    (helperUtils as any).successGrowl = mockGrowl;
+    (helperUtils as any).downloadFile = mockDownload;
+    (helperErrors as any).displayError = mockDisplayError;
+    const mockedOpenSRPservice = jest.fn().mockImplementation(() => {
+      return {
+        list: () => {
+          return Promise.resolve([]);
+        },
+      };
+    });
+    const props = {
+      initialValues: {
+        identifier,
+      },
+      serviceClass: new mockedOpenSRPservice(),
+    };
+    submitForm(setSubmitting, setGlobalError, props as any, { identifier });
+    await waitFor(() => {
+      expect(mockedOpenSRPservice).toHaveBeenCalledTimes(1);
+      expect(mockGrowl).not.toBeCalled();
+      expect(mockDownload).not.toBeCalled();
+      expect(mockDisplayError).toBeCalledWith(new Error(ERROR_NO_JURISDICTION_METADATA_FOUND));
     });
   });
 });

@@ -828,4 +828,9 @@ export const NO_JURISDICTION_SELECTIONS_FOUND = translate(
   'No Jurisdiction selections were found'
 );
 
+export const ERROR_NO_JURISDICTION_METADATA_FOUND = translate(
+  'ERROR_NO_JURISDICTION_METADATA_FOUND',
+  'No jurisdiction metadata found'
+);
+
 export const TOTAL = translate('TOTAL', 'Total');

@@ -1202,5 +1202,9 @@
   "UPLOADING_FILE": {
     "message": "Uploading File",
     "description": "text displayed when uploading a file"
+  },
+  "ERROR_NO_JURISDICTION_METADATA_FOUND": {
+    "message": "No jurisdiction metadata found",
+    "description": "Error message displayed if no jurisdiction metadata is found"
   }
 }
