@@ -115,6 +115,7 @@ describe('components/MDA Reports/JurisdictionReport', () => {
       'MDA Reporting: Dynamic-MDA-2019-09-05 TEST'
     );
     expect((wrapper.find('DrillDownTable').props().data as any).length).toEqual(4);
+    expect(wrapper.find('DrillDownTable .thead').text()).toMatchSnapshot('table headers');
     expect(supersetServiceMock.mock.calls).toEqual([
       [
         '1337',

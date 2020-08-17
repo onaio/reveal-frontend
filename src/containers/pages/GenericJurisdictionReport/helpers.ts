@@ -241,7 +241,7 @@ export const zambiaMDALowerJurisdictions = [
   },
   {
     Cell: (cell: Cell) => renderPercentage(cell),
-    Header: 'Structured Visited (%)',
+    Header: 'Structures Visited (%)',
     accessor: 'structures_visited_per',
   },
   {
