@@ -1206,5 +1206,21 @@
   "ERROR_NO_JURISDICTION_METADATA_FOUND": {
     "message": "No jurisdiction metadata found",
     "description": "Error message displayed if no jurisdiction metadata is found"
+  },
+  "COVERAGE_LABEL": {
+    "message": "Coverage",
+    "description": "Option displayed when selecting jurisdiction metadata type to download"
+  },
+  "TARGET_LABEL": {
+    "message": "Target",
+    "description": "Option displayed when selecting jurisdiction metadata type to download"
+  },
+  "POPULATION_LABEL": {
+    "message": "Population",
+    "description": "Option displayed when selecting jurisdiction metadata type to download"
+  },
+  "RISK_LABEL": {
+    "message": "Risk",
+    "description": "Option displayed when selecting jurisdiction metadata type to download"
   }
 }

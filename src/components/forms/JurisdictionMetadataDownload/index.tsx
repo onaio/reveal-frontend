@@ -7,6 +7,7 @@ import { Button } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
 import {
+  COVERAGE_LABEL,
   DOWNLOAD,
   DOWNLOAD_FILE,
   DOWNLOADING,
@@ -14,12 +15,17 @@ import {
   FILE,
   FILE_DOWNLOADED_SUCCESSFULLY,
   IDENTIFIER,
+  POPULATION_LABEL,
   REQUIRED,
+  RISK,
   SELECT,
+  TARGET_LABEL,
 } from '../../../configs/lang';
 import {
   JURISDICTION_METADATA_COVERAGE,
+  JURISDICTION_METADATA_POPULATION,
   JURISDICTION_METADATA_RISK,
+  JURISDICTION_METADATA_TARGET,
   OPENSRP_V2_SETTINGS,
   TEXT_CSV,
 } from '../../../constants';
@@ -155,8 +161,10 @@ const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFor
   const [globalError, setGlobalError] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(true);
   const identifierOptions = [
-    { value: JURISDICTION_METADATA_RISK, label: 'Risk' },
-    { value: JURISDICTION_METADATA_COVERAGE, label: 'Coverage' },
+    { value: JURISDICTION_METADATA_RISK, label: RISK },
+    { value: JURISDICTION_METADATA_COVERAGE, label: COVERAGE_LABEL },
+    { value: JURISDICTION_METADATA_POPULATION, label: POPULATION_LABEL },
+    { value: JURISDICTION_METADATA_TARGET, label: TARGET_LABEL },
   ];
 
   return (
