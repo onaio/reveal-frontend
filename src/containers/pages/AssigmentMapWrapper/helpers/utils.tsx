@@ -5,6 +5,7 @@ import { EventData, Map } from 'mapbox-gl';
 import { AssignmentMapWrapperProps } from '..';
 import { PLAN_TYPES_WITH_MULTI_JURISDICTIONS } from '../../../../configs/env';
 import {
+  ASSIGN_PLAN_URL,
   AUTO_ASSIGN_JURISDICTIONS_URL,
   MANUAL_ASSIGN_JURISDICTIONS_URL,
 } from '../../../../constants';
@@ -36,11 +37,13 @@ export const onJurisdictionClick = (
       currentChildren,
       plan,
       autoSelectionFlow,
+      isPlanAssignmentPage,
     } = props;
-
-    const baseUrl = !autoSelectionFlow
-      ? `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
-      : `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`;
+    const baseUrl = !isPlanAssignmentPage
+      ? !autoSelectionFlow
+        ? `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
+        : `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`
+      : `${ASSIGN_PLAN_URL}/${plan.identifier}`;
     // grab underlying features from map
     const features: Feature[] = target.queryRenderedFeatures(point);
     if (!features.length) {
@@ -49,7 +52,8 @@ export const onJurisdictionClick = (
 
     for (const feature of features) {
       const activeJurisdictionId =
-        (feature && feature.id) || (feature && feature.properties && feature.properties.externalId);
+        (feature && feature.id) ||
+        (feature && feature.properties && feature.properties.jurisdiction_id);
       if (activeJurisdictionId) {
         const currentId = activeJurisdictionId;
         let activeCurrentNode: TreeNode | undefined;

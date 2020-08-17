@@ -52,6 +52,7 @@ export interface AssignmentMapWrapperProps {
   selectNodeCreator: typeof selectNode;
   deselectNodeCreator: typeof deselectNode;
   currentParentNode?: TreeNode;
+  isPlanAssignmentPage?: boolean;
 }
 
 /** default value for feature Collection */
@@ -69,6 +70,7 @@ const defaultProps: AssignmentMapWrapperProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   getJurisdictionsFeatures: defaultFeatureCollection,
   getJurisdictionsMetadata: {},
+  isPlanAssignmentPage: false,
   jurisdictionsChunkSize: 30,
   plan: {
     identifier: '',

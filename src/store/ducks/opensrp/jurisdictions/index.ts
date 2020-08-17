@@ -190,10 +190,12 @@ export const getJurisdictionsFC = () =>
             ) as TreeNode;
             return {
               ...feature,
+              id: getNode.model.id, // set true jurisdiction id from node,
               properties: {
                 ...feature.properties,
                 fillColor: nodeIsSelected(getNode) ? RED : DARK_RED,
                 fillOutlineColor: nodeIsSelected(getNode) ? BLUE : WHITE,
+                jurisdiction_id: getNode.model.id, // set true jurisdiction id from node
                 lineColor: nodeIsSelected(getNode) ? BLUE : WHITE,
               },
             };
