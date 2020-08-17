@@ -17,7 +17,7 @@ import {
   IDENTIFIER,
   POPULATION_LABEL,
   REQUIRED,
-  RISK,
+  RISK_TEXT,
   SELECT,
   TARGET_LABEL,
 } from '../../../configs/lang';
@@ -161,7 +161,7 @@ const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFor
   const [globalError, setGlobalError] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(true);
   const identifierOptions = [
-    { value: JURISDICTION_METADATA_RISK, label: RISK },
+    { value: JURISDICTION_METADATA_RISK, label: RISK_TEXT },
     { value: JURISDICTION_METADATA_COVERAGE, label: COVERAGE_LABEL },
     { value: JURISDICTION_METADATA_POPULATION, label: POPULATION_LABEL },
     { value: JURISDICTION_METADATA_TARGET, label: TARGET_LABEL },

@@ -1219,7 +1219,7 @@
     "message": "Population",
     "description": "Option displayed when selecting jurisdiction metadata type to download"
   },
-  "RISK_LABEL": {
+  "RISK_TEXT": {
     "message": "Risk",
     "description": "Option displayed when selecting jurisdiction metadata type to download"
   }
