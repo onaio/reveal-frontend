@@ -10,6 +10,7 @@ import {
   DOWNLOAD,
   DOWNLOAD_FILE,
   DOWNLOADING,
+  ERROR_NO_JURISDICTION_METADATA_FOUND,
   FILE,
   FILE_DOWNLOADED_SUCCESSFULLY,
   IDENTIFIER,
@@ -22,6 +23,7 @@ import {
   OPENSRP_V2_SETTINGS,
   TEXT_CSV,
 } from '../../../constants';
+import { displayError } from '../../../helpers/errors';
 import { downloadFile, successGrowl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 
@@ -82,7 +84,12 @@ const createCsv = (entries: JurisdictionMetadataFile[], fileName: string): void 
  * Download CSV file from obtained data
  */
 export const download = (response: JurisdictionMetadataResponse[]) => {
+  if (!response.length) {
+    return;
+  }
+
   const entries: JurisdictionMetadataFile[] = [];
+
   response.forEach(item => {
     const metaType = item.settingIdentifier.replace('jurisdiction_metadata-', '');
     const entry: JurisdictionMetadataFile = {
@@ -128,8 +135,13 @@ export const submitForm = (
   serviceClass
     .list(params)
     .then((response: JurisdictionMetadataResponse[]) => {
-      download(response);
-      successGrowl(FILE_DOWNLOADED_SUCCESSFULLY);
+      if (response.length) {
+        download(response);
+        successGrowl(FILE_DOWNLOADED_SUCCESSFULLY);
+      } else {
+        displayError(new Error(ERROR_NO_JURISDICTION_METADATA_FOUND));
+      }
+
       setSubmitting(false);
     })
     .catch((e: Error) => {
