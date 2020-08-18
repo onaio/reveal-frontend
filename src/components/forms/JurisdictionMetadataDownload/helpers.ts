@@ -8,7 +8,7 @@ import {
 } from '../../../constants';
 
 /** select Option */
-interface SelectOption {
+export interface SelectOption {
   label: string;
   value: string;
 }
@@ -24,11 +24,11 @@ export const MetaDataIdentifierParams = {
 export type MetaDataIdentifierParams = keyof typeof MetaDataIdentifierParams;
 
 export const getAllowedMetaDataIdentifiers = (allowedIdentifiers: MetaDataIdentifierParams[]) => {
-  const allowwedOptions: SelectOption[] = [];
+  const allowedOptions: SelectOption[] = [];
   Object.entries(MetaDataIdentifierParams).forEach(([key, value]) => {
     if (allowedIdentifiers.includes(key as MetaDataIdentifierParams)) {
-      allowwedOptions.push(value);
+      allowedOptions.push(value);
     }
   });
-  return allowwedOptions;
+  return allowedOptions;
 };

@@ -7,7 +7,6 @@ import { Button } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
 import {
-  COVERAGE_LABEL,
   DOWNLOAD,
   DOWNLOAD_FILE,
   DOWNLOADING,
@@ -15,23 +14,14 @@ import {
   FILE,
   FILE_DOWNLOADED_SUCCESSFULLY,
   IDENTIFIER,
-  POPULATION_LABEL,
   REQUIRED,
-  RISK_TEXT,
   SELECT,
-  TARGET_LABEL,
 } from '../../../configs/lang';
-import {
-  JURISDICTION_METADATA_COVERAGE,
-  JURISDICTION_METADATA_POPULATION,
-  JURISDICTION_METADATA_RISK,
-  JURISDICTION_METADATA_TARGET,
-  OPENSRP_V2_SETTINGS,
-  TEXT_CSV,
-} from '../../../constants';
+import { OPENSRP_V2_SETTINGS, TEXT_CSV } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
 import { downloadFile, successGrowl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
+import { getAllowedMetaDataIdentifiers, SelectOption } from './helpers';
 
 /** yup validation schema for Jurisdiction Metadata Form input */
 export const JurisdictionSchema = Yup.object().shape({
@@ -120,6 +110,7 @@ export interface JurisdictionMetadataDownloadFormProps {
     props: JurisdictionMetadataDownloadFormProps,
     values: JurisdictionMetadataDownloadFormFields
   ) => void;
+  identifierOptions?: SelectOption[];
   initialValues: JurisdictionMetadataDownloadFormFields;
 }
 
@@ -157,15 +148,9 @@ export const submitForm = (
 };
 
 const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFormProps) => {
-  const { initialValues } = props;
+  const { initialValues, identifierOptions } = props;
   const [globalError, setGlobalError] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(true);
-  const identifierOptions = [
-    { value: JURISDICTION_METADATA_RISK, label: RISK_TEXT },
-    { value: JURISDICTION_METADATA_COVERAGE, label: COVERAGE_LABEL },
-    { value: JURISDICTION_METADATA_POPULATION, label: POPULATION_LABEL },
-    { value: JURISDICTION_METADATA_TARGET, label: TARGET_LABEL },
-  ];
 
   return (
     <div className="form-container">
@@ -226,6 +211,7 @@ const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFor
  */
 const defaultProps: JurisdictionMetadataDownloadFormProps = {
   disabledFields: [],
+  identifierOptions: getAllowedMetaDataIdentifiers(['TARGET', 'RISK', 'POPULATION', 'COVERAGE']),
   initialValues: defaultInitialValues,
   serviceClass: new OpenSRPService(OPENSRP_V2_SETTINGS),
   submitForm,
