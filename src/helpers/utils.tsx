@@ -948,18 +948,22 @@ export interface Setting {
 export interface SettingConfiguration {
   type: string;
   identifier: string;
-  providerId: string;
-  locationId: string;
+  providerId?: string;
+  locationId?: string;
   settings: Setting[];
-  teamId: string;
+  teamId?: string;
 }
 
 /**
  * Create payload for sending settings to OpenSRP v1 Settings endpoint
  */
-export const creatSettingsPayloads = (result: PapaResult): SettingConfiguration[] => {
+export const creatSettingsPayloads = (
+  result: PapaResult,
+  addUsername: boolean = false
+): SettingConfiguration[] => {
   const payloads: SettingConfiguration[] = [];
   const { data } = result;
+  const username = getUser(store.getState()).username;
   // check if jurisdiction_id exists
   if (data.length > 0 && data[0].jurisdiction_id) {
     // get the metadata items
@@ -984,15 +988,15 @@ export const creatSettingsPayloads = (result: PapaResult): SettingConfiguration[
           }
         }
       }
-      const username = getUser(store.getState()).username;
+
       const payload: SettingConfiguration = {
         identifier: `jurisdiction_metadata-${header}`,
-        locationId: '',
-        providerId: username,
         settings,
-        teamId: '',
         type: SETTINGS_CONFIGURATION,
       };
+      if (addUsername) {
+        payload.providerId = username;
+      }
       payloads.push(payload);
     }
   }
