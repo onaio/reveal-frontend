@@ -49,18 +49,6 @@ interface User {
   uuid: string;
 }
 
-/** util function that given an response from user Response, returns
- * whether we can call the openSRP proxy for the next page of user data
- */
-export const thereIsNextPage = (response: UserResponse): boolean => {
-  if (response.links) {
-    // check if we have a next link in the links
-    const links = response.links;
-    return links.filter(link => link.rel === 'next').length > 0;
-  }
-  return false;
-};
-
 /** our custom for the option object passed to onChangeHandler by react-select
  * we have intentionally excluded ValueTypeOptions<Option> since this would only be used
  * when react-select has to pass an array of options, i.e. in case of multi react select.
