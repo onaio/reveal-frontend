@@ -205,7 +205,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(wrapper.find('GisidaLite').text()).toEqual('Map is in the box');
   });
 
-  it('displays loader if jurisdiction has no geojson', async () => {
+  it('does not display map if jurisdiction has no geojson', async () => {
     // use dispatch
     store.dispatch(fetchPlans(fixturesMap.processedPlansJSON));
     store.dispatch(fetchJurisdictions([{ jurisdiction_id: '3951' }]));
@@ -295,5 +295,89 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     });
     expect(wrapper.find('GisidaLite').find('Ripple').length).toEqual(0);
     expect(wrapper.find('GisidaLite').text()).toEqual('Map is in the box');
+  });
+
+  it('displays loader if plan not found', async () => {
+    // use dispatch
+    store.dispatch(fetchPlans([]));
+    store.dispatch(fetchJurisdictions(fixturesMap.processedJurisdictionJSON));
+    store.dispatch(structureDucks.setStructures(fixturesMap.processedStructuresJSON));
+    store.dispatch(fetchGoals(fixturesMap.processedGoalsJSON));
+    store.dispatch(fetchTasks(fixturesMap.processedPlansTasksJson));
+    store.dispatch(fetchTasks(fixturesMap.processedCaseConfirmationTasksJSON));
+    const mock = jest.fn();
+    const supersetServiceMock = jest.fn(async () => null);
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: 'dbd9851f-2548-5aaa-8267-010897f98f45' },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/dbd9851f-2548-5aaa-8267-010897f98f45`,
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    const componentProps: any = wrapper.find('SingleActiveFIMap').props();
+    expect(componentProps.jurisdiction).toEqual(null);
+    expect(componentProps.pointFeatureCollection.features.length).toEqual(0);
+    expect(componentProps.polygonFeatureCollection.features.length).toEqual(0);
+    expect(componentProps.currentPointIndexCases).toEqual(null);
+    expect(componentProps.currentPolyIndexCases).toEqual(null);
+    expect(componentProps.historicalPointIndexCases).toEqual(null);
+    expect(componentProps.historicalPolyIndexCases).toEqual(null);
+    expect(wrapper.find('Ripple').length).toEqual(1);
+  });
+
+  it('displays loader if jurisdiction not found', async () => {
+    // use dispatch
+    store.dispatch(fetchPlans(fixturesMap.processedPlansJSON));
+    store.dispatch(fetchJurisdictions([]));
+    store.dispatch(structureDucks.setStructures(fixturesMap.processedStructuresJSON));
+    store.dispatch(fetchGoals(fixturesMap.processedGoalsJSON));
+    store.dispatch(fetchTasks(fixturesMap.processedPlansTasksJson));
+    store.dispatch(fetchTasks(fixturesMap.processedCaseConfirmationTasksJSON));
+    const mock = jest.fn();
+    const supersetServiceMock = jest.fn(async () => null);
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: 'dbd9851f-2548-5aaa-8267-010897f98f45' },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/dbd9851f-2548-5aaa-8267-010897f98f45`,
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    const componentProps: any = wrapper.find('SingleActiveFIMap').props();
+    expect(componentProps.jurisdiction).toEqual(null);
+    expect(componentProps.pointFeatureCollection.features.length).toEqual(0);
+    expect(componentProps.polygonFeatureCollection.features.length).toEqual(0);
+    expect(componentProps.currentPointIndexCases).toEqual(null);
+    expect(componentProps.currentPolyIndexCases).toEqual(null);
+    expect(componentProps.historicalPointIndexCases).toEqual(null);
+    expect(componentProps.historicalPolyIndexCases).toEqual(null);
+    expect(wrapper.find('Ripple').length).toEqual(1);
   });
 });
