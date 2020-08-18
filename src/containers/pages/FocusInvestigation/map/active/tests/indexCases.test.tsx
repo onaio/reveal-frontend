@@ -14,15 +14,17 @@ import * as tasksDucks from '../../../../../../store/ducks/tasks';
 import ConnectedMapSingleFI from '../../active/';
 import * as fixturesMap from './fixtures';
 
-jest.mock('../../../../../../components/GisidaLite', () => {
-  const GisidaLiteMock = () => <div>I love oov</div>;
-  const MemoizedGisidaLiteMock = () => <div>I love oov</div>;
+jest.mock('react-mapbox-gl', () => {
+  const defaultMock = () => {
+    return <span>Map is in the box</span>;
+  };
 
   return {
-    GisidaLite: GisidaLiteMock,
-    MemoizedGisidaLite: MemoizedGisidaLiteMock,
+    __esModule: true,
+    default: jest.fn().mockReturnValue(defaultMock),
   };
 });
+
 jest.mock('../../../../../../configs/env');
 const history = createBrowserHistory();
 const { fetchGoals } = goalDucks;
@@ -44,6 +46,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     jest.restoreAllMocks();
     jest.clearAllMocks();
   });
+
   it('passes historical index cases to gisida lite', async () => {
     // use dispatch
     store.dispatch(fetchPlans(fixturesMap.processedPlansJSON));
@@ -87,7 +90,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(componentProps.historicalPolyIndexCases.features.length).toEqual(2);
 
     // gisida lite layers
-    const gisidaLiteProps: any = wrapper.find('MemoizedGisidaLiteMock').props();
+    const gisidaLiteProps: any = wrapper.find('GisidaLite').props();
     const { layers } = gisidaLiteProps;
 
     layers.forEach((layer: any) => {
@@ -142,7 +145,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(componentProps.historicalPolyIndexCases.features.length).toEqual(2);
 
     // gisida lite layers
-    const gisidaLiteProps: any = wrapper.find('MemoizedGisidaLiteMock').props();
+    const gisidaLiteProps: any = wrapper.find('GisidaLite').props();
     const { layers } = gisidaLiteProps;
 
     layers.forEach((layer: any) => {
@@ -152,5 +155,53 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       delete localLayer.data;
       expect(localLayer).toMatchSnapshot();
     });
+  });
+
+  it('displays map when no structures are returned', async () => {
+    // use dispatch
+    store.dispatch(fetchPlans(fixturesMap.processedPlansJSON));
+    store.dispatch(fetchJurisdictions(fixturesMap.processedJurisdictionJSON));
+    store.dispatch(structureDucks.setStructures([]));
+    store.dispatch(fetchGoals(fixturesMap.processedGoalsJSON));
+    store.dispatch(fetchTasks(fixturesMap.processedPlansTasksJson));
+    store.dispatch(fetchTasks(fixturesMap.processedCaseConfirmationTasksJSON));
+    const mock = jest.fn();
+    const supersetServiceMock = jest.fn(async () => null);
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: 'dbd9851f-2548-5aaa-8267-010897f98f45' },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/dbd9851f-2548-5aaa-8267-010897f98f45`,
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    const componentProps: any = wrapper.find('SingleActiveFIMap').props();
+
+    expect(componentProps.plan.id).toEqual('dbd9851f-2548-5aaa-8267-010897f98f45');
+    expect(componentProps.jurisdiction.jurisdiction_id).toEqual('3951');
+    expect(componentProps.pointFeatureCollection.features.length).toEqual(95);
+    expect(componentProps.polygonFeatureCollection.features.length).toEqual(7);
+    expect(componentProps.currentPointIndexCases.features.length).toEqual(1);
+    expect(componentProps.currentPolyIndexCases.features.length).toEqual(0);
+    expect(componentProps.historicalPointIndexCases.features.length).toEqual(0);
+    expect(componentProps.historicalPolyIndexCases.features.length).toEqual(2);
+
+    // gisida lite layers
+    expect(wrapper.find('Loading').length).toEqual(0);
+    expect(wrapper.find('GisidaLite').text()).toEqual('Map is in the box');
   });
 });
