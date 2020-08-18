@@ -114,6 +114,7 @@ import {
   CASE_CONFIRMATION_CODE,
   CASE_NUMBER_CODE,
   CASE_TRIGGERED,
+  CREATE_TYPE,
   DISABLED,
   DYNAMIC_BCC_ACTIVITY_CODE,
   DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
@@ -377,6 +378,7 @@ export interface PlanAction {
   timingPeriod: PlanActionTimingPeriod;
   title: string;
   trigger?: PlanActionTrigger[];
+  type?: string;
 }
 
 /** Plan Goal detailQuantity */
@@ -655,6 +657,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: BCC_GOAL_DESCRIPTION,
@@ -734,6 +737,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: BEDNET_ACTIVITY_DESCRIPTION,
@@ -801,6 +805,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
@@ -859,6 +864,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description:
@@ -928,6 +934,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description:
@@ -1008,6 +1015,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
@@ -1077,6 +1085,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: IRS_GOAL_DESCRIPTION,
@@ -1145,6 +1154,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
@@ -1213,6 +1223,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
