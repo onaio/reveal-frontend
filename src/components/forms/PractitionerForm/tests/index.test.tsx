@@ -54,7 +54,7 @@ describe('src/components/PractitionerForm', () => {
     await flushPromises();
     expect(fetch.mock.calls).toEqual([
       [
-        'https://test.smartregister.org/opensrp/rest/user?page_size=51&start_index=0',
+        'https://test.smartregister.org/opensrp/rest/user?page_size=51&source=Keycloak&start_index=0',
         {
           headers: {
             accept: 'application/json',

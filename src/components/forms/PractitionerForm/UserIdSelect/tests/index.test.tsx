@@ -3,7 +3,7 @@ import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import React from 'react';
 import { OpenSRPService } from '../../../../../services/opensrp';
-import UserIdSelect, { thereIsNextPage } from '../../UserIdSelect';
+import UserIdSelect from '../../UserIdSelect';
 import { practitioners, sortedUsers, users } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires
@@ -53,7 +53,7 @@ describe('src/*/forms/userIdSelect', () => {
     await new Promise(resolve => setImmediate(resolve));
     const calls = [
       [
-        'https://test.smartregister.org/opensrp/rest/user?page_size=51&start_index=0',
+        'https://test.smartregister.org/opensrp/rest/user?page_size=51&source=Keycloak&start_index=0',
         {
           headers: {
             accept: 'application/json',
@@ -95,7 +95,7 @@ describe('src/*/forms/userIdSelect', () => {
     const selectWrapperOptions = (selectWrapperProps as any).options;
 
     // should be less that those passed in from the api
-    expect(selectWrapperOptions.length).toEqual(users.results.length - 2);
+    expect(selectWrapperOptions.length).toEqual(users.length - 2);
 
     // we then look if the records that are missing are actually
     // those that we want missing i.e from the dropdown options
@@ -121,7 +121,7 @@ describe('src/*/forms/userIdSelect', () => {
     const selectWrapperProps = wrapper.find('Select').props();
     const selectWrapperOptions = (selectWrapperProps as any).options;
 
-    expect(selectWrapperOptions.length).toEqual(users.results.length);
+    expect(selectWrapperOptions.length).toEqual(users.length);
 
     const optionNames = selectWrapperOptions.map((option: any) => option.label);
     expect(optionNames.includes('superset-user')).toBeTruthy();
@@ -174,32 +174,16 @@ describe('src/*/forms/userIdSelect', () => {
   });
 });
 
-describe('src/containers/forms/PractitionerForm/UserIdSelect.utils', () => {
-  it('correctly checks if there is more data', () => {
-    expect(thereIsNextPage(users)).toBeFalsy();
-    let mockResponse = {
-      links: [
-        {
-          rel: 'next',
-          uri: '',
-        },
-        {
-          rel: 'prev',
-          uri: '',
-        },
-      ],
-      results: [],
-    };
-    expect(thereIsNextPage(mockResponse)).toBeTruthy();
-    mockResponse = {
-      links: [
-        {
-          rel: 'next',
-          uri: '',
-        },
-      ],
-      results: [],
-    };
-    expect(thereIsNextPage(mockResponse)).toBeTruthy();
-  });
+it('test that user service is not triggered when response length is 0', async () => {
+  fetch.once(JSON.stringify([])).once(JSON.stringify([]));
+  const props = {
+    serviceClass: OpenSRPService,
+  };
+  const wrapper = mount(<UserIdSelect {...props} />);
+  await flushPromises();
+  // check for options to Select
+  const selectWrapperProps = wrapper.find('Select').props();
+  const selectWrapperOptions = (selectWrapperProps as any).options;
+  // test that options are empty
+  expect(selectWrapperOptions).toEqual([]);
 });

@@ -27,6 +27,7 @@ describe('src/components/forms/FilterForm', () => {
     // tslint:disable-next-line:promise-must-complete
     await new Promise<any>(resolve => new Promise<any>(resolve));
     wrapper.update();
+    wrapper.unmount();
   });
 
   it('renders correctly', async () => {
@@ -62,7 +63,7 @@ describe('src/components/forms/FilterForm', () => {
     await flushPromises();
     const calls = [
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/user?page_size=100&start_index=0',
+        'https://reveal-stage.smartregister.org/opensrp/rest/user?page_size=100&source=Keycloak&start_index=0',
         {
           headers: {
             accept: 'application/json',
@@ -73,7 +74,7 @@ describe('src/components/forms/FilterForm', () => {
         },
       ],
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/user?page_size=100&start_index=0',
+        'https://reveal-stage.smartregister.org/opensrp/rest/user?page_size=100&source=Keycloak&start_index=0',
         {
           headers: {
             accept: 'application/json',
