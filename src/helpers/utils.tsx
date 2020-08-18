@@ -959,7 +959,7 @@ export interface SettingConfiguration {
  */
 export const creatSettingsPayloads = (
   result: PapaResult,
-  addUsername: boolean = false
+  addProvider: boolean = false
 ): SettingConfiguration[] => {
   const payloads: SettingConfiguration[] = [];
   const { data } = result;
@@ -988,13 +988,12 @@ export const creatSettingsPayloads = (
           }
         }
       }
-
       const payload: SettingConfiguration = {
         identifier: `jurisdiction_metadata-${header}`,
         settings,
         type: SETTINGS_CONFIGURATION,
       };
-      if (addUsername) {
+      if (addProvider) {
         payload.providerId = username;
       }
       payloads.push(payload);

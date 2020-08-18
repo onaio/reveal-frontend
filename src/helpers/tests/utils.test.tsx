@@ -453,9 +453,9 @@ describe('helpers/utils', () => {
     expect(payloads).toHaveLength(2);
     expect(payload).toEqual(expectedPayload);
 
-    const payloadWithUser: SettingConfiguration[] = creatSettingsPayloads(result, true);
-    const expectedPayloadWithUser = { ...expectedPayload, providerId: 'testUser' };
-    expect(payloadWithUser[0]).toEqual(expectedPayloadWithUser);
+    const payloadWithProvider: SettingConfiguration[] = creatSettingsPayloads(result, true);
+    const expectedPayloadWithProvider = { ...expectedPayload, providerId: 'testUser' };
+    expect(payloadWithProvider[0]).toEqual(expectedPayloadWithProvider);
   });
 
   it('getPlanStatusToDisplay - eliminates unwanted plans', () => {
