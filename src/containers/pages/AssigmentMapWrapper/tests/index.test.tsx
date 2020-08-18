@@ -81,7 +81,6 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     fetch.mockResponseOnce(JSON.stringify([fixtures.jurisdiction1]), { status: 200 });
     store.dispatch(fetchJurisdictions(fixtures.payload as any));
     const props = {
-      autoSelectionFlow: false,
       currentParentId: '2492',
       plan: {
         identifier: '2493',
@@ -119,7 +118,6 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
       autoSelectNodesActionCreator: expect.any(Function),
-      autoSelectionFlow: false,
       baseAssignmentURL: '/',
       currentChildren: [],
       currentParentId: '2492',
@@ -178,7 +176,6 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     expect(fetch).toHaveBeenCalledTimes(3);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
       autoSelectNodesActionCreator: expect.any(Function),
-      autoSelectionFlow: false,
       baseAssignmentURL: '/',
       currentChildren: expect.any(Array),
       currentParentId: '3019',
@@ -239,7 +236,6 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
       autoSelectNodesActionCreator: expect.any(Function),
-      autoSelectionFlow: false,
       baseAssignmentURL: '/',
       currentChildren: expect.any(Array),
       currentParentId: '3019',

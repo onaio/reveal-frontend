@@ -257,7 +257,6 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   };
 
   const AssignmentWraperProps = {
-    autoSelectionFlow: false,
     baseAssignmentURL: `${ASSIGN_PLAN_URL}/${(plan as PlanDefinition).identifier}`,
     currentParentId: jurisdictionId,
     isPlanAssignmentPage: true,

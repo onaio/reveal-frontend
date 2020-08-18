@@ -38,7 +38,6 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 /** props for Plan jurisdiction and team assignment higher order component */
 export interface AssignmentMapWrapperProps {
-  autoSelectionFlow: boolean;
   plan: PlanDefinition;
   rootJurisdictionId: string;
   currentParentId?: string;
@@ -63,7 +62,6 @@ const defaultFeatureCollection: FeatureCollection = {
 
 const defaultProps: AssignmentMapWrapperProps = {
   autoSelectNodesActionCreator: autoSelectNodes,
-  autoSelectionFlow: false,
   baseAssignmentURL: '/',
   currentChildren: [],
   currentParentId: undefined,

@@ -173,7 +173,6 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
   };
 
   const AssignmentWrapperProps = {
-    autoSelectionFlow: false,
     baseAssignmentURL: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootId}`,
     currentParentId: props.match.params.parentId,
     jurisdictionsChunkSize: 30,
