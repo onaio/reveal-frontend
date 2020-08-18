@@ -156,6 +156,7 @@ export const OPENSRP_FORM_METADATA_ENDPOINT = 'clientForm/metadata';
 export const SETTINGS_ENDPOINT = 'settings/';
 export const LOCATIONS_ENDPOINT = 'location/location-tree';
 export const SECURITY_AUTHENTICATE_ENDPOINT = 'security/authenticate';
+export const OPENSRP_KEYCLOAK_PARAM = 'Keycloak';
 
 // colors
 export const GREEN = 'Green';

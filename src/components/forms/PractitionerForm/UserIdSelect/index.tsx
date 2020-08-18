@@ -7,7 +7,11 @@ import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
 import { SELECT } from '../../../../configs/lang';
-import { OPENSRP_PRACTITIONER_ENDPOINT, OPENSRP_USERS_ENDPOINT } from '../../../../constants';
+import {
+  OPENSRP_KEYCLOAK_PARAM,
+  OPENSRP_PRACTITIONER_ENDPOINT,
+  OPENSRP_USERS_ENDPOINT,
+} from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -81,27 +85,28 @@ export const UserIdSelect = (props: Props) => {
   };
 
   /** Pulls all users data */
-  const loadUsers = async (service: typeof OpenSRPService = OpenSRPService) => {
+  const loadUsers = async () => {
     let filterParams = {
       page_size: USERS_REQUEST_PAGE_SIZE,
+      source: OPENSRP_KEYCLOAK_PARAM,
       start_index: 0,
     };
-    const serve = new service(OPENSRP_USERS_ENDPOINT);
+    const serve = new props.serviceClass(OPENSRP_USERS_ENDPOINT);
     const allUsers = [];
-    let response: UserResponse;
+    let response: User[];
     do {
       response = await serve.list(filterParams).catch(err => {
         displayError(err);
       });
-      allUsers.push(...response.results);
+      allUsers.push(...response);
 
       // modify filter params to point to next page
-      const responseSize = response.results.length;
+      const responseSize = response.length;
       filterParams = {
         ...filterParams,
         start_index: filterParams.start_index + responseSize,
       };
-    } while (thereIsNextPage(response));
+    } while (filterParams.start_index < response.length);
     return allUsers;
   };
 
