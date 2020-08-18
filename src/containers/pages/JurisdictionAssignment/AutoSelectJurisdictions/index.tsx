@@ -240,7 +240,7 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
   };
 
   const AssignmentWrapperProps = {
-    autoSelectionFlow: true,
+    baseAssignmentURL: `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`,
     currentParentId: props.match.params.parentId,
     jurisdictionsChunkSize: 30,
     plan,
