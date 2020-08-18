@@ -1,7 +1,9 @@
 import { mount } from 'enzyme';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import { cloneDeep } from 'lodash';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { FI_SINGLE_URL } from '../../../../../../constants';
@@ -75,8 +77,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     const componentProps: any = wrapper.find('SingleActiveFIMap').props();
 
@@ -130,8 +134,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     const componentProps: any = wrapper.find('SingleActiveFIMap').props();
 
@@ -186,8 +192,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       </Provider>
     );
 
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     const componentProps: any = wrapper.find('SingleActiveFIMap').props();
 
@@ -233,8 +241,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     expect(wrapper.find('GisidaLite').find('Ripple').length).toEqual(1);
     expect(wrapper.find('GisidaLite').text()).toEqual('');
@@ -268,8 +278,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     const componentProps: any = wrapper.find('SingleActiveFIMap').props();
 
@@ -325,8 +337,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     const componentProps: any = wrapper.find('SingleActiveFIMap').props();
     expect(componentProps.jurisdiction).toEqual(null);
@@ -367,8 +381,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     const componentProps: any = wrapper.find('SingleActiveFIMap').props();
     expect(componentProps.jurisdiction).toEqual(null);
