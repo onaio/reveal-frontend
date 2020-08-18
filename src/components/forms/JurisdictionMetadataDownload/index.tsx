@@ -6,6 +6,7 @@ import { ValueType } from 'react-select/src/types';
 import { Button } from 'reactstrap';
 import { FormGroup } from 'reactstrap';
 import * as Yup from 'yup';
+import { ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS } from '../../../configs/env';
 import {
   DOWNLOAD,
   DOWNLOAD_FILE,
@@ -21,7 +22,7 @@ import { OPENSRP_V2_SETTINGS, TEXT_CSV } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
 import { downloadFile, successGrowl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
-import { getAllowedMetaDataIdentifiers, SelectOption } from './helpers';
+import { getAllowedMetaDataIdentifiers, MetaDataIdentifierParams, SelectOption } from './helpers';
 
 /** yup validation schema for Jurisdiction Metadata Form input */
 export const JurisdictionSchema = Yup.object().shape({
@@ -147,6 +148,11 @@ export const submitForm = (
     });
 };
 
+/** get enabled identifier options */
+const enabledIdentifierOptions = getAllowedMetaDataIdentifiers(
+  ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS as MetaDataIdentifierParams[]
+);
+
 const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFormProps) => {
   const { initialValues, identifierOptions } = props;
   const [globalError, setGlobalError] = useState<string>('');
@@ -211,7 +217,7 @@ const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFor
  */
 const defaultProps: JurisdictionMetadataDownloadFormProps = {
   disabledFields: [],
-  identifierOptions: getAllowedMetaDataIdentifiers(['TARGET', 'RISK', 'POPULATION', 'COVERAGE']),
+  identifierOptions: enabledIdentifierOptions,
   initialValues: defaultInitialValues,
   serviceClass: new OpenSRPService(OPENSRP_V2_SETTINGS),
   submitForm,

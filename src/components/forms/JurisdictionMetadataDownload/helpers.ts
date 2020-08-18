@@ -23,6 +23,10 @@ export const MetaDataIdentifierParams = {
 
 export type MetaDataIdentifierParams = keyof typeof MetaDataIdentifierParams;
 
+/**
+ * filter allowed identifier options
+ * @param {MetaDataIdentifierParams[]} allowedIdentifiers - allowed options keys list
+ */
 export const getAllowedMetaDataIdentifiers = (allowedIdentifiers: MetaDataIdentifierParams[]) => {
   const allowedOptions: SelectOption[] = [];
   Object.entries(MetaDataIdentifierParams).forEach(([key, value]) => {
