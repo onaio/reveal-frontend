@@ -57,7 +57,6 @@ export const goalsJSON = require('./supersetFixtures/goals.json');
 export const plansTasksJSON = require('./supersetFixtures/planTasks.json');
 /** this are case confirmation tasks within the jurisdiction area that this plan is part of */
 export const caseConfirmationJSON = require('./supersetFixtures/caseConfirmationTasks.json');
-export const jurisdictionNoGeoJSON = require('./supersetFixtures/jurisdictionsNoGeojson.json');
 
 export const processedPlansJSON = superset.processData(planJSON) || [];
 export const processedJurisdictionJSON = superset.processData(jurisdictionJSON) || [];
@@ -65,4 +64,3 @@ export const processedStructuresJSON = superset.processData(structuresJSON) || [
 export const processedGoalsJSON = superset.processData(goalsJSON) || [];
 export const processedPlansTasksJson = superset.processData(plansTasksJSON) || [];
 export const processedCaseConfirmationTasksJSON = superset.processData(caseConfirmationJSON) || [];
-export const processedJurisdictionNoGeoJSON = superset.processData(jurisdictionNoGeoJSON) || [];

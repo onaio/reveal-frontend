@@ -208,7 +208,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
   it('displays loader if jurisdiction has no geojson', async () => {
     // use dispatch
     store.dispatch(fetchPlans(fixturesMap.processedPlansJSON));
-    store.dispatch(fetchJurisdictions(fixturesMap.processedJurisdictionNoGeoJSON));
+    store.dispatch(fetchJurisdictions([{ jurisdiction_id: '3951' }]));
     store.dispatch(structureDucks.setStructures(fixturesMap.processedStructuresJSON));
     store.dispatch(fetchGoals(fixturesMap.processedGoalsJSON));
     store.dispatch(fetchTasks(fixturesMap.processedPlansTasksJson));
