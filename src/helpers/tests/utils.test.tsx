@@ -1,4 +1,5 @@
 import * as gatekeeper from '@onaio/gatekeeper';
+import { authenticateUser } from '@onaio/session-reducer';
 import { cloneDeep, map } from 'lodash';
 import MockDate from 'mockdate';
 import moment from 'moment';
@@ -13,6 +14,7 @@ import {
 } from '../../colors';
 import { ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE, PLAN_UUID_NAMESPACE } from '../../configs/env';
 import { SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../constants';
+import store from '../../store';
 import * as planDefinitionFixtures from '../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType, Plan } from '../../store/ducks/plans';
 import { InitialTask } from '../../store/ducks/tasks';
@@ -398,6 +400,15 @@ describe('helpers/utils', () => {
   });
 
   it('creates Payloads correctly', () => {
+    /** test User */
+    const testUser = {
+      email: 'test@example.com',
+      gravatar: '',
+      name: 'test',
+      username: 'testUser',
+    };
+    // dispatch user
+    store.dispatch(authenticateUser(true, testUser));
     const result: PapaResult = {
       data: [
         {
@@ -417,14 +428,34 @@ describe('helpers/utils', () => {
       meta: [],
     };
 
+    const expectedPayload = {
+      identifier: 'jurisdiction_metadata-coverage',
+      settings: [
+        {
+          description: 'Jurisdiction Metadata for test1 id 79b139c-3a20-4656-b684-d2d9ed83c94e',
+          key: '79b139c-3a20-4656-b684-d2d9ed83c94e',
+          label: 'test1 metadata',
+          value: '30',
+        },
+        {
+          description: 'Jurisdiction Metadata for test2 id 02ebbc84-5e29-4cd5-9b79-c594058923e9',
+          key: '02ebbc84-5e29-4cd5-9b79-c594058923e9',
+          label: 'test2 metadata',
+          value: '50',
+        },
+      ],
+      type: 'SettingConfiguration',
+    };
+
     const payloads: SettingConfiguration[] = creatSettingsPayloads(result);
     const payload: SettingConfiguration = payloads[0];
 
     expect(payloads).toHaveLength(2);
-    expect(payload.identifier).toEqual('jurisdiction_metadata-coverage');
-    expect(payload.settings).toHaveLength(2);
-    expect(payload.settings[0].value).toEqual('30');
-    expect(payload.settings[0].key).toEqual('79b139c-3a20-4656-b684-d2d9ed83c94e');
+    expect(payload).toEqual(expectedPayload);
+
+    const payloadWithUser: SettingConfiguration[] = creatSettingsPayloads(result, true);
+    const expectedPayloadWithUser = { ...expectedPayload, providerId: 'testUser' };
+    expect(payloadWithUser[0]).toEqual(expectedPayloadWithUser);
   });
 
   it('getPlanStatusToDisplay - eliminates unwanted plans', () => {
