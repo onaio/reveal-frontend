@@ -201,7 +201,42 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(componentProps.historicalPolyIndexCases.features.length).toEqual(2);
 
     // gisida lite layers
-    expect(wrapper.find('Loading').length).toEqual(0);
+    expect(wrapper.find('GisidaLite').find('Ripple').length).toEqual(0);
     expect(wrapper.find('GisidaLite').text()).toEqual('Map is in the box');
+  });
+
+  it('displays loader if jurisdiction has no geojson', async () => {
+    // use dispatch
+    store.dispatch(fetchPlans(fixturesMap.processedPlansJSON));
+    store.dispatch(fetchJurisdictions(fixturesMap.processedJurisdictionNoGeoJSON));
+    store.dispatch(structureDucks.setStructures(fixturesMap.processedStructuresJSON));
+    store.dispatch(fetchGoals(fixturesMap.processedGoalsJSON));
+    store.dispatch(fetchTasks(fixturesMap.processedPlansTasksJson));
+    store.dispatch(fetchTasks(fixturesMap.processedCaseConfirmationTasksJSON));
+    const mock = jest.fn();
+    const supersetServiceMock = jest.fn(async () => null);
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: 'dbd9851f-2548-5aaa-8267-010897f98f45' },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/dbd9851f-2548-5aaa-8267-010897f98f45`,
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+
+    expect(wrapper.find('GisidaLite').find('Ripple').length).toEqual(1);
+    expect(wrapper.find('GisidaLite').text()).toEqual('');
   });
 });
