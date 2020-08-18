@@ -10,6 +10,7 @@ import { Router } from 'react-router';
 import { AssignmentMapWrapper, ConnectedAssignmentMapWrapper } from '..';
 import { getJurisdictions } from '../../../../components/TreeWalker/helpers';
 import { PlanDefinition } from '../../../../configs/settings';
+import { ASSIGN_PLAN_URL, MANUAL_ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 import hierachyReducer, {
@@ -80,7 +81,6 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     fetch.mockResponseOnce(JSON.stringify([fixtures.jurisdiction1]), { status: 200 });
     store.dispatch(fetchJurisdictions(fixtures.payload as any));
     const props = {
-      autoSelectionFlow: false,
       currentParentId: '2492',
       plan: {
         identifier: '2493',
@@ -118,7 +118,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
       autoSelectNodesActionCreator: expect.any(Function),
-      autoSelectionFlow: false,
+      baseAssignmentURL: '/',
       currentChildren: [],
       currentParentId: '2492',
       currentParentNode: undefined,
@@ -176,7 +176,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     expect(fetch).toHaveBeenCalledTimes(3);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
       autoSelectNodesActionCreator: expect.any(Function),
-      autoSelectionFlow: false,
+      baseAssignmentURL: '/',
       currentChildren: expect.any(Array),
       currentParentId: '3019',
       currentParentNode: expect.any(Object),
@@ -236,7 +236,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
       autoSelectNodesActionCreator: expect.any(Function),
-      autoSelectionFlow: false,
+      baseAssignmentURL: '/',
       currentChildren: expect.any(Array),
       currentParentId: '3019',
       currentParentNode: expect.any(Object),
@@ -528,5 +528,99 @@ describe('containers/pages/AssigmentMapWrapper', () => {
       [{ getCanvas: expect.any(Function), unproject: expect.any(Function) }],
     ]);
     expect(addToMock).toBeCalledTimes(1);
+  });
+  it('drills down correctly based on the assignment page base URL', () => {
+    const event = {
+      originalEvent: {
+        altKey: false,
+      },
+      point: {
+        x: 463.5,
+        y: 477.1875,
+      },
+      target: {
+        queryRenderedFeatures: () => {
+          return [
+            {
+              geometry: {
+                coordinates: [
+                  [
+                    [101.16072535514832, 15.119824869285075],
+                    [101.15796539300004, 15.052626968000027],
+                    [101.16026588800008, 15.052683043000059],
+                    [101.16249336800007, 15.05279176700003],
+                    [101.16457351200006, 15.05287588400006],
+                    [101.16817184600006, 15.053010455000049],
+                    [101.16992435000009, 15.05309115600005],
+                    [101.16997576800009, 15.052226568000037],
+                    [101.17015797000005, 15.050841579000064],
+                    [101.17258921900009, 15.050799469000026],
+                    [101.17424499900005, 15.050698872000055],
+                    [101.17613469500009, 15.050485078000065],
+                    [101.17699562400009, 15.050437232000036],
+                  ],
+                ],
+                type: 'Polygon',
+              },
+              id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+              properties: {
+                geographicLevel: 3,
+                name: 'Two Three Two Release Village',
+                parentId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
+                status: 'Active',
+                version: 0,
+              },
+              type: 'Feature',
+            },
+          ];
+        },
+      },
+    };
+    const mockProps = {
+      baseAssignmentURL: `${ASSIGN_PLAN_URL}/2493`,
+      currentChildren: [
+        {
+          hasChildren: () => true,
+          model: {
+            id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+            meta: { selected: false },
+          },
+        },
+      ],
+      currentParentNode: {
+        children: [
+          {
+            hasChildren: () => true,
+            model: {
+              id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+              meta: { selected: false },
+            },
+          },
+        ],
+        model: {
+          id: '2943',
+          meta: { selected: false },
+        },
+      },
+      plan: {
+        identifier: '2493',
+        useContext: [{ code: 'interventionType', valueCodableConcept: 'IRS' }],
+      } as PlanDefinition,
+      rootJurisdictionId: '2942',
+    };
+    const mockMapObj: any = {};
+    const onJurisdictionClickMock1 = onJurisdictionClick(mockProps, () => jest.fn(), history);
+    onJurisdictionClickMock1(mockMapObj, event as EventData);
+
+    // test correct navigation for plans assignment
+    expect(history.location.pathname).toEqual('/assign/2493/8fb28715-6c80-4e2c-980f-422798fe9f41');
+
+    // test correct navigation for jurisdiction assignment
+    mockProps.baseAssignmentURL = `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${mockProps.plan.identifier}/${mockProps.rootJurisdictionId}`;
+    const onJurisdictionClickMock2 = onJurisdictionClick(mockProps, () => jest.fn(), history);
+    onJurisdictionClickMock2(mockMapObj, event as EventData);
+    expect(history.location.pathname).toEqual(
+      '/manualSelectJurisdictions/2493/2942/8fb28715-6c80-4e2c-980f-422798fe9f41'
+    );
   });
 });

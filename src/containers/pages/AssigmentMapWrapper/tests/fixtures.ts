@@ -339,6 +339,7 @@ export const geoCollection = {
         fillColor: '#792b16',
         fillOutlineColor: '#ffffff',
         geographicLevel: 3,
+        jurisdiction_id: '3951',
         lineColor: '#ffffff',
         name: 'Two Three Two Release Village',
         parentId: '3019',
