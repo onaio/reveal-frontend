@@ -42,11 +42,25 @@ export interface Option {
 
 /** interface describing a user */
 interface User {
-  person: {
-    display: string;
+  access?: {
+    manageGroupMembership: boolean;
+    view: boolean;
+    mapRoles: boolean;
+    impersonate: boolean;
+    manage: boolean;
   };
-  display: string;
-  uuid: string;
+  createdTimestamp?: number;
+  disableableCredentialTypes?: string[];
+  email?: string;
+  emailVerified?: boolean;
+  enabled?: boolean;
+  firstName?: string;
+  id: string;
+  lastName?: string;
+  notBefore?: number;
+  requiredActions?: string[];
+  totp?: boolean;
+  username: string;
 }
 
 /** our custom for the option object passed to onChangeHandler by react-select
@@ -118,7 +132,7 @@ export const UserIdSelect = (props: Props) => {
     ).list();
 
     const practitionerUserIds = practitioners.map(practitioner => practitioner.userId);
-    const unMatchedUsers = allUsers.filter(user => !practitionerUserIds.includes(user.uuid));
+    const unMatchedUsers = allUsers.filter(user => !practitionerUserIds.includes(user.id));
     if (isMounted.current) {
       setUsers(unMatchedUsers);
       setSelectIsLoading(false);
@@ -139,8 +153,8 @@ export const UserIdSelect = (props: Props) => {
   const options = React.useMemo(() => {
     return users
       .map((user: User) => ({
-        label: user.display,
-        value: user.uuid,
+        label: user.username,
+        value: user.id,
       }))
       .sort((userA, userB) => {
         const userALabel = userA.label;
