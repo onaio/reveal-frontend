@@ -10,6 +10,7 @@ import { SELECT } from '../../../../configs/lang';
 import {
   OPENSRP_KEYCLOAK_PARAM,
   OPENSRP_PRACTITIONER_ENDPOINT,
+  OPENSRP_USERS_COUNT_ENDPOINT,
   OPENSRP_USERS_ENDPOINT,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
@@ -86,6 +87,15 @@ export const UserIdSelect = (props: Props) => {
     }
   };
 
+  // fetch total number of users
+  const fetchUsersCount = async () => {
+    const serve = new props.serviceClass(OPENSRP_USERS_COUNT_ENDPOINT);
+    const response = await serve.list().catch(err => {
+      displayError(err);
+    });
+    return response;
+  };
+
   /** Pulls all users data */
   const loadUsers = async () => {
     let filterParams = {
@@ -96,6 +106,8 @@ export const UserIdSelect = (props: Props) => {
     const serve = new props.serviceClass(OPENSRP_USERS_ENDPOINT);
     const allUsers = [];
     let response: User[];
+    const usersCount: number = await fetchUsersCount();
+
     do {
       response = await serve.list(filterParams).catch(err => {
         displayError(err);
@@ -108,7 +120,7 @@ export const UserIdSelect = (props: Props) => {
         ...filterParams,
         start_index: filterParams.start_index + responseSize,
       };
-    } while (filterParams.start_index < response.length);
+    } while (filterParams.start_index < usersCount);
     return allUsers;
   };
 
