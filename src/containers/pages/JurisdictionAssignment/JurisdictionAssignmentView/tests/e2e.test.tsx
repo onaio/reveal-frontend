@@ -176,21 +176,21 @@ it('plans with existing node selections', async () => {
   renderTable(wrapper, 'after third click');
   // akros_3 node should  be selected while the others are not
   expect(tbodyRow.length).toEqual(2);
-  //   wrapper.find('tbody tr').forEach(tr => {
-  //     if (tr.text().includes('Akros_3')) {
-  //       expect(
-  //         tr
-  //           .find('td input')
-  //           .at(0)
-  //           .props().checked
-  //       ).toBeTruthy();
-  //     } else {
-  //       expect(
-  //         tr
-  //           .find('td input')
-  //           .at(0)
-  //           .props().checked
-  //       ).toBeFalsy();
-  //     }
-  //   });
+  wrapper.find('tbody tr').forEach(tr => {
+    if (tr.text().includes('Akros_3')) {
+      expect(
+        tr
+          .find('td input')
+          .at(0)
+          .props().checked
+      ).toBeTruthy();
+    } else {
+      expect(
+        tr
+          .find('td input')
+          .at(0)
+          .props().checked
+      ).toBeFalsy();
+    }
+  });
 });
