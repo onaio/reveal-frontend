@@ -17,7 +17,10 @@ describe('src/*/forms/userIdSelect', () => {
   });
 
   it('renders without crashing', async () => {
-    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -28,7 +31,10 @@ describe('src/*/forms/userIdSelect', () => {
   });
 
   it('renders correctly', async () => {
-    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -41,7 +47,10 @@ describe('src/*/forms/userIdSelect', () => {
   });
 
   it('calls to fetch', async () => {
-    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
 
     const props = {
       serviceClass: OpenSRPService,
@@ -52,6 +61,17 @@ describe('src/*/forms/userIdSelect', () => {
     await flushPromises();
     await new Promise(resolve => setImmediate(resolve));
     const calls = [
+      [
+        'https://test.smartregister.org/opensrp/rest/user/count',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
       [
         'https://test.smartregister.org/opensrp/rest/user?page_size=51&source=Keycloak&start_index=0',
         {
@@ -81,7 +101,10 @@ describe('src/*/forms/userIdSelect', () => {
   it('should not reselect an already matched user', async () => {
     // users (options) shown in select dropdown
     // should not be already mapped to a practitioner entity in opensrp
-    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -107,7 +130,10 @@ describe('src/*/forms/userIdSelect', () => {
   it('displays all users even those matched to practitioner', async () => {
     // shows all users (options) shown in select dropdown
     // if showPractitioners props is true
-    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
     const props = {
       serviceClass: OpenSRPService,
       showPractitioners: true,
@@ -129,7 +155,10 @@ describe('src/*/forms/userIdSelect', () => {
   });
 
   it('calls onchangeHandler callback correctly with correct arguments', async () => {
-    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
     const mock: any = jest.fn();
     const props = {
       onChangeHandler: mock,
@@ -158,7 +187,10 @@ describe('src/*/forms/userIdSelect', () => {
   });
 
   it('options are sorted in descending', async () => {
-    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -175,7 +207,10 @@ describe('src/*/forms/userIdSelect', () => {
 });
 
 it('test that user service is not triggered when response length is 0', async () => {
-  fetch.once(JSON.stringify([])).once(JSON.stringify([]));
+  fetch
+    .once(JSON.stringify(0))
+    .once(JSON.stringify([]))
+    .once(JSON.stringify([]));
   const props = {
     serviceClass: OpenSRPService,
   };

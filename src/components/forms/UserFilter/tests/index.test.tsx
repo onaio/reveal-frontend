@@ -15,7 +15,7 @@ const history = createBrowserHistory();
 
 describe('src/components/forms/FilterForm', () => {
   it('renders without crashing', async () => {
-    fetch.once(JSON.stringify(users));
+    fetch.once(JSON.stringify(users.length)).once(JSON.stringify(users));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -31,7 +31,7 @@ describe('src/components/forms/FilterForm', () => {
   });
 
   it('renders correctly', async () => {
-    fetch.once(JSON.stringify(users));
+    fetch.once(JSON.stringify(users.length)).once(JSON.stringify(users));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -48,7 +48,7 @@ describe('src/components/forms/FilterForm', () => {
   });
 
   it('calls to fetch', async () => {
-    fetch.once(JSON.stringify(users));
+    fetch.once(JSON.stringify(users.length)).once(JSON.stringify(users));
 
     const props = {
       serviceClass: OpenSRPService,
@@ -63,7 +63,7 @@ describe('src/components/forms/FilterForm', () => {
     await flushPromises();
     const calls = [
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/user?page_size=100&source=Keycloak&start_index=0',
+        'https://reveal-stage.smartregister.org/opensrp/rest/user/count',
         {
           headers: {
             accept: 'application/json',
@@ -74,7 +74,29 @@ describe('src/components/forms/FilterForm', () => {
         },
       ],
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/user?page_size=100&source=Keycloak&start_index=0',
+        'https://reveal-stage.smartregister.org/opensrp/rest/user?page_size=1000&source=Keycloak&start_index=0',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+      [
+        'https://reveal-stage.smartregister.org/opensrp/rest/user/count',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+      [
+        'https://reveal-stage.smartregister.org/opensrp/rest/user?page_size=1000&source=Keycloak&start_index=0',
         {
           headers: {
             accept: 'application/json',
@@ -88,7 +110,7 @@ describe('src/components/forms/FilterForm', () => {
     expect(fetch.mock.calls).toEqual(calls);
   });
   it('calls onchangeHandler callback correctly with correct arguments', async () => {
-    fetch.once(JSON.stringify(users));
+    fetch.once(JSON.stringify(users.length)).once(JSON.stringify(users));
     const mock: any = jest.fn();
     const props = {
       onChangeHandler: mock,
