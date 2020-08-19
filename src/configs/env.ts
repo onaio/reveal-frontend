@@ -313,7 +313,7 @@ export const PRACTITIONER_FORM_NAMESPACE =
   process.env.REACT_APP_PRACTITIONER_FORM_NAMESPACE || '78295ac0-df73-11e9-a54b-dbf5e5b2d668';
 export type PRACTITIONER_FORM_NAMESPACE = typeof PRACTITIONER_FORM_NAMESPACE;
 
-const usersRequestPageSize = process.env.REACT_APP_USERS_REQUEST_PAGE_SIZE || '100';
+const usersRequestPageSize = process.env.REACT_APP_USERS_REQUEST_PAGE_SIZE || '1000';
 export const USERS_REQUEST_PAGE_SIZE = parseInt(usersRequestPageSize, 10);
 export type USERS_REQUEST_PAGE_SIZE = typeof USERS_REQUEST_PAGE_SIZE;
 
