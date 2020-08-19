@@ -1,11 +1,12 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { mount, ReactWrapper } from 'enzyme';
+import { mount } from 'enzyme';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, Switch } from 'react-router';
 import ConnectedJurisdictionAssignmentView from '..';
 import { MANUAL_ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
+import { renderTable } from '../../../../../helpers/testUtils';
 import store from '../../../../../store';
 import hierarchiesReducer, {
   reducerName as hierarchiesReducerName,
@@ -16,15 +17,6 @@ import { plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/f
 
 reducerRegistry.register(reducerName, plansReducer);
 reducerRegistry.register(hierarchiesReducerName, hierarchiesReducer);
-
-// TODO - dry this
-/** will use this to render table rows */
-const renderTable = (wrapper: ReactWrapper, message: string) => {
-  const trs = wrapper.find('table tr');
-  trs.forEach(tr => {
-    expect(tr.text()).toMatchSnapshot(message);
-  });
-};
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
