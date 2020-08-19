@@ -15,7 +15,7 @@ exports[`src/containers/TeamAssignment/PractitionersListView/ renders a dumb Tea
       className="breadcrumb"
     >
       <BreadcrumbItem
-        key="0"
+        key="reveal-breadcrumb-0"
         tag="li"
       >
         <li
