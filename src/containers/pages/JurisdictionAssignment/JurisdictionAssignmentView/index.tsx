@@ -136,7 +136,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
         if (apiResponse.value) {
           const responseData = apiResponse.value;
           treeFetchedCreator(responseData);
-          autoSelectNodesCreator(rootId, callback, plan.identifier, SELECTION_REASON.NOT_CHANGED);
+          autoSelectNodesCreator(rootId, callback, plan.identifier, SELECTION_REASON.USER_CHANGE);
         }
         if (apiResponse.error) {
           throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);

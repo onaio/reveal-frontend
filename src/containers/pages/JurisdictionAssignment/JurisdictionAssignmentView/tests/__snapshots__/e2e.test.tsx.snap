@@ -24,7 +24,7 @@ exports[`plans with existing node selections: after third click 3`] = `"Akros_11
 
 exports[`plans with existing node selections: after third click 4`] = `"Akros_20Not Targeted0"`;
 
-exports[`plans with existing node selections: after third click 5`] = `"Akros_30Targeted1"`;
+exports[`plans with existing node selections: after third click 5`] = `"Akros_30TargetedUser Change1"`;
 
 exports[`plans with existing node selections: general snapshot of page 1`] = `"Planning toolA2-Lusaka Akros Test Focus 2Assign JurisdictionsAssignment Wrapper....NameStructures CountTarget StatusStatus setting by...Selected Jurisdictionsra Zambia132save draftSave & Activate"`;
 
