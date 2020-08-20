@@ -1,5 +1,4 @@
 import { COVERAGE_LABEL, POPULATION_LABEL, RISK_TEXT, TARGET_LABEL } from '../../../configs/lang';
-
 import {
   JURISDICTION_METADATA_COVERAGE,
   JURISDICTION_METADATA_POPULATION,
@@ -13,7 +12,7 @@ export interface SelectOption {
   value: string;
 }
 
-/** assign all jurisdiction metadata identifiers to a c */
+/** assign all jurisdiction metadata identifiers to a constant */
 export const MetaDataIdentifierParams = {
   COVERAGE: { value: JURISDICTION_METADATA_COVERAGE, label: COVERAGE_LABEL },
   POPULATION: { value: JURISDICTION_METADATA_POPULATION, label: POPULATION_LABEL },
