@@ -1414,7 +1414,7 @@
     "description": "Table column header"
   },
   "CHILDS_NAME": {
-    "message": "\"Child's name\"",
+    "message": "Child's name",
     "description": "Table column header"
   },
   "NATIONAL_ID": {
