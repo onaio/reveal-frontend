@@ -5,17 +5,12 @@ import { Redirect } from 'react-router';
 import { Button, Form, FormGroup, Input, Label, Modal, ModalBody, ModalHeader } from 'reactstrap';
 import * as Yup from 'yup';
 import LinkAsButton from '../../../../components/LinkAsButton';
-import {
-  CLIENT_UPLOAD_FORM,
-  MODAL_BUTTON_CLASS,
-  REQUIRED,
-  SUBMIT,
-  UPLOAD_FILE,
-} from '../../../../configs/lang';
+import { CLIENT_UPLOAD_FORM, REQUIRED, SUBMIT, UPLOAD_FILE } from '../../../../configs/lang';
 import {
   CLIENTS_LIST_URL,
   EVENT_NAME_PARAM,
   GO_BACK_TEXT,
+  MODAL_BUTTON_CLASS,
   OPENSRP_EVENT_PARAM_VALUE,
 } from '../../../../constants';
 import { postUploadedFile } from '../ClientListView/helpers/serviceHooks';

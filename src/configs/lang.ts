@@ -535,10 +535,6 @@ export const OWNER = translate('OWNER', 'Owner');
 export const UPLOAD_DATE = translate('UPLOAD_DATE', 'Upload Date');
 export const UPLOAD_FILE = translate('UPLOAD_FILE', 'Upload File');
 export const DOWNLOAD_FILE = translate('DOWNLOAD_FILE', 'Download File');
-export const MODAL_BUTTON_CLASS = translate(
-  'MODAL_BUTTON_CLASS',
-  'focus-investigation btn btn-primary float-right mt-0'
-);
 export const SUBMIT = translate('SUBMIT', 'Submit');
 export const CLIENT_UPLOAD_FORM = translate('CLIENT_UPLOAD_FORM', 'Client Upload Form');
 export const FILE_SUBMISSION_READY = translate('FILE_SUBMISSION_READY', 'File is ready to submit');
@@ -590,7 +586,7 @@ export const USER_HAS_NO_PLAN_ASSIGNMENTS = translate(
 export const NO_ROWS_FOUND = translate('NO_ROWS_FOUND', 'No rows found');
 
 export const AGE_RANGE = translate('AGE_RANGE', 'Age Range');
-export const TOTAL_SACS_REGISTERED = translate('', 'Total SACs Registered');
+export const TOTAL_SACS_REGISTERED = translate('TOTAL_SACS_REGISTERED', 'Total SACs Registered');
 export const MMA_COVERAGE = translate('MMA_COVERAGE', 'MMA Coverage');
 export const SACS_REFUSED = translate('SACS_REFUSED', 'SACs Refused');
 export const SACS_SICK = translate('SACS_SICK', 'SACs Sick/Pregnant/Contraindicated');
@@ -713,7 +709,7 @@ export const JURISDICTION_UPLOAD_STEP_1 = translate(
 );
 export const JURISDICTION_UPLOAD_STEP_2 = translate(
   'JURISDICTION_UPLOAD_STEP_2',
-  'Open the downloaded file and complete the risk and target details on therespective columns.'
+  'Open the downloaded file and complete the risk and target details on the respective columns.'
 );
 export const JURISDICTION_UPLOAD_STEP_3 = translate(
   'JURISDICTION_UPLOAD_STEP_3',

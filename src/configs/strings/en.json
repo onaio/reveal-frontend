@@ -1225,7 +1225,7 @@
   },
   "PLANNING_PAGE_TITLE": {
     "message": "Planning tool",
-    "description": "Title for page with the feature to help create plans"
+    "description": "Title of page with the feature to help create plans"
   },
   "SAVE_FILE": {
     "message": "Save File",
@@ -1234,11 +1234,7 @@
   "UPLOAD": { "message": "Upload", "description": "upload" },
   "MDA_POINT_PLANS": {
     "message": "MDA Point Plans",
-    "description": "Title for page that lists MDA point plans"
-  },
-  "JURISDICTION_HIERARCHY": {
-    "message": "jurisdictionHierachy",
-    "description": ""
+    "description": "Title of page that lists MDA point plans"
   },
   "JURISDICTION_HIERARCHY_TEMPLATE": {
     "message": "JurisdictionHierachyTemplate",
@@ -1254,11 +1250,11 @@
   },
   "DOWNLOAD_JURISDICTION_METADATA": {
     "message": "Download Jurisdiction Metadata",
-    "description": "Text for a call to action button to download metadata"
+    "description": "Button Text: button to download metadata"
   },
   "UPLOAD_JURISDICTION_METADATA": {
     "message": "Upload Jurisdiction Metadata",
-    "description": "Text for a call to actio nbutton to upload metadata csv file"
+    "description": "Button Text to upload metadata csv file"
   },
   "HOW_TO_UPDATE_JURISDICTION_METADATA": {
     "message": "How To Update The Jurisdiction Metadata",
@@ -1266,16 +1262,16 @@
   },
   "DOWNLOADING": { "message": "Downloading", "description": "Downloading" },
   "FILE_UPLOADED_SUCCESSFULLY": {
-    "message": "`File uploaded successfully.`",
-    "description": "Text shown as feedback for the successful completion of a file upload action"
+    "message": "File uploaded successfully.",
+    "description": "Text shown as feedback after the successful completion of a file upload action"
   },
   "FILE_DOWNLOADED_SUCCESSFULLY": {
-    "message": "`File downloaded successfully.`",
-    "description": "Text shown as feedback for the successfule completion of a file download action"
+    "message": "File downloaded successfully.",
+    "description": "Text shown as feedback after the successful completion of a file download action"
   },
   "FILE_UPLOAD_FAILED": {
     "message": "`File upload failed please try again.`",
-    "description": "Text shown as feedback for a failed file upload operation"
+    "description": "Text shown as feedback after a failed file upload operation"
   },
   "MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION": {
     "message": "Percent of eligible people",
@@ -1287,19 +1283,28 @@
   },
   "MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL": {
     "message": "Percent of people who reported adverse events",
-    "description": "Description of a metric to a task in a plan"
+    "description": "Description of a metric for a task in a plan"
   },
-  "MDA_POINT_TITLE": { "message": "MDA Point", "description": "" },
-  "DYNAMIC_FI_TITLE": { "message": "Dynamic FI", "description": "" },
-  "DYNAMIC_IRS_TITLE": { "message": "Dynamic IRS", "description": "" },
-  "DYNAMIC_MDA_TITLE": { "message": "Dynamic MDA", "description": "" },
+  "MDA_POINT_TITLE": { "message": "MDA Point", "description": "page title: for MDA point pages" },
+  "DYNAMIC_FI_TITLE": {
+    "message": "Dynamic FI",
+    "description": "page title: for dynamic FI pages"
+  },
+  "DYNAMIC_IRS_TITLE": {
+    "message": "Dynamic IRS",
+    "description": "page title: for dynamic IRS pages"
+  },
+  "DYNAMIC_MDA_TITLE": {
+    "message": "Dynamic MDA",
+    "description": "page title: for dynamic MDA pages"
+  },
   "TEAM_ASSIGNMENT_SUCCESSFUL": {
     "message": "Team(s) assignment updated successfully",
-    "description": "Text shown as feedback after the successfule completion  of a team assignment operation"
+    "description": "Text shown as feedback after the successful completion  of a team assignment operation"
   },
   "UPLOADED_CLIENT_LISTS": {
     "message": "Uploaded Clients List",
-    "description": "Section title that lists uploaded clients csv files."
+    "description": "Section title for section that lists uploaded clients csv files."
   },
   "RESET": { "message": "Reset", "description": "Reset" },
   "EXPORT_BASED_ON_GEOGRAPHICAL_REGION": {
@@ -1315,23 +1320,19 @@
   "OWNER": { "message": "Owner", "description": "Belonging to" },
   "UPLOAD_DATE": {
     "message": "Upload Date",
-    "description": "Table column header with records of when something was uploaded"
+    "description": "Table column header whose records are of when something was uploaded"
   },
   "UPLOAD_FILE": {
     "message": "Upload File",
-    "description": "Form label for a file upload input tag"
+    "description": "Form label of a file upload input tag"
   },
   "DOWNLOAD_FILE": {
     "message": "Download File",
-    "description": "Label of button whose action is to download a file"
-  },
-  "MODAL_BUTTON_CLASS": {
-    "message": "focus-investigation btn btn-primary float-right mt-0",
-    "description": ""
+    "description": "Button text: whose action is to download a file"
   },
   "SUBMIT": {
     "message": "Submit",
-    "description": "Call to action to submit a form"
+    "description": "Button text: submit a form"
   },
   "CLIENT_UPLOAD_FORM": {
     "message": "Client Upload Form",
@@ -1345,31 +1346,23 @@
     "message": "loading...",
     "description": "Text describing an in-progress action"
   },
-  "GEOGRAPHICAL_REGION_TO_INCLUDE": {
-    "message": "Geographical level to include",
-    "description": ""
-  },
-  "ASSIGN_TEAM_TO_SCHOOL": {
-    "message": "Assign team to this school",
-    "description": ""
-  },
   "MDA_POINT_REPORTING_TITLE": {
     "message": "MDA Point Reporting",
-    "description": "Title for page that lists MDA point plans for reporting"
+    "description": "Title of page that lists MDA point plans for reporting"
   },
   "FILTER": { "message": "Filter", "description": "Filter" },
   "USER": { "message": "user", "description": "user" },
   "MDA_POINT_LOCATION_REPORT_TITLE": {
     "message": "MDA Point Location Report",
-    "description": "Title for page that shows reporting dashboards for MDA Point plans"
+    "description": "Title of page that shows reporting dashboards for MDA Point plans"
   },
   "MDA_POINT_CHILD_REPORT_TITLE": {
     "message": "MDA Point Child Report",
-    "description": "Title for page that shows reporting dashboards for MDA Point plans"
+    "description": "Title of page that shows reporting dashboards for MDA Point plans"
   },
   "MDA_POINT_SCHOOL_REPORT_TITLE": {
     "message": "MDA Point School Report",
-    "description": "Title for page that shows reporting dashboards for MDA Point plans"
+    "description": "Title of page that shows reporting dashboards for MDA Point plans"
   },
   "USER_HAS_NO_VALID_ASSIGNMENTS": {
     "message": "User does not have valid plan assignments",
@@ -1380,8 +1373,8 @@
     "description": "Error message"
   },
   "ACCESS_DENIED": {
-    "message": "Sorry",
-    "description": "Part of an error message"
+    "message": "Access Denied",
+    "description": "Error message when api call resolves with a 403 status"
   },
   "USER_HAS_NO_PLAN_ASSIGNMENTS": {
     "message": "User does not have any plans assigned",
@@ -1392,7 +1385,7 @@
     "description": "Info message when there is no data to show"
   },
   "AGE_RANGE": { "message": "Age Range", "description": "Table column header" },
-  "": {
+  "TOTAL_SACS_REGISTERED": {
     "message": "Total SACs Registered",
     "description": "Table column Header"
   },
@@ -1441,18 +1434,14 @@
     "description": "Table column header"
   },
   "FILE": { "message": "File", "description": "A file" },
-  "FILE_FORMAT": { "message": "fileFormat", "description": "" },
   "CSV_FILE": {
     "message": "CSV File",
     "description": "Label of a an upload csv form field"
   },
-  "JURISDICTION_ID": { "message": "jurisdiction_id", "description": "" },
-  "JURISDICTION_NAME": { "message": "jurisdiction_name", "description": "" },
   "INVALID_CSV": {
     "message": "Invalid CSV",
     "description": "Error message shown when an invalid csv file is uploaded"
   },
-  "CSV_ONLY": { "message": "CSV Files Only", "description": "" },
   "ROW_HEIGHT": {
     "message": "Row Height",
     "description": "Label of a form field that is used to configure a table row's height"
@@ -1527,7 +1516,6 @@
     "message": "Status setting by...",
     "description": "Table column Header whose records the action that resulted in a change in the jurisdiction selection status"
   },
-  "RISK_LABEL": { "message": "Risk Label", "description": "" },
   "AUTO_SELECTION": {
     "message": "Auto-selection",
     "description": "Label used to show action by which a jurisdiction node is selected"
@@ -1546,7 +1534,7 @@
   },
   "JURISDICTION_ASSIGNMENT_SUCCESSFUL": {
     "message": "Jurisdiction(s) assigned to plan successfully",
-    "description": "Feedback after the succesfull completion of a jurisdiction assignment operation"
+    "description": "Feedback after the successful completion of a jurisdiction assignment operation"
   },
   "SELECTED_JURISDICTIONS": {
     "message": "Selected Jurisdictions",
