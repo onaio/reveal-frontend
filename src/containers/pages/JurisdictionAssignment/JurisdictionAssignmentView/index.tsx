@@ -33,7 +33,6 @@ import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { OpenSRPService } from '../../../../services/opensrp';
 import hierarchyReducer, {
   autoSelectNodes,
-  AutoSelectNodesAction,
   FetchedTreeAction,
   fetchTree,
   getTreeById,
@@ -65,7 +64,7 @@ export interface JurisdictionAssignmentViewProps {
   plan: PlanDefinition | null;
   serviceClass: typeof OpenSRPService;
   treeFetchedCreator: ActionCreator<FetchedTreeAction>;
-  autoSelectNodesCreator: ActionCreator<AutoSelectNodesAction>;
+  autoSelectNodesCreator: typeof autoSelectNodes;
   tree?: TreeNode;
 }
 
@@ -123,8 +122,10 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
       return;
     }
     const callback = (node: TreeNode) => {
-      const existingAssignments = plan.jurisdiction;
-      return existingAssignments.includes(node.model.id);
+      const existingAssignmentsIds = plan.jurisdiction.map(
+        jurisdictionCode => jurisdictionCode.code
+      );
+      return existingAssignmentsIds.includes(node.model.id);
     };
     const params = {
       return_structure_count: true,
@@ -135,7 +136,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
         if (apiResponse.value) {
           const responseData = apiResponse.value;
           treeFetchedCreator(responseData);
-          autoSelectNodesCreator(rootId, callback, SELECTION_REASON.NOT_CHANGED);
+          autoSelectNodesCreator(rootId, callback, plan.identifier, SELECTION_REASON.USER_CHANGE);
         }
         if (apiResponse.error) {
           throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
@@ -213,7 +214,7 @@ JurisdictionAssignmentView.defaultProps = defaultProps;
 type MapStateToProps = Pick<JurisdictionAssignmentViewProps, 'plan' | 'tree'>;
 type DispatchToProps = Pick<
   JurisdictionAssignmentViewProps,
-  'fetchPlanCreator' | 'treeFetchedCreator'
+  'fetchPlanCreator' | 'treeFetchedCreator' | 'autoSelectNodesCreator'
 >;
 
 const treeByIdSelector = getTreeById();
@@ -231,6 +232,7 @@ const mapStateToProps = (
 };
 
 const mapDispatchToProps: DispatchToProps = {
+  autoSelectNodesCreator: autoSelectNodes,
   fetchPlanCreator: addPlanDefinition,
   treeFetchedCreator: fetchTree,
 };
