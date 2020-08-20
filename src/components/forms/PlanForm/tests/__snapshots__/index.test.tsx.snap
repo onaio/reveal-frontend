@@ -4488,30 +4488,13 @@ Array [
   >
     Description
   </label>,
-  <label
-    className="col-sm-2 col-form-label"
-    htmlFor="activities[1].condition[0].expression"
-  >
-    Expression
-  </label>,
-  <label
-    className="col-sm-2 col-form-label"
-    htmlFor="activities[1].condition[0].description"
-  >
-    Description
-  </label>,
 ]
 `;
 
 exports[`containers/forms/PlanForm renders dynamic plans correctly: conditions legends 1`] = `
-Array [
-  <legend>
-    Conditions
-  </legend>,
-  <legend>
-    Conditions
-  </legend>,
-]
+<legend>
+  Conditions
+</legend>
 `;
 
 exports[`containers/forms/PlanForm renders dynamic plans correctly: conditions textareas 1`] = `
@@ -4524,7 +4507,7 @@ Array [
     onBlur={[Function]}
     onChange={[Function]}
     required={true}
-    value="$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'"
+    value="$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'"
   />,
   <textarea
     className="form-control col-sm-10"
@@ -4544,7 +4527,7 @@ Array [
     onBlur={[Function]}
     onChange={[Function]}
     required={true}
-    value="questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'"
+    value="$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')"
   />,
   <textarea
     className="form-control col-sm-10"
@@ -4555,26 +4538,6 @@ Array [
     onChange={[Function]}
     required={true}
     value="Apply to residential structures in Register_Structure questionnaires"
-  />,
-  <textarea
-    className="form-control col-sm-10"
-    disabled={false}
-    id="activities[1].condition[0].expression"
-    name="activities[1].condition[0].expression"
-    onBlur={[Function]}
-    onChange={[Function]}
-    required={true}
-    value="Location.physicalType.text = 'jdn'"
-  />,
-  <textarea
-    className="form-control col-sm-10"
-    disabled={false}
-    id="activities[1].condition[0].description"
-    name="activities[1].condition[0].description"
-    onBlur={[Function]}
-    onChange={[Function]}
-    required={true}
-    value="Jurisdiction type location"
   />,
 ]
 `;
@@ -4605,18 +4568,6 @@ Array [
     type="text"
     value="event-submission"
   />,
-  <input
-    className="form-control col-sm-10"
-    disabled={false}
-    id="activities[1].trigger[0].name"
-    name="activities[1].trigger[0].name"
-    onBlur={[Function]}
-    onChange={[Function]}
-    required={true}
-    sm={10}
-    type="text"
-    value="plan-activation"
-  />,
 ]
 `;
 
@@ -4646,24 +4597,13 @@ Array [
   >
     Description
   </label>,
-  <label
-    className="col-sm-2 col-form-label"
-    htmlFor="activities[1].trigger[0].name"
-  >
-    Name
-  </label>,
 ]
 `;
 
 exports[`containers/forms/PlanForm renders dynamic plans correctly: triggers legends 1`] = `
-Array [
-  <legend>
-    Triggers
-  </legend>,
-  <legend>
-    Triggers
-  </legend>,
-]
+<legend>
+  Triggers
+</legend>
 `;
 
 exports[`containers/forms/PlanForm renders dynamic plans correctly: triggers textareas 1`] = `

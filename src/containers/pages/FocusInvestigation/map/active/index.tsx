@@ -334,10 +334,12 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     ...currentIndexSymbolLayers,
   ];
 
-  const mapCenter = getCenter({
-    features: [jurisdiction.geojson as any],
-    type: 'FeatureCollection',
-  });
+  const mapCenter = jurisdiction.geojson
+    ? getCenter({
+        features: [jurisdiction.geojson as any],
+        type: 'FeatureCollection',
+      })
+    : undefined;
 
   const mapBounds = getMapBounds(jurisdiction);
 
