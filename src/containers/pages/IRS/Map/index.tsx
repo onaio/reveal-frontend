@@ -293,8 +293,8 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
               <GisidaWrapper {...gisidaWrapperProps} />
             </div>
           ) : (
-              <div>{MAP_LOAD_ERROR}</div>
-            )}
+            <div>{MAP_LOAD_ERROR}</div>
+          )}
         </Col>
         <Col xs={3}>
           <div className="mapSidebar">
@@ -327,7 +327,9 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
                   {!row.listDisplay && <p className="indicator-description">{row.description}</p>}
                   {!row.listDisplay && (
                     <ProgressBar
-                      lineColorThresholds={lineColorThreshold || null} value={row.value} />
+                      lineColorThresholds={lineColorThreshold || null}
+                      value={row.value}
+                    />
                   )}
                   <p className="indicator-breakdown">
                     {!row.listDisplay && `${PROGRESS}: `}
