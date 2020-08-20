@@ -687,25 +687,18 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Structure is residential or type does not exist',
             expression:
-              "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
+              "$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists())",
           },
           kind: APPLICABILITY_CONDITION_KIND,
-        },
-        {
-          expression: {
-            description: 'Family exists for structure',
-            expression: '$this.contained.exists()',
-            subjectCodableConcept: {
-              text: 'Family',
-            },
+          subjectCodableConcept: {
+            text: 'Family',
           },
-          kind: APPLICABILITY_CONDITION_KIND,
         },
         {
           expression: {
             description: 'Register structure event submitted for a residential structure',
             expression:
-              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
+              "$this.is(FHIR.Location)  or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
