@@ -361,6 +361,7 @@ export interface PlanActionTrigger {
 export interface PlanActionCondition {
   expression: PlanExpression;
   kind: Readonly<'applicability'>;
+  subjectCodableConcept?: PlanActionsubjectCodableConcept;
 }
 
 /** Plan Action */
@@ -964,25 +965,18 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Structure is residential or type does not exist',
             expression:
-              "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
+              "$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists().not())",
           },
           kind: APPLICABILITY_CONDITION_KIND,
-        },
-        {
-          expression: {
-            description: 'Family does not exist for structure',
-            expression: '$this.contained.exists().not()',
-            subjectCodableConcept: {
-              text: 'Family',
-            },
+          subjectCodableConcept: {
+            text: 'Family',
           },
-          kind: APPLICABILITY_CONDITION_KIND,
         },
         {
           expression: {
             description: 'Apply to residential structures in Register_Structure questionnaires',
             expression:
-              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
+              "$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
