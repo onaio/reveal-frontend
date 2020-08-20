@@ -126,6 +126,21 @@ Object {
 }
 `;
 
+exports[`containers/pages/FocusInvestigation/activeMap displays map if only plans and jurisdiction available 1`] = `
+Object {
+  "id": "main-plan-layer-3951",
+  "lineLayout": Object {
+    "visibility": "visible",
+  },
+  "linePaint": Object {
+    "line-color": "#FFDC00",
+    "line-opacity": 1,
+    "line-width": 3,
+  },
+  "type": "line",
+}
+`;
+
 exports[`containers/pages/FocusInvestigation/activeMap passes historical index cases to gisida lite 1`] = `
 Object {
   "id": "main-plan-layer-3951",
