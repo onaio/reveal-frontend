@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`plans with existing node selections: after first click 1`] = `"NameStructures CountTarget StatusStatus setting by...Selected Jurisdictions"`;
+
+exports[`plans with existing node selections: after first click 2`] = `"Lusaka131"`;
+
+exports[`plans with existing node selections: after first click 3`] = `"ra Eastern01"`;
+
+exports[`plans with existing node selections: after first click 4`] = `"ra Luapula00"`;
+
+exports[`plans with existing node selections: after first click 5`] = `"ra Lusaka00"`;
+
+exports[`plans with existing node selections: after second click 1`] = `"NameStructures CountTarget StatusStatus setting by...Selected Jurisdictions"`;
+
+exports[`plans with existing node selections: after second click 2`] = `"Mtendere131"`;
+
+exports[`plans with existing node selections: after second click 3`] = `"Lusaka District0Not Targeted0"`;
+
+exports[`plans with existing node selections: after third click 1`] = `"NameStructures CountTarget StatusStatus setting by...Selected Jurisdictions"`;
+
+exports[`plans with existing node selections: after third click 2`] = `"REVEAL TEST0Not Targeted0"`;
+
+exports[`plans with existing node selections: after third click 3`] = `"Akros_113Not Targeted0"`;
+
+exports[`plans with existing node selections: after third click 4`] = `"Akros_20Not Targeted0"`;
+
+exports[`plans with existing node selections: after third click 5`] = `"Akros_30TargetedUser Change1"`;
+
+exports[`plans with existing node selections: general snapshot of page 1`] = `"Planning toolA2-Lusaka Akros Test Focus 2Assign JurisdictionsAssignment Wrapper....NameStructures CountTarget StatusStatus setting by...Selected Jurisdictionsra Zambia132save draftSave & Activate"`;
+
+exports[`plans with existing node selections: should have single node(parent node) 1`] = `"NameStructures CountTarget StatusStatus setting by...Selected Jurisdictions"`;
+
+exports[`plans with existing node selections: should have single node(parent node) 2`] = `"ra Zambia132"`;

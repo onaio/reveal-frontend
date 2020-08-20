@@ -6,7 +6,7 @@ import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedJurisdictionAssignmentView, { JurisdictionAssignmentView } from '..';
-import { ASSIGN_JURISDICTIONS_URL as MANUAL_JURISDICTIONS_URL } from '../../../../../constants';
+import { MANUAL_ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import hierarchiesReducer, {
   deforest,
@@ -65,15 +65,15 @@ describe('src/containers/JurisdictionView', () => {
       jurisdictionsMetadata: jurisdictionsMetadataArray,
       location: {
         hash: '',
-        pathname: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
+        pathname: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
         search: '',
         state: {},
       },
       match: {
         isExact: true,
         params: { planId: plan.identifier, rootId },
-        path: `${MANUAL_JURISDICTIONS_URL}/:planId`,
-        url: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
+        path: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId`,
+        url: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
       },
       plan: plans[0],
       tree: generateJurisdictionTree(sampleHierarchy),
@@ -112,15 +112,15 @@ describe('src/containers/JurisdictionView', () => {
       history,
       location: {
         hash: '',
-        pathname: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
+        pathname: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
         search: '',
         state: {},
       },
       match: {
         isExact: true,
         params: { planId: plan.identifier, rootId },
-        path: `${MANUAL_JURISDICTIONS_URL}/:planId`,
-        url: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
+        path: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId`,
+        url: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
       },
     };
 
@@ -157,15 +157,15 @@ describe('src/containers/JurisdictionView', () => {
       history,
       location: {
         hash: '',
-        pathname: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
+        pathname: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
         search: '',
         state: {},
       },
       match: {
         isExact: true,
         params: { planId: plan.identifier, rootId },
-        path: `${MANUAL_JURISDICTIONS_URL}/:planId`,
-        url: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
+        path: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId`,
+        url: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
       },
     };
 
@@ -195,15 +195,15 @@ describe('src/containers/JurisdictionView', () => {
       history,
       location: {
         hash: '',
-        pathname: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
+        pathname: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
         search: '',
         state: {},
       },
       match: {
         isExact: true,
         params: { planId: plan.identifier, rootId },
-        path: `${MANUAL_JURISDICTIONS_URL}/:planId`,
-        url: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
+        path: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId`,
+        url: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
       },
     };
 
@@ -236,15 +236,15 @@ describe('src/containers/JurisdictionView', () => {
       history,
       location: {
         hash: '',
-        pathname: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
+        pathname: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
         search: '',
         state: {},
       },
       match: {
         isExact: true,
         params: { planId: plan.identifier, rootId },
-        path: `${MANUAL_JURISDICTIONS_URL}/:planId`,
-        url: `${MANUAL_JURISDICTIONS_URL}/${plan.identifier}`,
+        path: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId`,
+        url: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}`,
       },
     };
 
