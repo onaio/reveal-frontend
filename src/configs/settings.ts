@@ -1164,7 +1164,8 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description: 'Structure is a mosquito collection point',
-            expression: "$this.type.where(id='locationType').text = 'Mosquito Collection Point'",
+            expression:
+              "$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').text = 'Mosquito Collection Point'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1172,7 +1173,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Apply to mosquito collection point in Register_Structure questionnaires',
             expression:
-              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Mosquito Collection Point'",
+              "$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Mosquito Collection Point')",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
