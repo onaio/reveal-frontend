@@ -769,9 +769,6 @@ export const planActivities: PlanActivities = {
               'Person is older than 5 years or person associated with questionnaire response if older than 5 years',
             expression:
               "($this.is(FHIR.Patient) and $this.birthDate <= today() - 5 'years') or ($this.contained.where(Patient.birthDate <= today() - 5 'years').exists())",
-            subjectCodableConcept: {
-              text: 'Person',
-            },
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
