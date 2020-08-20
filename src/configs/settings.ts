@@ -1094,7 +1094,8 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description: 'Structure is a larval breeding site',
-            expression: "$this.type.where(id='locationType').text = 'Larval Breeding Site'",
+            expression:
+              "$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').text = 'Larval Breeding Site'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1102,7 +1103,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Apply to larval breeding sites in Register_Structure questionnaires',
             expression:
-              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Larval Breeding Site'",
+              "$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Larval Breeding Site')",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
