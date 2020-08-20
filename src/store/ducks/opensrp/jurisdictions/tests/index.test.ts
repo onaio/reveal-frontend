@@ -122,6 +122,7 @@ describe('reducers/opensrp/hierarchies', () => {
             ...raKsh3.properties,
             fillColor: '#ff5c33',
             fillOutlineColor: '#22bcfb',
+            jurisdiction_id: 'xyz0d71d-0410-45d3-8305-a9f092a150b8',
             lineColor: '#22bcfb',
           },
         },

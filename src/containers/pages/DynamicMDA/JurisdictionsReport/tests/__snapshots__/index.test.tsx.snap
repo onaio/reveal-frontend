@@ -90,3 +90,5 @@ exports[`components/MDA Reports/JurisdictionReport renders correctly: page title
   MDA Reporting: Dynamic-MDA-2019-09-05 TEST
 </h3>
 `;
+
+exports[`components/MDA Reports/JurisdictionReport renders correctly: table headers 1`] = `"NameExpected Children Found (%)Expected Children Treated (%)Registered Children Treated (%)Structures Visited (%)PZQ Tablets Distributed"`;

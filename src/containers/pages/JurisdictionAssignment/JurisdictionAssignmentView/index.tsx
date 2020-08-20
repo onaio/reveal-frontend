@@ -23,7 +23,11 @@ import {
   PLANNING_PAGE_TITLE,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
-import { ASSIGN_JURISDICTIONS_URL, PLANNING_VIEW_URL } from '../../../../constants';
+import {
+  ASSIGN_JURISDICTIONS_URL,
+  MANUAL_ASSIGN_JURISDICTIONS_URL,
+  PLANNING_VIEW_URL,
+} from '../../../../constants';
 import { LoadOpenSRPHierarchy } from '../../../../helpers/dataLoading/jurisdictions';
 import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -169,7 +173,7 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
   };
 
   const AssignmentWrapperProps = {
-    autoSelectionFlow: false,
+    baseAssignmentURL: `${MANUAL_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootId}`,
     currentParentId: props.match.params.parentId,
     jurisdictionsChunkSize: 30,
     plan,
