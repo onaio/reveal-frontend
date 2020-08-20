@@ -332,7 +332,7 @@ export function getPlanActivityFromActionCode(
  * Get the plan definition conditions from form field values
  * @param element - form field values for one plan activity
  */
-const getConditionFromFormField = (
+export const getConditionFromFormField = (
   element: PlanActivityFormFields,
   planActivity: PlanActivity | null
 ): PlanActionCondition[] | undefined => {
