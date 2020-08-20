@@ -26,7 +26,11 @@ import MDAPointPlanreducer, {
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 import { MDAPointJurisdictionsJSON } from '../../jurisdictionsReport/tests/fixtures';
 
-jest.mock('../../../../../configs/env');
+jest.mock('../../../../../configs/env', () => ({
+  SHOW_MDA_SCHOOL_REPORT_LABEL: false,
+  SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE: '01',
+  SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES: '12,esw-jurisdictions',
+}));
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
@@ -90,7 +94,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
       </Provider>
     );
 
-    expect(wrapper.find('h3.page-title').text()).toEqual('MDA Point School Report: Akros_1');
+    expect(wrapper.find('h3.page-title').text()).toEqual('MDA Point Location Report: Akros_1');
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
 
     // correct table data is passed
