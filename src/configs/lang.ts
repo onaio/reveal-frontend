@@ -151,7 +151,6 @@ export const IRS_PLANS = translate('IRS_PLANS', 'IRS Plans');
 export const MDA_PLANS = translate('MDA_PLANS', 'MDA Plans');
 export const MDA_POINT_PLANS = translate('MDA_POINT_PLANS', 'MDA Point Plans');
 export const COUNTRY = translate('COUNTRY', 'Country');
-export const JURISDICTION_HIERARCHY = translate('JURISDICTION_HIERARCHY', 'jurisdictionHierachy');
 export const JURISDICTION_HIERARCHY_TEMPLATE = translate(
   'JURISDICTION_HIERARCHY_TEMPLATE',
   'JurisdictionHierachyTemplate'
@@ -544,14 +543,6 @@ export const SUBMIT = translate('SUBMIT', 'Submit');
 export const CLIENT_UPLOAD_FORM = translate('CLIENT_UPLOAD_FORM', 'Client Upload Form');
 export const FILE_SUBMISSION_READY = translate('FILE_SUBMISSION_READY', 'File is ready to submit');
 export const LOADING = translate('LOADING', 'loading...');
-export const GEOGRAPHICAL_REGION_TO_INCLUDE = translate(
-  'GEOGRAPHICAL_REGION_TO_INCLUDE',
-  'Geographical level to include'
-);
-export const ASSIGN_TEAM_TO_SCHOOL = translate(
-  'ASSIGN_TEAM_TO_SCHOOL',
-  'Assign team to this school'
-);
 
 export const MDA_POINT_REPORTING_TITLE = translate(
   'MDA_POINT_REPORTING_TITLE',
@@ -646,12 +637,11 @@ export const FIND_RELEASE_FILES = translate('FIND_RELEASE_FILES', 'Find Release 
 export const FIND_VALIDATOR_FILES = translate('FIND_VALIDATOR_FILES', 'Find Validator Files');
 
 export const FILE = translate('FILE', 'File');
-export const FILE_FORMAT = translate('FILE_FORMAT', 'fileFormat');
 export const CSV_FILE = translate('CSV_FILE', 'CSV File');
 export const JURISDICTION_ID = translate('JURISDICTION_ID', 'jurisdiction_id');
 export const JURISDICTION_NAME = translate('JURISDICTION_NAME', 'jurisdiction_name');
 export const INVALID_CSV = translate('INVALID_CSV', 'Invalid CSV');
-export const CSV_ONLY = translate('CSV_ONLY', 'CSV Files Only');
+
 export const ROW_HEIGHT = translate('ROW_HEIGHT', 'Row Height');
 
 export const ROWS_TO_DISPLAY = translate('ROWS_TO_DISPLAY', 'Rows to display');
@@ -747,8 +737,6 @@ export const COULD_NOT_LOAD_JURISDICTION_HIERARCHY = translate(
 export const STRUCTURES_COUNT = translate('STRUCTURES_COUNT', 'Structures Count');
 
 export const STATUS_SETTING = translate('STATUS_SETTING', 'Status setting by...');
-
-export const RISK_LABEL = translate('RISK_LABEL', 'Risk Label');
 
 export const AUTO_SELECTION = translate('AUTO_SELECTION', 'Auto-selection');
 export const EXISTING_SELECTION = translate('EXISTING_SELECTION', 'Existing selection');
