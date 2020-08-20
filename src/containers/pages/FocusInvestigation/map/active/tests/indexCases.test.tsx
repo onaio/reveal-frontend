@@ -16,6 +16,7 @@ import * as tasksDucks from '../../../../../../store/ducks/tasks';
 import ConnectedMapSingleFI from '../../active/';
 import * as fixturesMap from './fixtures';
 
+// tslint:disable: object-literal-sort-keys
 jest.mock('react-mapbox-gl', () => {
   const defaultMock = () => {
     return <span>Map is in the box</span>;
@@ -24,6 +25,8 @@ jest.mock('react-mapbox-gl', () => {
   return {
     __esModule: true,
     default: jest.fn().mockReturnValue(defaultMock),
+    GeoJSONLayer: () => <span>GeoJSONLayer</span>,
+    ZoomControl: () => <span>ZoomControl</span>,
   };
 });
 
