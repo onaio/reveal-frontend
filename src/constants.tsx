@@ -200,6 +200,8 @@ export const MDA_POINT_ADVERSE_EFFECTS_CODE = 'MDA Adverse Event(s)';
 export const MDA_ADHERENCE_CODE = 'MDA Adherence';
 export const GOAL_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
 
+export const CREATE_TYPE = 'create';
+
 // dynamic plan activities
 export const NAMED_EVENT_TRIGGER_TYPE = 'named-event';
 export const PLAN_ACTIVATION_TRIGGER_NAME = 'plan-activation';
