@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
-import { SELECT } from '../../../../configs/lang';
+import { SELECT, USERS_FETCH_ERROR } from '../../../../configs/lang';
 import {
   OPENSRP_KEYCLOAK_PARAM,
   OPENSRP_PRACTITIONER_ENDPOINT,
@@ -74,6 +74,7 @@ export type OptionTypes = Option | null | undefined;
 export const UserIdSelect = (props: Props) => {
   const { onChangeHandler } = props;
   const [users, setUsers] = useState<User[]>([]);
+  const [countFetchError, setCountFetchError] = useState<string>('');
   const [selectIsLoading, setSelectIsLoading] = useState<boolean>(true);
   const isMounted = useRef<boolean>(true);
 
@@ -91,6 +92,7 @@ export const UserIdSelect = (props: Props) => {
   const fetchUsersCount = async () => {
     const serve = new props.serviceClass(OPENSRP_USERS_COUNT_ENDPOINT);
     const response = await serve.list().catch(err => {
+      setCountFetchError(USERS_FETCH_ERROR);
       displayError(err);
     });
     return response;
@@ -107,20 +109,21 @@ export const UserIdSelect = (props: Props) => {
     const allUsers = [];
     let response: User[];
     const usersCount: number = await fetchUsersCount();
+    if (typeof usersCount !== 'undefined') {
+      do {
+        response = await serve.list(filterParams).catch(err => {
+          displayError(err);
+        });
+        allUsers.push(...response);
 
-    do {
-      response = await serve.list(filterParams).catch(err => {
-        displayError(err);
-      });
-      allUsers.push(...response);
-
-      // modify filter params to point to next page
-      const responseSize = response.length;
-      filterParams = {
-        ...filterParams,
-        start_index: filterParams.start_index + responseSize,
-      };
-    } while (filterParams.start_index < usersCount);
+        // modify filter params to point to next page
+        const responseSize = response.length;
+        filterParams = {
+          ...filterParams,
+          start_index: filterParams.start_index + responseSize,
+        };
+      } while (filterParams.start_index < usersCount);
+    }
     return allUsers;
   };
 
@@ -175,7 +178,7 @@ export const UserIdSelect = (props: Props) => {
       });
   }, [users]);
 
-  return (
+  return !countFetchError.length ? (
     <Select
       className={props.className}
       cacheOptions={true}
@@ -189,6 +192,8 @@ export const UserIdSelect = (props: Props) => {
       placeholder={SELECT}
       noOptionsMessage={reactSelectNoOptionsText}
     />
+  ) : (
+    <div>{countFetchError}</div>
   );
 };
 

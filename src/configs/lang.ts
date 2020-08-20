@@ -102,6 +102,10 @@ export const PLAN_STATUS_UPDATE_ERROR = translate(
   'PLAN_STATUS_UPDATE_ERROR',
   'Sorry, something went wrong when we tried to update the plan status'
 );
+export const USERS_FETCH_ERROR = translate(
+  'USERS_FETCH_ERROR',
+  'Sorry, something went wrong when we tried to fetch users'
+);
 export const NO_PLAN_FOUND_ERROR = translate(
   'NO_PLAN_FOUND_ERROR',
   'Sorry, no plan found in the cloud!'
