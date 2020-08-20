@@ -6,8 +6,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
 import { USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
-import { SELECT } from '../../../../configs/lang';
-import { OPENSRP_PRACTITIONER_ENDPOINT, OPENSRP_USERS_ENDPOINT } from '../../../../constants';
+import { SELECT, USERS_FETCH_ERROR } from '../../../../configs/lang';
+import {
+  OPENSRP_KEYCLOAK_PARAM,
+  OPENSRP_PRACTITIONER_ENDPOINT,
+  OPENSRP_USERS_COUNT_ENDPOINT,
+  OPENSRP_USERS_ENDPOINT,
+} from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -38,24 +43,26 @@ export interface Option {
 
 /** interface describing a user */
 interface User {
-  person: {
-    display: string;
+  access?: {
+    manageGroupMembership: boolean;
+    view: boolean;
+    mapRoles: boolean;
+    impersonate: boolean;
+    manage: boolean;
   };
-  display: string;
-  uuid: string;
+  createdTimestamp?: number;
+  disableableCredentialTypes?: string[];
+  email?: string;
+  emailVerified?: boolean;
+  enabled?: boolean;
+  firstName?: string;
+  id: string;
+  lastName?: string;
+  notBefore?: number;
+  requiredActions?: string[];
+  totp?: boolean;
+  username: string;
 }
-
-/** util function that given an response from user Response, returns
- * whether we can call the openSRP proxy for the next page of user data
- */
-export const thereIsNextPage = (response: UserResponse): boolean => {
-  if (response.links) {
-    // check if we have a next link in the links
-    const links = response.links;
-    return links.filter(link => link.rel === 'next').length > 0;
-  }
-  return false;
-};
 
 /** our custom for the option object passed to onChangeHandler by react-select
  * we have intentionally excluded ValueTypeOptions<Option> since this would only be used
@@ -67,6 +74,7 @@ export type OptionTypes = Option | null | undefined;
 export const UserIdSelect = (props: Props) => {
   const { onChangeHandler } = props;
   const [users, setUsers] = useState<User[]>([]);
+  const [countFetchError, setCountFetchError] = useState<string>('');
   const [selectIsLoading, setSelectIsLoading] = useState<boolean>(true);
   const isMounted = useRef<boolean>(true);
 
@@ -80,28 +88,42 @@ export const UserIdSelect = (props: Props) => {
     }
   };
 
+  // fetch total number of users
+  const fetchUsersCount = async () => {
+    const serve = new props.serviceClass(OPENSRP_USERS_COUNT_ENDPOINT);
+    const response = await serve.list().catch(err => {
+      setCountFetchError(USERS_FETCH_ERROR);
+      displayError(err);
+    });
+    return response;
+  };
+
   /** Pulls all users data */
-  const loadUsers = async (service: typeof OpenSRPService = OpenSRPService) => {
+  const loadUsers = async () => {
     let filterParams = {
       page_size: USERS_REQUEST_PAGE_SIZE,
+      source: OPENSRP_KEYCLOAK_PARAM,
       start_index: 0,
     };
-    const serve = new service(OPENSRP_USERS_ENDPOINT);
+    const serve = new props.serviceClass(OPENSRP_USERS_ENDPOINT);
     const allUsers = [];
-    let response: UserResponse;
-    do {
-      response = await serve.list(filterParams).catch(err => {
-        displayError(err);
-      });
-      allUsers.push(...response.results);
+    let response: User[];
+    const usersCount: number = await fetchUsersCount();
+    if (typeof usersCount !== 'undefined') {
+      do {
+        response = await serve.list(filterParams).catch(err => {
+          displayError(err);
+        });
+        allUsers.push(...response);
 
-      // modify filter params to point to next page
-      const responseSize = response.results.length;
-      filterParams = {
-        ...filterParams,
-        start_index: filterParams.start_index + responseSize,
-      };
-    } while (thereIsNextPage(response));
+        // modify filter params to point to next page
+        const responseSize = response.length;
+        filterParams = {
+          ...filterParams,
+          start_index: filterParams.start_index + responseSize,
+        };
+      } while (filterParams.start_index < usersCount);
+    }
     return allUsers;
   };
 
@@ -125,7 +147,7 @@ export const UserIdSelect = (props: Props) => {
     ).list();
 
     const practitionerUserIds = practitioners.map(practitioner => practitioner.userId);
-    const unMatchedUsers = allUsers.filter(user => !practitionerUserIds.includes(user.uuid));
+    const unMatchedUsers = allUsers.filter(user => !practitionerUserIds.includes(user.id));
     if (isMounted.current) {
       setUsers(unMatchedUsers);
       setSelectIsLoading(false);
@@ -146,8 +168,8 @@ export const UserIdSelect = (props: Props) => {
   const options = React.useMemo(() => {
     return users
       .map((user: User) => ({
-        label: user.display,
-        value: user.uuid,
+        label: user.username,
+        value: user.id,
       }))
       .sort((userA, userB) => {
         const userALabel = userA.label;
@@ -156,7 +178,7 @@ export const UserIdSelect = (props: Props) => {
       });
   }, [users]);
 
-  return (
+  return !countFetchError.length ? (
     <Select
       className={props.className}
       cacheOptions={true}
@@ -170,6 +192,8 @@ export const UserIdSelect = (props: Props) => {
       placeholder={SELECT}
       noOptionsMessage={reactSelectNoOptionsText}
     />
+  ) : (
+    <div>{countFetchError}</div>
   );
 };
 

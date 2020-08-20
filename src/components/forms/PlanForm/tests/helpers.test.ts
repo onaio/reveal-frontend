@@ -9,6 +9,7 @@ import {
   extractActivitiesFromPlanForm,
   extractActivityForForm,
   generatePlanDefinition,
+  getConditionFromFormField,
   getFormActivities,
   getGoalUnitFromActionCode,
   getNameTitle,
@@ -118,6 +119,7 @@ describe('containers/forms/PlanForm/helpers', () => {
     };
     // remove serverVersion
     const { serverVersion, ...expectedDynamicPlan } = planCopy;
+    expectedDynamicPlan.action[0].type = 'create';
     expect(generatePlanDefinition(planFormValues3 as PlanFormFields)).toEqual(expectedDynamicPlan);
     MockDate.reset();
   });
@@ -216,5 +218,13 @@ describe('containers/forms/PlanForm/helpers', () => {
     onSubmitSuccess(setSubmittingMock, setAreWeDoneHereMock, payload);
     expect(setAreWeDoneHereMock).toHaveBeenLastCalledWith(true);
     expect(setSubmittingMock).toHaveBeenLastCalledWith(false);
+  });
+
+  it('getConditionFromFormField works correctly', () => {
+    const { dynamicFamilyRegistration } = planActivities;
+    const formPlan = extractActivityForForm(dynamicFamilyRegistration);
+    expect(getConditionFromFormField(formPlan, dynamicFamilyRegistration)).toEqual(
+      dynamicFamilyRegistration.action.condition
+    );
   });
 });
