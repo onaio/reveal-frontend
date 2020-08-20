@@ -2,13 +2,17 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import React from 'react';
+import { USERS_FETCH_ERROR } from '../../../../../configs/lang';
+import * as helperUtils from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import UserIdSelect from '../../UserIdSelect';
 import { practitioners, sortedUsers, users } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
-jest.mock('../../../../../configs/env');
+jest.mock('../../../../../configs/env.ts', () => ({
+  USERS_REQUEST_PAGE_SIZE: 1000,
+}));
 
 describe('src/*/forms/userIdSelect', () => {
   beforeEach(() => {
@@ -73,7 +77,7 @@ describe('src/*/forms/userIdSelect', () => {
         },
       ],
       [
-        'https://test.smartregister.org/opensrp/rest/user?page_size=51&source=Keycloak&start_index=0',
+        'https://test.smartregister.org/opensrp/rest/user?page_size=1000&source=Keycloak&start_index=0',
         {
           headers: {
             accept: 'application/json',
@@ -204,21 +208,44 @@ describe('src/*/forms/userIdSelect', () => {
     const selectWrapperOptions = (selectWrapperProps as any).options;
     expect(selectWrapperOptions).toEqual(sortedUsers);
   });
-});
-
-it('test that user service is not triggered when response length is 0', async () => {
-  fetch
-    .once(JSON.stringify(0))
-    .once(JSON.stringify([]))
-    .once(JSON.stringify([]));
-  const props = {
-    serviceClass: OpenSRPService,
-  };
-  const wrapper = mount(<UserIdSelect {...props} />);
-  await flushPromises();
-  // check for options to Select
-  const selectWrapperProps = wrapper.find('Select').props();
-  const selectWrapperOptions = (selectWrapperProps as any).options;
-  // test that options are empty
-  expect(selectWrapperOptions).toEqual([]);
+  it('test that user service is not triggered when response length is 0', async () => {
+    fetch
+      .once(JSON.stringify(0))
+      .once(JSON.stringify([]))
+      .once(JSON.stringify([]));
+    const props = {
+      serviceClass: OpenSRPService,
+    };
+    const wrapper = mount(<UserIdSelect {...props} />);
+    await flushPromises();
+    // check for options to Select
+    const selectWrapperProps = wrapper.find('Select').props();
+    const selectWrapperOptions = (selectWrapperProps as any).options;
+    // test that options are empty
+    expect(selectWrapperOptions).toEqual([]);
+  });
+  it('tests that page size set in env is used', async () => {
+    fetch.once(JSON.stringify(users.length)).once(JSON.stringify(users));
+    const props = {
+      serviceClass: OpenSRPService,
+    };
+    mount(<UserIdSelect {...props} />);
+    // tslint:disable-next-line:promise-must-complete
+    await new Promise<any>(resolve => new Promise<any>(resolve));
+    await flushPromises();
+    await new Promise(resolve => setImmediate(resolve));
+    expect(fetch.mock.calls[1][0]).toContain(1000);
+  });
+  it('show error div if count is not received', async () => {
+    fetch.mockReject(new Error('Request failed'));
+    const mockGrowl: any = jest.fn();
+    (helperUtils as any).growl = mockGrowl;
+    const props = {
+      serviceClass: OpenSRPService,
+    };
+    const wrapper = mount(<UserIdSelect {...props} />);
+    await flushPromises();
+    wrapper.update();
+    expect(wrapper.find('div').text()).toEqual(`${USERS_FETCH_ERROR}`);
+  });
 });
