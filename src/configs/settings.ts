@@ -1044,7 +1044,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Structure is residential or type does not exist',
             expression:
-              "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
+              "$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1052,7 +1052,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Apply to residential structures in Register_Structure questionnaires',
             expression:
-              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
+              "$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
