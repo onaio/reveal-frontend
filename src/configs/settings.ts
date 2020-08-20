@@ -894,12 +894,9 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description:
-              'Person or person associated with questionaire response is older than 5 years and younger than 14 years 11 months',
+              'Person or person associated with questionaire response is older than 5 years and younger than 15 years',
             expression:
-              "($this.is(FHIR.Patient) and $this.birthDate <= today() - 60 'months' and $this.birthDate >= today() - 179 'months') or ($this.contained.where(Patient.birthDate <= today() - 60 'months' and $this.birthDate >= today() - 179 'months').exists())",
-            subjectCodableConcept: {
-              text: 'Person',
-            },
+              "($this.is(FHIR.Patient) and $this.birthDate <= today() - 5 'years' and $this.birthDate > today() - 15 'years') or ($this.contained.where(Patient.birthDate <= today() - 5 'years' and $this.birthDate > today() - 15 'years').exists())",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
