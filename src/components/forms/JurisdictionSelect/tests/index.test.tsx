@@ -2,12 +2,13 @@ import { fireEvent, render } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
 import React from 'react';
-import JurisdictionSelect from '..';
+import JurisdictionSelect, { SelectOption } from '..';
 import defaultProps, {
   handleChange as handleChangeHandler,
   handleChangeWithOptions as handleChangeWithOptionsHandler,
   handleChangeWithoutOptions as handleChangeWithoutOptionsHandler,
 } from '..';
+import { OPENSRP_FIND_BY_PROPERTIES, OPENSRP_LOCATION } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
 
 jest.mock('../../../../configs/env');
@@ -280,5 +281,37 @@ describe('components/forms/JurisdictionSelect', () => {
     promiseOptions.mock.calls.forEach(call => {
       expect(call[1].properties_filter.includes('status:Active')).toBeTruthy();
     });
+  });
+  it('Uses Status: Active in filter param', async () => {
+    const mock = jest.fn();
+    fetch.resetMocks();
+    fetch.mockResponse(JSON.stringify([]));
+    const mockOptions: SelectOption = { label: 'Akros', value: '395X' };
+    const service = new OpenSRPService(`${OPENSRP_LOCATION}/${OPENSRP_FIND_BY_PROPERTIES}`);
+    handleChangeHandler(
+      {},
+      true,
+      service,
+      mockOptions,
+      [],
+      true,
+      true,
+      true,
+      mock,
+      mock,
+      mock,
+      mock,
+      mock,
+      mock,
+      '',
+      mock as any,
+      mock,
+      handleChangeWithOptionsHandler,
+      mock
+    );
+    await new Promise(resolve => setImmediate(resolve));
+    expect(fetch.mock.calls[0][0]).toEqual(
+      'https://test.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=parentId%3A395X%2Cstatus%3AActive'
+    );
   });
 });
