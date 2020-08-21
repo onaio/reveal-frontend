@@ -838,3 +838,8 @@ export const ERROR_NO_JURISDICTION_METADATA_FOUND = translate(
 );
 
 export const TOTAL = translate('TOTAL', 'Total');
+
+export const COVERAGE_LABEL = translate('COVERAGE_LABEL', 'Coverage');
+export const TARGET_LABEL = translate('TARGET_LABEL', 'Target');
+export const POPULATION_LABEL = translate('POPULATION_LABEL', 'Population');
+export const RISK_TEXT = translate('RISK_TEXT', 'Risk');
