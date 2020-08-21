@@ -17,12 +17,18 @@ describe('src/components/PractitionerForm', () => {
     fetch.resetMocks();
   });
   it('renders without crashing', () => {
-    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
     shallow(<PractitionerForm />);
   });
 
   it('renders correctly', () => {
-    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
     // looking for each fields
     const wrapper = mount(<PractitionerForm />);
 
@@ -46,15 +52,41 @@ describe('src/components/PractitionerForm', () => {
   });
 
   it('yup validates correctly', async () => {
-    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
-    // fetch.mockResponse(JSON.stringify([]))
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
+
     // looking for each fields
     const wrapper = mount(<PractitionerForm />);
 
     await flushPromises();
+    wrapper.update();
     expect(fetch.mock.calls).toEqual([
       [
-        'https://test.smartregister.org/opensrp/rest/user?page_size=51&start_index=0',
+        'https://test.smartregister.org/opensrp/rest/practitioner',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+      [
+        'https://test.smartregister.org/opensrp/rest/user/count',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+      [
+        'https://test.smartregister.org/opensrp/rest/user?page_size=51&source=Keycloak&start_index=0',
         {
           headers: {
             accept: 'application/json',
@@ -115,7 +147,10 @@ describe('src/components/PractitionerForm', () => {
   });
 
   it('creates object to send correctly for creating new practitioner', async () => {
-    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
     (helpers as any).generateNameSpacedUUID = jest.fn(() => 'someUUId');
     const wrapper = mount(<PractitionerForm />);
 
@@ -134,7 +169,7 @@ describe('src/components/PractitionerForm', () => {
 
     await new Promise<any>(resolve => setImmediate(resolve));
 
-    expect(fetch.mock.calls[2]).toEqual([
+    expect(fetch.mock.calls[3]).toEqual([
       'https://test.smartregister.org/opensrp/rest/practitioner',
       {
         'Cache-Control': 'no-cache',
@@ -152,7 +187,10 @@ describe('src/components/PractitionerForm', () => {
   });
 
   it('creates object to send correctly for editing practitioner', async () => {
-    fetch.once(JSON.stringify(users)).once(JSON.stringify(practitioners));
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
     const props = {
       initialValues: {
         active: false,

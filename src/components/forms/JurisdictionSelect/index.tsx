@@ -359,7 +359,7 @@ export const handleChange = (
     const newParamsToUse = {
       ...params,
       is_jurisdiction: isJurisdiction,
-      properties_filter: getFilterParams({ parentId: optionVal.value }),
+      properties_filter: getFilterParams({ parentId: optionVal.value, status: OPENSRP_ACTIVE }),
     };
 
     handleSelectChangeWithOptions(

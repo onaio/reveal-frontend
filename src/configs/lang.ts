@@ -102,6 +102,10 @@ export const PLAN_STATUS_UPDATE_ERROR = translate(
   'PLAN_STATUS_UPDATE_ERROR',
   'Sorry, something went wrong when we tried to update the plan status'
 );
+export const USERS_FETCH_ERROR = translate(
+  'USERS_FETCH_ERROR',
+  'Sorry, something went wrong when we tried to fetch users'
+);
 export const NO_PLAN_FOUND_ERROR = translate(
   'NO_PLAN_FOUND_ERROR',
   'Sorry, no plan found in the cloud!'
@@ -834,3 +838,8 @@ export const ERROR_NO_JURISDICTION_METADATA_FOUND = translate(
 );
 
 export const TOTAL = translate('TOTAL', 'Total');
+
+export const COVERAGE_LABEL = translate('COVERAGE_LABEL', 'Coverage');
+export const TARGET_LABEL = translate('TARGET_LABEL', 'Target');
+export const POPULATION_LABEL = translate('POPULATION_LABEL', 'Population');
+export const RISK_TEXT = translate('RISK_TEXT', 'Risk');

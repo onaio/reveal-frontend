@@ -89,6 +89,7 @@ export const GenericPlansList = (props: GenericPlanListProps & RouteComponentPro
       },
       Header: TITLE,
       accessor: 'plan_title',
+      minWidth: 660,
     },
     {
       Header: DATE_CREATED,
