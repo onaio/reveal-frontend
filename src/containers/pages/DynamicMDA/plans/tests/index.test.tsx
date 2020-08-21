@@ -67,6 +67,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
       .forEach((_, i) => {
         expect(tableHeader.at(i).text()).toMatchSnapshot(`table header-${i + 1}`);
       });
+    expect(tableHeader.first().props().style).toMatchSnapshot('title column styling');
     expect(wrapper.find('.tbody .tr').length).toEqual(2);
     // have searchbar
     expect(wrapper.find('.search-input-wrapper').length).toEqual(1);
