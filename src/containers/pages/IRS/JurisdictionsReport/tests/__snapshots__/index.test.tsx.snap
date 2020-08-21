@@ -238,3 +238,14 @@ exports[`components/IRS Reports/JurisdictionReport renders correctly: page title
   IRS Reporting: IRS 2019-09-05 TEST
 </h3>
 `;
+
+exports[`components/IRS Reports/JurisdictionReport renders correctly: title column styling 1`] = `
+Object {
+  "boxSizing": "border-box",
+  "cursor": "pointer",
+  "flex": "200 0 auto",
+  "minWidth": "360px",
+  "position": "relative",
+  "width": "200px",
+}
+`;
