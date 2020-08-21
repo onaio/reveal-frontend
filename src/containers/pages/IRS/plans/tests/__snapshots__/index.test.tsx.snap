@@ -181,6 +181,17 @@ exports[`components/IRS Reports/IRSPlansList renders plan definition list correc
 
 exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: the full rendered rows tr index 3 1`] = `"Berg Namibia 20192019-08-292019-08-292019-09-18active"`;
 
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: title column styling 1`] = `
+Object {
+  "boxSizing": "border-box",
+  "cursor": "pointer",
+  "flex": "200 0 auto",
+  "minWidth": "660px",
+  "position": "relative",
+  "width": "200px",
+}
+`;
+
 exports[`components/IRS Reports/IRSPlansList renders plans correctly when connected to store: GenericPlansList props: connected to store 1`] = `
 Object {
   "fetchPlans": [Function],

@@ -83,6 +83,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
       .forEach((_, i) => {
         expect(tableHeader.at(i).text()).toMatchSnapshot(`table header-${i + 1}`);
       });
+    expect(tableHeader.first().props().style).toMatchSnapshot('title column styling');
     expect(wrapper.find('.tbody .tr').length).toEqual(3);
     expect(wrapper.find('GenericPlansList').length).toBe(1);
     expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('GenericPlansList props');
