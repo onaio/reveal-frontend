@@ -139,6 +139,12 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       columns: expect.any(Object) /** just for purposes of making snapshot smaller */,
       data: expect.any(Object) /** just for purposes of making snapshot smaller */,
     });
+    expect(
+      wrapper
+        .find('.thead .tr .th')
+        .first()
+        .props().style
+    ).toMatchSnapshot('title column styling');
     expect(wrapper.find('DrillDownTable').props().data).toEqual(jurisdictions);
     expect((wrapper.find('DrillDownTable').props() as any).columns).toEqual(
       plansTableColumns.zambiaJurisdictions2019

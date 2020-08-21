@@ -149,3 +149,14 @@ exports[`components/MDA Reports/MDAPlansList renders plan definition list correc
 exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: table header-4 1`] = `"End Date"`;
 
 exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: table header-5 1`] = `"Status"`;
+
+exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: title column styling 1`] = `
+Object {
+  "boxSizing": "border-box",
+  "cursor": "pointer",
+  "flex": "200 0 auto",
+  "minWidth": "660px",
+  "position": "relative",
+  "width": "200px",
+}
+`;
