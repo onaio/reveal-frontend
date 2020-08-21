@@ -254,11 +254,6 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
     defaultIndicatorStop
   );
 
-  const lineColorThreshold = {} as any;
-  Object.values(indicatorThresholdsIRS).forEach(element => {
-    lineColorThreshold[element.color] = element.value * 100;
-  });
-
   const gisidaWrapperProps = getGisidaWrapperProps(jurisdiction, structures, indicatorStops);
 
   /**
@@ -327,7 +322,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
                   {!row.listDisplay && <p className="indicator-description">{row.description}</p>}
                   {!row.listDisplay && (
                     <ProgressBar
-                      lineColorThresholds={lineColorThreshold || null}
+                      lineColorThresholds={indicatorThresholdsIRS || null}
                       value={row.value}
                     />
                   )}
