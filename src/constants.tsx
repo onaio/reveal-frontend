@@ -131,6 +131,7 @@ export const OPENSRP_ORG_PRACTITIONER_ENDPOINT = 'organization/practitioner';
 export const OPENSRP_DEL_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/deleteByPractitioner';
 export const OPENSRP_ADD_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole/add';
 export const OPENSRP_USERS_ENDPOINT = 'user';
+export const OPENSRP_USERS_COUNT_ENDPOINT = 'user/count';
 export const OPENSRP_FIND_EVENTS_ENDPOINT = 'event/findById';
 export const OPENSRP_LOCATIONS_BY_PLAN = 'plans/findLocationNames';
 export const OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT = 'upload/history';
@@ -156,6 +157,7 @@ export const OPENSRP_FORM_METADATA_ENDPOINT = 'clientForm/metadata';
 export const SETTINGS_ENDPOINT = 'settings/';
 export const LOCATIONS_ENDPOINT = 'location/location-tree';
 export const SECURITY_AUTHENTICATE_ENDPOINT = 'security/authenticate';
+export const OPENSRP_KEYCLOAK_PARAM = 'Keycloak';
 
 // colors
 export const GREEN = 'Green';
@@ -197,6 +199,8 @@ export const MDA_POINT_DISPENSE_CODE = 'MDA Dispense';
 export const MDA_POINT_ADVERSE_EFFECTS_CODE = 'MDA Adverse Event(s)';
 export const MDA_ADHERENCE_CODE = 'MDA Adherence';
 export const GOAL_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
+
+export const CREATE_TYPE = 'create';
 
 // dynamic plan activities
 export const NAMED_EVENT_TRIGGER_TYPE = 'named-event';
