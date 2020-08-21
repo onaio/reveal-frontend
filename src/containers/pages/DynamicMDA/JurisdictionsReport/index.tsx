@@ -32,6 +32,7 @@ import {
   GenericJurisdictionProps,
   GenericJurisdictionReport,
 } from '../../GenericJurisdictionReport';
+import './index.css';
 
 /** register the reducers */
 reducerRegistry.register(MDAPlansReducerName, MDAPlansReducer);
