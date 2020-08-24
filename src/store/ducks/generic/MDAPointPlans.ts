@@ -1,8 +1,12 @@
+import {
+  fetchActionCreatorFactory,
+  reducerFactory,
+  removeActionCreatorFactory,
+} from '@opensrp/reducer-factory';
 import intersect from 'fast_array_intersect';
 import { get, keyBy, values } from 'lodash';
-import { AnyAction, Store } from 'redux';
+import { Store } from 'redux';
 import { createSelector } from 'reselect';
-import SeamlessImmutable from 'seamless-immutable';
 import { InterventionType, PlanStatus } from '../plans';
 
 /** the reducer name */
@@ -24,121 +28,16 @@ export interface MDAPointPlan {
   jurisdiction_root_parent_ids: string[];
 }
 
+/** Dynamic MDA Reducer */
+const reducer = reducerFactory<MDAPointPlan>(reducerName);
+export default reducer;
+
 // actions
-
-/** MDA_POINT_PLAN_FETCHED action type */
-export const MDA_POINT_PLANS_FETCHED =
-  'reveal/reducer/MDAPoint/MDAPointPlan/MDA_Point_PLANS_FETCHED';
-
-/** MDA_POINT_PLAN_FETCHED action type */
-export const REMOVE_MDA_POINT_PLANS = 'reveal/reducer/MDAPoint/MDAPointPlan/REMOVE_MDA_POINT_PLANS';
-
-/** MDA_POINT_PLAN_FETCHED action type */
-export const ADD_MDA_POINT_PLAN = 'reveal/reducer/MDAPoint/MDAPointPlan/ADD_MDA_POINT_PLAN';
-
-/** interface for fetch MDAPointPlans action */
-interface FetchMDAPointPlansAction extends AnyAction {
-  MDAPointPlansById: { [key: string]: MDAPointPlan };
-  type: typeof MDA_POINT_PLANS_FETCHED;
-}
-
-/** interface for removing MDAPointPlans action */
-interface RemoveMDAPointPlansAction extends AnyAction {
-  MDAPointPlansById: { [key: string]: MDAPointPlan };
-  type: typeof REMOVE_MDA_POINT_PLANS;
-}
-
-/** interface for adding a single MDAPointPlans action */
-interface AddMDAPointPlanAction extends AnyAction {
-  MDAPointPlanObj: MDAPointPlan;
-  type: typeof ADD_MDA_POINT_PLAN;
-}
-
-/** Create type for MDAPointPlan reducer actions */
-export type MDAPointPlanActionTypes =
-  | FetchMDAPointPlansAction
-  | RemoveMDAPointPlansAction
-  | AddMDAPointPlanAction
-  | AnyAction;
-
-// action creators
-
-/**
- * Fetch Plan Definitions action creator
- * @param {MDAPointPlan[]} MDAPointPlanList - list of plan definition objects
- */
-export const fetchMDAPointPlans = (
-  MDAPointPlanList: MDAPointPlan[] = []
-): FetchMDAPointPlansAction => ({
-  MDAPointPlansById: keyBy(MDAPointPlanList, 'plan_id'),
-  type: MDA_POINT_PLANS_FETCHED,
-});
+/** actionCreator returns action to to add Item records to store */
+export const fetchMDAPointPlans = fetchActionCreatorFactory<MDAPointPlan>(reducerName, 'plan_id');
 
 /** Reset plan definitions state action creator */
-export const removeMDAPointPlans = () => ({
-  MDAPointPlansById: {},
-  type: REMOVE_MDA_POINT_PLANS,
-});
-
-/**
- * Add one Plan Definition action creator
- * @param {MDAPointPlan} MDAPointPlanObj - the plan definition object
- */
-export const addMDAPointPlan = (MDAPointPlanObj: MDAPointPlan): AddMDAPointPlanAction => ({
-  MDAPointPlanObj,
-  type: ADD_MDA_POINT_PLAN,
-});
-
-// the reducer
-
-/** interface for MDAPointPlan state */
-interface MDAPointPlanState {
-  MDAPointPlansById: { [key: string]: MDAPointPlan } | {};
-}
-
-/** immutable MDAPointPlan state */
-export type ImmutableMDAPointPlanState = SeamlessImmutable.ImmutableObject<MDAPointPlanState> &
-  MDAPointPlanState;
-
-/** initial MDAPointPlan state */
-const initialState: ImmutableMDAPointPlanState = SeamlessImmutable({
-  MDAPointPlansById: {},
-});
-
-/** the MDAPointPlan reducer function */
-export default function reducer(
-  state = initialState,
-  action: MDAPointPlanActionTypes
-): ImmutableMDAPointPlanState {
-  switch (action.type) {
-    case MDA_POINT_PLANS_FETCHED:
-      if (action.MDAPointPlansById) {
-        return SeamlessImmutable({
-          ...state,
-          MDAPointPlansById: { ...state.MDAPointPlansById, ...action.MDAPointPlansById },
-        });
-      }
-      return state;
-    case ADD_MDA_POINT_PLAN:
-      if (action.MDAPointPlanObj as MDAPointPlan) {
-        return SeamlessImmutable({
-          ...state,
-          MDAPointPlansById: {
-            ...state.MDAPointPlansById,
-            [action.MDAPointPlanObj.plan_id as string]: action.MDAPointPlanObj,
-          },
-        });
-      }
-      return state;
-    case REMOVE_MDA_POINT_PLANS:
-      return SeamlessImmutable({
-        ...state,
-        MDAPointPlansById: action.MDAPointPlansById,
-      });
-    default:
-      return state;
-  }
-}
+export const removeMDAPointPlans = removeActionCreatorFactory(reducerName);
 
 // selectors
 
@@ -154,7 +53,7 @@ export function getMDAPointPlansById(
   if (interventionType) {
     return keyBy(getMDAPointPlansArray(state, interventionType), 'plan_id');
   }
-  return (state as any)[reducerName].MDAPointPlansById;
+  return (state as any)[reducerName].objectsById;
 }
 
 /** get one MDAPointPlan using its id
@@ -163,7 +62,7 @@ export function getMDAPointPlansById(
  * @returns {MDAPointPlan|null} a MDAPointPlan object or null
  */
 export function getMDAPointPlanById(state: Partial<Store>, planId: string): MDAPointPlan | null {
-  return get((state as any)[reducerName].MDAPointPlansById, planId) || null;
+  return get((state as any)[reducerName].objectsById, planId) || null;
 }
 
 /** get an array of MDAPointPlan objects
@@ -175,7 +74,7 @@ export function getMDAPointPlansArray(
   state: Partial<Store>,
   interventionType: InterventionType = InterventionType.MDAPoint
 ): MDAPointPlan[] {
-  const result = values((state as any)[reducerName].MDAPointPlansById);
+  const result = values((state as any)[reducerName].objectsById);
   return result.filter((e: MDAPointPlan) => e.plan_intervention_type === interventionType);
 }
 
@@ -190,9 +89,8 @@ export interface MDAPointPlanFilters {
 /** MDAPointPlansArrayBaseSelector select an array of all plans
  * @param state - the redux store
  */
-export const MDAPointPlansArrayBaseSelector = (planKey?: string) => (
-  state: Partial<Store>
-): MDAPointPlan[] => values((state as any)[reducerName][planKey ? planKey : 'MDAPointPlansById']);
+export const MDAPointPlansArrayBaseSelector = () => (state: Partial<Store>): MDAPointPlan[] =>
+  values((state as any)[reducerName].objectsById);
 
 /** getMDAPointPlansArrayByTitle
  * Gets title from PlanFilters
@@ -213,8 +111,8 @@ export const getStatusList = (_: Partial<Store>, props: MDAPointPlanFilters) => 
  * @param {Partial<Store>} state - the redux store
  * @param {PlanDefinitionFilters} props - the plan defintion filters object
  */
-export const getMDAPointPlansArrayByTitle = (planKey?: string) =>
-  createSelector([MDAPointPlansArrayBaseSelector(planKey), getTitle], (plans, title) =>
+export const getMDAPointPlansArrayByTitle = () =>
+  createSelector([MDAPointPlansArrayBaseSelector(), getTitle], (plans, title) =>
     title
       ? plans.filter(plan => plan.plan_title.toLowerCase().includes(title.toLowerCase()))
       : plans
@@ -225,8 +123,8 @@ export const getMDAPointPlansArrayByTitle = (planKey?: string) =>
  * @param {Partial<Store>} state - the redux store
  * @param {PlanDefinitionFilters} props - the plan defintion filters object
  */
-export const getMDAPointPlansArrayByStatus = (planKey?: string) =>
-  createSelector([MDAPointPlansArrayBaseSelector(planKey), getStatusList], (plans, statusList) =>
+export const getMDAPointPlansArrayByStatus = () =>
+  createSelector([MDAPointPlansArrayBaseSelector(), getStatusList], (plans, statusList) =>
     statusList
       ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
       : plans
@@ -248,9 +146,9 @@ export const getMDAPointPlansArrayByStatus = (planKey?: string) =>
  * @param {PlanFilters} props - the plan filters object
  * @param {string} sortField - sort by field
  */
-export const makeMDAPointPlansArraySelector = (planKey?: string) => {
+export const makeMDAPointPlansArraySelector = () => {
   return createSelector(
-    [getMDAPointPlansArrayByTitle(planKey), getMDAPointPlansArrayByStatus(planKey)],
+    [getMDAPointPlansArrayByTitle(), getMDAPointPlansArrayByStatus()],
     (plan1, plan2) => intersect([plan1, plan2], JSON.stringify)
   );
 };
