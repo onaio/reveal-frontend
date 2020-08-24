@@ -15,7 +15,7 @@ import GenericPLansReducer, {
   genericFetchPlans,
   makeGenericPlansArraySelector,
   reducerName as GenericPLansReducerName,
-} from '../../../../store/ducks/generic/MDAPlans';
+} from '../../../../store/ducks/generic/plans';
 import { GenericPlan } from '../../../../store/ducks/generic/plans';
 import { InterventionType } from '../../../../store/ducks/plans';
 import { GenericPlanListProps, GenericPlansList } from '../../GenericPlansList';
