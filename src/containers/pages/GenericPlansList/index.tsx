@@ -26,14 +26,13 @@ import { HOME_URL, QUERY_PARAM_TITLE } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
 import { DefaultDrillDownPropsType } from '../../../helpers/utils';
 import supersetFetch from '../../../services/superset';
-import { genericFetchPlans } from '../../../store/ducks/generic/MDAPlans';
 import { fetchMDAPointPlans } from '../../../store/ducks/generic/MDAPointPlans';
-import { fetchIRSPlans, GenericPlan } from '../../../store/ducks/generic/plans';
+import { genericFetchPlans, GenericPlan } from '../../../store/ducks/generic/plans';
 import './index.css';
 
 /** interface for GenericPlanList props */
 export interface GenericPlanListProps {
-  fetchPlans: typeof fetchIRSPlans | typeof fetchMDAPointPlans | typeof genericFetchPlans;
+  fetchPlans: typeof fetchMDAPointPlans | typeof genericFetchPlans;
   pageTitle: string;
   pageUrl: string;
   plans: GenericPlan[];

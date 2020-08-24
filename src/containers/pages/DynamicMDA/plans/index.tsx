@@ -11,19 +11,23 @@ import { MDA_PLANS } from '../../../../configs/lang';
 import { QUERY_PARAM_TITLE, REPORT_MDA_PLAN_URL } from '../../../../constants';
 import { getPlanStatusToDisplay, getQueryParams, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import DynamicMDAPLansReducer, {
+import GenericPLansReducer, {
   genericFetchPlans,
-  makePlansArraySelector,
-  reducerName as DynamicMDAPLansReducerName,
+  makeGenericPlansArraySelector,
+  reducerName as GenericPLansReducerName,
 } from '../../../../store/ducks/generic/MDAPlans';
 import { GenericPlan } from '../../../../store/ducks/generic/plans';
+import { InterventionType } from '../../../../store/ducks/plans';
 import { GenericPlanListProps, GenericPlansList } from '../../GenericPlansList';
 
 /** register the MDA plan definitions reducer */
-reducerRegistry.register(DynamicMDAPLansReducerName, DynamicMDAPLansReducer);
+reducerRegistry.register(GenericPLansReducerName, GenericPLansReducer);
 
 /** a list of plan statuses to be displayed */
 const allowedPlanStatusList = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
+
+/** selector for Dynamic MDA plans */
+const MDAPlansArraySelector = makeGenericPlansArraySelector(InterventionType.DynamicMDA);
 
 /** Simple component that loads a list of MDA plans */
 const MDAPLansList = (props: GenericPlanListProps & RouteComponentProps) => {
@@ -61,7 +65,7 @@ const mapStateToProps = (
   ownProps: RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const plans = makePlansArraySelector()(state, {
+  const plans = MDAPlansArraySelector(state, {
     plan_title: searchedTitle,
     statusList: allowedPlanStatusList,
   });

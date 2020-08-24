@@ -1,6 +1,7 @@
 import {
   fetchActionCreatorFactory,
   getItemByIdFactory,
+  getItemsByIdFactory,
   reducerFactory,
   removeActionCreatorFactory,
 } from '@opensrp/reducer-factory';
@@ -8,10 +9,11 @@ import intersect from 'fast_array_intersect';
 import { values } from 'lodash';
 import { Store } from 'redux';
 import { createSelector } from 'reselect';
+import { InterventionType } from '../plans';
 import { GenericPlan } from './plans';
 
 /** the reducer name */
-export const reducerName = 'DynamicMdaReportPlans';
+export const reducerName = 'AllGenericPlans';
 
 /** Dynamic MDA Reducer */
 const reducer = reducerFactory<GenericPlan>(reducerName);
@@ -27,6 +29,9 @@ export const genericRemovePlans = removeActionCreatorFactory(reducerName);
 /** get one Plan using its id */
 export const getPlanByIdSelector = getItemByIdFactory<GenericPlan>(reducerName);
 
+/** get all plans by ids */
+export const getAllPlansByIds = getItemsByIdFactory<GenericPlan>(reducerName);
+
 /** This interface represents the structure of IRS plan filter options/params */
 export interface PlanFilters {
   plan_title?: string /** plan title */;
@@ -36,9 +41,12 @@ export interface PlanFilters {
 /** PlansArrayBaseSelector select an array of all plans
  * @param state - the redux store
  */
-export const PlansArrayBaseSelector = (planKey?: string) => (
+export const PlansArrayBaseSelector = (interventionType: InterventionType) => (
   state: Partial<Store>
-): GenericPlan[] => values((state as any)[reducerName][planKey ? planKey : 'objectsById']);
+): GenericPlan[] =>
+  values(getAllPlansByIds(state) || {}).filter(
+    plan => plan.plan_intervention_type === interventionType
+  );
 
 /** getTitle
  * Gets title from PlanFilters
@@ -59,8 +67,8 @@ export const getStatusList = (_: Partial<Store>, props: PlanFilters) => props.st
  * @param  state - the redux store
  * @param  props - the plan filters object
  */
-export const getPlansArrayByTitle = (planKey?: string) =>
-  createSelector([PlansArrayBaseSelector(planKey), getTitle], (plans, title) =>
+export const getPlansArrayByTitle = (interventionType: InterventionType) =>
+  createSelector([PlansArrayBaseSelector(interventionType), getTitle], (plans, title) =>
     title
       ? plans.filter(plan => plan.plan_title.toLowerCase().includes(title.toLowerCase()))
       : plans
@@ -71,8 +79,8 @@ export const getPlansArrayByTitle = (planKey?: string) =>
  * @param  state - the redux store
  * @param  props - the plan filters object
  */
-export const getPlansArrayByStatus = (planKey?: string) =>
-  createSelector([PlansArrayBaseSelector(planKey), getStatusList], (plans, statusList) =>
+export const getPlansArrayByStatus = (interventionType: InterventionType) =>
+  createSelector([PlansArrayBaseSelector(interventionType), getStatusList], (plans, statusList) =>
     statusList
       ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
       : plans
@@ -93,9 +101,9 @@ export const getPlansArrayByStatus = (planKey?: string) =>
  * @param {PlanFilters} props - the plan filters object
  * @param {string} sortField - sort by field
  */
-export const makePlansArraySelector = (planKey?: string) => {
+export const makeGenericPlansArraySelector = (interventionType: InterventionType) => {
   return createSelector(
-    [getPlansArrayByTitle(planKey), getPlansArrayByStatus(planKey)],
+    [getPlansArrayByTitle(interventionType), getPlansArrayByStatus(interventionType)],
     (plan1, plan2) => intersect([plan1, plan2], JSON.stringify)
   );
 };

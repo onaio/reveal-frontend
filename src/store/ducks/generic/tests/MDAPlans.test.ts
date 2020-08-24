@@ -1,12 +1,13 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../..';
+import { InterventionType } from '../../plans';
 import reducer, {
   genericFetchPlans,
   genericRemovePlans,
   getPlanByIdSelector,
   getPlansArrayByTitle,
-  makePlansArraySelector,
+  makeGenericPlansArraySelector,
   reducerName,
 } from '../MDAPlans';
 import { GenericPlan } from '../plans';
@@ -14,7 +15,8 @@ import * as fixtures from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
-const plansArraySelector = makePlansArraySelector();
+const MDAInterventionType = InterventionType.DynamicMDA;
+const MDAplansArraySelector = makeGenericPlansArraySelector(MDAInterventionType);
 const defaultProps = {};
 
 describe('reducers/MDA/Dynami-MDAPlan', () => {
@@ -26,7 +28,7 @@ describe('reducers/MDA/Dynami-MDAPlan', () => {
   });
 
   it('should have initial state', () => {
-    expect(plansArraySelector(store.getState(), defaultProps)).toEqual([]);
+    expect(MDAplansArraySelector(store.getState(), defaultProps)).toEqual([]);
     expect(getPlanByIdSelector(store.getState(), '356b6b84-fc36-4389-a44a-2b038ed2f38d')).toEqual(
       null
     );
@@ -48,22 +50,22 @@ describe('reducers/MDA/Dynami-MDAPlan', () => {
       plan_title: 'BERG',
     };
 
-    expect(getPlansArrayByTitle()(store.getState(), titleFilter)).toEqual([
+    expect(getPlansArrayByTitle(MDAInterventionType)(store.getState(), titleFilter)).toEqual([
       fixtures.DynamicMDAPlans[2],
     ]);
-    expect(getPlansArrayByTitle()(store.getState(), titleUpperFilter)).toEqual([
+    expect(getPlansArrayByTitle(MDAInterventionType)(store.getState(), titleUpperFilter)).toEqual([
       fixtures.DynamicMDAPlans[2],
     ]);
-    expect(plansArraySelector(store.getState(), { statusList: ['retired'] })).toEqual([
+    expect(MDAplansArraySelector(store.getState(), { statusList: ['retired'] })).toEqual([
       fixtures.DynamicMDAPlans[0],
     ]);
-    expect(plansArraySelector(store.getState(), { statusList: ['draft'] })).toEqual([]);
+    expect(MDAplansArraySelector(store.getState(), { statusList: ['draft'] })).toEqual([]);
     expect(
-      plansArraySelector(store.getState(), { statusList: ['active'], plan_title: 'mda' })
+      MDAplansArraySelector(store.getState(), { statusList: ['active'], plan_title: 'mda' })
     ).toEqual([fixtures.DynamicMDAPlans[1]]);
     // reset
     store.dispatch(genericRemovePlans());
-    expect(plansArraySelector(store.getState(), defaultProps)).toEqual([]);
+    expect(MDAplansArraySelector(store.getState(), defaultProps)).toEqual([]);
   });
 
   it('Fetching plans does not replace GenericPlansById', () => {
@@ -72,14 +74,14 @@ describe('reducers/MDA/Dynami-MDAPlan', () => {
       genericFetchPlans([fixtures.DynamicMDAPlans[0], fixtures.DynamicMDAPlans[1]] as GenericPlan[])
     );
     // we should have them in the store
-    expect(plansArraySelector(store.getState(), defaultProps)).toEqual([
+    expect(MDAplansArraySelector(store.getState(), defaultProps)).toEqual([
       fixtures.DynamicMDAPlans[0],
       fixtures.DynamicMDAPlans[1],
     ]);
     // fetch one more plan definition objects
     store.dispatch(genericFetchPlans([fixtures.DynamicMDAPlans[2]] as GenericPlan[]));
     // we should now have a total of three plan definition objects in the store
-    expect(plansArraySelector(store.getState(), defaultProps)).toEqual([
+    expect(MDAplansArraySelector(store.getState(), defaultProps)).toEqual([
       fixtures.DynamicMDAPlans[0],
       fixtures.DynamicMDAPlans[1],
       fixtures.DynamicMDAPlans[2],
