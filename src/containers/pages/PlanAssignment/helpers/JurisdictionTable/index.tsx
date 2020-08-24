@@ -1,27 +1,17 @@
-import ListView from '@onaio/list-view';
 import React, { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/TreeWalker';
-import {
-  ASSIGN_PLANS,
-  HOME,
-  NAME,
-  NO_ROWS_FOUND,
-  TEAMS_ASSIGNMENT,
-} from '../../../../../configs/lang';
+import { ASSIGN_PLANS, HOME } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../../constants';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
 import { Organization } from '../../../../../store/ducks/opensrp/organizations';
-import { AssignedOrgs } from '../AssignedOrgs';
-import { EditOrgs } from '../EditOrgs';
-import { JurisdictionCell } from '../JurisdictionCell';
 
 /** base props for JurisdictionTable */
-interface BaseJurisdictionTablProps extends WithWalkerProps {
+export interface BaseJurisdictionTablProps extends WithWalkerProps {
   assignments: Assignment[];
   organizations: Organization[];
   plan: PlanDefinition | null;
@@ -47,21 +37,11 @@ export type JurisdictionTableProps = RouteComponentProps<RouteParams> & BaseJuri
  * @param props - the props that JurisdictionTable expects
  */
 const JurisdictionTable = (props: JurisdictionTableProps) => {
-  const { assignments, organizations, plan, submitCallBackFunc } = props;
-
-  const currentChildren = props.currentChildren as TreeNode[];
-  const currentNode = props.currentNode as TreeNode;
+  const { plan } = props;
   const hierarchy = props.hierarchy as TreeNode[];
 
   if (!plan) {
     return null;
-  }
-
-  // we will use the jurisdiction id in the url to know if the parent
-  // node has been set, if drilling down has began.
-  let derivedChildrenNodes = currentChildren;
-  if (!props.match.params.jurisdictionId) {
-    derivedChildrenNodes = [currentNode];
   }
 
   const pageTitle = plan.title;
@@ -106,62 +86,6 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
     };
   }
 
-  const data = derivedChildrenNodes.map(node => {
-    const jurisdictionAssignments = assignments.filter(
-      assignment => assignment.jurisdiction === node.model.id
-    );
-    const jurisdictionOrgs = organizations.filter(org => {
-      const jurisdictionOrgIds = jurisdictionAssignments.map(assignment => assignment.organization);
-      return jurisdictionOrgIds.includes(org.identifier);
-    });
-
-    const orgOptions = organizations.map(org => {
-      return { label: org.name, value: org.identifier };
-    });
-
-    const selectedOrgs = jurisdictionOrgs.map(org => {
-      return { label: org.name, value: org.identifier };
-    });
-
-    return [
-      <JurisdictionCell
-        key={`${node.model.id}-jurisdiction`}
-        node={node}
-        url={`${ASSIGN_PLAN_URL}/${plan.identifier}/${node.model.id}`}
-      />,
-      <AssignedOrgs key={`${node.model.id}-txt`} id={node.model.id} orgs={jurisdictionOrgs} />,
-      <EditOrgs
-        defaultValue={selectedOrgs}
-        jurisdiction={node}
-        existingAssignments={jurisdictionAssignments}
-        key={`${node.model.id}-form`}
-        options={orgOptions}
-        plan={plan}
-        submitCallBackFunc={submitCallBackFunc}
-      />,
-    ];
-  });
-  const headerItems = [NAME, TEAMS_ASSIGNMENT, ''];
-  const tableClass = 'table table-bordered';
-  const renderHeaders = () => {
-    return (
-      <thead className="thead-plan-orgs">
-        <tr>
-          <th style={{ width: '25%' }}>{headerItems[0]}</th>
-          <th style={{ width: '25%' }}>{headerItems[1]}</th>
-          <th>{headerItems[2]}</th>
-        </tr>
-      </thead>
-    );
-  };
-
-  const listViewProps = {
-    data,
-    headerItems,
-    renderHeaders,
-    tableClass,
-  };
-
   return (
     <Fragment>
       <Helmet>
@@ -169,13 +93,6 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
       </Helmet>
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
-      <ListView {...listViewProps} />
-      {!data.length && (
-        <div style={{ textAlign: 'center' }}>
-          {NO_ROWS_FOUND}
-          <hr />
-        </div>
-      )}
     </Fragment>
   );
 };

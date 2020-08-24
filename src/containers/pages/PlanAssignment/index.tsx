@@ -54,6 +54,7 @@ import planDefinitionReducer, {
 import { ConnectedAssignmentMapWrapper } from '../AssigmentMapWrapper';
 import { useHandleBrokenPage } from '../JurisdictionAssignment/helpers/utils';
 import { JurisdictionTable, JurisdictionTableProps } from './helpers/JurisdictionTable';
+import { JurisdictionTableListView } from './helpers/JurisdictionTableListView';
 import { AssignmentResponse } from './helpers/types';
 
 // register reducers
@@ -238,6 +239,9 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
 
   // TODO: Determine if this can safely be moved outside this component so as not to remount
   const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
+  const WrappedJurisdictionTableListView = withTreeWalker<JurisdictionTableProps>(
+    JurisdictionTableListView
+  );
 
   /** Props to be passed to the wrapped component */
   const wrappedProps = {
@@ -268,8 +272,9 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
 
   return (
     <>
-      {!isMapDisabled(plan) && <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />}
       <WrappedJurisdictionTable {...wrappedProps} />
+      {!isMapDisabled(plan) && <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />}
+      <WrappedJurisdictionTableListView {...wrappedProps} />
     </>
   );
 };
