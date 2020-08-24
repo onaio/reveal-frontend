@@ -1100,10 +1100,6 @@
     "description": "Info message when there is no data to show"
   },
   "AGE_RANGE": { "message": "ช่วงอายุ", "description": "Table column header" },
-  "TOTAL_SACS_REGISTERED": { "description": "Table column Header" },
-  "MMA_COVERAGE": { "description": "table column header" },
-  "SACS_REFUSED": { "description": "Table column header" },
-  "SACS_SICK": { "description": "Table column header" },
   "ADR_REPORTED": {
     "message": "รายงานอาการข้างเคียงจากการใช้ยา (ADR)",
     "description": "Table column header"
@@ -1112,12 +1108,9 @@
     "message": "อาการข้างเคียงชนิดรุนแรงจากการใช้ยา",
     "description": "Table column Header"
   },
-  "ALB_TABLETS_DISTRIBUTED": { "description": "Table column header" },
   "CHILDS_NAME": { "message": "ชื่อเด็ก", "description": "Table column header" },
   "NATIONAL_ID": { "message": "รหัสประชาชน", "description": "Table column header" },
   "ENROLLED_IN_SCHOOL": { "message": "เข้าเรียนในโรงเรียน", "description": "Table Column header" },
-  "MMA_DRUGS_ADMINISTRED": { "description": "Table column header" },
-  "PZQ_DISTRIBUTED": { "description": "Table column header" },
   "FILE": { "message": "ไฟล์", "description": "A file" },
   "CSV_FILE": { "message": "ไฟล์ CSV", "description": "Label of a an upload csv form field" },
   "INVALID_CSV": {
