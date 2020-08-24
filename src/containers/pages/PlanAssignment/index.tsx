@@ -53,8 +53,11 @@ import planDefinitionReducer, {
 } from '../../../store/ducks/opensrp/PlanDefinition';
 import { ConnectedAssignmentMapWrapper } from '../AssigmentMapWrapper';
 import { useHandleBrokenPage } from '../JurisdictionAssignment/helpers/utils';
-import { JurisdictionTable, JurisdictionTableProps } from './helpers/JurisdictionTable';
-import { JurisdictionTableListView } from './helpers/JurisdictionTableListView';
+import {
+  JurisdictionTableListView,
+  JurisdictionTableListViewPropTypes,
+} from './helpers/JurisdictionTableListView';
+import { JurisdictionTableView, JurisdictionTableViewProps } from './helpers/JurisdictionTableView';
 import { AssignmentResponse } from './helpers/types';
 
 // register reducers
@@ -67,7 +70,7 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 // const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
 
 /** PlanAssignment props */
-interface PlanAssignmentProps extends JurisdictionTableProps {
+interface PlanAssignmentProps extends JurisdictionTableListViewPropTypes {
   OpenSRPServiceClass: typeof OpenSRPService;
   addPlanActionCreator: typeof addPlanDefinition;
   fetchAssignmentsActionCreator: typeof fetchAssignments;
@@ -75,7 +78,6 @@ interface PlanAssignmentProps extends JurisdictionTableProps {
   fetchTreeActionCreator: ActionCreator<FetchedTreeAction>;
   tree: TreeNode | null;
 }
-
 /**
  * Check if map should be visible based on plan type
  */
@@ -238,12 +240,14 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   }
 
   // TODO: Determine if this can safely be moved outside this component so as not to remount
-  const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
-  const WrappedJurisdictionTableListView = withTreeWalker<JurisdictionTableProps>(
+  const WrappedJurisdictionTableView = withTreeWalker<JurisdictionTableViewProps>(
+    JurisdictionTableView
+  );
+  const WrappedJurisdictionTableListView = withTreeWalker<JurisdictionTableListViewPropTypes>(
     JurisdictionTableListView
   );
 
-  /** Props to be passed to the wrapped component */
+  /** Props to be passed to the wrapped components */
   const wrappedProps = {
     ...props,
     LoadingIndicator: Loading, // TODO: indicate what is loading
@@ -272,7 +276,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
 
   return (
     <>
-      <WrappedJurisdictionTable {...wrappedProps} />
+      <WrappedJurisdictionTableView {...wrappedProps} />
       {!isMapDisabled(plan) && <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />}
       <WrappedJurisdictionTableListView {...wrappedProps} />
     </>

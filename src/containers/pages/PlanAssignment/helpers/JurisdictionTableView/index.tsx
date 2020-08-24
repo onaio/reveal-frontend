@@ -6,16 +6,11 @@ import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/T
 import { ASSIGN_PLANS, HOME } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../../constants';
-import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
-import { Organization } from '../../../../../store/ducks/opensrp/organizations';
 
-/** base props for JurisdictionTable */
+/** base props for JurisdictionTableView */
 export interface BaseJurisdictionTablProps extends WithWalkerProps {
-  assignments: Assignment[];
-  organizations: Organization[];
   plan: PlanDefinition | null;
-  submitCallBackFunc: (assignments: Assignment[]) => void;
 }
 
 /** Route params interface */
@@ -24,19 +19,20 @@ export interface RouteParams {
   planId: string;
 }
 
-/** Props for JurisdictionTable */
-export type JurisdictionTableProps = RouteComponentProps<RouteParams> & BaseJurisdictionTablProps;
+/** Props for JurisdictionTableView */
+export type JurisdictionTableViewProps = RouteComponentProps<RouteParams> &
+  BaseJurisdictionTablProps;
 
 /**
- * JurisdictionTable
+ * JurisdictionTableView
  *
  * This component renders the table of jurisdictions on the plan assignment page.
  * The expectation is that to use this component, one will need to "enhance" it by
  * having it wrapped by the `withTreeWalker` higher order component.
  *
- * @param props - the props that JurisdictionTable expects
+ * @param props - the props that JurisdictionTableView expects
  */
-const JurisdictionTable = (props: JurisdictionTableProps) => {
+const JurisdictionTableView = (props: JurisdictionTableViewProps) => {
   const { plan } = props;
   const hierarchy = props.hierarchy as TreeNode[];
 
@@ -97,15 +93,12 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
   );
 };
 
-/** default props for JurisdictionTable */
+/** default props for JurisdictionTableView */
 const defaultProps: BaseJurisdictionTablProps = {
   ...defaultWalkerProps,
-  assignments: [],
-  organizations: [],
   plan: null,
-  submitCallBackFunc: () => null,
 };
 
-JurisdictionTable.defaultProps = defaultProps;
+JurisdictionTableView.defaultProps = defaultProps;
 
-export { JurisdictionTable };
+export { JurisdictionTableView };

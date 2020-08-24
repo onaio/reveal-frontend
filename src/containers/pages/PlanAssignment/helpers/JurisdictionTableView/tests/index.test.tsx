@@ -19,11 +19,11 @@ import {
   organization3,
 } from '../../../../../../store/ducks/tests/fixtures';
 import { assignments } from '../../JurisdictionAssignmentForm/tests/fixtures';
-import { JurisdictionTable } from '../index';
+import { JurisdictionTableView } from '../index';
 
 const history = createBrowserHistory();
 
-describe('PlanAssignment/JurisdictionTable', () => {
+describe('PlanAssignment/JurisdictionTableView', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -68,7 +68,7 @@ describe('PlanAssignment/JurisdictionTable', () => {
           },
         ]}
       >
-        <JurisdictionTable {...props} />
+        <JurisdictionTableView {...props} />
       </MemoryRouter>
     );
 

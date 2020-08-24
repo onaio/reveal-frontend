@@ -1,15 +1,29 @@
 import ListView from '@onaio/list-view';
 import * as React from 'react';
-import { defaultWalkerProps } from '../../../../../components/TreeWalker';
+import { RouteComponentProps } from 'react-router';
+import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/TreeWalker';
 import { NAME, NO_ROWS_FOUND, TEAMS_ASSIGNMENT } from '../../../../../configs/lang';
+import { PlanDefinition } from '../../../../../configs/settings';
 import { ASSIGN_PLAN_URL } from '../../../../../constants';
+import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
+import { Organization } from '../../../../../store/ducks/opensrp/organizations';
 import { AssignedOrgs } from '../AssignedOrgs';
 import { EditOrgs } from '../EditOrgs';
 import { JurisdictionCell } from '../JurisdictionCell';
-import { JurisdictionTableProps } from '../JurisdictionTable';
+import { RouteParams } from '../JurisdictionTableView';
 
-const JurisdictionTableListView = (props: JurisdictionTableProps) => {
+export interface JurisdictionTableListViewProps extends WithWalkerProps {
+  assignments: Assignment[];
+  organizations: Organization[];
+  plan: PlanDefinition | null;
+  submitCallBackFunc: (assignments: Assignment[]) => void;
+}
+
+export type JurisdictionTableListViewPropTypes = RouteComponentProps<RouteParams> &
+  JurisdictionTableListViewProps;
+
+const JurisdictionTableListView = (props: JurisdictionTableListViewPropTypes) => {
   const { organizations, assignments, plan, submitCallBackFunc } = props;
   const currentChildren = props.currentChildren as TreeNode[];
   const currentNode = props.currentNode as TreeNode;
@@ -92,6 +106,13 @@ const JurisdictionTableListView = (props: JurisdictionTableProps) => {
   );
 };
 
-JurisdictionTableListView.defaultProps = defaultWalkerProps;
+const defaultProps = {
+  ...defaultWalkerProps,
+  assignments: [],
+  organizations: [],
+  submitCallBackFunc: () => null,
+};
+
+JurisdictionTableListView.defaultProps = defaultProps;
 
 export { JurisdictionTableListView };
