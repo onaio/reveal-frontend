@@ -33,6 +33,7 @@ import {
   NAVBAR_BRAND_IMG_SRC,
   WEBSITE_NAME,
 } from '../../../configs/env';
+import { ENABLED_PLAN_TYPES } from '../../../configs/env';
 import {
   ABOUT,
   ADMIN,
@@ -119,6 +120,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
   public render() {
     const { authenticated, user } = this.props;
     const path = this.props.location.pathname;
+    const enablePlansDropDown = ENABLED_PLAN_TYPES.length > 0;
     return (
       <div>
         <Navbar light={true} expand="md">
@@ -140,7 +142,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                 </NavLink>
               </NavItem>
 
-              {(ENABLE_IRS || ENABLE_FI) && (
+              {enablePlansDropDown && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle nav={true} caret={true} className={'nav-link'}>
                     {PLAN_TITLE}
