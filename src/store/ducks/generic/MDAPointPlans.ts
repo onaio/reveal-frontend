@@ -1,10 +1,11 @@
 import {
   fetchActionCreatorFactory,
+  getItemByIdFactory,
   reducerFactory,
   removeActionCreatorFactory,
 } from '@opensrp/reducer-factory';
 import intersect from 'fast_array_intersect';
-import { get, keyBy, values } from 'lodash';
+import { keyBy, values } from 'lodash';
 import { Store } from 'redux';
 import { createSelector } from 'reselect';
 import { InterventionType, PlanStatus } from '../plans';
@@ -28,7 +29,7 @@ export interface MDAPointPlan {
   jurisdiction_root_parent_ids: string[];
 }
 
-/** Dynamic MDA Reducer */
+/** MDA point Reducer */
 const reducer = reducerFactory<MDAPointPlan>(reducerName);
 export default reducer;
 
@@ -61,9 +62,7 @@ export function getMDAPointPlansById(
  * @param {string} planId - the MDAPointPlan id
  * @returns {MDAPointPlan|null} a MDAPointPlan object or null
  */
-export function getMDAPointPlanById(state: Partial<Store>, planId: string): MDAPointPlan | null {
-  return get((state as any)[reducerName].objectsById, planId) || null;
-}
+export const getMDAPointPlanById = getItemByIdFactory<MDAPointPlan>(reducerName);
 
 /** get an array of MDAPointPlan objects
  * @param {Partial<Store>} state - the redux store

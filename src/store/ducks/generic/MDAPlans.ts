@@ -1,10 +1,11 @@
 import {
   fetchActionCreatorFactory,
+  getItemByIdFactory,
   reducerFactory,
   removeActionCreatorFactory,
 } from '@opensrp/reducer-factory';
 import intersect from 'fast_array_intersect';
-import { get, values } from 'lodash';
+import { values } from 'lodash';
 import { Store } from 'redux';
 import { createSelector } from 'reselect';
 import { GenericPlan } from './plans';
@@ -23,14 +24,8 @@ export const genericFetchPlans = fetchActionCreatorFactory<GenericPlan>(reducerN
 export const genericRemovePlans = removeActionCreatorFactory(reducerName);
 
 // selectors
-/** get one Plan using its id
- * @param state - the redux store
- * @param planId - the IRSPlan id
- * @returns a Plan object or null
- */
-export function getPlanByIdSelector(state: Partial<Store>, planId: string): GenericPlan | null {
-  return get((state as any)[reducerName].objectsById, planId) || null;
-}
+/** get one Plan using its id */
+export const getPlanByIdSelector = getItemByIdFactory<GenericPlan>(reducerName);
 
 /** This interface represents the structure of IRS plan filter options/params */
 export interface PlanFilters {

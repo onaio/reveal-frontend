@@ -1,8 +1,13 @@
+import {
+  fetchActionCreatorFactory,
+  getItemByIdFactory,
+  reducerFactory,
+  removeActionCreatorFactory,
+} from '@opensrp/reducer-factory';
 import intersect from 'fast_array_intersect';
-import { get, keyBy, values } from 'lodash';
-import { AnyAction, Store } from 'redux';
+import { keyBy, values } from 'lodash';
+import { Store } from 'redux';
 import { createSelector } from 'reselect';
-import SeamlessImmutable from 'seamless-immutable';
 import { InterventionType, PlanStatus } from '../plans';
 
 /** the reducer name */
@@ -24,117 +29,17 @@ export interface GenericPlan {
   jurisdiction_root_parent_ids: string[];
 }
 
+/** IRS plans Reducer */
+const reducer = reducerFactory<GenericPlan>(reducerName);
+export default reducer;
+
 // actions
 
-/** IRS_PLAN_FETCHED action type */
-export const IRS_PLANS_FETCHED = 'reveal/reducer/IRS/IRSPlan/IRS_PLANS_FETCHED';
-
-/** IRS_PLAN_FETCHED action type */
-export const REMOVE_IRS_PLANS = 'reveal/reducer/IRS/IRSPlan/REMOVE_IRS_PLANS';
-
-/** IRS_PLAN_FETCHED action type */
-export const ADD_IRS_PLAN = 'reveal/reducer/IRS/IRSPlan/ADD_IRS_PLAN';
-
-/** interface for fetch IRSPlans action */
-interface FetchIRSPlansAction extends AnyAction {
-  IRSPlansById: { [key: string]: GenericPlan };
-  type: typeof IRS_PLANS_FETCHED;
-}
-
-/** interface for removing IRSPlans action */
-interface RemoveIRSPlansAction extends AnyAction {
-  IRSPlansById: { [key: string]: GenericPlan };
-  type: typeof REMOVE_IRS_PLANS;
-}
-
-/** interface for adding a single IRSPlans action */
-interface AddIRSPlanAction extends AnyAction {
-  IRSPlanObj: GenericPlan;
-  type: typeof ADD_IRS_PLAN;
-}
-
-/** Create type for IRSPlan reducer actions */
-export type IRSPlanActionTypes =
-  | FetchIRSPlansAction
-  | RemoveIRSPlansAction
-  | AddIRSPlanAction
-  | AnyAction;
-
-// action creators
-
-/**
- * Fetch Plan Definitions action creator
- * @param {GenericPlan[]} IRSPlanList - list of plan definition objects
- */
-export const fetchIRSPlans = (IRSPlanList: GenericPlan[] = []): FetchIRSPlansAction => ({
-  IRSPlansById: keyBy(IRSPlanList, 'plan_id'),
-  type: IRS_PLANS_FETCHED,
-});
+/** actionCreator returns action to to add Item records to store */
+export const fetchIRSPlans = fetchActionCreatorFactory<GenericPlan>(reducerName, 'plan_id');
 
 /** Reset plan definitions state action creator */
-export const removeIRSPlans = () => ({
-  IRSPlansById: {},
-  type: REMOVE_IRS_PLANS,
-});
-
-/**
- * Add one Plan Definition action creator
- * @param {GenericPlan} IRSPlanObj - the plan definition object
- */
-export const addIRSPlan = (IRSPlanObj: GenericPlan): AddIRSPlanAction => ({
-  IRSPlanObj,
-  type: ADD_IRS_PLAN,
-});
-
-// the reducer
-
-/** interface for IRSPlan state */
-interface IRSPlanState {
-  IRSPlansById: { [key: string]: GenericPlan } | {};
-}
-
-/** immutable IRSPlan state */
-export type ImmutableIRSPlanState = SeamlessImmutable.ImmutableObject<IRSPlanState> & IRSPlanState;
-
-/** initial IRSPlan state */
-const initialState: ImmutableIRSPlanState = SeamlessImmutable({
-  IRSPlansById: {},
-});
-
-/** the IRSPlan reducer function */
-export default function reducer(
-  state = initialState,
-  action: IRSPlanActionTypes
-): ImmutableIRSPlanState {
-  switch (action.type) {
-    case IRS_PLANS_FETCHED:
-      if (action.IRSPlansById) {
-        return SeamlessImmutable({
-          ...state,
-          IRSPlansById: { ...state.IRSPlansById, ...action.IRSPlansById },
-        });
-      }
-      return state;
-    case ADD_IRS_PLAN:
-      if (action.IRSPlanObj as GenericPlan) {
-        return SeamlessImmutable({
-          ...state,
-          IRSPlansById: {
-            ...state.IRSPlansById,
-            [action.IRSPlanObj.plan_id as string]: action.IRSPlanObj,
-          },
-        });
-      }
-      return state;
-    case REMOVE_IRS_PLANS:
-      return SeamlessImmutable({
-        ...state,
-        IRSPlansById: action.IRSPlansById,
-      });
-    default:
-      return state;
-  }
-}
+export const removeIRSPlans = removeActionCreatorFactory(reducerName);
 
 // selectors
 
@@ -150,17 +55,11 @@ export function getIRSPlansById(
   if (interventionType) {
     return keyBy(getIRSPlansArray(state, interventionType), 'plan_id');
   }
-  return (state as any)[reducerName].IRSPlansById;
+  return (state as any)[reducerName].objectsById;
 }
 
-/** get one IRSPlan using its id
- * @param {Partial<Store>} state - the redux store
- * @param {string} planId - the IRSPlan id
- * @returns {GenericPlan|null} a IRSPlan object or null
- */
-export function getIRSPlanById(state: Partial<Store>, planId: string): GenericPlan | null {
-  return get((state as any)[reducerName].IRSPlansById, planId) || null;
-}
+/** get one IRSPlan using its id */
+export const getIRSPlanById = getItemByIdFactory<GenericPlan>(reducerName);
 
 /** get an array of IRSPlan objects
  * @param {Partial<Store>} state - the redux store
@@ -171,7 +70,7 @@ export function getIRSPlansArray(
   state: Partial<Store>,
   interventionType: InterventionType = InterventionType.IRS
 ): GenericPlan[] {
-  const result = values((state as any)[reducerName].IRSPlansById);
+  const result = values((state as any)[reducerName].objectsById);
   return result.filter((e: GenericPlan) => e.plan_intervention_type === interventionType);
 }
 
@@ -186,9 +85,8 @@ export interface IRSPlanFilters {
 /** IRSPlansArrayBaseSelector select an array of all plans
  * @param state - the redux store
  */
-export const IRSPlansArrayBaseSelector = (planKey?: string) => (
-  state: Partial<Store>
-): GenericPlan[] => values((state as any)[reducerName][planKey ? planKey : 'IRSPlansById']);
+export const IRSPlansArrayBaseSelector = () => (state: Partial<Store>): GenericPlan[] =>
+  values((state as any)[reducerName].objectsById);
 
 /** getIRSPlansArrayByTitle
  * Gets title from PlanFilters
@@ -209,8 +107,8 @@ export const getStatusList = (_: Partial<Store>, props: IRSPlanFilters) => props
  * @param {Partial<Store>} state - the redux store
  * @param {PlanDefinitionFilters} props - the plan defintion filters object
  */
-export const getIRSPlansArrayByTitle = (planKey?: string) =>
-  createSelector([IRSPlansArrayBaseSelector(planKey), getTitle], (plans, title) =>
+export const getIRSPlansArrayByTitle = () =>
+  createSelector([IRSPlansArrayBaseSelector(), getTitle], (plans, title) =>
     title
       ? plans.filter(plan => plan.plan_title.toLowerCase().includes(title.toLowerCase()))
       : plans
@@ -221,8 +119,8 @@ export const getIRSPlansArrayByTitle = (planKey?: string) =>
  * @param {Partial<Store>} state - the redux store
  * @param {PlanDefinitionFilters} props - the plan defintion filters object
  */
-export const getIRSPlansArrayByStatus = (planKey?: string) =>
-  createSelector([IRSPlansArrayBaseSelector(planKey), getStatusList], (plans, statusList) =>
+export const getIRSPlansArrayByStatus = () =>
+  createSelector([IRSPlansArrayBaseSelector(), getStatusList], (plans, statusList) =>
     statusList
       ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
       : plans
@@ -244,9 +142,8 @@ export const getIRSPlansArrayByStatus = (planKey?: string) =>
  * @param {PlanFilters} props - the plan filters object
  * @param {string} sortField - sort by field
  */
-export const makeIRSPlansArraySelector = (planKey?: string) => {
-  return createSelector(
-    [getIRSPlansArrayByTitle(planKey), getIRSPlansArrayByStatus(planKey)],
-    (plan1, plan2) => intersect([plan1, plan2], JSON.stringify)
+export const makeIRSPlansArraySelector = () => {
+  return createSelector([getIRSPlansArrayByTitle(), getIRSPlansArrayByStatus()], (plan1, plan2) =>
+    intersect([plan1, plan2], JSON.stringify)
   );
 };

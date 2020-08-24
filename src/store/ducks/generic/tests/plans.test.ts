@@ -4,7 +4,6 @@ import { FlushThunks } from 'redux-testkit';
 import store from '../../..';
 import { InterventionType } from '../../plans';
 import reducer, {
-  addIRSPlan,
   fetchIRSPlans,
   GenericPlan,
   getIRSPlanById,
@@ -98,26 +97,5 @@ describe('reducers/IRS/IRSPlan', () => {
       fixtures.plans[1],
       fixtures.plans[2],
     ]);
-  });
-
-  it('You can add one plan definition object to the store', () => {
-    // reset
-    store.dispatch(removeIRSPlans());
-
-    // add one plan definition objects
-    store.dispatch(addIRSPlan(fixtures.plans[2] as GenericPlan));
-    // we should have it in the store
-    expect(getIRSPlansArray(store.getState())).toEqual([fixtures.plans[2]]);
-
-    // fetch one more plan definition objects
-    store.dispatch(addIRSPlan(fixtures.plans[1] as GenericPlan));
-    // we should now have a total of three plan definition objects in the store
-    expect(getIRSPlansArray(store.getState())).toEqual([fixtures.plans[2], fixtures.plans[1]]);
-
-    // add an existing plan again
-    store.dispatch(addIRSPlan(fixtures.plans[2] as GenericPlan));
-    // nothing should have changed in the store
-    // we should now have a total of three plan definition objects in the store
-    expect(getIRSPlansArray(store.getState())).toEqual([fixtures.plans[2], fixtures.plans[1]]);
   });
 });
