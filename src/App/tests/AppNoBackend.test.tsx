@@ -32,7 +32,7 @@ describe('App no backend', () => {
 
     // user redirected to login
     expect(wrapper.text()).toMatchInlineSnapshot(
-      `"HomeLoginPlease log in with one of the following providers"`
+      `"HomePlanManage PlansLoginPlease log in with one of the following providers"`
     );
     expect((wrapper.find('Router').props() as any).history).toMatchObject({
       location: {
