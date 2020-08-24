@@ -946,5 +946,325 @@
   "FOCUS_CLASSIFICATION_LABEL": {
     "message": "การตัดสินแหล่งแพร่เชื้อ",
     "description": "form label: for the status of a focus investigation plan"
-  }
+  },
+  "PLANNING_PAGE_TITLE": {
+    "message": "การสร้างแผนปฏิบัติงาน",
+    "description": "Title of page with the feature to help create plans"
+  },
+  "SAVE_FILE": { "message": "บันทึกไฟล์", "description": "Action to save a file" },
+  "UPLOAD": { "message": "อัปโหลด", "description": "upload" },
+  "MDA_POINT_PLANS": {
+    "message": "แผนของจุดการจ่ายยาแบบกลุ่ม",
+    "description": "Title of page that lists MDA point plans"
+  },
+  "JURISDICTION_HIERARCHY_TEMPLATE": {
+    "message": "แบบฟอร์มพื้นที่ปฏิบัติงาน",
+    "description": "Name given to a file downloaded as a template for risk upload"
+  },
+  "SELECT_COUNTRY": { "message": "เลือกประเทศ", "description": "Prompt to select Country" },
+  "JURISDICTION_METADATA": {
+    "message": "ข้อมูลพื้นที่ปฏิบัติงาน",
+    "description": "Title of page that user can upload and download jurisdiction metadata csv files"
+  },
+  "DOWNLOAD_JURISDICTION_METADATA": {
+    "message": "ดาวน์โหลดข้อมูลพื้นที่ปฏิบัติงาน",
+    "description": "Button Text: button to download metadata"
+  },
+  "UPLOAD_JURISDICTION_METADATA": {
+    "message": "อัปโหลดข้อมูลพื้นที่ปฏิบัติงาน",
+    "description": "Button Text to upload metadata csv file"
+  },
+  "HOW_TO_UPDATE_JURISDICTION_METADATA": {
+    "message": "วิธีการอัพเดทข้อมูลพื้นที่ปฏิบัติงาน",
+    "description": "Text title for section describing how to update Jurisdictions metadata"
+  },
+  "DOWNLOADING": { "message": "กำลังดาวน์โหลด", "description": "Downloading" },
+  "FILE_UPLOADED_SUCCESSFULLY": {
+    "message": "อัปโหลดไฟล์สำเร็จ",
+    "description": "Text shown as feedback after the successful completion of a file upload action"
+  },
+  "FILE_DOWNLOADED_SUCCESSFULLY": {
+    "message": "ดาวน์โหลดไฟล์สำเร็จ",
+    "description": "Text shown as feedback after the successful completion of a file download action"
+  },
+  "FILE_UPLOAD_FAILED": {
+    "message": "อัปโหลดไฟล์ไม่สำเร็จ โปรดลองอีกครั้ง",
+    "description": "Text shown as feedback after a failed file upload operation"
+  },
+  "MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION": {
+    "message": "เปอร์เซ็นต์ของคนที่ได้เลือกดำเนินการ",
+    "description": "Description of a metric to a task in a plan"
+  },
+  "MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION": {
+    "message": "รายงานเหตุการณ์ไม่พึงประสงค์จากการใช้ยา",
+    "description": "Description of a task in a plan"
+  },
+  "MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL": {
+    "message": "เปอร์เซ็นต์ของผู้ที่รายงานเหตุการณ์ไม่พึงประสงค์",
+    "description": "Description of a metric for a task in a plan"
+  },
+  "MDA_POINT_TITLE": {
+    "message": "จุดจ่ายยาแบบกลุ่ม",
+    "description": "page title: for MDA point pages"
+  },
+  "DYNAMIC_FI_TITLE": {
+    "message": "Dynamic FI",
+    "description": "page title: for dynamic FI pages"
+  },
+  "DYNAMIC_IRS_TITLE": {
+    "message": "Dynamic IRS",
+    "description": "page title: for dynamic IRS pages"
+  },
+  "DYNAMIC_MDA_TITLE": {
+    "message": "Dynamic MDA",
+    "description": "page title: for dynamic MDA pages"
+  },
+  "TEAM_ASSIGNMENT_SUCCESSFUL": {
+    "message": "อัพเดทการมอบหมายทีมปฏิบัติงานเรียบร้อยแล้ว",
+    "description": "Text shown as feedback after the successful completion of a team assignment operation"
+  },
+  "UPLOADED_CLIENT_LISTS": {
+    "message": "อัปโหลดรายการของผู้ใช้แล้ว",
+    "description": "Section title for section that lists uploaded clients csv files."
+  },
+  "RESET": { "message": "รีเซ็ต", "description": "Reset" },
+  "EXPORT_BASED_ON_GEOGRAPHICAL_REGION": {
+    "message": "Export ข้อมูลประเทศตามระดับทางภูมิศาสตร์",
+    "description": "Prompt shown on a csv download form"
+  },
+  "SELECT_LOCATION_ERROR_MESSAGE": {
+    "message": "โปรดเลือกสถานที่",
+    "description": "Prompt shown on a form that requires user to select location"
+  },
+  "DOWNLOAD": { "message": "ดาวน์โหลด", "description": "Download" },
+  "FILE_NAME": { "message": "ชื่อไฟล์", "description": "Name of a file" },
+  "OWNER": { "message": "เป็นของ", "description": "Belonging to" },
+  "UPLOAD_DATE": {
+    "message": "วันที่อัปโหลด",
+    "description": "Table column header whose records are of when something was uploaded"
+  },
+  "UPLOAD_FILE": {
+    "message": "อัปโหลดไฟล์",
+    "description": "Form label of a file upload input tag"
+  },
+  "DOWNLOAD_FILE": {
+    "message": "ดาวน์โหลดไฟล์",
+    "description": "Button text: whose action is to download a file"
+  },
+  "SUBMIT": { "message": "ส่ง", "description": "Button text: submit a form" },
+  "CLIENT_UPLOAD_FORM": {
+    "message": "อัปโหลดฟอร์มจากผู้ใช้",
+    "description": "Title of modal where user can upload a form"
+  },
+  "FILE_SUBMISSION_READY": {
+    "message": "ไฟล์พร้อมที่จะส่งแล้ว",
+    "description": "Text describing the submit status of a form"
+  },
+  "LOADING": { "message": "กำลังโหลด...", "description": "Text describing an in-progress action" },
+  "MDA_POINT_REPORTING_TITLE": {
+    "message": "การรายงานจุดจ่ายยาแบบกลุ่ม",
+    "description": "Title of page that lists MDA point plans for reporting"
+  },
+  "FILTER": { "message": "ตัวกรอง", "description": "Filter" },
+  "USER": { "message": "ผู้ใช้งาน", "description": "user" },
+  "MDA_POINT_LOCATION_REPORT_TITLE": {
+    "message": "รายงานตำแหน่งจุดจ่ายยาแบบกลุ่ม",
+    "description": "Title of page that shows reporting dashboards for MDA Point plans"
+  },
+  "MDA_POINT_CHILD_REPORT_TITLE": {
+    "message": "รายงานตำแหน่งจุดจ่ายยาแบบกลุ่มในเด็ก",
+    "description": "Title of page that shows reporting dashboards for MDA Point plans"
+  },
+  "MDA_POINT_SCHOOL_REPORT_TITLE": {
+    "message": "รายงานตำแหน่งจุดจ่ายยาแบบกลุ่มในโรงเรียน",
+    "description": "Title of page that shows reporting dashboards for MDA Point plans"
+  },
+  "USER_HAS_NO_VALID_ASSIGNMENTS": {
+    "message": "ผู้ใช้ไม่มีการกำหนดแผนที่ถูกต้อง",
+    "description": "Error message"
+  },
+  "NETWORK_ERROR": {
+    "message": "เราประสบปัญหาในการเรียกทรัพยากรที่ร้องขอ",
+    "description": "Error message"
+  },
+  "ACCESS_DENIED": {
+    "message": "การเข้าถึงถูกปฏิเสธ",
+    "description": "Error message when api call resolves with a 403 status"
+  },
+  "USER_HAS_NO_PLAN_ASSIGNMENTS": {
+    "message": "ผู้ใช้ไม่ได้กำหนดแผนปฏิบัติงานใดๆ",
+    "description": "Error message"
+  },
+  "NO_ROWS_FOUND": {
+    "message": "ไม่พบข้อมูล",
+    "description": "Info message when there is no data to show"
+  },
+  "AGE_RANGE": { "message": "ช่วงอายุ", "description": "Table column header" },
+  "ADR_REPORTED": {
+    "message": "รายงานอาการข้างเคียงจากการใช้ยา (ADR)",
+    "description": "Table column header"
+  },
+  "ADR_SEVERE": {
+    "message": "อาการข้างเคียงชนิดรุนแรงจากการใช้ยา",
+    "description": "Table column Header"
+  },
+  "CHILDS_NAME": { "message": "ชื่อเด็ก", "description": "Table column header" },
+  "NATIONAL_ID": { "message": "รหัสประชาชน", "description": "Table column header" },
+  "ENROLLED_IN_SCHOOL": { "message": "เข้าเรียนในโรงเรียน", "description": "Table Column header" },
+  "FILE": { "message": "ไฟล์", "description": "A file" },
+  "CSV_FILE": { "message": "ไฟล์ CSV", "description": "Label of a an upload csv form field" },
+  "INVALID_CSV": {
+    "message": "ไฟล์ CSV ไม่ถูกต้อง",
+    "description": "Error message shown when an invalid csv file is uploaded"
+  },
+  "ROW_HEIGHT": {
+    "message": "ความสูงของแถว",
+    "description": "Label of a form field that is used to configure a table row's height"
+  },
+  "ROWS_TO_DISPLAY": {
+    "message": "จำนวนแถวที่แสดง",
+    "description": "Label of a form field for how many items to be shown in a single page of a table"
+  },
+  "PAGE": { "message": "หน้า", "description": "Page" },
+  "OF": { "message": "ของ", "description": "Of" },
+  "DEFAULT": { "message": "ค่าเริ่มต้น", "description": "Default" },
+  "SHORT": { "message": "สั้น", "description": "Measure of length" },
+  "TALL": { "message": "ยาว", "description": "Measure of length" },
+  "NO_DATA_FOUND": {
+    "message": "ไม่พบข้อมูล",
+    "description": "Info message when there is no data to show"
+  },
+  "CUSTOMIZE_COLUMNS": {
+    "message": "ปรับแต่งคอลัมน์",
+    "description": "Label of a form field used to toggle the visibility of table columns"
+  },
+  "CUSTOMIZE_COLUMNS_FILTER_MESSAGE": {
+    "message": "เลือกคอลัมภ์ที่จะแสดง",
+    "description": "Label of section where users can check checkboxes effectively toggling the visibility of table columns"
+  },
+  "COULD_NOT_LOAD_CHILDREN": {
+    "message": "ไม่สามารถโหลดข้อมูลเด็กได้",
+    "description": "Error Message shown due to a failed api call to get the descendants of a jurisdiction"
+  },
+  "COULD_NOT_LOAD_PARENTS": {
+    "message": "ไม่สามารถโหลดข้อมูลเด็กได้",
+    "description": "Error Message shown due to a failed api call to get the ancestors of a jurisdiction"
+  },
+  "SEARCH_LABEL": { "message": "ค้นหา", "description": "Label of a search input form field" },
+  "SETTINGS_LABEL": { "message": "ตั้งค่า", "description": "Settings" },
+  "JURISDICTION_UPLOAD_STEP_1": {
+    "message": "คลิกที่ปุ่มดาวน์โหลดไฟล์ CSV ด้านล่าง",
+    "description": "Guiding message on what the user should do"
+  },
+  "JURISDICTION_UPLOAD_STEP_2": {
+    "message": "เปิดไฟล์ที่ดาวน์โหลดและกรอกรายละเอียดความเสี่ยงและเป้าหมายในคอลัมน์ที่เกี่ยวข้อง",
+    "description": "Guiding message on what the user should do"
+  },
+  "JURISDICTION_UPLOAD_STEP_3": {
+    "message": "บันทึกไฟล์ CSV ที่ได้อัพเดท",
+    "description": "Guiding message on what the user should do"
+  },
+  "JURISDICTION_UPLOAD_STEP_4": {
+    "message": "เลือกไฟล์ที่บันทึกไว้ในแบบฟอร์มการอัปโหลด",
+    "description": "Guiding message on what the user should do"
+  },
+  "JURISDICTION_UPLOAD_STEP_5": {
+    "message": "คลิกปุ่ม \"อัปโหลดไฟล์\" เพื่อเสร็จสิ้นกระบวนการ",
+    "description": "Guiding message on what the user should do"
+  },
+  "DRAFT PLANS": { "message": "แผนร่าง", "description": "Title of page that lists draft plans" },
+  "COULD_NOT_LOAD_JURISDICTION_HIERARCHY": {
+    "message": "ไม่สามารถโหลดลำดับของพื้นที่ปฏิบัติงานได้",
+    "description": "Error message shown when a page cannot load a tree structure representing the jurisdiction hierarchy"
+  },
+  "STRUCTURES_COUNT": { "message": "จำนวนสิ่งปลูกสร้าง", "description": "Number of structures" },
+  "STATUS_SETTING": {
+    "message": "การตั้งสถานะโดย...",
+    "description": "Table column Header whose records the action that resulted in a change in the jurisdiction selection status"
+  },
+  "AUTO_SELECTION": {
+    "message": "เลือกอัตโนมัติ",
+    "description": "Label used to show action by which a jurisdiction node is selected"
+  },
+  "EXISTING_SELECTION": {
+    "message": "ที่เลือกอยู่",
+    "description": "Label of action by which a jurisdiction node is selected"
+  },
+  "USER_CHANGE": {
+    "message": "เปลี่ยนผู้ใช้",
+    "description": "Label of action by which a jurisdiction node is selected"
+  },
+  "COULD_NOT_LOAD_JURISDICTION": {
+    "message": "ไม่สามารถโหลดพื้นที่ปฏิบัติงานได้",
+    "description": "Error message shown by page when jurisdictions failed to load"
+  },
+  "JURISDICTION_ASSIGNMENT_SUCCESSFUL": {
+    "message": "กำหนดพื้นที่ดำเนินการให้แผนปฏิบัติงานเรียบร้อยแล้ว",
+    "description": "Feedback after the successful completion of a jurisdiction assignment operation"
+  },
+  "SELECTED_JURISDICTIONS": {
+    "message": "เลือกพื้นที่ปฏิบัติงาน",
+    "description": "Table Column header"
+  },
+  "SAVE_DRAFT": {
+    "message": "บันทึกร่าง",
+    "description": "Label of button, which saves a plan with a draft status"
+  },
+  "SAVE_AND_ACTIVATE": {
+    "message": "บันทึกเพื่อดำเนินการ",
+    "description": "Label of button, which saves a plan with an active status"
+  },
+  "CANNOT_ASSIGN_TEAM": {
+    "message": "ไม่สามารถกำหนดทีมสำหรับแผนหมดอายุแล้ว",
+    "description": "Error message shown when user tries assigning teams to expired plans"
+  },
+  "NUMBER_OF_STRUCTURES_IN_JURISDICTIONS": {
+    "message": "จำนวนสิ่งปลูกสร้างในพื้นที่ปฏิบัติงานที่เลือก",
+    "description": "(in caps) comes before a number that represents a structure count"
+  },
+  "ADJUST_SLIDER_MESSAGE": {
+    "message": "ปรับแถบเลื่อนไปยังพื้นที่เป้าหมายอัตโนมัติ",
+    "description": "Label of progress-bar form element"
+  },
+  "AUTO_TARGET_JURISDICTIONS_BY_RISK": {
+    "message": "พื้นที่เป้าหมายอัตโนมัติโดยมีความเสี่ยง",
+    "description": "Title of section where user can use a slider to auto-select jurisdictions"
+  },
+  "REFINE_SELECTED_JURISDICTIONS": {
+    "message": "ปรับแต่งพื้นที่ที่เลือก",
+    "description": "Title of section where user can refine jurisdictions that were previously selected"
+  },
+  "CONTINUE_TO_NEXT_STEP": {
+    "message": "เข้าสู่ขั้นตอนถัดไป",
+    "description": "Label on a button that moves the user to the next step"
+  },
+  "ONE_STR": { "message": 1, "description": "Denotes the first step" },
+  "TWO_STR": { "message": 2, "description": "Denotes the second step" },
+  "TARGETED_STATUS": {
+    "message": "สถานะพื้นที่เป้าหมาย",
+    "description": "Table column header, shows the selection status of a jurisdiction"
+  },
+  "TARGETED": {
+    "message": "เป็นเป้าหมาย",
+    "description": "Label for when a jurisdiction is selected"
+  },
+  "NOT_TARGETED": {
+    "message": "ไม่ใช่เป้าหมาย",
+    "description": "Label used when a jurisdiction is not selected"
+  },
+  "DAYS": { "message": "วัน", "description": "Days" },
+  "RESOURCE_ESTIMATE_FOR": {
+    "message": "เวลาโดยประมาณ %s",
+    "description": "Label of number that provides an estimated time of completion given a certain amount of resources"
+  },
+  "AT_A_RATE_OF": { "message": "ในอัตรา", "description": "Ratio" },
+  "STRUCTURES_PER_TEAM_PER_DAY": {
+    "message": "จำนวนสิ่งปลูกสร้างต่อทีมต่อวัน",
+    "description": "Label of form field for the number of structures a team can handle per day"
+  },
+  "NO_JURISDICTION_SELECTIONS_FOUND": {
+    "message": "ไม่พบการเลือกพื้นที่เป้าหมาย",
+    "description": "Info message shown when there are no selected jurisdiction records found"
+  },
+  "TOTAL": { "message": "รวม", "description": "Total" }
 }

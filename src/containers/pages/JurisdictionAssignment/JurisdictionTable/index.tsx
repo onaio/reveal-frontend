@@ -17,7 +17,6 @@ import {
   NO_DATA_FOUND,
   NO_ROWS_FOUND,
   NOT_TARGETED,
-  RISK_LABEL,
   SAVE_AND_ACTIVATE,
   SAVE_DRAFT,
   SELECT_JURISDICTION,
@@ -33,6 +32,7 @@ import {
   AUTO_ASSIGN_JURISDICTIONS_URL,
   MANUAL_ASSIGN_JURISDICTIONS_URL,
   PLANNING_VIEW_URL,
+  RISK_LABEL,
 } from '../../../../constants';
 import { putJurisdictionsToPlan } from '../../../../helpers/dataLoading/jurisdictions';
 import { displayError } from '../../../../helpers/errors';
