@@ -1,7 +1,9 @@
 import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
+import { get } from 'lodash';
 import { Cell } from 'react-table';
 import { getIRSThresholdAdherenceIndicator, renderPercentage } from '../../../helpers/indicators';
+import { GenericJurisdiction } from '../../../store/ducks/generic/jurisdictions';
 
 /** columns for Namibia IRS jurisdictions */
 export const NamibiaColumns = [
@@ -295,3 +297,34 @@ export type TableProps = Pick<
   | 'useDrillDown'
   | 'renderNullDataComponent'
 >;
+
+export type CustomColumnsGet = (
+  jurisdiction: GenericJurisdiction[],
+  id: string | null
+) => Array<DrillDownColumn<Dictionary<{}>>>;
+
+/**
+ * gets columns to be used
+ * @param {GenericJurisdiction[]} jurisdiction - jurisdiction data
+ * @param {string} jurisdictionColumn  - The reporting jurisdiction columns
+ * @param {string} focusAreaColumn  - Reporting focus area column
+ * @param {string} focusAreaLevel - Jurisdiction depth of the lowest level jurisdictions
+ * @param {string} jurisdictionId - jurisdiction identifier
+ */
+export const getColumnsToUse = (
+  jurisdiction: GenericJurisdiction[],
+  jurisdictionColumn: string,
+  focusAreaColumn: string,
+  focusAreaLevel: string,
+  jurisdictionId: string | null
+) => {
+  const currLevelData = jurisdiction.filter(el => el.jurisdiction_parent_id === jurisdictionId);
+
+  let columnsToUse = get(plansTableColumns, jurisdictionColumn, null);
+  if (currLevelData && currLevelData.length > 0) {
+    if (currLevelData[0].jurisdiction_depth >= +focusAreaLevel) {
+      columnsToUse = get(plansTableColumns, focusAreaColumn, null);
+    }
+  }
+  return columnsToUse;
+};

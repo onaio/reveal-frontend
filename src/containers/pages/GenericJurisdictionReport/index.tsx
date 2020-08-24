@@ -2,7 +2,6 @@ import { DrillDownColumn, DrillDownTable, hasChildrenFunc } from '@onaio/drill-d
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
-import { get } from 'lodash';
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
@@ -27,7 +26,7 @@ import { genericFetchPlans } from '../../../store/ducks/generic/MDAPlans';
 import { fetchMDAPointPlans } from '../../../store/ducks/generic/MDAPointPlans';
 import { fetchIRSPlans, GenericPlan } from '../../../store/ducks/generic/plans';
 import { getJurisdictionBreadcrumbs } from '../IRS/Map/helpers';
-import { plansTableColumns, TableProps } from './helpers';
+import { CustomColumnsGet, getColumnsToUse, TableProps } from './helpers';
 import './style.css';
 
 /** register the reducers */
@@ -37,6 +36,8 @@ reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsRe
 export interface GenericJurisdictionProps {
   /** The url for navigating to this page */
   baseURL: string;
+  /** custom function for getting columns */
+  customColumnsGet?: CustomColumnsGet;
   cellComponent: React.ElementType<any>;
   /** Title of this page */
   pageTitle: string;
@@ -92,6 +93,7 @@ const GenericJurisdictionReport = (
     reportingPlanSlice,
     LegendIndicatorComp,
     cellComponent,
+    customColumnsGet,
   } = props;
 
   /** async function to load the data */
@@ -197,14 +199,9 @@ const GenericJurisdictionReport = (
     currentJurisdictionName = theObject[0].jurisdiction_name;
   }
 
-  const currLevelData = data.filter(el => el.jurisdiction_parent_id === jurisdictionId);
-
-  let columnsToUse = get(plansTableColumns, jurisdictionColumn, null);
-  if (currLevelData && currLevelData.length > 0) {
-    if (currLevelData[0].jurisdiction_depth >= +focusAreaLevel) {
-      columnsToUse = get(plansTableColumns, focusAreaColumn, null);
-    }
-  }
+  const columnsToUse = customColumnsGet
+    ? customColumnsGet(data, jurisdictionId)
+    : getColumnsToUse(data, jurisdictionColumn, focusAreaColumn, focusAreaLevel, jurisdictionId);
 
   const tableProps: TableProps = {
     columns: [] as Array<DrillDownColumn<Dictionary>>,
