@@ -14,7 +14,7 @@ export const NamibiaColumns = [
   },
   {
     Header: 'Structures Targeted',
-    accessor: 'target_2019',
+    accessor: 'jurisdiction_target',
   },
   {
     Header: 'Structures Found',
