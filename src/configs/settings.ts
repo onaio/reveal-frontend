@@ -362,7 +362,6 @@ export interface PlanActionTrigger {
 export interface PlanActionCondition {
   expression: PlanExpression;
   kind: Readonly<'applicability'>;
-  subjectCodableConcept?: PlanActionsubjectCodableConcept;
 }
 
 /** Plan Action */
@@ -689,11 +688,11 @@ export const planActivities: PlanActivities = {
             description: 'Structure is residential or type does not exist',
             expression:
               "$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists())",
+            subjectCodableConcept: {
+              text: 'Family',
+            },
           },
           kind: APPLICABILITY_CONDITION_KIND,
-          subjectCodableConcept: {
-            text: 'Family',
-          },
         },
         {
           expression: {
@@ -954,11 +953,11 @@ export const planActivities: PlanActivities = {
             description: 'Structure is residential or type does not exist',
             expression:
               "$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists().not())",
+            subjectCodableConcept: {
+              text: 'Family',
+            },
           },
           kind: APPLICABILITY_CONDITION_KIND,
-          subjectCodableConcept: {
-            text: 'Family',
-          },
         },
         {
           expression: {
