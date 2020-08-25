@@ -298,10 +298,13 @@ export type TableProps = Pick<
   | 'renderNullDataComponent'
 >;
 
-export type CustomColumnsGet = (
+export type GetColumnsToUse = (
   jurisdiction: GenericJurisdiction[],
-  id: string | null
-) => Array<DrillDownColumn<Dictionary<{}>>>;
+  jurisdictionColumn: string,
+  focusAreaColumn: string,
+  focusAreaLevel: string,
+  jurisdictionId: string | null
+) => Array<DrillDownColumn<Dictionary<{}>>> | null;
 
 /**
  * gets columns to be used
@@ -311,7 +314,7 @@ export type CustomColumnsGet = (
  * @param {string} focusAreaLevel - Jurisdiction depth of the lowest level jurisdictions
  * @param {string} jurisdictionId - jurisdiction identifier
  */
-export const getColumnsToUse = (
+export const getColumnsToUse: GetColumnsToUse = (
   jurisdiction: GenericJurisdiction[],
   jurisdictionColumn: string,
   focusAreaColumn: string,

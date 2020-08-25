@@ -26,18 +26,26 @@ import { genericFetchPlans } from '../../../store/ducks/generic/MDAPlans';
 import { fetchMDAPointPlans } from '../../../store/ducks/generic/MDAPointPlans';
 import { fetchIRSPlans, GenericPlan } from '../../../store/ducks/generic/plans';
 import { getJurisdictionBreadcrumbs } from '../IRS/Map/helpers';
-import { CustomColumnsGet, getColumnsToUse, TableProps } from './helpers';
+import { GetColumnsToUse, getColumnsToUse, TableProps } from './helpers';
 import './style.css';
 
 /** register the reducers */
 reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
 
-/** IRS Jurisdictions props */
+/** default props */
+export interface DefaultGenericJurisdictionProps {
+  columnsGetter: GetColumnsToUse;
+}
+
+/** default props */
+const defaultProps: DefaultGenericJurisdictionProps = {
+  columnsGetter: getColumnsToUse,
+};
+
+/** generic Jurisdictions props */
 export interface GenericJurisdictionProps {
   /** The url for navigating to this page */
   baseURL: string;
-  /** custom function for getting columns */
-  customColumnsGet?: CustomColumnsGet;
   cellComponent: React.ElementType<any>;
   /** Title of this page */
   pageTitle: string;
@@ -66,7 +74,9 @@ export interface GenericJurisdictionProps {
 
 /** Renders generic Jurisdictions reports */
 const GenericJurisdictionReport = (
-  props: GenericJurisdictionProps & RouteComponentProps<RouteParams>
+  props: GenericJurisdictionProps &
+    DefaultGenericJurisdictionProps &
+    RouteComponentProps<RouteParams>
 ) => {
   const [jurisdictionId, setJurisdictionId] = useState<string | null>(
     (props.match && props.match.params && props.match.params.jurisdictionId) || null
@@ -93,7 +103,7 @@ const GenericJurisdictionReport = (
     reportingPlanSlice,
     LegendIndicatorComp,
     cellComponent,
-    customColumnsGet,
+    columnsGetter,
   } = props;
 
   /** async function to load the data */
@@ -199,9 +209,13 @@ const GenericJurisdictionReport = (
     currentJurisdictionName = theObject[0].jurisdiction_name;
   }
 
-  const columnsToUse = customColumnsGet
-    ? customColumnsGet(data, jurisdictionId)
-    : getColumnsToUse(data, jurisdictionColumn, focusAreaColumn, focusAreaLevel, jurisdictionId);
+  const columnsToUse = columnsGetter(
+    data,
+    jurisdictionColumn,
+    focusAreaColumn,
+    focusAreaLevel,
+    jurisdictionId
+  );
 
   const tableProps: TableProps = {
     columns: [] as Array<DrillDownColumn<Dictionary>>,
@@ -266,4 +280,5 @@ const GenericJurisdictionReport = (
   );
 };
 
+GenericJurisdictionReport.defaultProps = defaultProps;
 export { GenericJurisdictionReport };
