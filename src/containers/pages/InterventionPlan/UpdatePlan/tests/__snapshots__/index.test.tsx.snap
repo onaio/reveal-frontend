@@ -22,56 +22,77 @@ exports[`components/InterventionPlan/UpdatePlan renders plan definition list cor
     <ol
       className="breadcrumb"
     >
-      <BreadcrumbItem
-        key="reveal-breadcrumb-0"
-        tag="li"
+      <LinkList
+        currentPage={
+          Object {
+            "label": "Update Plan: TwoTwoOne_01 IRS 2019-07-10",
+            "url": "/plans/new",
+          }
+        }
+        pages={
+          Array [
+            Object {
+              "label": "Home",
+              "url": "/",
+            },
+            Object {
+              "label": "Manage Plans",
+              "url": "/plans/list",
+            },
+          ]
+        }
       >
-        <li
-          className="breadcrumb-item"
+        <BreadcrumbItem
+          key="0"
+          tag="li"
         >
-          <Link
-            key="0"
-            to="/"
+          <li
+            className="breadcrumb-item"
           >
-            <LinkAnchor
-              href="/"
-              navigate={[Function]}
+            <Link
+              key="0"
+              to="/"
             >
-              <a
+              <LinkAnchor
                 href="/"
-                onClick={[Function]}
+                navigate={[Function]}
               >
-                Home
-              </a>
-            </LinkAnchor>
-          </Link>
-        </li>
-      </BreadcrumbItem>
-      <BreadcrumbItem
-        key="reveal-breadcrumb-1"
-        tag="li"
-      >
-        <li
-          className="breadcrumb-item"
+                <a
+                  href="/"
+                  onClick={[Function]}
+                >
+                  Home
+                </a>
+              </LinkAnchor>
+            </Link>
+          </li>
+        </BreadcrumbItem>
+        <BreadcrumbItem
+          key="1"
+          tag="li"
         >
-          <Link
-            key="1"
-            to="/plans/list"
+          <li
+            className="breadcrumb-item"
           >
-            <LinkAnchor
-              href="/plans/list"
-              navigate={[Function]}
+            <Link
+              key="1"
+              to="/plans/list"
             >
-              <a
+              <LinkAnchor
                 href="/plans/list"
-                onClick={[Function]}
+                navigate={[Function]}
               >
-                Manage Plans
-              </a>
-            </LinkAnchor>
-          </Link>
-        </li>
-      </BreadcrumbItem>
+                <a
+                  href="/plans/list"
+                  onClick={[Function]}
+                >
+                  Manage Plans
+                </a>
+              </LinkAnchor>
+            </Link>
+          </li>
+        </BreadcrumbItem>
+      </LinkList>
       <BreadcrumbItem
         active={true}
         tag="li"

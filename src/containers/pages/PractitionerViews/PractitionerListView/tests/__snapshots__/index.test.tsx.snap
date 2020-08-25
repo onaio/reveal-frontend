@@ -14,31 +14,48 @@ exports[`src/containers/TeamAssignment/PractitionersListView/ renders a dumb Tea
     <ol
       className="breadcrumb"
     >
-      <BreadcrumbItem
-        key="reveal-breadcrumb-0"
-        tag="li"
+      <LinkList
+        currentPage={
+          Object {
+            "label": "Practitioners",
+            "url": "/practitioners",
+          }
+        }
+        pages={
+          Array [
+            Object {
+              "label": "Home",
+              "url": "/",
+            },
+          ]
+        }
       >
-        <li
-          className="breadcrumb-item"
+        <BreadcrumbItem
+          key="0"
+          tag="li"
         >
-          <Link
-            key="0"
-            to="/"
+          <li
+            className="breadcrumb-item"
           >
-            <LinkAnchor
-              href="/"
-              navigate={[Function]}
+            <Link
+              key="0"
+              to="/"
             >
-              <a
+              <LinkAnchor
                 href="/"
-                onClick={[Function]}
+                navigate={[Function]}
               >
-                Home
-              </a>
-            </LinkAnchor>
-          </Link>
-        </li>
-      </BreadcrumbItem>
+                <a
+                  href="/"
+                  onClick={[Function]}
+                >
+                  Home
+                </a>
+              </LinkAnchor>
+            </Link>
+          </li>
+        </BreadcrumbItem>
+      </LinkList>
       <BreadcrumbItem
         active={true}
         tag="li"

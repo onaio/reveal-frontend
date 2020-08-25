@@ -53,7 +53,7 @@ describe('components/page/HeaderBreadcrumb/helpers', () => {
         <LinkList {...props} />
       </Router>
     );
-    expect(toJson(wrapper)).toMatchSnapshot();
+    expect(toJson(wrapper.find('LinkList'))).toMatchSnapshot();
     wrapper.unmount();
   });
 });
