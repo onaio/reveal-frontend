@@ -240,7 +240,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
     cssClass="progress-bar-striped"
     decimalPoints={0}
     height="10px"
-    lineColor="#0000FF"
+    lineColor="#ff3"
     max={1}
     min={0}
     showLabel={false}
@@ -259,7 +259,7 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
         role="progressbar"
         style={
           Object {
-            "backgroundColor": "#0000FF",
+            "backgroundColor": "#ff3",
             "width": "0%",
           }
         }
