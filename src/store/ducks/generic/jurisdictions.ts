@@ -20,6 +20,7 @@ export interface GenericJurisdiction {
 }
 
 export interface NamibiaJurisdiction extends GenericJurisdiction {
+  jurisdiction_target: number;
   lockedfirst: number;
   lockedmopup: number;
   refusalsfirst: number;
@@ -28,7 +29,6 @@ export interface NamibiaJurisdiction extends GenericJurisdiction {
   structuresfound: number;
   structuressprayed: number;
   targetcoverage: number;
-  target_2019: number;
 }
 
 export interface ZambiaJurisdiction extends GenericJurisdiction {
