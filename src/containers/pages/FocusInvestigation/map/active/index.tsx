@@ -433,7 +433,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
                       </p>
                       <br />
                       <ProgressBar
-                        value={0.012}
+                        value={goalReport.percentAchieved}
                         max={1}
                         lineColorThresholds={indicatorThresholdsFI}
                       />

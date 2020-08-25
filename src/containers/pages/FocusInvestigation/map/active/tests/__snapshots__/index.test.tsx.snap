@@ -240,7 +240,35 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
     cssClass="progress-bar-striped"
     decimalPoints={0}
     height="10px"
-    lineColor="#ff3"
+    lineColor="#0000FF"
+    lineColorThresholds={
+      Object {
+        "GREEN_THRESHOLD": Object {
+          "color": "#33ad33",
+          "name": "Green",
+          "orEquals": true,
+          "value": 0.9,
+        },
+        "ORANGE_THRESHOLD": Object {
+          "color": "#ff8533",
+          "name": "Orange",
+          "orEquals": true,
+          "value": 0.8,
+        },
+        "RED_THRESHOLD": Object {
+          "color": "#ff5c33",
+          "name": "Red",
+          "orEquals": true,
+          "value": 0.2,
+        },
+        "YELLOW_THRESHOLD": Object {
+          "color": "#ff3",
+          "name": "Yellow",
+          "orEquals": true,
+          "value": 0.0001,
+        },
+      }
+    }
     max={1}
     min={0}
     showLabel={false}
