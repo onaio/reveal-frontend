@@ -19,11 +19,11 @@ import {
   organization3,
 } from '../../../../../../store/ducks/tests/fixtures';
 import { assignments } from '../../JurisdictionAssignmentForm/tests/fixtures';
-import { JurisdictionTableView } from '../index';
+import { JurisdictionTableListView } from '../index';
 
 const history = createBrowserHistory();
 
-describe('PlanAssignment/JurisdictionTableView', () => {
+describe('PlanAssignment/JurisdictionTableListView', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -68,7 +68,7 @@ describe('PlanAssignment/JurisdictionTableView', () => {
           },
         ]}
       >
-        <JurisdictionTableView {...props} />
+        <JurisdictionTableListView {...props} />
       </MemoryRouter>
     );
 
@@ -76,12 +76,27 @@ describe('PlanAssignment/JurisdictionTableView', () => {
       await flushPromises();
       wrapper.update();
     });
-
-    expect(toJson(wrapper.find('HelmetWrapper'))).toMatchSnapshot('helmet');
-    expect(toJson(wrapper.find('.page-title'))).toMatchSnapshot('page-title');
-    expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('Breadcrumbs');
     expect(toJson(wrapper.find('thead'))).toMatchSnapshot('Table headers');
-    expect(toJson(wrapper.find('AssignedOrgs span'))).toMatchSnapshot('AssignedOrgs');
+    expect(wrapper.find('EditOrgs').props()).toEqual({
+      assignTeamsLabel: 'Assign Teams',
+      cancelCallBackFunc: expect.any(Function),
+      defaultValue: [],
+      existingAssignments: [],
+      jurisdiction: raKsh3Node,
+      labels: {
+        assignmentSuccess: 'Team(s) assignment updated successfully',
+        close: 'Close',
+        fieldError: 'Did not save successfully',
+        loadFormError: 'Could not load the form.',
+        save: 'Save',
+        saving: 'Saving',
+      },
+      options: orgs.map(e => ({ label: e.name, value: e.identifier })),
+      plan: plans[0],
+      submitCallBackFunc: callBack,
+      successNotifierBackFunc: expect.any(Function),
+    });
+    expect(toJson(wrapper.find('JurisdictionCell span'))).toMatchSnapshot('JurisdictionCell');
     wrapper.unmount();
   });
 });

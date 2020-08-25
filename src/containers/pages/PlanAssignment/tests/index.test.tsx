@@ -146,7 +146,7 @@ describe('PlanAssignment', () => {
       'https://test.smartregister.org/opensrp/rest/plans/356b6b84-fc36-4389-a44a-2b038ed2f38d'
     );
 
-    expect(wrapper.find('TreeWalker').props()).toEqual({
+    const wrapperProps = {
       LoadingIndicator: Loading,
       OpenSRPServiceClass: OpenSRPService,
       addPlanActionCreator: addPlanDefinition,
@@ -186,7 +186,23 @@ describe('PlanAssignment', () => {
       submitCallBackFunc: expect.any(Function),
       tree: locationTree,
       useJurisdictionNodeType: false,
-    });
+    };
+
+    // test jurisdiction table view props
+    expect(
+      wrapper
+        .find('TreeWalker')
+        .at(0)
+        .props()
+    ).toEqual(wrapperProps);
+
+    // test jurisdiction table list view props
+    expect(
+      wrapper
+        .find('TreeWalker')
+        .at(1)
+        .props()
+    ).toEqual(wrapperProps);
 
     expect(wrapper.find('#mockComponent').length).toEqual(0);
 
