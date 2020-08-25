@@ -15,7 +15,7 @@ import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../../store/ducks/generic/jurisdictions';
-import { genericFetchPlans } from '../../../../../store/ducks/generic/MDAPlans';
+import { genericFetchPlans } from '../../../../../store/ducks/generic/plans';
 import { GenericPlan } from '../../../../../store/ducks/generic/plans';
 import { DynamicMDAPlans } from '../../../../../store/ducks/generic/tests/fixtures';
 import * as fixtures from './fixtures';
