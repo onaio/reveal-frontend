@@ -1238,8 +1238,8 @@
     "message": "เข้าสู่ขั้นตอนถัดไป",
     "description": "Label on a button that moves the user to the next step"
   },
-  "ONE_STR": { "message": 1, "description": "Denotes the first step" },
-  "TWO_STR": { "message": 2, "description": "Denotes the second step" },
+  "ONE_STR": { "message": "1", "description": "Denotes the first step" },
+  "TWO_STR": { "message": "2", "description": "Denotes the second step" },
   "TARGETED_STATUS": {
     "message": "สถานะพื้นที่เป้าหมาย",
     "description": "Table column header, shows the selection status of a jurisdiction"
