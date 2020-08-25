@@ -42,7 +42,7 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
     return (
       <div>
         <Breadcrumb
-          className={`reveal-breadcrumb ${isPlanAssignmentPage ? 'plans-breadcrumb' : ''}`}
+          className={`reveal-breadcrumb${isPlanAssignmentPage ? ' plans-breadcrumb' : ''}`}
         >
           {linkList}
           <BreadcrumbItem active={true}>{currentPage.label}</BreadcrumbItem>

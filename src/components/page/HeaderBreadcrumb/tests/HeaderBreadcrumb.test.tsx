@@ -64,4 +64,37 @@ describe('components/page/HeaderBreadcrumb', () => {
     expect(toJson(wrapper)).toMatchSnapshot();
     wrapper.unmount();
   });
+  it('renders HeaderBreadcrumb with white background', () => {
+    const props = {
+      currentPage: {
+        label: 'IRS',
+        url: '/irs',
+      },
+      isPlanAssignmentPage: true,
+      pages: [
+        {
+          label: 'Home',
+          url: '/',
+        },
+        {
+          label: 'Programs',
+          url: '/programs',
+        },
+        {
+          label: 'Provinces',
+          url: '',
+        },
+        {
+          label: 'Disctricts',
+        },
+      ],
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <HeaderBreadcrumb {...props} />
+      </Router>
+    );
+    expect(wrapper.find('Breadcrumb').hasClass('plans-breadcrumb')).toEqual(true);
+    wrapper.unmount();
+  });
 });
