@@ -1597,7 +1597,7 @@
     "description": "Label of form field for the number of structures a team can handle per day"
   },
   "NO_JURISDICTION_SELECTIONS_FOUND": {
-    "message": "No Jurisdiction selections were found",
+    "message": "There are no descendant jurisdictions that are targeted.",
     "description": "Info message shown when there are no selected jurisdiction records found"
   },
   "TOTAL": { "message": "Total", "description": "Total" }

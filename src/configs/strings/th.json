@@ -1262,9 +1262,5 @@
     "message": "จำนวนสิ่งปลูกสร้างต่อทีมต่อวัน",
     "description": "Label of form field for the number of structures a team can handle per day"
   },
-  "NO_JURISDICTION_SELECTIONS_FOUND": {
-    "message": "ไม่พบการเลือกพื้นที่เป้าหมาย",
-    "description": "Info message shown when there are no selected jurisdiction records found"
-  },
   "TOTAL": { "message": "รวม", "description": "Total" }
 }
