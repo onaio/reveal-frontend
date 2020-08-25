@@ -10,7 +10,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Store } from 'redux';
 import { format } from 'util';
-import { ErrorPage } from '../../../../../components/page/ErrorPage';
 import {
   AT_A_RATE_OF,
   NO_JURISDICTION_SELECTIONS_FOUND,
@@ -19,6 +18,7 @@ import {
   TEAMS,
 } from '../../../../../configs/lang';
 import hierarchyReducer, {
+  getCurrentParentNode,
   getParentNodeInSelectedTree,
   reducerName as hierarchyReducerName,
 } from '../../../../../store/ducks/opensrp/hierarchies';
@@ -33,6 +33,7 @@ export interface ResourceCalculationProps {
   rootId: string;
   planId: string;
   currentParentNode?: TreeNode;
+  selectedTreeCurrentParentNode?: TreeNode;
   currentParentId?: string;
 }
 
@@ -55,13 +56,18 @@ export const computeEstimate = (
 
 /** The component that renders the resource calculation info */
 const ResourceCalculation = (props: ResourceCalculationProps) => {
-  const { currentParentNode } = props;
+  const { selectedTreeCurrentParentNode, currentParentNode } = props;
 
-  if (!currentParentNode) {
-    return <ErrorPage errorMessage={NO_JURISDICTION_SELECTIONS_FOUND} />;
+  if (!selectedTreeCurrentParentNode) {
+    const parentNodeLabel = currentParentNode ? `${currentParentNode.model.label}: ` : '';
+    return (
+      <div id="resource-calc-widget">
+        {`${parentNodeLabel} ${NO_JURISDICTION_SELECTIONS_FOUND}`}
+      </div>
+    );
   }
-  const jurisdictionName = currentParentNode.model.label;
-  const structuresCount = getNodeStructureCount(currentParentNode);
+  const jurisdictionName = selectedTreeCurrentParentNode.model.label;
+  const structuresCount = getNodeStructureCount(selectedTreeCurrentParentNode);
 
   return (
     <div id="resource-calc-widget">
@@ -96,9 +102,13 @@ const ResourceCalculation = (props: ResourceCalculationProps) => {
 
 export { ResourceCalculation };
 
-type MapStateToProps = Pick<ResourceCalculationProps, 'currentParentNode'>;
+type MapStateToProps = Pick<
+  ResourceCalculationProps,
+  'currentParentNode' | 'selectedTreeCurrentParentNode'
+>;
 
-export const parentNodeSelector = getParentNodeInSelectedTree();
+export const selectedTreeParentNodeSelector = getParentNodeInSelectedTree();
+export const parentNodeSelector = getCurrentParentNode();
 
 /** map props to store state selectors
  * @param state - the store
@@ -114,7 +124,8 @@ const mapStateToProps = (
     rootJurisdictionId: ownProps.rootId,
   };
   const currentParentNode = parentNodeSelector(state, filters);
-  return { currentParentNode };
+  const selectedTreeCurrentParentNode = selectedTreeParentNodeSelector(state, filters);
+  return { currentParentNode, selectedTreeCurrentParentNode };
 };
 
 const ConnectedResourceWidget = connect(mapStateToProps)(ResourceCalculation);
