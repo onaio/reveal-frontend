@@ -62,11 +62,11 @@ import plansReducer, {
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 import { ConnectedAssignmentMapWrapper } from '../../AssigmentMapWrapper';
 import { useGetJurisdictionTree, usePlanEffect } from '../EntryView/utils';
+import { ConnectedJurisdictionTable } from '../helpers/JurisdictionTable';
 import { ConnectedResourceWidget } from '../helpers/ResourceCalcWidget';
 import { ConnectedJurisdictionSelectionsSlider } from '../helpers/Slider';
+import { ConnectedSelectedStructuresTable } from '../helpers/StructureCountTable/structureSummary';
 import { useHandleBrokenPage } from '../helpers/utils';
-import { ConnectedJurisdictionTable } from '../JurisdictionTable';
-import { ConnectedSelectedStructuresTable } from '../JurisdictionTable/structureSummary';
 import './index.css';
 
 reducerRegistry.register(planReducerName, plansReducer);

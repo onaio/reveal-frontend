@@ -4,7 +4,7 @@
  */
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
+import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
 
 /**
  * Props for NodeCell

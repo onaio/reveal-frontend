@@ -49,10 +49,10 @@ import plansReducer, {
   getPlanDefinitionById,
   reducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
-import { ConnectedAssignmentMapWrapper } from '../../AssigmentMapWrapper/';
+import { ConnectedAssignmentMapWrapper } from '../../AssigmentMapWrapper';
 import { usePlanEffect } from '../EntryView/utils';
+import { ConnectedJurisdictionTable } from '../helpers/JurisdictionTable';
 import { useHandleBrokenPage } from '../helpers/utils';
-import { ConnectedJurisdictionTable } from '../JurisdictionTable';
 
 reducerRegistry.register(reducerName, plansReducer);
 reducerRegistry.register(jurisdictionMetadataReducerName, jurisdictionMetadataReducer);

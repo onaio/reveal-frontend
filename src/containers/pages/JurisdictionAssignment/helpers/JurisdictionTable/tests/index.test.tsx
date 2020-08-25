@@ -8,16 +8,19 @@ import { Provider } from 'react-redux';
 import { Route, Router, Switch } from 'react-router';
 import { MemoryRouter, RouteComponentProps } from 'react-router-dom';
 import { ConnectedJurisdictionTable } from '..';
-import { ASSIGN_PLAN_URL, MANUAL_ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
-import store from '../../../../../store';
+import { ASSIGN_PLAN_URL, MANUAL_ASSIGN_JURISDICTIONS_URL } from '../../../../../../constants';
+import store from '../../../../../../store';
 import {
   deforest,
   deselectAllNodes,
   fetchTree,
-} from '../../../../../store/ducks/opensrp/hierarchies';
-import { sampleHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
-import { irsPlans, plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
-import { PlanStatus } from '../../../../../store/ducks/plans';
+} from '../../../../../../store/ducks/opensrp/hierarchies';
+import { sampleHierarchy } from '../../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
+import {
+  irsPlans,
+  plans,
+} from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { PlanStatus } from '../../../../../../store/ducks/plans';
 import { afterDraftSave, afterSaveAndActivate } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires

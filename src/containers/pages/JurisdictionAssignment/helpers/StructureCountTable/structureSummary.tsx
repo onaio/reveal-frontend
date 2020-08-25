@@ -8,22 +8,22 @@ import Button from 'reactstrap/lib/Button';
 import { Store } from 'redux';
 import HeaderBreadcrumb, {
   Page,
-} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+} from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
   CONTINUE_TO_NEXT_STEP,
   NAME,
   NO_ROWS_FOUND,
   STRUCTURES_COUNT,
   TOTAL,
-} from '../../../../configs/lang';
-import { AUTO_ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
+} from '../../../../../configs/lang';
+import { AUTO_ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
 import hierarchyReducer, {
   Filters,
   getNodesInSelectedTree,
   reducerName as hierarchyReducerName,
-} from '../../../../store/ducks/opensrp/hierarchies';
-import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
-import { getNodeStructureCount } from '../../../../store/ducks/opensrp/hierarchies/utils';
+} from '../../../../../store/ducks/opensrp/hierarchies';
+import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
+import { getNodeStructureCount } from '../../../../../store/ducks/opensrp/hierarchies/utils';
 import { NodeCell } from '../JurisdictionCell';
 
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);

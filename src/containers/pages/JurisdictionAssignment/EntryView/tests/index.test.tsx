@@ -15,7 +15,7 @@ import planDefinitionReducer, {
   reducerName as planDefinitionReducerName,
 } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import { plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
-import { akros2, lusaka, mtendere } from '../../JurisdictionAssignmentView/tests/fixtures';
+import { akros2, lusaka, mtendere } from '../../ManualSelectJurisdiction/tests/fixtures';
 
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);

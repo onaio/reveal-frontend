@@ -29,7 +29,7 @@ jest.mock('../../../../../configs/env');
 
 const history = createBrowserHistory();
 
-jest.mock('../../JurisdictionTable', () => {
+jest.mock('../../helpers/JurisdictionTable', () => {
   const mockComponent = (_: any) => <div id="mockComponent">I love oov</div>;
   return {
     ConnectedJurisdictionTable: mockComponent,

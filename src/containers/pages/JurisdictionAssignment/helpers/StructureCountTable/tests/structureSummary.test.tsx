@@ -4,11 +4,11 @@ import toJson from 'enzyme-to-json';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, Route, RouteComponentProps, Switch } from 'react-router';
-import { AUTO_ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
-import store from '../../../../../store';
-import { fetchTree, selectNode } from '../../../../../store/ducks/opensrp/hierarchies';
-import { raZambiaHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
-import { irsPlans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { AUTO_ASSIGN_JURISDICTIONS_URL } from '../../../../../../constants';
+import store from '../../../../../../store';
+import { fetchTree, selectNode } from '../../../../../../store/ducks/opensrp/hierarchies';
+import { raZambiaHierarchy } from '../../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
+import { irsPlans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { ConnectedSelectedStructuresTable } from '../structureSummary';
 
 /** will use this to render table rows */

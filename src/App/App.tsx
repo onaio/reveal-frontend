@@ -113,7 +113,7 @@ import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
 import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
-import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/JurisdictionAssignmentView';
+import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/ManualSelectJurisdiction';
 import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
 import ConnectedChildReports from '../containers/pages/MDAPoint/ChildReports';
 import ConnectedClientListView from '../containers/pages/MDAPoint/ClientListView';
