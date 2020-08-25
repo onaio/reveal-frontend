@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { LinkList } from './helpers';
 
 /** interface describing page object for use in breadcrumbs */
 export interface Page {
@@ -11,7 +11,6 @@ export interface Page {
 /** interface for breadcrumb items */
 export interface BreadCrumbProps {
   currentPage: Page;
-  isPlanAssignmentPage?: boolean;
   pages: Page[];
 }
 
@@ -22,29 +21,12 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
   }
 
   public render() {
-    const { currentPage, pages, isPlanAssignmentPage } = this.props;
-
-    const linkList = pages.map((page, key) => {
-      // render breadcrumb items with urls as links or without urls as text nodes
-      let breadCrumbItem: string | JSX.Element;
-      if (page.url && page.url.trim()) {
-        breadCrumbItem = (
-          <Link to={page.url} key={key}>
-            {page.label}
-          </Link>
-        );
-      } else {
-        breadCrumbItem = page.label;
-      }
-      return <BreadcrumbItem key={`reveal-breadcrumb-${key}`}>{breadCrumbItem}</BreadcrumbItem>;
-    });
+    const { currentPage } = this.props;
 
     return (
       <div>
-        <Breadcrumb
-          className={`reveal-breadcrumb${isPlanAssignmentPage ? ' plans-breadcrumb' : ''}`}
-        >
-          {linkList}
+        <Breadcrumb className="reveal-breadcrumb">
+          <LinkList {...this.props} />
           <BreadcrumbItem active={true}>{currentPage.label}</BreadcrumbItem>
         </Breadcrumb>
       </div>

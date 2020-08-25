@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
-import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { LinkList } from '../../../../../components/page/HeaderBreadcrumb/helpers';
 import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/TreeWalker';
 import { ASSIGN_PLANS, HOME } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
@@ -48,36 +49,33 @@ const JurisdictionTableView = (props: JurisdictionTableViewProps) => {
     url: baseUrl,
   };
 
-  const breadcrumbProps = {
-    currentPage: initialCurrentPage,
-    isPlanAssignmentPage: true,
-    pages: [
-      {
-        label: HOME,
-        url: HOME_URL,
-      },
-      {
-        label: ASSIGN_PLANS,
-        url: ASSIGN_PLAN_URL,
-      },
-    ],
-  };
+  let currentPage = initialCurrentPage;
+  const pages = [
+    {
+      label: HOME,
+      url: HOME_URL,
+    },
+    {
+      label: ASSIGN_PLANS,
+      url: ASSIGN_PLAN_URL,
+    },
+  ];
 
   // create breadcrumb props.
   if (props.match.params.jurisdictionId) {
     const path = [...hierarchy];
     const lastNode = path.pop();
 
-    breadcrumbProps.pages.push(initialCurrentPage);
+    pages.push(initialCurrentPage);
 
     path.forEach(nd => {
-      breadcrumbProps.pages.push({
+      pages.push({
         label: nd.model.label,
         url: `${baseUrl}/${nd.model.id}`,
       });
     });
 
-    breadcrumbProps.currentPage = {
+    currentPage = {
       label: (lastNode as TreeNode).model.label,
       url: `${baseUrl}/${(lastNode as TreeNode).model.id}`,
     };
@@ -88,7 +86,12 @@ const JurisdictionTableView = (props: JurisdictionTableViewProps) => {
       <Helmet>
         <title>{pageTitle}</title>
       </Helmet>
-      <HeaderBreadcrumb {...breadcrumbProps} />
+      <div>
+        <Breadcrumb className="reveal-breadcrumb plans-breadcrumb">
+          <LinkList pages={pages} />
+          <BreadcrumbItem active={true}>{currentPage.label}</BreadcrumbItem>
+        </Breadcrumb>
+      </div>
       <h3 className="mb-3 page-title">{pageTitle}</h3>
     </Fragment>
   );
