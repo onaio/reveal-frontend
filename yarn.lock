@@ -1745,6 +1745,13 @@
   dependencies:
     "@onaio/element-map" "^0.0.5"
 
+"@onaio/progress-indicators@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@onaio/progress-indicators/-/progress-indicators-0.0.5.tgz#4d2dc7b71b6039f6bfdc18939ca2156374a5af7d"
+  integrity sha512-OhXl14hMeGr9JryLGH/mvH6AkoCzj7fJaXqLOsXSl3ebtknp+xcOIdNQi2FhuCKAFjiCHD9C70UDrNjSD7Mtvw==
+  dependencies:
+    bootstrap "^4.3.1"
+
 "@onaio/react-utils@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@onaio/react-utils/-/react-utils-0.0.1.tgz#506df861bdc947ac63973d3b3f821836af39ad08"
