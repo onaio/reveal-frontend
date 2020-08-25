@@ -24,9 +24,9 @@ import {
   getGenericJurisdictionsArray,
 } from '../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
-  fetchIRSPlans,
+  genericFetchPlans,
   GenericPlan,
-  getIRSPlanById,
+  getPlanByIdSelector,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
 import {
@@ -51,7 +51,7 @@ const defaultProps: GenericJurisdictionProps = {
   baseURL: REPORT_IRS_PLAN_URL,
   cellComponent: IRSTableCell,
   fetchJurisdictions: fetchGenericJurisdictions,
-  fetchPlans: fetchIRSPlans,
+  fetchPlans: genericFetchPlans,
   focusAreaColumn: SUPERSET_IRS_REPORTING_FOCUS_AREAS_COLUMNS,
   focusAreaLevel: SUPERSET_IRS_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
   hasChildren: hasChildrenFunc,
@@ -82,7 +82,7 @@ const mapStateToProps = (
   ownProps: GenericJurisdictionProps & RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
   const planId = ownProps.match.params.planId || null;
-  const plan = planId ? getIRSPlanById(state, planId) : null;
+  const plan = planId ? getPlanByIdSelector(state, planId) : null;
 
   let jurisdictions: GenericJurisdiction[] = [];
   defaultProps.slices.forEach(
@@ -100,7 +100,7 @@ const mapStateToProps = (
 /** map dispatch to props */
 const mapDispatchToProps = {
   fetchJurisdictions: fetchGenericJurisdictions,
-  fetchPlans: fetchIRSPlans,
+  fetchPlans: genericFetchPlans,
 };
 
 /** Connected ActiveFI component */

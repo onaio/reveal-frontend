@@ -12,19 +12,23 @@ import { QUERY_PARAM_TITLE, REPORT_MDA_POINT_PLAN_URL } from '../../../../consta
 import { getPlanStatusToDisplay, getQueryParams } from '../../../../helpers/utils';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import MDAPointPlansReducer, {
-  fetchMDAPointPlans,
-  makeMDAPointPlansArraySelector,
-  MDAPointPlan,
-  reducerName as MDAPointPlansReducerName,
-} from '../../../../store/ducks/generic/MDAPointPlans';
+import GenericPlansReducer, {
+  genericFetchPlans,
+  GenericPlan,
+  makeGenericPlansArraySelector,
+  reducerName as genericReducerName,
+} from '../../../../store/ducks/generic/plans';
+import { InterventionType } from '../../../../store/ducks/plans';
 import { GenericPlanListProps, GenericPlansList } from '../../GenericPlansList';
 
 /** register the MDA plan definitions reducer */
-reducerRegistry.register(MDAPointPlansReducerName, MDAPointPlansReducer);
+reducerRegistry.register(genericReducerName, GenericPlansReducer);
 
 /** a list of plan statuses to be displayed */
 const allowedPlanStatusList = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
+
+/** selector for MDA point plans */
+const makeMDAPointPlansArraySelector = makeGenericPlansArraySelector(InterventionType.MDAPoint);
 
 /** Simple component that loads a preview list of MDA plans */
 const MDAPointPlansList = (props: GenericPlanListProps & RouteComponentProps) => {
@@ -37,7 +41,7 @@ const MDAPointPlansList = (props: GenericPlanListProps & RouteComponentProps) =>
 
 /** Declare default props for MDAPointPlansList */
 const defaultProps: GenericPlanListProps = {
-  fetchPlans: fetchMDAPointPlans,
+  fetchPlans: genericFetchPlans,
   pageTitle: MDA_POINT_PLANS,
   pageUrl: REPORT_MDA_POINT_PLAN_URL,
   plans: [],
@@ -53,7 +57,7 @@ export { MDAPointPlansList };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps extends RouteComponentProps<RouteParams> {
-  plans: MDAPointPlan[];
+  plans: GenericPlan[];
 }
 
 /** map state to props */
@@ -62,7 +66,7 @@ const mapStateToProps = (
   ownProps: RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const MDAPointPlansArray = makeMDAPointPlansArraySelector()(state, {
+  const MDAPointPlansArray = makeMDAPointPlansArraySelector(state, {
     plan_title: searchedTitle,
     statusList: allowedPlanStatusList,
   });
@@ -74,7 +78,7 @@ const mapStateToProps = (
 };
 
 /** map dispatch to props */
-const mapDispatchToProps = { fetchPlans: fetchMDAPointPlans };
+const mapDispatchToProps = { fetchPlans: genericFetchPlans };
 
 /** Connected ActiveFI component */
 const ConnectedMDAPointPlansList = connect(mapStateToProps, mapDispatchToProps)(MDAPointPlansList);

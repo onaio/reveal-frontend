@@ -26,7 +26,7 @@ import MDAPlansReducer, {
   genericFetchPlans,
   getPlanByIdSelector,
   reducerName as MDAPlansReducerName,
-} from '../../../../store/ducks/generic/MDAPlans';
+} from '../../../../store/ducks/generic/plans';
 import { GenericPlan } from '../../../../store/ducks/generic/plans';
 import {
   GenericJurisdictionProps,

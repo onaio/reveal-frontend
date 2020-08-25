@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { REPORT_MDA_POINT_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
-import { fetchMDAPointPlans } from '../../../../../store/ducks/generic/MDAPointPlans';
+import { genericFetchPlans } from '../../../../../store/ducks/generic/plans';
 import { GenericPlan } from '../../../../../store/ducks/generic/plans';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 import ConnectedMDAPointPlansList, { MDAPointPlansList } from '../index';
@@ -47,7 +47,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
   });
 
   it('renders plan definition list correctly', () => {
-    store.dispatch(fetchMDAPointPlans(fixtures.MDAPointplans as GenericPlan[]));
+    store.dispatch(genericFetchPlans(fixtures.MDAPointplans as GenericPlan[]));
     fetch.mockResponseOnce(JSON.stringify({}));
     const wrapper = mount(
       <Provider store={store}>
@@ -92,7 +92,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
   });
 
   it('handles search correctly', async () => {
-    store.dispatch(fetchMDAPointPlans(fixtures.MDAPointplans as GenericPlan[]));
+    store.dispatch(genericFetchPlans(fixtures.MDAPointplans as GenericPlan[]));
     props.location.search = '?title=Berg';
     const wrapper = mount(
       <Provider store={store}>
