@@ -4,6 +4,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import HeaderComponentWithRouter from '..';
+import { PLAN_TITLE } from '../../../../configs/lang';
 
 const history = createBrowserHistory();
 
@@ -72,5 +73,49 @@ describe('components/page/Header', () => {
     );
     renderNavLinks(wrapper);
     wrapper.unmount();
+  });
+
+  it('shows plans drop down option in the nav when with enabled plans', () => {
+    const envModule = require('../../../../configs/env');
+    envModule.ENABLED_PLAN_TYPES = ['Dynamic-MDA'];
+    const props = {
+      authenticated: true,
+      user: {
+        email: 'bob@example.com',
+        name: 'Bobbie',
+        username: 'RobertBaratheon',
+      },
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <HeaderComponentWithRouter {...props} />
+      </Router>
+    );
+
+    // Plan drop down toggle should be shown
+    const navLabels = wrapper.find('DropdownToggle').map(el => el.text().trim());
+    expect(navLabels.includes(PLAN_TITLE)).toBeTruthy();
+  });
+
+  it('Does not show plans drop down option in the nav', () => {
+    const envModule = require('../../../../configs/env');
+    envModule.ENABLED_PLAN_TYPES = [];
+
+    const props = {
+      authenticated: true,
+      user: {
+        email: 'bob@example.com',
+        name: 'Bobbie',
+        username: 'RobertBaratheon',
+      },
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <HeaderComponentWithRouter {...props} />
+      </Router>
+    );
+    // Plan should not be shown
+    const navLabels = wrapper.find('DropdownToggle').map(el => el.text().trim());
+    expect(navLabels.includes(PLAN_TITLE)).toBeFalsy();
   });
 });

@@ -62,6 +62,7 @@ export const RISK_LABEL = 'Risk';
 export const TIMELINE_SLIDER_STEP1 = '1';
 export const TIMELINE_SLIDER_STEP2 = '2';
 export const TIMELINE_SLIDER_STEP3 = '3';
+export const MODAL_BUTTON_CLASS = 'focus-investigation btn btn-primary float-right mt-0';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';

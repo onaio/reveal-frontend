@@ -1,3 +1,4 @@
+import { ProgressBar } from '@onaio/progress-indicators';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import * as React from 'react';
@@ -29,7 +30,7 @@ import {
   REACTIVE_INVESTIGATION,
   ROUTINE_INVESTIGATION_TITLE,
 } from '../../../../../configs/lang';
-import { FIReasons } from '../../../../../configs/settings';
+import { FIReasons, indicatorThresholdsFI } from '../../../../../configs/settings';
 import {
   CASE_CONFIRMATION_CODE,
   CASE_CONFIRMATION_GOAL_ID,
@@ -48,7 +49,6 @@ import {
 import { PLAN_INTERVENTION_TYPE } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
 import { getGoalReport } from '../../../../../helpers/indicators';
-import ProgressBar from '../../../../../helpers/ProgressBar';
 import {
   FeatureCollection,
   getFilteredFIPlansURL,
@@ -432,7 +432,11 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
                         ({goalReport.prettyPercentAchieved})
                       </p>
                       <br />
-                      <ProgressBar value={goalReport.percentAchieved} max={1} />
+                      <ProgressBar
+                        value={goalReport.percentAchieved}
+                        max={1}
+                        lineColorThresholds={indicatorThresholdsFI}
+                      />
                     </div>
                   </div>
                 );

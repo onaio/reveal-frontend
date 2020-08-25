@@ -18,7 +18,7 @@ export const NamibiaColumns: Array<DrillDownColumn<Dictionary>> = [
   },
   {
     Header: 'Structures Targeted',
-    accessor: 'target_2019',
+    accessor: 'jurisdiction_target',
   },
   {
     Header: 'Structures Found',
