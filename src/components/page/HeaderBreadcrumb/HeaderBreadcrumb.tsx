@@ -11,6 +11,7 @@ export interface Page {
 /** interface for breadcrumb items */
 export interface BreadCrumbProps {
   currentPage: Page;
+  isPlanAssignmentPage?: boolean;
   pages: Page[];
 }
 
@@ -21,7 +22,7 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
   }
 
   public render() {
-    const { currentPage, pages } = this.props;
+    const { currentPage, pages, isPlanAssignmentPage } = this.props;
 
     const linkList = pages.map((page, key) => {
       // render breadcrumb items with urls as links or without urls as text nodes
@@ -40,7 +41,9 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
 
     return (
       <div>
-        <Breadcrumb className="reveal-breadcrumb">
+        <Breadcrumb
+          className={`reveal-breadcrumb ${isPlanAssignmentPage ? 'plans-breadcrumb' : ''}`}
+        >
           {linkList}
           <BreadcrumbItem active={true}>{currentPage.label}</BreadcrumbItem>
         </Breadcrumb>

@@ -50,6 +50,7 @@ const JurisdictionTableView = (props: JurisdictionTableViewProps) => {
 
   const breadcrumbProps = {
     currentPage: initialCurrentPage,
+    isPlanAssignmentPage: true,
     pages: [
       {
         label: HOME,
