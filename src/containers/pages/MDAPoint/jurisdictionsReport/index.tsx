@@ -23,13 +23,11 @@ import {
   GenericJurisdiction,
   getGenericJurisdictionsArray,
 } from '../../../../store/ducks/generic/jurisdictions';
-import MDAPointPlansReducer, {
-  reducerName as MDAPointPlansReducerName,
-} from '../../../../store/ducks/generic/MDAPointPlans';
-import {
-  fetchMDAPointPlans,
-  getMDAPointPlanById,
-} from '../../../../store/ducks/generic/MDAPointPlans';
+import GenericPlansReducer, {
+  genericFetchPlans,
+  getPlanByIdSelector,
+  reducerName as genericPlansReducerName,
+} from '../../../../store/ducks/generic/plans';
 import { GenericPlan } from '../../../../store/ducks/generic/plans';
 import {
   GenericJurisdictionProps,
@@ -38,7 +36,7 @@ import {
 import '../../IRS/JurisdictionsReport/style.css';
 
 /** register the reducers */
-reducerRegistry.register(MDAPointPlansReducerName, MDAPointPlansReducer);
+reducerRegistry.register(genericPlansReducerName, GenericPlansReducer);
 
 /** Renders IRS Jurisdictions reports */
 const MdaPointJurisdictionReport = (
@@ -56,7 +54,7 @@ const defaultProps: GenericJurisdictionProps = {
   baseURL: REPORT_MDA_POINT_PLAN_URL,
   cellComponent: MDAPointTableCell,
   fetchJurisdictions: fetchGenericJurisdictions,
-  fetchPlans: fetchMDAPointPlans,
+  fetchPlans: genericFetchPlans,
   focusAreaColumn: SUPERSET_MDA_POINT_REPORTING_FOCUS_AREAS_COLUMNS,
   focusAreaLevel: SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
   hasChildren: hasChildrenFunc,
@@ -87,7 +85,7 @@ const mapStateToProps = (
   ownProps: RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
   const planId = ownProps.match.params.planId || null;
-  const plan = planId ? getMDAPointPlanById(state, planId) : null;
+  const plan = planId ? getPlanByIdSelector(state, planId) : null;
 
   let jurisdictions: GenericJurisdiction[] = [];
   defaultProps.slices.forEach(
@@ -104,7 +102,7 @@ const mapStateToProps = (
 /** map dispatch to props */
 const mapDispatchToProps = {
   fetchJurisdictions: fetchGenericJurisdictions,
-  fetchPlans: fetchMDAPointPlans,
+  fetchPlans: genericFetchPlans,
 };
 
 /** Connected ActiveFI component */

@@ -23,7 +23,6 @@ import GenericJurisdictionsReducer, {
   GenericJurisdiction,
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../store/ducks/generic/jurisdictions';
-import { fetchMDAPointPlans } from '../../../store/ducks/generic/MDAPointPlans';
 import { genericFetchPlans, GenericPlan } from '../../../store/ducks/generic/plans';
 import { getJurisdictionBreadcrumbs } from '../IRS/Map/helpers';
 import { plansTableColumns, TableProps } from './helpers';
@@ -42,7 +41,7 @@ export interface GenericJurisdictionProps {
   /** Action for dispatching jurisdictions to store */
   fetchJurisdictions: typeof fetchGenericJurisdictions;
   /** An action for dispatching  plans */
-  fetchPlans: typeof fetchMDAPointPlans | typeof genericFetchPlans;
+  fetchPlans: typeof genericFetchPlans;
   /** Reporting focus area column */
   focusAreaColumn: string;
   /** Jurisdiction depth of the lowest level jurisdictions */
