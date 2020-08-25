@@ -9,7 +9,6 @@ import { NavLink } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
-import * as colors from '../../../../../colors';
 import { MemoizedGisidaLite } from '../../../../../components/GisidaLite';
 import { getCenter } from '../../../../../components/GisidaLite/helpers';
 import HeaderBreadcrumb, {
@@ -31,12 +30,7 @@ import {
   REACTIVE_INVESTIGATION,
   ROUTINE_INVESTIGATION_TITLE,
 } from '../../../../../configs/lang';
-import {
-  FIReasons,
-  GREEN_THRESHOLD,
-  ORANGE_THRESHOLD,
-  YELLOW_THRESHOLD,
-} from '../../../../../configs/settings';
+import { FIReasons, indicatorThresholdsFI } from '../../../../../configs/settings';
 import {
   CASE_CONFIRMATION_CODE,
   CASE_CONFIRMATION_GOAL_ID,
@@ -349,16 +343,6 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
 
   const mapBounds = getMapBounds(jurisdiction);
 
-  function getLineColor(decimalValue: number) {
-    return decimalValue >= GREEN_THRESHOLD
-      ? colors.GREEN
-      : decimalValue >= ORANGE_THRESHOLD
-      ? colors.ORANGE
-      : decimalValue >= YELLOW_THRESHOLD
-      ? colors.RED
-      : colors.YELLOW;
-  }
-
   return (
     <div>
       <Helmet>
@@ -449,9 +433,9 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
                       </p>
                       <br />
                       <ProgressBar
-                        value={goalReport.percentAchieved}
+                        value={0.012}
                         max={1}
-                        lineColor={getLineColor(goalReport.percentAchieved)}
+                        lineColorThresholds={indicatorThresholdsFI}
                       />
                     </div>
                   </div>
