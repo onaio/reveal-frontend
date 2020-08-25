@@ -206,7 +206,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
         props.fetchTasksActionCreator,
         props.plan,
         props.supersetService
-      ).catch((error: Error) => displayError(error));
+      ).catch((_: Error) => displayError(new Error(AN_ERROR_OCCURRED)));
     }
     /**
      * Only re-run effect if props.plan.plan_id changes

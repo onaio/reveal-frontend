@@ -27,7 +27,10 @@ export const fetchMiddleware = (res: { [key: string]: any }) => {
 };
 
 /** callback for fetching from Superset */
-export const fetchCallback = (parsedResponse: Array<{ [key: string]: any }>) => {
+export const fetchCallback = (parsedResponse: { [key: string]: any }) => {
+  if (parsedResponse.rowcount === 0) {
+    return [];
+  }
   const sliceData = superset.processData(parsedResponse);
   return sliceData;
 };
