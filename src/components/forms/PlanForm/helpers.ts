@@ -342,12 +342,12 @@ export const getConditionFromFormField = (
       const subjectCodableConcept =
         (planActivity &&
           planActivity.action.condition &&
-          planActivity.action.condition[index].subjectCodableConcept) ||
+          planActivity.action.condition[index].expression.subjectCodableConcept) ||
         null;
       return {
-        ...(subjectCodableConcept && { subjectCodableConcept }),
         expression: {
           ...(item.description && { description: item.description }),
+          ...(subjectCodableConcept && { subjectCodableConcept }),
           expression: item.expression,
         },
         kind: APPLICABILITY_CONDITION_KIND,

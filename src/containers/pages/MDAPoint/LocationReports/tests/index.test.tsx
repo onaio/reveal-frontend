@@ -18,11 +18,11 @@ import MDAPointLocationReportReducer, {
   reducerName as MDAPointLocationReportReducerName,
   removeMDAPointLocationReports,
 } from '../../../../../store/ducks/generic/MDALocationsReport';
-import MDAPointPlanreducer, {
-  fetchMDAPointPlans,
-  MDAPointPlan,
-  reducerName as MDAPointReducerName,
-} from '../../../../../store/ducks/generic/MDAPointPlans';
+import GenericPlanreducer, {
+  genericFetchPlans,
+  GenericPlan,
+  reducerName as genericReducerName,
+} from '../../../../../store/ducks/generic/plans';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 import { MDAPointJurisdictionsJSON } from '../../jurisdictionsReport/tests/fixtures';
 
@@ -38,11 +38,11 @@ const history = createBrowserHistory();
 
 reducerRegistry.register(MDAPointLocationReportReducerName, MDAPointLocationReportReducer);
 reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
-reducerRegistry.register(MDAPointReducerName, MDAPointPlanreducer);
+reducerRegistry.register(genericReducerName, GenericPlanreducer);
 
 const jurisdictionData = superset.processData(MDAPointJurisdictionsJSON) || [];
 store.dispatch(fetchGenericJurisdictions('esw-jurisdictions', jurisdictionData));
-store.dispatch(fetchMDAPointPlans(fixtures.MDAPointplans as MDAPointPlan[]));
+store.dispatch(genericFetchPlans(fixtures.MDAPointplans as GenericPlan[]));
 
 const props = {
   history,
