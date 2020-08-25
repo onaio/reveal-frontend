@@ -29,7 +29,7 @@ export interface GenericPlan {
 /** the reducer name */
 export const reducerName = 'AllGenericPlans';
 
-/** Dynamic MDA Reducer */
+/** generic plans Reducer */
 const reducer = reducerFactory<GenericPlan>(reducerName);
 export default reducer;
 
@@ -46,7 +46,7 @@ export const getPlanByIdSelector = getItemByIdFactory<GenericPlan>(reducerName);
 /** get all plans by ids */
 export const getAllPlansByIds = getItemsByIdFactory<GenericPlan>(reducerName);
 
-/** This interface represents the structure of IRS plan filter options/params */
+/** This interface represents the structure of plans filter options/params */
 export interface PlanFilters {
   plan_title?: string /** plan title */;
   statusList?: string[] /** array of plan statuses */;
@@ -109,7 +109,7 @@ export const getPlansArrayByStatus = (interventionType: InterventionType) =>
  * These filter params are all optional and are supplied via the prop parameter.
  *
  * To use this selector, do something like:
- *    const PlansArraySelector = makePlansArraySelector();
+ *    const PlansArraySelector = makePlansArraySelector(<plan intervention type>);
  *
  * @param  state - the redux store
  * @param {PlanFilters} props - the plan filters object
