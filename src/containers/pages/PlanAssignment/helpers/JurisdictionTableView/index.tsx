@@ -26,7 +26,7 @@ export type JurisdictionTableViewProps = RouteComponentProps<RouteParams> &
 /**
  * JurisdictionTableView
  *
- * This component renders the table of jurisdictions on the plan assignment page.
+ * This component renders the breadcrumb and plan title of jurisdictions on the plan assignment page.
  * The expectation is that to use this component, one will need to "enhance" it by
  * having it wrapped by the `withTreeWalker` higher order component.
  *

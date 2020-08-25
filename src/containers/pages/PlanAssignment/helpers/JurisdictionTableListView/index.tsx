@@ -13,12 +13,19 @@ import { EditOrgs } from '../EditOrgs';
 import { JurisdictionCell } from '../JurisdictionCell';
 import { RouteParams } from '../JurisdictionTableView';
 
+/** props for  JurisdictionTableListView */
 export interface JurisdictionTableListViewProps extends WithWalkerProps {
   assignments: Assignment[];
   organizations: Organization[];
   plan: PlanDefinition | null;
   submitCallBackFunc: (assignments: Assignment[]) => void;
 }
+
+/**
+ * This component renders the table for jurisdictions on the plans
+ * assignment page and is a wrapper around the ListView component.
+ * @param props - props that the JurisdictionTableListView component expects
+ */
 
 export type JurisdictionTableListViewPropTypes = RouteComponentProps<RouteParams> &
   JurisdictionTableListViewProps;
