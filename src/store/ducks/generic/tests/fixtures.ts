@@ -120,7 +120,7 @@ export const namibiaIRSJurisdictions = [
     structuresfound: 0,
     structuressprayed: 0,
     targetcoverage: 0,
-    target_2019: 0,
+    jurisdiction_target: 0,
   },
   {
     id: '00056eb5-51c3-5bd6-a216-c8da451953c1',
@@ -145,7 +145,7 @@ export const namibiaIRSJurisdictions = [
     refusalsmopup: 0,
     lockedfirst: 0,
     lockedmopup: 0,
-    target_2019: 22,
+    jurisdiction_target: 22,
   },
   {
     foundcoverage: 0,
@@ -170,7 +170,7 @@ export const namibiaIRSJurisdictions = [
     sprayeffectiveness: 0,
     structuresfound: 0,
     structuressprayed: 0,
-    target_2019: 0,
+    jurisdiction_target: 0,
     targetcoverage: 0,
   },
   {
@@ -196,7 +196,7 @@ export const namibiaIRSJurisdictions = [
     lockedmopup: 0,
     refusalsfirst: 0,
     refusalsmopup: 0,
-    target_2019: 0,
+    jurisdiction_target: 0,
   },
 ];
 
