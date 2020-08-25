@@ -9,7 +9,7 @@ import reducer, {
   getPlansArrayByTitle,
   makeGenericPlansArraySelector,
   reducerName,
-} from '../MDAPlans';
+} from '../plans';
 import { GenericPlan } from '../plans';
 import * as fixtures from './fixtures';
 
