@@ -23,6 +23,7 @@ reducerRegistry.register(GenericPLansReducerName, GenericPLansReducer);
 /** a list of plan statuses to be displayed */
 const allowedPlanStatusList = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
 
+/** selector for IRS plans */
 const makeIRSPlansArraySelector = makeGenericPlansArraySelector(InterventionType.IRS);
 
 /** Simple component that loads a preview list of IRS plans */
