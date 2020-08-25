@@ -468,6 +468,7 @@ export const WELCOME_BACK = translate('WELCOME_BACK', 'Welcome back');
 export const LINK = translate('LINK', 'Link');
 export const IRS_GREEN_THRESHOLD = translate('IRS_GREEN_THRESHOLD', 'Green');
 export const IRS_GREY_THRESHOLD = translate('IRS_GREY_THRESHOLD', 'Grey');
+export const IRS_ORANGE_THRESHOLD = translate('IRS_ORANGE_THRESHOLD', 'Orange');
 export const IRS_RED_THRESHOLD = translate('IRS_RED_THRESHOLD', 'Red');
 export const IRS_YELLOW_THRESHOLD = translate('IRS_YELLOW_THRESHOLD', 'Yellow');
 export const IRS_LIGHT_GREEN_THRESHOLD = translate('IRS_LIGHT_GREEN_THRESHOLD', 'Light Green');
