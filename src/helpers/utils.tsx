@@ -20,7 +20,12 @@ import { TASK_YELLOW } from '../colors';
 import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
 import { FIReasonType, FIStatusType } from '../components/forms/PlanForm/types';
 import NewRecordBadge from '../components/NewRecordBadge';
-import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
+import {
+  DIGITAL_GLOBE_CONNECT_ID,
+  ONADATA_OAUTH_STATE,
+  OPENSRP_MAX_PLANS_PER_REQUEST,
+  OPENSRP_OAUTH_STATE,
+} from '../configs/env';
 import {
   ACTION,
   FAILED_TO_EXTRACT_PLAN_RECORD,
@@ -880,4 +885,10 @@ export const reactSelectNoOptionsText = () => NO_OPTIONS;
  */
 export const getQueryParams = (location: Location) => {
   return querystring.parse(trimStart(location.search, '?'));
+};
+
+/** filter params to be used when getting all plans */
+export const PLANS_SERVICE_FILTER_PARAM = {
+  limit: OPENSRP_MAX_PLANS_PER_REQUEST,
+  serverVersion: 0,
 };
