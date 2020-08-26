@@ -9,7 +9,6 @@
  *  load plan given a url with the planId
  *  also requires the hierarchy
  *
- *  pending : render map.
  */
 
 import reducerRegistry from '@onaio/redux-reducer-registry';

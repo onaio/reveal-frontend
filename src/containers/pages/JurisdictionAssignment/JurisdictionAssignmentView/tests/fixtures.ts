@@ -41,7 +41,7 @@ export const lusaka = {
 
 export const fetchCalls = [
   [
-    'https://reveal-stage.smartregister.org/opensrp/rest/plans/356b6b84-fc36-4389-a44a-2b038ed2f38d',
+    'https://test.smartregister.org/opensrp/rest/plans/356b6b84-fc36-4389-a44a-2b038ed2f38d',
     {
       headers: {
         accept: 'application/json',
@@ -52,7 +52,7 @@ export const fetchCalls = [
     },
   ],
   [
-    'https://reveal-stage.smartregister.org/opensrp/rest/location/hierarchy/2942?return_structure_count=true',
+    'https://test.smartregister.org/opensrp/rest/location/hierarchy/2942?return_structure_count=true',
     {
       headers: {
         accept: 'application/json',

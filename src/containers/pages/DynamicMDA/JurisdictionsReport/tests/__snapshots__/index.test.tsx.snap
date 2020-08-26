@@ -5,6 +5,7 @@ Object {
   "LegendIndicatorComp": null,
   "baseURL": "/intervention/mda/report",
   "cellComponent": [Function],
+  "columnsGetter": [Function],
   "fetchJurisdictions": [Function],
   "fetchPlans": [Function],
   "focusAreaColumn": "zambiaLowerUpper2020",

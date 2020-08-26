@@ -47,9 +47,9 @@ import GenericJurisdictionsReducer, {
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
-  fetchIRSPlans,
+  genericFetchPlans,
   GenericPlan,
-  getIRSPlanById,
+  getPlanByIdSelector,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
 import genericStructuresReducer, {
@@ -88,7 +88,7 @@ const focusAreaSlice = slices.pop();
 interface IRSReportingMapProps {
   fetchFocusAreas: typeof fetchGenericJurisdictions;
   fetchJurisdictionsAction: typeof fetchJurisdictions;
-  fetchPlans: typeof fetchIRSPlans;
+  fetchPlans: typeof genericFetchPlans;
   fetchStructures: typeof fetchGenericStructures;
   focusArea: GenericJurisdiction | null;
   jurisdiction: Jurisdiction | null;
@@ -101,7 +101,7 @@ interface IRSReportingMapProps {
 const defaultProps: IRSReportingMapProps = {
   fetchFocusAreas: fetchGenericJurisdictions,
   fetchJurisdictionsAction: fetchJurisdictions,
-  fetchPlans: fetchIRSPlans,
+  fetchPlans: genericFetchPlans,
   fetchStructures: fetchGenericStructures,
   focusArea: null,
   jurisdiction: null,
@@ -377,8 +377,7 @@ interface DispatchedStateProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planId = ownProps.match.params.planId || null;
   const jurisdictionId = ownProps.match.params.jurisdictionId || null;
-  const plan = getIRSPlanById(state, planId);
-
+  const plan = getPlanByIdSelector(state, planId);
   const jurisdiction = getJurisdictionById(state, jurisdictionId);
   const structures = getGenericStructures(
     state,
@@ -403,7 +402,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 const mapDispatchToProps = {
   fetchFocusAreas: fetchGenericJurisdictions,
   fetchJurisdictionsAction: fetchJurisdictions,
-  fetchPlans: fetchIRSPlans,
+  fetchPlans: genericFetchPlans,
   fetchStructures: fetchGenericStructures,
 };
 

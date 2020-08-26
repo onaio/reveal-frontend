@@ -35,7 +35,7 @@ class HeaderBreadcrumb extends React.Component<BreadCrumbProps, {}> {
       } else {
         breadCrumbItem = page.label;
       }
-      return <BreadcrumbItem key={key}>{breadCrumbItem}</BreadcrumbItem>;
+      return <BreadcrumbItem key={`reveal-breadcrumb-${key}`}>{breadCrumbItem}</BreadcrumbItem>;
     });
 
     return (

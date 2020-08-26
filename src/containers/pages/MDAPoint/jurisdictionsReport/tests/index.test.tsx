@@ -14,7 +14,7 @@ import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../../store/ducks/generic/jurisdictions';
-import { fetchMDAPointPlans } from '../../../../../store/ducks/generic/MDAPointPlans';
+import { genericFetchPlans } from '../../../../../store/ducks/generic/plans';
 import { GenericPlan } from '../../../../../store/ducks/generic/plans';
 import { MDAPointplans } from '../../../../../store/ducks/generic/tests/fixtures';
 import * as fixtures from './fixtures';
@@ -35,7 +35,7 @@ const jurisdictionData = superset.processData(fixtures.MDAPointJurisdictionsJSON
 
 store.dispatch(fetchGenericJurisdictions('esw-jurisdictions', jurisdictionData));
 store.dispatch(fetchGenericJurisdictions('esw-focusAreas', focusAreaData));
-store.dispatch(fetchMDAPointPlans(MDAPointplans as GenericPlan[]));
+store.dispatch(genericFetchPlans(MDAPointplans as GenericPlan[]));
 
 describe('components/MDA Reports/JurisdictionReport', () => {
   beforeEach(() => {
