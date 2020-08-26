@@ -43,7 +43,8 @@ describe('e2e test auto-selection flow', () => {
     store.dispatch(deselectAllNodes('22bc44dd-752d-4c20-8761-617361b4f1e7'));
     store.dispatch(deforest());
   });
-  it('from slider auto-selection to refine jurisdictions', async done => {
+  it('from slider auto-selection to refine jurisdictions', async () => {
+    jest.setTimeout(30000);
     const envModule = require('../../../../../configs/env');
     envModule.ASSIGNMENT_PAGE_SHOW_MAP = true;
 
@@ -303,10 +304,10 @@ describe('e2e test auto-selection flow', () => {
         ).toBeFalsy();
       }
     });
-    done();
   });
 
-  it('when there are no selected jurisdictions(without metaData)', async done => {
+  it('when there are no selected jurisdictions(without metaData)', async () => {
+    jest.setTimeout(20000);
     const envModule = require('../../../../../configs/env');
     envModule.ASSIGNMENT_PAGE_SHOW_MAP = true;
 
@@ -477,7 +478,5 @@ describe('e2e test auto-selection flow', () => {
     expect(wrapper.find(ResourceCalculation).text()).toMatchInlineSnapshot(
       `"An error ocurred. Please try and refresh the page.The specific error is: No Jurisdiction selections were found"`
     );
-
-    done();
   });
 });
