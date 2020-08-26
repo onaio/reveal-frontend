@@ -34,6 +34,7 @@ jest.mock('../../../AssigmentMapWrapper', () => {
 });
 
 it('plans with existing node selections', async () => {
+  jest.setTimeout(10000);
   const envModule = require('../../../../../configs/env');
   envModule.ASSIGNMENT_PAGE_SHOW_MAP = true;
 
