@@ -7,7 +7,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
-import { INTERVENTION_IRS_URL, MAP } from '../../../../../constants';
+import { MAP, REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -106,8 +106,8 @@ describe('components/IRS Reports/IRSReportingMap', () => {
           jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
           planId: (plans[0] as GenericPlan).plan_id,
         },
-        path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
-        url: `${INTERVENTION_IRS_URL}/${
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/${
           (plans[0] as GenericPlan).plan_id
         }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
       },
