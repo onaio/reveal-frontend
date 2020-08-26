@@ -154,9 +154,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       ).then((result: Jurisdiction[]) => fetchJurisdictionsAction(result));
 
       let fetchStructureParams: SupersetFormData | null = null;
-      if (jurisdictionId) {
+      if (jurisdictionId && planId) {
         fetchStructureParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
           { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
+          { comparator: planId, operator: '==', subject: 'plan_id' },
         ]);
       }
 
