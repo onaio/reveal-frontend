@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { REPORT_MDA_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
-import { genericFetchPlans } from '../../../../../store/ducks/generic/MDAPlans';
+import { genericFetchPlans } from '../../../../../store/ducks/generic/plans';
 import { GenericPlan } from '../../../../../store/ducks/generic/plans';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 import ConnectedMDAPLansList, { MDAPLansList } from '../index';

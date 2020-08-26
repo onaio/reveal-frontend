@@ -68,6 +68,7 @@ import {
   IRS_GOAL_MEASURE,
   IRS_GREEN_THRESHOLD,
   IRS_GREY_THRESHOLD,
+  IRS_ORANGE_THRESHOLD,
   IRS_RED_THRESHOLD,
   IRS_YELLOW_THRESHOLD,
   LARVAL_DIPPING_ACTIVITY,
@@ -361,7 +362,6 @@ export interface PlanActionTrigger {
 export interface PlanActionCondition {
   expression: PlanExpression;
   kind: Readonly<'applicability'>;
-  subjectCodableConcept?: PlanActionsubjectCodableConcept;
 }
 
 /** Plan Action */
@@ -688,11 +688,11 @@ export const planActivities: PlanActivities = {
             description: 'Structure is residential or type does not exist',
             expression:
               "$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists())",
+            subjectCodableConcept: {
+              text: 'Family',
+            },
           },
           kind: APPLICABILITY_CONDITION_KIND,
-          subjectCodableConcept: {
-            text: 'Family',
-          },
         },
         {
           expression: {
@@ -953,11 +953,11 @@ export const planActivities: PlanActivities = {
             description: 'Structure is residential or type does not exist',
             expression:
               "$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists().not())",
+            subjectCodableConcept: {
+              text: 'Family',
+            },
           },
           kind: APPLICABILITY_CONDITION_KIND,
-          subjectCodableConcept: {
-            text: 'Family',
-          },
         },
         {
           expression: {
@@ -1665,6 +1665,35 @@ export const indicatorThresholdsIRSNamibia: IndicatorThresholds = {
   },
 };
 /** END Namibia IRS Reporting configs */
+
+/** Focus Investigation Reporting Configs */
+export const indicatorThresholdsFI: IndicatorThresholds = {
+  GREEN_THRESHOLD: {
+    color: '#33ad33',
+    name: IRS_GREEN_THRESHOLD,
+    orEquals: true,
+    value: 0.9,
+  },
+  ORANGE_THRESHOLD: {
+    color: '#ff8533',
+    name: IRS_ORANGE_THRESHOLD,
+    orEquals: true,
+    value: 0.8,
+  },
+  RED_THRESHOLD: {
+    color: '#ff5c33',
+    name: IRS_RED_THRESHOLD,
+    orEquals: true,
+    value: 0.2,
+  },
+  YELLOW_THRESHOLD: {
+    color: '#ff3',
+    name: IRS_YELLOW_THRESHOLD,
+    orEquals: true,
+    value: 0.0001,
+  },
+};
+/** END Focus Investigation Reporting Configs */
 
 /** Interface describing thresholds look up */
 export interface IndicatorThresholdsLookUp {

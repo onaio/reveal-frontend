@@ -51,7 +51,7 @@ export type IndicatorRows = IndicatorRowItem[];
 export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
   namibia2019: [
     {
-      denominator: 'target_2019',
+      denominator: 'jurisdiction_target',
       description: 'Percent of structures sprayed over targeted',
       numerator: 'structuressprayed',
       title: 'Target Coverage',

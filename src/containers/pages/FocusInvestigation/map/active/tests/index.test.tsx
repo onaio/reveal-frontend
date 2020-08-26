@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import SelectComponent from '../../../../../../components/SelectPlan';
+import { AN_ERROR_OCCURRED } from '../../../../../../configs/lang';
 import { FIReasons } from '../../../../../../configs/settings';
 import {
   CASE_CONFIRMATION_GOAL_ID,
@@ -24,7 +25,7 @@ import * as structureDucks from '../../../../../../store/ducks/structures';
 import * as tasksDucks from '../../../../../../store/ducks/tasks';
 import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { MapSingleFIProps, SingleActiveFIMap } from '../../active/';
-import { fetchData } from '../helpers/utils';
+import * as utils from '../helpers/utils';
 import * as fixturesMap from './fixtures';
 
 jest.mock('../../../../../../components/GisidaLite', () => {
@@ -35,6 +36,7 @@ jest.mock('../../../../../../components/GisidaLite', () => {
     MemoizedGisidaLite: MemoizedGisidaLiteMock,
   };
 });
+
 jest.mock('../../../../../../configs/env');
 const history = createBrowserHistory();
 const { fetchGoals } = goalDucks;
@@ -561,7 +563,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const fetchStructuresActionCreatorMock: any = jest.fn();
     const fetchTasksActionCreatorMock: any = jest.fn();
     const plan = fixtures.plan1;
-    void fetchData(
+    void utils.fetchData(
       fetchGoalsActionsCreatorMock,
       fetchJurisdictionsActionCreatorMock,
       fetchPlansActionCreatorMock,
@@ -581,7 +583,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const fetchPlansActionCreatorMock: any = jest.fn();
     const fetchStructuresActionCreatorMock: any = jest.fn();
     const fetchTasksActionCreatorMock: any = jest.fn();
-    void fetchData(
+    void utils.fetchData(
       fetchGoalsActionsCreatorMock,
       fetchJurisdictionsActionCreatorMock,
       fetchPlansActionCreatorMock,
@@ -603,7 +605,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const fetchStructuresActionCreatorMock: any = jest.fn();
     const fetchTasksActionCreatorMock: any = jest.fn();
     const plan = fixtures.plan1;
-    void fetchData(
+    void utils.fetchData(
       fetchGoalsActionsCreatorMock,
       fetchJurisdictionsActionCreatorMock,
       fetchPlansActionCreatorMock,
@@ -639,6 +641,34 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
     expect(displayErrorMock).toHaveBeenCalledTimes(6);
+    wrapper.unmount();
+  });
+
+  it('handles fetchData promise errors correctly', async () => {
+    jest.spyOn(utils, 'fetchData').mockReturnValue(Promise.reject('fetch data promise failed'));
+    const supersetServiceMock: any = jest.fn(() => Promise.reject('error'));
+    const displayErrorMock = jest.spyOn(helperErrors, 'displayError');
+    store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
+    store.dispatch(fetchJurisdictions([fixtures.jurisdictions[0]]));
+    store.dispatch(fetchPlans([fixtures.plan1]));
+    store.dispatch(fetchTasks(fixtures.tasks));
+    const props = {
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+      },
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(displayErrorMock).toHaveBeenCalledTimes(1);
+    expect(displayErrorMock).toHaveBeenCalledWith(new Error(AN_ERROR_OCCURRED));
     wrapper.unmount();
   });
 

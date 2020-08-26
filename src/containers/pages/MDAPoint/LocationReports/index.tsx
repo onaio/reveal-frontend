@@ -49,7 +49,7 @@ import MDAPointLocationReportReducer, {
   makeMDAPointLocationReportsArraySelector,
   reducerName as MDAPointLocationReportReducerName,
 } from '../../../../store/ducks/generic/MDALocationsReport';
-import { getMDAPointPlanById } from '../../../../store/ducks/generic/MDAPointPlans';
+import { getPlanByIdSelector } from '../../../../store/ducks/generic/plans';
 
 /** register the MDA point school report definitions reducer */
 reducerRegistry.register(MDAPointLocationReportReducerName, MDAPointLocationReportReducer);
@@ -194,7 +194,7 @@ const mapStateToProps = (
     const { pTitle, prevPages } = buildBreadCrumbs(jurisdictions, planId, jurisdictionId);
     pageTitle = pTitle;
     prevPage = prevPages;
-    const plan = getMDAPointPlanById(state, planId);
+    const plan = getPlanByIdSelector(state, planId);
     if (plan) {
       prevPage.unshift({ label: plan.plan_name, url: `${REPORT_MDA_POINT_PLAN_URL}/${planId}` });
     }

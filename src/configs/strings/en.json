@@ -1222,5 +1222,383 @@
   "RISK_TEXT": {
     "message": "Risk",
     "description": "Option displayed when selecting jurisdiction metadata type to download"
-  }
+  },
+  "PLANNING_PAGE_TITLE": {
+    "message": "Planning tool",
+    "description": "Title of page with the feature to help create plans"
+  },
+  "SAVE_FILE": {
+    "message": "Save File",
+    "description": "Action to save a file"
+  },
+  "UPLOAD": { "message": "Upload", "description": "upload" },
+  "MDA_POINT_PLANS": {
+    "message": "MDA Point Plans",
+    "description": "Title of page that lists MDA point plans"
+  },
+  "JURISDICTION_HIERARCHY_TEMPLATE": {
+    "message": "JurisdictionHierachyTemplate",
+    "description": "Name given to a file downloaded as a template for risk upload"
+  },
+  "SELECT_COUNTRY": {
+    "message": "Select Country",
+    "description": "Prompt to select Country"
+  },
+  "JURISDICTION_METADATA": {
+    "message": "Jurisdiction Metadata",
+    "description": "Title of page that user can upload and download jurisdiction metadata csv files"
+  },
+  "DOWNLOAD_JURISDICTION_METADATA": {
+    "message": "Download Jurisdiction Metadata",
+    "description": "Button Text: button to download metadata"
+  },
+  "UPLOAD_JURISDICTION_METADATA": {
+    "message": "Upload Jurisdiction Metadata",
+    "description": "Button Text to upload metadata csv file"
+  },
+  "HOW_TO_UPDATE_JURISDICTION_METADATA": {
+    "message": "How To Update The Jurisdiction Metadata",
+    "description": "Text title for section describing how to update Jurisdictions metadata"
+  },
+  "DOWNLOADING": { "message": "Downloading", "description": "Downloading" },
+  "FILE_UPLOADED_SUCCESSFULLY": {
+    "message": "File uploaded successfully.",
+    "description": "Text shown as feedback after the successful completion of a file upload action"
+  },
+  "FILE_DOWNLOADED_SUCCESSFULLY": {
+    "message": "File downloaded successfully.",
+    "description": "Text shown as feedback after the successful completion of a file download action"
+  },
+  "FILE_UPLOAD_FAILED": {
+    "message": "`File upload failed please try again.`",
+    "description": "Text shown as feedback after a failed file upload operation"
+  },
+  "MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION": {
+    "message": "Percent of eligible people",
+    "description": "Description of a metric to a task in a plan"
+  },
+  "MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION": {
+    "message": "Report any adverse events from medication",
+    "description": "Description of a task in a plan"
+  },
+  "MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL": {
+    "message": "Percent of people who reported adverse events",
+    "description": "Description of a metric for a task in a plan"
+  },
+  "MDA_POINT_TITLE": { "message": "MDA Point", "description": "page title: for MDA point pages" },
+  "DYNAMIC_FI_TITLE": {
+    "message": "Dynamic FI",
+    "description": "page title: for dynamic FI pages"
+  },
+  "DYNAMIC_IRS_TITLE": {
+    "message": "Dynamic IRS",
+    "description": "page title: for dynamic IRS pages"
+  },
+  "DYNAMIC_MDA_TITLE": {
+    "message": "Dynamic MDA",
+    "description": "page title: for dynamic MDA pages"
+  },
+  "TEAM_ASSIGNMENT_SUCCESSFUL": {
+    "message": "Team(s) assignment updated successfully",
+    "description": "Text shown as feedback after the successful completion  of a team assignment operation"
+  },
+  "UPLOADED_CLIENT_LISTS": {
+    "message": "Uploaded Clients List",
+    "description": "Section title for section that lists uploaded clients csv files."
+  },
+  "RESET": { "message": "Reset", "description": "Reset" },
+  "EXPORT_BASED_ON_GEOGRAPHICAL_REGION": {
+    "message": "Export Country based on Geographical level!",
+    "description": "Prompt shown on a csv download form"
+  },
+  "SELECT_LOCATION_ERROR_MESSAGE": {
+    "message": "Please select location",
+    "description": "Prompt shown on a form that requires user to select location"
+  },
+  "DOWNLOAD": { "message": "Download", "description": "Download" },
+  "FILE_NAME": { "message": "File Name", "description": "Name of a file" },
+  "OWNER": { "message": "Owner", "description": "Belonging to" },
+  "UPLOAD_DATE": {
+    "message": "Upload Date",
+    "description": "Table column header whose records are of when something was uploaded"
+  },
+  "UPLOAD_FILE": {
+    "message": "Upload File",
+    "description": "Form label of a file upload input tag"
+  },
+  "DOWNLOAD_FILE": {
+    "message": "Download File",
+    "description": "Button text: whose action is to download a file"
+  },
+  "SUBMIT": {
+    "message": "Submit",
+    "description": "Button text: submit a form"
+  },
+  "CLIENT_UPLOAD_FORM": {
+    "message": "Client Upload Form",
+    "description": "Title of modal where user can upload a form"
+  },
+  "FILE_SUBMISSION_READY": {
+    "message": "File is ready to submit",
+    "description": "Text describing the submit status of a form"
+  },
+  "LOADING": {
+    "message": "loading...",
+    "description": "Text describing an in-progress action"
+  },
+  "MDA_POINT_REPORTING_TITLE": {
+    "message": "MDA Point Reporting",
+    "description": "Title of page that lists MDA point plans for reporting"
+  },
+  "FILTER": { "message": "Filter", "description": "Filter" },
+  "USER": { "message": "user", "description": "user" },
+  "MDA_POINT_LOCATION_REPORT_TITLE": {
+    "message": "MDA Point Location Report",
+    "description": "Title of page that shows reporting dashboards for MDA Point plans"
+  },
+  "MDA_POINT_CHILD_REPORT_TITLE": {
+    "message": "MDA Point Child Report",
+    "description": "Title of page that shows reporting dashboards for MDA Point plans"
+  },
+  "MDA_POINT_SCHOOL_REPORT_TITLE": {
+    "message": "MDA Point School Report",
+    "description": "Title of page that shows reporting dashboards for MDA Point plans"
+  },
+  "USER_HAS_NO_VALID_ASSIGNMENTS": {
+    "message": "User does not have valid plan assignments",
+    "description": "Error message "
+  },
+  "NETWORK_ERROR": {
+    "message": "We are having trouble retrieving requested resource",
+    "description": "Error message"
+  },
+  "ACCESS_DENIED": {
+    "message": "Access Denied",
+    "description": "Error message when api call resolves with a 403 status"
+  },
+  "USER_HAS_NO_PLAN_ASSIGNMENTS": {
+    "message": "User does not have any plans assigned",
+    "description": "Error message"
+  },
+  "NO_ROWS_FOUND": {
+    "message": "No rows found",
+    "description": "Info message when there is no data to show"
+  },
+  "AGE_RANGE": { "message": "Age Range", "description": "Table column header" },
+  "TOTAL_SACS_REGISTERED": {
+    "message": "Total SACs Registered",
+    "description": "Table column Header"
+  },
+  "MMA_COVERAGE": {
+    "message": "MMA Coverage",
+    "description": "table column header"
+  },
+  "SACS_REFUSED": {
+    "message": "SACs Refused",
+    "description": "Table column header"
+  },
+  "SACS_SICK": {
+    "message": "SACs Sick/Pregnant/Contraindicated",
+    "description": "Table column header"
+  },
+  "ADR_REPORTED": {
+    "message": "ADR Reported",
+    "description": "Table column header"
+  },
+  "ADR_SEVERE": {
+    "message": "ADR Severe",
+    "description": "Table column Header"
+  },
+  "ALB_TABLETS_DISTRIBUTED": {
+    "message": "Alb Tablets Distributed",
+    "description": "Table column header"
+  },
+  "CHILDS_NAME": {
+    "message": "Child's name",
+    "description": "Table column header"
+  },
+  "NATIONAL_ID": {
+    "message": "National ID",
+    "description": "Table column header"
+  },
+  "ENROLLED_IN_SCHOOL": {
+    "message": "Enrolled in school",
+    "description": "Table Column header"
+  },
+  "MMA_DRUGS_ADMINISTRED": {
+    "message": "MMA drug administered",
+    "description": "Table column header"
+  },
+  "PZQ_DISTRIBUTED": {
+    "message": "PZQ tablets distributed",
+    "description": "Table column header"
+  },
+  "FILE": { "message": "File", "description": "A file" },
+  "CSV_FILE": {
+    "message": "CSV File",
+    "description": "Label of a an upload csv form field"
+  },
+  "INVALID_CSV": {
+    "message": "Invalid CSV",
+    "description": "Error message shown when an invalid csv file is uploaded"
+  },
+  "ROW_HEIGHT": {
+    "message": "Row Height",
+    "description": "Label of a form field that is used to configure a table row's height"
+  },
+  "ROWS_TO_DISPLAY": {
+    "message": "Rows to display",
+    "description": "Label of a form field for how many items to be shown in a single page of a table"
+  },
+  "PAGE": { "message": "page", "description": "Page" },
+  "OF": { "message": "of", "description": "Of" },
+  "DEFAULT": { "message": "default", "description": "Default" },
+  "SHORT": { "message": "short", "description": "Measure of length" },
+  "TALL": { "message": "tall", "description": "Measure of length" },
+  "NO_DATA_FOUND": {
+    "message": "No Data Found",
+    "description": "Info message when there is no data to show"
+  },
+  "CUSTOMIZE_COLUMNS": {
+    "message": "Customize Columns",
+    "description": "Label of a form field used to toggle the visibility of table columns"
+  },
+  "CUSTOMIZE_COLUMNS_FILTER_MESSAGE": {
+    "message": "Select columns to be displayed",
+    "description": "Label of section where users can check checkboxes effectively toggling the visibility of table columns"
+  },
+  "COULD_NOT_LOAD_CHILDREN": {
+    "message": "Could not load children",
+    "description": "Error Message shown due to a failed api call to get the descendants of a jurisdiction"
+  },
+  "COULD_NOT_LOAD_PARENTS": {
+    "message": "Could not load parents",
+    "description": "Error Message shown due to a failed api call to get the ancestors of a jurisdiction"
+  },
+  "SEARCH_LABEL": {
+    "message": "Search",
+    "description": "Label of a search input form field"
+  },
+  "SETTINGS_LABEL": { "message": "Settings", "description": "Settings" },
+  "JURISDICTION_UPLOAD_STEP_1": {
+    "message": "Click on the download template CSV button below.",
+    "description": "Guiding message on what the user should do "
+  },
+  "JURISDICTION_UPLOAD_STEP_2": {
+    "message": "Open the downloaded file and complete the risk and target details on the respective columns.",
+    "description": "Guiding message on what the user should do"
+  },
+  "JURISDICTION_UPLOAD_STEP_3": {
+    "message": "Save the updated CSV file.",
+    "description": "Guiding message on what the user should do"
+  },
+  "JURISDICTION_UPLOAD_STEP_4": {
+    "message": "Select the saved file on the upload form.",
+    "description": "Guiding message on what the user should do"
+  },
+  "JURISDICTION_UPLOAD_STEP_5": {
+    "message": "Click the \"Upload File\" button to complete the process.",
+    "description": "Guiding message on what the user should do"
+  },
+  "DRAFT PLANS": {
+    "message": "Draft plans",
+    "description": "Title of page that lists draft plans"
+  },
+  "COULD_NOT_LOAD_JURISDICTION_HIERARCHY": {
+    "message": "Failed to load Jurisdiction hierarchy",
+    "description": "Error message shown when a page cannot load a tree structure representing the jurisdiction hierarchy"
+  },
+  "STRUCTURES_COUNT": {
+    "message": "Structures Count",
+    "description": "Number of structures"
+  },
+  "STATUS_SETTING": {
+    "message": "Status setting by...",
+    "description": "Table column Header whose records the action that resulted in a change in the jurisdiction selection status"
+  },
+  "AUTO_SELECTION": {
+    "message": "Auto-selection",
+    "description": "Label used to show action by which a jurisdiction node is selected"
+  },
+  "EXISTING_SELECTION": {
+    "message": "Existing selection",
+    "description": "Label of action by which a jurisdiction node is selected"
+  },
+  "USER_CHANGE": {
+    "message": "User Change",
+    "description": "Label of action by which a jurisdiction node is selected"
+  },
+  "COULD_NOT_LOAD_JURISDICTION": {
+    "message": "Could not load jurisdiction",
+    "description": "Error message shown by page when jurisdictions failed to load"
+  },
+  "JURISDICTION_ASSIGNMENT_SUCCESSFUL": {
+    "message": "Jurisdiction(s) assigned to plan successfully",
+    "description": "Feedback after the successful completion of a jurisdiction assignment operation"
+  },
+  "SELECTED_JURISDICTIONS": {
+    "message": "Selected Jurisdictions",
+    "description": "Table Column header"
+  },
+  "SAVE_DRAFT": {
+    "message": "save draft",
+    "description": "Label of button, which saves a plan with a draft status"
+  },
+  "SAVE_AND_ACTIVATE": {
+    "message": "Save & Activate",
+    "description": "Label of button, which saves a plan with an active status"
+  },
+  "CANNOT_ASSIGN_TEAM": {
+    "message": "Cannot assign teams for expired plans",
+    "description": "Error message shown when user tries assigning teams to expired plans"
+  },
+  "NUMBER_OF_STRUCTURES_IN_JURISDICTIONS": {
+    "message": "NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS",
+    "description": "(in caps) comes before a number that represents a structure count "
+  },
+  "ADJUST_SLIDER_MESSAGE": {
+    "message": "Adjust slider to auto-target jurisdictions",
+    "description": "Label of progress-bar form element"
+  },
+  "AUTO_TARGET_JURISDICTIONS_BY_RISK": {
+    "message": "Auto target jurisdictions by risk",
+    "description": "Title of section where user can use a slider to auto-select jurisdictions"
+  },
+  "REFINE_SELECTED_JURISDICTIONS": {
+    "message": "Refine selected jurisdictions",
+    "description": "Title of section where user can refine jurisdictions that were previously selected"
+  },
+  "CONTINUE_TO_NEXT_STEP": {
+    "message": "Continue to next step",
+    "description": "Label on a button that moves the user to the next step"
+  },
+  "ONE_STR": { "message": "1", "description": "Denotes the first step " },
+  "TWO_STR": { "message": "2", "description": "Denotes the second step" },
+  "TARGETED_STATUS": {
+    "message": "Target Status",
+    "description": "Table column header, shows the selection status of a jurisdiction"
+  },
+  "TARGETED": {
+    "message": "Targeted",
+    "description": "Label for when a jurisdiction is selected"
+  },
+  "NOT_TARGETED": {
+    "message": "Not Targeted",
+    "description": "Label used when a jurisdiction is not selected"
+  },
+  "DAYS": { "message": "days", "description": "Days" },
+  "RESOURCE_ESTIMATE_FOR": {
+    "message": "Resource Estimate for %s",
+    "description": "Label of number that provides an estimated time of completion given a certain amount of resources"
+  },
+  "AT_A_RATE_OF": { "message": "at a rate of", "description": "Ratio" },
+  "STRUCTURES_PER_TEAM_PER_DAY": {
+    "message": "structures per team per day with",
+    "description": "Label of form field for the number of structures a team can handle per day"
+  },
+  "NO_JURISDICTION_SELECTIONS_FOUND": {
+    "message": "No Jurisdiction selections were found",
+    "description": "Info message shown when there are no selected jurisdiction records found"
+  },
+  "TOTAL": { "message": "Total", "description": "Total" }
 }
