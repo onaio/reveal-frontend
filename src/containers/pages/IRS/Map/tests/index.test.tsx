@@ -15,7 +15,7 @@ import {
   fillLayerConfig,
   lineLayerConfig,
 } from '../../../../../configs/settings';
-import { INTERVENTION_IRS_URL, MAIN_PLAN, MAP, STRUCTURE_LAYER } from '../../../../../constants';
+import { MAIN_PLAN, MAP, REPORT_IRS_PLAN_URL, STRUCTURE_LAYER } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -89,8 +89,8 @@ describe('components/IRS Reports/IRSReportingMap', () => {
           jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
           planId: (plans[0] as GenericPlan).plan_id,
         },
-        path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
-        url: `${INTERVENTION_IRS_URL}/${
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/${
           (plans[0] as GenericPlan).plan_id
         }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
       },
@@ -125,8 +125,8 @@ describe('components/IRS Reports/IRSReportingMap', () => {
           jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
           planId: (plans[0] as GenericPlan).plan_id,
         },
-        path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
-        url: `${INTERVENTION_IRS_URL}/${
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/${
           (plans[0] as GenericPlan).plan_id
         }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
       },
@@ -175,8 +175,8 @@ describe('components/IRS Reports/IRSReportingMap', () => {
           jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
           planId: (plans[0] as GenericPlan).plan_id,
         },
-        path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
-        url: `${INTERVENTION_IRS_URL}/${
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/${
           (plans[0] as GenericPlan).plan_id
         }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
       },
@@ -240,6 +240,13 @@ describe('components/IRS Reports/IRSReportingMap', () => {
               expressionType: 'SIMPLE',
               operator: '==',
               subject: 'jurisdiction_id',
+            },
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
             },
           ],
           row_limit: 3000,
@@ -348,8 +355,8 @@ describe('components/IRS Reports/IRSReportingMap', () => {
           jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
           planId: (plans[0] as GenericPlan).plan_id,
         },
-        path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
-        url: `${INTERVENTION_IRS_URL}/${
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/${
           (plans[0] as GenericPlan).plan_id
         }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
       },
@@ -408,8 +415,8 @@ describe('components/IRS Reports/IRSReportingMap', () => {
           jurisdictionId: '92a0c5f3-8b47-465e-961b-2998ad3f00a5',
           planId: (plans[0] as GenericPlan).plan_id,
         },
-        path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
-        url: `${INTERVENTION_IRS_URL}/${
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/${
           (plans[0] as GenericPlan).plan_id
         }/92a0c5f3-8b47-465e-961b-2998ad3f00a5/${MAP}`,
       },
