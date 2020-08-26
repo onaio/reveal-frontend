@@ -2,7 +2,7 @@ import { viewport } from '@mapbox/geo-viewport';
 import GeojsonExtent from '@mapbox/geojson-extent';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Dictionary } from '@onaio/utils';
-import { FeatureCollection } from '@turf/turf';
+import { Feature, FeatureCollection, Geometry } from '@turf/turf';
 import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -139,7 +139,21 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   let mapCenter;
   let mapBounds;
   let zoom;
+  let hasValidGeoms = true;
   if (getJurisdictionsFeatures && getJurisdictionsFeatures.features.length) {
+    const getCoordinates = (coordinates: any) => {
+      if (coordinates && Array.isArray(coordinates)) {
+        getCoordinates((coordinates as any)[0]);
+      } else if (typeof coordinates === 'undefined') {
+        hasValidGeoms = false;
+      }
+    };
+    const mapFeatures = (feature: Feature) => {
+      if ((feature.geometry as Geometry).coordinates.length) {
+        (feature.geometry as Geometry).coordinates.forEach(getCoordinates);
+      }
+    };
+    getJurisdictionsFeatures.features.forEach(mapFeatures);
     structures = buildStructureLayers(getJurisdictionsFeatures as any, true);
     if (Object.keys(CountriesAdmin0).filter(admin => jurisdictionLabels.includes(admin)).length) {
       mapCenter = undefined;
@@ -152,25 +166,25 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     }
   }
 
+  if (!hasValidGeoms) {
+    return <div>{MAP_LOAD_ERROR}</div>;
+  }
+
   if (loading) {
     return <Loading />;
   }
 
   return (
     <div className="map">
-      {typeof mapBounds !== 'undefined' ? (
-        <MemoizedGisidaLite
-          layers={[...structures]}
-          zoom={zoom}
-          mapCenter={mapCenter}
-          mapBounds={mapBounds}
-          onMouseMoveHandler={buildMouseMoveHandler}
-          // tslint:disable-next-line: jsx-no-lambda
-          onClickHandler={onJurisdictionClick(props, setMapParent, history)}
-        />
-      ) : (
-        <div>{MAP_LOAD_ERROR}</div>
-      )}
+      <MemoizedGisidaLite
+        layers={[...structures]}
+        zoom={zoom}
+        mapCenter={mapCenter}
+        mapBounds={mapBounds}
+        onMouseMoveHandler={buildMouseMoveHandler}
+        // tslint:disable-next-line: jsx-no-lambda
+        onClickHandler={onJurisdictionClick(props, setMapParent, history)}
+      />
     </div>
   );
 };

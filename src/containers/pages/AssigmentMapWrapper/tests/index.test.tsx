@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { AssignmentMapWrapper, ConnectedAssignmentMapWrapper } from '..';
 import { getJurisdictions } from '../../../../components/TreeWalker/helpers';
+import { MAP_LOAD_ERROR } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { ASSIGN_PLAN_URL, MANUAL_ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -622,5 +623,35 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     expect(history.location.pathname).toEqual(
       '/manualSelectJurisdictions/2493/2942/8fb28715-6c80-4e2c-980f-422798fe9f41'
     );
+  });
+  it('shows error div when features have invalid coordinates', async () => {
+    store.dispatch(fetchTree(sampleHierarchy, '2942'));
+    store.dispatch(fetchJurisdictions(fixtures.payloadWithInvalidCoordinates as any));
+    store.dispatch(selectNode('2942', '2942', '2943'));
+    const children = getCurrentChildren()(store.getState(), {
+      currentParentId: '2942',
+      leafNodesOnly: true,
+      planId: '2953',
+      rootJurisdictionId: '2942',
+    });
+    const props = {
+      currentChildren: [children] as any,
+      currentParentId: '3019',
+      fetchJurisdictionsActionCreator: fetchJurisdictions,
+      getJurisdictionsFeatures: fixtures.invalidCoordinatesGeom as any,
+      plan: {
+        identifier: '2493',
+      } as PlanDefinition,
+      rootJurisdictionId: '2942',
+      serviceClass: OpenSRPService,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedAssignmentMapWrapper {...props} />
+        </Router>
+      </Provider>
+    );
+    expect(wrapper.find('div').text()).toEqual(MAP_LOAD_ERROR);
   });
 });

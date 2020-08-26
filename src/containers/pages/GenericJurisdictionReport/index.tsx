@@ -2,7 +2,6 @@ import { DrillDownColumn, DrillDownTable, hasChildrenFunc } from '@onaio/drill-d
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
-import { get } from 'lodash';
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { RouteComponentProps } from 'react-router';
@@ -25,13 +24,23 @@ import GenericJurisdictionsReducer, {
 } from '../../../store/ducks/generic/jurisdictions';
 import { genericFetchPlans, GenericPlan } from '../../../store/ducks/generic/plans';
 import { getJurisdictionBreadcrumbs } from '../IRS/Map/helpers';
-import { plansTableColumns, TableProps } from './helpers';
+import { GetColumnsToUse, getColumnsToUse, TableProps } from './helpers';
 import './style.css';
 
 /** register the reducers */
 reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
 
-/** IRS Jurisdictions props */
+/** default props */
+export interface DefaultGenericJurisdictionProps {
+  columnsGetter: GetColumnsToUse;
+}
+
+/** default props */
+const defaultProps: DefaultGenericJurisdictionProps = {
+  columnsGetter: getColumnsToUse,
+};
+
+/** generic Jurisdictions props */
 export interface GenericJurisdictionProps {
   /** The url for navigating to this page */
   baseURL: string;
@@ -63,7 +72,9 @@ export interface GenericJurisdictionProps {
 
 /** Renders generic Jurisdictions reports */
 const GenericJurisdictionReport = (
-  props: GenericJurisdictionProps & RouteComponentProps<RouteParams>
+  props: GenericJurisdictionProps &
+    DefaultGenericJurisdictionProps &
+    RouteComponentProps<RouteParams>
 ) => {
   const [jurisdictionId, setJurisdictionId] = useState<string | null>(
     (props.match && props.match.params && props.match.params.jurisdictionId) || null
@@ -90,6 +101,7 @@ const GenericJurisdictionReport = (
     reportingPlanSlice,
     LegendIndicatorComp,
     cellComponent,
+    columnsGetter,
   } = props;
 
   /** async function to load the data */
@@ -195,14 +207,13 @@ const GenericJurisdictionReport = (
     currentJurisdictionName = theObject[0].jurisdiction_name;
   }
 
-  const currLevelData = data.filter(el => el.jurisdiction_parent_id === jurisdictionId);
-
-  let columnsToUse = get(plansTableColumns, jurisdictionColumn, null);
-  if (currLevelData && currLevelData.length > 0) {
-    if (currLevelData[0].jurisdiction_depth >= +focusAreaLevel) {
-      columnsToUse = get(plansTableColumns, focusAreaColumn, null);
-    }
-  }
+  const columnsToUse = columnsGetter(
+    data,
+    jurisdictionColumn,
+    focusAreaColumn,
+    focusAreaLevel,
+    jurisdictionId
+  );
 
   const tableProps: TableProps = {
     columns: [] as Array<DrillDownColumn<Dictionary>>,
@@ -267,4 +278,5 @@ const GenericJurisdictionReport = (
   );
 };
 
+GenericJurisdictionReport.defaultProps = defaultProps;
 export { GenericJurisdictionReport };
