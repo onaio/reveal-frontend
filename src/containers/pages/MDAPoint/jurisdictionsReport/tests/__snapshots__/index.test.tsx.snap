@@ -5,6 +5,7 @@ Object {
   "LegendIndicatorComp": [Function],
   "baseURL": "/intervention/mda-point/report",
   "cellComponent": [Function],
+  "columnsGetter": [Function],
   "fetchJurisdictions": [Function],
   "fetchPlans": [Function],
   "focusAreaColumn": "0",
