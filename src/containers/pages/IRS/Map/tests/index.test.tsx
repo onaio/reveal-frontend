@@ -241,6 +241,13 @@ describe('components/IRS Reports/IRSReportingMap', () => {
               operator: '==',
               subject: 'jurisdiction_id',
             },
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
+            },
           ],
           row_limit: 3000,
         },
