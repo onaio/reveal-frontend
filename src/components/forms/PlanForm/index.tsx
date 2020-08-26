@@ -75,7 +75,7 @@ import {
   planActivities,
   planStatusDisplay,
 } from '../../../configs/settings';
-import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constants';
+import { MDA_POINT_ADVERSE_EFFECTS_CODE, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
@@ -263,7 +263,7 @@ const PlanForm = (props: PlanFormProps) => {
         /* tslint:disable-next-line jsx-no-lambda */
         onSubmit={(values, { setSubmitting }) => {
           const payload = generatePlanDefinition(values);
-          const apiService = new OpenSRPService('plans');
+          const apiService = new OpenSRPService(OPENSRP_PLANS);
 
           if (editMode) {
             apiService

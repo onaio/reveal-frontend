@@ -3,9 +3,9 @@ import { ActionCreator, AnyAction } from 'redux';
 import { isPlanTypeEnabled } from '../../components/forms/PlanForm/helpers';
 import { USER_HAS_NO_PLAN_ASSIGNMENTS } from '../../configs/lang';
 import {
+  OPENSRP_GET_ALL_PLANS,
   OPENSRP_PLANS,
   OPENSRP_PLANS_BY_USER_FILTER,
-  PLAN_INTERVENTION_TYPE,
 } from '../../constants';
 import { OpenSRPService } from '../../services/opensrp';
 import store from '../../store';
@@ -59,7 +59,7 @@ export const loadOpenSRPPlans = (
   actionCreator: ActionCreator<FetchPlanRecordsAction>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  const OpenSrpPlanService = new service(OPENSRP_PLANS);
+  const OpenSrpPlanService = new service(OPENSRP_GET_ALL_PLANS);
   OpenSrpPlanService.list()
     .then((plans: PlanPayload[]) => {
       const extractedPlanRecords = plans
