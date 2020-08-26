@@ -34,11 +34,15 @@ import {
   INTERVENTION_IRS_DRAFTS_URL,
   INTERVENTION_IRS_URL,
   NEW,
-  OPENSRP_PLANS,
+  OPENSRP_GET_ALL_PLANS,
   PLAN_RECORD_BY_ID,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { extractPlanRecordResponseFromPlanPayload, RouteParams } from '../../../../helpers/utils';
+import {
+  extractPlanRecordResponseFromPlanPayload,
+  PLANS_SERVICE_FILTER_PARAM,
+  RouteParams,
+} from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import plansReducer, {
   fetchPlanRecords,
@@ -122,8 +126,8 @@ const loadOpenSRPPlans = (
   service: typeof OpenSRPService,
   actionCreator: ActionCreator<FetchPlanRecordsAction>
 ) => {
-  const OpenSrpPlanService = new service(OPENSRP_PLANS);
-  OpenSrpPlanService.list()
+  const OpenSrpPlanService = new service(OPENSRP_GET_ALL_PLANS);
+  OpenSrpPlanService.list(PLANS_SERVICE_FILTER_PARAM)
     .then((plans: PlanPayload[]) => {
       const extractedPlanRecords = plans
         .map(plan => extractPlanRecordResponseFromPlanPayload(plan))

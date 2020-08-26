@@ -22,11 +22,15 @@ import { planStatusDisplay } from '../../../../configs/settings';
 import {
   ASSIGN_PLAN_URL,
   HOME_URL,
+  OPENSRP_GET_ALL_PLANS,
   PLAN_RECORD_BY_ID,
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { extractPlanRecordResponseFromPlanPayload } from '../../../../helpers/utils';
+import {
+  extractPlanRecordResponseFromPlanPayload,
+  PLANS_SERVICE_FILTER_PARAM,
+} from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import IRSPlansReducer, {
   reducerName as IRSPlansReducerName,
@@ -43,7 +47,7 @@ import {
 /** register the plan definitions reducer */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 
-const OpenSrpPlanService = new OpenSRPService('plans');
+const OpenSrpPlanService = new OpenSRPService(OPENSRP_GET_ALL_PLANS);
 
 /** Plans filter selector */
 const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
@@ -78,7 +82,7 @@ const IRSAssignmentPlansList = (props: PlanAssignmentsListProps) => {
   async function loadData() {
     try {
       setLoading(plans.length < 1); // only set loading when there are no plans
-      await OpenSrpPlanService.list()
+      await OpenSrpPlanService.list(PLANS_SERVICE_FILTER_PARAM)
         .then(planResults => {
           if (planResults) {
             const planRecords: PlanRecordResponse[] =

@@ -23,13 +23,13 @@ import {
 import { PlanDefinition, planStatusDisplay } from '../../../../configs/settings';
 import {
   HOME_URL,
-  OPENSRP_PLANS,
+  OPENSRP_GET_ALL_PLANS,
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
   QUERY_PARAM_TITLE,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { getQueryParams } from '../../../../helpers/utils';
+import { getQueryParams, PLANS_SERVICE_FILTER_PARAM } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import planDefinitionReducer, {
   fetchPlanDefinitions,
@@ -50,7 +50,7 @@ interface PlanListProps {
 const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
   const { fetchPlans, plans, service } = props;
   const [loading, setLoading] = useState<boolean>(true);
-  const apiService = new service(OPENSRP_PLANS);
+  const apiService = new service(OPENSRP_GET_ALL_PLANS);
   const pageTitle: string = PLANS;
   const breadcrumbProps = {
     currentPage: {
@@ -69,7 +69,7 @@ const PlanDefinitionList = (props: PlanListProps & RouteComponentProps) => {
   async function loadData() {
     try {
       setLoading(plans.length < 1); // only set loading when there are no plans
-      const planObjects = await apiService.list();
+      const planObjects = await apiService.list(PLANS_SERVICE_FILTER_PARAM);
       fetchPlans(planObjects);
     } catch (e) {
       displayError(e);
