@@ -158,19 +158,22 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     if (Object.keys(CountriesAdmin0).filter(admin => jurisdictionLabels.includes(admin)).length) {
       mapCenter = undefined;
       mapBounds = undefined;
+      hasValidGeoms = false;
     } else {
       mapBounds = GeojsonExtent(getJurisdictionsFeatures);
       const centerAndZoom = viewport(mapBounds, [600, 400]);
       mapCenter = centerAndZoom.center;
       zoom = centerAndZoom.zoom;
     }
+  } else {
+    hasValidGeoms = false;
   }
 
   if (loading) {
     return <Loading />;
   }
 
-  if (!hasValidGeoms || !structures.length) {
+  if (!hasValidGeoms) {
     return <div>{MAP_LOAD_ERROR}</div>;
   }
 
