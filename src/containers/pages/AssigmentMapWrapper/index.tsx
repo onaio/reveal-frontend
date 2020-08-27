@@ -166,12 +166,12 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     }
   }
 
-  if (!hasValidGeoms) {
-    return <div>{MAP_LOAD_ERROR}</div>;
-  }
-
   if (loading) {
     return <Loading />;
+  }
+
+  if (!hasValidGeoms || !structures.length) {
+    return <div>{MAP_LOAD_ERROR}</div>;
   }
 
   return (
