@@ -212,7 +212,7 @@ export const namibiaIRSJurisdictions = [
   },
 ];
 
-export const MDAPointplans = [
+export const MDAPointPlans = [
   {
     jurisdiction_root_parent_ids: ['2942'],
     plan_date: '2019-09-05',
@@ -251,7 +251,7 @@ export const MDAPointplans = [
   },
 ];
 
-export const DynamicMDAPlans = MDAPointplans.map(item => {
+export const DynamicMDAPlans = MDAPointPlans.map(item => {
   return {
     ...item,
     plan_intervention_type: 'Dynamic-MDA',
