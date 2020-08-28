@@ -1,3 +1,4 @@
+import { renderTable } from '@onaio/drill-down-table';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
@@ -49,7 +50,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
     );
   });
 
-  it('renders plan definition list correctly', () => {
+  it('plan list view works correctly with store', () => {
     store.dispatch(genericFetchPlans(fixtures.DynamicMDAPlans as GenericPlan[]));
     fetch.mockResponseOnce(JSON.stringify({}));
     const wrapper = mount(
@@ -91,6 +92,8 @@ describe('components/MDA Reports/MDAPlansList', () => {
     expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('GenericPlansList props');
 
     expect(wrapper.find('.page-title').text()).toEqual('MDA Plans');
+
+    renderTable(wrapper, 'Dynamic mda plans');
 
     expect(supersetServiceMock.mock.calls).toEqual([['1337']]);
 
