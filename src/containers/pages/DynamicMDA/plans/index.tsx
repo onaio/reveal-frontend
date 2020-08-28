@@ -66,7 +66,7 @@ const mapStateToProps = (
 ): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const plans = MDAPlansArraySelector(state, {
-    interventionTypes: [InterventionType.MDA],
+    interventionTypes: [InterventionType.DynamicMDA],
     plan_title: searchedTitle,
     statusList: allowedPlanStatusList,
   });

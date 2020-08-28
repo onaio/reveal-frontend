@@ -19,18 +19,6 @@ Array [
 ]
 `;
 
-exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store:  tr index 0 1`] = `"TitleDate CreatedStart DateEnd DateStatus"`;
-
-exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store:  tr index 1 1`] = `"Dynamic-MDA-2019-08-30m2019-08-302019-08-302019-09-14active"`;
-
-exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store:  tr index 2 1`] = `"Berg Eswatini 20192019-08-292019-08-292019-09-18active"`;
-
-exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: Dynamic  tr index 0 1`] = `"TitleDate CreatedStart DateEnd DateStatus"`;
-
-exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: Dynamic  tr index 1 1`] = `"Dynamic-MDA-2019-08-30m2019-08-302019-08-302019-09-14active"`;
-
-exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: Dynamic  tr index 2 1`] = `"Berg Eswatini 20192019-08-292019-08-292019-09-18active"`;
-
 exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: Dynamic mda plans tr index 0 1`] = `"TitleDate CreatedStart DateEnd DateStatus"`;
 
 exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: Dynamic mda plans tr index 1 1`] = `"Dynamic-MDA-2019-08-30m2019-08-302019-08-302019-09-14active"`;
