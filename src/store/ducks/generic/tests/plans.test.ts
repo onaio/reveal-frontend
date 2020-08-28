@@ -102,3 +102,61 @@ describe('reducers/MDA/Dynami-MDAPlan', () => {
     ]);
   });
 });
+
+describe('reducer: generic reducers', () => {
+  let flushThunks;
+  const selector = makeGenericPlansArraySelector();
+
+  beforeEach(() => {
+    flushThunks = FlushThunks.createMiddleware();
+    jest.resetAllMocks();
+  });
+
+  it('fetches plans correctly', () => {
+    // the target to is to make sure that the returned plans respects the intervention type
+    // dispatch all 3 plan types: IRS, DynamicIRS, DynamicMDA, MdaPointPlans
+    const allPlans = [
+      ...fixtures.plans,
+      fixtures.DynamicMDAPlans,
+      fixtures.MDAPointPlans,
+    ] as GenericPlan[];
+    store.dispatch(genericFetchPlans(allPlans));
+
+    // we will look for an IRS plan using different intervention types
+
+    const state = store.getState();
+    let response = selector(state, {
+      interventionTypes: [InterventionType.IRS],
+      // using plan_title somewhat like na id
+      plan_title: 'MegaMind',
+    });
+
+    expect(response).toEqual([]);
+
+    // now check again using dynamic IRS intervention type
+    response = selector(state, {
+      interventionTypes: [InterventionType.DynamicIRS],
+      // using plan_title somewhat like na id
+      plan_title: 'MegaMind',
+    });
+    expect(response).toEqual([fixtures.plans[3]]);
+    // this will also return correct plan when there is no intervention type
+    response = selector(state, {
+      plan_title: 'MegaMind',
+    });
+    expect(response).toEqual([fixtures.plans[3]]);
+
+    // what if we checked using DynamicMDA
+    response = selector(state, {
+      interventionTypes: [InterventionType.DynamicMDA],
+      plan_title: 'MegaMind',
+    });
+    expect(response).toEqual([]);
+
+    response = selector(state, {
+      interventionTypes: [InterventionType.MDAPoint],
+      plan_title: 'MegaMind',
+    });
+    expect(response).toEqual([]);
+  });
+});

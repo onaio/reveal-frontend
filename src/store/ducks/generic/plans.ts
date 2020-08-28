@@ -99,11 +99,13 @@ export const plansByIntervention = () =>
  * @param  props - the plan filters object
  */
 export const getPlansArrayByTitle = () =>
-  createSelector([plansByIntervention(), getTitle], (plans, title) =>
-    title
-      ? plans.filter(plan => plan.plan_title.toLowerCase().includes(title.toLowerCase()))
-      : plans
-  );
+  createSelector([plansByIntervention(), getTitle], (plans, title) => {
+    return title
+      ? plans.filter(
+          plan => plan.plan_title && plan.plan_title.toLowerCase().includes(title.toLowerCase())
+        )
+      : plans;
+  });
 
 /** getPlansArrayByStatus
  * Gets an array of Plan objects filtered by plan status
