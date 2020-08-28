@@ -385,7 +385,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const routineSearchString = getQueryParams(ownProps.location)[ROUTINE_QUERY_PARAM] as string;
 
   const caseTriggeredPlans = makePlansArraySelector()(state, {
-    interventionType: InterventionType.FI,
+    interventionType: [InterventionType.FI, InterventionType.DynamicFI],
     parentJurisdictionId: jurisdictionParentId,
     planIds,
     reason: CASE_TRIGGERED,
@@ -393,7 +393,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     title: reactiveSearchString,
   });
   const routinePlans = makePlansArraySelector()(state, {
-    interventionType: InterventionType.FI,
+    interventionType: [InterventionType.FI, InterventionType.DynamicFI],
     parentJurisdictionId: jurisdictionParentId,
     planIds,
     reason: ROUTINE,

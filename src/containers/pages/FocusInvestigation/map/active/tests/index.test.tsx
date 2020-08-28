@@ -9,7 +9,6 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import SelectComponent from '../../../../../../components/SelectPlan';
 import { AN_ERROR_OCCURRED } from '../../../../../../configs/lang';
-import { FIReasons } from '../../../../../../configs/settings';
 import {
   CASE_CONFIRMATION_GOAL_ID,
   FI_SINGLE_URL,
@@ -678,12 +677,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
    */
   it('selectors get called with correct arguments', () => {
     // spy on the selectors
-    const getPlansArrayMock = jest.spyOn(planDucks, 'getPlansArray');
     const planByIdMock = jest.spyOn(planDucks, 'getPlanById');
     const currentGoalMock = jest.spyOn(goalDucks, 'getCurrentGoal');
     const goalPlanJurisdictionMock = jest.spyOn(goalDucks, 'getGoalsByPlanAndJurisdiction');
     const jurisdictionIdMock = jest.spyOn(jurisdictionDucks, 'getJurisdictionById');
-    const plansIdArrayMock = jest.spyOn(planDucks, 'getPlansIdArray');
     const structuresMock = jest.spyOn(structureDucks, 'getStructuresFCByJurisdictionId');
     const FCMock = jest.spyOn(tasksDucks, 'getFCByPlanAndGoalAndJurisdiction');
     // setup the component and mount
@@ -716,31 +713,11 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     );
 
     // define expected results
-    const plansArrayExpected1 = [
-      fixturesMap.existingState,
-      'FI',
-      ['active', 'complete'],
-      FIReasons[0],
-      ['450fc15b-5bd2-468a-927a-49cb10d3bcac'],
-    ];
-    const plansArrayExpected2 = [
-      fixturesMap.existingState,
-      'FI',
-      ['active', 'complete'],
-      'Case Triggered',
-      ['450fc15b-5bd2-468a-927a-49cb10d3bcac'],
-    ];
     const planByIdExpected = [fixturesMap.existingState, 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f'];
     const goalPlanJurisdictionexpected = [
       fixturesMap.existingState,
       '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
       '450fc15b-5bd2-468a-927a-49cb10d3bcac',
-    ];
-    const getPlansIdArrayExpected = [
-      fixturesMap.existingState,
-      'FI',
-      [planDucks.PlanStatus.ACTIVE, planDucks.PlanStatus.DRAFT],
-      null,
     ];
     const jurisdictionIdExpected = [
       fixturesMap.existingState,
@@ -748,11 +725,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     ];
 
     // perform the actual assertions
-    expect(getPlansArrayMock.mock.calls[0]).toEqual(plansArrayExpected1);
-    expect(getPlansArrayMock.mock.calls[1]).toEqual(plansArrayExpected2);
     expect(planByIdMock.mock.calls[0]).toEqual(planByIdExpected);
     expect(goalPlanJurisdictionMock.mock.calls[0]).toEqual(goalPlanJurisdictionexpected);
-    expect(plansIdArrayMock.mock.calls[0]).toEqual(getPlansIdArrayExpected);
     expect(jurisdictionIdMock.mock.calls[0]).toEqual(jurisdictionIdExpected);
 
     expect(structuresMock).not.toBeCalled();
