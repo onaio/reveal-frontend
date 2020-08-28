@@ -28,7 +28,7 @@ reducerRegistry.register(genericReducerName, GenericPlansReducer);
 const allowedPlanStatusList = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
 
 /** selector for MDA point plans */
-const makeMDAPointPlansArraySelector = makeGenericPlansArraySelector(InterventionType.MDAPoint);
+const makeMDAPointPlansArraySelector = makeGenericPlansArraySelector();
 
 /** Simple component that loads a preview list of MDA plans */
 const MDAPointPlansList = (props: GenericPlanListProps & RouteComponentProps) => {
@@ -67,6 +67,7 @@ const mapStateToProps = (
 ): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const MDAPointPlansArray = makeMDAPointPlansArraySelector(state, {
+    interventionTypes: [InterventionType.MDAPoint],
     plan_title: searchedTitle,
     statusList: allowedPlanStatusList,
   });
