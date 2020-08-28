@@ -1,6 +1,9 @@
 import ListView from '@onaio/list-view';
 import * as React from 'react';
+import { Fragment } from 'react';
 import { RouteComponentProps } from 'react-router';
+import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { LinkList } from '../../../../../components/page/HeaderBreadcrumb/helpers';
 import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/TreeWalker';
 import { NAME, NO_ROWS_FOUND, TEAMS_ASSIGNMENT } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
@@ -12,6 +15,7 @@ import { AssignedOrgs } from '../AssignedOrgs';
 import { EditOrgs } from '../EditOrgs';
 import { JurisdictionCell } from '../JurisdictionCell';
 import { RouteParams } from '../JurisdictionTableView';
+import { pagesBuilder } from '../JurisdictionTableView/helpers/utils';
 
 /** props for  JurisdictionTableListView */
 export interface JurisdictionTableListViewProps extends WithWalkerProps {
@@ -100,8 +104,13 @@ const JurisdictionTableListView = (props: JurisdictionTableListViewPropTypes) =>
     renderHeaders,
     tableClass,
   };
+  const { pages, currentPage } = pagesBuilder(props);
   return (
-    <>
+    <Fragment>
+      <Breadcrumb className="reveal-breadcrumb plans-breadcrumb">
+        <LinkList pages={pages} />
+        <BreadcrumbItem active={true}>{currentPage.label}</BreadcrumbItem>
+      </Breadcrumb>
       <ListView {...listViewProps} />
       {!data.length && (
         <div style={{ textAlign: 'center' }}>
@@ -109,7 +118,7 @@ const JurisdictionTableListView = (props: JurisdictionTableListViewPropTypes) =>
           <hr />
         </div>
       )}
-    </>
+    </Fragment>
   );
 };
 

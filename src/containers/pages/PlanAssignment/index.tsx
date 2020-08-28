@@ -1,6 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { ActionCreator, Store } from 'redux';
 import Loading from '../../../components/page/Loading';
@@ -275,11 +275,11 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   };
 
   return (
-    <>
+    <Fragment>
       <WrappedJurisdictionTableView {...wrappedProps} />
       {!isMapDisabled(plan) && <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />}
       <WrappedJurisdictionTableListView {...wrappedProps} />
-    </>
+    </Fragment>
   );
 };
 
