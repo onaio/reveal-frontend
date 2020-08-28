@@ -73,7 +73,6 @@ import plansReducer, {
   FetchPlansAction,
   getPlanById,
   getPlansArray,
-  getPlansIdArray,
   InterventionType,
   Plan,
   PlanStatus,
@@ -452,11 +451,27 @@ SingleActiveFIMap.defaultProps = defaultMapSingleFIProps;
 
 export { SingleActiveFIMap };
 
+type MapStateToProps = Pick<
+  MapSingleFIProps,
+  | 'currentGoal'
+  | 'currentPointIndexCases'
+  | 'currentPolyIndexCases'
+  | 'goals'
+  | 'jurisdiction'
+  | 'plan'
+  | 'plansByFocusArea'
+  | 'structures'
+  | 'historicalPointIndexCases'
+  | 'pointFeatureCollection'
+  | 'historicalPolyIndexCases'
+  | 'polygonFeatureCollection'
+>;
+
 /** map state to props
  * @param {partial<store>} - the redux store
  * @param {any} ownProps - the props
  */
-const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
+const mapStateToProps = (state: Partial<Store>, ownProps: any): MapStateToProps => {
   // pass in the plan id to get plan the get the jurisdiction_id from the plan
   const getTasksFCSelector = tasksFCSelectorFactory();
   const currentGoal = ownProps.match.params.goalId || RACD_REGISTER_FAMILY_ID;
@@ -540,6 +555,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     );
     structures = getStructuresFCByJurisdictionId(state, jurisdiction.jurisdiction_id);
   }
+
   return {
     currentGoal,
     currentPointIndexCases,
@@ -549,14 +565,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     historicalPolyIndexCases,
     jurisdiction,
     plan,
-    plansArray: getPlansArray(state, InterventionType.FI, [PlanStatus.ACTIVE, PlanStatus.COMPLETE]),
     plansByFocusArea,
-    plansIdArray: getPlansIdArray(
-      state,
-      InterventionType.FI,
-      [PlanStatus.ACTIVE, PlanStatus.DRAFT],
-      null
-    ),
     pointFeatureCollection,
     polygonFeatureCollection,
     structures,

@@ -160,9 +160,13 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   });
 
   it('works with the Redux store', async () => {
-    store.dispatch(fetchPlans(fixtures.plans));
+    const envModule = require('../../../../../configs/env');
+    envModule.ENABLED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
+      ','
+    );
+    store.dispatch(fetchPlans([...fixtures.plans, fixtures.plan104]));
     const mock: any = jest.fn();
-    mock.mockImplementation(() => Promise.resolve(fixtures.plans));
+    mock.mockImplementation(() => Promise.resolve([...fixtures.plans, fixtures.plan104]));
     const props = {
       history,
       location: mock,
@@ -179,6 +183,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
     expect(wrapper.text()).toMatchSnapshot('A large unstyled string of the rendered output');
+    wrapper.find('DrillDownTable').forEach(table => renderTable(table));
   });
 
   it('calls superset with the correct params', async () => {

@@ -319,21 +319,6 @@ export function getPlansArray(
   );
 }
 
-/** getPlansIdArray - get an array of Plan ids
- * @param {Partial<Store>} state - the redux store
- * @param {InterventionType} intervention - the intervention type
- * @param {string[]} statusList - the plan statuses
- * @param {string} reason - the plan reason
- */
-export function getPlansIdArray(
-  state: Partial<Store>,
-  intervention: InterventionType | null = null,
-  statusList: string[] = [PlanStatus.ACTIVE],
-  reason: string | null = null
-): string[] {
-  return keys(getPlansById(state, intervention, statusList, reason));
-}
-
 /** getPlanById - get one Plan by id
  * @param {Partial<Store>} state - the redux store
  * @param {string} id - the plan id
@@ -391,7 +376,7 @@ export function getPlanRecordById(state: Partial<Store>, id: string): PlanRecord
 
 /** This interface represents the structure of plan filter options/params */
 export interface PlanFilters {
-  interventionType?: InterventionType /** The plan intervention type */;
+  interventionType?: InterventionType | InterventionType[] /** allowed intervention type(s) */;
   jurisdictionIds?: string[] /** an array of jurisdiction ids */;
   parentJurisdictionId?: string /** jurisdiction parent id */;
   reason?: FIReasonType /** plan FI reason */;
@@ -462,14 +447,21 @@ export const getPlanIds = (_: Partial<Store>, props: PlanFilters) => props.planI
  * @param {Partial<Store>} state - the redux store
  * @param {PlanFilters} props - the plan filters object
  */
-export const getPlansArrayByInterventionType = (planKey?: string) =>
-  createSelector(
+export const getPlansArrayByInterventionType = (planKey?: string) => {
+  return createSelector(
     [plansArrayBaseSelector(planKey), getInterventionType],
-    (plans, interventionType) =>
-      interventionType
-        ? plans.filter(plan => plan.plan_intervention_type === interventionType)
-        : plans
+    (plans, interventionType) => {
+      if (interventionType === undefined) {
+        return plans;
+      }
+      const interventionTypes = Array.isArray(interventionType)
+        ? interventionType
+        : [interventionType];
+
+      return plans.filter(plan => interventionTypes.includes(plan.plan_intervention_type));
+    }
   );
+};
 
 /** getPlansArrayByJurisdictionIds
  * Gets an array of Plan objects filtered by jurisdictionIds

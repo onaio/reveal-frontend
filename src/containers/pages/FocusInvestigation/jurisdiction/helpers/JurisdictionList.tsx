@@ -26,7 +26,7 @@ export default class JurisdictionList<
       const jurisdictionId = ownProps.match.params.jurisdictionId;
 
       const reactiveFilters: PlanFilters = {
-        interventionType: InterventionType.FI,
+        interventionType: [InterventionType.FI, InterventionType.DynamicFI],
         jurisdictionIds: [jurisdictionId],
         reason: FIReasons[1],
       };
