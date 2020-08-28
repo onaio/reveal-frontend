@@ -8,7 +8,13 @@ import plansReducer, {
   Plan,
   reducerName as plansReducerName,
 } from '../../../../../../store/ducks/plans';
-import { plan101, plan102, plan103, plan99 } from '../../../../../../store/ducks/tests/fixtures';
+import {
+  plan101,
+  plan102,
+  plan103,
+  plan104,
+  plan99,
+} from '../../../../../../store/ducks/tests/fixtures';
 import JurisdictionList from '../JurisdictionList';
 
 jest.mock('../../../../../../configs/env');
@@ -21,7 +27,11 @@ describe('containers/FocusInvestigation/Jurisdiction/JurisdictionList', () => {
   });
 
   it('getMapStateToProps works as expected', () => {
-    store.dispatch(fetchPlans([plan99, plan101, plan102, plan103] as Plan[]));
+    const envModule = require('../../../../../../configs/env');
+    envModule.ENABLED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
+      ','
+    );
+    store.dispatch(fetchPlans([plan99, plan101, plan102, plan103, plan104] as Plan[]));
 
     const getPlansArray = makePlansArraySelector();
 
@@ -57,7 +67,7 @@ describe('containers/FocusInvestigation/Jurisdiction/JurisdictionList', () => {
       completeReactivePlans: [plan101],
       completeRoutinePlans: [plan103],
       currentReactivePlans: [plan99],
-      currentRoutinePlans: [plan102],
+      currentRoutinePlans: [plan102, plan104],
     });
 
     ownProps = {
