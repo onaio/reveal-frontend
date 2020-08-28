@@ -24,7 +24,7 @@ const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
-jest.mock('../../JurisdictionTable', () => {
+jest.mock('../../helpers/JurisdictionTable', () => {
   const mockComponent = (_: any) => <div id="mockComponent">I love oov</div>;
   return {
     ConnectedJurisdictionTable: mockComponent,

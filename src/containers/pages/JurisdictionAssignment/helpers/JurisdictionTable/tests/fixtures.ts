@@ -1,5 +1,5 @@
-import { plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
-import { PlanStatus } from '../../../../../store/ducks/plans';
+import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { PlanStatus } from '../../../../../../store/ducks/plans';
 
 const plan = { ...plans[0] };
 

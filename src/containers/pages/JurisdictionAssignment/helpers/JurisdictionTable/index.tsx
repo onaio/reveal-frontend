@@ -6,11 +6,11 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Button, Tooltip } from 'reactstrap';
 import { Store } from 'redux';
-import { ErrorPage } from '../../../../components/page/ErrorPage';
+import { ErrorPage } from '../../../../../components/page/ErrorPage';
 import HeaderBreadcrumb, {
   Page,
-} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { PLAN_TYPES_WITH_MULTI_JURISDICTIONS } from '../../../../configs/env';
+} from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { PLAN_TYPES_WITH_MULTI_JURISDICTIONS } from '../../../../../configs/env';
 import {
   JURISDICTION_ASSIGNMENT_SUCCESSFUL,
   NAME,
@@ -25,19 +25,19 @@ import {
   STRUCTURES_COUNT,
   TARGETED,
   TARGETED_STATUS,
-} from '../../../../configs/lang';
-import { PlanDefinition } from '../../../../configs/settings';
+} from '../../../../../configs/lang';
+import { PlanDefinition } from '../../../../../configs/settings';
 import {
   ASSIGN_PLAN_URL,
   AUTO_ASSIGN_JURISDICTIONS_URL,
   MANUAL_ASSIGN_JURISDICTIONS_URL,
   PLANNING_VIEW_URL,
   RISK_LABEL,
-} from '../../../../constants';
-import { putJurisdictionsToPlan } from '../../../../helpers/dataLoading/jurisdictions';
-import { displayError } from '../../../../helpers/errors';
-import { getPlanType, successGrowl } from '../../../../helpers/utils';
-import { OpenSRPService } from '../../../../services/opensrp';
+} from '../../../../../constants';
+import { putJurisdictionsToPlan } from '../../../../../helpers/dataLoading/jurisdictions';
+import { displayError } from '../../../../../helpers/errors';
+import { getPlanType, successGrowl } from '../../../../../helpers/utils';
+import { OpenSRPService } from '../../../../../services/opensrp';
 import hierarchyReducer, {
   autoSelectNodes,
   deselectAllNodes,
@@ -49,17 +49,17 @@ import hierarchyReducer, {
   getCurrentParentNode,
   reducerName as hierarchyReducerName,
   selectNode,
-} from '../../../../store/ducks/opensrp/hierarchies';
-import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
-import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
-import { nodeIsSelected } from '../../../../store/ducks/opensrp/hierarchies/utils';
-import { JurisdictionsMetadata } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
-import { addPlanDefinition } from '../../../../store/ducks/opensrp/PlanDefinition';
-import { PlanStatus } from '../../../../store/ducks/plans';
-import { RiskLabel } from '../helpers/RiskLabel';
-import { SelectedJurisdictionsCount } from '../helpers/SelectedJurisdictionsCount';
-import { checkParentCheckbox, useHandleBrokenPage } from '../helpers/utils';
+} from '../../../../../store/ducks/opensrp/hierarchies';
+import { SELECTION_REASON } from '../../../../../store/ducks/opensrp/hierarchies/constants';
+import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
+import { nodeIsSelected } from '../../../../../store/ducks/opensrp/hierarchies/utils';
+import { JurisdictionsMetadata } from '../../../../../store/ducks/opensrp/jurisdictionsMetadata';
+import { addPlanDefinition } from '../../../../../store/ducks/opensrp/PlanDefinition';
+import { PlanStatus } from '../../../../../store/ducks/plans';
 import { NodeCell } from '../JurisdictionCell';
+import { RiskLabel } from '../RiskLabel';
+import { SelectedJurisdictionsCount } from '../SelectedJurisdictionsCount';
+import { checkParentCheckbox, useHandleBrokenPage } from '../utils';
 import './index.css';
 
 reducerRegistry.register(hierarchyReducerName, hierarchyReducer);

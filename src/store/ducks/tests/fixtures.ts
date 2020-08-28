@@ -314,7 +314,7 @@ export const plan103 = {
   plan_version: '1',
 };
 
-export const plan104: Plan = {
+export const plan104 = {
   ...plan103,
   id: 'plan104',
   plan_intervention_type: InterventionType.DynamicFI,
