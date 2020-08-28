@@ -47,7 +47,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     );
   });
 
-  it('renders plan definition list correctly', async () => {
+  it('renders plan list view correctly', async () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const props = {
       history,
@@ -83,7 +83,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
         expect(tableHeader.at(i).text()).toMatchSnapshot(`table header-${i + 1}`);
       });
     expect(tableHeader.first().props().style).toMatchSnapshot('title column styling');
-    expect(wrapper.find('.tbody .tr').length).toEqual(3);
+    expect(wrapper.find('.tbody .tr').length).toEqual(4);
     expect(wrapper.find('GenericPlansList').length).toBe(1);
     expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('GenericPlansList props');
     renderTable(wrapper, 'the full rendered rows');
@@ -143,7 +143,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
     );
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title: connected to store');
 
-    expect(wrapper.find('.tbody .tr').length).toEqual(2);
+    expect(wrapper.find('.tbody .tr').length).toEqual(3);
     expect(wrapper.find('GenericPlansList').length).toBe(1);
     expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot(
       'GenericPlansList props: connected to store'

@@ -24,7 +24,7 @@ reducerRegistry.register(GenericPLansReducerName, GenericPLansReducer);
 const allowedPlanStatusList = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
 
 /** selector for IRS plans */
-const makeIRSPlansArraySelector = makeGenericPlansArraySelector(InterventionType.IRS);
+const makeIRSPlansArraySelector = makeGenericPlansArraySelector();
 
 /** Simple component that loads a preview list of IRS plans */
 const IRSPlansList = (props: GenericPlanListProps & RouteComponentProps) => {
@@ -63,6 +63,7 @@ const mapStateToProps = (
 ): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const plans = makeIRSPlansArraySelector(state, {
+    interventionTypes: [InterventionType.IRS, InterventionType.DynamicIRS],
     plan_title: searchedTitle,
     statusList: allowedPlanStatusList,
   });
