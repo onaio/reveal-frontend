@@ -50,17 +50,15 @@ export const getAllPlansByIds = getItemsByIdFactory<GenericPlan>(reducerName);
 export interface PlanFilters {
   plan_title?: string /** plan title */;
   statusList?: string[] /** array of plan statuses */;
+  interventionTypes?: InterventionType[] /** intervention types */;
 }
 
+// TODO - memoize this
 /** PlansArrayBaseSelector select an array of all plans
  * @param state - the redux store
  */
-export const PlansArrayBaseSelector = (interventionType: InterventionType) => (
-  state: Partial<Store>
-): GenericPlan[] =>
-  values(getAllPlansByIds(state) || {}).filter(
-    plan => plan.plan_intervention_type === interventionType
-  );
+export const PlansArrayBaseSelector = (state: Partial<Store>): GenericPlan[] =>
+  values(getAllPlansByIds(state) || {});
 
 /** getTitle
  * Gets title from PlanFilters
@@ -76,13 +74,32 @@ export const getTitle = (_: Partial<Store>, props: PlanFilters) => props.plan_ti
  */
 export const getStatusList = (_: Partial<Store>, props: PlanFilters) => props.statusList;
 
+/** getIntervention types
+ * @param state - the redux store
+ * @param props - the plan filter object
+ */
+export const getInterventionTypes = (_: Partial<Store>, props: PlanFilters) =>
+  props.interventionTypes;
+
+/**
+ * Gets an array of Plan objects filtered by plan title
+ * @param  state - the redux store
+ * @param  props - the plan filters object
+ */
+export const plansByIntervention = () =>
+  createSelector(PlansArrayBaseSelector, getInterventionTypes, (plans, interventionTypes) =>
+    interventionTypes
+      ? plans.filter(plan => interventionTypes.includes(plan.plan_intervention_type))
+      : plans
+  );
+
 /** getPlansArrayByTitle
  * Gets an array of Plan objects filtered by plan title
  * @param  state - the redux store
  * @param  props - the plan filters object
  */
-export const getPlansArrayByTitle = (interventionType: InterventionType) =>
-  createSelector([PlansArrayBaseSelector(interventionType), getTitle], (plans, title) =>
+export const getPlansArrayByTitle = () =>
+  createSelector([PlansArrayBaseSelector, getTitle], (plans, title) =>
     title
       ? plans.filter(plan => plan.plan_title.toLowerCase().includes(title.toLowerCase()))
       : plans
@@ -93,8 +110,8 @@ export const getPlansArrayByTitle = (interventionType: InterventionType) =>
  * @param  state - the redux store
  * @param  props - the plan filters object
  */
-export const getPlansArrayByStatus = (interventionType: InterventionType) =>
-  createSelector([PlansArrayBaseSelector(interventionType), getStatusList], (plans, statusList) =>
+export const getPlansArrayByStatus = () =>
+  createSelector([PlansArrayBaseSelector, getStatusList], (plans, statusList) =>
     statusList
       ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
       : plans
@@ -115,9 +132,8 @@ export const getPlansArrayByStatus = (interventionType: InterventionType) =>
  * @param {PlanFilters} props - the plan filters object
  * @param {string} sortField - sort by field
  */
-export const makeGenericPlansArraySelector = (interventionType: InterventionType) => {
-  return createSelector(
-    [getPlansArrayByTitle(interventionType), getPlansArrayByStatus(interventionType)],
-    (plan1, plan2) => intersect([plan1, plan2], JSON.stringify)
+export const makeGenericPlansArraySelector = () => {
+  return createSelector([getPlansArrayByTitle(), getPlansArrayByStatus()], (plan1, plan2) =>
+    intersect([plan1, plan2], JSON.stringify)
   );
 };
