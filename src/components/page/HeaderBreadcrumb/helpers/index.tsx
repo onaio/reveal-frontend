@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { BreadcrumbItem } from 'reactstrap';
 import { BreadCrumbProps, Page } from '../HeaderBreadcrumb';
 
+/**
+ * Util component to build out breacrumb links
+ * @param props breadcrumb props
+ */
 const LinkList = (props: Partial<BreadCrumbProps>) => {
   const { pages } = props;
 
