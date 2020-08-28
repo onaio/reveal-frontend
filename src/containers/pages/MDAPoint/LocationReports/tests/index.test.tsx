@@ -42,7 +42,7 @@ reducerRegistry.register(genericReducerName, GenericPlanreducer);
 
 const jurisdictionData = superset.processData(MDAPointJurisdictionsJSON) || [];
 store.dispatch(fetchGenericJurisdictions('esw-jurisdictions', jurisdictionData));
-store.dispatch(genericFetchPlans(fixtures.MDAPointplans as GenericPlan[]));
+store.dispatch(genericFetchPlans(fixtures.MDAPointPlans as GenericPlan[]));
 
 const props = {
   history,

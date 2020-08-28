@@ -47,7 +47,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
   });
 
   it('renders plan definition list correctly', () => {
-    store.dispatch(genericFetchPlans(fixtures.MDAPointplans as GenericPlan[]));
+    store.dispatch(genericFetchPlans(fixtures.MDAPointPlans as GenericPlan[]));
     fetch.mockResponseOnce(JSON.stringify({}));
     const wrapper = mount(
       <Provider store={store}>
@@ -92,7 +92,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
   });
 
   it('handles search correctly', async () => {
-    store.dispatch(genericFetchPlans(fixtures.MDAPointplans as GenericPlan[]));
+    store.dispatch(genericFetchPlans(fixtures.MDAPointPlans as GenericPlan[]));
     props.location.search = '?title=Berg';
     const wrapper = mount(
       <Provider store={store}>

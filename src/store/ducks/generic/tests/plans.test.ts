@@ -16,7 +16,7 @@ import * as fixtures from './fixtures';
 reducerRegistry.register(reducerName, reducer);
 
 const MDAInterventionType = InterventionType.DynamicMDA;
-const MDAplansArraySelector = makeGenericPlansArraySelector(MDAInterventionType);
+const plansSelector = makeGenericPlansArraySelector();
 const defaultProps = {};
 
 describe('reducers/MDA/Dynami-MDAPlan', () => {
@@ -28,7 +28,7 @@ describe('reducers/MDA/Dynami-MDAPlan', () => {
   });
 
   it('should have initial state', () => {
-    expect(MDAplansArraySelector(store.getState(), defaultProps)).toEqual([]);
+    expect(plansSelector(store.getState(), defaultProps)).toEqual([]);
     expect(getPlanByIdSelector(store.getState(), '356b6b84-fc36-4389-a44a-2b038ed2f38d')).toEqual(
       null
     );
@@ -44,28 +44,42 @@ describe('reducers/MDA/Dynami-MDAPlan', () => {
 
     // RESELECT TESTS
     const titleFilter = {
+      interventionTypes: [MDAInterventionType],
       plan_title: 'Berg',
     };
     const titleUpperFilter = {
+      interventionTypes: [MDAInterventionType],
       plan_title: 'BERG',
     };
 
-    expect(getPlansArrayByTitle(MDAInterventionType)(store.getState(), titleFilter)).toEqual([
+    expect(getPlansArrayByTitle()(store.getState(), titleFilter)).toEqual([
       fixtures.DynamicMDAPlans[2],
     ]);
-    expect(getPlansArrayByTitle(MDAInterventionType)(store.getState(), titleUpperFilter)).toEqual([
+    expect(getPlansArrayByTitle()(store.getState(), titleUpperFilter)).toEqual([
       fixtures.DynamicMDAPlans[2],
     ]);
-    expect(MDAplansArraySelector(store.getState(), { statusList: ['retired'] })).toEqual([
-      fixtures.DynamicMDAPlans[0],
-    ]);
-    expect(MDAplansArraySelector(store.getState(), { statusList: ['draft'] })).toEqual([]);
     expect(
-      MDAplansArraySelector(store.getState(), { statusList: ['active'], plan_title: 'mda' })
+      plansSelector(store.getState(), {
+        interventionTypes: [MDAInterventionType],
+        statusList: ['retired'],
+      })
+    ).toEqual([fixtures.DynamicMDAPlans[0]]);
+    expect(
+      plansSelector(store.getState(), {
+        interventionTypes: [MDAInterventionType],
+        statusList: ['draft'],
+      })
+    ).toEqual([]);
+    expect(
+      plansSelector(store.getState(), {
+        interventionTypes: [MDAInterventionType],
+        plan_title: 'mda',
+        statusList: ['active'],
+      })
     ).toEqual([fixtures.DynamicMDAPlans[1]]);
     // reset
     store.dispatch(genericRemovePlans());
-    expect(MDAplansArraySelector(store.getState(), defaultProps)).toEqual([]);
+    expect(plansSelector(store.getState(), defaultProps)).toEqual([]);
   });
 
   it('Fetching plans does not replace GenericPlansById', () => {
@@ -74,17 +88,75 @@ describe('reducers/MDA/Dynami-MDAPlan', () => {
       genericFetchPlans([fixtures.DynamicMDAPlans[0], fixtures.DynamicMDAPlans[1]] as GenericPlan[])
     );
     // we should have them in the store
-    expect(MDAplansArraySelector(store.getState(), defaultProps)).toEqual([
+    expect(plansSelector(store.getState(), defaultProps)).toEqual([
       fixtures.DynamicMDAPlans[0],
       fixtures.DynamicMDAPlans[1],
     ]);
     // fetch one more plan definition objects
     store.dispatch(genericFetchPlans([fixtures.DynamicMDAPlans[2]] as GenericPlan[]));
     // we should now have a total of three plan definition objects in the store
-    expect(MDAplansArraySelector(store.getState(), defaultProps)).toEqual([
+    expect(plansSelector(store.getState(), defaultProps)).toEqual([
       fixtures.DynamicMDAPlans[0],
       fixtures.DynamicMDAPlans[1],
       fixtures.DynamicMDAPlans[2],
     ]);
+  });
+});
+
+describe('reducer: generic reducers', () => {
+  let flushThunks;
+  const selector = makeGenericPlansArraySelector();
+
+  beforeEach(() => {
+    flushThunks = FlushThunks.createMiddleware();
+    jest.resetAllMocks();
+  });
+
+  it('fetches plans correctly', () => {
+    // the target to is to make sure that the returned plans respects the intervention type
+    // dispatch all 3 plan types: IRS, DynamicIRS, DynamicMDA, MdaPointPlans
+    const allPlans = [
+      ...fixtures.plans,
+      fixtures.DynamicMDAPlans,
+      fixtures.MDAPointPlans,
+    ] as GenericPlan[];
+    store.dispatch(genericFetchPlans(allPlans));
+
+    // we will look for an IRS plan using different intervention types
+
+    const state = store.getState();
+    let response = selector(state, {
+      interventionTypes: [InterventionType.IRS],
+      // using plan_title somewhat like na id
+      plan_title: 'MegaMind',
+    });
+
+    expect(response).toEqual([]);
+
+    // now check again using dynamic IRS intervention type
+    response = selector(state, {
+      interventionTypes: [InterventionType.DynamicIRS],
+      // using plan_title somewhat like na id
+      plan_title: 'MegaMind',
+    });
+    expect(response).toEqual([fixtures.plans[3]]);
+    // this will also return correct plan when there is no intervention type
+    response = selector(state, {
+      plan_title: 'MegaMind',
+    });
+    expect(response).toEqual([fixtures.plans[3]]);
+
+    // what if we checked using DynamicMDA
+    response = selector(state, {
+      interventionTypes: [InterventionType.DynamicMDA],
+      plan_title: 'MegaMind',
+    });
+    expect(response).toEqual([]);
+
+    response = selector(state, {
+      interventionTypes: [InterventionType.MDAPoint],
+      plan_title: 'MegaMind',
+    });
+    expect(response).toEqual([]);
   });
 });

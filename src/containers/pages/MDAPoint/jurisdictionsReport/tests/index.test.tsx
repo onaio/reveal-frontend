@@ -16,7 +16,7 @@ import GenericJurisdictionsReducer, {
 } from '../../../../../store/ducks/generic/jurisdictions';
 import { genericFetchPlans } from '../../../../../store/ducks/generic/plans';
 import { GenericPlan } from '../../../../../store/ducks/generic/plans';
-import { MDAPointplans } from '../../../../../store/ducks/generic/tests/fixtures';
+import { MDAPointPlans } from '../../../../../store/ducks/generic/tests/fixtures';
 import * as fixtures from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
@@ -35,7 +35,7 @@ const jurisdictionData = superset.processData(fixtures.MDAPointJurisdictionsJSON
 
 store.dispatch(fetchGenericJurisdictions('esw-jurisdictions', jurisdictionData));
 store.dispatch(fetchGenericJurisdictions('esw-focusAreas', focusAreaData));
-store.dispatch(genericFetchPlans(MDAPointplans as GenericPlan[]));
+store.dispatch(genericFetchPlans(MDAPointPlans as GenericPlan[]));
 
 describe('components/MDA Reports/JurisdictionReport', () => {
   beforeEach(() => {
@@ -50,10 +50,10 @@ describe('components/MDA Reports/JurisdictionReport', () => {
       match: {
         isExact: true,
         params: {
-          planId: (MDAPointplans[0] as GenericPlan).plan_id,
+          planId: (MDAPointPlans[0] as GenericPlan).plan_id,
         },
         path: `${REPORT_MDA_POINT_PLAN_URL}/:planId`,
-        url: `${REPORT_MDA_POINT_PLAN_URL}/${(MDAPointplans[0] as GenericPlan).plan_id}`,
+        url: `${REPORT_MDA_POINT_PLAN_URL}/${(MDAPointPlans[0] as GenericPlan).plan_id}`,
       },
     };
     shallow(
@@ -78,10 +78,10 @@ describe('components/MDA Reports/JurisdictionReport', () => {
       match: {
         isExact: true,
         params: {
-          planId: (MDAPointplans[0] as GenericPlan).plan_id,
+          planId: (MDAPointPlans[0] as GenericPlan).plan_id,
         },
         path: `${REPORT_MDA_POINT_PLAN_URL}/:planId`,
-        url: `${REPORT_MDA_POINT_PLAN_URL}/${(MDAPointplans[0] as GenericPlan).plan_id}`,
+        url: `${REPORT_MDA_POINT_PLAN_URL}/${(MDAPointPlans[0] as GenericPlan).plan_id}`,
       },
     };
 

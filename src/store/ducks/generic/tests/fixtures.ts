@@ -37,6 +37,18 @@ export const plans = [
     plan_title: 'Berg Namibia 2019',
     plan_version: '2',
   },
+  {
+    jurisdiction_root_parent_ids: ['Metrociti'],
+    plan_date: '2019-08-29',
+    plan_effective_period_end: '2019-09-18',
+    plan_effective_period_start: '2019-08-29',
+    plan_id: 'UUID-1-test',
+    plan_intervention_type: InterventionType.DynamicIRS,
+    plan_name: 'forget me stick',
+    plan_status: 'active',
+    plan_title: 'MegaMind',
+    plan_version: '2',
+  },
 ];
 
 export const planRecords: PlanRecord[] = [
@@ -200,7 +212,7 @@ export const namibiaIRSJurisdictions = [
   },
 ];
 
-export const MDAPointplans = [
+export const MDAPointPlans = [
   {
     jurisdiction_root_parent_ids: ['2942'],
     plan_date: '2019-09-05',
@@ -239,7 +251,7 @@ export const MDAPointplans = [
   },
 ];
 
-export const DynamicMDAPlans = MDAPointplans.map(item => {
+export const DynamicMDAPlans = MDAPointPlans.map(item => {
   return {
     ...item,
     plan_intervention_type: 'Dynamic-MDA',

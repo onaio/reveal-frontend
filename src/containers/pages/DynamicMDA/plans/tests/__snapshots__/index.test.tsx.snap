@@ -19,7 +19,13 @@ Array [
 ]
 `;
 
-exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: GenericPlansList props 1`] = `
+exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: Dynamic mda plans tr index 0 1`] = `"TitleDate CreatedStart DateEnd DateStatus"`;
+
+exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: Dynamic mda plans tr index 1 1`] = `"Dynamic-MDA-2019-08-30m2019-08-302019-08-302019-09-14active"`;
+
+exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: Dynamic mda plans tr index 2 1`] = `"Berg Eswatini 20192019-08-292019-08-292019-09-18active"`;
+
+exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: GenericPlansList props 1`] = `
 Object {
   "fetchPlans": [Function],
   "history": Object {
@@ -101,7 +107,7 @@ Object {
 }
 `;
 
-exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: breadcrumbs 1`] = `
+exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: breadcrumbs 1`] = `
 Array [
   <li
     className="breadcrumb-item"
@@ -132,7 +138,7 @@ Array [
 ]
 `;
 
-exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: page title 1`] = `
+exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: page title 1`] = `
 <h3
   className="mt-3 mb-3 page-title"
 >
@@ -140,17 +146,17 @@ exports[`components/MDA Reports/MDAPlansList renders plan definition list correc
 </h3>
 `;
 
-exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: table header-1 1`] = `"Title"`;
+exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: table header-1 1`] = `"Title"`;
 
-exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: table header-2 1`] = `"Date Created"`;
+exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: table header-2 1`] = `"Date Created"`;
 
-exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: table header-3 1`] = `"Start Date"`;
+exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: table header-3 1`] = `"Start Date"`;
 
-exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: table header-4 1`] = `"End Date"`;
+exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: table header-4 1`] = `"End Date"`;
 
-exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: table header-5 1`] = `"Status"`;
+exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: table header-5 1`] = `"Status"`;
 
-exports[`components/MDA Reports/MDAPlansList renders plan definition list correctly: title column styling 1`] = `
+exports[`components/MDA Reports/MDAPlansList plan list view works correctly with store: title column styling 1`] = `
 Object {
   "boxSizing": "border-box",
   "cursor": "pointer",
