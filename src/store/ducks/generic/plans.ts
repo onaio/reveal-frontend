@@ -99,7 +99,7 @@ export const plansByIntervention = () =>
  * @param  props - the plan filters object
  */
 export const getPlansArrayByTitle = () =>
-  createSelector([PlansArrayBaseSelector, getTitle], (plans, title) =>
+  createSelector([plansByIntervention(), getTitle], (plans, title) =>
     title
       ? plans.filter(plan => plan.plan_title.toLowerCase().includes(title.toLowerCase()))
       : plans
@@ -111,7 +111,7 @@ export const getPlansArrayByTitle = () =>
  * @param  props - the plan filters object
  */
 export const getPlansArrayByStatus = () =>
-  createSelector([PlansArrayBaseSelector, getStatusList], (plans, statusList) =>
+  createSelector([plansByIntervention(), getStatusList], (plans, statusList) =>
     statusList
       ? plans.filter(plan => (statusList.length ? statusList.includes(plan.plan_status) : true))
       : plans
