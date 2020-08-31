@@ -121,6 +121,10 @@ export function useGetRootJurisdictionId(
   return rootJurisdictionId;
 }
 
+const defaultCallback = () => {
+  return;
+};
+
 /** get the jurisdiction Tree given the rootJurisdiction Id
  * @param rootJurisdictionId - id of top level jurisdiction
  * @param startLoading - helper to start loading
@@ -128,6 +132,7 @@ export function useGetRootJurisdictionId(
  * @param stopLoading - helper to stop loading
  * @param handleBrokenPage - helper to handle page errors
  * @param tree - the tree if it exists, used to know if we should set loading to true.
+ * @param onThen - a callback called with the response
  */
 export function useGetJurisdictionTree(
   rootJurisdictionId: string,
@@ -135,7 +140,8 @@ export function useGetJurisdictionTree(
   treeFetchedCreator: ActionCreator<FetchedTreeAction>,
   stopLoading: StopLoading,
   handleBrokenPage: HandleBrokenPage,
-  tree?: TreeNode
+  tree?: TreeNode,
+  onThen: (apiResponse: Result<RawOpenSRPHierarchy>) => void = defaultCallback
 ) {
   React.useEffect(() => {
     const params = {
@@ -148,6 +154,7 @@ export function useGetJurisdictionTree(
           if (apiResponse.value) {
             const responseData = apiResponse.value;
             treeFetchedCreator(responseData);
+            onThen(apiResponse);
           }
           if (apiResponse.error) {
             throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
