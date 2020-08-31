@@ -6,7 +6,7 @@
  */
 
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
@@ -125,16 +125,15 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     return existingAssignmentsIds.includes(node.model.id);
   };
 
-  /** useGetJurisdictionTree callback, called after the the hierarchy apiResponse has been received. */
-  const getTreeCallback = () => {
-    if (!plan) {
-      return;
-    }
-    const autoSelectCallback = autoSelectCallbackFactory(plan);
+  /** autoSelects existing plan jurisdiction assignments
+   * @param thePlan - plan to derive the existing assignments from.
+   */
+  const getTreeCallback = (thePlan: PlanDefinition) => {
+    const autoSelectCallback = autoSelectCallbackFactory(thePlan);
     autoSelectNodesCreator(
       rootId,
       autoSelectCallback,
-      plan.identifier,
+      thePlan.identifier,
       SELECTION_REASON.USER_CHANGE
     );
   };
@@ -145,9 +144,14 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     treeFetchedCreator,
     stopLoading,
     handleBrokenPage,
-    tree,
-    getTreeCallback
+    tree
   );
+
+  useEffect(() => {
+    if (plan && tree) {
+      getTreeCallback(plan);
+    }
+  }, [plan, tree]);
 
   if (loading()) {
     return <Ripple />;
