@@ -6,7 +6,6 @@
  */
 
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { Result } from '@onaio/utils';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
@@ -28,7 +27,6 @@ import {
   MANUAL_ASSIGN_JURISDICTIONS_URL,
   PLANNING_VIEW_URL,
 } from '../../../../constants';
-import { LoadOpenSRPHierarchy } from '../../../../helpers/dataLoading/jurisdictions';
 import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { OpenSRPService } from '../../../../services/opensrp';
 import hierarchyReducer, {
@@ -39,7 +37,7 @@ import hierarchyReducer, {
   reducerName as hierarchyReducerName,
 } from '../../../../store/ducks/opensrp/hierarchies';
 import { SELECTION_REASON } from '../../../../store/ducks/opensrp/hierarchies/constants';
-import { RawOpenSRPHierarchy, TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
+import { TreeNode } from '../../../../store/ducks/opensrp/hierarchies/types';
 import jurisdictionMetadataReducer, {
   reducerName as jurisdictionMetadataReducerName,
 } from '../../../../store/ducks/opensrp/jurisdictionsMetadata';
@@ -50,7 +48,7 @@ import plansReducer, {
   reducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 import { ConnectedAssignmentMapWrapper } from '../../AssigmentMapWrapper';
-import { usePlanEffect } from '../EntryView/utils';
+import { useGetJurisdictionTree, usePlanEffect } from '../EntryView/utils';
 import { ConnectedJurisdictionTable } from '../helpers/JurisdictionTable';
 import { useHandleBrokenPage } from '../helpers/utils';
 
@@ -117,38 +115,39 @@ export const JurisdictionAssignmentView = (props: JurisdictionAssignmentViewFull
     startLoading
   );
 
-  React.useEffect(() => {
+  /** helper to create the callback function that will be called on each node in the tree
+   * @param thePlan - plan to derive the existing assignments from.
+   */
+  const autoSelectCallbackFactory = (thePlan: PlanDefinition) => (node: TreeNode) => {
+    const existingAssignmentsIds = thePlan.jurisdiction.map(
+      jurisdictionCode => jurisdictionCode.code
+    );
+    return existingAssignmentsIds.includes(node.model.id);
+  };
+
+  /** useGetJurisdictionTree callback, called after the the hierarchy apiResponse has been received. */
+  const getTreeCallback = () => {
     if (!plan) {
       return;
     }
-    const callback = (node: TreeNode) => {
-      const existingAssignmentsIds = plan.jurisdiction.map(
-        jurisdictionCode => jurisdictionCode.code
-      );
-      return existingAssignmentsIds.includes(node.model.id);
-    };
-    const params = {
-      return_structure_count: true,
-    };
-    startLoading(rootId, !tree);
-    LoadOpenSRPHierarchy(rootId, OpenSRPService, params)
-      .then((apiResponse: Result<RawOpenSRPHierarchy>) => {
-        if (apiResponse.value) {
-          const responseData = apiResponse.value;
-          treeFetchedCreator(responseData);
-          autoSelectNodesCreator(rootId, callback, plan.identifier, SELECTION_REASON.USER_CHANGE);
-        }
-        if (apiResponse.error) {
-          throw new Error(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-        }
-      })
-      .finally(() => {
-        stopLoading(rootId);
-      })
-      .catch(() => {
-        handleBrokenPage(COULD_NOT_LOAD_JURISDICTION_HIERARCHY);
-      });
-  }, [rootId, plan]);
+    const autoSelectCallback = autoSelectCallbackFactory(plan);
+    autoSelectNodesCreator(
+      rootId,
+      autoSelectCallback,
+      plan.identifier,
+      SELECTION_REASON.USER_CHANGE
+    );
+  };
+
+  useGetJurisdictionTree(
+    rootId,
+    startLoading,
+    treeFetchedCreator,
+    stopLoading,
+    handleBrokenPage,
+    tree,
+    getTreeCallback
+  );
 
   if (loading()) {
     return <Ripple />;
