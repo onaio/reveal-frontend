@@ -36,7 +36,7 @@ const HeaderBreadcrumb = (props: BreadCrumbProps) => {
 
   return (
     <div>
-      <Breadcrumb className={`reveal-breadcrumb ${props.className}`}>
+      <Breadcrumb className={`reveal-breadcrumb${props.className ? ' ' + props.className : ''}`}>
         {linkList}
         <BreadcrumbItem active={true}>{currentPage.label}</BreadcrumbItem>
       </Breadcrumb>
