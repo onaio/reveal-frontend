@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PlanAssignment/JurisdictionTableView works as expected: AssignedOrgs 1`] = `null`;
-
 exports[`PlanAssignment/JurisdictionTableView works as expected: Breadcrumbs 1`] = `
 Array [
   <li
@@ -132,8 +130,6 @@ Array [
   </li>,
 ]
 `;
-
-exports[`PlanAssignment/JurisdictionTableView works as expected: Table headers 1`] = `null`;
 
 exports[`PlanAssignment/JurisdictionTableView works as expected: helmet 1`] = `
 <HelmetWrapper

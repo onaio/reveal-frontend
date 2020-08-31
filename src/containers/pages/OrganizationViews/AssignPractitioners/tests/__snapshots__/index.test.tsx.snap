@@ -14,106 +14,81 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
     <ol
       className="breadcrumb"
     >
-      <LinkList
-        currentPage={
-          Object {
-            "label": "Assign Practitioners",
-            "url": "/teams/assignPractitioners",
-          }
-        }
-        pages={
-          Array [
-            Object {
-              "label": "Home",
-              "url": "/",
-            },
-            Object {
-              "label": "Teams",
-              "url": "/teams",
-            },
-            Object {
-              "label": "Takang 1",
-              "url": "/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4",
-            },
-          ]
-        }
+      <BreadcrumbItem
+        key="reveal-breadcrumb-0"
+        tag="li"
       >
-        <BreadcrumbItem
-          key="reveal-breadcrumb-0"
-          tag="li"
+        <li
+          className="breadcrumb-item"
         >
-          <li
-            className="breadcrumb-item"
+          <Link
+            key="0"
+            to="/"
           >
-            <Link
-              key="0"
-              to="/"
+            <LinkAnchor
+              href="/"
+              navigate={[Function]}
             >
-              <LinkAnchor
+              <a
                 href="/"
-                navigate={[Function]}
+                onClick={[Function]}
               >
-                <a
-                  href="/"
-                  onClick={[Function]}
-                >
-                  Home
-                </a>
-              </LinkAnchor>
-            </Link>
-          </li>
-        </BreadcrumbItem>
-        <BreadcrumbItem
-          key="reveal-breadcrumb-1"
-          tag="li"
+                Home
+              </a>
+            </LinkAnchor>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="reveal-breadcrumb-1"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
         >
-          <li
-            className="breadcrumb-item"
+          <Link
+            key="1"
+            to="/teams"
           >
-            <Link
-              key="1"
-              to="/teams"
+            <LinkAnchor
+              href="/teams"
+              navigate={[Function]}
             >
-              <LinkAnchor
+              <a
                 href="/teams"
-                navigate={[Function]}
+                onClick={[Function]}
               >
-                <a
-                  href="/teams"
-                  onClick={[Function]}
-                >
-                  Teams
-                </a>
-              </LinkAnchor>
-            </Link>
-          </li>
-        </BreadcrumbItem>
-        <BreadcrumbItem
-          key="reveal-breadcrumb-2"
-          tag="li"
+                Teams
+              </a>
+            </LinkAnchor>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="reveal-breadcrumb-2"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
         >
-          <li
-            className="breadcrumb-item"
+          <Link
+            key="2"
+            to="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
           >
-            <Link
-              key="2"
-              to="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
+            <LinkAnchor
+              href="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
+              navigate={[Function]}
             >
-              <LinkAnchor
+              <a
                 href="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
-                navigate={[Function]}
+                onClick={[Function]}
               >
-                <a
-                  href="/teams/view/d23f7350-d406-11e9-bb65-2a2ae2dbcce4"
-                  onClick={[Function]}
-                >
-                  Takang 1
-                </a>
-              </LinkAnchor>
-            </Link>
-          </li>
-        </BreadcrumbItem>
-      </LinkList>
+                Takang 1
+              </a>
+            </LinkAnchor>
+          </Link>
+        </li>
+      </BreadcrumbItem>
       <BreadcrumbItem
         active={true}
         tag="li"

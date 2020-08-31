@@ -80,8 +80,6 @@ describe('PlanAssignment/JurisdictionTableView', () => {
     expect(toJson(wrapper.find('HelmetWrapper'))).toMatchSnapshot('helmet');
     expect(toJson(wrapper.find('.page-title'))).toMatchSnapshot('page-title');
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('Breadcrumbs');
-    expect(toJson(wrapper.find('thead'))).toMatchSnapshot('Table headers');
-    expect(toJson(wrapper.find('AssignedOrgs span'))).toMatchSnapshot('AssignedOrgs');
     wrapper.unmount();
   });
 });

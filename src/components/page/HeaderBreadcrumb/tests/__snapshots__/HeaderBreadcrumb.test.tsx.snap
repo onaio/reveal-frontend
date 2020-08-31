@@ -64,104 +64,76 @@ exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`]
           <ol
             className="breadcrumb"
           >
-            <LinkList
-              currentPage={
-                Object {
-                  "label": "IRS",
-                  "url": "/irs",
-                }
-              }
-              pages={
-                Array [
-                  Object {
-                    "label": "Home",
-                    "url": "/",
-                  },
-                  Object {
-                    "label": "Programs",
-                    "url": "/programs",
-                  },
-                  Object {
-                    "label": "Provinces",
-                    "url": "",
-                  },
-                  Object {
-                    "label": "Disctricts",
-                  },
-                ]
-              }
+            <BreadcrumbItem
+              key="reveal-breadcrumb-0"
+              tag="li"
             >
-              <BreadcrumbItem
-                key="reveal-breadcrumb-0"
-                tag="li"
+              <li
+                className="breadcrumb-item"
               >
-                <li
-                  className="breadcrumb-item"
+                <Link
+                  key="0"
+                  to="/"
                 >
-                  <Link
-                    key="0"
-                    to="/"
+                  <LinkAnchor
+                    href="/"
+                    navigate={[Function]}
                   >
-                    <LinkAnchor
+                    <a
                       href="/"
-                      navigate={[Function]}
+                      onClick={[Function]}
                     >
-                      <a
-                        href="/"
-                        onClick={[Function]}
-                      >
-                        Home
-                      </a>
-                    </LinkAnchor>
-                  </Link>
-                </li>
-              </BreadcrumbItem>
-              <BreadcrumbItem
-                key="reveal-breadcrumb-1"
-                tag="li"
+                      Home
+                    </a>
+                  </LinkAnchor>
+                </Link>
+              </li>
+            </BreadcrumbItem>
+            <BreadcrumbItem
+              key="reveal-breadcrumb-1"
+              tag="li"
+            >
+              <li
+                className="breadcrumb-item"
               >
-                <li
-                  className="breadcrumb-item"
+                <Link
+                  key="1"
+                  to="/programs"
                 >
-                  <Link
-                    key="1"
-                    to="/programs"
+                  <LinkAnchor
+                    href="/programs"
+                    navigate={[Function]}
                   >
-                    <LinkAnchor
+                    <a
                       href="/programs"
-                      navigate={[Function]}
+                      onClick={[Function]}
                     >
-                      <a
-                        href="/programs"
-                        onClick={[Function]}
-                      >
-                        Programs
-                      </a>
-                    </LinkAnchor>
-                  </Link>
-                </li>
-              </BreadcrumbItem>
-              <BreadcrumbItem
-                key="reveal-breadcrumb-2"
-                tag="li"
+                      Programs
+                    </a>
+                  </LinkAnchor>
+                </Link>
+              </li>
+            </BreadcrumbItem>
+            <BreadcrumbItem
+              key="reveal-breadcrumb-2"
+              tag="li"
+            >
+              <li
+                className="breadcrumb-item"
               >
-                <li
-                  className="breadcrumb-item"
-                >
-                  Provinces
-                </li>
-              </BreadcrumbItem>
-              <BreadcrumbItem
-                key="reveal-breadcrumb-3"
-                tag="li"
+                Provinces
+              </li>
+            </BreadcrumbItem>
+            <BreadcrumbItem
+              key="reveal-breadcrumb-3"
+              tag="li"
+            >
+              <li
+                className="breadcrumb-item"
               >
-                <li
-                  className="breadcrumb-item"
-                >
-                  Disctricts
-                </li>
-              </BreadcrumbItem>
-            </LinkList>
+                Disctricts
+              </li>
+            </BreadcrumbItem>
             <BreadcrumbItem
               active={true}
               tag="li"

@@ -68,164 +68,131 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
     <ol
       className="breadcrumb"
     >
-      <LinkList
-        currentPage={
-          Object {
-            "label": "A1-Tha Luang Village 1 Focus 01",
-            "url": "/focus-investigation/map/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-          }
-        }
-        pages={
-          Array [
-            Object {
-              "label": "Home",
-              "url": "/",
-            },
-            Object {
-              "label": "Focus Investigations",
-              "url": "/focus-investigation",
-            },
-            Object {
-              "label": "Chadiza",
-              "url": "/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-            },
-            Object {
-              "label": "Naviluli",
-              "url": "/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f",
-            },
-            Object {
-              "label": "NVI_439",
-              "url": "/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac",
-            },
-          ]
-        }
+      <BreadcrumbItem
+        key="reveal-breadcrumb-0"
+        tag="li"
       >
-        <BreadcrumbItem
-          key="reveal-breadcrumb-0"
-          tag="li"
+        <li
+          className="breadcrumb-item"
         >
-          <li
-            className="breadcrumb-item"
+          <Link
+            key="0"
+            to="/"
           >
-            <Link
-              key="0"
-              to="/"
+            <LinkAnchor
+              href="/"
+              navigate={[Function]}
             >
-              <LinkAnchor
+              <a
                 href="/"
-                navigate={[Function]}
+                onClick={[Function]}
               >
-                <a
-                  href="/"
-                  onClick={[Function]}
-                >
-                  Home
-                </a>
-              </LinkAnchor>
-            </Link>
-          </li>
-        </BreadcrumbItem>
-        <BreadcrumbItem
-          key="reveal-breadcrumb-1"
-          tag="li"
+                Home
+              </a>
+            </LinkAnchor>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="reveal-breadcrumb-1"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
         >
-          <li
-            className="breadcrumb-item"
+          <Link
+            key="1"
+            to="/focus-investigation"
           >
-            <Link
-              key="1"
-              to="/focus-investigation"
+            <LinkAnchor
+              href="/focus-investigation"
+              navigate={[Function]}
             >
-              <LinkAnchor
+              <a
                 href="/focus-investigation"
-                navigate={[Function]}
+                onClick={[Function]}
               >
-                <a
-                  href="/focus-investigation"
-                  onClick={[Function]}
-                >
-                  Focus Investigations
-                </a>
-              </LinkAnchor>
-            </Link>
-          </li>
-        </BreadcrumbItem>
-        <BreadcrumbItem
-          key="reveal-breadcrumb-2"
-          tag="li"
+                Focus Investigations
+              </a>
+            </LinkAnchor>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="reveal-breadcrumb-2"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
         >
-          <li
-            className="breadcrumb-item"
+          <Link
+            key="2"
+            to="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
           >
-            <Link
-              key="2"
-              to="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+            <LinkAnchor
+              href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+              navigate={[Function]}
             >
-              <LinkAnchor
+              <a
                 href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                navigate={[Function]}
+                onClick={[Function]}
               >
-                <a
-                  href="/focus-investigation/filter/2939/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                  onClick={[Function]}
-                >
-                  Chadiza
-                </a>
-              </LinkAnchor>
-            </Link>
-          </li>
-        </BreadcrumbItem>
-        <BreadcrumbItem
-          key="reveal-breadcrumb-3"
-          tag="li"
+                Chadiza
+              </a>
+            </LinkAnchor>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="reveal-breadcrumb-3"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
         >
-          <li
-            className="breadcrumb-item"
+          <Link
+            key="3"
+            to="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
           >
-            <Link
-              key="3"
-              to="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+            <LinkAnchor
+              href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
+              navigate={[Function]}
             >
-              <LinkAnchor
+              <a
                 href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                navigate={[Function]}
+                onClick={[Function]}
               >
-                <a
-                  href="/focus-investigation/filter/2944/ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f"
-                  onClick={[Function]}
-                >
-                  Naviluli
-                </a>
-              </LinkAnchor>
-            </Link>
-          </li>
-        </BreadcrumbItem>
-        <BreadcrumbItem
-          key="reveal-breadcrumb-4"
-          tag="li"
+                Naviluli
+              </a>
+            </LinkAnchor>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="reveal-breadcrumb-4"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
         >
-          <li
-            className="breadcrumb-item"
+          <Link
+            key="4"
+            to="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
           >
-            <Link
-              key="4"
-              to="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
+            <LinkAnchor
+              href="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
+              navigate={[Function]}
             >
-              <LinkAnchor
+              <a
                 href="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
-                navigate={[Function]}
+                onClick={[Function]}
               >
-                <a
-                  href="/focus-investigation/view/450fc15b-5bd2-468a-927a-49cb10d3bcac"
-                  onClick={[Function]}
-                >
-                  NVI_439
-                </a>
-              </LinkAnchor>
-            </Link>
-          </li>
-        </BreadcrumbItem>
-      </LinkList>
+                NVI_439
+              </a>
+            </LinkAnchor>
+          </Link>
+        </li>
+      </BreadcrumbItem>
       <BreadcrumbItem
         active={true}
         tag="li"

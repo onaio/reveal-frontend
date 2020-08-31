@@ -2,12 +2,17 @@ import ListView from '@onaio/list-view';
 import * as React from 'react';
 import { Fragment } from 'react';
 import { RouteComponentProps } from 'react-router';
-import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
-import { LinkList } from '../../../../../components/page/HeaderBreadcrumb/helpers';
+import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/TreeWalker';
-import { NAME, NO_ROWS_FOUND, TEAMS_ASSIGNMENT } from '../../../../../configs/lang';
+import {
+  ASSIGN_PLANS,
+  HOME,
+  NAME,
+  NO_ROWS_FOUND,
+  TEAMS_ASSIGNMENT,
+} from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
-import { ASSIGN_PLAN_URL } from '../../../../../constants';
+import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../../constants';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
 import { Organization } from '../../../../../store/ducks/opensrp/organizations';
@@ -15,7 +20,6 @@ import { AssignedOrgs } from '../AssignedOrgs';
 import { EditOrgs } from '../EditOrgs';
 import { JurisdictionCell } from '../JurisdictionCell';
 import { RouteParams } from '../JurisdictionTableView';
-import { pagesBuilder } from '../JurisdictionTableView/helpers/utils';
 
 /** props for  JurisdictionTableListView */
 export interface JurisdictionTableListViewProps extends WithWalkerProps {
@@ -48,6 +52,51 @@ const JurisdictionTableListView = (props: JurisdictionTableListViewPropTypes) =>
   let derivedChildrenNodes = currentChildren;
   if (!props.match.params.jurisdictionId) {
     derivedChildrenNodes = [currentNode];
+  }
+
+  const pageTitle = plan.title;
+  const baseUrl = `${ASSIGN_PLAN_URL}/${plan.identifier}`;
+
+  const initialCurrentPage = {
+    label: pageTitle,
+    url: baseUrl,
+  };
+
+  const hierarchy = props.hierarchy as TreeNode[];
+
+  const breadcrumbProps = {
+    className: 'plans-breadcrumb',
+    currentPage: initialCurrentPage,
+    pages: [
+      {
+        label: HOME,
+        url: HOME_URL,
+      },
+      {
+        label: ASSIGN_PLANS,
+        url: ASSIGN_PLAN_URL,
+      },
+    ],
+  };
+
+  // create breadcrumb props.
+  if (props.match.params.jurisdictionId) {
+    const path = [...hierarchy];
+    const lastNode = path.pop();
+
+    breadcrumbProps.pages.push(initialCurrentPage);
+
+    path.forEach(nd => {
+      breadcrumbProps.pages.push({
+        label: nd.model.label,
+        url: `${baseUrl}/${nd.model.id}`,
+      });
+    });
+
+    breadcrumbProps.currentPage = {
+      label: (lastNode as TreeNode).model.label,
+      url: `${baseUrl}/${(lastNode as TreeNode).model.id}`,
+    };
   }
 
   const data = derivedChildrenNodes.map(node => {
@@ -104,13 +153,10 @@ const JurisdictionTableListView = (props: JurisdictionTableListViewPropTypes) =>
     renderHeaders,
     tableClass,
   };
-  const { pages, currentPage } = pagesBuilder(props);
+
   return (
     <Fragment>
-      <Breadcrumb className="reveal-breadcrumb plans-breadcrumb">
-        <LinkList pages={pages} />
-        <BreadcrumbItem active={true}>{currentPage.label}</BreadcrumbItem>
-      </Breadcrumb>
+      <HeaderBreadcrumb {...breadcrumbProps} />
       <ListView {...listViewProps} />
       {!data.length && (
         <div style={{ textAlign: 'center' }}>

@@ -1,23 +1,29 @@
 import { ASSIGN_PLANS, HOME } from '../../../../../../configs/lang';
+import { PlanDefinition } from '../../../../../../configs/settings';
 import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../../../constants';
 import { TreeNode } from '../../../../../../store/ducks/opensrp/hierarchies/types';
+import { JurisdictionTableListViewPropTypes } from '../../JurisdictionTableListView';
 
 /**
  * Util function to build out pages for header breadcrumb component
  * @param props - props required to build out pages
  */
-export const pagesBuilder = (props: any) => {
+interface Pages {
+  label: string;
+  url: string;
+}
+export const pagesBuilder = (props: Partial<JurisdictionTableListViewPropTypes>) => {
   const { plan } = props;
-  const pageTitle = plan.title;
-  const baseUrl = `${ASSIGN_PLAN_URL}/${plan.identifier}`;
+  const pageTitle = (plan as PlanDefinition).title;
+  const baseUrl = `${ASSIGN_PLAN_URL}/${(plan as PlanDefinition).identifier}`;
 
   const initialCurrentPage = {
     label: pageTitle,
     url: baseUrl,
   };
   const hierarchy = props.hierarchy as TreeNode[];
-  let currentPage = initialCurrentPage;
-  const pages = [
+  let currentPage: Pages = initialCurrentPage;
+  const pages: Pages[] = [
     {
       label: HOME,
       url: HOME_URL,
@@ -29,7 +35,7 @@ export const pagesBuilder = (props: any) => {
   ];
 
   // create breadcrumb props.
-  if (props.match.params.jurisdictionId) {
+  if (props.match && props.match.params.jurisdictionId) {
     const path = [...hierarchy];
     const lastNode = path.pop();
 

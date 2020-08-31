@@ -24,77 +24,56 @@ exports[`src/containers/pages/OrganizationViews renders SingleTeamView correctly
     <ol
       className="breadcrumb"
     >
-      <LinkList
-        currentPage={
-          Object {
-            "label": "The Luang",
-            "url": "/teams/view/fcc19470-d599-11e9-bb65-2a2ae2dbcce4",
-          }
-        }
-        pages={
-          Array [
-            Object {
-              "label": "Home",
-              "url": "/",
-            },
-            Object {
-              "label": "Teams",
-              "url": "/teams",
-            },
-          ]
-        }
+      <BreadcrumbItem
+        key="reveal-breadcrumb-0"
+        tag="li"
       >
-        <BreadcrumbItem
-          key="reveal-breadcrumb-0"
-          tag="li"
+        <li
+          className="breadcrumb-item"
         >
-          <li
-            className="breadcrumb-item"
+          <Link
+            key="0"
+            to="/"
           >
-            <Link
-              key="0"
-              to="/"
+            <LinkAnchor
+              href="/"
+              navigate={[Function]}
             >
-              <LinkAnchor
+              <a
                 href="/"
-                navigate={[Function]}
+                onClick={[Function]}
               >
-                <a
-                  href="/"
-                  onClick={[Function]}
-                >
-                  Home
-                </a>
-              </LinkAnchor>
-            </Link>
-          </li>
-        </BreadcrumbItem>
-        <BreadcrumbItem
-          key="reveal-breadcrumb-1"
-          tag="li"
+                Home
+              </a>
+            </LinkAnchor>
+          </Link>
+        </li>
+      </BreadcrumbItem>
+      <BreadcrumbItem
+        key="reveal-breadcrumb-1"
+        tag="li"
+      >
+        <li
+          className="breadcrumb-item"
         >
-          <li
-            className="breadcrumb-item"
+          <Link
+            key="1"
+            to="/teams"
           >
-            <Link
-              key="1"
-              to="/teams"
+            <LinkAnchor
+              href="/teams"
+              navigate={[Function]}
             >
-              <LinkAnchor
+              <a
                 href="/teams"
-                navigate={[Function]}
+                onClick={[Function]}
               >
-                <a
-                  href="/teams"
-                  onClick={[Function]}
-                >
-                  Teams
-                </a>
-              </LinkAnchor>
-            </Link>
-          </li>
-        </BreadcrumbItem>
-      </LinkList>
+                Teams
+              </a>
+            </LinkAnchor>
+          </Link>
+        </li>
+      </BreadcrumbItem>
       <BreadcrumbItem
         active={true}
         tag="li"
