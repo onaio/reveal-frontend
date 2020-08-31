@@ -104,6 +104,7 @@ export const isMapDisabled = (plan: PlanDefinition | null): boolean => {
  */
 const PlanAssignment = (props: PlanAssignmentProps) => {
   const [loading, setLoading] = useState<boolean>(true);
+  const [hideBottomBreadCrumb, setHideBottomBreadCrumb] = useState<boolean>(false);
   const {
     OpenSRPServiceClass,
     addPlanActionCreator,
@@ -252,6 +253,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     ...props,
     LoadingIndicator: Loading, // TODO: indicate what is loading
     assignments,
+    hideBottomBreadCrumb,
     jurisdictionId,
     labels: {
       loadAncestorsError: COULD_NOT_LOAD_PARENTS,
@@ -267,6 +269,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   const AssignmentWraperProps = {
     baseAssignmentURL: `${ASSIGN_PLAN_URL}/${(plan as PlanDefinition).identifier}`,
     currentParentId: jurisdictionId,
+    hideBottomBreadCrumbCallback: setHideBottomBreadCrumb,
     isPlanAssignmentPage: true,
     jurisdictionsChunkSize: 30,
     plan: plan as PlanDefinition,

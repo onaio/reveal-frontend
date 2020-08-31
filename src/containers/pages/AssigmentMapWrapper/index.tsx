@@ -52,6 +52,7 @@ export interface AssignmentMapWrapperProps {
   deselectNodeCreator: typeof deselectNode;
   currentParentNode?: TreeNode;
   baseAssignmentURL: string;
+  hideBottomBreadCrumbCallback: (showBreadcrumb: boolean) => void;
 }
 
 /** default value for feature Collection */
@@ -69,6 +70,9 @@ const defaultProps: AssignmentMapWrapperProps = {
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   getJurisdictionsFeatures: defaultFeatureCollection,
   getJurisdictionsMetadata: {},
+  hideBottomBreadCrumbCallback: () => {
+    return;
+  },
   jurisdictionsChunkSize: 30,
   plan: {
     identifier: '',
@@ -94,10 +98,12 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     currentParentId,
     rootJurisdictionId,
     jurisdictionsChunkSize,
+    hideBottomBreadCrumbCallback,
   } = props;
   const currentChildIds: string[] = currentChildren.map(node => node.model.id);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [mapParent, setMapParent] = React.useState<string>('');
+  const [hasValidGeoms, setHasValidGeoms] = React.useState<boolean>(true);
   const jurisdictionLabels = currentChildren.map(d => d.model.label);
   const history = useHistory();
 
@@ -115,15 +121,41 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
         serviceClass
       )
         .then(res => {
+          let hasValidGeomsBool = true;
           if (res.value && res.value.length && currentChildren.length) {
-            fetchJurisdictionsActionCreator(res.value);
+            const getCoordinates = (coordinates: any) => {
+              if (coordinates && Array.isArray(coordinates)) {
+                getCoordinates((coordinates as any)[0]);
+              } else if (typeof coordinates === 'undefined') {
+                hasValidGeomsBool = false;
+              }
+            };
+            const mapFeatures = (feature: Feature) => {
+              if ((feature.geometry as Geometry).coordinates.length) {
+                (feature.geometry as Geometry).coordinates.forEach(getCoordinates);
+              }
+            };
+            (res.value as Feature[]).forEach(mapFeatures);
+            if (hasValidGeomsBool) {
+              fetchJurisdictionsActionCreator(res.value);
+            }
             setLoading(false);
+            setHasValidGeoms(hasValidGeomsBool);
+            hideBottomBreadCrumbCallback(!hasValidGeomsBool);
+          } else {
+            setLoading(false);
+            setHasValidGeoms(false);
+            hideBottomBreadCrumbCallback(true);
           }
         })
         .finally(() => {
           setLoading(false);
         })
         .catch(error => displayError(error));
+    } else {
+      setLoading(false);
+      setHasValidGeoms(true);
+      hideBottomBreadCrumbCallback(false);
     }
   }, [getJurisdictionsFeatures, currentParentId]);
 
@@ -139,41 +171,24 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   let mapCenter;
   let mapBounds;
   let zoom;
-  let hasValidGeoms = true;
   if (getJurisdictionsFeatures && getJurisdictionsFeatures.features.length) {
-    const getCoordinates = (coordinates: any) => {
-      if (coordinates && Array.isArray(coordinates)) {
-        getCoordinates((coordinates as any)[0]);
-      } else if (typeof coordinates === 'undefined') {
-        hasValidGeoms = false;
-      }
-    };
-    const mapFeatures = (feature: Feature) => {
-      if ((feature.geometry as Geometry).coordinates.length) {
-        (feature.geometry as Geometry).coordinates.forEach(getCoordinates);
-      }
-    };
-    getJurisdictionsFeatures.features.forEach(mapFeatures);
     structures = buildStructureLayers(getJurisdictionsFeatures as any, true);
     if (Object.keys(CountriesAdmin0).filter(admin => jurisdictionLabels.includes(admin)).length) {
       mapCenter = undefined;
       mapBounds = undefined;
-      hasValidGeoms = false;
     } else {
       mapBounds = GeojsonExtent(getJurisdictionsFeatures);
       const centerAndZoom = viewport(mapBounds, [600, 400]);
       mapCenter = centerAndZoom.center;
       zoom = centerAndZoom.zoom;
     }
-  } else {
-    hasValidGeoms = false;
   }
 
   if (loading) {
     return <Loading />;
   }
 
-  if (!hasValidGeoms) {
+  if (!hasValidGeoms || !structures.length || typeof mapBounds === 'undefined') {
     return <div>{MAP_LOAD_ERROR}</div>;
   }
 

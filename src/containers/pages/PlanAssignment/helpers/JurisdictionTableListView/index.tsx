@@ -27,6 +27,7 @@ export interface JurisdictionTableListViewProps extends WithWalkerProps {
   organizations: Organization[];
   plan: PlanDefinition | null;
   submitCallBackFunc: (assignments: Assignment[]) => void;
+  hideBottomBreadCrumb?: boolean;
 }
 
 /**
@@ -39,7 +40,7 @@ export type JurisdictionTableListViewPropTypes = RouteComponentProps<RouteParams
   JurisdictionTableListViewProps;
 
 const JurisdictionTableListView = (props: JurisdictionTableListViewPropTypes) => {
-  const { organizations, assignments, plan, submitCallBackFunc } = props;
+  const { organizations, assignments, plan, submitCallBackFunc, hideBottomBreadCrumb } = props;
   const currentChildren = props.currentChildren as TreeNode[];
   const currentNode = props.currentNode as TreeNode;
 
@@ -156,7 +157,7 @@ const JurisdictionTableListView = (props: JurisdictionTableListViewPropTypes) =>
 
   return (
     <Fragment>
-      <HeaderBreadcrumb {...breadcrumbProps} />
+      {!hideBottomBreadCrumb && <HeaderBreadcrumb {...breadcrumbProps} />}
       <ListView {...listViewProps} />
       {!data.length && (
         <div style={{ textAlign: 'center' }}>
