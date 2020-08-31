@@ -163,6 +163,7 @@ describe('PlanAssignment', () => {
       fetchTreeActionCreator: fetchTree,
       getAncestorsFunc: expect.any(Function),
       getChildrenFunc: expect.any(Function),
+      hideBottomBreadCrumb: false,
       hierarchy: [],
       history: expect.any(Object),
       jurisdictionId: '8d44d54e-8b4c-465c-9e93-364a25739a6d',

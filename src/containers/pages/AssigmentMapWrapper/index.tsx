@@ -188,7 +188,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     return <Loading />;
   }
 
-  if (!hasValidGeoms || !structures.length || typeof mapBounds === 'undefined') {
+  if (!hasValidGeoms || !structures.length || !mapBounds || !zoom) {
     return <div>{MAP_LOAD_ERROR}</div>;
   }
 
