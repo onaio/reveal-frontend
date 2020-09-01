@@ -1,6 +1,6 @@
 import ListView from '@onaio/list-view';
-import React, { Fragment } from 'react';
-import { Helmet } from 'react-helmet';
+import * as React from 'react';
+import { Fragment } from 'react';
 import { RouteComponentProps } from 'react-router';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/TreeWalker';
@@ -19,39 +19,30 @@ import { Organization } from '../../../../../store/ducks/opensrp/organizations';
 import { AssignedOrgs } from '../AssignedOrgs';
 import { EditOrgs } from '../EditOrgs';
 import { JurisdictionCell } from '../JurisdictionCell';
+import { RouteParams } from '../JurisdictionTableView';
 
-/** base props for JurisdictionTable */
-interface BaseJurisdictionTablProps extends WithWalkerProps {
+/** props for  JurisdictionTableListView */
+export interface JurisdictionTableListViewProps extends WithWalkerProps {
   assignments: Assignment[];
   organizations: Organization[];
   plan: PlanDefinition | null;
   submitCallBackFunc: (assignments: Assignment[]) => void;
+  hideBottomBreadCrumb?: boolean;
 }
-
-/** Route params interface */
-export interface RouteParams {
-  jurisdictionId: string;
-  planId: string;
-}
-
-/** Props for JurisdictionTable */
-export type JurisdictionTableProps = RouteComponentProps<RouteParams> & BaseJurisdictionTablProps;
 
 /**
- * JurisdictionTable
- *
- * This component renders the table of jurisdictions on the plan assignment page.
- * The expectation is that to use this component, one will need to "enhance" it by
- * having it wrapped by the `withTreeWalker` higher order component.
- *
- * @param props - the props that JurisdictionTable expects
+ * This component renders the table for jurisdictions on the plans
+ * assignment page and is a wrapper around the ListView component.
+ * @param props - props that the JurisdictionTableListView component expects
  */
-const JurisdictionTable = (props: JurisdictionTableProps) => {
-  const { assignments, organizations, plan, submitCallBackFunc } = props;
 
+export type JurisdictionTableListViewPropTypes = RouteComponentProps<RouteParams> &
+  JurisdictionTableListViewProps;
+
+const JurisdictionTableListView = (props: JurisdictionTableListViewPropTypes) => {
+  const { organizations, assignments, plan, submitCallBackFunc, hideBottomBreadCrumb } = props;
   const currentChildren = props.currentChildren as TreeNode[];
   const currentNode = props.currentNode as TreeNode;
-  const hierarchy = props.hierarchy as TreeNode[];
 
   if (!plan) {
     return null;
@@ -72,7 +63,10 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
     url: baseUrl,
   };
 
+  const hierarchy = props.hierarchy as TreeNode[];
+
   const breadcrumbProps = {
+    className: 'plans-breadcrumb',
     currentPage: initialCurrentPage,
     pages: [
       {
@@ -154,7 +148,6 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
       </thead>
     );
   };
-
   const listViewProps = {
     data,
     headerItems,
@@ -164,11 +157,7 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
 
   return (
     <Fragment>
-      <Helmet>
-        <title>{pageTitle}</title>
-      </Helmet>
-      <HeaderBreadcrumb {...breadcrumbProps} />
-      <h3 className="mb-3 page-title">{pageTitle}</h3>
+      {!hideBottomBreadCrumb && <HeaderBreadcrumb {...breadcrumbProps} />}
       <ListView {...listViewProps} />
       {!data.length && (
         <div style={{ textAlign: 'center' }}>
@@ -180,15 +169,13 @@ const JurisdictionTable = (props: JurisdictionTableProps) => {
   );
 };
 
-/** default props for JurisdictionTable */
-const defaultProps: BaseJurisdictionTablProps = {
+const defaultProps = {
   ...defaultWalkerProps,
   assignments: [],
   organizations: [],
-  plan: null,
   submitCallBackFunc: () => null,
 };
 
-JurisdictionTable.defaultProps = defaultProps;
+JurisdictionTableListView.defaultProps = defaultProps;
 
-export { JurisdictionTable };
+export { JurisdictionTableListView };
