@@ -81,10 +81,10 @@ export const BaseUserSelectFilter = (props: BaseUserSelectFilterPropTypes) => {
         <DropdownMenu className="adhoc-filters">
           <h6>{FILTER}</h6>
           <div className="form-group row">
-            <div className="col-sm-2">
+            <div className="col-sm-4">
               <label>{USER}</label>
             </div>
-            <div className="col-sm-10">
+            <div className="col-sm-8">
               <UserIdSelect {...userIdSelectProps} />
             </div>
           </div>
