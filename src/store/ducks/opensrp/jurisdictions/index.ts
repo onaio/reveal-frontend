@@ -182,6 +182,15 @@ export const getJurisdictionsFC = () =>
       const validFeatures = activeJurisdictionsArray.filter(
         item => 'geometry' in item
       ) as Feature[];
+      // return empty features array if there are no valid features
+      // to avoid having an array of undefined
+      if (!validFeatures.length) {
+        return {
+          features: [],
+          type: 'FeatureCollection',
+        } as FeatureCollection;
+      }
+
       return {
         features: validFeatures.map((feature: Feature) => {
           if (newFeatureProps) {
