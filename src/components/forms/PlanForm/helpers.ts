@@ -245,10 +245,7 @@ export const DynamicMDAActivities = pick(planActivities, [
   DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
   DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
 ]);
-export const DynamicIRSActivities = pick(planActivities, [
-  DYNAMIC_BCC_ACTIVITY_CODE,
-  DYNAMIC_IRS_ACTIVITY_CODE,
-]);
+export const DynamicIRSActivities = pick(planActivities, [DYNAMIC_IRS_ACTIVITY_CODE]);
 
 export type FormActivity =
   | typeof FIActivities
@@ -335,15 +332,22 @@ export function getPlanActivityFromActionCode(
  * Get the plan definition conditions from form field values
  * @param element - form field values for one plan activity
  */
-const getConditionFromFormField = (
-  element: PlanActivityFormFields
+export const getConditionFromFormField = (
+  element: PlanActivityFormFields,
+  planActivity: PlanActivity | null
 ): PlanActionCondition[] | undefined => {
   return (
     element.condition &&
-    element.condition.map(item => {
+    element.condition.map((item, index) => {
+      const subjectCodableConcept =
+        (planActivity &&
+          planActivity.action.condition &&
+          planActivity.action.condition[index].expression.subjectCodableConcept) ||
+        null;
       return {
         expression: {
           ...(item.description && { description: item.description }),
+          ...(subjectCodableConcept && { subjectCodableConcept }),
           expression: item.expression,
         },
         kind: APPLICABILITY_CONDITION_KIND,
@@ -421,7 +425,7 @@ export function extractActivitiesFromPlanForm(
         };
       }
 
-      const condition = getConditionFromFormField(element);
+      const condition = getConditionFromFormField(element, planActivity);
       const trigger = getTriggerFromFormField(element);
 
       const thisActionIdentifier =

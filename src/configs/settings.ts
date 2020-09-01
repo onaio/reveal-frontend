@@ -68,6 +68,7 @@ import {
   IRS_GOAL_MEASURE,
   IRS_GREEN_THRESHOLD,
   IRS_GREY_THRESHOLD,
+  IRS_ORANGE_THRESHOLD,
   IRS_RED_THRESHOLD,
   IRS_YELLOW_THRESHOLD,
   LARVAL_DIPPING_ACTIVITY,
@@ -114,6 +115,7 @@ import {
   CASE_CONFIRMATION_CODE,
   CASE_NUMBER_CODE,
   CASE_TRIGGERED,
+  CREATE_TYPE,
   DISABLED,
   DYNAMIC_BCC_ACTIVITY_CODE,
   DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
@@ -377,6 +379,7 @@ export interface PlanAction {
   timingPeriod: PlanActionTimingPeriod;
   title: string;
   trigger?: PlanActionTrigger[];
+  type?: string;
 }
 
 /** Plan Goal detailQuantity */
@@ -655,6 +658,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: BCC_GOAL_DESCRIPTION,
@@ -683,14 +687,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Structure is residential or type does not exist',
             expression:
-              "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
-          },
-          kind: APPLICABILITY_CONDITION_KIND,
-        },
-        {
-          expression: {
-            description: 'Family exists for structure',
-            expression: '$this.contained.exists()',
+              "$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists())",
             subjectCodableConcept: {
               text: 'Family',
             },
@@ -701,7 +698,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Register structure event submitted for a residential structure',
             expression:
-              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
+              "$this.is(FHIR.Location)  or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -734,6 +731,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: BEDNET_ACTIVITY_DESCRIPTION,
@@ -764,9 +762,6 @@ export const planActivities: PlanActivities = {
               'Person is older than 5 years or person associated with questionnaire response if older than 5 years',
             expression:
               "($this.is(FHIR.Patient) and $this.birthDate <= today() - 5 'years') or ($this.contained.where(Patient.birthDate <= today() - 5 'years').exists())",
-            subjectCodableConcept: {
-              text: 'Person',
-            },
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -801,6 +796,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: BLOOD_SCREENING_ACTIVITY_DESCRIPTION,
@@ -859,6 +855,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description:
@@ -887,12 +884,9 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description:
-              'Person or person associated with questionaire response is older than 5 years and younger than 14 years 11 months',
+              'Person or person associated with questionaire response is older than 5 years and younger than 15 years',
             expression:
-              "($this.is(FHIR.Patient) and $this.birthDate <= today() - 60 'months' and $this.birthDate >= today() - 179 'months') or ($this.contained.where(Patient.birthDate <= today() - 60 'months' and $this.birthDate >= today() - 179 'months').exists())",
-            subjectCodableConcept: {
-              text: 'Person',
-            },
+              "($this.is(FHIR.Patient) and $this.birthDate <= today() - 5 'years' and $this.birthDate > today() - 15 'years') or ($this.contained.where(Patient.birthDate <= today() - 5 'years' and $this.birthDate > today() - 15 'years').exists())",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -928,6 +922,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description:
@@ -957,14 +952,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Structure is residential or type does not exist',
             expression:
-              "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
-          },
-          kind: APPLICABILITY_CONDITION_KIND,
-        },
-        {
-          expression: {
-            description: 'Family does not exist for structure',
-            expression: '$this.contained.exists().not()',
+              "$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists().not())",
             subjectCodableConcept: {
               text: 'Family',
             },
@@ -975,7 +963,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Apply to residential structures in Register_Structure questionnaires',
             expression:
-              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
+              "$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1008,6 +996,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
@@ -1036,7 +1025,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Structure is residential or type does not exist',
             expression:
-              "$this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
+              "$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1044,7 +1033,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Apply to residential structures in Register_Structure questionnaires',
             expression:
-              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure'",
+              "$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1077,6 +1066,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: IRS_GOAL_DESCRIPTION,
@@ -1104,7 +1094,8 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description: 'Structure is a larval breeding site',
-            expression: "$this.type.where(id='locationType').text = 'Larval Breeding Site'",
+            expression:
+              "$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').text = 'Larval Breeding Site'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1112,7 +1103,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Apply to larval breeding sites in Register_Structure questionnaires',
             expression:
-              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Larval Breeding Site'",
+              "$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Larval Breeding Site')",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1145,6 +1136,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
@@ -1172,7 +1164,8 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description: 'Structure is a mosquito collection point',
-            expression: "$this.type.where(id='locationType').text = 'Mosquito Collection Point'",
+            expression:
+              "$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').text = 'Mosquito Collection Point'",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1180,7 +1173,7 @@ export const planActivities: PlanActivities = {
           expression: {
             description: 'Apply to mosquito collection point in Register_Structure questionnaires',
             expression:
-              "questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Mosquito Collection Point'",
+              "$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Mosquito Collection Point')",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
@@ -1213,6 +1206,7 @@ export const planActivities: PlanActivities = {
           type: NAMED_EVENT_TRIGGER_TYPE,
         },
       ],
+      type: CREATE_TYPE,
     },
     goal: {
       description: MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
@@ -1671,6 +1665,35 @@ export const indicatorThresholdsIRSNamibia: IndicatorThresholds = {
   },
 };
 /** END Namibia IRS Reporting configs */
+
+/** Focus Investigation Reporting Configs */
+export const indicatorThresholdsFI: IndicatorThresholds = {
+  GREEN_THRESHOLD: {
+    color: '#33ad33',
+    name: IRS_GREEN_THRESHOLD,
+    orEquals: true,
+    value: 0.9,
+  },
+  ORANGE_THRESHOLD: {
+    color: '#ff8533',
+    name: IRS_ORANGE_THRESHOLD,
+    orEquals: true,
+    value: 0.8,
+  },
+  RED_THRESHOLD: {
+    color: '#ff5c33',
+    name: IRS_RED_THRESHOLD,
+    orEquals: true,
+    value: 0.2,
+  },
+  YELLOW_THRESHOLD: {
+    color: '#ff3',
+    name: IRS_YELLOW_THRESHOLD,
+    orEquals: true,
+    value: 0.0001,
+  },
+};
+/** END Focus Investigation Reporting Configs */
 
 /** Interface describing thresholds look up */
 export interface IndicatorThresholdsLookUp {

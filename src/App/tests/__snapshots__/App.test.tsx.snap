@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App integration: renders App correctly: The displayed text 1`] = `"HomePlanManage PlansAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingAdminTeamsPractitionersUsersClientsAbout superset-userSign OutWelcome to RevealGet started by selecting an intervention belowPlanning toolFocus InvestigationTeams v0.4.2"`;
+exports[`App integration: renders App correctly: The displayed text 1`] = `"HomePlanManage PlansAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingMDA ReportingAdminTeamsPractitionersUsersClientsAbout superset-userSign OutWelcome to RevealGet started by selecting an intervention belowPlanning toolFocus InvestigationTeams v0.4.2"`;
 
 exports[`App integration: renders App correctly: footer 1`] = `
 <footer

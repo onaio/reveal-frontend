@@ -103,7 +103,7 @@ export const fetchGenericStructures = (
         return structure;
       }
     ),
-    'structure_id'
+    'id'
   ),
   reducerKey,
   type: GENERIC_STRUCTURES_FETCHED,

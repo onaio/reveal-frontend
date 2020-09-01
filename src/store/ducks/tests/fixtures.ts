@@ -314,6 +314,15 @@ export const plan103 = {
   plan_version: '1',
 };
 
+export const plan104 = {
+  ...plan103,
+  id: 'plan104',
+  plan_intervention_type: InterventionType.DynamicFI,
+  plan_status: 'active' as PlanStatus,
+  plan_title: 'plan104',
+  plan_name: 'plan!04',
+};
+
 export const plans: Plan[] = [
   plan1,
   plan2,

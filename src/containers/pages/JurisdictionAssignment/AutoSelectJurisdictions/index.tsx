@@ -9,7 +9,6 @@
  *  load plan given a url with the planId
  *  also requires the hierarchy
  *
- *  pending : render map.
  */
 
 import reducerRegistry from '@onaio/redux-reducer-registry';
@@ -22,7 +21,7 @@ import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Ripple from '../../../../components/page/Loading';
 import { TimelineSlider, TimelineSliderProps } from '../../../../components/TimeLineSlider';
-import { JURISDICTION_METADATA_RISK } from '../../../../configs/env';
+import { ASSIGNMENT_PAGE_SHOW_MAP, JURISDICTION_METADATA_RISK } from '../../../../configs/env';
 import {
   AUTO_TARGET_JURISDICTIONS_BY_RISK,
   COULD_NOT_LOAD_JURISDICTION_HIERARCHY,
@@ -61,10 +60,14 @@ import plansReducer, {
   getPlanDefinitionById,
   reducerName as planReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
+import { ConnectedAssignmentMapWrapper } from '../../AssigmentMapWrapper';
 import { useGetJurisdictionTree, usePlanEffect } from '../EntryView/utils';
+import { ConnectedJurisdictionTable } from '../helpers/JurisdictionTable';
+import { ConnectedResourceWidget } from '../helpers/ResourceCalcWidget';
 import { ConnectedJurisdictionSelectionsSlider } from '../helpers/Slider';
+import { ConnectedSelectedStructuresTable } from '../helpers/StructureCountTable/structureSummary';
 import { useHandleBrokenPage } from '../helpers/utils';
-import { ConnectedJurisdictionTable } from '../JurisdictionTable';
+import './index.css';
 
 reducerRegistry.register(planReducerName, plansReducer);
 reducerRegistry.register(jurisdictionMetadataReducerName, jurisdictionMetadataReducer);
@@ -193,6 +196,13 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     serviceClass,
   };
 
+  const structureSummaryProps = {
+    currentParentId: props.match.params.parentId,
+    onClickNext: () => setStep(TIMELINE_SLIDER_STEP3),
+    planId: plan.identifier,
+    rootJurisdictionId,
+  };
+
   const breadcrumbProps = {
     currentPage: {
       label: plan.title,
@@ -222,6 +232,21 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
     ],
   };
 
+  const resourceCalculationProps = {
+    currentParentId: props.match.params.parentId,
+    planId: plan.identifier,
+    rootId: rootJurisdictionId,
+  };
+
+  const AssignmentWrapperProps = {
+    baseAssignmentURL: `${AUTO_ASSIGN_JURISDICTIONS_URL}/${plan.identifier}/${rootJurisdictionId}`,
+    currentParentId: props.match.params.parentId,
+    jurisdictionsChunkSize: 30,
+    plan,
+    rootJurisdictionId,
+    serviceClass,
+  };
+
   const pageTitle = plan.title;
   return (
     <>
@@ -231,12 +256,26 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
       <HeaderBreadcrumb {...breadcrumbProps} />
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <TimelineSlider {...timelineSliderProps} />
+      <hr />
       {/* each of this components is a step in the auto selection journey, we start
       at the slider and go through a few tables and we should ideally end at plan assignment
       each of this components gets a callback that is called that modifies the state of this 
       container to know what is the next component to be rendered in the below section */}
+      {step !== TIMELINE_SLIDER_STEP1 && (
+        <div className="map-resource-widget">
+          <div className="map-wrapper">
+            {ASSIGNMENT_PAGE_SHOW_MAP && (
+              <ConnectedAssignmentMapWrapper {...AssignmentWrapperProps} />
+            )}
+          </div>
+          <ConnectedResourceWidget {...resourceCalculationProps} />
+        </div>
+      )}
       {step === TIMELINE_SLIDER_STEP1 && <ConnectedJurisdictionSelectionsSlider {...sliderProps} />}
-      {step === TIMELINE_SLIDER_STEP2 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
+      {step === TIMELINE_SLIDER_STEP2 && (
+        <ConnectedSelectedStructuresTable {...structureSummaryProps} />
+      )}
+      {step === TIMELINE_SLIDER_STEP3 && <ConnectedJurisdictionTable {...jurisdictionTableProps} />}
     </>
   );
 };
@@ -260,7 +299,9 @@ const mapStateToProps = (
 ): MapStateToProps => {
   const planId = ownProps.match.params.planId;
   const planObj = getPlanDefinitionById(state, planId);
-  const tree = treeByIdSelector(state, { rootJurisdictionId: ownProps.match.params.rootId });
+  const tree = treeByIdSelector(state, {
+    rootJurisdictionId: ownProps.match.params.rootId,
+  });
 
   return {
     jurisdictionsMetadata: getJurisdictionsMetadata(state),

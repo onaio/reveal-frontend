@@ -1,3 +1,4 @@
+import { ProgressBar } from '@onaio/progress-indicators';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import * as React from 'react';
@@ -29,7 +30,7 @@ import {
   REACTIVE_INVESTIGATION,
   ROUTINE_INVESTIGATION_TITLE,
 } from '../../../../../configs/lang';
-import { FIReasons } from '../../../../../configs/settings';
+import { FIReasons, indicatorThresholdsFI } from '../../../../../configs/settings';
 import {
   CASE_CONFIRMATION_CODE,
   CASE_CONFIRMATION_GOAL_ID,
@@ -48,7 +49,6 @@ import {
 import { PLAN_INTERVENTION_TYPE } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
 import { getGoalReport } from '../../../../../helpers/indicators';
-import ProgressBar from '../../../../../helpers/ProgressBar';
 import {
   FeatureCollection,
   getFilteredFIPlansURL,
@@ -73,7 +73,6 @@ import plansReducer, {
   FetchPlansAction,
   getPlanById,
   getPlansArray,
-  getPlansIdArray,
   InterventionType,
   Plan,
   PlanStatus,
@@ -96,6 +95,7 @@ import MarkCompleteLink, { MarkCompleteLinkProps } from './helpers/MarkCompleteL
 import StatusBadge, { StatusBadgeProps } from './helpers/StatusBadge';
 import {
   buildGsLiteLayers,
+  buildGsLiteSymbolLayers,
   buildJurisdictionLayers,
   buildOnClickHandler,
   buildStructureLayers,
@@ -205,7 +205,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
         props.fetchTasksActionCreator,
         props.plan,
         props.supersetService
-      ).catch((error: Error) => displayError(error));
+      ).catch((_: Error) => displayError(new Error(AN_ERROR_OCCURRED)));
     }
     /**
      * Only re-run effect if props.plan.plan_id changes
@@ -279,6 +279,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
   const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
   const structureLayers = buildStructureLayers(structures);
 
+  /** Build line and fill layers */
   const historicalIndexLayers = buildGsLiteLayers(
     CASE_CONFIRMATION_GOAL_ID,
     historicalPointIndexCases,
@@ -298,18 +299,46 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     {}
   );
 
+  /** Build symbol layers */
+  const historicalIndexSymbolLayers = buildGsLiteSymbolLayers(
+    CASE_CONFIRMATION_GOAL_ID,
+    historicalPointIndexCases,
+    historicalPolyIndexCases,
+    { useId: HISTORICAL_INDEX_CASES }
+  );
+  const currentIndexSymbolLayers = buildGsLiteSymbolLayers(
+    CASE_CONFIRMATION_GOAL_ID,
+    currentPointIndexCases,
+    currentPolyIndexCases,
+    { useId: CURRENT_INDEX_CASES }
+  );
+  const otherSymbolLayers = buildGsLiteSymbolLayers(
+    currentGoal,
+    pointFeatureCollection,
+    polygonFeatureCollection,
+    {}
+  );
+
+  /** Symbol layers should appear over fill and line so we make sure symbol layers are last
+   * in the array
+   */
   const gsLayers = [
     ...jurisdictionLayers,
     ...structureLayers,
     ...historicalIndexLayers,
     ...currentIndexLayers,
     ...otherLayers,
+    ...otherSymbolLayers,
+    ...historicalIndexSymbolLayers,
+    ...currentIndexSymbolLayers,
   ];
 
-  const mapCenter = getCenter({
-    features: [jurisdiction.geojson as any],
-    type: 'FeatureCollection',
-  });
+  const mapCenter = jurisdiction.geojson
+    ? getCenter({
+        features: [jurisdiction.geojson as any],
+        type: 'FeatureCollection',
+      })
+    : undefined;
 
   const mapBounds = getMapBounds(jurisdiction);
 
@@ -402,7 +431,11 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
                         ({goalReport.prettyPercentAchieved})
                       </p>
                       <br />
-                      <ProgressBar value={goalReport.percentAchieved} max={1} />
+                      <ProgressBar
+                        value={goalReport.percentAchieved}
+                        max={1}
+                        lineColorThresholds={indicatorThresholdsFI}
+                      />
                     </div>
                   </div>
                 );
@@ -418,11 +451,27 @@ SingleActiveFIMap.defaultProps = defaultMapSingleFIProps;
 
 export { SingleActiveFIMap };
 
+type MapStateToProps = Pick<
+  MapSingleFIProps,
+  | 'currentGoal'
+  | 'currentPointIndexCases'
+  | 'currentPolyIndexCases'
+  | 'goals'
+  | 'jurisdiction'
+  | 'plan'
+  | 'plansByFocusArea'
+  | 'structures'
+  | 'historicalPointIndexCases'
+  | 'pointFeatureCollection'
+  | 'historicalPolyIndexCases'
+  | 'polygonFeatureCollection'
+>;
+
 /** map state to props
  * @param {partial<store>} - the redux store
  * @param {any} ownProps - the props
  */
-const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
+const mapStateToProps = (state: Partial<Store>, ownProps: any): MapStateToProps => {
   // pass in the plan id to get plan the get the jurisdiction_id from the plan
   const getTasksFCSelector = tasksFCSelectorFactory();
   const currentGoal = ownProps.match.params.goalId || RACD_REGISTER_FAMILY_ID;
@@ -453,8 +502,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     plansByFocusArea.sort((a: Plan, b: Plan) => Date.parse(b.plan_date) - Date.parse(a.plan_date));
   }
 
-  if (plan && jurisdiction && goals && goals.length > 1) {
-    /** include all complete index cases including current index case */
+  if (plan && jurisdiction) {
     historicalPointIndexCases = getTasksFCSelector(state, {
       actionCode: CASE_CONFIRMATION_CODE,
       excludePlanId: plan.plan_id,
@@ -469,7 +517,10 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
       structureType: [POLYGON, MULTI_POLYGON],
       taskBusinessStatus: 'Complete',
     });
+  }
 
+  if (plan && jurisdiction && goals && goals.length > 1) {
+    /** include all complete index cases including current index case */
     currentPointIndexCases = getTasksFCSelector(state, {
       actionCode: CASE_CONFIRMATION_CODE,
       jurisdictionId: plan.jurisdiction_id,
@@ -504,6 +555,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     );
     structures = getStructuresFCByJurisdictionId(state, jurisdiction.jurisdiction_id);
   }
+
   return {
     currentGoal,
     currentPointIndexCases,
@@ -513,14 +565,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any) => {
     historicalPolyIndexCases,
     jurisdiction,
     plan,
-    plansArray: getPlansArray(state, InterventionType.FI, [PlanStatus.ACTIVE, PlanStatus.COMPLETE]),
     plansByFocusArea,
-    plansIdArray: getPlansIdArray(
-      state,
-      InterventionType.FI,
-      [PlanStatus.ACTIVE, PlanStatus.DRAFT],
-      null
-    ),
     pointFeatureCollection,
     polygonFeatureCollection,
     structures,

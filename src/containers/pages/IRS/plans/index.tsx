@@ -8,19 +8,23 @@ import { IRS_PLANS } from '../../../../configs/lang';
 import { QUERY_PARAM_TITLE, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import { getPlanStatusToDisplay, getQueryParams, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import IRSPlansReducer, {
-  fetchIRSPlans,
+import GenericPLansReducer, {
+  genericFetchPlans,
   GenericPlan,
-  makeIRSPlansArraySelector,
-  reducerName as IRSPlansReducerName,
+  makeGenericPlansArraySelector,
+  reducerName as GenericPLansReducerName,
 } from '../../../../store/ducks/generic/plans';
+import { InterventionType } from '../../../../store/ducks/plans';
 import { GenericPlanListProps, GenericPlansList } from '../../GenericPlansList';
 
 /** register the IRS plan definitions reducer */
-reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
+reducerRegistry.register(GenericPLansReducerName, GenericPLansReducer);
 
 /** a list of plan statuses to be displayed */
 const allowedPlanStatusList = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
+
+/** selector for IRS plans */
+const makeIRSPlansArraySelector = makeGenericPlansArraySelector();
 
 /** Simple component that loads a preview list of IRS plans */
 const IRSPlansList = (props: GenericPlanListProps & RouteComponentProps) => {
@@ -33,7 +37,7 @@ const IRSPlansList = (props: GenericPlanListProps & RouteComponentProps) => {
 
 /** Declare default props for IRSPlansList */
 const defaultProps: GenericPlanListProps = {
-  fetchPlans: fetchIRSPlans,
+  fetchPlans: genericFetchPlans,
   pageTitle: IRS_PLANS,
   pageUrl: REPORT_IRS_PLAN_URL,
   plans: [],
@@ -58,7 +62,8 @@ const mapStateToProps = (
   ownProps: RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const plans = makeIRSPlansArraySelector()(state, {
+  const plans = makeIRSPlansArraySelector(state, {
+    interventionTypes: [InterventionType.IRS, InterventionType.DynamicIRS],
     plan_title: searchedTitle,
     statusList: allowedPlanStatusList,
   });
@@ -70,7 +75,7 @@ const mapStateToProps = (
 };
 
 /** map dispatch to props */
-const mapDispatchToProps = { fetchPlans: fetchIRSPlans };
+const mapDispatchToProps = { fetchPlans: genericFetchPlans };
 
 /** Connected ActiveFI component */
 const ConnectedIRSPlansList = connect(mapStateToProps, mapDispatchToProps)(IRSPlansList);

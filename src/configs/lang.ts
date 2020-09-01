@@ -37,6 +37,7 @@ export const HOME_TITLE = translate('HOME_TITLE', 'Home page');
 export const IRS_TITLE = translate('IRS_TITLE', 'IRS');
 export const PLANNING_PAGE_TITLE = translate('PLANNING_PAGE_TITLE', 'Planning tool');
 export const IRS_REPORTING_TITLE = translate('IRS_REPORTING_TITLE', 'IRS Reporting');
+export const MDA_REPORTING_TITLE = translate('MDA_REPORTING_TITLE', 'MDA Reporting');
 export const CONDITIONAL_FORMATTING_RULES = translate(
   'CONDITIONAL_FORMATTING_RULES',
   'Conditional formatting rules'
@@ -101,6 +102,10 @@ export const PLAN_STATUS_UPDATE_ERROR = translate(
   'PLAN_STATUS_UPDATE_ERROR',
   'Sorry, something went wrong when we tried to update the plan status'
 );
+export const USERS_FETCH_ERROR = translate(
+  'USERS_FETCH_ERROR',
+  'Sorry, something went wrong when we tried to fetch users'
+);
 export const NO_PLAN_FOUND_ERROR = translate(
   'NO_PLAN_FOUND_ERROR',
   'Sorry, no plan found in the cloud!'
@@ -143,9 +148,9 @@ export const REMOVE = translate('REMOVE', 'Remove');
 export const UPLOAD = translate('UPLOAD', 'Upload');
 
 export const IRS_PLANS = translate('IRS_PLANS', 'IRS Plans');
+export const MDA_PLANS = translate('MDA_PLANS', 'MDA Plans');
 export const MDA_POINT_PLANS = translate('MDA_POINT_PLANS', 'MDA Point Plans');
 export const COUNTRY = translate('COUNTRY', 'Country');
-export const JURISDICTION_HIERARCHY = translate('JURISDICTION_HIERARCHY', 'jurisdictionHierachy');
 export const JURISDICTION_HIERARCHY_TEMPLATE = translate(
   'JURISDICTION_HIERARCHY_TEMPLATE',
   'JurisdictionHierachyTemplate'
@@ -183,7 +188,7 @@ export const REACTIVE = translate('REACTIVE', 'Reactive');
 export const REACTIVE_INVESTIGATION = translate('REACTIVE_INVESTIGATION', 'Reactive Investigation');
 export const REQUIRED = translate('REQUIRED', 'Required');
 export const SAVING = translate('SAVING', 'Saving');
-export const UPLOADING = translate('UPLOADING', 'Uploading');
+export const UPLOADING_FILE = translate('UPLOADING_FILE', 'Uploading File');
 export const DOWNLOADING = translate('DOWNLOADING', 'Downloading');
 export const PLANS = translate('PLANS', 'Manage Plans');
 export const PLANNING = translate('PLANNING', 'Planning');
@@ -463,6 +468,7 @@ export const WELCOME_BACK = translate('WELCOME_BACK', 'Welcome back');
 export const LINK = translate('LINK', 'Link');
 export const IRS_GREEN_THRESHOLD = translate('IRS_GREEN_THRESHOLD', 'Green');
 export const IRS_GREY_THRESHOLD = translate('IRS_GREY_THRESHOLD', 'Grey');
+export const IRS_ORANGE_THRESHOLD = translate('IRS_ORANGE_THRESHOLD', 'Orange');
 export const IRS_RED_THRESHOLD = translate('IRS_RED_THRESHOLD', 'Red');
 export const IRS_YELLOW_THRESHOLD = translate('IRS_YELLOW_THRESHOLD', 'Yellow');
 export const IRS_LIGHT_GREEN_THRESHOLD = translate('IRS_LIGHT_GREEN_THRESHOLD', 'Light Green');
@@ -530,22 +536,10 @@ export const OWNER = translate('OWNER', 'Owner');
 export const UPLOAD_DATE = translate('UPLOAD_DATE', 'Upload Date');
 export const UPLOAD_FILE = translate('UPLOAD_FILE', 'Upload File');
 export const DOWNLOAD_FILE = translate('DOWNLOAD_FILE', 'Download File');
-export const MODAL_BUTTON_CLASS = translate(
-  'MODAL_BUTTON_CLASS',
-  'focus-investigation btn btn-primary float-right mt-0'
-);
 export const SUBMIT = translate('SUBMIT', 'Submit');
 export const CLIENT_UPLOAD_FORM = translate('CLIENT_UPLOAD_FORM', 'Client Upload Form');
 export const FILE_SUBMISSION_READY = translate('FILE_SUBMISSION_READY', 'File is ready to submit');
 export const LOADING = translate('LOADING', 'loading...');
-export const GEOGRAPHICAL_REGION_TO_INCLUDE = translate(
-  'GEOGRAPHICAL_REGION_TO_INCLUDE',
-  'Geographical level to include'
-);
-export const ASSIGN_TEAM_TO_SCHOOL = translate(
-  'ASSIGN_TEAM_TO_SCHOOL',
-  'Assign team to this school'
-);
 
 export const MDA_POINT_REPORTING_TITLE = translate(
   'MDA_POINT_REPORTING_TITLE',
@@ -593,7 +587,7 @@ export const USER_HAS_NO_PLAN_ASSIGNMENTS = translate(
 export const NO_ROWS_FOUND = translate('NO_ROWS_FOUND', 'No rows found');
 
 export const AGE_RANGE = translate('AGE_RANGE', 'Age Range');
-export const TOTAL_SACS_REGISTERED = translate('', 'Total SACs Registered');
+export const TOTAL_SACS_REGISTERED = translate('TOTAL_SACS_REGISTERED', 'Total SACs Registered');
 export const MMA_COVERAGE = translate('MMA_COVERAGE', 'MMA Coverage');
 export const SACS_REFUSED = translate('SACS_REFUSED', 'SACs Refused');
 export const SACS_SICK = translate('SACS_SICK', 'SACs Sick/Pregnant/Contraindicated');
@@ -640,12 +634,11 @@ export const FIND_RELEASE_FILES = translate('FIND_RELEASE_FILES', 'Find Release 
 export const FIND_VALIDATOR_FILES = translate('FIND_VALIDATOR_FILES', 'Find Validator Files');
 
 export const FILE = translate('FILE', 'File');
-export const FILE_FORMAT = translate('FILE_FORMAT', 'fileFormat');
 export const CSV_FILE = translate('CSV_FILE', 'CSV File');
 export const JURISDICTION_ID = translate('JURISDICTION_ID', 'jurisdiction_id');
 export const JURISDICTION_NAME = translate('JURISDICTION_NAME', 'jurisdiction_name');
 export const INVALID_CSV = translate('INVALID_CSV', 'Invalid CSV');
-export const CSV_ONLY = translate('CSV_ONLY', 'CSV Files Only');
+
 export const ROW_HEIGHT = translate('ROW_HEIGHT', 'Row Height');
 
 export const ROWS_TO_DISPLAY = translate('ROWS_TO_DISPLAY', 'Rows to display');
@@ -717,7 +710,7 @@ export const JURISDICTION_UPLOAD_STEP_1 = translate(
 );
 export const JURISDICTION_UPLOAD_STEP_2 = translate(
   'JURISDICTION_UPLOAD_STEP_2',
-  'Open the downloaded file and complete the risk and target details on therespective columns.'
+  'Open the downloaded file and complete the risk and target details on the respective columns.'
 );
 export const JURISDICTION_UPLOAD_STEP_3 = translate(
   'JURISDICTION_UPLOAD_STEP_3',
@@ -741,8 +734,6 @@ export const COULD_NOT_LOAD_JURISDICTION_HIERARCHY = translate(
 export const STRUCTURES_COUNT = translate('STRUCTURES_COUNT', 'Structures Count');
 
 export const STATUS_SETTING = translate('STATUS_SETTING', 'Status setting by...');
-
-export const RISK_LABEL = translate('RISK_LABEL', 'Risk Label');
 
 export const AUTO_SELECTION = translate('AUTO_SELECTION', 'Auto-selection');
 export const EXISTING_SELECTION = translate('EXISTING_SELECTION', 'Existing selection');
@@ -780,6 +771,7 @@ export const ADJUST_SLIDER_MESSAGE = translate(
   'ADJUST_SLIDER_MESSAGE',
   'Adjust slider to auto-target jurisdictions'
 );
+
 export const ERROR_PERMISSION_DENIED = translate(
   'ERROR_PERMISSION_DENIED',
   'This user does not have permissions to access this page'
@@ -809,3 +801,30 @@ export const SELECT_JURISDICTION = translate(
   'SELECT_JURISDICTION',
   'Please select at least one jurisdiction'
 );
+export const DAYS = translate('DAYS', 'days');
+
+export const RESOURCE_ESTIMATE_FOR = translate('RESOURCE_ESTIMATE_FOR', 'Resource Estimate for %s');
+
+export const AT_A_RATE_OF = translate('AT_A_RATE_OF', 'at a rate of');
+
+export const STRUCTURES_PER_TEAM_PER_DAY = translate(
+  'STRUCTURES_PER_TEAM_PER_DAY',
+  'structures per team per day with'
+);
+
+export const NO_JURISDICTION_SELECTIONS_FOUND = translate(
+  'NO_JURISDICTION_SELECTIONS_FOUND',
+  'No Jurisdiction selections were found'
+);
+
+export const ERROR_NO_JURISDICTION_METADATA_FOUND = translate(
+  'ERROR_NO_JURISDICTION_METADATA_FOUND',
+  'No jurisdiction metadata found'
+);
+
+export const TOTAL = translate('TOTAL', 'Total');
+
+export const COVERAGE_LABEL = translate('COVERAGE_LABEL', 'Coverage');
+export const TARGET_LABEL = translate('TARGET_LABEL', 'Target');
+export const POPULATION_LABEL = translate('POPULATION_LABEL', 'Population');
+export const RISK_TEXT = translate('RISK_TEXT', 'Risk');

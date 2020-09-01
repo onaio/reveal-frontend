@@ -65,7 +65,7 @@ exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`]
             className="breadcrumb"
           >
             <BreadcrumbItem
-              key="0"
+              key="reveal-breadcrumb-0"
               tag="li"
             >
               <li
@@ -90,7 +90,7 @@ exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`]
               </li>
             </BreadcrumbItem>
             <BreadcrumbItem
-              key="1"
+              key="reveal-breadcrumb-1"
               tag="li"
             >
               <li
@@ -115,7 +115,7 @@ exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`]
               </li>
             </BreadcrumbItem>
             <BreadcrumbItem
-              key="2"
+              key="reveal-breadcrumb-2"
               tag="li"
             >
               <li
@@ -125,7 +125,7 @@ exports[`components/page/HeaderBreadcrumb renders HeaderBreadcrumb correctly 1`]
               </li>
             </BreadcrumbItem>
             <BreadcrumbItem
-              key="3"
+              key="reveal-breadcrumb-3"
               tag="li"
             >
               <li

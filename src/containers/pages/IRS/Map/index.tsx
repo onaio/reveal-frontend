@@ -1,3 +1,4 @@
+import { ProgressBar } from '@onaio/progress-indicators';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
@@ -11,6 +12,7 @@ import { Store } from 'redux';
 import { format } from 'util';
 import GisidaWrapper from '../../../../components/GisidaWrapper';
 import NotFound from '../../../../components/NotFound';
+import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
@@ -24,6 +26,7 @@ import {
   SUPERSET_MAX_RECORDS,
 } from '../../../../configs/env';
 import {
+  AN_ERROR_OCCURRED,
   HOME,
   IRS_REPORTING_TITLE,
   LEGEND_LABEL,
@@ -35,7 +38,6 @@ import {
 import { indicatorThresholdsIRS } from '../../../../configs/settings';
 import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import ProgressBar from '../../../../helpers/ProgressBar';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import GenericJurisdictionsReducer, {
@@ -45,9 +47,9 @@ import GenericJurisdictionsReducer, {
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
-  fetchIRSPlans,
+  genericFetchPlans,
   GenericPlan,
-  getIRSPlanById,
+  getPlanByIdSelector,
   reducerName as IRSPlansReducerName,
 } from '../../../../store/ducks/generic/plans';
 import genericStructuresReducer, {
@@ -86,7 +88,7 @@ const focusAreaSlice = slices.pop();
 interface IRSReportingMapProps {
   fetchFocusAreas: typeof fetchGenericJurisdictions;
   fetchJurisdictionsAction: typeof fetchJurisdictions;
-  fetchPlans: typeof fetchIRSPlans;
+  fetchPlans: typeof genericFetchPlans;
   fetchStructures: typeof fetchGenericStructures;
   focusArea: GenericJurisdiction | null;
   jurisdiction: Jurisdiction | null;
@@ -99,7 +101,7 @@ interface IRSReportingMapProps {
 const defaultProps: IRSReportingMapProps = {
   fetchFocusAreas: fetchGenericJurisdictions,
   fetchJurisdictionsAction: fetchJurisdictions,
-  fetchPlans: fetchIRSPlans,
+  fetchPlans: genericFetchPlans,
   fetchStructures: fetchGenericStructures,
   focusArea: null,
   jurisdiction: null,
@@ -152,9 +154,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       ).then((result: Jurisdiction[]) => fetchJurisdictionsAction(result));
 
       let fetchStructureParams: SupersetFormData | null = null;
-      if (jurisdictionId) {
+      if (jurisdictionId && planId) {
         fetchStructureParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
           { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
+          { comparator: planId, operator: '==', subject: 'plan_id' },
         ]);
       }
 
@@ -200,15 +203,21 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   }
 
   useEffect(() => {
-    loadData().catch(e => displayError(e));
+    loadData()
+      .finally(() => setLoading(false))
+      .catch(e => displayError(e));
   }, []);
 
   if (!jurisdictionId || !planId) {
     return <NotFound />;
   }
 
-  if (loading === true || !focusArea || !jurisdiction || !plan || !structures) {
+  if (loading === true) {
     return <Loading />;
+  }
+
+  if (!focusArea || !plan || !jurisdiction) {
+    return <ErrorPage errorMessage={AN_ERROR_OCCURRED} />;
   }
 
   const baseURL = `${REPORT_IRS_PLAN_URL}/${plan.plan_id}`;
@@ -322,7 +331,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
                   {!row.listDisplay && <p className="indicator-description">{row.description}</p>}
                   {!row.listDisplay && (
                     <ProgressBar
-                      indicatorThresholds={indicatorThresholdsIRS || null}
+                      lineColorThresholds={indicatorThresholdsIRS || null}
                       value={row.value}
                     />
                   )}
@@ -368,7 +377,7 @@ interface DispatchedStateProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planId = ownProps.match.params.planId || null;
   const jurisdictionId = ownProps.match.params.jurisdictionId || null;
-  const plan = getIRSPlanById(state, planId);
+  const plan = getPlanByIdSelector(state, planId);
   const jurisdiction = getJurisdictionById(state, jurisdictionId);
   const structures = getGenericStructures(
     state,
@@ -393,7 +402,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 const mapDispatchToProps = {
   fetchFocusAreas: fetchGenericJurisdictions,
   fetchJurisdictionsAction: fetchJurisdictions,
-  fetchPlans: fetchIRSPlans,
+  fetchPlans: genericFetchPlans,
   fetchStructures: fetchGenericStructures,
 };
 

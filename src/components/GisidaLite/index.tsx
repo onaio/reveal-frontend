@@ -1,7 +1,7 @@
 import { isEqual } from 'lodash';
 import { EventData, Style } from 'mapbox-gl';
 import { Map } from 'mapbox-gl';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl';
 import { FitBounds } from 'react-mapbox-gl/lib/map';
 import Loading from '../../components/page/Loading';
@@ -17,10 +17,6 @@ interface MapIcon {
 
 /** interface for  GisidaLite props */
 export interface GisidaLiteProps {
-  accessToken: string;
-  attributionControl: boolean;
-  customAttribution: string;
-  injectCSS: boolean;
   layers: JSX.Element[];
   mapCenter: [number, number] | undefined;
   mapBounds?: FitBounds;
@@ -31,14 +27,11 @@ export interface GisidaLiteProps {
   zoom: number;
   mapIcons: MapIcon[];
   onClickHandler?: (map: Map, event: EventData) => void;
+  onMouseMoveHandler?: (map: Map, event: EventData) => void;
 }
 
 /** Default props for GisidaLite */
 const gisidaLiteDefaultProps: GisidaLiteProps = {
-  accessToken: GISIDA_MAPBOX_TOKEN,
-  attributionControl: true,
-  customAttribution: '&copy; Reveal',
-  injectCSS: true,
   layers: [],
   mapCenter: undefined,
   mapHeight: '800px',
@@ -48,6 +41,13 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   scrollZoom: true,
   zoom: 17,
 };
+
+const Mapbox = ReactMapboxGl({
+  accessToken: GISIDA_MAPBOX_TOKEN,
+  attributionControl: true,
+  customAttribution: '&copy; Reveal',
+  injectCSS: true,
+});
 
 /**
  * Really simple Gisida :)
@@ -61,10 +61,6 @@ const GisidaLite = (props: GisidaLiteProps) => {
   const [renderLayers, setRenderLayers] = React.useState<boolean>(false);
 
   const {
-    accessToken,
-    attributionControl,
-    customAttribution,
-    injectCSS,
     layers,
     mapCenter,
     mapHeight,
@@ -74,18 +70,12 @@ const GisidaLite = (props: GisidaLiteProps) => {
     onClickHandler,
     zoom,
     mapBounds,
+    onMouseMoveHandler,
   } = props;
 
   if (mapCenter === undefined) {
     return <Loading />;
   }
-
-  const Mapbox = ReactMapboxGl({
-    accessToken,
-    attributionControl,
-    customAttribution,
-    injectCSS,
-  });
 
   const runAfterMapLoaded = React.useCallback(
     (map: Map) => {
@@ -102,9 +92,6 @@ const GisidaLite = (props: GisidaLiteProps) => {
                 | ImageData
             ) => {
               map.addImage(element.id, res);
-              if (!renderLayers) {
-                setRenderLayers(true);
-              }
             }
           );
         });
@@ -112,6 +99,31 @@ const GisidaLite = (props: GisidaLiteProps) => {
     },
     [mapIcons]
   );
+
+  /**
+   * Workaround to make sure each time props.layers change, we set renderLayers to false
+   * so that we can re-create the map layers. The map jankiness solved by having the ReactMapboxGl
+   * instance created outside the component to prevent new instances from being created when props change
+   * introduced a bug where the layers stopped being rendered correctly.
+   * For instance, some structures that were to be rendered with a fill of yellow were being rendered as green.
+   * Symbol layers were not showing correctly. A race condition appears to be happening.
+   * The bug fix is either to wait for all layers to be received before rendering the layers or
+   * re-creating the map layers when props.layers change
+   */
+  useEffect(() => {
+    if (renderLayers) {
+      setRenderLayers(false);
+    }
+  }, [layers]);
+
+  /**
+   * We want to make sure when layers GeoJSON change we set renderLayers to true
+   */
+  const onRender = (_: Map, __: React.SyntheticEvent<any>) => {
+    if (!renderLayers) {
+      setRenderLayers(true);
+    }
+  };
 
   return (
     <Mapbox
@@ -125,6 +137,8 @@ const GisidaLite = (props: GisidaLiteProps) => {
       fitBounds={mapBounds}
       onStyleLoad={runAfterMapLoaded}
       onClick={onClickHandler}
+      onRender={onRender}
+      onMouseMove={onMouseMoveHandler}
     >
       <>
         {renderLayers &&

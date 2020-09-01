@@ -3,6 +3,7 @@ import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { act } from 'react-dom/test-utils';
 import GoogleAnalytics from 'react-ga';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
@@ -24,12 +25,14 @@ describe('App', () => {
     history.push('/');
   });
 
+  const LogoutComponent = () => null;
+
   it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(
       <Provider store={store}>
         <Router history={history}>
-          <App />
+          <App logoutComponent={LogoutComponent} />
         </Router>
       </Provider>,
       div
@@ -37,12 +40,12 @@ describe('App', () => {
     ReactDOM.unmountComponentAtNode(div);
   });
 
-  it('tracks pages correctly', () => {
+  it('tracks pages correctly', async () => {
     GoogleAnalytics.pageview = jest.fn();
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <App />
+          <App logoutComponent={LogoutComponent} />
         </Router>
       </Provider>
     );
@@ -57,20 +60,24 @@ describe('App', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <App />
+          <App logoutComponent={LogoutComponent} />
         </Router>
       </Provider>
     );
     // before resolving get oauth state request, the user is logged out
     expect(wrapper.text()).toMatchInlineSnapshot(
-      `"HomePlanManage PlansAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingAdminTeamsPractitionersUsersClientsAboutLogin v0.4.2"`
+      `"HomePlanManage PlansAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingMDA ReportingAdminTeamsPractitionersUsersClientsAboutLogin v0.4.2"`
     );
     expect(toJson(wrapper.find('footer'))).toMatchSnapshot('footer');
     expect(wrapper.text()).toMatchInlineSnapshot(
-      `"HomePlanManage PlansAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingAdminTeamsPractitionersUsersClientsAboutLogin v0.4.2"`
+      `"HomePlanManage PlansAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingMDA ReportingAdminTeamsPractitionersUsersClientsAboutLogin v0.4.2"`
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
-    wrapper.update();
+
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
     expect(fetch.mock.calls).toEqual([['http://localhost:3000/oauth/state']]);
 
     // after resolving get oauth state request superset user is logged in
@@ -94,11 +101,14 @@ describe('App', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <App />
+          <App logoutComponent={LogoutComponent} />
         </Router>
       </Provider>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     expect(GoogleAnalytics.set).toBeCalledWith({ env: 'test', username: 'superset-user' });
     wrapper.unmount();
   });
@@ -111,23 +121,26 @@ describe('App', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <App />
+          <App logoutComponent={LogoutComponent} />
         </Router>
       </Provider>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     expect(GoogleAnalytics.set).not.toBeCalled();
     wrapper.unmount();
   });
 
-  it('does not track pages if google analytics code is not set', () => {
+  it('does not track pages if google analytics code is not set', async () => {
     GoogleAnalytics.pageview = jest.fn();
     const envModule = require('../../configs/env');
     envModule.GA_CODE = '';
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <App />
+          <App logoutComponent={LogoutComponent} />
         </Router>
       </Provider>
     );

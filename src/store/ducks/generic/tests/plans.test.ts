@@ -1,25 +1,25 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { keyBy } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../..';
 import { InterventionType } from '../../plans';
 import reducer, {
-  addIRSPlan,
-  fetchIRSPlans,
-  GenericPlan,
-  getIRSPlanById,
-  getIRSPlansArray,
-  getIRSPlansArrayByTitle,
-  getIRSPlansById,
-  makeIRSPlansArraySelector,
+  genericFetchPlans,
+  genericRemovePlans,
+  getPlanByIdSelector,
+  getPlansArrayByTitle,
+  makeGenericPlansArraySelector,
   reducerName,
-  removeIRSPlans,
 } from '../plans';
+import { GenericPlan } from '../plans';
 import * as fixtures from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
-describe('reducers/IRS/IRSPlan', () => {
+const MDAInterventionType = InterventionType.DynamicMDA;
+const plansSelector = makeGenericPlansArraySelector();
+const defaultProps = {};
+
+describe('reducers/MDA/Dynami-MDAPlan', () => {
   let flushThunks;
 
   beforeEach(() => {
@@ -28,96 +28,135 @@ describe('reducers/IRS/IRSPlan', () => {
   });
 
   it('should have initial state', () => {
-    expect(getIRSPlansArray(store.getState())).toEqual([]);
-    expect(getIRSPlanById(store.getState(), '356b6b84-fc36-4389-a44a-2b038ed2f38d')).toEqual(null);
-    expect(getIRSPlansById(store.getState())).toEqual({});
+    expect(plansSelector(store.getState(), defaultProps)).toEqual([]);
+    expect(getPlanByIdSelector(store.getState(), '356b6b84-fc36-4389-a44a-2b038ed2f38d')).toEqual(
+      null
+    );
   });
 
   it('Fetches plan definitions correctly', () => {
     // action creators dispatch
-    store.dispatch(fetchIRSPlans(fixtures.plans as GenericPlan[]));
+    store.dispatch(genericFetchPlans(fixtures.DynamicMDAPlans as GenericPlan[]));
 
-    expect(getIRSPlansById(store.getState())).toEqual(keyBy(fixtures.plans, 'plan_id'));
-
-    expect(getIRSPlansArray(store.getState())).toEqual(fixtures.plans);
-
-    expect(getIRSPlanById(store.getState(), '727c3d40-e118-564a-b231-aac633e6abce')).toEqual(
-      fixtures.plans[0]
-    );
-
-    // filter by intervention type
-    expect(getIRSPlansArray(store.getState(), InterventionType.IRS)).toEqual([
-      fixtures.plans[0],
-      fixtures.plans[1],
-      fixtures.plans[2],
-    ]);
-    expect(getIRSPlansArray(store.getState(), InterventionType.FI)).toEqual([]);
-
-    expect(getIRSPlansById(store.getState(), InterventionType.FI)).toEqual({});
-    expect(getIRSPlansById(store.getState(), InterventionType.IRS)).toEqual(
-      keyBy([fixtures.plans[0], fixtures.plans[1], fixtures.plans[2]], 'plan_id')
+    expect(getPlanByIdSelector(store.getState(), '40357eff-81b6-4e32-bd3d-484019689f7c')).toEqual(
+      fixtures.DynamicMDAPlans[0]
     );
 
     // RESELECT TESTS
     const titleFilter = {
+      interventionTypes: [MDAInterventionType],
       plan_title: 'Berg',
     };
     const titleUpperFilter = {
+      interventionTypes: [MDAInterventionType],
       plan_title: 'BERG',
     };
-    const IRSPlansArraySelector = makeIRSPlansArraySelector();
-    expect(getIRSPlansArrayByTitle()(store.getState(), titleFilter)).toEqual([fixtures.plans[2]]);
-    expect(getIRSPlansArrayByTitle()(store.getState(), titleUpperFilter)).toEqual([
-      fixtures.plans[2],
+
+    expect(getPlansArrayByTitle()(store.getState(), titleFilter)).toEqual([
+      fixtures.DynamicMDAPlans[2],
     ]);
-    expect(IRSPlansArraySelector(store.getState(), { plan_title: 'Berg' })).toEqual([
-      fixtures.plans[2],
+    expect(getPlansArrayByTitle()(store.getState(), titleUpperFilter)).toEqual([
+      fixtures.DynamicMDAPlans[2],
     ]);
-    expect(IRSPlansArraySelector(store.getState(), { statusList: ['retired'] })).toEqual([
-      fixtures.plans[0],
-    ]);
-    expect(IRSPlansArraySelector(store.getState(), { statusList: ['draft'] })).toEqual([]);
     expect(
-      IRSPlansArraySelector(store.getState(), { statusList: ['active'], plan_title: 'irs' })
-    ).toEqual([fixtures.plans[1]]);
+      plansSelector(store.getState(), {
+        interventionTypes: [MDAInterventionType],
+        statusList: ['retired'],
+      })
+    ).toEqual([fixtures.DynamicMDAPlans[0]]);
+    expect(
+      plansSelector(store.getState(), {
+        interventionTypes: [MDAInterventionType],
+        statusList: ['draft'],
+      })
+    ).toEqual([]);
+    expect(
+      plansSelector(store.getState(), {
+        interventionTypes: [MDAInterventionType],
+        plan_title: 'mda',
+        statusList: ['active'],
+      })
+    ).toEqual([fixtures.DynamicMDAPlans[1]]);
     // reset
-    store.dispatch(removeIRSPlans());
-    expect(getIRSPlansArray(store.getState())).toEqual([]);
+    store.dispatch(genericRemovePlans());
+    expect(plansSelector(store.getState(), defaultProps)).toEqual([]);
   });
 
-  it('Fetching plans does not replace IRSPlansById', () => {
+  it('Fetching plans does not replace GenericPlansById', () => {
     // fetch two plan definition objects
-    store.dispatch(fetchIRSPlans([fixtures.plans[0], fixtures.plans[1]] as GenericPlan[]));
+    store.dispatch(
+      genericFetchPlans([fixtures.DynamicMDAPlans[0], fixtures.DynamicMDAPlans[1]] as GenericPlan[])
+    );
     // we should have them in the store
-    expect(getIRSPlansArray(store.getState())).toEqual([fixtures.plans[0], fixtures.plans[1]]);
+    expect(plansSelector(store.getState(), defaultProps)).toEqual([
+      fixtures.DynamicMDAPlans[0],
+      fixtures.DynamicMDAPlans[1],
+    ]);
     // fetch one more plan definition objects
-    store.dispatch(fetchIRSPlans([fixtures.plans[2]] as GenericPlan[]));
+    store.dispatch(genericFetchPlans([fixtures.DynamicMDAPlans[2]] as GenericPlan[]));
     // we should now have a total of three plan definition objects in the store
-    expect(getIRSPlansArray(store.getState())).toEqual([
-      fixtures.plans[0],
-      fixtures.plans[1],
-      fixtures.plans[2],
+    expect(plansSelector(store.getState(), defaultProps)).toEqual([
+      fixtures.DynamicMDAPlans[0],
+      fixtures.DynamicMDAPlans[1],
+      fixtures.DynamicMDAPlans[2],
     ]);
   });
+});
 
-  it('You can add one plan definition object to the store', () => {
-    // reset
-    store.dispatch(removeIRSPlans());
+describe('reducer: generic reducers', () => {
+  let flushThunks;
+  const selector = makeGenericPlansArraySelector();
 
-    // add one plan definition objects
-    store.dispatch(addIRSPlan(fixtures.plans[2] as GenericPlan));
-    // we should have it in the store
-    expect(getIRSPlansArray(store.getState())).toEqual([fixtures.plans[2]]);
+  beforeEach(() => {
+    flushThunks = FlushThunks.createMiddleware();
+    jest.resetAllMocks();
+  });
 
-    // fetch one more plan definition objects
-    store.dispatch(addIRSPlan(fixtures.plans[1] as GenericPlan));
-    // we should now have a total of three plan definition objects in the store
-    expect(getIRSPlansArray(store.getState())).toEqual([fixtures.plans[2], fixtures.plans[1]]);
+  it('fetches plans correctly', () => {
+    // the target to is to make sure that the returned plans respects the intervention type
+    // dispatch all 3 plan types: IRS, DynamicIRS, DynamicMDA, MdaPointPlans
+    const allPlans = [
+      ...fixtures.plans,
+      fixtures.DynamicMDAPlans,
+      fixtures.MDAPointPlans,
+    ] as GenericPlan[];
+    store.dispatch(genericFetchPlans(allPlans));
 
-    // add an existing plan again
-    store.dispatch(addIRSPlan(fixtures.plans[2] as GenericPlan));
-    // nothing should have changed in the store
-    // we should now have a total of three plan definition objects in the store
-    expect(getIRSPlansArray(store.getState())).toEqual([fixtures.plans[2], fixtures.plans[1]]);
+    // we will look for an IRS plan using different intervention types
+
+    const state = store.getState();
+    let response = selector(state, {
+      interventionTypes: [InterventionType.IRS],
+      // using plan_title somewhat like na id
+      plan_title: 'MegaMind',
+    });
+
+    expect(response).toEqual([]);
+
+    // now check again using dynamic IRS intervention type
+    response = selector(state, {
+      interventionTypes: [InterventionType.DynamicIRS],
+      // using plan_title somewhat like na id
+      plan_title: 'MegaMind',
+    });
+    expect(response).toEqual([fixtures.plans[3]]);
+    // this will also return correct plan when there is no intervention type
+    response = selector(state, {
+      plan_title: 'MegaMind',
+    });
+    expect(response).toEqual([fixtures.plans[3]]);
+
+    // what if we checked using DynamicMDA
+    response = selector(state, {
+      interventionTypes: [InterventionType.DynamicMDA],
+      plan_title: 'MegaMind',
+    });
+    expect(response).toEqual([]);
+
+    response = selector(state, {
+      interventionTypes: [InterventionType.MDAPoint],
+      plan_title: 'MegaMind',
+    });
+    expect(response).toEqual([]);
   });
 });

@@ -83,6 +83,7 @@ import {
   REACT_CALLBACK_PATH,
   REACT_LOGIN_URL,
   REPORT_IRS_PLAN_URL,
+  REPORT_MDA_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
   SINGLE_ORGANIZATION_URL,
   VIEW_DRAFT_FILES_URL,
@@ -93,6 +94,8 @@ import { ManifestDraftFilesPage } from '../containers/pages/ConfigForm/manifest/
 import { ManifestFiles } from '../containers/pages/ConfigForm/manifest/filesList';
 import { ManifestReleasesPage } from '../containers/pages/ConfigForm/manifest/releases';
 import ConnectedUploadConfigFilePage from '../containers/pages/ConfigForm/manifest/uploadFile';
+import ConnectedMDAJurisdictionReport from '../containers/pages/DynamicMDA/JurisdictionsReport';
+import ConnectedMDAPLansList from '../containers/pages/DynamicMDA/plans';
 import ActiveFocusInvestigation from '../containers/pages/FocusInvestigation/active';
 import FIJurisdiction from '../containers/pages/FocusInvestigation/jurisdiction';
 import SingleActiveFIMap from '../containers/pages/FocusInvestigation/map/active';
@@ -110,7 +113,7 @@ import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
 import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
-import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/JurisdictionAssignmentView';
+import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/ManualSelectJurisdiction';
 import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
 import ConnectedChildReports from '../containers/pages/MDAPoint/ChildReports';
 import ConnectedClientListView from '../containers/pages/MDAPoint/ClientListView';
@@ -270,6 +273,28 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedIRSReportingMap}
+                />
+                {/* MDA Reporting plan table view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={REPORT_MDA_PLAN_URL}
+                  component={ConnectedMDAPLansList}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_PLAN_URL}/:planId`}
+                  component={ConnectedMDAJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedMDAJurisdictionReport}
                 />
                 {/* Plan Assignment views for Plan */}
                 <ConnectedPrivateRoute

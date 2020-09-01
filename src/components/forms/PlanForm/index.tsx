@@ -22,6 +22,7 @@ import {
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
   ENABLED_FI_REASONS,
+  ENABLED_PLAN_TYPES,
 } from '../../../configs/env';
 import {
   ACTION,
@@ -108,9 +109,14 @@ const initialJurisdictionValues: PlanJurisdictionFormFields = {
   name: '',
 };
 
+/** default intervention type displayed */
+const defaultInterventionType = ENABLED_PLAN_TYPES
+  ? (ENABLED_PLAN_TYPES[0] as InterventionType)
+  : InterventionType.FI;
+
 /** initial values for plan Form */
 export const defaultInitialValues: PlanFormFields = {
-  activities: planActivitiesMap[InterventionType.FI],
+  activities: planActivitiesMap[defaultInterventionType],
   caseNum: '',
   date: moment().toDate(),
   end: moment()
@@ -119,7 +125,7 @@ export const defaultInitialValues: PlanFormFields = {
   fiReason: undefined,
   fiStatus: undefined,
   identifier: '',
-  interventionType: InterventionType.FI,
+  interventionType: defaultInterventionType,
   jurisdictions: [initialJurisdictionValues],
   name: '',
   opensrpEventId: undefined,
@@ -264,6 +270,7 @@ const PlanForm = (props: PlanFormProps) => {
                 onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
               })
               .catch((e: Error) => {
+                setSubmitting(false);
                 displayError(e, AN_ERROR_OCCURRED, false);
               });
           } else {
@@ -273,6 +280,7 @@ const PlanForm = (props: PlanFormProps) => {
                 onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
               })
               .catch((e: Error) => {
+                setSubmitting(false);
                 displayError(e, AN_ERROR_OCCURRED, false);
               });
           }

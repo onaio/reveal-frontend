@@ -334,11 +334,15 @@ export const geoCollection = {
         ],
         type: 'Polygon',
       },
-      id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+      id: '3951',
       properties: {
+        fillColor: '#792b16',
+        fillOutlineColor: '#ffffff',
         geographicLevel: 3,
+        jurisdiction_id: '3951',
+        lineColor: '#ffffff',
         name: 'Two Three Two Release Village',
-        // parentId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
+        parentId: '3019',
         status: 'Active',
         version: 0,
       },
@@ -513,7 +517,7 @@ export const payload = [
       ],
       type: 'MultiPolygon',
     },
-    id: '07b09ec1-0589-4a98-9480-4c403ac24d59',
+    id: '2942',
     properties: {
       geographicLevel: 3,
       name: 'Two Two Two Release Village',
@@ -688,11 +692,46 @@ export const payload = [
       ],
       type: 'MultiPolygon',
     },
-    id: '8fb28715-6c80-4e2c-980f-422798fe9f41',
+    id: '3951',
     properties: {
       geographicLevel: 3,
       name: 'Two Three Two Release Village',
+      parentId: '3019',
+      status: 'Active',
+      version: 0,
+    },
+    serverVersion: 1565045134411,
+    type: 'Feature',
+  },
+];
+
+export const payloadWithInvalidCoordinates = [
+  {
+    geometry: {
+      coordinates: [[[[]]]],
+      type: 'MultiPolygon',
+    },
+    id: '2942',
+    properties: {
+      geographicLevel: 3,
+      name: 'Two Two Two Release Village',
       parentId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
+      status: 'Active',
+      version: 0,
+    },
+    serverVersion: 1563491844118,
+    type: 'Feature',
+  },
+  {
+    geometry: {
+      coordinates: [[[[]]]],
+      type: 'MultiPolygon',
+    },
+    id: '3951',
+    properties: {
+      geographicLevel: 3,
+      name: 'Two Three Two Release Village',
+      parentId: '3019',
       status: 'Active',
       version: 0,
     },
@@ -714,3 +753,54 @@ export const fetchCalls = [
     },
   ],
 ];
+
+export const jurisdiction1 = {
+  id: '2942',
+  properties: {
+    geographicLevel: 3,
+    name: 'Two Two Two Release Village',
+    status: 'Active',
+    version: 0,
+  },
+  type: 'Feature',
+};
+
+export const invalidCoordinatesGeom = {
+  features: [
+    {
+      geometry: {
+        coordinates: [[[]]],
+        type: 'Polygon',
+      },
+      id: '07b09ec1-0589-4a98-9480-4c403ac24d59',
+      properties: {
+        geographicLevel: 3,
+        name: 'Two Two Two Release Village',
+        // parentId: '872cc59e-0bce-427a-bd1f-6ef674dba8e2',
+        status: 'Active',
+        version: 0,
+      },
+      type: 'Feature',
+    },
+    {
+      geometry: {
+        coordinates: [[[]]],
+        type: 'Polygon',
+      },
+      id: '3951',
+      properties: {
+        fillColor: '#792b16',
+        fillOutlineColor: '#ffffff',
+        geographicLevel: 3,
+        jurisdiction_id: '3951',
+        lineColor: '#ffffff',
+        name: 'Two Three Two Release Village',
+        parentId: '3019',
+        status: 'Active',
+        version: 0,
+      },
+      type: 'Feature',
+    },
+  ],
+  type: 'FeatureCollection',
+};

@@ -37,6 +37,18 @@ export const plans = [
     plan_title: 'Berg Namibia 2019',
     plan_version: '2',
   },
+  {
+    jurisdiction_root_parent_ids: ['Metrociti'],
+    plan_date: '2019-08-29',
+    plan_effective_period_end: '2019-09-18',
+    plan_effective_period_start: '2019-08-29',
+    plan_id: 'UUID-1-test',
+    plan_intervention_type: InterventionType.DynamicIRS,
+    plan_name: 'forget me stick',
+    plan_status: 'active',
+    plan_title: 'MegaMind',
+    plan_version: '2',
+  },
 ];
 
 export const planRecords: PlanRecord[] = [
@@ -120,7 +132,7 @@ export const namibiaIRSJurisdictions = [
     structuresfound: 0,
     structuressprayed: 0,
     targetcoverage: 0,
-    target_2019: 0,
+    jurisdiction_target: 0,
   },
   {
     id: '00056eb5-51c3-5bd6-a216-c8da451953c1',
@@ -145,7 +157,7 @@ export const namibiaIRSJurisdictions = [
     refusalsmopup: 0,
     lockedfirst: 0,
     lockedmopup: 0,
-    target_2019: 22,
+    jurisdiction_target: 22,
   },
   {
     foundcoverage: 0,
@@ -170,7 +182,7 @@ export const namibiaIRSJurisdictions = [
     sprayeffectiveness: 0,
     structuresfound: 0,
     structuressprayed: 0,
-    target_2019: 0,
+    jurisdiction_target: 0,
     targetcoverage: 0,
   },
   {
@@ -196,11 +208,11 @@ export const namibiaIRSJurisdictions = [
     lockedmopup: 0,
     refusalsfirst: 0,
     refusalsmopup: 0,
-    target_2019: 0,
+    jurisdiction_target: 0,
   },
 ];
 
-export const MDAPointplans = [
+export const MDAPointPlans = [
   {
     jurisdiction_root_parent_ids: ['2942'],
     plan_date: '2019-09-05',
@@ -238,6 +250,15 @@ export const MDAPointplans = [
     plan_version: '2',
   },
 ];
+
+export const DynamicMDAPlans = MDAPointPlans.map(item => {
+  return {
+    ...item,
+    plan_intervention_type: 'Dynamic-MDA',
+    plan_name: item.plan_name.replace('MDA-Point', 'Dynamic-MDA'),
+    plan_title: item.plan_title.replace('MDA-Point', 'Dynamic-MDA'),
+  };
+});
 
 export const MDAPointSchoolReportData = [
   {

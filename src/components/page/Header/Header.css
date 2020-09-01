@@ -15,6 +15,11 @@
   background-color: #eceeef;
 }
 
+.reveal-breadcrumb.plans-breadcrumb > .breadcrumb {
+  background-color: #ffffff !important;
+  padding: 0.75rem 0 !important;
+}
+
 .header-logo-navbar {
   padding-left: 0;
 }

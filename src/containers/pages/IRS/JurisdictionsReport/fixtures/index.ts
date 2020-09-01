@@ -21,7 +21,7 @@ export const NamibiaColumns: Array<DrillDownColumn<Dictionary>> = [
   },
   {
     Header: 'Structures Targeted',
-    accessor: 'target_2019',
+    accessor: 'jurisdiction_target',
   },
   {
     Header: 'Structures Found',
@@ -82,7 +82,7 @@ export const ZambiaFocusAreasColumns: Array<DrillDownColumn<Dictionary>> = [
   {
     Header: 'Name',
     accessor: 'jurisdiction_name',
-    minWidth: 180,
+    minWidth: 360,
   },
   {
     Header: 'Structures on the ground',
@@ -128,7 +128,7 @@ export const ZambiaJurisdictionsColumns: Array<DrillDownColumn<Dictionary>> = [
   {
     Header: 'Name',
     accessor: 'jurisdiction_name',
-    minWidth: 180,
+    minWidth: 360,
   },
   {
     Header: 'Total Spray Areas',

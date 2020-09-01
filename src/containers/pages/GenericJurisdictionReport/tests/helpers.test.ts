@@ -1,5 +1,8 @@
+import superset from '@onaio/superset-connector';
+import { MDAJurisdictionsJSON } from '../../DynamicMDA/JurisdictionsReport/tests/fixtures';
 import * as fixtures from '../../IRS/JurisdictionsReport/fixtures';
 import * as helpers from '../helpers';
+import { getColumnsToUse } from '../helpers';
 
 describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
   it('should return the correct columns for Namibia', () => {
@@ -24,6 +27,8 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
       'namibia2019',
       'zambiaFocusArea2019',
       'zambiaJurisdictions2019',
+      'zambiaMDALower2020',
+      'zambiaMDAUpper2020',
     ]);
   });
   it('it should return the correct table columns for plansTableColumns namibia2019', () => {
@@ -48,5 +53,35 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
     expect(JSON.stringify(helpers.mdaJurisdictionsColumns)).toEqual(
       JSON.stringify(fixtures.mdaPointColumns)
     );
+  });
+
+  it('getColumnsToUse: should return correct columns', () => {
+    const jurisdiction = superset.processData(MDAJurisdictionsJSON) || [];
+    const jurisdictionColumn = 'zambiaMDAUpper2020';
+    const focusAreaColumn = 'zambiaMDALower2020';
+    const focusAreaLevel = '2';
+    let jurisdictionId = '4669b841-5f06-47bc-ac87-4282ca21ae6a';
+    // jurisdiction_depth of 2
+    expect(
+      getColumnsToUse(
+        jurisdiction,
+        jurisdictionColumn,
+        focusAreaColumn,
+        focusAreaLevel,
+        jurisdictionId
+      )
+    ).toEqual(helpers.zambiaMDALowerJurisdictions);
+
+    // jurisdiction_depth of 1
+    jurisdictionId = 'ecfbf048-fb7a-47d8-a12b-61bf5d2a6e7b';
+    expect(
+      getColumnsToUse(
+        jurisdiction,
+        jurisdictionColumn,
+        focusAreaColumn,
+        focusAreaLevel,
+        jurisdictionId
+      )
+    ).toEqual(helpers.zambiaMDAUpperJurisdictions);
   });
 });

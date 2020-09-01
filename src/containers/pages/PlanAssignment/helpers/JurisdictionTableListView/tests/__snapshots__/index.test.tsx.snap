@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanAssignment/JurisdictionTableListView works as expected: JurisdictionCell 1`] = `
+<span
+  key="xyz0d71d-0410-45d3-8305-a9f092a150b8-span"
+>
+  ra_ksh_3
+</span>
+`;
+
+exports[`PlanAssignment/JurisdictionTableListView works as expected: Table headers 1`] = `
+<thead
+  className="thead-plan-orgs"
+>
+  <tr>
+    <th
+      style={
+        Object {
+          "width": "25%",
+        }
+      }
+    >
+      Name
+    </th>
+    <th
+      style={
+        Object {
+          "width": "25%",
+        }
+      }
+    >
+      Team Assignment
+    </th>
+    <th />
+  </tr>
+</thead>
+`;

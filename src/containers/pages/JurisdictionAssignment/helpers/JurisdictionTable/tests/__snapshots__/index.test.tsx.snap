@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and deselect nodes: should be now checked 1`] = `
+<input
+  checked={true}
+  disabled={false}
+  key="2942-check-jurisdiction"
+  onChange={[Function]}
+  type="checkbox"
+/>
+`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and deselect nodes: should be now deselected 1`] = `
+<input
+  checked={false}
+  disabled={false}
+  key="2942-check-jurisdiction"
+  onChange={[Function]}
+  type="checkbox"
+/>
+`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and deselect nodes: should be unchecked 1`] = `
+<input
+  checked={false}
+  disabled={false}
+  onChange={[Function]}
+  type="checkbox"
+/>
+`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and deselect nodes: should be unchecked 2`] = `
+<input
+  checked={false}
+  disabled={false}
+  key="2942-check-jurisdiction"
+  onChange={[Function]}
+  type="checkbox"
+/>
+`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable selects and deselect nodes: should now be checked 1`] = `
+<input
+  checked={true}
+  disabled={false}
+  onChange={[Function]}
+  type="checkbox"
+/>
+`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: after first click 1`] = `"NameStructures CountTarget StatusStatus setting by...Selected Jurisdictions"`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: after first click 2`] = `"Mtendere159User Change1"`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: after second click 1`] = `"NameStructures CountTarget StatusStatus setting by...Selected Jurisdictions"`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: after second click 2`] = `"Akros_1159TargetedUser Change1"`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: input checked 1`] = `"NameStructures CountTarget StatusStatus setting by...Selected Jurisdictions"`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: input checked 2`] = `"Lusaka159User Change1"`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: should have single node(parent node) 1`] = `"NameStructures CountTarget StatusStatus setting by...Selected Jurisdictions"`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: should have single node(parent node) 2`] = `"Lusaka1590"`;
+
+exports[`src/containers/pages/jurisdictionView/jurisdictionTable works correctly through a full render cycle: should not have btn-link or onClick handler 1`] = `
+<span
+  key="3951-span"
+>
+  Akros_1
+</span>
+`;

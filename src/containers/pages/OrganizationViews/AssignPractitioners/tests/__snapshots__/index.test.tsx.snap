@@ -15,7 +15,7 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
       className="breadcrumb"
     >
       <BreadcrumbItem
-        key="0"
+        key="reveal-breadcrumb-0"
         tag="li"
       >
         <li
@@ -40,7 +40,7 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
         </li>
       </BreadcrumbItem>
       <BreadcrumbItem
-        key="1"
+        key="reveal-breadcrumb-1"
         tag="li"
       >
         <li
@@ -65,7 +65,7 @@ exports[`src/pages/*/AssignPractitioners Renders correctly: BreadCrumb 1`] = `
         </li>
       </BreadcrumbItem>
       <BreadcrumbItem
-        key="2"
+        key="reveal-breadcrumb-2"
         tag="li"
       >
         <li

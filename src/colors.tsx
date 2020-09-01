@@ -15,6 +15,8 @@ export const WHITE = '#ffffff';
 export type WHITE = typeof WHITE;
 export const BLUE = '#22bcfb';
 export type BLUE = typeof BLUE;
+export const DARK_RED = '#792b16';
+export type DARK_RED = typeof DARK_RED;
 
 // map stuff
 export const DEFAULT_MAP_COLOR = '#FFDC00';

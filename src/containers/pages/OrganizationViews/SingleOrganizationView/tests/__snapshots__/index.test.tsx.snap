@@ -25,7 +25,7 @@ exports[`src/containers/pages/OrganizationViews renders SingleTeamView correctly
       className="breadcrumb"
     >
       <BreadcrumbItem
-        key="0"
+        key="reveal-breadcrumb-0"
         tag="li"
       >
         <li
@@ -50,7 +50,7 @@ exports[`src/containers/pages/OrganizationViews renders SingleTeamView correctly
         </li>
       </BreadcrumbItem>
       <BreadcrumbItem
-        key="1"
+        key="reveal-breadcrumb-1"
         tag="li"
       >
         <li

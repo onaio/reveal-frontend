@@ -18,15 +18,19 @@ import MDAPointLocationReportReducer, {
   reducerName as MDAPointLocationReportReducerName,
   removeMDAPointLocationReports,
 } from '../../../../../store/ducks/generic/MDALocationsReport';
-import MDAPointPlanreducer, {
-  fetchMDAPointPlans,
-  MDAPointPlan,
-  reducerName as MDAPointReducerName,
-} from '../../../../../store/ducks/generic/MDAPointPlans';
+import GenericPlanreducer, {
+  genericFetchPlans,
+  GenericPlan,
+  reducerName as genericReducerName,
+} from '../../../../../store/ducks/generic/plans';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 import { MDAPointJurisdictionsJSON } from '../../jurisdictionsReport/tests/fixtures';
 
-jest.mock('../../../../../configs/env');
+jest.mock('../../../../../configs/env', () => ({
+  SHOW_MDA_SCHOOL_REPORT_LABEL: false,
+  SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE: '01',
+  SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES: '12,esw-jurisdictions',
+}));
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
@@ -34,11 +38,11 @@ const history = createBrowserHistory();
 
 reducerRegistry.register(MDAPointLocationReportReducerName, MDAPointLocationReportReducer);
 reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
-reducerRegistry.register(MDAPointReducerName, MDAPointPlanreducer);
+reducerRegistry.register(genericReducerName, GenericPlanreducer);
 
 const jurisdictionData = superset.processData(MDAPointJurisdictionsJSON) || [];
 store.dispatch(fetchGenericJurisdictions('esw-jurisdictions', jurisdictionData));
-store.dispatch(fetchMDAPointPlans(fixtures.MDAPointplans as MDAPointPlan[]));
+store.dispatch(genericFetchPlans(fixtures.MDAPointPlans as GenericPlan[]));
 
 const props = {
   history,
@@ -90,7 +94,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
       </Provider>
     );
 
-    expect(wrapper.find('h3.page-title').text()).toEqual('MDA Point School Report: Akros_1');
+    expect(wrapper.find('h3.page-title').text()).toEqual('MDA Point Location Report: Akros_1');
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
 
     // correct table data is passed

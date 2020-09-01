@@ -19,7 +19,6 @@ import reducer, {
   getPlansArrayByStatus,
   getPlansArrayByTitle,
   getPlansById,
-  getPlansIdArray,
   InterventionType,
   makePlansArraySelector,
   Plan,
@@ -51,7 +50,6 @@ describe('reducers/plans', () => {
     expect(getPlansById(store.getState(), InterventionType.FI, ['active', 'draft'], null)).toEqual(
       {}
     );
-    expect(getPlansIdArray(store.getState(), InterventionType.FI, [], null)).toEqual([]);
     expect(getPlansArray(store.getState(), InterventionType.FI, [], null)).toEqual([]);
     expect(getPlanById(store.getState(), 'someId')).toEqual(null);
     expect(getPlanRecordsById(store.getState())).toEqual({});
@@ -63,13 +61,20 @@ describe('reducers/plans', () => {
   });
 
   it('should fetch Plans', () => {
-    store.dispatch(fetchPlans([...fixtures.plans, fixtures.plan22]));
+    store.dispatch(fetchPlans([...fixtures.plans, fixtures.plan22, fixtures.plan104]));
 
-    const allPlans = keyBy([...fixtures.plans, fixtures.plan22], (plan: Plan) => plan.id);
+    const allPlans = keyBy(
+      [...fixtures.plans, fixtures.plan22, fixtures.plan104],
+      (plan: Plan) => plan.id
+    );
     const fiPlans = pickBy(allPlans, (e: Plan) => e.plan_intervention_type === InterventionType.FI);
     const irsPlans = pickBy(
       allPlans,
       (e: Plan) => e.plan_intervention_type === InterventionType.IRS
+    );
+    const dynamicFiPlans = pickBy(
+      allPlans,
+      (e: Plan) => e.plan_intervention_type === InterventionType.DynamicFI
     );
     const routinePlans = values(cloneDeep(store.getState().plans.plansById)).filter(
       (plan: Plan) =>
@@ -88,13 +93,6 @@ describe('reducers/plans', () => {
     );
     expect(getPlansById(store.getState(), InterventionType.FI, [], null)).toEqual(fiPlans);
     expect(getPlansById(store.getState(), InterventionType.IRS, [], null)).toEqual(irsPlans);
-
-    expect(getPlansIdArray(store.getState())).toEqual([
-      'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f',
-      'plan-id-2',
-      'plan-22',
-    ]);
-    expect(getPlansIdArray(store.getState(), InterventionType.IRS)).toEqual(['plan-id-2']);
 
     expect(plansArrayBaseSelector()(store.getState())).toEqual(values(allPlans));
 
@@ -137,6 +135,9 @@ describe('reducers/plans', () => {
     const fiFilter = {
       interventionType: InterventionType.FI,
     };
+    const severalInterventions = {
+      interventionType: [InterventionType.FI, InterventionType.DynamicFI],
+    };
     const jurisdictionFilter = {
       jurisdictionIds: ['450fc15b-5bd2-468a-927a-49cb10d3bcac'],
     };
@@ -158,6 +159,9 @@ describe('reducers/plans', () => {
 
     expect(getPlansArrayByInterventionType()(store.getState(), {})).toEqual(values(allPlans));
     expect(getPlansArrayByInterventionType()(store.getState(), fiFilter)).toEqual(values(fiPlans));
+    expect(getPlansArrayByInterventionType()(store.getState(), severalInterventions)).toEqual(
+      values({ ...fiPlans, ...dynamicFiPlans })
+    );
     expect(getPlansArrayByJurisdictionIds()(store.getState(), jurisdictionFilter)).toEqual(
       values(allPlans).filter(e => e.jurisdiction_id === '450fc15b-5bd2-468a-927a-49cb10d3bcac')
     );

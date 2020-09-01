@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PlanAssignment/JurisdictionTableView works as expected: Breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      to="/"
+    >
+      <LinkAnchor
+        href="/"
+        navigate={[Function]}
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="1"
+      to="/assign"
+    >
+      <LinkAnchor
+        href="/assign"
+        navigate={[Function]}
+      >
+        <a
+          href="/assign"
+          onClick={[Function]}
+        >
+          Assign Plans
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="2"
+      to="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+    >
+      <LinkAnchor
+        href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+        navigate={[Function]}
+      >
+        <a
+          href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d"
+          onClick={[Function]}
+        >
+          A2-Lusaka Akros Test Focus 2
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="3"
+      to="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/0ddd9ad1-452b-4825-a92a-49cb9fc82d18"
+    >
+      <LinkAnchor
+        href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/0ddd9ad1-452b-4825-a92a-49cb9fc82d18"
+        navigate={[Function]}
+      >
+        <a
+          href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/0ddd9ad1-452b-4825-a92a-49cb9fc82d18"
+          onClick={[Function]}
+        >
+          ra Zambia
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="4"
+      to="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/cec79f21-33c3-43f5-a8af-59a47aa61b84"
+    >
+      <LinkAnchor
+        href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/cec79f21-33c3-43f5-a8af-59a47aa61b84"
+        navigate={[Function]}
+      >
+        <a
+          href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/cec79f21-33c3-43f5-a8af-59a47aa61b84"
+          onClick={[Function]}
+        >
+          ra Luapula
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="5"
+      to="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"
+    >
+      <LinkAnchor
+        href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"
+        navigate={[Function]}
+      >
+        <a
+          href="/assign/356b6b84-fc36-4389-a44a-2b038ed2f38d/dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63"
+          onClick={[Function]}
+        >
+          ra Nchelenge
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    ra Kashikishi HAHC
+  </li>,
+]
+`;
+
+exports[`PlanAssignment/JurisdictionTableView works as expected: helmet 1`] = `
+<HelmetWrapper
+  defer={true}
+  encodeSpecialCharacters={true}
+>
+  <SideEffect(NullComponent)
+    defer={true}
+    encodeSpecialCharacters={true}
+    title="A2-Lusaka Akros Test Focus 2"
+    titleAttributes={Object {}}
+  >
+    <NullComponent
+      defer={true}
+      encodeSpecialCharacters={true}
+      title="A2-Lusaka Akros Test Focus 2"
+      titleAttributes={Object {}}
+    />
+  </SideEffect(NullComponent)>
+</HelmetWrapper>
+`;
+
+exports[`PlanAssignment/JurisdictionTableView works as expected: page-title 1`] = `
+<h3
+  className="mb-3 page-title"
+>
+  A2-Lusaka Akros Test Focus 2
+</h3>
+`;

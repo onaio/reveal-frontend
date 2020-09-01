@@ -1,7 +1,9 @@
 import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
+import { get } from 'lodash';
 import { Cell } from 'react-table';
-import { getIRSThresholdAdherenceIndicator } from '../../../helpers/indicators';
+import { getIRSThresholdAdherenceIndicator, renderPercentage } from '../../../helpers/indicators';
+import { GenericJurisdiction } from '../../../store/ducks/generic/jurisdictions';
 
 /** columns for Namibia IRS jurisdictions */
 export const NamibiaColumns = [
@@ -12,7 +14,7 @@ export const NamibiaColumns = [
   },
   {
     Header: 'Structures Targeted',
-    accessor: 'target_2019',
+    accessor: 'jurisdiction_target',
   },
   {
     Header: 'Structures Found',
@@ -78,7 +80,7 @@ export const ZambiaJurisdictionsColumns = [
   {
     Header: 'Name',
     accessor: 'jurisdiction_name',
-    minWidth: 180,
+    minWidth: 360,
   },
   {
     Header: 'Total Spray Areas',
@@ -179,7 +181,7 @@ export const ZambiaFocusAreasColumns = [
   {
     Header: 'Name',
     accessor: 'jurisdiction_name',
-    minWidth: 180,
+    minWidth: 360,
   },
   {
     Header: 'Structures on the ground',
@@ -227,6 +229,46 @@ export const ZambiaFocusAreasColumns = [
   },
 ];
 
+/** columns for Namibia IRS focus (spray) areas */
+export const zambiaMDALowerJurisdictions = [
+  {
+    Header: 'Name',
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
+  },
+  {
+    Cell: (cell: Cell) => renderPercentage(cell),
+    Header: 'Registered Children Treated (%)',
+    accessor: 'registeredchildrentreated_per',
+  },
+  {
+    Cell: (cell: Cell) => renderPercentage(cell),
+    Header: 'Structures Visited (%)',
+    accessor: 'structures_visited_per',
+  },
+  {
+    Header: 'PZQ Tablets Distributed',
+    accessor: 'total_pzqdistributed',
+  },
+];
+
+export const zambiaMDAUpperJurisdictions = zambiaMDALowerJurisdictions.slice();
+// add two columns after the first element in the array
+zambiaMDAUpperJurisdictions.splice(
+  1,
+  0,
+  {
+    Cell: (cell: Cell) => renderPercentage(cell),
+    Header: 'Expected Children Found (%)',
+    accessor: 'expectedchildren_found',
+  },
+  {
+    Cell: (cell: Cell) => renderPercentage(cell),
+    Header: 'Expected Children Treated (%)',
+    accessor: 'expectedchildren_treated',
+  }
+);
+
 /** IRS Table Columns
  * These are all the table columns for IRS that we know about.
  */
@@ -235,6 +277,8 @@ export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionar
   namibia2019: NamibiaColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
   zambiaJurisdictions2019: ZambiaJurisdictionsColumns,
+  zambiaMDALower2020: zambiaMDALowerJurisdictions,
+  zambiaMDAUpper2020: zambiaMDAUpperJurisdictions,
 };
 
 export type TableProps = Pick<
@@ -253,3 +297,34 @@ export type TableProps = Pick<
   | 'useDrillDown'
   | 'renderNullDataComponent'
 >;
+
+export type GetColumnsToUse = (
+  jurisdiction: GenericJurisdiction[],
+  jurisdictionColumn: string,
+  focusAreaColumn: string,
+  focusAreaLevel: string,
+  jurisdictionId: string | null
+) => Array<DrillDownColumn<Dictionary<{}>>> | null;
+
+/**
+ * gets columns to be used
+ * @param {GenericJurisdiction[]} jurisdiction - jurisdiction data
+ * @param {string} jurisdictionColumn  - The reporting jurisdiction columns
+ * @param {string} focusAreaColumn  - Reporting focus area column
+ * @param {string} focusAreaLevel - Jurisdiction depth of the lowest level jurisdictions
+ * @param {string} jurisdictionId - jurisdiction identifier
+ */
+export const getColumnsToUse: GetColumnsToUse = (
+  jurisdiction: GenericJurisdiction[],
+  jurisdictionColumn: string,
+  focusAreaColumn: string,
+  focusAreaLevel: string,
+  jurisdictionId: string | null
+) => {
+  const currLevelData = jurisdiction.filter(el => el.jurisdiction_parent_id === jurisdictionId);
+  return currLevelData &&
+    currLevelData.length > 0 &&
+    currLevelData[0].jurisdiction_depth >= +focusAreaLevel
+    ? get(plansTableColumns, focusAreaColumn, null)
+    : get(plansTableColumns, jurisdictionColumn, null);
+};

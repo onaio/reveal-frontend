@@ -8,7 +8,7 @@ import React from 'react';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
 import { SUPERSET_IRS_REPORTING_INDICATOR_STOPS } from '../../../../../configs/env';
-import { INTERVENTION_IRS_URL, MAP } from '../../../../../constants';
+import { MAP, REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -16,7 +16,7 @@ import GenericJurisdictionsReducer, {
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../../store/ducks/generic/jurisdictions';
 import IRSPlansReducer, {
-  IRSPlan,
+  GenericPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../../store/ducks/generic/plans';
 import genericStructuresReducer, {
@@ -102,14 +102,14 @@ describe('Namibia configs: components/IRS Reports/IRSReportingMap', () => {
         isExact: true,
         params: {
           jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
-          planId: (plans[0] as IRSPlan).plan_id,
+          planId: (plans[0] as GenericPlan).plan_id,
         },
-        path: `${INTERVENTION_IRS_URL}/:planId/:jurisdictionId/${MAP}`,
-        url: `${INTERVENTION_IRS_URL}/${
-          (plans[0] as IRSPlan).plan_id
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/${
+          (plans[0] as GenericPlan).plan_id
         }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
       },
-      plan: plans[0] as IRSPlan,
+      plan: plans[0] as GenericPlan,
       service: supersetServiceMock,
       structures,
     };
@@ -168,6 +168,13 @@ describe('Namibia configs: components/IRS Reports/IRSReportingMap', () => {
               expressionType: 'SIMPLE',
               operator: '==',
               subject: 'jurisdiction_id',
+            },
+            {
+              clause: 'WHERE',
+              comparator: '727c3d40-e118-564a-b231-aac633e6abce',
+              expressionType: 'SIMPLE',
+              operator: '==',
+              subject: 'plan_id',
             },
           ],
           row_limit: 2000,

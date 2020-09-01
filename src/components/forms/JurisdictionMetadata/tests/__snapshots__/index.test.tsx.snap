@@ -12,6 +12,7 @@ exports[`components/forms/JurisdictionMetadata renders correctly: JurisdictionMe
   name="csv file"
   onBlur={[Function]}
   onChange={[Function]}
+  onClick={[Function]}
   type="file"
 />
 `;
