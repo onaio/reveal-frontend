@@ -7,11 +7,13 @@ import { EventData, Popup } from 'mapbox-gl';
 import * as React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import { toast } from 'react-toastify';
 import { AssignmentMapWrapper, ConnectedAssignmentMapWrapper } from '..';
 import { getJurisdictions } from '../../../../components/TreeWalker/helpers';
-import { MAP_LOAD_ERROR } from '../../../../configs/lang';
+import { INVALID_GEOMETRIES, MAP_LOAD_ERROR } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { ASSIGN_PLAN_URL, MANUAL_ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
+import * as helperUtils from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 import hierachyReducer, {
@@ -656,5 +658,31 @@ describe('containers/pages/AssigmentMapWrapper', () => {
       </Provider>
     );
     expect(wrapper.find('div').text()).toEqual(MAP_LOAD_ERROR);
+  });
+  it('growl on error when loading map', async () => {
+    fetch.mockResponseOnce(JSON.stringify(fixtures.payloadWithInvalidCoordinates), { status: 200 });
+    const props = {
+      plan: {
+        identifier: '2493',
+      } as PlanDefinition,
+      serviceClass: OpenSRPService,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedAssignmentMapWrapper {...props} />
+        </Router>
+      </Provider>
+    );
+    const mockGrowl: any = jest.fn();
+    (helperUtils as any).growl = mockGrowl;
+
+    await flushPromises();
+    wrapper.update();
+
+    expect(mockGrowl).toBeCalled();
+    expect(mockGrowl).toHaveBeenCalledWith(`${MAP_LOAD_ERROR}: ${INVALID_GEOMETRIES}`, {
+      type: toast.TYPE.ERROR,
+    });
   });
 });
