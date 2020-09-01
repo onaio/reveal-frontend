@@ -50,7 +50,7 @@ export const getPayload = (
   }
 
   // turns out if you put it in the loop it keeps subtracting a day for every iteration
-  const retireDate = now.subtract(1, 'day').format();
+  const retireDate = now.format();
 
   for (const retiredOrgId of initialOrgs.filter(orgId => !selectedOrgs.includes(orgId))) {
     if (!payload.map(obj => obj.organization).includes(retiredOrgId)) {
