@@ -7,7 +7,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Store } from 'redux';
-import { CountriesAdmin0, PlanDefinition } from '../../../../src/configs/settings';
+import { PlanDefinition } from '../../../../src/configs/settings';
 import { MemoizedGisidaLite } from '../../../components/GisidaLite';
 import Loading from '../../../components/page/Loading';
 import { getJurisdictions } from '../../../components/TreeWalker/helpers';
@@ -104,10 +104,23 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [mapParent, setMapParent] = React.useState<string>('');
   const [hasValidGeoms, setHasValidGeoms] = React.useState<boolean>(true);
-  const jurisdictionLabels = currentChildren.map(d => d.model.label);
   const history = useHistory();
 
   React.useEffect(() => {
+    // invalid geoms handler
+    let hasValidGeomsBool = true;
+    const getCoordinates = (coordinates: any) => {
+      if (coordinates && Array.isArray(coordinates)) {
+        getCoordinates((coordinates as any)[0]);
+      } else if (typeof coordinates === 'undefined') {
+        hasValidGeomsBool = false;
+      }
+    };
+    const mapFeatures = (feature: Feature) => {
+      if ((feature.geometry as Geometry).coordinates.length) {
+        (feature.geometry as Geometry).coordinates.forEach(getCoordinates);
+      }
+    };
     if (!getJurisdictionsFeatures.features.length) {
       setLoading(true);
       const params = {
@@ -121,20 +134,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
         serviceClass
       )
         .then(res => {
-          let hasValidGeomsBool = true;
           if (res.value && res.value.length && currentChildren.length) {
-            const getCoordinates = (coordinates: any) => {
-              if (coordinates && Array.isArray(coordinates)) {
-                getCoordinates((coordinates as any)[0]);
-              } else if (typeof coordinates === 'undefined') {
-                hasValidGeomsBool = false;
-              }
-            };
-            const mapFeatures = (feature: Feature) => {
-              if ((feature.geometry as Geometry).coordinates.length) {
-                (feature.geometry as Geometry).coordinates.forEach(getCoordinates);
-              }
-            };
             (res.value as Feature[]).forEach(mapFeatures);
             if (hasValidGeomsBool) {
               fetchJurisdictionsActionCreator(res.value);
@@ -153,9 +153,10 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
         })
         .catch(error => displayError(error));
     } else {
+      getJurisdictionsFeatures.features.forEach(mapFeatures);
       setLoading(false);
-      setHasValidGeoms(true);
-      hideBottomBreadCrumbCallback(false);
+      setHasValidGeoms(hasValidGeomsBool);
+      hideBottomBreadCrumbCallback(!hasValidGeomsBool);
     }
   }, [getJurisdictionsFeatures, currentParentId]);
 
@@ -173,15 +174,11 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   let zoom;
   if (getJurisdictionsFeatures && getJurisdictionsFeatures.features.length) {
     structures = buildStructureLayers(getJurisdictionsFeatures as any, true);
-    if (Object.keys(CountriesAdmin0).filter(admin => jurisdictionLabels.includes(admin)).length) {
-      mapCenter = undefined;
-      mapBounds = undefined;
-    } else {
-      mapBounds = GeojsonExtent(getJurisdictionsFeatures);
-      const centerAndZoom = viewport(mapBounds, [600, 400]);
-      mapCenter = centerAndZoom.center;
-      zoom = centerAndZoom.zoom;
-    }
+    mapBounds = GeojsonExtent(getJurisdictionsFeatures);
+    // get map zoom and center values
+    const centerAndZoom = viewport(mapBounds, [600, 400]);
+    mapCenter = centerAndZoom.center;
+    zoom = centerAndZoom.zoom;
   }
 
   if (loading) {
