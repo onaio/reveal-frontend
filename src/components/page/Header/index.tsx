@@ -28,6 +28,7 @@ import {
   ENABLE_PLANNING,
   ENABLE_POPULATION_SERVER_SETTINGS,
   ENABLE_PRACTITIONERS,
+  ENABLE_SMC,
   ENABLE_TEAMS,
   ENABLE_USERS,
   NAVBAR_BRAND_IMG_SRC,
@@ -57,6 +58,7 @@ import {
   PRACTITIONERS,
   SERVER_SETTINGS,
   SIGN_OUT,
+  SMC_REPORTING_TITLE,
   STUDENTS_TITLE,
   USERS,
 } from '../../../configs/lang';
@@ -78,6 +80,7 @@ import {
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
+  REPORT_SMC_PLAN_URL,
   VIEW_DRAFT_FILES_URL,
 } from '../../../constants';
 import './Header.css';
@@ -230,6 +233,19 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                             activeClassName="active"
                           >
                             {MDA_REPORTING_TITLE}
+                          </NavLink>
+                        </DropdownItem>
+                      </div>
+                    )}
+                    {ENABLE_SMC && (
+                      <div>
+                        <DropdownItem>
+                          <NavLink
+                            to={REPORT_SMC_PLAN_URL}
+                            className="nav-link"
+                            activeClassName="active"
+                          >
+                            {SMC_REPORTING_TITLE}
                           </NavLink>
                         </DropdownItem>
                       </div>

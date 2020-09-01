@@ -85,6 +85,7 @@ import {
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
+  REPORT_SMC_PLAN_URL,
   SINGLE_ORGANIZATION_URL,
   VIEW_DRAFT_FILES_URL,
 } from '../constants';
@@ -127,6 +128,9 @@ import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/Single
 import { ConnectedPlanAssignment } from '../containers/pages/PlanAssignment';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
+import ConnectedSMCJurisdictionReport from '../containers/pages/SMC/jurisdictionsReport';
+import ConnectedSMCReportingMap from '../containers/pages/SMC/Map';
+import ConnectedSMCPlansList from '../containers/pages/SMC/plans';
 import { EditServerSettings } from '../containers/pages/ServerSettings/EditSettings';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 import store from '../store';
@@ -243,6 +247,56 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={`${MDA_POINT_CHILD_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedChildReports}
+                />
+                {/* SMC Reporting plan table view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={REPORT_SMC_PLAN_URL}
+                  component={ConnectedSMCPlansList}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_SMC_PLAN_URL}/:planId`}
+                  component={ConnectedSMCJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedSMCJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedSMCJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedSMCJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedSMCJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
+                  component={ConnectedSMCReportingMap}
                 />
                 {/* IRS Reporting plan table view */}
                 <ConnectedPrivateRoute

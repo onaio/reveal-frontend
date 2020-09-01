@@ -268,6 +268,51 @@ zambiaMDAUpperJurisdictions.splice(
     accessor: 'expectedchildren_treated',
   }
 );
+/** columns for  smc point jurisdictions */
+export const smcJurisdictionsColumns = [
+  {
+    Header: 'Name',
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
+  },
+  {
+    Header: 'Operational Areas Visited',
+    accessor: 'operational_areas_visited',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Distribution Effectiveness (%)',
+    accessor: 'operational_areas_distributed',
+  },
+  {
+    Header: 'Total Structures',
+    accessor: 'total_structures',
+  },
+  {
+    Header: 'Total Found Structures',
+    accessor: 'total_found_structures',
+  },
+  {
+    Header: 'Total structures received SPAQ',
+    accessor: 'total_structures_recieved_spaq',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Found Coverage %',
+    accessor: 'total_eligible_children',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Distribution Coverage %',
+    accessor: 'total_operational_areas',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Treatment Coverage %',
+    accessor: 'total_eligible_children_treated',
+  },
+];
+
 
 /** IRS Table Columns
  * These are all the table columns for IRS that we know about.
@@ -275,6 +320,7 @@ zambiaMDAUpperJurisdictions.splice(
 export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionary>> } = {
   mdaJurisdictionsColumns,
   namibia2019: NamibiaColumns,
+  smcJurisdictionsColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
   zambiaJurisdictions2019: ZambiaJurisdictionsColumns,
   zambiaMDALower2020: zambiaMDALowerJurisdictions,

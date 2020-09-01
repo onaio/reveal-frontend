@@ -58,6 +58,7 @@ import {
   SAVE_PLAN,
   SAVING,
   SELECT_PLACHOLDER,
+  SMC_TITLE,
   START_DATE,
   STATUS_HEADER,
   TRIGGERS_LABEL,
@@ -358,6 +359,9 @@ const PlanForm = (props: PlanFormProps) => {
                 )}
                 {isPlanTypeEnabled(InterventionType.MDAPoint) && (
                   <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>
+                )}
+                {isPlanTypeEnabled(InterventionType.SMC) && (
+                  <option value={InterventionType.SMC}>{SMC_TITLE}</option>
                 )}
                 {isPlanTypeEnabled(InterventionType.DynamicFI) && (
                   <option value={InterventionType.DynamicFI}>{DYNAMIC_FI_TITLE}</option>
