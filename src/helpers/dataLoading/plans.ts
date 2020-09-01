@@ -18,7 +18,7 @@ import {
   PlanRecordResponse,
 } from '../../store/ducks/plans';
 import { displayError } from '../errors';
-import { extractPlanRecordResponseFromPlanPayload } from '../utils';
+import { extractPlanRecordResponseFromPlanPayload, PLANS_SERVICE_FILTER_PARAM } from '../utils';
 
 /** find plans that the given user has access to
  * @param {string} userName - username
@@ -60,7 +60,7 @@ export const loadOpenSRPPlans = (
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const OpenSrpPlanService = new service(OPENSRP_GET_ALL_PLANS);
-  OpenSrpPlanService.list()
+  OpenSrpPlanService.list(PLANS_SERVICE_FILTER_PARAM)
     .then((plans: PlanPayload[]) => {
       const extractedPlanRecords = plans
         .map(plan => extractPlanRecordResponseFromPlanPayload(plan))

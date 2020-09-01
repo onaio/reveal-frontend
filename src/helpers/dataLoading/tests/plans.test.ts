@@ -1,5 +1,5 @@
 import flushPromises from 'flush-promises';
-import { OPENSRP_PLANS, OPENSRP_PLANS_BY_USER_FILTER } from '../../../constants';
+import { OPENSRP_GET_ALL_PLANS, OPENSRP_PLANS_BY_USER_FILTER } from '../../../constants';
 import { PlanPayload } from '../../../store/ducks/plans';
 import { loadOpenSRPPlans, loadPlansByUserFilter } from '../plans';
 
@@ -48,7 +48,7 @@ describe('helpers/dataLoading', () => {
     await flushPromises();
 
     // calls the correct endpoint
-    expect(mockClass).toHaveBeenCalledWith(OPENSRP_PLANS);
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_GET_ALL_PLANS);
 
     // Uses the correct service method
     expect(mockList).toHaveBeenCalledTimes(1);
