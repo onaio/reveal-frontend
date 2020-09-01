@@ -17,7 +17,7 @@ export interface BreadCrumbProps {
 
 /** Configurable Breadcrumbs Component */
 const HeaderBreadcrumb = (props: BreadCrumbProps) => {
-  const { currentPage, pages } = props;
+  const { currentPage, pages, className } = props;
 
   const linkList = pages.map((page, key) => {
     // render breadcrumb items with urls as links or without urls as text nodes
@@ -36,7 +36,7 @@ const HeaderBreadcrumb = (props: BreadCrumbProps) => {
 
   return (
     <div>
-      <Breadcrumb className={`reveal-breadcrumb${props.className ? ' ' + props.className : ''}`}>
+      <Breadcrumb className={`reveal-breadcrumb${className ? ' ' + className : ''}`}>
         {linkList}
         <BreadcrumbItem active={true}>{currentPage.label}</BreadcrumbItem>
       </Breadcrumb>
