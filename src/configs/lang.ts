@@ -81,6 +81,7 @@ export const LOGIN = translate('LOGIN', 'Login');
 export const SIGN_OUT = translate('SIGN_OUT', 'Sign Out');
 
 export const MAP_LOAD_ERROR = translate('MAP_LOAD_ERROR', 'Could not load the map');
+export const INVALID_GEOMETRIES = translate('INVALID_GEOMETRIES', 'Invalid Geometries');
 export const AN_ERROR_OCCURRED = translate('AN_ERROR_OCCURRED', 'An Error Ocurred');
 export const PLEASE_FIX_THESE_ERRORS = translate(
   'PLEASE_FIX_THESE_ERRORS',

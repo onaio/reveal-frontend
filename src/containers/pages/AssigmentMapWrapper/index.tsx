@@ -11,7 +11,7 @@ import { PlanDefinition } from '../../../../src/configs/settings';
 import { MemoizedGisidaLite } from '../../../components/GisidaLite';
 import Loading from '../../../components/page/Loading';
 import { getJurisdictions } from '../../../components/TreeWalker/helpers';
-import { MAP_LOAD_ERROR } from '../../../configs/lang';
+import { INVALID_GEOMETRIES, MAP_LOAD_ERROR } from '../../../configs/lang';
 import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import {
@@ -106,6 +106,12 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
   const [hasValidGeoms, setHasValidGeoms] = React.useState<boolean>(true);
   const history = useHistory();
 
+  const mapErrorGrowl = (isValidGeom: boolean) => {
+    if (!isValidGeom) {
+      displayError(Error(`${MAP_LOAD_ERROR}: ${INVALID_GEOMETRIES}`));
+    }
+  };
+
   React.useEffect(() => {
     // invalid geoms handler
     let hasValidGeomsBool = true;
@@ -141,10 +147,12 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
             }
             setLoading(false);
             setHasValidGeoms(hasValidGeomsBool);
+            mapErrorGrowl(hasValidGeomsBool);
             hideBottomBreadCrumbCallback(!hasValidGeomsBool);
           } else {
             setLoading(false);
             setHasValidGeoms(false);
+            mapErrorGrowl(false);
             hideBottomBreadCrumbCallback(true);
           }
         })
@@ -155,6 +163,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
     } else {
       getJurisdictionsFeatures.features.forEach(mapFeatures);
       setLoading(false);
+      mapErrorGrowl(hasValidGeomsBool);
       setHasValidGeoms(hasValidGeomsBool);
       hideBottomBreadCrumbCallback(!hasValidGeomsBool);
     }
