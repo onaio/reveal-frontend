@@ -25,7 +25,7 @@ import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
-import { LogoutProps } from '../components/Logout';
+import { logoutFromAuthServer } from '../components/Logout';
 import CustomConnectedAPICallBack from '../components/page/CustomCallback';
 import Loading from '../components/page/Loading';
 import {
@@ -33,8 +33,6 @@ import {
   DISABLE_LOGIN_PROTECTION,
   GA_CODE,
   GA_ENV,
-  OPENSRP_LOGOUT_URL,
-  OPENSRP_OAUTH_STATE,
   TOAST_AUTO_CLOSE_DELAY,
   WEBSITE_NAME,
 } from '../configs/env';
@@ -130,7 +128,6 @@ import ConnectedPractitionersListView from '../containers/pages/PractitionerView
 import { EditServerSettings } from '../containers/pages/ServerSettings/EditSettings';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 import store from '../store';
-import { getOauthProviderState } from '../store/selectors';
 import './App.css';
 
 library.add(
@@ -161,10 +158,6 @@ if (GA_CODE) {
 export interface AppState {
   username?: string;
 }
-/** Interface defining component props */
-interface AppProps {
-  logoutComponent: (props: LogoutProps) => null;
-}
 
 const APP_CALLBACK_URL = BACKEND_ACTIVE ? BACKEND_CALLBACK_URL : REACT_LOGIN_URL;
 const { IMPLICIT, AUTHORIZATION_CODE } = AuthorizationGrantType;
@@ -173,7 +166,7 @@ const APP_LOGIN_URL = BACKEND_ACTIVE ? BACKEND_LOGIN_URL : REACT_LOGIN_URL;
 const APP_CALLBACK_PATH = BACKEND_ACTIVE ? BACKEND_CALLBACK_PATH : REACT_CALLBACK_PATH;
 
 /** Main App component */
-const App = (props: AppProps) => {
+const App = () => {
   useEffect(() => {
     const username = (getUser(store.getState()) || {}).username || '';
     if (GA_CODE && username) {
@@ -619,18 +612,7 @@ const App = (props: AppProps) => {
                   path={LOGOUT_URL}
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
-                    if (true) {
-                      /** returns logout component responsible for opensrp logout and moving execution to express server */
-                      return <props.logoutComponent logoutURL={OPENSRP_LOGOUT_URL} />;
-                    }
-                    const state = getOauthProviderState(store.getState());
-                    return (
-                      <ConnectedLogout
-                        {...{
-                          logoutURL: state === OPENSRP_OAUTH_STATE ? OPENSRP_LOGOUT_URL : null,
-                        }}
-                      />
-                    );
+                    return <ConnectedLogout logoutFunction={logoutFromAuthServer} />;
                   }}
                 />
               </Switch>

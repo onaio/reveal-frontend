@@ -1,33 +1,15 @@
-import { mount, shallow } from 'enzyme';
-import toJson from 'enzyme-to-json';
-import React from 'react';
-import Logout, { logoutFromAuthServer } from '..';
-import { EXPRESS_OAUTH_LOGOUT_URL, OPENSRP_LOGOUT_URL } from '../../../configs/env';
+import { logoutFromAuthServer } from '..';
+import * as utils from '../../../helpers/errors';
 
-jest.useFakeTimers();
+// tslint:disable-next-line: no-var-requires
+const fetch = require('jest-fetch-mock');
 
 describe('gatekeeper/utils/logoutFromAuthServer', () => {
-  beforeEach(() => {
-    window.open = jest.fn();
+  afterEach(() => {
+    fetch.resetMocks();
   });
-
-  it('renders without crashing', () => {
-    shallow(<Logout logoutURL={OPENSRP_LOGOUT_URL} />);
-  });
-
-  it('Renders Logout button correctly', () => {
-    const wrapper = mount(<Logout logoutURL={OPENSRP_LOGOUT_URL} />);
-    expect(toJson(wrapper.find('Logout'))).toMatchSnapshot();
-    wrapper.unmount();
-  });
-
-  it('calls window.open', () => {
-    window.open = jest.fn();
-    logoutFromAuthServer(OPENSRP_LOGOUT_URL);
-    expect(window.open).toBeCalledWith(OPENSRP_LOGOUT_URL);
-  });
-
-  it('calls href with express logout', () => {
+  it('invokes all the required stuff', async () => {
+    fetch.once(JSON.stringify('logged off'), { status: 200 });
     delete window.location;
     const hrefMock = jest.fn();
     (window.location as any) = {
@@ -35,7 +17,35 @@ describe('gatekeeper/utils/logoutFromAuthServer', () => {
         hrefMock(url);
       },
     };
-    jest.runAllTimers();
-    expect(hrefMock).toHaveBeenCalledWith(EXPRESS_OAUTH_LOGOUT_URL);
+
+    logoutFromAuthServer();
+    await new Promise(resolve => setImmediate(resolve));
+
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://reveal-stage.smartregister.org/opensrp/logout.do?',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+    ]);
+    expect(hrefMock).toHaveBeenCalledWith(
+      'https://keycloak-stage.smartregister.org/auth/realms/reveal-stage/protocol/openid-connect/logout?redirect_uri=http%3A%2F%2Flocalhost%3A3000'
+    );
+  });
+
+  it('Deals with errors', async () => {
+    fetch.mockReject(JSON.stringify('still logged in'));
+    const displayErrorMock = jest.spyOn(utils, 'displayError');
+
+    logoutFromAuthServer();
+    await new Promise(resolve => setImmediate(resolve));
+
+    expect(displayErrorMock).toHaveBeenCalledWith('"still logged in"');
   });
 });

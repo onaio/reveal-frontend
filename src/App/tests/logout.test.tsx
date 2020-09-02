@@ -2,6 +2,7 @@ import * as sessionDux from '@onaio/session-reducer';
 import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import store from '../../store';
@@ -25,11 +26,10 @@ describe('src/app.logout', () => {
       },
     };
 
-    const mockLogout = jest.fn(() => null);
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <App logoutComponent={mockLogout} />
+          <App />
         </Router>
       </Provider>
     );
@@ -42,13 +42,31 @@ describe('src/app.logout', () => {
 
     // simulate logout
     history.push('/logout');
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     wrapper.update();
 
-    // unfortunately we don't have a definitive way to test that the user session was invalidated;
-    // since the functionality that does this is in the express server and is thus out of the
-    // react-app's scope.
-    // ensure we are calling the logout component which handles opensrp logout and redirects to backend
-    // PS: only after redirecting to the express server and back is the user unauthenticated.
-    expect(mockLogout).toBeCalled();
+    expect(fetch.mock.calls).toEqual([
+      ['http://localhost:3000/oauth/state'],
+      [
+        'https://opensrp/logout?',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer hunter2',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+      ['http://localhost:3000/oauth/state'],
+    ]);
+
+    expect(hrefMock.mock.calls).toEqual([
+      ['/login'],
+      ['https://keycloak/logout?redirect_uri=localhost'],
+    ]);
   });
 });

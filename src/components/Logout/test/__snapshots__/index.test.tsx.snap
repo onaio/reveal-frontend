@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`gatekeeper/utils/logoutFromAuthServer Renders Logout button correctly 1`] = `
-<Logout
-  logoutURL="https://reveal-stage.smartregister.org/opensrp/logout.do"
-/>
-`;
