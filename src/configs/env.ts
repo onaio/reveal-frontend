@@ -272,12 +272,6 @@ export type GISIDA_ONADATA_API_TOKEN = typeof GISIDA_ONADATA_API_TOKEN;
 export const DIGITAL_GLOBE_CONNECT_ID = process.env.REACT_APP_DIGITAL_GLOBE_CONNECT_ID || '';
 export type DIGITAL_GLOBE_CONNECT_ID = typeof DIGITAL_GLOBE_CONNECT_ID;
 
-export const IRS_PLAN_COUNTRIES =
-  (process.env.REACT_APP_IRS_PLAN_COUNTRIES &&
-    process.env.REACT_APP_IRS_PLAN_COUNTRIES.split(',')) ||
-  [];
-export type IRS_PLAN_COUNTRIES = typeof IRS_PLAN_COUNTRIES;
-
 export const DATE_FORMAT = process.env.REACT_APP_DATE_FORMAT || 'yyyy-MM-dd';
 export type DATE_FORMAT = typeof DATE_FORMAT;
 
@@ -332,11 +326,6 @@ export type EXPRESS_OAUTH_LOGOUT_URL = typeof EXPRESS_OAUTH_LOGOUT_URL;
 
 export const BACKEND_ACTIVE = process.env.REACT_APP_BACKEND_ACTIVE === 'true';
 export type BACKEND_ACTIVE = typeof BACKEND_ACTIVE;
-
-export const HIDE_MAP_FOR_INTERVENTIONS = String(
-  process.env.REACT_APP_HIDE_MAP_FOR_INTERVENTIONS || ' '
-).split(',');
-export type HIDE_MAP_FOR_INTERVENTIONS = typeof HIDE_MAP_FOR_INTERVENTIONS;
 
 export const REACT_APP_VERSION = process.env.REACT_APP_VERSION;
 export type REACT_APP_VERSION = typeof REACT_APP_VERSION;
