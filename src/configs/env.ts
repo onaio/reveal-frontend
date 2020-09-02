@@ -409,3 +409,8 @@ export const ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS = (
   'COVERAGE,POPULATION,RISK,TARGET'
 ).split(',');
 export type ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS = typeof ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS;
+
+export const KEYCLOAK_LOGOUT_URL =
+  process.env.REACT_APP_KEYCLOAK_LOGOUT_URL ||
+  'https://keycloak-stage.smartregister.org/auth/realms/reveal-stage/protocol/openid-connect/logout';
+export type KEYCLOAK_LOGOUT_URL = typeof KEYCLOAK_LOGOUT_URL;
