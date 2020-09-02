@@ -9,6 +9,7 @@ import {
 import { displayError } from '../../helpers/errors';
 import { getPayloadOptions, OpenSRPService } from '../../services/opensrp';
 
+/** custom function that logs user from the authorization server */
 export const logoutFromAuthServer = () => {
   const payload = getPayloadOptions(new AbortController().signal, 'GET');
   const redirectUri = BACKEND_ACTIVE ? EXPRESS_OAUTH_LOGOUT_URL : DOMAIN_NAME;
