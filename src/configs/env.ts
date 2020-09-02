@@ -73,6 +73,11 @@ export type DISABLE_LOGIN_PROTECTION = typeof DISABLE_LOGIN_PROTECTION;
 export const ENABLE_CONFIG_FORM = process.env.REACT_APP_ENABLE_CONFIG_FORM === 'true';
 export type ENABLE_CONFIG_FORM = typeof ENABLE_CONFIG_FORM;
 
+/** Do you want to enable IRS Performance Reporting */
+export const ENABLE_IRS_PERFORMANCE_REPORT =
+  process.env.REACT_APP_ENABLE_IRS_PERFORMANCE_REPORT === 'true';
+export type ENABLE_IRS_PERFORMANCE_REPORT = typeof ENABLE_IRS_PERFORMANCE_REPORT;
+
 /** The Superset API base */
 export const SUPERSET_API_BASE = process.env.REACT_APP_SUPERSET_API_BASE || 'http://localhost';
 export type SUPERSET_API_BASE = typeof SUPERSET_API_BASE;
