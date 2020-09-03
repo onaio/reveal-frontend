@@ -1,6 +1,5 @@
 import {
   fetchActionCreatorFactory,
-  getItemByIdFactory,
   getItemsByIdFactory,
   reducerFactory,
   removeActionCreatorFactory,
@@ -13,7 +12,7 @@ import { createSelector } from 'reselect';
 /** the reducer name */
 export const reducerName = 'IRSDistrictPerformance';
 
-interface IRSPerformanceCommonFields {
+export interface IRSPerformanceCommonFields {
   end_time: string;
   field_duration: string;
   start_time: string;
@@ -43,15 +42,12 @@ export default reducer;
 /** actionCreator returns action to to add Item records to store */
 export const FetchIRSDistricts = fetchActionCreatorFactory<IRSDistrictPerformance>(
   reducerName,
-  'district_id'
+  'id'
 );
 /** actionCreator returns action to to remove Item records to store */
 export const genericIRSDistricts = removeActionCreatorFactory(reducerName);
 
 // selectors
-/** get one district using its id */
-export const getIRSDistrictByIdSelector = getItemByIdFactory<IRSDistrictPerformance>(reducerName);
-
 /** get all districts by ids */
 export const getAllIRSDistrictsByIds = getItemsByIdFactory<IRSDistrictPerformance>(reducerName);
 
