@@ -26,7 +26,7 @@
     "@onaio/utils": "^0.0.1",
     "@opensrp/form-config": "^0.0.5",
     "@opensrp/population-characteristics": "^0.0.6",
-    "@opensrp/server-logout": "file:/home/peter/Desktop/opensrp/mpower/opensrp-web/packages/server-logout/",
+    "@opensrp/server-logout": "^0.0.1",
     "@opensrp/server-service": "^0.0.2",
     "@sentry/browser": "^5.19.0",
     "@sentry/react": "^5.19.0",

@@ -1839,13 +1839,10 @@
     redux "^4.0.5"
     seamless-immutable "^7.1.4"
 
-"@opensrp/server-logout@file:../../opensrp/mpower/opensrp-web/packages/server-logout":
-  version "0.0.0"
-  dependencies:
-    "@opensrp/server-service" "^0.0.4"
-
-"@opensrp/server-logout@file:/home/peter/Desktop/opensrp/mpower/opensrp-web/packages/server-logout/":
-  version "0.0.0"
+"@opensrp/server-logout@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@opensrp/server-logout/-/server-logout-0.0.1.tgz#82497960c1cc5d0f1da8e8aa4be9bedd6c32a5c0"
+  integrity sha512-OAoXQsD/ZY9yT7q/jdjRTvsgRKudifc6Az9D/vfiUsgR6+zdK1YXP8afpXXY2OeY1VnJorMujSSolk/zv0a54Q==
   dependencies:
     "@opensrp/server-service" "^0.0.4"
 
