@@ -39,6 +39,7 @@ import { LOGIN_PROMPT } from '../configs/lang';
 import { providers } from '../configs/settings';
 
 import '@onaio/drill-down-table/dist/table.css';
+import { customLogout } from '../components/Logout';
 import { Footer } from '../components/page/Footer';
 import {
   ASSIGN_JURISDICTIONS_URL,
@@ -125,7 +126,7 @@ import { ConnectedPlanAssignment } from '../containers/pages/PlanAssignment';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
 import { EditServerSettings } from '../containers/pages/ServerSettings/EditSettings';
-import { customLogout, oAuthUserInfoGetter } from '../helpers/utils';
+import { oAuthUserInfoGetter } from '../helpers/utils';
 import store from '../store';
 import './App.css';
 
