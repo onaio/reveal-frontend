@@ -11,12 +11,7 @@ import {
   faTextHeight,
 } from '@fortawesome/free-solid-svg-icons';
 import ConnectedPrivateRoute from '@onaio/connected-private-route';
-import {
-  AuthorizationGrantType,
-  ConnectedLogout,
-  ConnectedOauthCallback,
-  OauthLogin,
-} from '@onaio/gatekeeper';
+import { AuthorizationGrantType, ConnectedOauthCallback, OauthLogin } from '@onaio/gatekeeper';
 import { initGoogleAnalytics, RouteTracker, setDimensions } from '@onaio/google-analytics';
 import { getUser } from '@onaio/session-reducer';
 import React, { useEffect } from 'react';
@@ -39,7 +34,7 @@ import { LOGIN_PROMPT } from '../configs/lang';
 import { providers } from '../configs/settings';
 
 import '@onaio/drill-down-table/dist/table.css';
-import { customLogout } from '../components/Logout';
+import { CustomLogout } from '../components/Logout';
 import { Footer } from '../components/page/Footer';
 import {
   ASSIGN_JURISDICTIONS_URL,
@@ -612,7 +607,7 @@ const App = () => {
                   path={LOGOUT_URL}
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
-                    return <ConnectedLogout logoutFunction={customLogout} />;
+                    return <CustomLogout />;
                   }}
                 />
               </Switch>

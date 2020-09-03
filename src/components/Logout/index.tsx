@@ -16,7 +16,7 @@ import Ripple from '../page/Loading';
 /** HOC function that calls function that logs out the user from both opensrp
  * and keycloak
  */
-export const customLogout = () => {
+export const CustomLogout = () => {
   const history = useHistory();
   const payload = getPayloadOptions(new AbortController().signal, 'GET');
   const redirectUri = BACKEND_ACTIVE ? EXPRESS_OAUTH_LOGOUT_URL : DOMAIN_NAME;
