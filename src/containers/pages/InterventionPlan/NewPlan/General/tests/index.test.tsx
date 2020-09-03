@@ -8,6 +8,7 @@ import configureMockStore from 'redux-mock-store';
 import { defaultProps as defaultPlanFormProps } from '../../../../../../components/forms/PlanForm';
 import { generatePlanDefinition } from '../../../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb from '../../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { FOCUS_AREA_HEADER } from '../../../../../../configs/lang';
 import store from '../../../../../../store';
 import {
   addPlanDefinition,
@@ -51,7 +52,10 @@ describe('containers/pages/NewPlan', () => {
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...defaultPlanFormProps,
       addPlan: expect.any(Function),
+      allowMoreJurisdictions: true,
+      cascadingSelect: true,
       formHandler: expect.any(Function),
+      jurisdictionLabel: FOCUS_AREA_HEADER,
     });
 
     // check that there's a Row that nests a Col that nests a PlanForm
