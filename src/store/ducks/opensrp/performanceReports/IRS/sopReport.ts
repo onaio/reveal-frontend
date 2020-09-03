@@ -18,8 +18,8 @@ export interface IRSSOPPerformance extends IRSPerformanceCommonFields {
   avg_found: number;
   avg_refused: number;
   avg_sprayed: number;
-  days_worked: number;
   data_collector: string;
+  days_worked: number;
   district_id: string;
   found: number;
   id: string;
