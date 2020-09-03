@@ -9,3 +9,9 @@ Below is a list of currently supported environment variables:
 - Controls the identifier options displayed when downloading jurisdiction metadata.
 - Options: POPULATION, RISK, COVERAGE and TARGET
 - Variable is **not required** and if not provided all the options are loaded.
+
+2. **REACT_APP_KEYCLOAK_LOGOUT_URL**
+
+- url to logout from the keycloak server
+- **Required**
+- default: `https://keycloak-stage.smartregister.org/auth/realms/reveal-stage/protocol/openid-connect/logout`
