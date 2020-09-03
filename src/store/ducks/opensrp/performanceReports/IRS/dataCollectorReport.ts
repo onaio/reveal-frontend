@@ -40,7 +40,7 @@ export const FetchIRSDataCollectors = fetchActionCreatorFactory<IRSCollectorPerf
   'id'
 );
 /** actionCreator returns action to to remove Item records to store */
-export const genericIRSDataCollectors = removeActionCreatorFactory(reducerName);
+export const removeIRSDataCollectors = removeActionCreatorFactory(reducerName);
 
 // selectors
 /** get all data collectors by ids */

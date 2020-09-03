@@ -45,7 +45,7 @@ export const FetchIRSDistricts = fetchActionCreatorFactory<IRSDistrictPerformanc
   'id'
 );
 /** actionCreator returns action to to remove Item records to store */
-export const genericIRSDistricts = removeActionCreatorFactory(reducerName);
+export const removeIRSDistricts = removeActionCreatorFactory(reducerName);
 
 // selectors
 /** get all districts by ids */

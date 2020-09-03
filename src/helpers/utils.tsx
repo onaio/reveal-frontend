@@ -79,10 +79,12 @@ import { colorMaps, ColorMapsTypes } from './structureColorMaps';
 
 /** Route params interface */
 export interface RouteParams {
+  dataCollector?: string;
   goalId?: string;
   id?: string;
   jurisdictionId?: string;
   planId?: string;
+  sop?: string;
   type?: string;
 }
 

@@ -111,7 +111,7 @@ import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan
 import { OpenSRPPlansList } from '../containers/pages/IRS/assignments';
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import { IRSPlanPerfomenceReport } from '../containers/pages/IRS/performanceReport/plans';
-import { IRSPerfomenceReport } from '../containers/pages/IRS/performanceReport/reports';
+import ConnectedIRSPerfomenceReport from '../containers/pages/IRS/performanceReport/reports';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
 import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
@@ -289,7 +289,28 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId`}
-                  component={IRSPerfomenceReport}
+                  component={ConnectedIRSPerfomenceReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedIRSPerfomenceReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/:dataCollector`}
+                  component={ConnectedIRSPerfomenceReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/:dataCollector/:sop`}
+                  component={ConnectedIRSPerfomenceReport}
                 />
                 {/* MDA Reporting plan table view */}
                 <ConnectedPrivateRoute

@@ -39,7 +39,7 @@ export default reducer;
 /** actionCreator returns action to to add Item records to store */
 export const FetchIRSSOPs = fetchActionCreatorFactory<IRSSOPPerformance>(reducerName, 'id');
 /** actionCreator returns action to to remove Item records to store */
-export const genericIRSSOPs = removeActionCreatorFactory(reducerName);
+export const removeIRSSOPs = removeActionCreatorFactory(reducerName);
 
 // selectors
 /** get all SOPs by ids */

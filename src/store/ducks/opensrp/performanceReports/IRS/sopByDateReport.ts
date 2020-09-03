@@ -39,7 +39,7 @@ export const FetchIRSSOPByDate = fetchActionCreatorFactory<IRSSOPByDatePerforman
   'id'
 );
 /** actionCreator returns action to to remove Item records to store */
-export const genericIRSSOPByDate = removeActionCreatorFactory(reducerName);
+export const removeIRSSOPByDate = removeActionCreatorFactory(reducerName);
 
 // selectors
 /** get all SOPs by ids */
