@@ -5,7 +5,7 @@ import { PERFORMANCE_REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import { RouteParams } from '../../../../../helpers/utils';
 import ConnectedIRSPlansList from '../../plans';
 
-export const IRSPerfomenceReport = (props: RouteComponentProps<RouteParams>) => {
+export const IRSPlanPerfomenceReport = (props: RouteComponentProps<RouteParams>) => {
   const plansProps = {
     ...props,
     pageTitle: IRS_PERFORMANCE_REPORTING_TITLE,

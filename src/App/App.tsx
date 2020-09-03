@@ -110,8 +110,8 @@ import { DraftPlans } from '../containers/pages/InterventionPlan/PlanningView/Dr
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import { OpenSRPPlansList } from '../containers/pages/IRS/assignments';
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
-import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
-import { IRSPerfomenceReport } from '../containers/pages/IRS/performanceReport/plans';
+import { IRSPlanPerfomenceReport } from '../containers/pages/IRS/performanceReport/plans';
+import { IRSPerfomenceReport } from '../containers/pages/IRS/performanceReport/reports';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
 import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
@@ -274,7 +274,7 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
-                  component={ConnectedIRSReportingMap}
+                  component={4}
                 />
                 {/* IRS performance Reporting view */}
                 <ConnectedPrivateRoute
@@ -282,6 +282,13 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={PERFORMANCE_REPORT_IRS_PLAN_URL}
+                  component={IRSPlanPerfomenceReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId`}
                   component={IRSPerfomenceReport}
                 />
                 {/* MDA Reporting plan table view */}
