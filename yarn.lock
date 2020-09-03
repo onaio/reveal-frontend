@@ -1719,8 +1719,10 @@
   resolved "https://registry.yarnpkg.com/@onaio/formik-effect/-/formik-effect-0.0.1.tgz#7c234b031e311eaebcaa7da3beded575949c4fc8"
   integrity sha512-4Gvtwa4AKL+ksYyqUBS9FRSGZohk9ppi0uBPhY17wlkfuhSIp9nEuJbZCKc+tQqU19Y0jNtaYzYvvsPl3HziMA==
 
-"@onaio/gatekeeper@file:../js-tools/packages/gatekeeper":
+"@onaio/gatekeeper@^0.0.21":
   version "0.0.21"
+  resolved "https://registry.yarnpkg.com/@onaio/gatekeeper/-/gatekeeper-0.0.21.tgz#ebf445833330ebc09548999b85a9da253b7ebd1a"
+  integrity sha512-0kN42NehnehGnPn8rMQnUvQOGstU8xkR6GEpeTPHqt0G/8pcWULUSzDZOZyADO1oZOpyz+dzC70NuvTw8jHt1w==
   dependencies:
     "@onaio/session-reducer" "^0.0.11"
     client-oauth2 "^4.2.3"
