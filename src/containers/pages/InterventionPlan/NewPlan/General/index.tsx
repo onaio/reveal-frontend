@@ -10,14 +10,15 @@ import { planActivitiesMap } from '../../../../../components/forms/PlanForm/help
 import HeaderBreadcrumb, {
   Page,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { COUNTRY, CREATE_NEW_PLAN, DRAFT_PLANS, HOME, PLANS } from '../../../../../configs/lang';
 import {
-  ASSIGN_JURISDICTIONS_URL,
-  HOME_URL,
-  NEW_PLAN_URL,
-  PLAN_LIST_URL,
-  PLANNING_VIEW_URL,
-} from '../../../../../constants';
+  COUNTRY,
+  CREATE_NEW_PLAN,
+  DRAFT_PLANS,
+  FOCUS_AREA_HEADER,
+  HOME,
+  PLANS,
+} from '../../../../../configs/lang';
+import { HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL, PLANNING_VIEW_URL } from '../../../../../constants';
 import { addPlanDefinition } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType } from '../../../../../store/ducks/plans';
 import { JurisdictionDetails } from './JurisdictionDetails';
@@ -50,22 +51,30 @@ export const defaultBasePlanProps = {
  */
 const planFormPropsLookUp = {
   [InterventionType.IRS]: {
-    allowMoreJurisdictions: false,
-    cascadingSelect: false,
+    allowMoreJurisdictions: true,
+    cascadingSelect: true,
     initialValues: {
       ...defaultInitialValues,
       activities: planActivitiesMap[InterventionType.IRS],
       interventionType: InterventionType.IRS,
     },
-    jurisdictionLabel: COUNTRY,
-    redirectAfterAction: ASSIGN_JURISDICTIONS_URL,
+    jurisdictionLabel: FOCUS_AREA_HEADER,
+    redirectAfterAction: PLAN_LIST_URL,
   },
   [InterventionType.FI]: {},
   [InterventionType.MDA]: {},
   [InterventionType.MDAPoint]: {},
   [InterventionType.DynamicFI]: {},
-  [InterventionType.DynamicIRS]: {},
-  [InterventionType.DynamicMDA]: {},
+  [InterventionType.DynamicIRS]: {
+    allowMoreJurisdictions: true,
+    cascadingSelect: true,
+    jurisdictionLabel: FOCUS_AREA_HEADER,
+  },
+  [InterventionType.DynamicMDA]: {
+    allowMoreJurisdictions: true,
+    cascadingSelect: true,
+    jurisdictionLabel: FOCUS_AREA_HEADER,
+  },
 };
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
