@@ -62,7 +62,7 @@ export const getPlanId = (_: Partial<Store>, props: DataCollectorFilters) => pro
 /** get district id
  * Gets district id from DataCollectorFilters
  * @param state - the redux store
- * @param props - the district filters object
+ * @param props - the data collector filters object
  */
 export const getDistrictId = (_: Partial<Store>, props: DataCollectorFilters) => props.district_id;
 
