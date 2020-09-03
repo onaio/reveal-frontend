@@ -42,6 +42,15 @@ export const defaultBasePlanProps = {
   showJurisdictionDetails: true,
 };
 
+/** portion of planform props that configures how the field(s) used to
+ * add jurisdictions to a plan behave
+ */
+const managePlansLocationFieldProps = {
+  allowMoreJurisdictions: true,
+  cascadingSelect: true,
+  jurisdictionLabel: FOCUS_AREA_HEADER,
+};
+
 /** dynamically supply props during runtime when the interventionType changes
  * Reason: the planForm is using a key (the intervention type); once the intervention changes
  *  the planForm does not re-render it remounts, the look up gives it a place to get the props it should
@@ -66,14 +75,10 @@ const planFormPropsLookUp = {
   [InterventionType.MDAPoint]: {},
   [InterventionType.DynamicFI]: {},
   [InterventionType.DynamicIRS]: {
-    allowMoreJurisdictions: true,
-    cascadingSelect: true,
-    jurisdictionLabel: FOCUS_AREA_HEADER,
+    ...managePlansLocationFieldProps,
   },
   [InterventionType.DynamicMDA]: {
-    allowMoreJurisdictions: true,
-    cascadingSelect: true,
-    jurisdictionLabel: FOCUS_AREA_HEADER,
+    ...managePlansLocationFieldProps,
   },
 };
 
