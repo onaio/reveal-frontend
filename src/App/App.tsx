@@ -25,7 +25,6 @@ import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
-import { logoutFromAuthServer } from '../components/Logout';
 import CustomConnectedAPICallBack from '../components/page/CustomCallback';
 import Loading from '../components/page/Loading';
 import {
@@ -126,7 +125,7 @@ import { ConnectedPlanAssignment } from '../containers/pages/PlanAssignment';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
 import { EditServerSettings } from '../containers/pages/ServerSettings/EditSettings';
-import { oAuthUserInfoGetter } from '../helpers/utils';
+import { customLogout, oAuthUserInfoGetter } from '../helpers/utils';
 import store from '../store';
 import './App.css';
 
@@ -612,7 +611,7 @@ const App = () => {
                   path={LOGOUT_URL}
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
-                    return <ConnectedLogout logoutFunction={logoutFromAuthServer} />;
+                    return <ConnectedLogout logoutFunction={customLogout} />;
                   }}
                 />
               </Switch>

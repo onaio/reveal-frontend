@@ -48,21 +48,20 @@ describe('src/app.logout', () => {
     });
     wrapper.update();
 
-    // expect(fetch.mock.calls).toEqual([
-    //   ['http://localhost:3000/oauth/state'],
-    //   [
-    //     'https://opensrp/logout?',
-    //     {
-    //       headers: {
-    //         accept: 'application/json',
-    //         authorization: 'Bearer hunter2',
-    //         'content-type': 'application/json;charset=UTF-8',
-    //       },
-    //       method: 'GET',
-    //     },
-    //   ],
-    //   ['http://localhost:3000/oauth/state'],
-    // ]);
+    expect(fetch.mock.calls).toEqual([
+      ['http://localhost:3000/oauth/state'],
+      [
+        'https://opensrp/logout',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer hunter2',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+    ]);
 
     expect(hrefMock.mock.calls).toEqual([
       ['https://keycloak/logout?redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Flogout'],

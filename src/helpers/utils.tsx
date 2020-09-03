@@ -3,6 +3,7 @@ import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { getUser, SessionState } from '@onaio/session-reducer';
 import { Dictionary, percentage } from '@onaio/utils';
+import { logout } from '@opensrp/server-logout';
 import { Color } from 'csstype';
 import { GisidaMap } from 'gisida';
 import { Location } from 'history';
@@ -21,8 +22,18 @@ import { TASK_YELLOW } from '../colors';
 import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
 import { FIReasonType, FIStatusType } from '../components/forms/PlanForm/types';
 import NewRecordBadge from '../components/NewRecordBadge';
+import Ripple from '../components/page/Loading';
 import { NoDataComponent } from '../components/Table/NoDataComponent';
-import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
+import {
+  BACKEND_ACTIVE,
+  DIGITAL_GLOBE_CONNECT_ID,
+  DOMAIN_NAME,
+  EXPRESS_OAUTH_LOGOUT_URL,
+  KEYCLOAK_LOGOUT_URL,
+  ONADATA_OAUTH_STATE,
+  OPENSRP_LOGOUT_URL,
+  OPENSRP_OAUTH_STATE,
+} from '../configs/env';
 import {
   ACTION,
   FAILED_TO_EXTRACT_PLAN_RECORD,
@@ -62,6 +73,7 @@ import {
   RACD_REGISTER_FAMILY_CODE,
   SETTINGS_CONFIGURATION,
 } from '../constants';
+import { getPayloadOptions } from '../services/opensrp';
 import store from '../store';
 import {
   InterventionType,
@@ -1046,4 +1058,16 @@ export type DefaultDrillDownPropsType = Pick<
  */
 export const getPlanStatusToDisplay = (planStatuses: string[]): string[] => {
   return Object.values(PlanStatus).filter(status => !planStatuses.includes(status));
+};
+
+/** wrapper function that calls function that logs out the user from both opensrp
+ * and keycloak
+ */
+export const customLogout = () => {
+  const payload = getPayloadOptions(new AbortController().signal, 'GET');
+  const redirectUri = BACKEND_ACTIVE ? EXPRESS_OAUTH_LOGOUT_URL : DOMAIN_NAME;
+  logout(payload, OPENSRP_LOGOUT_URL, KEYCLOAK_LOGOUT_URL, redirectUri, displayError).catch(_ => {
+    return;
+  });
+  return <Ripple />;
 };
