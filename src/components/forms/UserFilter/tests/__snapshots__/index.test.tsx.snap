@@ -31,3 +31,30 @@ exports[`src/components/forms/FilterForm renders correctly: Selector Input 1`] =
   value=""
 />
 `;
+
+exports[`src/components/forms/FilterForm renders correctly: label and input 1`] = `
+Object {
+  "children": <label>
+    user
+  </label>,
+  "className": "col-sm-4",
+}
+`;
+
+exports[`src/components/forms/FilterForm renders correctly: label and input 2`] = `
+Object {
+  "children": <UserIdSelect
+    ReactSelectDefaultValue={
+      Object {
+        "label": "Select username",
+        "value": "",
+      }
+    }
+    className=""
+    onChangeHandler={[Function]}
+    serviceClass={[Function]}
+    showPractitioners={true}
+  />,
+  "className": "col-sm-8",
+}
+`;
