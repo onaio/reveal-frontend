@@ -1262,5 +1262,98 @@
     "message": "จำนวนสิ่งปลูกสร้างต่อทีมต่อวัน",
     "description": "Label of form field for the number of structures a team can handle per day"
   },
-  "TOTAL": { "message": "รวม", "description": "Total" }
+  "NO_JURISDICTION_SELECTIONS_FOUND": {
+    "message": "ไม่พบการเลือกพื้นที่เป้าหมาย",
+    "description": "Info message shown when there are no selected jurisdiction records found"
+  },
+  "TOTAL": { "message": "รวม", "description": "Total" },
+  "EDIT_LABEL": { "message": "แก้ไข", "description": "table header label - edit" },
+  "DOWNLOAD_LABEL": { "message": "ดาวน์โหลด", "description": "table cell text - download" },
+  "UPLOAD_EDIT_LABEL": {
+    "message": "อัพโหลดแก้ไข",
+    "description": "table cell text - upload edit"
+  },
+  "UPOL0AD_FILE_LABEL": {
+    "message": "อัพโหลดไฟล์ใหม่",
+    "description": "button text: upload new file"
+  },
+  "VIEW_FILES_LABEL": { "message": "ดูไฟล์", "description": "table cell text - view files" },
+  "APP_ID_LABEL": {
+    "message": "รหัสแอพ",
+    "description": "table header label - application identifier"
+  },
+  "APP_VERSION_LABEL": {
+    "message": "เวอร์ชั่นแอพ",
+    "description": "table header label - application version"
+  },
+  "RELATED_TO_LABEL": { "message": "เกี่ยวข้องกับ", "description": "form label: file related to?" },
+  "FILE_UPLOAD_LABEL": { "message": "อัพโหลดไฟล์", "description": "button text: to upload file" },
+  "FORM_REQUIRED_LABEL": { "message": "ต้องกรอกแบบฟอร์ม", "description": "form error message" },
+  "FORM_NAME_REQUIRED_LABEL": {
+    "message": "ต้องระบุชื่อแบบฟอร์ม",
+    "description": "form error message"
+  },
+  "FIND_RELEASE_LABEL": { "message": "ค้นหารุ่น", "description": "search bar place holder" },
+  "FIND_DRAFT_FILE_LABEL": { "message": "ค้นหาไฟล์ร่าง", "description": "search bar place holder" },
+  "FIND_RELEASE_FILES": { "message": "ค้นหาไฟล์รุ่น", "description": "search bar place holder" },
+  "FIND_VALIDATOR_FILES": {
+    "message": "ค้นหาไฟล์ตัวตรวจสอบความถูกต้อง",
+    "description": "search bar place holder"
+  },
+  "COULD_NOT_LOAD_FORM": {
+    "message": "ไม่สามารถโหลดแบบฟอร์ม",
+    "description": "error: could not load the form"
+  },
+  "DID_NOT_SAVE_SUCCESSFULLY": {
+    "message": "บันทึกไม่สำเร็จ",
+    "description": "error: did not succeed when saving"
+  },
+  "AND": { "message": "และ", "description": "the word 'and'" },
+  "MORE": { "message": "มากกว่า", "description": "the word 'more'" },
+  "COULD_NOT_LOAD_PLAN_JURISDICTION_HIERARCHY": {
+    "message": "ไม่สามารถโหลดลำดับชั้นพื้นที่ปฏิบัติงานของแผน",
+    "description": "error: did not succeed when loading plan jurisdiction hierarchy"
+  },
+  "COULD_NOT_LOAD_ASSIGNMENTS": {
+    "message": "ไม่สามารถโหลดงานได้",
+    "description": "error: did not succeed when loading assignments"
+  },
+  "COULD_NOT_LOAD_TEAMS": {
+    "message": "ไม่สามารถโหลดทีมได้",
+    "description": "error: did not succeed when loading teams"
+  },
+  "COULD_NOT_LOAD_PLAN": {
+    "message": "ไม่สามารถโหลดแผนปฏิบัติงานได้",
+    "description": "error: did not succeed when loading the plan"
+  },
+  "THE_SPECIFIC_ERROR_IS": {
+    "message": "ข้อผิดพลาดเฉพาะคือ",
+    "description": "notice: points out the error"
+  },
+  "AN_ERROR_OCURRED": {
+    "message": "พบข้อผิดพลาด โปรดลองรีเฟรชหน้าเพจ",
+    "description": "Generic error message"
+  },
+  "FALLBACK_CUSTOM_ERROR_MESSAGE": {
+    "message": "เกิดข้อผิดพลาด มีการรายงานไปยังผู้ดูแลเว็บไซต์ทางอีเมลแล้วและควรได้รับการแก้ไขในไม่ช้า ขอบคุณสำหรับความอดทนของคุณ",
+    "description": "Error message displayed when application encounters internal error"
+  },
+  "SERVER_SETTINGS": { "message": "ตั้งค่า server", "description": "label: server settings" },
+  "SEARCH_SETTINGS_LABEL": {
+    "message": "ตั้งค่าการค้นหา",
+    "description": "settings search bar place holder"
+  },
+  "PAGE_TITLE_LABEL": { "message": "ตั้งค่า server", "description": "" },
+  "INHERITED_FROM_LABEL": {
+    "message": "สืบทอดมาจาก?",
+    "description": "table header label: settings inherited from?"
+  },
+  "SET_TO_YES_LABEL": {
+    "message": "ตั้งค่า 'ใช่'",
+    "description": "set population characteristics settings to true"
+  },
+  "SET_TO_NO_LABEL": {
+    "message": "ตั้งค่า 'ไม่ใช่'",
+    "description": "set population characteristics settings to false"
+  }
 }
