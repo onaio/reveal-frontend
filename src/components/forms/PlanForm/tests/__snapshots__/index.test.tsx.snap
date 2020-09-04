@@ -4631,6 +4631,88 @@ Array [
 ]
 `;
 
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: Dynamic-MDA addJurisdiction button 1`] = `
+<button
+  className="btn btn-primary btn-sm mb-5 addJurisdiction"
+  onClick={[Function]}
+  type="button"
+>
+  Add
+   
+  Focus Area
+</button>
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: Dynamic-MDA removeJurisdiction buttons 1`] = `
+Array [
+  <button
+    aria-label="Close"
+    className="close position-absolute removeArrItem removeJurisdiction"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>,
+  <button
+    aria-label="Close"
+    className="close position-absolute removeArrItem removeJurisdiction"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>,
+]
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: Dynamic-irs addJurisdiction button 1`] = `
+<button
+  className="btn btn-primary btn-sm mb-5 addJurisdiction"
+  onClick={[Function]}
+  type="button"
+>
+  Add
+   
+  Focus Area
+</button>
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: Dynamic-irs removeJurisdiction buttons 1`] = `
+Array [
+  <button
+    aria-label="Close"
+    className="close position-absolute removeArrItem removeJurisdiction"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>,
+  <button
+    aria-label="Close"
+    className="close position-absolute removeArrItem removeJurisdiction"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>,
+]
+`;
+
 exports[`containers/forms/PlanForm renders jurisdictions fields correctly: addJurisdiction button 1`] = `
 <button
   className="btn btn-primary btn-sm mb-5 addJurisdiction"
@@ -4715,33 +4797,4 @@ exports[`containers/forms/PlanForm renders jurisdictions fields correctly: juris
   type="hidden"
   value=""
 />
-`;
-
-exports[`containers/forms/PlanForm renders jurisdictions fields correctly: removeJurisdiction buttons 1`] = `
-Array [
-  <button
-    aria-label="Close"
-    className="close position-absolute removeArrItem removeJurisdiction"
-    onClick={[Function]}
-    type="button"
-  >
-    <span
-      aria-hidden="true"
-    >
-      ×
-    </span>
-  </button>,
-  <button
-    aria-label="Close"
-    className="close position-absolute removeArrItem removeJurisdiction"
-    onClick={[Function]}
-    type="button"
-  >
-    <span
-      aria-hidden="true"
-    >
-      ×
-    </span>
-  </button>,
-]
 `;
