@@ -12,7 +12,7 @@ import HeaderBreadcrumb, {
 import {
   CONTINUE_TO_NEXT_STEP,
   NAME,
-  NO_ROWS_FOUND,
+  NO_JURISDICTION_SELECTIONS_FOUND,
   STRUCTURES_COUNT,
   TOTAL,
 } from '../../../../../configs/lang';
@@ -132,7 +132,7 @@ const SelectedStructuresTable = (props: JurisdictionSelectorTableProps) => {
       <ListView {...listViewProps} />
       {!data.length && (
         <div style={{ textAlign: 'center' }}>
-          {NO_ROWS_FOUND}
+          {NO_JURISDICTION_SELECTIONS_FOUND}
           <hr />
         </div>
       )}

@@ -183,3 +183,10 @@ export const KEYCLOAK_LOGOUT_URL = 'https://keycloak/logout';
 export const OPENSRP_LOGOUT_URL = 'https://opensrp/logout';
 
 export const DOMAIN_NAME = 'localhost';
+
+export const PLAN_TYPES_WITH_MULTI_JURISDICTIONS = [
+  'IRS',
+  'MDA-Point',
+  'Dynamic-IRS',
+  'Dynamic-MDA',
+];

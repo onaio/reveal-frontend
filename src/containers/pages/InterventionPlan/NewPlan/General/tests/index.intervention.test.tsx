@@ -16,6 +16,7 @@ const history = createBrowserHistory();
 jest.mock('../../../../../../configs/env', () => ({
   ENABLED_FI_REASONS: ['Case Triggered', 'Routine'],
   ENABLED_PLAN_TYPES: ['IRS'],
+  PLAN_TYPES_WITH_MULTI_JURISDICTIONS: ['IRS', 'MDA-Point', 'Dynamic-IRS', 'Dynamic-MDA'],
 }));
 
 describe('containers/pages/NewPlan: single enabled intervention type', () => {
@@ -45,10 +46,8 @@ describe('containers/pages/NewPlan: single enabled intervention type', () => {
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...defaultPlanFormProps,
       addPlan: expect.any(Function),
-      allowMoreJurisdictions: false,
-      cascadingSelect: false,
+      allowMoreJurisdictions: true,
       formHandler: expect.any(Function),
-      jurisdictionLabel: 'Country',
     });
 
     // check that there's a Row that nests a Col that nests a PlanForm

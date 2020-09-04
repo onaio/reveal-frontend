@@ -23,6 +23,7 @@ import {
   DEFAULT_PLAN_VERSION,
   ENABLED_FI_REASONS,
   ENABLED_PLAN_TYPES,
+  PLAN_TYPES_WITH_MULTI_JURISDICTIONS,
 } from '../../../configs/env';
 import {
   ACTION,
@@ -490,8 +491,7 @@ const PlanForm = (props: PlanFormProps) => {
                           </div>
                         </fieldset>
                       ))}
-                      {(values.interventionType === InterventionType.IRS ||
-                        values.interventionType === InterventionType.MDAPoint) &&
+                      {PLAN_TYPES_WITH_MULTI_JURISDICTIONS.includes(values.interventionType) &&
                         allowMoreJurisdictions === true && (
                           <button
                             type="button"

@@ -32,7 +32,7 @@ describe('jurisdiction Assignment/Resource calculation', () => {
     currentParentNode.model.meta[META_STRUCTURE_COUNT] = 908;
     const otherProps = {
       ...props,
-      currentParentNode,
+      selectedTreeCurrentParentNode: currentParentNode,
     };
     const wrapper = mount(<ResourceCalculation {...otherProps} />);
 
@@ -69,7 +69,7 @@ describe('jurisdiction Assignment/Resource calculation', () => {
     currentParentNode.model.meta[META_STRUCTURE_COUNT] = 30;
     const otherProps = {
       ...props,
-      currentParentNode,
+      selectedTreeCurrentParentNode: currentParentNode,
     };
     const wrapper = mount(<ResourceCalculation {...otherProps} />);
 

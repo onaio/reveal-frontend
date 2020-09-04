@@ -814,7 +814,7 @@ export const STRUCTURES_PER_TEAM_PER_DAY = translate(
 
 export const NO_JURISDICTION_SELECTIONS_FOUND = translate(
   'NO_JURISDICTION_SELECTIONS_FOUND',
-  'No Jurisdiction selections were found'
+  'There are no descendant jurisdictions that are selected.'
 );
 
 export const ERROR_NO_JURISDICTION_METADATA_FOUND = translate(

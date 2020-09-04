@@ -11,7 +11,7 @@ import * as helperErrors from '../../../../helpers/errors';
 import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
-import { PlanStatus } from '../../../../store/ducks/plans';
+import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
 import { generatePlanDefinition, getPlanFormValues } from '../helpers';
 import * as fixtures from './fixtures';
 
@@ -282,8 +282,52 @@ describe('containers/forms/PlanForm', () => {
     wrapper.find(`.addJurisdiction`).simulate('click');
     // there are now two buttons to remove jurisdictions
     expect(wrapper.find(`.removeJurisdiction`).length).toEqual(2);
+
+    // change interventionType to Dynamic-IRS
+    wrapper.find('#interventionType select').simulate('change', {
+      target: { value: InterventionType.DynamicIRS, name: 'interventionType' },
+    });
+
+    // there is now a button to add jurisdictions
+    expect(wrapper.find(`.addJurisdiction`).length).toEqual(1);
+    expect(toJson(wrapper.find('.addJurisdiction'))).toMatchSnapshot(
+      'Dynamic-irs addJurisdiction button'
+    );
+    // there is still no button to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
+
+    // there is no button to remove activities
+    expect(wrapper.find(`.removeActivity`).length).toEqual(0);
+    // there is no modal to add more activities
+    expect(wrapper.find(`.add-more-activities`).length).toEqual(0);
+
+    // add one jurisdiction
+    wrapper.find(`.addJurisdiction`).simulate('click');
+    // there are now two buttons to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(2);
     expect(toJson(wrapper.find('.removeJurisdiction'))).toMatchSnapshot(
-      'removeJurisdiction buttons'
+      'Dynamic-irs removeJurisdiction buttons'
+    );
+
+    // change interventionType to Dynamic-MDA
+    wrapper.find('#interventionType select').simulate('change', {
+      target: { value: InterventionType.DynamicMDA, name: 'interventionType' },
+    });
+
+    // there is now a button to add jurisdictions
+    expect(wrapper.find(`.addJurisdiction`).length).toEqual(1);
+    expect(toJson(wrapper.find('.addJurisdiction'))).toMatchSnapshot(
+      'Dynamic-MDA addJurisdiction button'
+    );
+    // there is still no button to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
+
+    // add one jurisdiction
+    wrapper.find(`.addJurisdiction`).simulate('click');
+    // there are now two buttons to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(2);
+    expect(toJson(wrapper.find('.removeJurisdiction'))).toMatchSnapshot(
+      'Dynamic-MDA removeJurisdiction buttons'
     );
 
     // remove one jurisdiction
