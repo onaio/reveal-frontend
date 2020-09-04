@@ -14,6 +14,7 @@ import hierarchiesReducer, {
 import { raZambiaHierarchy } from '../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
 import plansReducer, { reducerName } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import { plans } from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { e2eFetchCalls } from './fixtures';
 
 reducerRegistry.register(reducerName, plansReducer);
 reducerRegistry.register(hierarchiesReducerName, hierarchiesReducer);
@@ -37,6 +38,7 @@ it('plans with existing node selections', async () => {
   jest.setTimeout(10000);
   const envModule = require('../../../../../configs/env');
   envModule.ASSIGNMENT_PAGE_SHOW_MAP = true;
+  envModule.OPENSRP_API_BASE_URL = 'https://test.smartregister.org/opensrp/rest/';
 
   const App = () => {
     return (
@@ -186,4 +188,6 @@ it('plans with existing node selections', async () => {
       ).toBeFalsy();
     }
   });
+  // 2 fetch calls one for plan and another for hierarchy.
+  expect(fetch.mock.calls).toEqual(e2eFetchCalls);
 });

@@ -54,8 +54,7 @@ export const reducer = (state: State, action: ActionType) => {
  * however there are a few cases where the above might not work and hence a useCase for this hook
  * , for e.g. when promises are spread across hooks, or where they are nested.
  *
- * @param initialKey - uses this key to create the initial state
- * @param load - the value of initialKey; forms the initial state
+ * @param initialLoadingState - whether to start in loading state or not
  */
 export const useLoadingReducer = (initialLoadingState: boolean = true) => {
   const initialLoadingStateKey = 'initialState';
