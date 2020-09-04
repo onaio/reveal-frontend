@@ -979,9 +979,7 @@ export const creatSettingsPayloads = (
             const setting: Setting = {
               description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
               key: item.jurisdiction_id,
-              label: `${
-                item.jurisdiction_name ? item.jurisdiction_name : item.jurisdiction_id
-              } metadata`,
+              label: item.jurisdiction_name ? item.jurisdiction_name : item.jurisdiction_id,
               value,
             };
             settings.push(setting);

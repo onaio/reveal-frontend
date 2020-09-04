@@ -434,13 +434,13 @@ describe('helpers/utils', () => {
         {
           description: 'Jurisdiction Metadata for test1 id 79b139c-3a20-4656-b684-d2d9ed83c94e',
           key: '79b139c-3a20-4656-b684-d2d9ed83c94e',
-          label: 'test1 metadata',
+          label: 'test1',
           value: '30',
         },
         {
           description: 'Jurisdiction Metadata for test2 id 02ebbc84-5e29-4cd5-9b79-c594058923e9',
           key: '02ebbc84-5e29-4cd5-9b79-c594058923e9',
-          label: 'test2 metadata',
+          label: 'test2',
           value: '50',
         },
       ],
