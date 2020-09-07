@@ -458,15 +458,15 @@ export function getColor(taskObject: InitialTask): Color {
   }
 }
 
-/** filters out plans whose jurisdiction id is null
+/** filters out plans whose jurisdiction id is null or has a value of 'null'
  * @param {Plan []} plansArray - a list of pre-filtered plans
  *
  * @return {Plan []} - A list of filtered plans
  */
 export const removeNullJurisdictionPlans = (plansArray: Plan[]): Plan[] => {
   return plansArray.filter((plan: Plan) => {
-    const jurisdictionID = plan.jurisdiction_id.toLowerCase().trim();
-    return !jurisdictionID.includes('null');
+    const jurisdictionId = plan.jurisdiction_id?.toLowerCase().trim();
+    return !!jurisdictionId && !jurisdictionId.includes('null');
   });
 };
 
