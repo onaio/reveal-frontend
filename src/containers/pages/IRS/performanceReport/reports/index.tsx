@@ -18,21 +18,39 @@ import { displayError } from '../../../../../helpers/errors';
 import { RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
 import { getPlanByIdSelector } from '../../../../../store/ducks/generic/plans';
-import { FetchIRSDataCollectors } from '../../../../../store/ducks/opensrp/performanceReports/IRS/dataCollectorReport';
+import DataCollectorreducer, {
+  FetchIRSDataCollectors,
+  makeIRSCollectorArraySelector,
+  reducerName as CollectorReducerName,
+} from '../../../../../store/ducks/opensrp/performanceReports/IRS/dataCollectorReport';
 import DistrictReducer, {
   FetchIRSDistricts,
   makeIRSDistrictArraySelector,
   reducerName as DistrictReducerName,
 } from '../../../../../store/ducks/opensrp/performanceReports/IRS/districtReport';
-import { FetchIRSSOPByDate } from '../../../../../store/ducks/opensrp/performanceReports/IRS/sopByDateReport';
-import { FetchIRSSOPs } from '../../../../../store/ducks/opensrp/performanceReports/IRS/sopReport';
+import SOPByDateReducer, {
+  FetchIRSSOPByDate,
+  makeIRSSOByDatePArraySelector,
+  reducerName as SOPByDateReducerName,
+} from '../../../../../store/ducks/opensrp/performanceReports/IRS/sopByDateReport';
+import SOPReducer, {
+  FetchIRSSOPs,
+  makeIRSSOPArraySelector,
+  reducerName as SOPReducerName,
+} from '../../../../../store/ducks/opensrp/performanceReports/IRS/sopReport';
 import { getColumnsToUse } from './helpers';
 
 /** register the reducers */
 reducerRegistry.register(DistrictReducerName, DistrictReducer);
+reducerRegistry.register(CollectorReducerName, DataCollectorreducer);
+reducerRegistry.register(SOPReducerName, SOPReducer);
+reducerRegistry.register(SOPByDateReducerName, SOPByDateReducer);
 
 /** selectors */
 const IRSDistrictsArraySelector = makeIRSDistrictArraySelector();
+const dataCollectorArraySelector = makeIRSCollectorArraySelector();
+const SOPArraySelector = makeIRSSOPArraySelector();
+const SOPByDateArraySelector = makeIRSSOByDatePArraySelector(true);
 
 /** generic IRSPerfomenceReport props */
 export interface IRSPerfomenceReportProps {
@@ -57,7 +75,10 @@ const IRSPerfomenceReport = (
     pageTitle,
     service,
     columns,
+    fetchDataCollectors,
     fetchDistricts,
+    fetchSOPs,
+    fetchSopByDate,
     tableData,
     breadCrumbs,
     currentPage,
@@ -79,6 +100,15 @@ const IRSPerfomenceReport = (
     try {
       await service('601').then(result => {
         fetchDistricts(result);
+      });
+      await service('602').then(result => {
+        fetchDataCollectors(result);
+      });
+      await service('603').then(result => {
+        fetchSOPs(result);
+      });
+      await service('604').then(result => {
+        fetchSopByDate(result);
       });
     } catch (e) {
       // todo - handle error https://github.com/onaio/reveal-frontend/issues/300
@@ -164,21 +194,58 @@ const mapStateToProps = (
   ownProps: RouteComponentProps<RouteParams>
 ): DispatchedStateProps => {
   const { params } = ownProps.match;
-  const { planId } = params;
+  const { planId, jurisdictionId, dataCollector, sop } = params;
+  let tableData: Array<Dictionary<any>> = [];
   const plan = getPlanByIdSelector(state, planId || '');
-  // this should be generated dynamically
-  const breadCrumbs: Page[] = [defaultProps.currentPage];
-  // this should be generated dynamically
-  const currentPage = {
-    label: (plan && plan.plan_title) || '',
-    url: `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}`,
-  };
-  const columns = getColumnsToUse(params);
-  // this should be generated dynamically
-  const tableData = IRSDistrictsArraySelector(state, {
+  const districts = IRSDistrictsArraySelector(state, {
     plan_id: planId,
   });
-  const pageTitle = `${IRS_PERFORMANCE_REPORTING_TITLE}: ${currentPage.label}`;
+  const breadCrumbs: Page[] = [defaultProps.currentPage];
+
+  let currentLabel = (plan && plan.plan_title) || '';
+  let currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}`;
+
+  const columns = getColumnsToUse(params);
+  tableData = districts;
+  if (jurisdictionId && !dataCollector && !sop) {
+    breadCrumbs.push({ label: currentLabel, url: currentUrl });
+    tableData = dataCollectorArraySelector(state, {
+      district_id: jurisdictionId,
+      plan_id: planId,
+    });
+    currentLabel = districts.length ? districts[0].district_name : currentLabel;
+    currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}/${jurisdictionId}`;
+  }
+
+  if (jurisdictionId && dataCollector && !sop) {
+    breadCrumbs.push({ label: currentLabel, url: currentUrl });
+    currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}/${jurisdictionId}/${dataCollector}`;
+    currentLabel = dataCollector;
+    tableData = SOPArraySelector(state, {
+      data_collector: dataCollector,
+      district_id: jurisdictionId,
+      plan_id: planId,
+    });
+  }
+
+  if (jurisdictionId && dataCollector && sop) {
+    breadCrumbs.push({ label: currentLabel, url: currentUrl });
+    currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}/${jurisdictionId}/${dataCollector}/${sop}`;
+    currentLabel = sop;
+    tableData = SOPByDateArraySelector(state, {
+      data_collector: dataCollector,
+      district_id: jurisdictionId,
+      plan_id: planId,
+      sop,
+    });
+  }
+
+  const currentPage: Page = {
+    label: currentLabel,
+    url: currentUrl,
+  };
+
+  const pageTitle = `${IRS_PERFORMANCE_REPORTING_TITLE}: ${currentLabel}`;
   return {
     breadCrumbs,
     columns,
