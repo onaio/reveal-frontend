@@ -19,6 +19,7 @@ import {
   HOME,
   IDENTIFIER,
   NEW_TEAM,
+  NO_ROWS_FOUND,
   ORGANIZATION_NAME_TITLE,
   ORGANIZATIONS_LABEL,
   VIEW,
@@ -31,6 +32,7 @@ import {
   SINGLE_ORGANIZATION_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import organizationsReducer, {
@@ -49,7 +51,6 @@ interface OrganizationsListViewProps {
   fetchOrganizationsAction: typeof fetchOrganizations;
   organizations: Organization[];
   serviceClass: typeof OpenSRPService;
-  name?: string;
 }
 
 /** the default props for SingleOrganizationView */
@@ -64,6 +65,7 @@ export type OrgsListViewPropsType = OrganizationsListViewProps & RouteComponentP
 
 const OrganizationListView = (props: OrgsListViewPropsType) => {
   const { organizations, serviceClass, fetchOrganizationsAction } = props;
+  const { startLoading, stopLoading, loading } = useLoadingReducer(organizations.length === 0);
 
   // functions/methods
 
@@ -112,12 +114,16 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
   };
 
   useEffect(() => {
-    loadOrganizations(serviceClass, fetchOrganizationsAction).catch(err => displayError(err));
+    const organizationsLoadingKey = 'organization';
+    startLoading(organizationsLoadingKey, organizations.length === 0);
+    loadOrganizations(serviceClass, fetchOrganizationsAction)
+      .finally(() => {
+        stopLoading(organizationsLoadingKey);
+      })
+      .catch(err => displayError(err));
   }, []);
 
-  // break early if organizations are absent
-  const isLoading = organizations.length < 1 && !props.name;
-  if (isLoading) {
+  if (loading()) {
     return <Loading />;
   }
 
@@ -144,6 +150,12 @@ const OrganizationListView = (props: OrgsListViewPropsType) => {
         </Col>
       </Row>
       <ListView {...listViewProps} />
+      {!organizations.length && (
+        <div style={{ textAlign: 'center' }}>
+          {NO_ROWS_FOUND}
+          <hr />
+        </div>
+      )}
     </div>
   );
 };
@@ -154,7 +166,7 @@ export { OrganizationListView };
 
 // connect to store
 
-type MapStateToProps = Pick<OrganizationsListViewProps, 'name' | 'organizations'>;
+type MapStateToProps = Pick<OrganizationsListViewProps, 'organizations'>;
 
 const mapStateToProps = (
   state: Partial<Store>,
@@ -163,7 +175,6 @@ const mapStateToProps = (
   const organizationSelector = makeOrgsArraySelector();
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   return {
-    name: searchedTitle,
     organizations: organizationSelector(state, { name: searchedTitle }),
   };
 };
