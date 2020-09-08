@@ -7,6 +7,7 @@ import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { createConnectedOpenSRPPlansList } from '..';
+import { USER_HAS_NO_PLAN_ASSIGNMENTS } from '../../../../../../../configs/lang';
 import { PLANNING_VIEW_URL, QUERY_PARAM_TITLE } from '../../../../../../../constants';
 import store from '../../../../../../../store';
 import {
@@ -114,6 +115,46 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
       wrapper.update();
     });
     renderTable(wrapper, 'find single row for entry with Khlong ');
+    wrapper.unmount();
+  });
+
+  it('errorMessage shown when there userName has no plans assigned', async () => {
+    // the assertion for the undefined plan is that we do not get an error
+    const fullList = [...plans];
+    fetch.mockResponse(JSON.stringify(fullList));
+    fetch.mockResponse(JSON.stringify([]));
+    const props = {
+      history,
+      location: {
+        hash: '',
+        pathname: '',
+        search: `?user=${'nonExistentUserName'}`,
+        state: '',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: '',
+        url: '',
+      },
+      planStatuses: ['draft'],
+      tableColumns: draftPageColumns,
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedOpenSRPPlansList {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+    expect(wrapper.text()).toMatchSnapshot();
+    expect(wrapper.text().includes(USER_HAS_NO_PLAN_ASSIGNMENTS)).toBeTruthy();
     wrapper.unmount();
   });
 

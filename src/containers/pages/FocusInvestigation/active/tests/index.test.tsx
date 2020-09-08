@@ -12,7 +12,10 @@ import { act } from 'react-dom/test-utils';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../configs/lang';
+import {
+  CURRENT_FOCUS_INVESTIGATION,
+  USER_HAS_NO_PLAN_ASSIGNMENTS,
+} from '../../../../../configs/lang';
 import { FI_URL, REACTIVE_QUERY_PARAM, ROUTINE_QUERY_PARAM } from '../../../../../constants';
 import * as errorUtils from '../../../../../helpers/errors';
 import store from '../../../../../store';
@@ -428,6 +431,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
 
     // no plans but loader is not showing
     expect(wrapper.find('Ripple').length).toEqual(0);
+    expect(wrapper.text().includes(USER_HAS_NO_PLAN_ASSIGNMENTS));
   });
 
   it('filters plans by userName', async () => {
