@@ -9,6 +9,8 @@ import { defaultAssignmentProps } from '../../JurisdictionAssignmentForm';
 import { assignment4 } from '../../JurisdictionAssignmentForm/tests/fixtures';
 import { EditOrgs } from '../index';
 
+jest.mock('../../../../../../configs/env');
+
 const pastPlan = {
   ...plans[1],
   effectivePeriod: { start: '2019-07-10', end: '2000-07-30' },
@@ -43,12 +45,12 @@ describe('PlanAssignment/EditOrgs', () => {
       fail();
     }
 
-    const EditOrgrops = {
+    const EditOrgProps = {
       ...props,
       plan: futurePlan,
     };
 
-    const wrapper = mount(<EditOrgs {...EditOrgrops} />);
+    const wrapper = mount(<EditOrgs {...EditOrgProps} />);
 
     // initially there is just a button JurisdictionAssignmentForm
     expect(toJson(wrapper.find('button.show-form'))).toMatchSnapshot('Show form button');
@@ -69,7 +71,7 @@ describe('PlanAssignment/EditOrgs', () => {
     expect(wrapper.find('button.show-form').length).toEqual(0);
     expect(wrapper.find('JurisdictionAssignmentForm').length).toEqual(1);
     expect(wrapper.find('JurisdictionAssignmentForm').props()).toEqual({
-      ...EditOrgrops,
+      ...EditOrgProps,
       assignTeamsLabel: 'Assign Teams',
       cancelCallBackFunc: expect.any(Function),
       labels: defaultAssignmentProps.labels,
@@ -94,12 +96,12 @@ describe('PlanAssignment/EditOrgs', () => {
     div.setAttribute('id', 'jurisiction-dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63');
     document.body.appendChild(div);
 
-    const EditOrgrops = {
+    const EditOrgProps = {
       ...props,
       plan: pastPlan,
     };
 
-    const wrapper = mount(<EditOrgs {...EditOrgrops} />);
+    const wrapper = mount(<EditOrgs {...EditOrgProps} />);
 
     // initially there is just a button JurisdictionAssignmentForm
     expect(toJson(wrapper.find('button.show-form'))).toMatchSnapshot('Show form button');
@@ -119,5 +121,21 @@ describe('PlanAssignment/EditOrgs', () => {
     // nothing happens
     expect(wrapper.find('JurisdictionAssignmentForm').length).toEqual(0);
     expect(wrapper.find('button.show-form').length).toEqual(1);
+  });
+
+  it('should not show form button for non operational areas', () => {
+    const envModule = require('../../../../../../configs/env');
+    envModule.SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY = true;
+    const EditOrgrops = {
+      ...props,
+      plan: futurePlan,
+    };
+
+    const wrapper = mount(<EditOrgs {...EditOrgrops} />);
+    // form button id is hidden
+    expect(wrapper.find('button.show-form').length).toEqual(0);
+    expect(toJson(wrapper.find('button.show-form'))).toMatchSnapshot(
+      'form button non operational areas'
+    );
   });
 });

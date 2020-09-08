@@ -415,6 +415,6 @@ export const KEYCLOAK_LOGOUT_URL =
   'https://keycloak-stage.smartregister.org/auth/realms/reveal-stage/protocol/openid-connect/logout';
 export type KEYCLOAK_LOGOUT_URL = typeof KEYCLOAK_LOGOUT_URL;
 
-export const SHOW_TEAM_ASSIGN__ON_OPERATIONAL_AREAS_ONLY =
+export const SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY =
   process.env.REACT_APP_SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY === 'true';
-export type SHOW_TEAM_ASSIGN__ON_OPERATIONAL_AREAS_ONLY = typeof SHOW_TEAM_ASSIGN__ON_OPERATIONAL_AREAS_ONLY;
+export type SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY = typeof SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY;

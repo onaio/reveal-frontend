@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Tooltip } from 'reactstrap';
-import { SHOW_TEAM_ASSIGN__ON_OPERATIONAL_AREAS_ONLY } from '../../../../../configs/env';
+import { SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY } from '../../../../../configs/env';
 import { ASSIGN_TEAMS, CANNOT_ASSIGN_TEAM_LABEL } from '../../../../../configs/lang';
 import {
   AssignmentFormProps,
@@ -49,8 +49,7 @@ const EditOrgs = (props: EditOrgsProps) => {
   const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
   const assignBtnId = `jurisiction-${jurisdictionId}`;
-
-  if (SHOW_TEAM_ASSIGN__ON_OPERATIONAL_AREAS_ONLY && jurisdiction && jurisdiction.hasChildren()) {
+  if (SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY && jurisdiction && jurisdiction.hasChildren()) {
     return null;
   }
 

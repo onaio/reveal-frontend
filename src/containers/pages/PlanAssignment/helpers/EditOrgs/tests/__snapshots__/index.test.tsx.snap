@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PlanAssignment/EditOrgs should not show form button for non operational areas: form button non operational areas 1`] = `null`;
+
 exports[`PlanAssignment/EditOrgs works as expected with for plans with past dates: Show form button 1`] = `
 <button
   aria-label={null}
