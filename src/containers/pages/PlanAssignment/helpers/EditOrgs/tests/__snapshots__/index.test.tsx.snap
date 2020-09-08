@@ -1,5 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PlanAssignment/EditOrgs should not show form button for non operational areas: form button non operational areas 1`] = `null`;
+
+exports[`PlanAssignment/EditOrgs should show form button for operational areas: form button operational areas 1`] = `
+<button
+  aria-label={null}
+  className="show-form btn btn-primary btn-sm"
+  id="jurisiction-xyz0d71d-0410-45d3-8305-a9f092a150b8"
+  onClick={[Function]}
+  type="button"
+>
+  Assign Teams
+</button>
+`;
+
 exports[`PlanAssignment/EditOrgs works as expected with for plans with past dates: Show form button 1`] = `
 <button
   aria-label={null}

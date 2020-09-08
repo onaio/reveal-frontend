@@ -190,3 +190,5 @@ export const PLAN_TYPES_WITH_MULTI_JURISDICTIONS = [
   'Dynamic-IRS',
   'Dynamic-MDA',
 ];
+
+export const SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY = false;
