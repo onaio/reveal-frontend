@@ -129,6 +129,7 @@ describe('PlanAssignment/EditOrgs', () => {
   it('should not show form button for non operational areas', () => {
     const envModule = require('../../../../../../configs/env');
     envModule.SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY = true;
+    // jurisdiction here is set to 'raNchelengeNode' which is a non operational area
     const EditOrgrops = {
       ...props,
       plan: futurePlan,
