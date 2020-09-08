@@ -71,7 +71,7 @@ describe('src/components/forms/FilterForm', () => {
     await flushPromises();
     const calls = [
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/user/count',
+        'https://test.smartregister.org/opensrp/rest/user/count',
         {
           headers: {
             accept: 'application/json',
@@ -82,7 +82,7 @@ describe('src/components/forms/FilterForm', () => {
         },
       ],
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/user?page_size=1000&source=Keycloak&start_index=0',
+        'https://test.smartregister.org/opensrp/rest/user?page_size=51&source=Keycloak&start_index=0',
         {
           headers: {
             accept: 'application/json',
@@ -93,7 +93,7 @@ describe('src/components/forms/FilterForm', () => {
         },
       ],
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/user/count',
+        'https://test.smartregister.org/opensrp/rest/user/count',
         {
           headers: {
             accept: 'application/json',
@@ -104,7 +104,7 @@ describe('src/components/forms/FilterForm', () => {
         },
       ],
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/user?page_size=1000&source=Keycloak&start_index=0',
+        'https://test.smartregister.org/opensrp/rest/user?page_size=51&source=Keycloak&start_index=0',
         {
           headers: {
             accept: 'application/json',
