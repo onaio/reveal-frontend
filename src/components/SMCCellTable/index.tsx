@@ -24,20 +24,19 @@ const SMCTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps
     // url = `${SMC_LOCATION_REPORT_URL}/${plan_id}/${jurisdiction_id}`;
     url = '';
   }
-  const val =
-    jurisdiction_id !== 'c071d830eb5a69df4b96f8bbcc253f6c' ? (
-      <span className="plan-jurisdiction-name name-label">{cellValue}</span>
-    ) : (
-      <span className="plan-jurisdiction-name main-span">
-        <span className="plan-jurisdiction-name btn-link">
-          <Link to={`${urlPath}/${original.jurisdiction_id}/${MAP}`}>
-            <FontAwesomeIcon icon={['fas', MAP]} />
-          </Link>
-        </span>
-        &nbsp;&nbsp;
-        <Link to={`${urlPath}/${original.jurisdiction_id}/${MAP}`}>{cellValue}</Link>
+  const val = original.is_virtual_jurisdiction ? (
+    <span className="plan-jurisdiction-name name-label">{cellValue}</span>
+  ) : (
+    <span className="plan-jurisdiction-name main-span">
+      <span className="plan-jurisdiction-name btn-link">
+        <Link to={`${urlPath}/${original.jurisdiction_id}/${MAP}`}>
+          <FontAwesomeIcon icon={['fas', MAP]} />
+        </Link>
       </span>
-    );
+      &nbsp;&nbsp;
+      <Link to={`${urlPath}/${original.jurisdiction_id}/${MAP}`}>{cellValue}</Link>
+    </span>
+  );
   return (
     <div>
       {hasChildren ? (

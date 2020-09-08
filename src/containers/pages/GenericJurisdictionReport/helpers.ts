@@ -282,7 +282,7 @@ export const smcJurisdictionsColumns = [
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Distribution Effectiveness (%)',
-    accessor: 'operational_areas_distributed',
+    accessor: 'distribution_effectivness',
   },
   {
     Header: 'Total Structures',
@@ -299,20 +299,19 @@ export const smcJurisdictionsColumns = [
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage %',
-    accessor: 'total_eligible_children',
+    accessor: 'found_coverage',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Distribution Coverage %',
-    accessor: 'total_operational_areas',
+    accessor: 'distribution_coverage',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Treatment Coverage %',
-    accessor: 'total_eligible_children_treated',
+    accessor: 'treatement_coverage',
   },
 ];
-
 
 /** IRS Table Columns
  * These are all the table columns for IRS that we know about.
