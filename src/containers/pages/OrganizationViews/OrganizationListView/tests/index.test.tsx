@@ -3,10 +3,11 @@ import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { ORGANIZATIONS_LABEL } from '../../../../../configs/lang';
+import { NO_ROWS_FOUND, ORGANIZATIONS_LABEL } from '../../../../../configs/lang';
 import { OPENSRP_ORGANIZATION_ENDPOINT, ORGANIZATIONS_LIST_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import {
@@ -123,6 +124,42 @@ describe('src/containers/TeamAssignment/OrganizationListView/', () => {
     const foundProps = wrapper.find('OrganizationListView').props() as any;
     expect(foundProps.organizations).toEqual(fixtures.organizations);
     wrapper.unmount();
+  });
+
+  it('Does not load when api returns no data', async () => {
+    fetch.once(JSON.stringify([]));
+    const mock: any = jest.fn();
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {},
+        path: ORGANIZATIONS_LIST_URL,
+        url: ORGANIZATIONS_LIST_URL,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedOrgsListView {...props} />
+        </Router>
+      </Provider>
+    );
+
+    wrapper.update();
+
+    expect(wrapper.find('Ripple').length).toEqual(1);
+
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    expect(wrapper.text()).toMatchInlineSnapshot(
+      `"HomeTeamsTeams (0)New TeamTeam NameIdentifierActionsNo rows found"`
+    );
+    expect(wrapper.text().includes(NO_ROWS_FOUND)).toBeTruthy();
   });
 
   it('Search works correctly', () => {
