@@ -73,10 +73,6 @@ const GisidaLite = (props: GisidaLiteProps) => {
     onMouseMoveHandler,
   } = props;
 
-  if (mapCenter === undefined) {
-    return <Loading />;
-  }
-
   const runAfterMapLoaded = React.useCallback(
     (map: Map) => {
       if (mapIcons) {
@@ -115,6 +111,10 @@ const GisidaLite = (props: GisidaLiteProps) => {
       setRenderLayers(false);
     }
   }, [layers]);
+
+  if (mapCenter === undefined) {
+    return <Loading />;
+  }
 
   /**
    * We want to make sure when layers GeoJSON change we set renderLayers to true

@@ -118,11 +118,6 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   } = props;
   const planId = props.match.params.planId;
 
-  /** We should not proceed without a plan id */
-  if (!planId) {
-    return null;
-  }
-
   /** Convenience function to handle cases where we must abort and tell the user we have done so */
   const { handleBrokenPage, broken, errorMessage } = useHandleBrokenPage();
 
@@ -209,6 +204,11 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
         handleBrokenPage(e.message);
       });
   }, []);
+
+  /** We should not proceed without a plan id */
+  if (!planId) {
+    return null;
+  }
 
   if (loading) {
     // TODO: show message of what is actually loading
