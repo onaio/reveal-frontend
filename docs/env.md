@@ -27,3 +27,15 @@ Below is a list of currently supported environment variables:
 - Focus investigation reasons to be enabled on plan form.
 - Options: Case Triggered and Routine
 - **Required**
+
+5. **REACT_APP_ENABLE_HOME_MANAGE_PLANS_LINK**
+
+- Enable or disable manage plans home page link.
+- **Not required**
+- Default value: `false`.
+
+6. **REACT_APP_ENABLE_HOME_PLANNING_VIEW_LINK**
+
+- Enable or disable planning view home page link.
+- **Not required**
+- Default value: `false`.
