@@ -1,5 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`containers/pages/Home quick links turn off configuration works correctly: teams home link 1`] = `
+<div
+  className="col-md-6"
+>
+  <Link
+    className="home-link"
+    to="/teams"
+  >
+    <LinkAnchor
+      className="home-link"
+      href="/teams"
+      navigate={[Function]}
+    >
+      <a
+        className="home-link"
+        href="/teams"
+        onClick={[Function]}
+      >
+        <Button
+          className="btn-intervention btn-lg btn-block btn-outline-green"
+          color="outline"
+          tag="button"
+        >
+          <button
+            aria-label={null}
+            className="btn-intervention btn-lg btn-block btn-outline-green btn btn-outline"
+            onClick={[Function]}
+          >
+            Teams
+          </button>
+        </Button>
+      </a>
+    </LinkAnchor>
+  </Link>
+</div>
+`;
+
 exports[`containers/pages/Home renders Home correctly & changes Title of page: box-1-link 1`] = `"/plans/list"`;
 
 exports[`containers/pages/Home renders Home correctly & changes Title of page: box-1-text 1`] = `"Manage Plans"`;
