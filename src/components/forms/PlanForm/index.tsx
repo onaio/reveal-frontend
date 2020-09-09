@@ -89,6 +89,7 @@ import {
   getFormActivities,
   getGoalUnitFromActionCode,
   getNameTitle,
+  isFIOrDynamicFI,
   isPlanTypeEnabled,
   onSubmitSuccess,
   planActivitiesMap,
@@ -507,11 +508,11 @@ const PlanForm = (props: PlanFormProps) => {
               )}
             />
 
-            {values.interventionType === InterventionType.FI && (
+            {isFIOrDynamicFI(values.interventionType) && (
               <FormGroup>
                 <Label for="fiStatus">{FOCUS_CLASSIFICATION_LABEL}</Label>
                 <Field
-                  required={values.interventionType === InterventionType.FI}
+                  required={isFIOrDynamicFI(values.interventionType)}
                   component="select"
                   name="fiStatus"
                   id="fiStatus"
@@ -532,11 +533,11 @@ const PlanForm = (props: PlanFormProps) => {
                 />
               </FormGroup>
             )}
-            {values.interventionType === InterventionType.FI && (
+            {isFIOrDynamicFI(values.interventionType) && (
               <FormGroup>
                 <Label for="fiReason">{FOCUS_INVESTIGATION_STATUS_REASON}</Label>
                 <Field
-                  required={values.interventionType === InterventionType.FI}
+                  required={isFIOrDynamicFI(values.interventionType)}
                   component="select"
                   name="fiReason"
                   id="fiReason"
@@ -557,13 +558,12 @@ const PlanForm = (props: PlanFormProps) => {
                 />
               </FormGroup>
             )}
-            {values.interventionType === InterventionType.FI && values.fiReason === FIReasons[1] && (
+            {isFIOrDynamicFI(values.interventionType) && values.fiReason === FIReasons[1] && (
               <FormGroup>
                 <Label for="caseNum">{CASE_NUMBER}</Label>
                 <Field
                   required={
-                    values.interventionType === InterventionType.FI &&
-                    values.fiReason === FIReasons[1]
+                    isFIOrDynamicFI(values.interventionType) && values.fiReason === FIReasons[1]
                   }
                   type="text"
                   name="caseNum"
