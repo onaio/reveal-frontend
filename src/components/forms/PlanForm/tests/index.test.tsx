@@ -123,6 +123,18 @@ describe('containers/forms/PlanForm', () => {
       'conditions textareas'
     );
 
+    // Show FI Reason and FI status fields when Dynamic FI is selected
+    wrapper
+      .find('#interventionType select')
+      .simulate('change', { target: { value: 'Dynamic-FI', name: 'interventionType' } });
+    expect(wrapper.find('#fiStatus select').length).toBeTruthy();
+    expect(wrapper.find('#fiReason select').length).toBeTruthy();
+    // Show case number field when Case Triggered option is selected for Dynamic FI
+    wrapper
+      .find('#fiReason select')
+      .simulate('change', { target: { value: 'Case Triggered', name: 'fiReason' } });
+    expect(wrapper.find('#caseNum input').length).toBeTruthy();
+
     wrapper.unmount();
   });
 
