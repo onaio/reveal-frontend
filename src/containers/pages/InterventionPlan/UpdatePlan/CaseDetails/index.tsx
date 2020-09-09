@@ -76,16 +76,18 @@ export const CaseDetails: React.FC<CaseDetailsProps> = (props = defaultCaseDetai
   const [isCollapsed, setCollapse] = React.useState<boolean>(true);
   const toggleCollapse = () => setCollapse(!isCollapsed);
 
+  // make a call to the events endpoint and get event
+  useEffect(() => {
+    if (eventId === null) {
+      return;
+    }
+    loadEvent(eventId, service, fetchEventsCreator);
+  }, [eventId]);
+
   if (eventId === null) {
-    // if eventId is null return early
     displayError(new Error(FAILED_TO_GET_EVENT_ID));
     return null;
   }
-
-  // make a call to the events endpoint and get event
-  useEffect(() => {
-    loadEvent(eventId, service, fetchEventsCreator);
-  }, [eventId]);
 
   if (!event) {
     return <Loading />;

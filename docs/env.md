@@ -15,3 +15,15 @@ Below is a list of currently supported environment variables:
 - url to logout from the keycloak server
 - **Required**
 - default: `https://keycloak-stage.smartregister.org/auth/realms/reveal-stage/protocol/openid-connect/logout`
+
+3. **REACT_APP_SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY**
+
+- A Boolean that enables and disables team assignment (by not showing team assignment form) for non-operational areas.
+- **Not required**
+- Default value: `false`.
+
+4. **REACT_APP_ENABLED_FI_REASONS**
+
+- Focus investigation reasons to be enabled on plan form.
+- Options: Case Triggered and Routine
+- **Required**

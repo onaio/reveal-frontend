@@ -786,3 +786,10 @@ export const onSubmitSuccess = (
   setSubmitting(false);
   setAreWeDoneHere(true);
 };
+
+/**
+ * Check if intervention type id FI or Dynamic FI
+ * @param {InterventionType} interventionType - intervention type
+ */
+export const isFIOrDynamicFI = (interventionType: InterventionType): boolean =>
+  [InterventionType.DynamicFI, InterventionType.FI].includes(interventionType);
