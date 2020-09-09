@@ -156,11 +156,12 @@ const PractitionerForm = (props: PractitionerFormProps) => {
                   component={UserIdSelect}
                   // tslint:disable-next-line: jsx-no-lambda
                   onChangeHandler={(option: OptionTypes) => {
-                    if (option !== null && option !== undefined) {
-                      setFieldValue('username', option.label),
-                        setFieldValue('userId', option.value);
+                    if (option) {
+                      setFieldValue('username', option.label);
+                      setFieldValue('userId', option.value);
                     } else {
-                      setFieldValue('username', undefined), setFieldValue('userId', undefined);
+                      setFieldValue('username', undefined);
+                      setFieldValue('userId', undefined);
                     }
                   }}
                   name="userId"
