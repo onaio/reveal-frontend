@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`containers/pages/Home quick links turn off configuration works correctly: teams home link 1`] = `
+exports[`containers/pages/Home quick links configuration works correctly: teams home link 1`] = `
 <div
   className="col-md-6"
 >

@@ -45,7 +45,7 @@ describe('containers/pages/Home', () => {
     wrapper.unmount();
   });
 
-  it('quick links turn off configuration works correctly', () => {
+  it('quick links configuration works correctly', () => {
     const envModule = require('../../../../configs/env');
     // turn off all quick links except teams
     envModule.ENABLE_HOME_MANAGE_PLANS_LINK = false;
