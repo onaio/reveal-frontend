@@ -8,11 +8,13 @@ import { createBrowserHistory } from 'history';
 import { cloneDeep } from 'lodash';
 import MockDate from 'mockdate';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { CURRENT_FOCUS_INVESTIGATION } from '../../../../../configs/lang';
 import { FI_URL, REACTIVE_QUERY_PARAM, ROUTINE_QUERY_PARAM } from '../../../../../constants';
+import * as errorUtils from '../../../../../helpers/errors';
 import store from '../../../../../store';
 import * as planDefFixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { fetchPlansByUser } from '../../../../../store/ducks/opensrp/planIdsByUser';
@@ -24,7 +26,12 @@ import reducer, {
 import { InterventionType } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import ConnectedActiveFocusInvestigation, { ActiveFocusInvestigation } from '../../active';
-import { activeFocusInvestigationProps, selectedPlan1, selectedPlan24 } from './fixtures';
+import {
+  activeFocusInvestigationProps,
+  nullJurisdictionIdsPlans,
+  selectedPlan1,
+  selectedPlan24,
+} from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
@@ -157,6 +164,35 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       activeFocusInvestigationProps.routinePlans
     );
     wrapper.unmount();
+  });
+
+  it('tracking error due to null jurisdiction ids', async () => {
+    // aim here is to see if an error is raised
+    const errorHandlerSpy = jest.spyOn(errorUtils, 'displayError');
+    const envModule = require('../../../../../configs/env');
+    envModule.ENABLED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
+      ','
+    );
+    const mock: any = jest.fn();
+    mock.mockImplementation(() => Promise.resolve(nullJurisdictionIdsPlans as any[]));
+    const props = {
+      history,
+      location: mock,
+      match: mock,
+      supersetService: mock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+    expect(errorHandlerSpy).not.toHaveBeenCalled();
   });
 
   it('works with the Redux store', async () => {
