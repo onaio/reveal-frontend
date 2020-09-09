@@ -38,7 +38,7 @@ import SOPReducer, {
   makeIRSSOPArraySelector,
   reducerName as SOPReducerName,
 } from '../../../../../store/ducks/opensrp/performanceReports/IRS/sopReport';
-import { getColumnsToUse } from './helpers';
+import { getColumnsToUse, IRSPerformanceTableCell } from './helpers';
 
 /** register the reducers */
 reducerRegistry.register(DistrictReducerName, DistrictReducer);
@@ -54,7 +54,10 @@ const SOPByDateArraySelector = makeIRSSOByDatePArraySelector(true);
 
 /** generic IRSPerfomenceReport props */
 export interface IRSPerfomenceReportProps {
+  linkerField: string;
+  keyToUse: string | null;
   breadCrumbs: Page[];
+  cellComponent: React.ElementType;
   columns: Array<DrillDownColumn<Dictionary<{}>>>;
   currentPage: Page;
   fetchDataCollectors: typeof FetchIRSDataCollectors;
@@ -70,6 +73,9 @@ const IRSPerfomenceReport = (
   props: IRSPerfomenceReportProps & RouteComponentProps<RouteParams>
 ) => {
   const [loading, setLoading] = useState<boolean>(true);
+  const [data, setData] = useState<Array<Dictionary<any>>>([]);
+  const [dataLinkerField, setDataLinkerField] = useState<string>(props.linkerField);
+  const { planId, jurisdictionId, dataCollector, sop } = props.match.params;
 
   const {
     pageTitle,
@@ -82,6 +88,9 @@ const IRSPerfomenceReport = (
     tableData,
     breadCrumbs,
     currentPage,
+    cellComponent,
+    keyToUse,
+    linkerField,
   } = props;
 
   const breadcrumbProps = {
@@ -97,19 +106,28 @@ const IRSPerfomenceReport = (
 
   /** async function to load the data */
   async function loadData() {
+    setLoading(tableData.length < 1);
     try {
-      await service('601').then(result => {
-        fetchDistricts(result);
-      });
-      await service('602').then(result => {
-        fetchDataCollectors(result);
-      });
-      await service('603').then(result => {
-        fetchSOPs(result);
-      });
-      await service('604').then(result => {
-        fetchSopByDate(result);
-      });
+      if (planId) {
+        await service('601').then(result => {
+          fetchDistricts(result);
+        });
+      }
+      if (jurisdictionId) {
+        await service('602').then(result => {
+          fetchDataCollectors(result);
+        });
+      }
+      if (dataCollector) {
+        await service('604').then(result => {
+          fetchSOPs(result);
+        });
+      }
+      if (sop) {
+        await service('605').then(result => {
+          fetchSopByDate(result);
+        });
+      }
     } catch (e) {
       // todo - handle error https://github.com/onaio/reveal-frontend/issues/300
     } finally {
@@ -119,24 +137,22 @@ const IRSPerfomenceReport = (
 
   useEffect(() => {
     loadData().catch(err => displayError(err));
-  }, []);
+  }, [planId, jurisdictionId, dataCollector, sop]);
 
   const tableProps = {
     columns,
     data: tableData,
-    // extraCellProps: { urlPath: currentBaseURL }
-    // CellComponent: <div></div>,
-    // identifierField: 'id',
-    // linkerField: 'id',
-    // paginate: false,
-    // parentIdentifierField: planId,
+    extraCellProps: { urlPath: currentPage.url, keyToUse, linkerField },
+    CellComponent: cellComponent,
+    identifierField: 'id',
+    linkerField,
+    paginate: false,
     renderNullDataComponent: () => <NoDataComponent />,
     resize: true,
-    // rootParentId: planId || '',
     useDrillDown: false,
   };
 
-  if (loading === true) {
+  if (loading) {
     return <Loading />;
   }
 
@@ -160,7 +176,10 @@ const IRSPerfomenceReport = (
 
 /** default props */
 const defaultProps: IRSPerfomenceReportProps = {
+  linkerField: 'district_name',
+  keyToUse: null,
   breadCrumbs: [],
+  cellComponent: IRSPerformanceTableCell,
   columns: [],
   currentPage: {
     label: IRS_PERFORMANCE_REPORTING_TITLE,
@@ -181,6 +200,8 @@ export { IRSPerfomenceReport };
 /** Connect the component to the store */
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
+  linkerField: string;
+  keyToUse: string | null;
   breadCrumbs: Page[];
   columns: Array<DrillDownColumn<Dictionary<{}>>>;
   currentPage: Page;
@@ -202,12 +223,16 @@ const mapStateToProps = (
   });
   const breadCrumbs: Page[] = [defaultProps.currentPage];
 
+  let linkerField = 'district_name';
+  let keyToUse: string | null = 'district_id';
   let currentLabel = (plan && plan.plan_title) || '';
   let currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}`;
 
   const columns = getColumnsToUse(params);
   tableData = districts;
-  if (jurisdictionId && !dataCollector && !sop) {
+  if (jurisdictionId) {
+    keyToUse = 'data_collector';
+    linkerField = 'data_collector';
     breadCrumbs.push({ label: currentLabel, url: currentUrl });
     tableData = dataCollectorArraySelector(state, {
       district_id: jurisdictionId,
@@ -217,7 +242,9 @@ const mapStateToProps = (
     currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}/${jurisdictionId}`;
   }
 
-  if (jurisdictionId && dataCollector && !sop) {
+  if (jurisdictionId && dataCollector) {
+    keyToUse = 'sop';
+    linkerField = 'sop';
     breadCrumbs.push({ label: currentLabel, url: currentUrl });
     currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}/${jurisdictionId}/${dataCollector}`;
     currentLabel = dataCollector;
@@ -229,6 +256,8 @@ const mapStateToProps = (
   }
 
   if (jurisdictionId && dataCollector && sop) {
+    keyToUse = null;
+    linkerField = 'event_date';
     breadCrumbs.push({ label: currentLabel, url: currentUrl });
     currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}/${jurisdictionId}/${dataCollector}/${sop}`;
     currentLabel = sop;
@@ -247,6 +276,8 @@ const mapStateToProps = (
 
   const pageTitle = `${IRS_PERFORMANCE_REPORTING_TITLE}: ${currentLabel}`;
   return {
+    linkerField,
+    keyToUse,
     breadCrumbs,
     columns,
     currentPage,

@@ -1,5 +1,7 @@
-import { DrillDownColumn } from '@onaio/drill-down-table';
+import { DrillDownColumn, DropDownCellProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { RouteParams } from '../../../../../helpers/utils';
 
 const daysWorkedColumn = [
@@ -117,6 +119,10 @@ export const IRSPerfomanceColumns = {
   sopColumns,
 };
 
+/**
+ * gets the columns to be used
+ * @param {RouteParams} params
+ */
 export const getColumnsToUse = (params: RouteParams): Array<DrillDownColumn<Dictionary<{}>>> => {
   const { jurisdictionId, dataCollector, sop } = params;
   if (sop) {
@@ -129,4 +135,28 @@ export const getColumnsToUse = (params: RouteParams): Array<DrillDownColumn<Dict
     return IRSPerfomanceColumns.dataCollectorsColumns;
   }
   return IRSPerfomanceColumns.districtColumns;
+};
+
+/** Interface for linked cell props */
+export interface LinkedCellProps extends DropDownCellProps {
+  keyToUse?: string;
+  linkerField?: string;
+  urlPath?: string;
+}
+
+/** Component that will be rendered in drop-down table cells showing a link
+ * that moves you to the next hierarchical level.
+ */
+export const IRSPerformanceTableCell: React.ElementType<LinkedCellProps> = (
+  props: LinkedCellProps
+) => {
+  const { cell, cellValue, urlPath, keyToUse, linkerField } = props;
+  const original: Dictionary = cell.row.original;
+  const linkerFieldValue = linkerField ? original[linkerField] : cellValue;
+  const url = urlPath && keyToUse ? `${urlPath}/${original[keyToUse]}` : '';
+  return keyToUse && url ? (
+    <Link to={url}>{linkerFieldValue}</Link>
+  ) : (
+    <span>{linkerFieldValue}</span>
+  );
 };
