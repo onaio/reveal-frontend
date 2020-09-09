@@ -20,9 +20,6 @@ const allowedSnapshots = {
   'src/containers/pages/FocusInvestigation/map/active/tests/__snapshots__/index.test.tsx.snap': [
     'containers/pages/FocusInvestigation/activeMap displays the correct badge and mark complete when plan status is active: mark complete link 1',
   ],
-  'src/containers/pages/Home/tests/__snapshots__/Home.test.tsx.snap': [
-    'containers/pages/Home renders Home correctly & changes Title of page 1',
-  ],
   'src/containers/pages/IRS/Map/tests/__snapshots__/index.test.tsx.snap': [
     'components/IRS Reports/IRSReportingMap renders correctly: Indicator item breakdown 1',
   ],

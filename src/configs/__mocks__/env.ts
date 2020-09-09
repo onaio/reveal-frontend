@@ -192,3 +192,6 @@ export const PLAN_TYPES_WITH_MULTI_JURISDICTIONS = [
 ];
 
 export const SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY = false;
+
+export const ENABLE_HOME_MANAGE_PLANS_LINK = true;
+export const ENABLE_HOME_PLANNING_VIEW_LINK = true;
