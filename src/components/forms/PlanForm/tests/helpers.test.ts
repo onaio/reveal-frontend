@@ -4,6 +4,7 @@ import {
   planActivities as planActivitiesFromConfig,
 } from '../../../../configs/settings';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
+import { InterventionType } from '../../../../store/ducks/plans';
 import {
   doesFieldHaveErrors,
   extractActivitiesFromPlanForm,
@@ -14,6 +15,7 @@ import {
   getGoalUnitFromActionCode,
   getNameTitle,
   getPlanFormValues,
+  isFIOrDynamicFI,
   onSubmitSuccess,
 } from '../helpers';
 import { GoalUnit, PlanActionCodesType, PlanActivities, PlanFormFields } from '../types';
@@ -226,5 +228,11 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(getConditionFromFormField(formPlan, dynamicFamilyRegistration)).toEqual(
       dynamicFamilyRegistration.action.condition
     );
+  });
+
+  it('isFIOrDynamicFI works correctly', () => {
+    expect(isFIOrDynamicFI(InterventionType.FI)).toBeTruthy();
+    expect(isFIOrDynamicFI(InterventionType.DynamicFI)).toBeTruthy();
+    expect(isFIOrDynamicFI(InterventionType.IRS)).toBeFalsy();
   });
 });
