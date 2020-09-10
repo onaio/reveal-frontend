@@ -70,10 +70,6 @@ export interface IRSPerfomenceReportProps {
   urlParamField: string | null;
 }
 
-const CustomDrillDownTable = (props: any) => {
-  return <DrillDownTable {...props} />;
-};
-
 const IRSPerfomenceReport = (
   props: IRSPerfomenceReportProps & RouteComponentProps<RouteParams>
 ) => {
@@ -145,7 +141,7 @@ const IRSPerfomenceReport = (
   const tableProps = {
     CellComponent: cellComponent,
     columns,
-    data: tableData,
+    data: tableData || [],
     extraCellProps: { urlPath: currentPage.url, urlParamField },
     identifierField: 'id',
     linkerField,
@@ -169,7 +165,7 @@ const IRSPerfomenceReport = (
         <Col>
           <h3 className="mb-3 page-title">{pageTitle}</h3>
           <div className="generic-report-table">
-            <CustomDrillDownTable {...tableProps} />
+            <DrillDownTable {...tableProps} />
           </div>
         </Col>
       </Row>
@@ -228,7 +224,7 @@ const mapStateToProps = (
 
   let linkerField = 'district_name';
   let urlParamField: string | null = 'district_id';
-  let currentLabel = (plan && plan.plan_title) || '';
+  let currentLabel = (plan && plan.plan_title) || 'plan';
   let currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}`;
 
   const columns = getColumnsToUse(params);
@@ -240,14 +236,14 @@ const mapStateToProps = (
       district_id: jurisdictionId,
       plan_id: planId,
     });
-    currentLabel = districts.length ? districts[0].district_name : currentLabel;
-    currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}/${jurisdictionId}`;
+    currentLabel = districts.length ? districts[0].district_name : 'district';
+    currentUrl = `${currentUrl}/${jurisdictionId}`;
   }
 
   if (jurisdictionId && dataCollector) {
     urlParamField = linkerField = 'sop';
     breadCrumbs.push({ label: currentLabel, url: currentUrl });
-    currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}/${jurisdictionId}/${dataCollector}`;
+    currentUrl = `${currentUrl}/${dataCollector}`;
     currentLabel = dataCollector;
     tableData = SOPArraySelector(state, {
       data_collector: dataCollector,
@@ -260,7 +256,7 @@ const mapStateToProps = (
     urlParamField = null;
     linkerField = 'event_date';
     breadCrumbs.push({ label: currentLabel, url: currentUrl });
-    currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}/${jurisdictionId}/${dataCollector}/${sop}`;
+    currentUrl = `${currentUrl}/${sop}`;
     currentLabel = sop;
     tableData = SOPByDateArraySelector(state, {
       data_collector: dataCollector,

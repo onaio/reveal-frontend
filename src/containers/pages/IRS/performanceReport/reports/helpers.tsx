@@ -4,33 +4,25 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { RouteParams } from '../../../../../helpers/utils';
 
-const daysWorkedColumn = [
-  {
-    Header: 'Number Days Worked',
-    accessor: 'days_worked',
-  },
-];
+const daysWorkedColumn = {
+  Header: 'Number Days Worked',
+  accessor: 'days_worked',
+};
 
-const foundColumn = [
-  {
-    Header: 'Found',
-    accessor: 'found',
-  },
-];
+const foundColumn = {
+  Header: 'Found',
+  accessor: 'found',
+};
 
-const sprayedColumn = [
-  {
-    Header: 'Sprayed',
-    accessor: 'sprayed',
-  },
-];
+const sprayedColumn = {
+  Header: 'Sprayed',
+  accessor: 'sprayed',
+};
 
-const averageStructuresColumn = [
-  {
-    Header: 'Average Structure Per Day',
-    accessor: 'avg_sprayed',
-  },
-];
+const averageStructuresColumn = {
+  Header: 'Average Structure Per Day',
+  accessor: 'avg_sprayed',
+};
 
 const averageTimeColumns = [
   {
@@ -57,7 +49,7 @@ const districtColumns = [
     Header: 'Number of Days Teams in Field',
     accessor: 'days_worked',
   },
-  ...averageStructuresColumn,
+  averageStructuresColumn,
   ...averageTimeColumns,
 ];
 
@@ -67,8 +59,8 @@ const dataCollectorsColumns = [
     accessor: 'data_collector',
     minWidth: 360,
   },
-  ...daysWorkedColumn,
-  ...averageStructuresColumn,
+  daysWorkedColumn,
+  averageStructuresColumn,
   ...averageTimeColumns,
 ];
 
@@ -77,19 +69,19 @@ const sopColumns = [
     Header: 'Spary Operator',
     accessor: 'sop',
   },
-  ...daysWorkedColumn,
+  daysWorkedColumn,
   {
     Header: 'Number of Structures(Latest submission)',
     columns: [
-      ...foundColumn,
-      ...sprayedColumn,
+      foundColumn,
+      sprayedColumn,
       {
         Header: 'Not Sprayed',
         accessor: 'not_sprayed',
       },
     ],
   },
-  ...averageStructuresColumn,
+  averageStructuresColumn,
   ...averageTimeColumns,
 ];
 
@@ -101,8 +93,8 @@ const sopByDateColumns = [
   {
     Header: 'Number of Structures',
     columns: [
-      ...foundColumn,
-      ...sprayedColumn,
+      foundColumn,
+      sprayedColumn,
       {
         Header: 'Not Sprayed',
         columns: [
