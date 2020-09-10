@@ -76,14 +76,18 @@ const sopColumns = [
   {
     Header: 'Spary Operator',
     accessor: 'sop',
-    minWidth: 360,
   },
   ...daysWorkedColumn,
-  ...foundColumn,
-  ...sprayedColumn,
   {
-    Header: 'Not Sprayed',
-    accessor: 'not_sprayed',
+    Header: 'Number of Structures(Latest submission)',
+    columns: [
+      ...foundColumn,
+      ...sprayedColumn,
+      {
+        Header: 'Not Sprayed',
+        accessor: 'not_sprayed',
+      },
+    ],
   },
   ...averageStructuresColumn,
   ...averageTimeColumns,
@@ -94,19 +98,29 @@ const sopByDateColumns = [
     Header: 'Date',
     accessor: 'event_date',
   },
-  ...foundColumn,
-  ...sprayedColumn,
   {
-    Header: 'Refused',
-    accessor: 'refused',
-  },
-  {
-    Header: 'Other',
-    accessor: 'other_reason',
-  },
-  {
-    Header: 'Total',
-    accessor: 'not_sprayed',
+    Header: 'Number of Structures',
+    columns: [
+      ...foundColumn,
+      ...sprayedColumn,
+      {
+        Header: 'Not Sprayed',
+        columns: [
+          {
+            Header: 'Refused',
+            accessor: 'refused',
+          },
+          {
+            Header: 'Other',
+            accessor: 'other_reason',
+          },
+          {
+            Header: 'Total',
+            accessor: 'not_sprayed',
+          },
+        ],
+      },
+    ],
   },
   ...averageTimeColumns,
 ];
@@ -139,8 +153,7 @@ export const getColumnsToUse = (params: RouteParams): Array<DrillDownColumn<Dict
 
 /** Interface for linked cell props */
 export interface LinkedCellProps extends DropDownCellProps {
-  keyToUse?: string;
-  linkerField?: string;
+  urlParamField?: string;
   urlPath?: string;
 }
 
@@ -150,13 +163,8 @@ export interface LinkedCellProps extends DropDownCellProps {
 export const IRSPerformanceTableCell: React.ElementType<LinkedCellProps> = (
   props: LinkedCellProps
 ) => {
-  const { cell, cellValue, urlPath, keyToUse, linkerField } = props;
+  const { cell, cellValue, urlPath, urlParamField } = props;
   const original: Dictionary = cell.row.original;
-  const linkerFieldValue = linkerField ? original[linkerField] : cellValue;
-  const url = urlPath && keyToUse ? `${urlPath}/${original[keyToUse]}` : '';
-  return keyToUse && url ? (
-    <Link to={url}>{linkerFieldValue}</Link>
-  ) : (
-    <span>{linkerFieldValue}</span>
-  );
+  const url = urlPath && urlParamField ? `${urlPath}/${original[urlParamField]}` : '';
+  return urlParamField && url ? <Link to={url}>{cellValue}</Link> : <span>{cellValue}</span>;
 };

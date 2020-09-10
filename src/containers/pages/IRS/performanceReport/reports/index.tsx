@@ -39,6 +39,7 @@ import SOPReducer, {
   reducerName as SOPReducerName,
 } from '../../../../../store/ducks/opensrp/performanceReports/IRS/sopReport';
 import { getColumnsToUse, IRSPerformanceTableCell } from './helpers';
+import './index.css';
 
 /** register the reducers */
 reducerRegistry.register(DistrictReducerName, DistrictReducer);
@@ -54,8 +55,6 @@ const SOPByDateArraySelector = makeIRSSOByDatePArraySelector(true);
 
 /** generic IRSPerfomenceReport props */
 export interface IRSPerfomenceReportProps {
-  linkerField: string;
-  keyToUse: string | null;
   breadCrumbs: Page[];
   cellComponent: React.ElementType;
   columns: Array<DrillDownColumn<Dictionary<{}>>>;
@@ -64,17 +63,21 @@ export interface IRSPerfomenceReportProps {
   fetchDistricts: typeof FetchIRSDistricts;
   fetchSOPs: typeof FetchIRSSOPs;
   fetchSopByDate: typeof FetchIRSSOPByDate;
+  linkerField: string;
   pageTitle: string;
   service: typeof supersetFetch;
   tableData: Array<Dictionary<any>>;
+  urlParamField: string | null;
 }
+
+const CustomDrillDownTable = (props: any) => {
+  return <DrillDownTable {...props} />;
+};
 
 const IRSPerfomenceReport = (
   props: IRSPerfomenceReportProps & RouteComponentProps<RouteParams>
 ) => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [data, setData] = useState<Array<Dictionary<any>>>([]);
-  const [dataLinkerField, setDataLinkerField] = useState<string>(props.linkerField);
+  const [loading, setLoading] = useState<boolean>(false);
   const { planId, jurisdictionId, dataCollector, sop } = props.match.params;
 
   const {
@@ -89,7 +92,7 @@ const IRSPerfomenceReport = (
     breadCrumbs,
     currentPage,
     cellComponent,
-    keyToUse,
+    urlParamField,
     linkerField,
   } = props;
 
@@ -106,7 +109,7 @@ const IRSPerfomenceReport = (
 
   /** async function to load the data */
   async function loadData() {
-    setLoading(tableData.length < 1);
+    // setLoading(tableData.length < 1);
     try {
       if (planId) {
         await service('601').then(result => {
@@ -140,10 +143,10 @@ const IRSPerfomenceReport = (
   }, [planId, jurisdictionId, dataCollector, sop]);
 
   const tableProps = {
+    CellComponent: cellComponent,
     columns,
     data: tableData,
-    extraCellProps: { urlPath: currentPage.url, keyToUse, linkerField },
-    CellComponent: cellComponent,
+    extraCellProps: { urlPath: currentPage.url, urlParamField },
     identifierField: 'id',
     linkerField,
     paginate: false,
@@ -166,7 +169,7 @@ const IRSPerfomenceReport = (
         <Col>
           <h3 className="mb-3 page-title">{pageTitle}</h3>
           <div className="generic-report-table">
-            <DrillDownTable {...tableProps} />
+            <CustomDrillDownTable {...tableProps} />
           </div>
         </Col>
       </Row>
@@ -176,8 +179,6 @@ const IRSPerfomenceReport = (
 
 /** default props */
 const defaultProps: IRSPerfomenceReportProps = {
-  linkerField: 'district_name',
-  keyToUse: null,
   breadCrumbs: [],
   cellComponent: IRSPerformanceTableCell,
   columns: [],
@@ -189,9 +190,11 @@ const defaultProps: IRSPerfomenceReportProps = {
   fetchDistricts: FetchIRSDistricts,
   fetchSOPs: FetchIRSSOPs,
   fetchSopByDate: FetchIRSSOPByDate,
+  linkerField: 'district_name',
   pageTitle: IRS_PERFORMANCE_REPORTING_TITLE,
   service: supersetFetch,
   tableData: [],
+  urlParamField: null,
 };
 
 IRSPerfomenceReport.defaultProps = defaultProps;
@@ -200,13 +203,13 @@ export { IRSPerfomenceReport };
 /** Connect the component to the store */
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
-  linkerField: string;
-  keyToUse: string | null;
   breadCrumbs: Page[];
   columns: Array<DrillDownColumn<Dictionary<{}>>>;
   currentPage: Page;
+  linkerField: string;
   pageTitle: string;
   tableData: Array<Dictionary<any>>;
+  urlParamField: string | null;
 }
 
 /** map state to props */
@@ -224,15 +227,14 @@ const mapStateToProps = (
   const breadCrumbs: Page[] = [defaultProps.currentPage];
 
   let linkerField = 'district_name';
-  let keyToUse: string | null = 'district_id';
+  let urlParamField: string | null = 'district_id';
   let currentLabel = (plan && plan.plan_title) || '';
   let currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}`;
 
   const columns = getColumnsToUse(params);
   tableData = districts;
   if (jurisdictionId) {
-    keyToUse = 'data_collector';
-    linkerField = 'data_collector';
+    urlParamField = linkerField = 'data_collector';
     breadCrumbs.push({ label: currentLabel, url: currentUrl });
     tableData = dataCollectorArraySelector(state, {
       district_id: jurisdictionId,
@@ -243,8 +245,7 @@ const mapStateToProps = (
   }
 
   if (jurisdictionId && dataCollector) {
-    keyToUse = 'sop';
-    linkerField = 'sop';
+    urlParamField = linkerField = 'sop';
     breadCrumbs.push({ label: currentLabel, url: currentUrl });
     currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}/${jurisdictionId}/${dataCollector}`;
     currentLabel = dataCollector;
@@ -256,7 +257,7 @@ const mapStateToProps = (
   }
 
   if (jurisdictionId && dataCollector && sop) {
-    keyToUse = null;
+    urlParamField = null;
     linkerField = 'event_date';
     breadCrumbs.push({ label: currentLabel, url: currentUrl });
     currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}/${jurisdictionId}/${dataCollector}/${sop}`;
@@ -276,13 +277,13 @@ const mapStateToProps = (
 
   const pageTitle = `${IRS_PERFORMANCE_REPORTING_TITLE}: ${currentLabel}`;
   return {
-    linkerField,
-    keyToUse,
     breadCrumbs,
     columns,
     currentPage,
+    linkerField,
     pageTitle,
     tableData,
+    urlParamField,
   };
 };
 
