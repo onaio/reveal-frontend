@@ -457,8 +457,16 @@ describe('helpers/utils', () => {
     const expectedPayloadWithProvider = { ...expectedPayload, providerId: 'testUser' };
     expect(payloadWithProvider[0]).toEqual(expectedPayloadWithProvider);
 
-    // data with empty value
+    // data missing some values
+    result.data[0].risk = '';
     result.data[1].risk = '';
+    const partialInvalidPayloads: SettingConfiguration[] = creatSettingsPayloads(result);
+    expect(partialInvalidPayloads).toHaveLength(1);
+    expect(partialInvalidPayloads).toEqual([expectedPayload]);
+
+    // data missing all values
+    result.data[0].coverage = '';
+    result.data[1].coverage = '';
     const invalidPayloads: SettingConfiguration[] = creatSettingsPayloads(result);
     expect(invalidPayloads).toHaveLength(0);
     expect(invalidPayloads).toEqual([]);
