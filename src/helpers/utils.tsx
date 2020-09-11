@@ -956,6 +956,10 @@ export interface SettingConfiguration {
 
 /**
  * Create payload for sending settings to OpenSRP v1 Settings endpoint
+ * Rules applied on creating payload:
+ * 1. If only some values are missing, those rows are droped silently
+ * 2. If all values are missing an error is raised
+ * 3. If any key is missing an error is raised
  */
 export const creatSettingsPayloads = (
   result: PapaResult,
