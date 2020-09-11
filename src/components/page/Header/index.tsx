@@ -121,6 +121,14 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
     const { authenticated, user } = this.props;
     const path = this.props.location.pathname;
     const enablePlansDropDown = ENABLED_PLAN_TYPES.length > 0;
+    const enableAdminDropDown =
+      ENABLE_TEAMS ||
+      ENABLE_PRACTITIONERS ||
+      ENABLE_USERS ||
+      ENABLE_MDA_POINT ||
+      ENABLE_CONFIG_FORM ||
+      ENABLE_JURISDICTION_METADATA_UPLOAD ||
+      ENABLE_POPULATION_SERVER_SETTINGS;
     return (
       <div>
         <Navbar light={true} expand="md">
@@ -238,7 +246,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                 </UncontrolledDropdown>
               )}
 
-              {(ENABLE_TEAMS || ENABLE_PRACTITIONERS || ENABLE_USERS || ENABLE_MDA_POINT) && (
+              {enableAdminDropDown && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle nav={true} caret={true} className={'nav-link'}>
                     {ADMIN}
