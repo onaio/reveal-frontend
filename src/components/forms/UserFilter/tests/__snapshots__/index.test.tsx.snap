@@ -47,13 +47,14 @@ Object {
     ReactSelectDefaultValue={
       Object {
         "label": "Select username",
-        "value": "",
+        "value": "Select username",
       }
     }
     className=""
     onChangeHandler={[Function]}
     serviceClass={[Function]}
     showPractitioners={true}
+    userNameAsValue={true}
   />,
   "className": "col-sm-8",
 }

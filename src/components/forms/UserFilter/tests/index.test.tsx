@@ -191,7 +191,7 @@ describe('src/components/forms/FilterForm', () => {
       [
         {
           label: 'RobertBaratheon',
-          value: '',
+          value: 'RobertBaratheon',
         },
       ],
     ]);
