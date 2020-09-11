@@ -22,7 +22,11 @@ import {
 import { getQueryParams } from '../../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../../services/opensrp';
 
-import { NO_DATA_FOUND, USER_HAS_NO_PLAN_ASSIGNMENTS } from '../../../../../../configs/lang';
+import {
+  LOADING,
+  NO_DATA_FOUND,
+  USER_HAS_NO_PLAN_ASSIGNMENTS,
+} from '../../../../../../configs/lang';
 import { displayError } from '../../../../../../helpers/errors';
 import plansByUserReducer, {
   makePlansByUserNamesSelector,
@@ -91,12 +95,18 @@ const OpenSRPPlansList = (props: OpenSRPPlanListViewProps & RouteComponentProps)
   } = props;
   const loadData = (setLoading: React.Dispatch<React.SetStateAction<boolean>>) =>
     loadOpenSRPPlans(serviceClass, fetchPlanRecordsCreator, setLoading);
+  const [loadingState, setLoadingState] = React.useState(true);
 
   useEffect(() => {
     if (props.userName) {
-      loadPlansByUserFilter(props.userName).catch(err => displayError(err));
+      setLoadingState(true);
+      loadPlansByUserFilter(props.userName)
+        .finally(() => setLoadingState(false))
+        .catch(err => displayError(err));
     }
   }, [props.userName]);
+
+  const finalNoDataMessage = loadingState ? LOADING : noDataMessage;
 
   /** topbar filters */
   let topFilterBarParams: any = {
@@ -130,7 +140,7 @@ const OpenSRPPlansList = (props: OpenSRPPlanListViewProps & RouteComponentProps)
       renderInTopFilterBar: renderInFilterFactory({
         ...topFilterBarParams,
       }),
-      renderNullDataComponent: () => <NoDataComponent message={noDataMessage} />,
+      renderNullDataComponent: () => <NoDataComponent message={finalNoDataMessage} />,
       useDrillDown: false,
     };
   };

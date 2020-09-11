@@ -32,6 +32,7 @@ import {
   FOCUS_AREA_HEADER,
   FOCUS_INVESTIGATIONS,
   HOME,
+  LOADING,
   NAME,
   NO_INVESTIGATIONS_FOUND,
   REACTIVE,
@@ -118,6 +119,7 @@ export const defaultActiveFIProps: ActiveFIProps = {
 
 interface ActiveFIState {
   loading: boolean;
+  loadingPlansByUser: boolean;
 }
 
 /** Reporting for Active Focus Investigations */
@@ -129,7 +131,7 @@ class ActiveFocusInvestigation extends React.Component<
 
   constructor(props: ActiveFIProps & RouteComponentProps<RouteParams>) {
     super(props);
-    const { caseTriggeredPlans, routinePlans } = props;
+    const { caseTriggeredPlans, routinePlans, userName } = props;
     const thereIsntData: boolean =
       (caseTriggeredPlans &&
         caseTriggeredPlans.length === 0 &&
@@ -138,6 +140,7 @@ class ActiveFocusInvestigation extends React.Component<
       true;
     this.state = {
       loading: thereIsntData,
+      loadingPlansByUser: !!userName,
     };
   }
 
@@ -162,14 +165,32 @@ class ActiveFocusInvestigation extends React.Component<
       });
 
     if (userName) {
-      loadPlansByUserFilter(userName).catch(err => displayError(err));
+      this.setState({
+        loadingPlansByUser: true,
+      });
+      loadPlansByUserFilter(userName)
+        .finally(() => {
+          this.setState({
+            loadingPlansByUser: false,
+          });
+        })
+        .catch(err => displayError(err));
     }
   }
 
   public componentDidUpdate(prevProps: ActiveFIProps) {
     const { userName } = this.props;
     if (userName && prevProps.userName !== userName) {
-      loadPlansByUserFilter(userName).catch(err => displayError(err));
+      this.setState({
+        loadingPlansByUser: true,
+      });
+      loadPlansByUserFilter(userName)
+        .finally(() => {
+          this.setState({
+            loadingPlansByUser: false,
+          });
+        })
+        .catch(err => displayError(err));
     }
   }
 
@@ -192,6 +213,7 @@ class ActiveFocusInvestigation extends React.Component<
     };
 
     const { caseTriggeredPlans, routinePlans, plan, noDataMessage } = this.props;
+    const finalNoDataMessage = this.state.loadingPlansByUser ? LOADING : noDataMessage;
     // We need to initialize jurisdictionName to a falsy value
     let jurisdictionName = null;
 
@@ -325,7 +347,7 @@ class ActiveFocusInvestigation extends React.Component<
               this.props,
               REACTIVE_QUERY_PARAM,
               this.props.serviceClass,
-              noDataMessage
+              finalNoDataMessage
             )}
           />
         </div>
@@ -347,7 +369,7 @@ class ActiveFocusInvestigation extends React.Component<
               this.props,
               ROUTINE_QUERY_PARAM,
               this.props.serviceClass,
-              noDataMessage
+              finalNoDataMessage
             )}
           />
         </div>
