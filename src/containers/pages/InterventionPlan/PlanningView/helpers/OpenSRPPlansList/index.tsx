@@ -95,7 +95,7 @@ const OpenSRPPlansList = (props: OpenSRPPlanListViewProps & RouteComponentProps)
   } = props;
   const loadData = (setLoading: React.Dispatch<React.SetStateAction<boolean>>) =>
     loadOpenSRPPlans(serviceClass, fetchPlanRecordsCreator, setLoading);
-  const [loadingState, setLoadingState] = React.useState(true);
+  const [loadingState, setLoadingState] = React.useState(!!props.userName);
 
   useEffect(() => {
     if (props.userName) {
