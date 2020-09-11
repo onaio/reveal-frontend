@@ -456,6 +456,12 @@ describe('helpers/utils', () => {
     const payloadWithProvider: SettingConfiguration[] = creatSettingsPayloads(result, true);
     const expectedPayloadWithProvider = { ...expectedPayload, providerId: 'testUser' };
     expect(payloadWithProvider[0]).toEqual(expectedPayloadWithProvider);
+
+    // data with empty value
+    result.data[1].risk = '';
+    const invalidPayloads: SettingConfiguration[] = creatSettingsPayloads(result);
+    expect(invalidPayloads).toHaveLength(0);
+    expect(invalidPayloads).toEqual([]);
   });
 
   it('getPlanStatusToDisplay - eliminates unwanted plans', () => {
