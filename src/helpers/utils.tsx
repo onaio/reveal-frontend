@@ -961,7 +961,7 @@ export const creatSettingsPayloads = (
   result: PapaResult,
   addProvider: boolean = false
 ): SettingConfiguration[] => {
-  const payloads: SettingConfiguration[] = [];
+  let payloads: SettingConfiguration[] = [];
   const { data } = result;
   const username = getUser(store.getState()).username;
   // check if jurisdiction_id exists
@@ -969,12 +969,16 @@ export const creatSettingsPayloads = (
     // get the metadata items
     const headers = Object.keys(data[0]);
     const filteredHeaders = headers.filter(f => ![JURISDICTION_ID, JURISDICTION_NAME].includes(f));
-    for (const header of filteredHeaders) {
+    loop1: for (const header of filteredHeaders) {
       const settings: Setting[] = [];
       // add the metadata values with jurisdiction as the key
       for (const item of data) {
         const entries = Object.entries(item);
         for (const [key, value] of entries) {
+          if (value && !item.jurisdiction_id) {
+            payloads = [];
+            break loop1;
+          }
           if (key === header && value) {
             const setting: Setting = {
               description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,

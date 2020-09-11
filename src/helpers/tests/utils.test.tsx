@@ -428,6 +428,8 @@ describe('helpers/utils', () => {
       meta: [],
     };
 
+    const resultCopy = { ...result };
+
     const expectedPayload = {
       identifier: 'jurisdiction_metadata-coverage',
       settings: [
@@ -470,6 +472,12 @@ describe('helpers/utils', () => {
     const invalidPayloads: SettingConfiguration[] = creatSettingsPayloads(result);
     expect(invalidPayloads).toHaveLength(0);
     expect(invalidPayloads).toEqual([]);
+
+    // data missing jurisdiction id
+    resultCopy.data[1].jurisdiction_id = '';
+    const noJurisdictionId: SettingConfiguration[] = creatSettingsPayloads(result);
+    expect(noJurisdictionId).toHaveLength(0);
+    expect(noJurisdictionId).toEqual([]);
   });
 
   it('getPlanStatusToDisplay - eliminates unwanted plans', () => {
