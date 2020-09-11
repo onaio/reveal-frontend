@@ -80,6 +80,26 @@ describe('components/forms/JurisdictionMetadata', () => {
     expect(container.getElementsByClassName('text-danger').length).toEqual(0);
   });
 
+  it('CSV file with missing jurisdiction id', async () => {
+    const { getByText, getByTestId, container } = render(<JurisdictionMetadataForm />);
+
+    const invalidCsvPath = path.join(__dirname, 'fixtures', 'invalidData.csv');
+    const fileContents = fs.readFileSync(invalidCsvPath);
+    const file = new File([fileContents], 'invalidData.csv', { type: 'text/csv' });
+
+    const fileInput = getByText('Upload File');
+    fireEvent.change(fileInput, { target: { file: [file] } });
+    fireEvent.submit(getByTestId('form'));
+
+    /** Assert uploaded csv is invalid */
+    await waitFor(() => {
+      expect(container.getElementsByClassName('text-danger').length).toEqual(1);
+      expect((container.getElementsByClassName('text-danger').item(0) as any).textContent).toEqual(
+        INVALID_CSV
+      );
+    });
+  });
+
   it('submitForm uploads CSV file', async () => {
     const fileContents = 'jurisdiction_id, jurisdiction_name';
     const file = new File([fileContents], 'jurisdiction.csv', { type: 'text/csv' });
