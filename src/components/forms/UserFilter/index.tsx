@@ -35,7 +35,7 @@ export type BaseUserSelectFilterPropTypes = BaseUserSelectFilterProps & RouteCom
 export const defaultHandler = (option: OptionTypes, props: BaseUserSelectFilterPropTypes) => {
   const allQueryParams = getQueryParams(props.location);
   if (option) {
-    const targetValue = option.label;
+    const targetValue = option.value;
     // modify just the user query param and leave the rest
     allQueryParams[QUERY_PARAM_USER] = targetValue;
   } else {
@@ -71,17 +71,18 @@ export const BaseUserSelectFilter = (props: BaseUserSelectFilterPropTypes) => {
     const { username } = getUser(store.getState());
     const option = {
       label: username,
-      value: '',
+      value: username,
     };
     // tslint:disable-next-line: no-unused-expression
     props.onChangeHandler?.(option) ?? defaultHandler(option, props);
   }, []);
 
   const userIdSelectProps = {
-    ReactSelectDefaultValue: { label: defaultUserNameValue, value: '' },
+    ReactSelectDefaultValue: { label: defaultUserNameValue, value: defaultUserNameValue },
     onChangeHandler,
     serviceClass: OpenSRPService,
     showPractitioners: true,
+    userNameAsValue: true,
   };
 
   return (
