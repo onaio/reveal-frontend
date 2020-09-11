@@ -63,3 +63,28 @@ export const fetchCalls = [
     },
   ],
 ];
+
+export const e2eFetchCalls = [
+  [
+    'https://test.smartregister.org/opensrp/rest/plans/356b6b84-fc36-4389-a44a-2b038ed2f38d',
+    {
+      headers: {
+        accept: 'application/json',
+        authorization: 'Bearer null',
+        'content-type': 'application/json;charset=UTF-8',
+      },
+      method: 'GET',
+    },
+  ],
+  [
+    'https://test.smartregister.org/opensrp/rest/location/hierarchy/0ddd9ad1-452b-4825-a92a-49cb9fc82d18?return_structure_count=true',
+    {
+      headers: {
+        accept: 'application/json',
+        authorization: 'Bearer null',
+        'content-type': 'application/json;charset=UTF-8',
+      },
+      method: 'GET',
+    },
+  ],
+];

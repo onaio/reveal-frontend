@@ -460,15 +460,15 @@ export function getColor(taskObject: InitialTask): Color {
   }
 }
 
-/** filters out plans whose jurisdiction id is null
+/** filters out plans whose jurisdiction id is null or has a value of 'null'
  * @param {Plan []} plansArray - a list of pre-filtered plans
  *
  * @return {Plan []} - A list of filtered plans
  */
 export const removeNullJurisdictionPlans = (plansArray: Plan[]): Plan[] => {
   return plansArray.filter((plan: Plan) => {
-    const jurisdictionID = plan.jurisdiction_id.toLowerCase().trim();
-    return !jurisdictionID.includes('null');
+    const jurisdictionId = plan.jurisdiction_id?.toLowerCase().trim();
+    return !!jurisdictionId && !jurisdictionId.includes('null');
   });
 };
 
@@ -958,12 +958,16 @@ export interface SettingConfiguration {
 
 /**
  * Create payload for sending settings to OpenSRP v1 Settings endpoint
+ * Rules applied on creating payload:
+ * 1. If only some values are missing, those rows are droped silently
+ * 2. If all values are missing an error is raised
+ * 3. If any key is missing an error is raised
  */
 export const creatSettingsPayloads = (
   result: PapaResult,
   addProvider: boolean = false
 ): SettingConfiguration[] => {
-  const payloads: SettingConfiguration[] = [];
+  let payloads: SettingConfiguration[] = [];
   const { data } = result;
   const username = getUser(store.getState()).username;
   // check if jurisdiction_id exists
@@ -971,34 +975,38 @@ export const creatSettingsPayloads = (
     // get the metadata items
     const headers = Object.keys(data[0]);
     const filteredHeaders = headers.filter(f => ![JURISDICTION_ID, JURISDICTION_NAME].includes(f));
-    for (const header of filteredHeaders) {
+    loop1: for (const header of filteredHeaders) {
       const settings: Setting[] = [];
       // add the metadata values with jurisdiction as the key
       for (const item of data) {
         const entries = Object.entries(item);
         for (const [key, value] of entries) {
-          if (key === header) {
+          if (value && !item.jurisdiction_id) {
+            payloads = [];
+            break loop1;
+          }
+          if (key === header && value) {
             const setting: Setting = {
               description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
               key: item.jurisdiction_id,
-              label: `${
-                item.jurisdiction_name ? item.jurisdiction_name : item.jurisdiction_id
-              } metadata`,
+              label: item.jurisdiction_name ? item.jurisdiction_name : item.jurisdiction_id,
               value,
             };
             settings.push(setting);
           }
         }
       }
-      const payload: SettingConfiguration = {
-        identifier: `jurisdiction_metadata-${header}`,
-        settings,
-        type: SETTINGS_CONFIGURATION,
-      };
-      if (addProvider) {
-        payload.providerId = username;
+      if (settings.length) {
+        const payload: SettingConfiguration = {
+          identifier: `jurisdiction_metadata-${header}`,
+          settings,
+          type: SETTINGS_CONFIGURATION,
+        };
+        if (addProvider) {
+          payload.providerId = username;
+        }
+        payloads.push(payload);
       }
-      payloads.push(payload);
     }
   }
   return payloads;

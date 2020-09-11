@@ -3,11 +3,12 @@ import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedPractitionersListView, { PractitionersListView } from '..';
-import { PRACTITIONERS } from '../../../../../configs/lang';
+import { NO_ROWS_FOUND, PRACTITIONERS } from '../../../../../configs/lang';
 import { OPENSRP_PRACTITIONER_ENDPOINT, PRACTITIONERS_LIST_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import * as practitionerDucks from '../../../../../store/ducks/opensrp/practitioners';
@@ -92,6 +93,41 @@ describe('src/containers/TeamAssignment/PractitionersListView/', () => {
     expect(classMock).toBeCalledWith(OPENSRP_PRACTITIONER_ENDPOINT);
     expect(mockList).toHaveBeenCalled();
     expect(fetchedMock).toHaveBeenCalledWith(fixtures.practitioners, true);
+  });
+
+  it('Does not load when api returns no data', async () => {
+    fetch.once(JSON.stringify([]));
+    const mock: any = jest.fn();
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {},
+        path: PRACTITIONERS_LIST_URL,
+        url: PRACTITIONERS_LIST_URL,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedPractitionersListView {...props} />
+        </Router>
+      </Provider>
+    );
+    wrapper.update();
+
+    expect(wrapper.find('Ripple').length).toEqual(1);
+
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    expect(wrapper.text()).toMatchInlineSnapshot(
+      `"HomePractitionersPractitioners (0)Add PractitionerPractitioner NameUsernameIdentifierActionsNo rows found"`
+    );
+    expect(wrapper.text().includes(NO_ROWS_FOUND)).toBeTruthy();
   });
 
   it('PractitionerListView works correctly when connected to store', () => {

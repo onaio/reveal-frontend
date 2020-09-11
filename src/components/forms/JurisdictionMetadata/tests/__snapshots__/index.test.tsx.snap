@@ -16,3 +16,18 @@ exports[`components/forms/JurisdictionMetadata renders correctly: JurisdictionMe
   type="file"
 />
 `;
+
+exports[`uploads form uploads a csv file correctly, makes correct calls: file input field 1`] = `
+<input
+  accept=".csv"
+  className="form-control"
+  data-testid="file"
+  disabled={false}
+  id="file"
+  name="csv file"
+  onBlur={[Function]}
+  onChange={[Function]}
+  onClick={[Function]}
+  type="file"
+/>
+`;

@@ -1,3 +1,4 @@
+// tslint:disable: object-literal-sort-keys
 /** Fixtures for tests */
 import { keyBy } from 'lodash';
 import * as fixtures from '../../../../../store/ducks/tests/fixtures';
@@ -250,3 +251,48 @@ export const selectedPlan1 = {
   village: 'Naviluli',
   ...fixtures.plan1,
 };
+
+export const nullJurisdictionIdsPlans = [
+  {
+    id: 'cab03044-9517-5857-b5fb-f95639c7595e',
+    plan_id: 'e835698d-fbad-4e2d-948c-5bb28763f821',
+    plan_title: 'A1 - เลตองคุ (6308041001) - เสาวภา คีรีการะเกด - 2020-09-02 - Site',
+    plan_name: 'A1-เลตองคุ (6308041001)-เสาวภา_คีรีการะเกด-2020-09-02-Site',
+    plan_status: 'active',
+    jurisdiction_id: null,
+    plan_fi_status: 'A1',
+    plan_fi_reason: 'Case Triggered',
+    plan_date: '2020-09-02',
+    plan_effective_period_start: '2020-09-02',
+    plan_effective_period_end: '2020-09-22',
+    plan_intervention_type: 'FI',
+    plan_version: 1,
+    jurisdiction_parent_id: null,
+    jurisdiction_name: null,
+    jurisdiction_geometry: null,
+    jurisdiction_depth: null,
+    jurisdiction_path: null,
+    jurisdiction_name_path: null,
+  },
+  {
+    id: 'febf9df3-d649-50f9-b035-45fe62279286',
+    plan_id: '9e382a18-cb6d-4f90-83bb-151527778571',
+    plan_title: 'A1 - นุซะโปล้ (6308040102) - หม่อโพแหน่ ชัยนทีนาวิน - 2020-09-02 - Site',
+    plan_name: 'A1-นุซะโปล้ (6308040102)-หม่อโพแหน่_ชัยนทีนาวิน-2020-09-02-Site',
+    plan_status: 'active',
+    jurisdiction_id: null,
+    plan_fi_status: 'A1',
+    plan_fi_reason: 'Case Triggered',
+    plan_date: '2020-09-02',
+    plan_effective_period_start: '2020-09-02',
+    plan_effective_period_end: '2020-09-22',
+    plan_intervention_type: 'FI',
+    plan_version: 1,
+    jurisdiction_parent_id: null,
+    jurisdiction_name: null,
+    jurisdiction_geometry: null,
+    jurisdiction_depth: null,
+    jurisdiction_path: null,
+    jurisdiction_name_path: null,
+  },
+];

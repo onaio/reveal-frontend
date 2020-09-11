@@ -23,6 +23,7 @@ import {
   DEFAULT_PLAN_VERSION,
   ENABLED_FI_REASONS,
   ENABLED_PLAN_TYPES,
+  PLAN_TYPES_WITH_MULTI_JURISDICTIONS,
 } from '../../../configs/env';
 import {
   ACTION,
@@ -88,6 +89,7 @@ import {
   getFormActivities,
   getGoalUnitFromActionCode,
   getNameTitle,
+  isFIOrDynamicFI,
   isPlanTypeEnabled,
   onSubmitSuccess,
   planActivitiesMap,
@@ -490,8 +492,7 @@ const PlanForm = (props: PlanFormProps) => {
                           </div>
                         </fieldset>
                       ))}
-                      {(values.interventionType === InterventionType.IRS ||
-                        values.interventionType === InterventionType.MDAPoint) &&
+                      {PLAN_TYPES_WITH_MULTI_JURISDICTIONS.includes(values.interventionType) &&
                         allowMoreJurisdictions === true && (
                           <button
                             type="button"
@@ -507,11 +508,11 @@ const PlanForm = (props: PlanFormProps) => {
               )}
             />
 
-            {values.interventionType === InterventionType.FI && (
+            {isFIOrDynamicFI(values.interventionType) && (
               <FormGroup>
                 <Label for="fiStatus">{FOCUS_CLASSIFICATION_LABEL}</Label>
                 <Field
-                  required={values.interventionType === InterventionType.FI}
+                  required={isFIOrDynamicFI(values.interventionType)}
                   component="select"
                   name="fiStatus"
                   id="fiStatus"
@@ -532,11 +533,11 @@ const PlanForm = (props: PlanFormProps) => {
                 />
               </FormGroup>
             )}
-            {values.interventionType === InterventionType.FI && (
+            {isFIOrDynamicFI(values.interventionType) && (
               <FormGroup>
                 <Label for="fiReason">{FOCUS_INVESTIGATION_STATUS_REASON}</Label>
                 <Field
-                  required={values.interventionType === InterventionType.FI}
+                  required={isFIOrDynamicFI(values.interventionType)}
                   component="select"
                   name="fiReason"
                   id="fiReason"
@@ -557,13 +558,12 @@ const PlanForm = (props: PlanFormProps) => {
                 />
               </FormGroup>
             )}
-            {values.interventionType === InterventionType.FI && values.fiReason === FIReasons[1] && (
+            {isFIOrDynamicFI(values.interventionType) && values.fiReason === FIReasons[1] && (
               <FormGroup>
                 <Label for="caseNum">{CASE_NUMBER}</Label>
                 <Field
                   required={
-                    values.interventionType === InterventionType.FI &&
-                    values.fiReason === FIReasons[1]
+                    isFIOrDynamicFI(values.interventionType) && values.fiReason === FIReasons[1]
                   }
                   type="text"
                   name="caseNum"

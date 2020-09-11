@@ -130,6 +130,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         type: 'FeatureCollection',
       },
       getJurisdictionsMetadata: {},
+      hideBottomBreadCrumbCallback: expect.any(Function),
       jurisdictionsChunkSize: 30,
       plan: {
         identifier: '2493',
@@ -174,7 +175,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     };
     const result = await getJurisdictions(['2942'], params, 20);
     await flushPromises();
-    expect(fetch).toHaveBeenCalledTimes(3);
+    expect(fetch).toHaveBeenCalledTimes(2);
     expect(wrapper.find('AssignmentMapWrapper').props()).toEqual({
       autoSelectNodesActionCreator: expect.any(Function),
       baseAssignmentURL: '/',
@@ -188,6 +189,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
         type: 'FeatureCollection',
       },
       getJurisdictionsMetadata: {},
+      hideBottomBreadCrumbCallback: expect.any(Function),
       jurisdictionsChunkSize: 30,
       plan: {
         identifier: '2493',
@@ -265,6 +267,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
           },
         },
       },
+      hideBottomBreadCrumbCallback: expect.any(Function),
       jurisdictionsChunkSize: 30,
       plan: {
         identifier: '2493',

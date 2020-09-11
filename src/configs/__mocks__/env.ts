@@ -177,3 +177,21 @@ export const ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS = 'COVERAGE,POPULA
 );
 
 export const ASSIGNMENT_PAGE_SHOW_MAP = false;
+
+export const KEYCLOAK_LOGOUT_URL = 'https://keycloak/logout';
+
+export const OPENSRP_LOGOUT_URL = 'https://opensrp/logout';
+
+export const DOMAIN_NAME = 'localhost';
+
+export const PLAN_TYPES_WITH_MULTI_JURISDICTIONS = [
+  'IRS',
+  'MDA-Point',
+  'Dynamic-IRS',
+  'Dynamic-MDA',
+];
+
+export const SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY = false;
+
+export const ENABLE_HOME_MANAGE_PLANS_LINK = true;
+export const ENABLE_HOME_PLANNING_VIEW_LINK = true;

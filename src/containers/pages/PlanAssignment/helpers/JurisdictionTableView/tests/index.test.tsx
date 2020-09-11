@@ -19,11 +19,11 @@ import {
   organization3,
 } from '../../../../../../store/ducks/tests/fixtures';
 import { assignments } from '../../JurisdictionAssignmentForm/tests/fixtures';
-import { JurisdictionTable } from '../index';
+import { JurisdictionTableView } from '../index';
 
 const history = createBrowserHistory();
 
-describe('PlanAssignment/JurisdictionTable', () => {
+describe('PlanAssignment/JurisdictionTableView', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -68,7 +68,7 @@ describe('PlanAssignment/JurisdictionTable', () => {
           },
         ]}
       >
-        <JurisdictionTable {...props} />
+        <JurisdictionTableView {...props} />
       </MemoryRouter>
     );
 
@@ -80,28 +80,6 @@ describe('PlanAssignment/JurisdictionTable', () => {
     expect(toJson(wrapper.find('HelmetWrapper'))).toMatchSnapshot('helmet');
     expect(toJson(wrapper.find('.page-title'))).toMatchSnapshot('page-title');
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('Breadcrumbs');
-    expect(toJson(wrapper.find('thead'))).toMatchSnapshot('Table headers');
-    expect(toJson(wrapper.find('AssignedOrgs span'))).toMatchSnapshot('AssignedOrgs');
-    expect(wrapper.find('EditOrgs').props()).toEqual({
-      assignTeamsLabel: 'Assign Teams',
-      cancelCallBackFunc: expect.any(Function),
-      defaultValue: [],
-      existingAssignments: [],
-      jurisdiction: raKsh3Node,
-      labels: {
-        assignmentSuccess: 'Team(s) assignment updated successfully',
-        close: 'Close',
-        fieldError: 'Did not save successfully',
-        loadFormError: 'Could not load the form.',
-        save: 'Save',
-        saving: 'Saving',
-      },
-      options: orgs.map(e => ({ label: e.name, value: e.identifier })),
-      plan: plans[0],
-      submitCallBackFunc: callBack,
-      successNotifierBackFunc: expect.any(Function),
-    });
-    expect(toJson(wrapper.find('JurisdictionCell span'))).toMatchSnapshot('JurisdictionCell');
     wrapper.unmount();
   });
 });

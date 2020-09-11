@@ -45,6 +45,9 @@ describe('src/components/forms/FilterForm', () => {
     wrapper.update();
     const inputSelect = wrapper.find('input');
     expect(toJson(inputSelect)).toMatchSnapshot('Selector Input');
+    wrapper.find('.form-group > div').forEach(div => {
+      expect(div.props()).toMatchSnapshot('label and input');
+    });
   });
 
   it('calls to fetch', async () => {

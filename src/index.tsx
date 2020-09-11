@@ -7,7 +7,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './App/App';
 import { Fallback } from './components/errors/Fallback';
-import Logout from './components/Logout';
 import { SENTRY_DSN } from './configs/env';
 import * as serviceWorker from './serviceWorker';
 import store from './store';
@@ -25,7 +24,7 @@ ReactDOM.render(
   <Provider store={store}>
     <SentryReact.ErrorBoundary fallback={Fallback}>
       <ConnectedRouter history={history}>
-        <App logoutComponent={Logout} />
+        <App />
       </ConnectedRouter>
     </SentryReact.ErrorBoundary>
   </Provider>,

@@ -36,6 +36,7 @@ const defaultProps: AssignedOrgsProps = {
  */
 const AssignedOrgs = (props: AssignedOrgsProps) => {
   const { id, orgs, displayLimit, labels } = props;
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
   if (!orgs || orgs.length < 1 || id === '') {
     return null;
@@ -48,7 +49,6 @@ const AssignedOrgs = (props: AssignedOrgsProps) => {
     return <span id={`org-span-${id}`}>{orgsDisplay}</span>;
   }
 
-  const [tooltipOpen, setTooltipOpen] = useState(false);
   const toggleTooltip = () => setTooltipOpen(!tooltipOpen);
 
   const displayString = `${orgNames.slice(0, displayLimit).join(', ')} ${labels.and} ${orgs.length -

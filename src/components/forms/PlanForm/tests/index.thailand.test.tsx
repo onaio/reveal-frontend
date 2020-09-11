@@ -9,6 +9,7 @@ jest.mock('../../../../configs/env', () => ({
   ENABLED_FI_REASONS: ['Routine'],
   ENABLED_PLAN_TYPES: ['FI'],
   LANGUAGE: 'th',
+  PLAN_TYPES_WITH_MULTI_JURISDICTIONS: ['IRS', 'MDA-Point', 'Dynamic-IRS', 'Dynamic-MDA'],
 }));
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');

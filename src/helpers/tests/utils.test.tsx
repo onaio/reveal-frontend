@@ -428,19 +428,21 @@ describe('helpers/utils', () => {
       meta: [],
     };
 
+    const resultCopy = { ...result };
+
     const expectedPayload = {
       identifier: 'jurisdiction_metadata-coverage',
       settings: [
         {
           description: 'Jurisdiction Metadata for test1 id 79b139c-3a20-4656-b684-d2d9ed83c94e',
           key: '79b139c-3a20-4656-b684-d2d9ed83c94e',
-          label: 'test1 metadata',
+          label: 'test1',
           value: '30',
         },
         {
           description: 'Jurisdiction Metadata for test2 id 02ebbc84-5e29-4cd5-9b79-c594058923e9',
           key: '02ebbc84-5e29-4cd5-9b79-c594058923e9',
-          label: 'test2 metadata',
+          label: 'test2',
           value: '50',
         },
       ],
@@ -456,6 +458,26 @@ describe('helpers/utils', () => {
     const payloadWithProvider: SettingConfiguration[] = creatSettingsPayloads(result, true);
     const expectedPayloadWithProvider = { ...expectedPayload, providerId: 'testUser' };
     expect(payloadWithProvider[0]).toEqual(expectedPayloadWithProvider);
+
+    // data missing some values
+    result.data[0].risk = '';
+    result.data[1].risk = '';
+    const partialInvalidPayloads: SettingConfiguration[] = creatSettingsPayloads(result);
+    expect(partialInvalidPayloads).toHaveLength(1);
+    expect(partialInvalidPayloads).toEqual([expectedPayload]);
+
+    // data missing all values
+    result.data[0].coverage = '';
+    result.data[1].coverage = '';
+    const invalidPayloads: SettingConfiguration[] = creatSettingsPayloads(result);
+    expect(invalidPayloads).toHaveLength(0);
+    expect(invalidPayloads).toEqual([]);
+
+    // data missing jurisdiction id
+    resultCopy.data[1].jurisdiction_id = '';
+    const noJurisdictionId: SettingConfiguration[] = creatSettingsPayloads(result);
+    expect(noJurisdictionId).toHaveLength(0);
+    expect(noJurisdictionId).toEqual([]);
   });
 
   it('getPlanStatusToDisplay - eliminates unwanted plans', () => {

@@ -48,9 +48,6 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   const planIdentifier = props.match.params.id;
   const [loading, setLoading] = useState<boolean>(true);
 
-  if (!planIdentifier) {
-    return null; /** we should make this into a better error page */
-  }
   const apiService = new service(OPENSRP_PLANS);
 
   /** async function to load the data */
@@ -70,6 +67,10 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   useEffect(() => {
     loadData().catch(err => displayError(err));
   }, []);
+
+  if (!planIdentifier) {
+    return null; /** we should make this into a better error page */
+  }
 
   if (loading === true) {
     return <Loading />;

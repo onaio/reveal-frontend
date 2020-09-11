@@ -383,14 +383,14 @@ describe('e2e test auto-selection flow', () => {
     const tbodyRow = wrapper.find('tbody tr');
     expect(tbodyRow.length).toEqual(0);
     expect(wrapper.find('SelectedStructuresTable').text()).toMatchInlineSnapshot(
-      `"....NameStructures CountNo rows foundContinue to next step"`
+      `"....NameStructures CountThere are no descendant jurisdictions that are targeted.Continue to next step"`
     );
 
     /** What of the resource calculation component */
 
     // is an error page => will refactor this to an info message instead
     expect(wrapper.find(ResourceCalculation).text()).toMatchInlineSnapshot(
-      `"An error ocurred. Please try and refresh the page.The specific error is: No Jurisdiction selections were found"`
+      `"Zambia:  There are no descendant jurisdictions that are targeted."`
     );
 
     // click next goto the refine jurisdiction selections section
@@ -476,7 +476,7 @@ describe('e2e test auto-selection flow', () => {
 
     /** the resource calculation component updates accordingly */
     expect(wrapper.find(ResourceCalculation).text()).toMatchInlineSnapshot(
-      `"An error ocurred. Please try and refresh the page.The specific error is: No Jurisdiction selections were found"`
+      `"Eastern:  There are no descendant jurisdictions that are targeted."`
     );
   });
 });

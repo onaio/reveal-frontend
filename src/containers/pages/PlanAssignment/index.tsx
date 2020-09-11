@@ -1,6 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import moment from 'moment';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { ActionCreator, Store } from 'redux';
 import Loading from '../../../components/page/Loading';
@@ -53,7 +53,11 @@ import planDefinitionReducer, {
 } from '../../../store/ducks/opensrp/PlanDefinition';
 import { ConnectedAssignmentMapWrapper } from '../AssigmentMapWrapper';
 import { useHandleBrokenPage } from '../JurisdictionAssignment/helpers/utils';
-import { JurisdictionTable, JurisdictionTableProps } from './helpers/JurisdictionTable';
+import {
+  JurisdictionTableListView,
+  JurisdictionTableListViewPropTypes,
+} from './helpers/JurisdictionTableListView';
+import { JurisdictionTableView, JurisdictionTableViewProps } from './helpers/JurisdictionTableView';
 import { AssignmentResponse } from './helpers/types';
 
 // register reducers
@@ -66,7 +70,7 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 // const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
 
 /** PlanAssignment props */
-interface PlanAssignmentProps extends JurisdictionTableProps {
+interface PlanAssignmentProps extends JurisdictionTableListViewPropTypes {
   OpenSRPServiceClass: typeof OpenSRPService;
   addPlanActionCreator: typeof addPlanDefinition;
   fetchAssignmentsActionCreator: typeof fetchAssignments;
@@ -74,7 +78,6 @@ interface PlanAssignmentProps extends JurisdictionTableProps {
   fetchTreeActionCreator: ActionCreator<FetchedTreeAction>;
   tree: TreeNode | null;
 }
-
 /**
  * Check if map should be visible based on plan type
  */
@@ -101,6 +104,7 @@ export const isMapDisabled = (plan: PlanDefinition | null): boolean => {
  */
 const PlanAssignment = (props: PlanAssignmentProps) => {
   const [loading, setLoading] = useState<boolean>(true);
+  const [hideBottomBreadCrumb, setHideBottomBreadCrumb] = useState<boolean>(false);
   const {
     OpenSRPServiceClass,
     addPlanActionCreator,
@@ -113,11 +117,6 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     plan,
   } = props;
   const planId = props.match.params.planId;
-
-  /** We should not proceed without a plan id */
-  if (!planId) {
-    return null;
-  }
 
   /** Convenience function to handle cases where we must abort and tell the user we have done so */
   const { handleBrokenPage, broken, errorMessage } = useHandleBrokenPage();
@@ -206,6 +205,11 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
       });
   }, []);
 
+  /** We should not proceed without a plan id */
+  if (!planId) {
+    return null;
+  }
+
   if (loading) {
     // TODO: show message of what is actually loading
     return <Loading />;
@@ -237,13 +241,19 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   }
 
   // TODO: Determine if this can safely be moved outside this component so as not to remount
-  const WrappedJurisdictionTable = withTreeWalker<JurisdictionTableProps>(JurisdictionTable);
+  const WrappedJurisdictionTableView = withTreeWalker<JurisdictionTableViewProps>(
+    JurisdictionTableView
+  );
+  const WrappedJurisdictionTableListView = withTreeWalker<JurisdictionTableListViewPropTypes>(
+    JurisdictionTableListView
+  );
 
-  /** Props to be passed to the wrapped component */
+  /** Props to be passed to the wrapped components */
   const wrappedProps = {
     ...props,
     LoadingIndicator: Loading, // TODO: indicate what is loading
     assignments,
+    hideBottomBreadCrumb,
     jurisdictionId,
     labels: {
       loadAncestorsError: COULD_NOT_LOAD_PARENTS,
@@ -259,6 +269,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   const AssignmentWraperProps = {
     baseAssignmentURL: `${ASSIGN_PLAN_URL}/${(plan as PlanDefinition).identifier}`,
     currentParentId: jurisdictionId,
+    hideBottomBreadCrumbCallback: setHideBottomBreadCrumb,
     isPlanAssignmentPage: true,
     jurisdictionsChunkSize: 30,
     plan: plan as PlanDefinition,
@@ -267,10 +278,11 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
   };
 
   return (
-    <>
+    <Fragment>
+      <WrappedJurisdictionTableView {...wrappedProps} />
       {!isMapDisabled(plan) && <ConnectedAssignmentMapWrapper {...AssignmentWraperProps} />}
-      <WrappedJurisdictionTable {...wrappedProps} />
-    </>
+      <WrappedJurisdictionTableListView {...wrappedProps} />
+    </Fragment>
   );
 };
 

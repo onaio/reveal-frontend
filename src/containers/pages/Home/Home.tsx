@@ -3,16 +3,27 @@ import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { Button, Col, Row } from 'reactstrap';
-import { ENABLE_FI, ENABLE_IRS, ENABLE_TEAMS } from '../../../configs/env';
+import {
+  ENABLE_FI,
+  ENABLE_HOME_MANAGE_PLANS_LINK,
+  ENABLE_HOME_PLANNING_VIEW_LINK,
+  ENABLE_TEAMS,
+} from '../../../configs/env';
 import {
   FOCUS_INVESTIGATION,
   GET_STARTED_MESSAGE,
   HOME_TITLE,
   ORGANIZATIONS_LABEL,
   PLANNING_PAGE_TITLE,
+  PLANS,
   WELCOME_TO_REVEAL,
 } from '../../../configs/lang';
-import { FI_URL, ORGANIZATIONS_LIST_URL, PLANNING_VIEW_URL } from '../../../constants';
+import {
+  FI_URL,
+  ORGANIZATIONS_LIST_URL,
+  PLAN_LIST_URL,
+  PLANNING_VIEW_URL,
+} from '../../../constants';
 import './Home.css';
 
 class Home extends React.Component<{}, {}> {
@@ -33,7 +44,19 @@ class Home extends React.Component<{}, {}> {
           </Col>
         </Row>
         <Row className="intervention-box">
-          {ENABLE_IRS && (
+          {ENABLE_HOME_MANAGE_PLANS_LINK && (
+            <Col md="6">
+              <Link to={PLAN_LIST_URL} className="home-link">
+                <Button
+                  color="outline"
+                  className="btn-intervention btn-lg btn-block btn-outline-green"
+                >
+                  {PLANS}
+                </Button>
+              </Link>
+            </Col>
+          )}
+          {ENABLE_HOME_PLANNING_VIEW_LINK && (
             <Col md="6">
               <Link to={PLANNING_VIEW_URL} className="home-link">
                 <Button

@@ -21,6 +21,7 @@ import {
   HOME,
   IDENTIFIER,
   NAME,
+  NO_ROWS_FOUND,
   PRACTITIONER,
   PRACTITIONERS,
   USERNAME,
@@ -33,6 +34,7 @@ import {
   QUERY_PARAM_TITLE,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { useLoadingReducer } from '../../../../helpers/useLoadingReducer';
 import { getQueryParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import practitionersReducer, {
@@ -50,7 +52,6 @@ interface Props {
   fetchPractitionersCreator: typeof fetchPractitioners;
   practitioners: Practitioner[];
   serviceClass: typeof OpenSRPService;
-  name?: string;
 }
 
 /** the default props for SinglePractitionerView */
@@ -65,6 +66,7 @@ export type PropsTypes = Props & RouteComponentProps;
 
 const PractitionersListView = (props: PropsTypes) => {
   const { practitioners, serviceClass, fetchPractitionersCreator } = props;
+  const { startLoading, stopLoading, loading } = useLoadingReducer();
 
   // functions/methods
 
@@ -109,12 +111,17 @@ const PractitionersListView = (props: PropsTypes) => {
 
   /** hook to load all practitioners and dispatch to them to store */
   useEffect(() => {
-    loadPractitioners(serviceClass, fetchPractitionersCreator).catch(error => displayError(error));
+    const practitionersLoadingKey = 'organization';
+    startLoading(practitionersLoadingKey, practitioners.length === 0);
+    loadPractitioners(serviceClass, fetchPractitionersCreator)
+      .finally(() => {
+        stopLoading(practitionersLoadingKey);
+      })
+      .catch(err => displayError(err));
   }, []);
 
   // break early if practitioners are absent
-  const isLoading = practitioners.length < 1 && !props.name;
-  if (isLoading) {
+  if (loading()) {
     return <Loading />;
   }
 
@@ -141,6 +148,12 @@ const PractitionersListView = (props: PropsTypes) => {
       </Row>
       <hr />
       <ListView {...listViewProps} />
+      {!practitioners.length && (
+        <div style={{ textAlign: 'center' }}>
+          {NO_ROWS_FOUND}
+          <hr />
+        </div>
+      )}
     </div>
   );
 };
@@ -151,14 +164,13 @@ export { PractitionersListView };
 
 // connect to store
 
-type MapStateToProps = Pick<Props, 'name' | 'practitioners'>;
+type MapStateToProps = Pick<Props, 'practitioners'>;
 
 /** maps props to state via selectors */
 const mapStateToProps = (state: Partial<Store>, ownProps: PropsTypes): MapStateToProps => {
   const practitionersSelector = makePractitionersSelector();
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   return {
-    name: searchedTitle,
     practitioners: practitionersSelector(state, { name: searchedTitle }),
   };
 };
