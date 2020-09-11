@@ -39,3 +39,9 @@ Below is a list of currently supported environment variables:
 - Enable or disable planning view home page link.
 - **Not required**
 - Default value: `false`.
+
+7. **REACT_APP_ENABLE_DEFAULT_PLAN_USER_FILTER**
+
+- _optional_; _(boolean)_
+- default: `false`
+- whether to filter plans by the logged in user right of the bat by default

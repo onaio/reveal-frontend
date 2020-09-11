@@ -2,6 +2,7 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { USERS_FETCH_ERROR } from '../../../../../configs/lang';
 import * as helperUtils from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
@@ -30,8 +31,10 @@ describe('src/*/forms/userIdSelect', () => {
     };
     const wrapper = shallow(<UserIdSelect {...props} />);
     // tslint:disable-next-line:promise-must-complete
-    await new Promise<any>(resolve => new Promise<any>(resolve));
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
   });
 
   it('renders correctly', async () => {
@@ -44,8 +47,11 @@ describe('src/*/forms/userIdSelect', () => {
     };
     const wrapper = mount(<UserIdSelect {...props} />);
     // tslint:disable-next-line:promise-must-complete
-    await new Promise<any>(resolve => new Promise<any>(resolve));
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
     const inputSelect = wrapper.find('input');
     expect(toJson(inputSelect)).toMatchSnapshot('Selector Input');
   });
@@ -61,9 +67,10 @@ describe('src/*/forms/userIdSelect', () => {
     };
     mount(<UserIdSelect {...props} />);
     // tslint:disable-next-line:promise-must-complete
-    await new Promise<any>(resolve => new Promise<any>(resolve));
-    await flushPromises();
-    await new Promise(resolve => setImmediate(resolve));
+    await act(async () => {
+      await flushPromises();
+    });
+
     const calls = [
       [
         'https://test.smartregister.org/opensrp/rest/user/count',
@@ -114,8 +121,10 @@ describe('src/*/forms/userIdSelect', () => {
     };
     const wrapper = mount(<UserIdSelect {...props} />);
 
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     // now look at passed options to Select
     const selectWrapperProps = wrapper.find('Select').props();
@@ -144,8 +153,10 @@ describe('src/*/forms/userIdSelect', () => {
     };
     const wrapper = mount(<UserIdSelect {...props} />);
 
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     // now look at passed options to Select
     const selectWrapperProps = wrapper.find('Select').props();
@@ -170,8 +181,10 @@ describe('src/*/forms/userIdSelect', () => {
     };
     const wrapper = mount(<UserIdSelect {...props} />);
 
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     (wrapper.find('Select').instance() as any).selectOption({
       label: 'Drake.Ramole',
@@ -190,6 +203,32 @@ describe('src/*/forms/userIdSelect', () => {
     ]);
   });
 
+  it('creates options correctly with userNameAsValue prop', async () => {
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify(practitioners));
+    const props = {
+      serviceClass: OpenSRPService,
+      userNameAsValue: true,
+    };
+    const wrapper = mount(<UserIdSelect {...props} />);
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    // now look at passed options to Select
+    const selectWrapperProps = wrapper.find('Select').props();
+    const selectWrapperOptions = (selectWrapperProps as any).options;
+    // both the label and the value are the userName
+    expect(selectWrapperOptions[0]).toEqual({
+      label: 'Arlene_Neal',
+      value: 'Arlene_Neal',
+    });
+  });
+
   it('options are sorted in descending', async () => {
     fetch
       .once(JSON.stringify(users.length))
@@ -200,8 +239,10 @@ describe('src/*/forms/userIdSelect', () => {
     };
     const wrapper = mount(<UserIdSelect {...props} />);
 
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     // now look at passed options to Select
     const selectWrapperProps = wrapper.find('Select').props();
@@ -217,7 +258,10 @@ describe('src/*/forms/userIdSelect', () => {
       serviceClass: OpenSRPService,
     };
     const wrapper = mount(<UserIdSelect {...props} />);
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
+
     // check for options to Select
     const selectWrapperProps = wrapper.find('Select').props();
     const selectWrapperOptions = (selectWrapperProps as any).options;
@@ -231,9 +275,10 @@ describe('src/*/forms/userIdSelect', () => {
     };
     mount(<UserIdSelect {...props} />);
     // tslint:disable-next-line:promise-must-complete
-    await new Promise<any>(resolve => new Promise<any>(resolve));
-    await flushPromises();
-    await new Promise(resolve => setImmediate(resolve));
+    await act(async () => {
+      await flushPromises();
+    });
+
     expect(fetch.mock.calls[1][0]).toContain(1000);
   });
   it('show error div if count is not received', async () => {
@@ -244,8 +289,11 @@ describe('src/*/forms/userIdSelect', () => {
       serviceClass: OpenSRPService,
     };
     const wrapper = mount(<UserIdSelect {...props} />);
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
     expect(wrapper.find('div').text()).toEqual(`${USERS_FETCH_ERROR}`);
   });
 });

@@ -32,11 +32,14 @@ import {
   FOCUS_AREA_HEADER,
   FOCUS_INVESTIGATIONS,
   HOME,
+  LOADING,
   NAME,
+  NO_INVESTIGATIONS_FOUND,
   REACTIVE,
   ROUTINE_TITLE,
   START_DATE,
   STATUS_HEADER,
+  USER_HAS_NO_PLAN_ASSIGNMENTS,
 } from '../../../../configs/lang';
 import {
   FIClassifications,
@@ -98,12 +101,14 @@ export interface ActiveFIProps {
   searchedTitle: string | null;
   serviceClass: typeof OpenSRPService;
   userName: string | null;
+  noDataMessage: string;
 }
 
 /** default props for ActiveFI component */
 export const defaultActiveFIProps: ActiveFIProps = {
   caseTriggeredPlans: null,
   fetchPlansActionCreator: fetchPlans,
+  noDataMessage: NO_INVESTIGATIONS_FOUND,
   plan: null,
   routinePlans: null,
   searchedTitle: null,
@@ -114,6 +119,7 @@ export const defaultActiveFIProps: ActiveFIProps = {
 
 interface ActiveFIState {
   loading: boolean;
+  loadingPlansByUser: boolean;
 }
 
 /** Reporting for Active Focus Investigations */
@@ -125,7 +131,7 @@ class ActiveFocusInvestigation extends React.Component<
 
   constructor(props: ActiveFIProps & RouteComponentProps<RouteParams>) {
     super(props);
-    const { caseTriggeredPlans, routinePlans } = props;
+    const { caseTriggeredPlans, routinePlans, userName } = props;
     const thereIsntData: boolean =
       (caseTriggeredPlans &&
         caseTriggeredPlans.length === 0 &&
@@ -134,6 +140,7 @@ class ActiveFocusInvestigation extends React.Component<
       true;
     this.state = {
       loading: thereIsntData,
+      loadingPlansByUser: !!userName,
     };
   }
 
@@ -158,14 +165,32 @@ class ActiveFocusInvestigation extends React.Component<
       });
 
     if (userName) {
-      loadPlansByUserFilter(userName).catch(err => displayError(err));
+      this.setState({
+        loadingPlansByUser: true,
+      });
+      loadPlansByUserFilter(userName)
+        .finally(() => {
+          this.setState({
+            loadingPlansByUser: false,
+          });
+        })
+        .catch(err => displayError(err));
     }
   }
 
   public componentDidUpdate(prevProps: ActiveFIProps) {
     const { userName } = this.props;
     if (userName && prevProps.userName !== userName) {
-      loadPlansByUserFilter(userName).catch(err => displayError(err));
+      this.setState({
+        loadingPlansByUser: true,
+      });
+      loadPlansByUserFilter(userName)
+        .finally(() => {
+          this.setState({
+            loadingPlansByUser: false,
+          });
+        })
+        .catch(err => displayError(err));
     }
   }
 
@@ -187,7 +212,8 @@ class ActiveFocusInvestigation extends React.Component<
       url: HOME_URL,
     };
 
-    const { caseTriggeredPlans, routinePlans, plan } = this.props;
+    const { caseTriggeredPlans, routinePlans, plan, noDataMessage } = this.props;
+    const finalNoDataMessage = this.state.loadingPlansByUser ? LOADING : noDataMessage;
     // We need to initialize jurisdictionName to a falsy value
     let jurisdictionName = null;
 
@@ -320,7 +346,8 @@ class ActiveFocusInvestigation extends React.Component<
               caseTriggeredPlans,
               this.props,
               REACTIVE_QUERY_PARAM,
-              this.props.serviceClass
+              this.props.serviceClass,
+              finalNoDataMessage
             )}
           />
         </div>
@@ -341,7 +368,8 @@ class ActiveFocusInvestigation extends React.Component<
               routinePlans,
               this.props,
               ROUTINE_QUERY_PARAM,
-              this.props.serviceClass
+              this.props.serviceClass,
+              finalNoDataMessage
             )}
           />
         </div>
@@ -365,6 +393,7 @@ interface DispatchedStateProps {
   routinePlans: Plan[] | null;
   searchedTitle: string;
   userName: string | null;
+  noDataMessage: string;
 }
 
 /** map state to props */
@@ -379,7 +408,6 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const userName = getQueryParams(ownProps.location)[QUERY_PARAM_USER] as string;
-
   const planIds = makePlansByUserNamesSelector()(state, { userName });
   const reactiveSearchString = getQueryParams(ownProps.location)[REACTIVE_QUERY_PARAM] as string;
   const routineSearchString = getQueryParams(ownProps.location)[ROUTINE_QUERY_PARAM] as string;
@@ -401,8 +429,14 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     title: routineSearchString,
   });
 
+  const noDataMessage =
+    !!(caseTriggeredPlans.length === 0 || routinePlans.length === 0) && userName
+      ? USER_HAS_NO_PLAN_ASSIGNMENTS
+      : NO_INVESTIGATIONS_FOUND;
+
   return {
     caseTriggeredPlans,
+    noDataMessage,
     plan,
     routinePlans,
     searchedTitle,

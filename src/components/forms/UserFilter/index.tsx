@@ -2,15 +2,18 @@
  * to other components through the url
  */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { getUser } from '@onaio/session-reducer';
 import queryString from 'query-string';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import DropdownMenu from 'reactstrap/lib/DropdownMenu';
+import { ENABLE_DEFAULT_PLAN_USER_FILTER } from '../../../configs/env';
 import { FILTER, SELECT_USERNAME, USER } from '../../../configs/lang';
 import { QUERY_PARAM_USER } from '../../../constants';
 import { getQueryParams } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
+import store from '../../../store';
 import { DropDownRenderer } from '../../DropDownRenderer';
 import UserIdSelect, { OptionTypes } from '../PractitionerForm/UserIdSelect';
 import './index.css';
@@ -32,7 +35,7 @@ export type BaseUserSelectFilterPropTypes = BaseUserSelectFilterProps & RouteCom
 export const defaultHandler = (option: OptionTypes, props: BaseUserSelectFilterPropTypes) => {
   const allQueryParams = getQueryParams(props.location);
   if (option) {
-    const targetValue = option.label;
+    const targetValue = option.value;
     // modify just the user query param and leave the rest
     allQueryParams[QUERY_PARAM_USER] = targetValue;
   } else {
@@ -60,11 +63,26 @@ export const BaseUserSelectFilter = (props: BaseUserSelectFilterPropTypes) => {
     defaultHandler(option, props);
   };
 
+  useEffect(() => {
+    if (!(defaultUserNameValue === SELECT_USERNAME && ENABLE_DEFAULT_PLAN_USER_FILTER)) {
+      return;
+    }
+
+    const { username } = getUser(store.getState());
+    const option = {
+      label: username,
+      value: username,
+    };
+    // tslint:disable-next-line: no-unused-expression
+    props.onChangeHandler?.(option) ?? defaultHandler(option, props);
+  }, []);
+
   const userIdSelectProps = {
-    ReactSelectDefaultValue: { label: defaultUserNameValue, value: '' },
+    ReactSelectDefaultValue: { label: defaultUserNameValue, value: defaultUserNameValue },
     onChangeHandler,
     serviceClass: OpenSRPService,
     showPractitioners: true,
+    userNameAsValue: true,
   };
 
   return (

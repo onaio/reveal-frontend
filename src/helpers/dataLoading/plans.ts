@@ -22,7 +22,7 @@ export async function loadPlansByUserFilter<T>(
   responseActionCreator?: ActionCreator<AnyAction>
 ) {
   const serve = new service(`${OPENSRP_PLANS_BY_USER_FILTER}/${userName}`);
-  serve
+  return serve
     .list()
     .then((response: T[] | null) => {
       if (response === null) {

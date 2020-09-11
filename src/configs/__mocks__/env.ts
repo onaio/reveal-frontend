@@ -195,3 +195,4 @@ export const SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY = false;
 
 export const ENABLE_HOME_MANAGE_PLANS_LINK = true;
 export const ENABLE_HOME_PLANNING_VIEW_LINK = true;
+export const ENABLE_DEFAULT_PLAN_USER_FILTER = false;

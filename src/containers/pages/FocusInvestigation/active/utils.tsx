@@ -25,7 +25,8 @@ export const createTableProps = <D extends object, TProps extends RouteComponent
   data: Plan[] | null,
   props: TProps,
   paramString: string,
-  service: typeof OpenSRPService
+  service: typeof OpenSRPService,
+  noDataMessage: string = NO_INVESTIGATIONS_FOUND
 ) => {
   const cleanedData = data !== null ? data : [];
   const jurisdictionValidPlans = removeNullJurisdictionPlans(cleanedData);
@@ -48,7 +49,7 @@ export const createTableProps = <D extends object, TProps extends RouteComponent
       queryParam: paramString,
       serviceClass: service,
     }),
-    renderNullDataComponent: () => <NoDataComponent message={NO_INVESTIGATIONS_FOUND} />,
+    renderNullDataComponent: () => <NoDataComponent message={noDataMessage} />,
     useDrillDown: false,
   };
 };
