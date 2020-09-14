@@ -10,22 +10,25 @@ import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
-import { MemoizedGisidaLite } from '../../../../components/GisidaLite';
-import { getCenter } from '../../../../components/GisidaLite/helpers';
+import GisidaWrapper from '../../../../components/GisidaWrapper';
 import NotFound from '../../../../components/NotFound';
+import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
-  SUPERSET_IRS_REPORTING_INDICATOR_ROWS,
-  SUPERSET_IRS_REPORTING_INDICATOR_STOPS,
+  HIDDEN_MAP_LEGEND_ITEMS,
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_MAX_RECORDS,
+  SUPERSET_SMC_REPORTING_INDICATOR_ROWS,
+  SUPERSET_SMC_REPORTING_INDICATOR_STOPS,
   SUPERSET_SMC_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_SMC_REPORTING_PLANS_SLICE,
   SUPERSET_SMC_REPORTING_STRUCTURES_DATA_SLICE,
 } from '../../../../configs/env';
 import {
+  AN_ERROR_OCCURRED,
   HOME,
+  LEGEND_LABEL,
   MAP_LOAD_ERROR,
   NUMERATOR_OF_DENOMINATOR_UNITS,
   PROGRESS,
@@ -43,12 +46,12 @@ import GenericJurisdictionsReducer, {
   getGenericJurisdictionByJurisdictionId,
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../store/ducks/generic/jurisdictions';
-import { GenericPlan } from '../../../../store/ducks/generic/plans';
 import SMCPlansReducer, {
-  fetchSMCPlans,
-  getSMCPlanById,
+  genericFetchPlans,
+  GenericPlan,
+  getPlanByIdSelector,
   reducerName as SMCPlansReducerName,
-} from '../../../../store/ducks/generic/SMCPlans';
+} from '../../../../store/ducks/generic/plans';
 import genericStructuresReducer, {
   fetchGenericStructures,
   GenericStructure,
@@ -63,16 +66,12 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../store/ducks/jurisdictions';
 import {
-  buildJurisdictionLayers,
-  getMapBounds,
-} from '../../FocusInvestigation/map/active/helpers/utils';
-import {
   defaultIndicatorStop,
   getGisidaWrapperProps,
   getIndicatorRows,
   getJurisdictionBreadcrumbs,
-  IRSIndicatorRows,
-  IRSIndicatorStops,
+  SMCIndicatorRows,
+  SMCIndicatorStops,
 } from './helpers';
 import './style.css';
 
@@ -85,11 +84,11 @@ reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer)
 const slices = SUPERSET_SMC_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
 const focusAreaSlice = slices.pop();
 
-/** interface for IRSReportingMap */
+/** interface for SMCReportingMap */
 interface SMCReportingMapProps {
   fetchFocusAreas: typeof fetchGenericJurisdictions;
   fetchJurisdictionsAction: typeof fetchJurisdictions;
-  fetchPlans: typeof fetchSMCPlans;
+  fetchPlans: typeof genericFetchPlans;
   fetchStructures: typeof fetchGenericStructures;
   focusArea: GenericJurisdiction | null;
   jurisdiction: Jurisdiction | null;
@@ -102,7 +101,7 @@ interface SMCReportingMapProps {
 const defaultProps: SMCReportingMapProps = {
   fetchFocusAreas: fetchGenericJurisdictions,
   fetchJurisdictionsAction: fetchJurisdictions,
-  fetchPlans: fetchSMCPlans,
+  fetchPlans: genericFetchPlans,
   fetchStructures: fetchGenericStructures,
   focusArea: null,
   jurisdiction: null,
@@ -155,9 +154,10 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
       ).then((result: Jurisdiction[]) => fetchJurisdictionsAction(result));
 
       let fetchStructureParams: SupersetFormData | null = null;
-      if (jurisdictionId) {
+      if (jurisdictionId && planId) {
         fetchStructureParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
           { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
+          { comparator: planId, operator: '==', subject: 'plan_id' },
         ]);
       }
 
@@ -203,15 +203,21 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
   }
 
   useEffect(() => {
-    loadData().catch(e => displayError(e));
+    loadData()
+      .finally(() => setLoading(false))
+      .catch(e => displayError(e));
   }, []);
 
   if (!jurisdictionId || !planId) {
     return <NotFound />;
   }
 
-  if (loading === true || !focusArea || !jurisdiction || !plan || !structures) {
+  if (loading === true) {
     return <Loading />;
+  }
+
+  if (!focusArea || !plan || !jurisdiction) {
+    return <ErrorPage errorMessage={AN_ERROR_OCCURRED} />;
   }
 
   const baseURL = `${REPORT_SMC_PLAN_URL}/${plan.plan_id}`;
@@ -245,25 +251,19 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
   const newPages = breadcrumbProps.pages.concat(jurisdictionBreadCrumbs);
   breadcrumbProps.pages = newPages;
 
-  const indicatorRows = get(IRSIndicatorRows, SUPERSET_IRS_REPORTING_INDICATOR_ROWS, null);
+  const indicatorRows = get(SMCIndicatorRows, SUPERSET_SMC_REPORTING_INDICATOR_ROWS, null);
   let sidebarIndicatorRows = null;
   if (indicatorRows !== null) {
     sidebarIndicatorRows = getIndicatorRows(indicatorRows, focusArea);
   }
 
   const indicatorStops = get(
-    IRSIndicatorStops,
-    SUPERSET_IRS_REPORTING_INDICATOR_STOPS,
+    SMCIndicatorStops,
+    SUPERSET_SMC_REPORTING_INDICATOR_STOPS,
     defaultIndicatorStop
   );
+
   const gisidaWrapperProps = getGisidaWrapperProps(jurisdiction, structures, indicatorStops);
-  const mapCenter = getCenter({
-    features: [jurisdiction.geojson as any],
-    type: 'FeatureCollection',
-  });
-  const mapBounds = getMapBounds(jurisdiction);
-  const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
-  const gsLayers = [...jurisdictionLayers];
 
   /**
    * Create list elements from dictionary
@@ -294,7 +294,7 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
         <Col xs={9}>
           {gisidaWrapperProps ? (
             <div className="map irs-reporting-map">
-              <MemoizedGisidaLite layers={gsLayers} mapCenter={mapCenter} mapBounds={mapBounds} />
+              <GisidaWrapper {...gisidaWrapperProps} />
             </div>
           ) : (
             <div>{MAP_LOAD_ERROR}</div>
@@ -304,6 +304,26 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
           <div className="mapSidebar">
             <h5>{focusArea && focusArea.jurisdiction_name}</h5>
             <hr />
+
+            {indicatorStops && (
+              <div className="mapLegend">
+                <h6>{LEGEND_LABEL}</h6>
+                {indicatorStops.map(
+                  (stop, i) =>
+                    !HIDDEN_MAP_LEGEND_ITEMS.includes(stop[0]) && (
+                      <div className="sidebar-legend-item" key={i}>
+                        <span
+                          className="sidebar-legend-color"
+                          style={{ backgroundColor: stop[1] }}
+                        />
+                        <span className="sidebar-legend-label">{stop[0]}</span>
+                      </div>
+                    )
+                )}
+                <hr />
+              </div>
+            )}
+
             {sidebarIndicatorRows &&
               sidebarIndicatorRows.map((row, i) => (
                 <div className="responseItem" key={i}>
@@ -357,7 +377,7 @@ interface DispatchedStateProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planId = ownProps.match.params.planId || null;
   const jurisdictionId = ownProps.match.params.jurisdictionId || null;
-  const plan = getSMCPlanById(state, planId);
+  const plan = getPlanByIdSelector(state, planId);
   const jurisdiction = getJurisdictionById(state, jurisdictionId);
   const structures = getGenericStructures(
     state,
@@ -382,11 +402,11 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 const mapDispatchToProps = {
   fetchFocusAreas: fetchGenericJurisdictions,
   fetchJurisdictionsAction: fetchJurisdictions,
-  fetchPlans: fetchSMCPlans,
+  fetchPlans: genericFetchPlans,
   fetchStructures: fetchGenericStructures,
 };
 
-/** Connected IRSReportingMap component */
+/** Connected SMCReportingMap component */
 const ConnectedSMCReportingMap = connect(mapStateToProps, mapDispatchToProps)(SMCReportingMap);
 
 export default ConnectedSMCReportingMap;

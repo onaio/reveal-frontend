@@ -309,7 +309,12 @@ export const smcJurisdictionsColumns = [
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Treatment Coverage %',
-    accessor: 'treatement_coverage',
+    accessor: 'treatment_coverage',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Referral Treatment Rate %',
+    accessor: 'referral_treatment_rate',
   },
 ];
 

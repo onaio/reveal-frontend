@@ -10,22 +10,20 @@ import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 
 /** The default indicator stop */
 export const defaultIndicatorStop = [
-  ['Sprayed', TASK_GREEN],
+  ['Completed', TASK_GREEN],
   ['Not Sprayed', TASK_RED],
   ['Partially Sprayed', TASK_ORANGE],
   ['Not Visited', TASK_YELLOW],
   ['Not Eligible', BLACK],
 ];
 
-/** IRS Indicator stops
+/** SMC Indicator stops
  * These are all the indicator stops for IRS that we know about.
  */
-export const IRSIndicatorStops: { [key: string]: string[][] } = {
-  namibia2019: defaultIndicatorStop,
-  zambia2019: [
+export const SMCIndicatorStops: { [key: string]: string[][] } = {
+  nigeria2020: [
     ['Complete', TASK_GREEN],
-    ['Not Sprayed', TASK_RED],
-    ['Partially Sprayed', TASK_GREEN],
+    ['No Tasks', TASK_ORANGE],
     ['Not Visited', TASK_YELLOW],
     ['Not Eligible', BLACK],
   ],
@@ -48,63 +46,45 @@ export type IndicatorRows = IndicatorRowItem[];
 /** IRS Indicator rows
  * These are all the indicator rows for IRS that we know about.
  */
-export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
-  namibia2019: [
+export const SMCIndicatorRows: { [key: string]: IndicatorRows } = {
+  nigeria2020: [
     {
-      denominator: 'target_2019',
-      description: 'Percent of structures sprayed over targeted',
-      numerator: 'structuressprayed',
-      title: 'Target Coverage',
-      unit: 'room(s)',
-      value: 'targetcoverage',
-    },
-    {
-      denominator: 'structuresfound',
-      description: 'Percent of structures sprayed over found',
-      numerator: 'structuressprayed',
-      title: 'Found Coverage',
-      unit: 'room(s)',
-      value: 'foundcoverage',
-    },
-  ],
-  zambia2019: [
-    {
-      denominator: 'totstruct',
+      denominator: 'total_structures',
       description: 'Percentage of structures found over total',
-      numerator: 'sprayedstruct',
+      numerator: 'total_found_structures',
       title: 'Visitation Coverage Percentage',
-      value: 'visited',
+      value: 'found_coverage',
     },
     {
-      denominator: 'totstruct',
+      denominator: 'total_structures',
       description: 'Percent of structures distributed over total',
-      numerator: 'foundstruct',
+      numerator: 'total_structures_recieved_spaq',
       title: 'Distribution Coverage Percentage',
-      value: 'distributed',
+      value: 'distribution_coverage_total',
     },
     {
-      denominator: 'foundstruct',
+      denominator: 'total_found_structures',
       description: 'Percent of structures distributed over found',
-      numerator: 'sprayedstruct',
+      numerator: 'total_structures_recieved_spaq',
       title: 'Structure Distribution Effectiveness',
-      value: 'spraysuccess',
+      value: 'distribution_coverage',
     },
     {
-      denominator: 'sprayed_rooms_eligible',
+      denominator: 'eligible_children',
       description: 'Percent of eligible children treated over total eligible',
-      numerator: 'sprayed_rooms_sprayed',
+      numerator: 'treated_children',
       title: 'Individual Distribution Effectiveness',
       unit: 'children',
-      value: 'roomcov',
+      value: 'treatement_coverage',
     },
     {
-      denominator: 'foundstruct',
+      denominator: 'treated_children',
       description: 'Percent of treated at HF of referrals by CDD over total',
       listDisplay: 'notsprayed_reasons_counts',
-      numerator: 'sprayedstruct',
+      numerator: 'referred_children',
       title: 'Percentage',
       unit: 'children treated',
-      value: 'spraysuccess',
+      value: 'referral_treatment_rate',
     },
   ],
 };
@@ -142,7 +122,7 @@ export const structuresLayerBuilder = (
     paint: {
       ...circleLayerConfig.paint,
       'circle-color': structureStatusColors,
-      'circle-radius': ['interpolate', ['exponential', 2], ['zoom'], 15.75, 2.5, 20.8, 1],
+      'circle-radius': ['interpolate', ['exponential', 2], ['zoom'], 15.75, 2.5, 20.8, 50],
       'circle-stroke-color': structureStatusColors,
       'circle-stroke-opacity': 1,
     },
@@ -265,7 +245,6 @@ export const getGisidaWrapperProps = (
     polygonFeatureCollection: null,
     structures: null,
   };
-
   return gisidaWrapperProps;
 };
 
@@ -291,6 +270,7 @@ export const getJurisdictionBreadcrumbs = (
       url,
     });
   }
+
   return result;
 };
 

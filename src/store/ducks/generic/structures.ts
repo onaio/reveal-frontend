@@ -3,7 +3,6 @@ import { keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { FeatureCollection, wrapFeatureCollection } from '../../../helpers/utils';
-
 /** the reducer name */
 export const reducerName = 'GenericStructures';
 
@@ -21,6 +20,10 @@ export interface GenericStructureProperties {
   structure_sprayed: string;
   structure_type: string;
   task_id: string | null;
+  found_structures: number;
+  structures_recieved_spaq: number;
+  treated_children: number;
+  referred_children: number;
 }
 
 /** GenericStructure interface */
@@ -103,7 +106,7 @@ export const fetchGenericStructures = (
         return structure;
       }
     ),
-    'id'
+    'structure_id'
   ),
   reducerKey,
   type: GENERIC_STRUCTURES_FETCHED,
