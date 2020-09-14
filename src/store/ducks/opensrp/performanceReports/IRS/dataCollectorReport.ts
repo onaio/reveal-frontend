@@ -48,6 +48,7 @@ export const getAllIRSCollectortsByIds = getItemsByIdFactory<IRSCollectorPerform
 
 /** This interface represents the structure of data collectors filter options/params */
 export interface DataCollectorFilters {
+  data_collector?: string /** daa collector */;
   district_id?: string /** district id */;
   plan_id?: string /* plan id */;
 }
@@ -58,6 +59,14 @@ export interface DataCollectorFilters {
  * @param props - the data collector filters object
  */
 export const getPlanId = (_: Partial<Store>, props: DataCollectorFilters) => props.plan_id;
+
+/** get data collector
+ * Gets data collector from DataCollectorFilters
+ * @param state - the redux store
+ * @param props - the data collector filters object
+ */
+export const getDataCollector = (_: Partial<Store>, props: DataCollectorFilters) =>
+  props.data_collector;
 
 /** get district id
  * Gets district id from DataCollectorFilters
@@ -80,6 +89,20 @@ export const IRSCollectorsArrayBaseSelector = (state: Partial<Store>): IRSCollec
 export const getIRSCollectorArrayByPlanId = () =>
   createSelector([IRSCollectorsArrayBaseSelector, getPlanId], (collectors, planId) => {
     return planId ? collectors.filter(collector => collector.plan_id === planId) : collectors;
+  });
+
+/** getIRSCollectorArrayByName
+ * Gets an array of data collector objects filtered by data collector
+ * @param  state - the redux store
+ * @param  props - the data collector filters object
+ */
+export const getIRSCollectorArrayByName = () =>
+  createSelector([IRSCollectorsArrayBaseSelector, getDataCollector], (collectors, title) => {
+    return title
+      ? collectors.filter(collector =>
+          collector.data_collector.toLocaleLowerCase().includes(title.toLocaleLowerCase())
+        )
+      : collectors;
   });
 
 /** getIRSCollectorArrayByDistrictId
@@ -110,7 +133,12 @@ export const getIRSCollectorArrayByDistrictId = () =>
  */
 export const makeIRSCollectorArraySelector = () => {
   return createSelector(
-    [getIRSCollectorArrayByPlanId(), getIRSCollectorArrayByDistrictId()],
-    (collector1, collector2) => intersect([collector1, collector2], JSON.stringify)
+    [
+      getIRSCollectorArrayByPlanId(),
+      getIRSCollectorArrayByDistrictId(),
+      getIRSCollectorArrayByName(),
+    ],
+    (collector1, collector2, collector3) =>
+      intersect([collector1, collector2, collector3], JSON.stringify)
   );
 };

@@ -48,6 +48,7 @@ export const getAllIRSSOPDateByIds = getItemsByIdFactory<IRSSOPByDatePerformance
 /** This interface represents the structure of SOPs filter options/params */
 export interface SOPDateFilters {
   data_collector?: string /** data collector */;
+  date?: string /** date */;
   district_id?: string /** district id */;
   plan_id?: string /* plan id */;
   sop?: string /** sprayer operator */;
@@ -59,6 +60,13 @@ export interface SOPDateFilters {
  * @param props - the SOP by date filters object
  */
 export const getPlanId = (_: Partial<Store>, props: SOPDateFilters) => props.plan_id;
+
+/** get date
+ * Gets date from SOPDateFilters
+ * @param state - the redux store
+ * @param props - the SOP by date filters object
+ */
+export const getDate = (_: Partial<Store>, props: SOPDateFilters) => props.date;
 
 /** get district id
  * Gets district id from SOPDateFilters
@@ -95,6 +103,16 @@ export const IRSSOPDatesBaseSelector = (state: Partial<Store>): IRSSOPByDatePerf
 export const getIRSSOPDateArrayByPlanId = () =>
   createSelector([IRSSOPDatesBaseSelector, getPlanId], (sopByDates, planId) => {
     return planId ? sopByDates.filter(sopByDate => sopByDate.plan_id === planId) : sopByDates;
+  });
+
+/** getIRSSOPDateArrayByPlanId
+ * Gets an array of SOP objects filtered by date
+ * @param  state - the redux store
+ * @param  props - the SOP by date filters object
+ */
+export const getIRSSOPDateArrayByDate = () =>
+  createSelector([IRSSOPDatesBaseSelector, getDate], (sopByDates, date) => {
+    return date ? sopByDates.filter(sopByDate => sopByDate.event_date.includes(date)) : sopByDates;
   });
 
 /** getIRSSOPDateArrayByDistrictId
@@ -154,9 +172,13 @@ export const makeIRSSOByDatePArraySelector = (orderByDate?: boolean) => {
       getIRSSOPDateArrayByDistrictId(),
       getIRSSOPDateArrayByCollector(),
       getIRSSOPDateArrayBySOP(),
+      getIRSSOPDateArrayByDate(),
     ],
-    (sopByDate1, sopByDate2, sopByDate3, sopByDate4) => {
-      const sopByDate = intersect([sopByDate1, sopByDate2, sopByDate3, sopByDate4], JSON.stringify);
+    (sopByDate1, sopByDate2, sopByDate3, sopByDate4, sopByDate5) => {
+      const sopByDate = intersect(
+        [sopByDate1, sopByDate2, sopByDate3, sopByDate4, sopByDate5],
+        JSON.stringify
+      );
       if (orderByDate) {
         sopByDate.sort((a, b) => Date.parse(b.event_date) - Date.parse(a.event_date));
       }

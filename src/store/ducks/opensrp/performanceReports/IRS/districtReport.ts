@@ -54,6 +54,7 @@ export const getAllIRSDistrictsByIds = getItemsByIdFactory<IRSDistrictPerformanc
 /** This interface represents the structure of districts filter options/params */
 export interface DistrictFilters {
   district_id?: string /** district id */;
+  district_name?: string /** district name */;
   plan_id?: string /* plan id */;
 }
 
@@ -63,6 +64,13 @@ export interface DistrictFilters {
  * @param props - the district filters object
  */
 export const getPlanId = (_: Partial<Store>, props: DistrictFilters) => props.plan_id;
+
+/** get district name
+ * Gets district name from DistrictFilters
+ * @param state - the redux store
+ * @param props - the district filters object
+ */
+export const getDistrictName = (_: Partial<Store>, props: DistrictFilters) => props.district_name;
 
 /** get district id
  * Gets district id from DistrictFilters
@@ -85,6 +93,20 @@ export const IRSDistrictsArrayBaseSelector = (state: Partial<Store>): IRSDistric
 export const getIRSDistrictArrayByPlanId = () =>
   createSelector([IRSDistrictsArrayBaseSelector, getPlanId], (districts, planId) => {
     return planId ? districts.filter(district => district.plan_id === planId) : districts;
+  });
+
+/** getIRSDistrictArrayByPlanId
+ * Gets an array of districts objects filtered by district name
+ * @param  state - the redux store
+ * @param  props - the districts filters object
+ */
+export const getIRSDistrictArrayByDistrictName = () =>
+  createSelector([IRSDistrictsArrayBaseSelector, getDistrictName], (districts, name) => {
+    return name
+      ? districts.filter(district =>
+          district.district_name.toLocaleLowerCase().includes(name.toLocaleLowerCase())
+        )
+      : districts;
   });
 
 /** getIRSDistrictArrayByPlanId
@@ -115,7 +137,12 @@ export const getIRSDistrictArrayByDistrictId = () =>
  */
 export const makeIRSDistrictArraySelector = () => {
   return createSelector(
-    [getIRSDistrictArrayByPlanId(), getIRSDistrictArrayByDistrictId()],
-    (district1, district2) => intersect([district1, district2], JSON.stringify)
+    [
+      getIRSDistrictArrayByPlanId(),
+      getIRSDistrictArrayByDistrictId(),
+      getIRSDistrictArrayByDistrictName(),
+    ],
+    (district1, district2, district3) =>
+      intersect([district1, district2, district3], JSON.stringify)
   );
 };

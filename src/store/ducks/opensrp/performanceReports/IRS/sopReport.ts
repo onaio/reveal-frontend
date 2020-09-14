@@ -50,6 +50,7 @@ export interface SOPFilters {
   data_collector?: string /** data collector */;
   district_id?: string /** district id */;
   plan_id?: string /* plan id */;
+  sop?: string /** sprayer operator */;
 }
 
 /** get plan id
@@ -58,6 +59,13 @@ export interface SOPFilters {
  * @param props - the SOP filters object
  */
 export const getPlanId = (_: Partial<Store>, props: SOPFilters) => props.plan_id;
+
+/** get sop
+ * Gets sop from SOPFilters
+ * @param state - the redux store
+ * @param props - the SOP filters object
+ */
+export const getSOP = (_: Partial<Store>, props: SOPFilters) => props.sop;
 
 /** get district id
  * Gets district id from SOPFilters
@@ -87,6 +95,18 @@ export const IRSSOPsArrayBaseSelector = (state: Partial<Store>): IRSSOPPerforman
 export const getIRSSOPArrayByPlanId = () =>
   createSelector([IRSSOPsArrayBaseSelector, getPlanId], (sops, planId) => {
     return planId ? sops.filter(sop => sop.plan_id === planId) : sops;
+  });
+
+/** getIRSSOPArrayBySOP
+ * Gets an array of SOP objects filtered by sop
+ * @param  state - the redux store
+ * @param  props - the SOP filters object
+ */
+export const getIRSSOPArrayBySOP = () =>
+  createSelector([IRSSOPsArrayBaseSelector, getSOP], (sops, title) => {
+    return title
+      ? sops.filter(sop => sop.sop.toLocaleLowerCase().includes(title.toLocaleLowerCase()))
+      : sops;
   });
 
 /** getIRSSOPArrayByDistrictId
@@ -126,7 +146,12 @@ export const getIRSSOPArrayByCollector = () =>
  */
 export const makeIRSSOPArraySelector = () => {
   return createSelector(
-    [getIRSSOPArrayByPlanId(), getIRSSOPArrayByDistrictId(), getIRSSOPArrayByCollector()],
-    (sop1, sop2, sop3) => intersect([sop1, sop2, sop3], JSON.stringify)
+    [
+      getIRSSOPArrayByPlanId(),
+      getIRSSOPArrayByDistrictId(),
+      getIRSSOPArrayByCollector(),
+      getIRSSOPArrayBySOP(),
+    ],
+    (sop1, sop2, sop3, sop4) => intersect([sop1, sop2, sop3, sop4], JSON.stringify)
   );
 };
