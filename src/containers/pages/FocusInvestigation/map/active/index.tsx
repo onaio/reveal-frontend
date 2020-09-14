@@ -46,7 +46,7 @@ import {
   POLYGON,
   RACD_REGISTER_FAMILY_ID,
 } from '../../../../../constants';
-import { PLAN_INTERVENTION_TYPE } from '../../../../../constants';
+import { supersetFIPlansParamFilters } from '../../../../../helpers/dataLoading/plans';
 import { displayError } from '../../../../../helpers/errors';
 import { getGoalReport } from '../../../../../helpers/indicators';
 import {
@@ -173,9 +173,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
        * Fetch plans incase the plan is not available e.g when page is refreshed
        */
       const { supersetService, fetchPlansActionCreator } = props;
-      const supersetParams = superset.getFormData(2000, [
-        { comparator: InterventionType.FI, operator: '==', subject: PLAN_INTERVENTION_TYPE },
-      ]);
+      const supersetParams = superset.getFormData(2000, supersetFIPlansParamFilters);
 
       /** TODO:// huge data set fetching to tasks slice */
 

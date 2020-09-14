@@ -58,7 +58,10 @@ import {
   ROUTINE,
   ROUTINE_QUERY_PARAM,
 } from '../../../../constants';
-import { loadPlansByUserFilter } from '../../../../helpers/dataLoading/plans';
+import {
+  loadPlansByUserFilter,
+  supersetFIPlansParamFilters,
+} from '../../../../helpers/dataLoading/plans';
 import { displayError } from '../../../../helpers/errors';
 import { renderClassificationRow } from '../../../../helpers/indicators';
 import '../../../../helpers/tables.css';
@@ -146,9 +149,7 @@ class ActiveFocusInvestigation extends React.Component<
 
   public componentDidMount() {
     const { userName, fetchPlansActionCreator, supersetService } = this.props;
-    const supersetParams = superset.getFormData(2000, [
-      { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
-    ]);
+    const supersetParams = superset.getFormData(2000, supersetFIPlansParamFilters);
     supersetService(SUPERSET_PLANS_SLICE, supersetParams)
       .then((result: Plan[]) => {
         if (result) {

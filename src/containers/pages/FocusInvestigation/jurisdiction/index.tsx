@@ -57,12 +57,12 @@ import {
   TablePropsType,
 } from '../../../../helpers/utils';
 
+import { supersetFIPlansParamFilters } from '../../../../helpers/dataLoading/plans';
 import supersetFetch from '../../../../services/superset';
 import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 import plansReducer, {
   fetchPlans,
   FetchPlansAction,
-  InterventionType,
   makePlansArraySelector,
   Plan,
   reducerName as plansReducerName,
@@ -137,7 +137,7 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
   // this gets FI plans for the current jurisdiction
   const supersetParams = superset.getFormData(2000, [
     { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
-    { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
+    ...supersetFIPlansParamFilters,
   ]);
 
   const jurisdictionCallback = (val: Jurisdiction) => {

@@ -758,7 +758,6 @@ export function getGoalUnitFromActionCode(actionCode: PlanActionCodesType): Goal
   }
   return GoalUnit.UNKNOWN;
 }
-
 /**
  * Check if a plan type should be visible
  * @param {InterventionType} planType - plan type
