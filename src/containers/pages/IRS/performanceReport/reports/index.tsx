@@ -1,6 +1,5 @@
 import { DrillDownColumn, DrillDownTable } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import superset from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
 import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
@@ -17,7 +16,6 @@ import {
   renderInFilterFactory,
 } from '../../../../../components/Table/DrillDownFilters/utils';
 import { NoDataComponent } from '../../../../../components/Table/NoDataComponent';
-import { SUPERSET_MAX_RECORDS } from '../../../../../configs/env';
 import { HOME, IRS_PERFORMANCE_REPORTING_TITLE } from '../../../../../configs/lang';
 import {
   HOME_URL,
@@ -49,7 +47,7 @@ import SOPReducer, {
   makeIRSSOPArraySelector,
   reducerName as SOPReducerName,
 } from '../../../../../store/ducks/opensrp/performanceReports/IRS/sopReport';
-import { getColumnsToUse, IRSPerformanceTableCell } from './helpers';
+import { getColumnsToUse, IRSPerformanceTableCell, supersetFilters } from './helpers';
 import './index.css';
 
 /** register the reducers */
@@ -85,7 +83,8 @@ const IRSPerfomenceReport = (
   props: IRSPerfomenceReportProps & RouteComponentProps<RouteParams>
 ) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const { planId, jurisdictionId, dataCollector, sop } = props.match.params;
+  const { params } = props.match;
+  const { planId, jurisdictionId, dataCollector, sop } = params;
 
   const {
     pageTitle,
@@ -119,39 +118,25 @@ const IRSPerfomenceReport = (
     setLoading(tableData.length < 1);
     try {
       if (planId) {
-        const fetchPlansParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-          { comparator: planId, operator: '==', subject: 'plan_id' },
-        ]);
+        const fetchPlansParams = supersetFilters(params, planId);
         await service('601', fetchPlansParams).then(result => {
           fetchDistricts(result);
         });
       }
       if (planId && jurisdictionId) {
-        const fetchPlansParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-          { comparator: planId, operator: '==', subject: 'plan_id' },
-          { comparator: jurisdictionId, operator: '==', subject: 'district_id' },
-        ]);
+        const fetchPlansParams = supersetFilters(params, jurisdictionId);
         await service('602', fetchPlansParams).then(result => {
           fetchDataCollectors(result);
         });
       }
       if (planId && jurisdictionId && dataCollector) {
-        const fetchPlansParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-          { comparator: planId, operator: '==', subject: 'plan_id' },
-          { comparator: jurisdictionId, operator: '==', subject: 'district_id' },
-          { comparator: dataCollector, operator: '==', subject: 'data_collector' },
-        ]);
+        const fetchPlansParams = supersetFilters(params, dataCollector);
         await service('604', fetchPlansParams).then(result => {
           fetchSOPs(result);
         });
       }
       if (planId && jurisdictionId && dataCollector && sop) {
-        const fetchPlansParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-          { comparator: planId, operator: '==', subject: 'plan_id' },
-          { comparator: jurisdictionId, operator: '==', subject: 'district_id' },
-          { comparator: dataCollector, operator: '==', subject: 'data_collector' },
-          { comparator: dataCollector, operator: '==', subject: 'data_collector' },
-        ]);
+        const fetchPlansParams = supersetFilters(params, sop);
         await service('609', fetchPlansParams).then(result => {
           fetchSopByDate(result);
         });
@@ -306,11 +291,11 @@ const mapStateToProps = (
     currentUrl = `${currentUrl}/${sop}`;
     currentLabel = sop;
     tableData = SOPByDateArraySelector(state, {
-      // data_collector: dataCollector,
+      data_collector: dataCollector,
       date: searchedDate,
-      // district_id: jurisdictionId,
-      // plan_id: planId,
-      // sop,
+      district_id: jurisdictionId,
+      plan_id: planId,
+      sop,
     });
   }
 

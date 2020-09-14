@@ -1,44 +1,60 @@
 import { DrillDownColumn, DropDownCellProps } from '@onaio/drill-down-table';
+import superset, {
+  SupersetAdhocFilterOption,
+  SupersetSQLFilterOption,
+} from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Cell } from 'react-table';
+import { SUPERSET_MAX_RECORDS } from '../../../../../configs/env';
 import { RouteParams } from '../../../../../helpers/utils';
 
+// number of days worked  column
 const daysWorkedColumn = {
   Header: 'Number Days Worked',
   accessor: 'days_worked',
 };
 
+// structures found column
 const foundColumn = {
   Header: 'Found',
   accessor: 'found',
+  maxWidth: 105,
 };
 
+// structures sprayed column
 const sprayedColumn = {
   Header: 'Sprayed',
   accessor: 'sprayed',
+  maxWidth: 105,
 };
 
+// avarage structured sprayed columns
 const averageStructuresColumn = {
+  Cell: (cell: Cell) => <div>{Math.round(cell.value)}</div>,
   Header: 'Average Structure Per Day',
   accessor: 'avg_sprayed',
+  maxWidth: 105,
 };
 
+// start time, end time and time time duration in the field
 const averageTimeColumns = [
   {
-    Header: 'Average start time',
+    Header: 'Average Start Time',
     accessor: 'start_time',
   },
   {
-    Header: 'Average end date',
+    Header: 'Average End Time',
     accessor: 'end_time',
   },
   {
-    Header: 'Duration in field',
+    Header: 'Duration in Field',
     accessor: 'field_duration',
   },
 ];
 
+/** District tables columns */
 const districtColumns = [
   {
     Header: 'District',
@@ -53,6 +69,7 @@ const districtColumns = [
   ...averageTimeColumns,
 ];
 
+/** data colecctors table columns */
 const dataCollectorsColumns = [
   {
     Header: 'Data Collector',
@@ -64,9 +81,10 @@ const dataCollectorsColumns = [
   ...averageTimeColumns,
 ];
 
+/** sprayer operator columns */
 const sopColumns = [
   {
-    Header: 'Spary Operator',
+    Header: 'Spray Operator',
     accessor: 'sop',
   },
   daysWorkedColumn,
@@ -78,14 +96,23 @@ const sopColumns = [
       {
         Header: 'Not Sprayed',
         accessor: 'not_sprayed',
+        maxWidth: 105,
       },
     ],
+    maxWidth: 345,
   },
   averageStructuresColumn,
   ...averageTimeColumns,
 ];
 
+/** sprayer operator dates columns */
 const sopByDateColumns = [
+  {
+    Cell: (cell: Cell) => <span>{cell.row.index + 1}</span>,
+    Header: 'Day',
+    accessor: 'index',
+    id: 'day',
+  },
   {
     Header: 'Date',
     accessor: 'event_date',
@@ -101,14 +128,17 @@ const sopByDateColumns = [
           {
             Header: 'Refused',
             accessor: 'refused',
+            maxWidth: 105,
           },
           {
             Header: 'Other',
             accessor: 'other_reason',
+            maxWidth: 105,
           },
           {
             Header: 'Total',
             accessor: 'not_sprayed',
+            maxWidth: 105,
           },
         ],
       },
@@ -159,4 +189,30 @@ export const IRSPerformanceTableCell: React.ElementType<LinkedCellProps> = (
   const original: Dictionary = cell.row.original;
   const url = urlPath && urlParamField ? `${urlPath}/${original[urlParamField]}` : '';
   return urlParamField && url ? <Link to={url}>{cellValue}</Link> : <span>{cellValue}</span>;
+};
+
+enum SupersetFilterSubjects {
+  dataCollector = 'data_collector',
+  jurisdictionId = 'district_id',
+  planId = 'plan_id',
+  sop = 'sop',
+}
+
+// Array<SupersetSQLFilterOption | SupersetAdhocFilterOption>
+export const supersetFilters = (params: RouteParams, currentParam: string) => {
+  const filters: Array<SupersetSQLFilterOption | SupersetAdhocFilterOption> = [];
+  const entries = Object.entries(params);
+  for (const [key, value] of entries) {
+    if (key && value) {
+      filters.push({
+        comparator: value,
+        operator: '==',
+        subject: (SupersetFilterSubjects as any)[key],
+      });
+    }
+    if (value === currentParam) {
+      break;
+    }
+  }
+  return superset.getFormData(SUPERSET_MAX_RECORDS, filters);
 };

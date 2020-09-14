@@ -145,7 +145,7 @@ export const getIRSSOPDateArrayByCollector = () =>
  * @param  props - the SOP by date filters object
  */
 export const getIRSSOPDateArrayBySOP = () =>
-  createSelector([IRSSOPDatesBaseSelector, getCollectorId], (sopByDates, sop) => {
+  createSelector([IRSSOPDatesBaseSelector, getSOPId], (sopByDates, sop) => {
     return sop ? sopByDates.filter(sopByDate => sopByDate.sop === sop) : sopByDates;
   });
 
