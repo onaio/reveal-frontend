@@ -6,6 +6,7 @@ import {
   OPENSRP_GET_ALL_PLANS,
   OPENSRP_PLANS,
   OPENSRP_PLANS_BY_USER_FILTER,
+  PLAN_INTERVENTION_TYPE,
 } from '../../constants';
 import { OpenSRPService } from '../../services/opensrp';
 import store from '../../store';
