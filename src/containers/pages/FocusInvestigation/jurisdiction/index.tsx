@@ -13,7 +13,7 @@ import HeaderBreadcrumbs, {
 import Loading from '../../../../components/page/Loading';
 import NullDataTable from '../../../../components/Table/NullDataTable';
 import TableHeader from '../../../../components/Table/TableHeaders';
-import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
+import { SUPERSET_MAX_RECORDS, SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
   AN_ERROR_OCCURRED,
   CANTON,
@@ -135,7 +135,7 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
   }
 
   // this gets FI plans for the current jurisdiction
-  const supersetParams = superset.getFormData(2000, [
+  const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
     { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
     ...supersetFIPlansParamFilters,
   ]);

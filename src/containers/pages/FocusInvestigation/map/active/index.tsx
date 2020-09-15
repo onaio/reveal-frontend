@@ -16,7 +16,7 @@ import HeaderBreadcrumb, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 import SelectComponent from '../../../../../components/SelectPlan/';
-import { SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
+import { SUPERSET_MAX_RECORDS, SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
 import {
   AN_ERROR_OCCURRED,
   FOCUS_INVESTIGATION,
@@ -173,7 +173,10 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
        * Fetch plans incase the plan is not available e.g when page is refreshed
        */
       const { supersetService, fetchPlansActionCreator } = props;
-      const supersetParams = superset.getFormData(2000, supersetFIPlansParamFilters);
+      const supersetParams = superset.getFormData(
+        SUPERSET_MAX_RECORDS,
+        supersetFIPlansParamFilters
+      );
 
       /** TODO:// huge data set fetching to tasks slice */
 

@@ -272,12 +272,12 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         },
       ],
 
-      row_limit: 2000,
+      row_limit: 3000,
     };
 
     const supersetCallList = [
       [
-        2000,
+        3000,
         [
           {
             comparator: [InterventionType.FI, InterventionType.DynamicFI],

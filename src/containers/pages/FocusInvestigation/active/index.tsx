@@ -19,7 +19,7 @@ import HeaderBreadCrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
+import { SUPERSET_MAX_RECORDS, SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
   ADD_FOCUS_INVESTIGATION,
   CASE_CLASSIFICATION_HEADER,
@@ -149,7 +149,7 @@ class ActiveFocusInvestigation extends React.Component<
 
   public componentDidMount() {
     const { userName, fetchPlansActionCreator, supersetService } = this.props;
-    const supersetParams = superset.getFormData(2000, supersetFIPlansParamFilters);
+    const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, supersetFIPlansParamFilters);
     supersetService(SUPERSET_PLANS_SLICE, supersetParams)
       .then((result: Plan[]) => {
         if (result) {
