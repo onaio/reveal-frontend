@@ -265,16 +265,9 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       adhoc_filters: [
         {
           clause: 'WHERE',
-          comparator: 'FI',
+          comparator: [InterventionType.FI, InterventionType.DynamicFI],
           expressionType: 'SIMPLE',
-          operator: '==',
-          subject: 'plan_intervention_type',
-        },
-        {
-          clause: 'WHERE',
-          comparator: 'Dynamic-FI',
-          expressionType: 'SIMPLE',
-          operator: '==',
+          operator: 'in',
           subject: 'plan_intervention_type',
         },
       ],
@@ -287,13 +280,8 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         2000,
         [
           {
-            comparator: InterventionType.FI,
-            operator: '==',
-            subject: 'plan_intervention_type',
-          },
-          {
-            comparator: InterventionType.DynamicFI,
-            operator: '==',
+            comparator: [InterventionType.FI, InterventionType.DynamicFI],
+            operator: 'in',
             subject: 'plan_intervention_type',
           },
         ],
