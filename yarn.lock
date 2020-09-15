@@ -2428,8 +2428,10 @@
     react-table "^7.0.6"
     reactstrap "^8.4.1"
 
-"@onaio/drill-down-table@file:../js-tools/packages/DrillDownTable":
-  version "1.0.3"
+"@onaio/drill-down-table@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@onaio/drill-down-table/-/drill-down-table-1.0.4.tgz#68a0262dc370b282369d90709cdeb5e94b1012b3"
+  integrity sha512-xidUjsYaPB/hddkuKooOpcrGHkGPfJ4XXEsnJEzARZz41mZ+Iy7S+NOIiwn4DlSJ5M34ZAYbppKF3PsCl8qe9A==
   dependencies:
     react-table "^7.0.6"
     reactstrap "^8.4.1"
