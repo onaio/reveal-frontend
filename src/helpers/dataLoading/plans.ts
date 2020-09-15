@@ -98,10 +98,12 @@ export async function loadOpenSRPPlan(
 
 /** Added to superset requests to specify only FI and Dynamic-Fi plans are required. */
 export const supersetFIPlansParamFilters = [
-  ...(isPlanTypeEnabled(InterventionType.FI)
-    ? [{ comparator: InterventionType.FI, operator: '==', subject: PLAN_INTERVENTION_TYPE }]
-    : []),
-  ...(isPlanTypeEnabled(InterventionType.DynamicFI)
-    ? [{ comparator: InterventionType.DynamicFI, operator: '==', subject: PLAN_INTERVENTION_TYPE }]
-    : []),
+  {
+    comparator: [
+      ...(isPlanTypeEnabled(InterventionType.FI) ? [InterventionType.FI] : []),
+      ...(isPlanTypeEnabled(InterventionType.DynamicFI) ? [InterventionType.DynamicFI] : []),
+    ],
+    operator: 'in',
+    subject: PLAN_INTERVENTION_TYPE,
+  },
 ] as SupersetAdhocFilterOption[];
