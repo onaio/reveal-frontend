@@ -29,11 +29,13 @@ import supersetFetch from '../../../../../services/superset';
 import { getPlanByIdSelector } from '../../../../../store/ducks/generic/plans';
 import DataCollectorreducer, {
   FetchIRSDataCollectors,
+  IRSCollectorPerformance,
   makeIRSCollectorArraySelector,
   reducerName as CollectorReducerName,
 } from '../../../../../store/ducks/opensrp/performanceReports/IRS/dataCollectorReport';
 import DistrictReducer, {
   FetchIRSDistricts,
+  IRSDistrictPerformance,
   makeIRSDistrictArraySelector,
   reducerName as DistrictReducerName,
 } from '../../../../../store/ducks/opensrp/performanceReports/IRS/districtReport';
@@ -44,10 +46,17 @@ import SOPByDateReducer, {
 } from '../../../../../store/ducks/opensrp/performanceReports/IRS/sopByDateReport';
 import SOPReducer, {
   FetchIRSSOPs,
+  IRSSOPPerformance,
   makeIRSSOPArraySelector,
   reducerName as SOPReducerName,
 } from '../../../../../store/ducks/opensrp/performanceReports/IRS/sopReport';
-import { getColumnsToUse, IRSPerformanceTableCell, supersetFilters } from './helpers';
+import {
+  getColumnsToUse,
+  IRSPerformanceTableCell,
+  LinkerFields,
+  RouterParamFields,
+  supersetFilters,
+} from './helpers';
 import './index.css';
 
 /** register the reducers */
@@ -68,6 +77,8 @@ export interface IRSPerfomenceReportProps {
   cellComponent: React.ElementType;
   columns: Array<DrillDownColumn<Dictionary<{}>>>;
   currentPage: Page;
+  dataCollectorsData: IRSCollectorPerformance[];
+  districtsData: IRSDistrictPerformance[];
   fetchDataCollectors: typeof FetchIRSDataCollectors;
   fetchDistricts: typeof FetchIRSDistricts;
   fetchSOPs: typeof FetchIRSSOPs;
@@ -75,6 +86,7 @@ export interface IRSPerfomenceReportProps {
   linkerField: string;
   pageTitle: string;
   service: typeof supersetFetch;
+  sopData: IRSSOPPerformance[];
   tableData: Array<Dictionary<any>>;
   urlParamField: string | null;
 }
@@ -100,6 +112,9 @@ const IRSPerfomenceReport = (
     cellComponent,
     urlParamField,
     linkerField,
+    dataCollectorsData,
+    districtsData,
+    sopData,
   } = props;
 
   const breadcrumbProps = {
@@ -117,25 +132,25 @@ const IRSPerfomenceReport = (
   async function loadData() {
     setLoading(tableData.length < 1);
     try {
-      if (planId) {
+      if (planId && !districtsData.length) {
         const fetchPlansParams = supersetFilters(params, planId);
         await service('601', fetchPlansParams).then(result => {
           fetchDistricts(result);
         });
       }
-      if (planId && jurisdictionId) {
+      if (planId && jurisdictionId && !dataCollectorsData.length) {
         const fetchPlansParams = supersetFilters(params, jurisdictionId);
         await service('602', fetchPlansParams).then(result => {
           fetchDataCollectors(result);
         });
       }
-      if (planId && jurisdictionId && dataCollector) {
+      if (planId && jurisdictionId && dataCollector && !sopData.length) {
         const fetchPlansParams = supersetFilters(params, dataCollector);
         await service('604', fetchPlansParams).then(result => {
           fetchSOPs(result);
         });
       }
-      if (planId && jurisdictionId && dataCollector && sop) {
+      if (planId && jurisdictionId && dataCollector && sop && !tableData.length) {
         const fetchPlansParams = supersetFilters(params, sop);
         await service('609', fetchPlansParams).then(result => {
           fetchSopByDate(result);
@@ -208,6 +223,8 @@ const defaultProps: IRSPerfomenceReportProps = {
     label: IRS_PERFORMANCE_REPORTING_TITLE,
     url: PERFORMANCE_REPORT_IRS_PLAN_URL,
   },
+  dataCollectorsData: [],
+  districtsData: [],
   fetchDataCollectors: FetchIRSDataCollectors,
   fetchDistricts: FetchIRSDistricts,
   fetchSOPs: FetchIRSSOPs,
@@ -215,6 +232,7 @@ const defaultProps: IRSPerfomenceReportProps = {
   linkerField: 'district_name',
   pageTitle: IRS_PERFORMANCE_REPORTING_TITLE,
   service: supersetFetch,
+  sopData: [],
   tableData: [],
   urlParamField: null,
 };
@@ -228,8 +246,11 @@ interface DispatchedStateProps {
   breadCrumbs: Page[];
   columns: Array<DrillDownColumn<Dictionary<{}>>>;
   currentPage: Page;
+  dataCollectorsData: IRSCollectorPerformance[];
+  districtsData: IRSDistrictPerformance[];
   linkerField: string;
   pageTitle: string;
+  sopData: IRSSOPPerformance[];
   tableData: Array<Dictionary<any>>;
   urlParamField: string | null;
 }
@@ -246,37 +267,42 @@ const mapStateToProps = (
 
   let tableData: Array<Dictionary<any>> = [];
   const plan = getPlanByIdSelector(state, planId || '');
-  const districts = IRSDistrictsArraySelector(state, {
+  const districtsData = IRSDistrictsArraySelector(state, {
     district_name: searchedTitle,
     plan_id: planId,
   });
   const breadCrumbs: Page[] = [defaultProps.currentPage];
 
-  let linkerField = 'district_name';
-  let urlParamField: string | null = 'district_id';
+  let dataCollectorsData: IRSCollectorPerformance[] = [];
+  let sopData: IRSSOPPerformance[] = [];
+
+  let linkerField = LinkerFields.districtName;
+  let urlParamField: string | null = RouterParamFields.jurisdictionId;
   let currentLabel = (plan && plan.plan_title) || 'plan';
   let currentUrl = `${PERFORMANCE_REPORT_IRS_PLAN_URL}/${planId}`;
 
   const columns = getColumnsToUse(params);
-  tableData = districts;
+  tableData = districtsData;
   if (jurisdictionId) {
-    urlParamField = linkerField = 'data_collector';
+    urlParamField = RouterParamFields.dataCollector;
+    linkerField = LinkerFields.dataCollector;
     breadCrumbs.push({ label: currentLabel, url: currentUrl });
-    tableData = dataCollectorArraySelector(state, {
+    dataCollectorsData = tableData = dataCollectorArraySelector(state, {
       data_collector: searchedTitle,
       district_id: jurisdictionId,
       plan_id: planId,
     });
-    currentLabel = districts.length ? districts[0].district_name : 'district';
+    currentLabel = districtsData.length ? districtsData[0].district_name : 'district';
     currentUrl = `${currentUrl}/${jurisdictionId}`;
   }
 
   if (jurisdictionId && dataCollector) {
-    urlParamField = linkerField = 'sop';
+    urlParamField = RouterParamFields.sop;
+    linkerField = LinkerFields.sop;
     breadCrumbs.push({ label: currentLabel, url: currentUrl });
     currentUrl = `${currentUrl}/${dataCollector}`;
     currentLabel = dataCollector;
-    tableData = SOPArraySelector(state, {
+    sopData = tableData = SOPArraySelector(state, {
       data_collector: dataCollector,
       district_id: jurisdictionId,
       plan_id: planId,
@@ -286,7 +312,7 @@ const mapStateToProps = (
 
   if (jurisdictionId && dataCollector && sop) {
     urlParamField = null;
-    linkerField = 'event_date';
+    linkerField = LinkerFields.eventDate;
     breadCrumbs.push({ label: currentLabel, url: currentUrl });
     currentUrl = `${currentUrl}/${sop}`;
     currentLabel = sop;
@@ -309,8 +335,11 @@ const mapStateToProps = (
     breadCrumbs,
     columns,
     currentPage,
+    dataCollectorsData,
+    districtsData,
     linkerField,
     pageTitle,
+    sopData,
     tableData,
     urlParamField,
   };

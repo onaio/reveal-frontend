@@ -112,6 +112,7 @@ const sopByDateColumns = [
     Header: 'Day',
     accessor: 'index',
     id: 'day',
+    maxWidth: 80,
   },
   {
     Header: 'Date',
@@ -133,12 +134,12 @@ const sopByDateColumns = [
           {
             Header: 'Other',
             accessor: 'other_reason',
-            maxWidth: 105,
+            maxWidth: 80,
           },
           {
             Header: 'Total',
             accessor: 'not_sprayed',
-            maxWidth: 105,
+            maxWidth: 80,
           },
         ],
       },
@@ -180,7 +181,7 @@ export interface LinkedCellProps extends DropDownCellProps {
 }
 
 /** Component that will be rendered in drop-down table cells showing a link
- * that moves you to the next hierarchical level.
+ * that moves you to the next performance report level.
  */
 export const IRSPerformanceTableCell: React.ElementType<LinkedCellProps> = (
   props: LinkedCellProps
@@ -191,14 +192,19 @@ export const IRSPerformanceTableCell: React.ElementType<LinkedCellProps> = (
   return urlParamField && url ? <Link to={url}>{cellValue}</Link> : <span>{cellValue}</span>;
 };
 
-enum SupersetFilterSubjects {
+/** defines fields with the router param data */
+export enum RouterParamFields {
   dataCollector = 'data_collector',
   jurisdictionId = 'district_id',
   planId = 'plan_id',
   sop = 'sop',
 }
 
-// Array<SupersetSQLFilterOption | SupersetAdhocFilterOption>
+/**
+ * Generates superset filters
+ * @param {RouteParams} params
+ * @param {string} currentParam last filter
+ */
 export const supersetFilters = (params: RouteParams, currentParam: string) => {
   const filters: Array<SupersetSQLFilterOption | SupersetAdhocFilterOption> = [];
   const entries = Object.entries(params);
@@ -207,7 +213,7 @@ export const supersetFilters = (params: RouteParams, currentParam: string) => {
       filters.push({
         comparator: value,
         operator: '==',
-        subject: (SupersetFilterSubjects as any)[key],
+        subject: (RouterParamFields as any)[key],
       });
     }
     if (value === currentParam) {
@@ -216,3 +222,11 @@ export const supersetFilters = (params: RouteParams, currentParam: string) => {
   }
   return superset.getFormData(SUPERSET_MAX_RECORDS, filters);
 };
+
+/** defines table cell linker field */
+export enum LinkerFields {
+  dataCollector = 'data_collector',
+  districtName = 'district_name',
+  eventDate = 'event_date',
+  sop = 'sop',
+}
