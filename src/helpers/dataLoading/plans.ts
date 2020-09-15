@@ -1,11 +1,22 @@
+import { SupersetAdhocFilterOption } from '@onaio/superset-connector';
 import { ActionCreator, AnyAction } from 'redux';
+import { isPlanTypeEnabled } from '../../components/forms/PlanForm/helpers';
 import { USER_HAS_NO_PLAN_ASSIGNMENTS } from '../../configs/lang';
-import { OPENSRP_PLANS, OPENSRP_PLANS_BY_USER_FILTER } from '../../constants';
+import {
+  OPENSRP_PLANS,
+  OPENSRP_PLANS_BY_USER_FILTER,
+  PLAN_INTERVENTION_TYPE,
+} from '../../constants';
 import { OpenSRPService } from '../../services/opensrp';
 import store from '../../store';
 import { AddPlanDefinitionAction } from '../../store/ducks/opensrp/PlanDefinition';
 import { fetchPlansByUser, FetchPlansByUserAction } from '../../store/ducks/opensrp/planIdsByUser';
-import { FetchPlanRecordsAction, PlanPayload, PlanRecordResponse } from '../../store/ducks/plans';
+import {
+  FetchPlanRecordsAction,
+  InterventionType,
+  PlanPayload,
+  PlanRecordResponse,
+} from '../../store/ducks/plans';
 import { displayError } from '../errors';
 import { extractPlanRecordResponseFromPlanPayload } from '../utils';
 
@@ -84,3 +95,15 @@ export async function loadOpenSRPPlan(
       displayError(err);
     });
 }
+
+/** Added to superset requests to specify only FI and Dynamic-Fi plans are required. */
+export const supersetFIPlansParamFilters = [
+  {
+    comparator: [
+      ...(isPlanTypeEnabled(InterventionType.FI) ? [InterventionType.FI] : []),
+      ...(isPlanTypeEnabled(InterventionType.DynamicFI) ? [InterventionType.DynamicFI] : []),
+    ],
+    operator: 'in',
+    subject: PLAN_INTERVENTION_TYPE,
+  },
+] as SupersetAdhocFilterOption[];

@@ -40,11 +40,17 @@ reducerRegistry.register(reducerName, reducer);
 
 library.add(faExternalLinkSquareAlt);
 const history = createBrowserHistory();
-jest.mock('../../../../../configs/env');
-jest.mock('../../../../../helpers/dataLoading/plans', () => {
+jest.mock('../../../../../configs/env', () => {
+  const orig = require.requireActual('../../../../../configs/__mocks__/env');
   return {
-    loadPlansByUserFilter: async () => [],
+    ...orig,
+    ENABLED_PLAN_TYPES: ['FI', 'IRS', 'MDA', 'MDA-Point', 'Dynamic-FI'],
   };
+});
+
+jest.mock('../../../../../helpers/dataLoading/plans', () => {
+  const original = require.requireActual('../../../../../helpers/dataLoading/plans');
+  return { ...original, loadPlansByUserFilter: async () => [] };
 });
 
 describe('containers/pages/ActiveFocusInvestigation', () => {
@@ -226,6 +232,11 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   });
 
   it('calls superset with the correct params', async () => {
+    const envModule = require('../../../../../configs/env');
+    envModule.ENABLED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
+      ','
+    );
+    // export const ENABLED_PLAN_TYPES = ['FI', 'IRS', 'MDA', 'MDA-Point', 'Dynamic-FI'];
     const actualFormData = superset.getFormData;
     const getFormDataMock: any = jest.fn();
     getFormDataMock.mockImplementation((...args: any) => {
@@ -254,21 +265,29 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       adhoc_filters: [
         {
           clause: 'WHERE',
-          comparator: 'FI',
+          comparator: [InterventionType.FI, InterventionType.DynamicFI],
           expressionType: 'SIMPLE',
-          operator: '==',
+          operator: 'in',
           subject: 'plan_intervention_type',
         },
       ],
-      row_limit: 2000,
+
+      row_limit: 3000,
     };
 
     const supersetCallList = [
       [
-        2000,
-        [{ comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' }],
+        3000,
+        [
+          {
+            comparator: [InterventionType.FI, InterventionType.DynamicFI],
+            operator: 'in',
+            subject: 'plan_intervention_type',
+          },
+        ],
       ],
     ];
+
     expect((superset.getFormData as any).mock.calls).toEqual(supersetCallList);
     expect(supersetMock).toHaveBeenCalledWith(0, supersetParams);
     wrapper.unmount();
