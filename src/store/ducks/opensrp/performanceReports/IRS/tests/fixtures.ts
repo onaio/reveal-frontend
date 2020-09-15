@@ -113,3 +113,38 @@ export const sopReport = [
     avg_refused: 0,
   },
 ];
+
+export const sopByDateReport = [
+  {
+    id: '77cfcbb0-d572-51e3-a12d-7f02f05b4929',
+    plan_id: '1b959ca5-4c58-5416-b728-03756a0c57e8',
+    district_id: '7d1297d2-a7e7-4896-a391-31d14cab9d32',
+    data_collector: 'NL6:Lillian Mulubwa',
+    sop: 'ZM-SOP-2019-21017:Chomba Gladys',
+    event_date: '2020-08-25',
+    found: 1,
+    sprayed: 1,
+    refused: 0,
+    other_reason: 0,
+    not_sprayed: 0,
+    start_time: '13:55',
+    end_time: '14:01',
+    field_duration: '00:05',
+  },
+  {
+    id: 'mas3fcbb0-d572-51e3-a12d-7f02f05b4929',
+    plan_id: '5640fcc2-772a-5e06-9e00-491e3aa544f5',
+    district_id: '7d1297d2-a7e7-4896-a391-31d14cab9d32',
+    data_collector: 'NL11:Romeo Chimese',
+    sop: 'ZM-SOP-2019-21021:Davies Illunga',
+    event_date: '2020-08-26',
+    found: 1,
+    sprayed: 1,
+    refused: 0,
+    other_reason: 0,
+    not_sprayed: 0,
+    start_time: '13:55',
+    end_time: '14:01',
+    field_duration: '00:05',
+  },
+];

@@ -22,7 +22,7 @@ reducerRegistry.register(reducerName, reducer);
 // reselect selector
 const IRSSOPArraySelector = makeIRSSOPArraySelector();
 
-describe('reducers/opensrp/performanceReport/districtReport', () => {
+describe('reducers/opensrp/performanceReport/sopReport', () => {
   let flushThunks;
 
   beforeEach(() => {

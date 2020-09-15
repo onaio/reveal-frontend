@@ -21,7 +21,7 @@ reducerRegistry.register(reducerName, reducer);
 // reselect selector
 const IRSDataCollectorArraySelector = makeIRSCollectorArraySelector();
 
-describe('reducers/opensrp/performanceReport/districtReport', () => {
+describe('reducers/opensrp/performanceReport/dataCollectorReport', () => {
   let flushThunks;
 
   beforeEach(() => {
