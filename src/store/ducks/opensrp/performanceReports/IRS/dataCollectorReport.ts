@@ -48,7 +48,7 @@ export const getAllIRSCollectortsByIds = getItemsByIdFactory<IRSCollectorPerform
 
 /** This interface represents the structure of data collectors filter options/params */
 export interface DataCollectorFilters {
-  data_collector?: string /** daa collector */;
+  data_collector?: string /** data collector */;
   district_id?: string /** district id */;
   plan_id?: string /* plan id */;
 }
