@@ -1,5 +1,7 @@
 import { getColumnsToUse, IRSPerfomanceColumns, supersetFilters } from '../helpers';
 
+jest.mock('../../../../../../configs/env');
+
 describe('IRS/performanceReport/reports/helpers', () => {
   it('getColumnsToUse works correctly', () => {
     expect(getColumnsToUse({ planId: '12345' })).toEqual(IRSPerfomanceColumns.districtColumns);
@@ -30,7 +32,7 @@ describe('IRS/performanceReport/reports/helpers', () => {
           subject: 'plan_id',
         },
       ],
-      row_limit: 15000,
+      row_limit: 3000,
     });
     expect(supersetFilters({ planId: '12345' }, '12345')).toEqual({
       adhoc_filters: [
@@ -42,7 +44,7 @@ describe('IRS/performanceReport/reports/helpers', () => {
           subject: 'plan_id',
         },
       ],
-      row_limit: 15000,
+      row_limit: 3000,
     });
     expect(supersetFilters({ jurisdictionId: '', planId: '12345', sop: '' }, '12345')).toEqual({
       adhoc_filters: [
@@ -54,7 +56,7 @@ describe('IRS/performanceReport/reports/helpers', () => {
           subject: 'plan_id',
         },
       ],
-      row_limit: 15000,
+      row_limit: 3000,
     });
     expect(
       supersetFilters({ jurisdictionId: 'qwertdg', planId: '12345', sop: 'NL2:sop' }, 'NL2:sop')
@@ -82,7 +84,7 @@ describe('IRS/performanceReport/reports/helpers', () => {
           subject: 'sop',
         },
       ],
-      row_limit: 15000,
+      row_limit: 3000,
     });
   });
 });
