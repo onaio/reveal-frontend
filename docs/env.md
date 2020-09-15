@@ -39,3 +39,23 @@ Below is a list of currently supported environment variables:
 - Enable or disable planning view home page link.
 - **Not required**
 - Default value: `false`.
+
+7. **REACT_APP_SUPERSET_IRS_DISTRICT_PERFORMANCE_REPORT_SLICE**
+
+- IRS Performance Reporting districts Superset slice id
+- **Required**
+
+8. **REACT_APP_SUPERSET_IRS_DATA_COLLECTORS_PERFORMANCE_REPORT_SLICE**
+
+- IRS Performance Reporting data collectors Superset slice id
+- **Required**
+
+9. **REACT_APP_SUPERSET_IRS_SOP_PERFORMANCE_REPORT_SLICE**
+
+- IRS Performance Reporting spray operators Superset slice id
+- **Required**
+
+10. **REACT_APP_SUPERSET_IRS_SOP_BY_DATE_PERFORMANCE_REPORT_SLICE**
+
+- IRS Performance Reporting spray event date Superset slice id
+- **Required**

@@ -16,6 +16,12 @@ import {
   renderInFilterFactory,
 } from '../../../../../components/Table/DrillDownFilters/utils';
 import { NoDataComponent } from '../../../../../components/Table/NoDataComponent';
+import {
+  SUPERSET_IRS_DATA_COLLECTORS_PERFORMANCE_REPORT_SLICE,
+  SUPERSET_IRS_DISTRICT_PERFORMANCE_REPORT_SLICE,
+  SUPERSET_IRS_SOP_BY_DATE_PERFORMANCE_REPORT_SLICE,
+  SUPERSET_IRS_SOP_PERFORMANCE_REPORT_SLICE,
+} from '../../../../../configs/env';
 import { HOME, IRS_PERFORMANCE_REPORTING_TITLE } from '../../../../../configs/lang';
 import {
   HOME_URL,
@@ -134,27 +140,33 @@ const IRSPerfomenceReport = (
     try {
       if (planId && !districtsData.length) {
         const fetchPlansParams = supersetFilters(params, planId);
-        await service('601', fetchPlansParams).then(result => {
-          fetchDistricts(result);
-        });
+        await service(SUPERSET_IRS_DISTRICT_PERFORMANCE_REPORT_SLICE, fetchPlansParams).then(
+          result => {
+            fetchDistricts(result);
+          }
+        );
       }
       if (planId && jurisdictionId && !dataCollectorsData.length) {
         const fetchPlansParams = supersetFilters(params, jurisdictionId);
-        await service('602', fetchPlansParams).then(result => {
-          fetchDataCollectors(result);
-        });
+        await service(SUPERSET_IRS_DATA_COLLECTORS_PERFORMANCE_REPORT_SLICE, fetchPlansParams).then(
+          result => {
+            fetchDataCollectors(result);
+          }
+        );
       }
       if (planId && jurisdictionId && dataCollector && !sopData.length) {
         const fetchPlansParams = supersetFilters(params, dataCollector);
-        await service('604', fetchPlansParams).then(result => {
+        await service(SUPERSET_IRS_SOP_PERFORMANCE_REPORT_SLICE, fetchPlansParams).then(result => {
           fetchSOPs(result);
         });
       }
       if (planId && jurisdictionId && dataCollector && sop && !tableData.length) {
         const fetchPlansParams = supersetFilters(params, sop);
-        await service('609', fetchPlansParams).then(result => {
-          fetchSopByDate(result);
-        });
+        await service(SUPERSET_IRS_SOP_BY_DATE_PERFORMANCE_REPORT_SLICE, fetchPlansParams).then(
+          result => {
+            fetchSopByDate(result);
+          }
+        );
       }
     } catch (e) {
       // todo - handle error https://github.com/onaio/reveal-frontend/issues/300
