@@ -49,7 +49,7 @@ const averageTimeColumns = [
     accessor: 'end_time',
   },
   {
-    Header: 'Duration in Field',
+    Header: 'Duration in Field (hours:minutes)',
     accessor: 'field_duration',
   },
 ];
