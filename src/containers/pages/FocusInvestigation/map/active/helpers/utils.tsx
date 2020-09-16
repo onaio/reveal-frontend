@@ -438,10 +438,14 @@ export const getMapBounds = (jurisdiction: Jurisdiction | null) => {
  * ref: https://github.com/mapbox/mapbox-gl-js/issues/1970#issuecomment-297465871
  */
 export const setMapViewPortZoomFactory = (mapBounds: BoundingBox) => (map: Map) => {
+  const zoomAnimationDuration = 1000;
+  const minZoom = 0;
+  const maxZoom = 20;
+  const mapBoxTileSize = 512;
   const mapEl = map.getCanvas().getBoundingClientRect();
   const mapDim: [number, number] = [mapEl.height, mapEl.width];
-  const newBounds = viewport(mapBounds, mapDim, 0, 20, 512);
-  map.zoomTo(newBounds.zoom, { duration: 1000 });
+  const newBounds = viewport(mapBounds, mapDim, minZoom, maxZoom, mapBoxTileSize);
+  map.zoomTo(newBounds.zoom, { duration: zoomAnimationDuration });
 };
 
 /**
