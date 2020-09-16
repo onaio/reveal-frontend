@@ -96,6 +96,13 @@ describe('containers/pages/NewPlan', () => {
     wrapper.update();
     expect(wrapper.find('JurisdictionDetails').length).toEqual(0);
 
+    // change to Dynamic-FI
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'Dynamic-FI' } });
+    wrapper.update();
+    expect(wrapper.find('JurisdictionDetails').length).toEqual(0);
+
     wrapper.unmount();
   });
 
