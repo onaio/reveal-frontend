@@ -212,6 +212,30 @@ export const namibiaIRSJurisdictions = [
   },
 ];
 
+export const nullJurisdiction = [
+  {
+    foundcoverage: 0,
+    householdsnotaccessible: 0,
+    id: '0001ca08-c9b7-5ea5-acc5-dc9b2fce5d24',
+    jurisdiction_depth: 3,
+    jurisdiction_id: null,
+    jurisdiction_name: 'KASOTE',
+    jurisdiction_name_path: null,
+    jurisdiction_parent_id: '3f017d7d-1ac0-4d6f-92d0-33bdcbeff5c4',
+    jurisdiction_path: null,
+    lockedfirst: 0,
+    lockedmopup: 0,
+    plan_id: 'da451786-a760-4947-870c-7c9c0a818574',
+    refusalsfirst: 0,
+    refusalsmopup: 0,
+    sprayeffectiveness: 0,
+    structuresfound: 0,
+    structuressprayed: 0,
+    targetcoverage: 0,
+    jurisdiction_target: 0,
+  },
+];
+
 export const MDAPointPlans = [
   {
     jurisdiction_root_parent_ids: ['2942'],
