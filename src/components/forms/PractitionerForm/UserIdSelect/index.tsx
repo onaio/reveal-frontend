@@ -25,6 +25,10 @@ export interface Props {
   showPractitioners: boolean /** show users that are already mapped to a practitioner */;
   className: string;
   ReactSelectDefaultValue: Option;
+  /** if we are only interested in the userName -> affects how a single option
+   *    in the dropdown looks like i.e if the value will be the userId or the userName;
+   */
+  userNameAsValue: boolean;
 }
 
 /** default props for UserIdSelect component */
@@ -33,6 +37,7 @@ export const defaultProps = {
   className: '',
   serviceClass: OpenSRPService,
   showPractitioners: false,
+  userNameAsValue: false,
 };
 
 /** interface for each select dropdown option */
@@ -72,7 +77,7 @@ export type OptionTypes = Option | null | undefined;
 
 /** The UserIdSelect component */
 export const UserIdSelect = (props: Props) => {
-  const { onChangeHandler } = props;
+  const { onChangeHandler, userNameAsValue } = props;
   const [users, setUsers] = useState<User[]>([]);
   const [countFetchError, setCountFetchError] = useState<string>('');
   const [selectIsLoading, setSelectIsLoading] = useState<boolean>(true);
@@ -169,7 +174,7 @@ export const UserIdSelect = (props: Props) => {
     return users
       .map((user: User) => ({
         label: user.username,
-        value: user.id,
+        value: userNameAsValue ? user.username : user.id,
       }))
       .sort((userA, userB) => {
         const userALabel = userA.label;

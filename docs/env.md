@@ -59,3 +59,9 @@ Below is a list of currently supported environment variables:
 
 - IRS Performance Reporting spray event date Superset slice id
 - **Required**
+
+11. **REACT_APP_ENABLE_DEFAULT_PLAN_USER_FILTER**
+
+- _optional_; _(boolean)_
+- default: `false`
+- whether to filter plans by the logged in user right of the bat by default

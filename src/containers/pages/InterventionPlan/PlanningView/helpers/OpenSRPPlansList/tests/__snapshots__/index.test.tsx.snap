@@ -5,3 +5,5 @@ exports[`src/../PlanningView/OpenSRPPlansList Search works correctly: find singl
 exports[`src/../PlanningView/OpenSRPPlansList Search works correctly: find single row for entry with Khlong  tr index 1 1`] = `"A1 - Khlong Nam Sai - IRS 012019-05-24draft"`;
 
 exports[`src/../PlanningView/OpenSRPPlansList does not show loader for no data: find No Data Found text tr index 0 1`] = `"NameDate CreatedStatus"`;
+
+exports[`src/../PlanningView/OpenSRPPlansList errorMessage shown when there userName has no plans assigned 1`] = `"Row Height Row HeightdefaultshorttallCustomize ColumnsCustomize ColumnsSelect columns to be displayedNameDate CreatedStatusRows to display10203050Previouspage    of 0Next NameDate CreatedStatusUser does not have any plans assignedRows to display10203050Previouspage    of 0Next "`;

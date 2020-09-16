@@ -13,7 +13,7 @@ import HeaderBreadcrumbs, {
 import Loading from '../../../../components/page/Loading';
 import NullDataTable from '../../../../components/Table/NullDataTable';
 import TableHeader from '../../../../components/Table/TableHeaders';
-import { SUPERSET_PLANS_SLICE } from '../../../../configs/env';
+import { SUPERSET_MAX_RECORDS, SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
   AN_ERROR_OCCURRED,
   CANTON,
@@ -57,12 +57,12 @@ import {
   TablePropsType,
 } from '../../../../helpers/utils';
 
+import { supersetFIPlansParamFilters } from '../../../../helpers/dataLoading/plans';
 import supersetFetch from '../../../../services/superset';
 import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 import plansReducer, {
   fetchPlans,
   FetchPlansAction,
-  InterventionType,
   makePlansArraySelector,
   Plan,
   reducerName as plansReducerName,
@@ -135,9 +135,9 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
   }
 
   // this gets FI plans for the current jurisdiction
-  const supersetParams = superset.getFormData(2000, [
+  const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
     { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
-    { comparator: InterventionType.FI, operator: '==', subject: 'plan_intervention_type' },
+    ...supersetFIPlansParamFilters,
   ]);
 
   const jurisdictionCallback = (val: Jurisdiction) => {
