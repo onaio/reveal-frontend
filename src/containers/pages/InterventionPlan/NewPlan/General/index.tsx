@@ -6,7 +6,10 @@ import PlanForm, {
   defaultInitialValues,
   PlanFormProps,
 } from '../../../../../components/forms/PlanForm';
-import { planActivitiesMap } from '../../../../../components/forms/PlanForm/helpers';
+import {
+  isFIOrDynamicFI,
+  planActivitiesMap,
+} from '../../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb, {
   Page,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -126,7 +129,7 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
         </Col>
         {props.showJurisdictionDetails && (
           <Col md={4}>
-            {formValues.interventionType === InterventionType.FI &&
+            {isFIOrDynamicFI(formValues.interventionType) &&
               formValues.jurisdictions[0].id !== '' && (
                 <JurisdictionDetails planFormJurisdiction={formValues.jurisdictions[0]} />
               )}
