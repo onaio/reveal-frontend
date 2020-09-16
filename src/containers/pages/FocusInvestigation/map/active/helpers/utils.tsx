@@ -48,6 +48,7 @@ import {
 } from '../../../../../../store/ducks/structures';
 import { fetchTasks, FetchTasksAction, TaskGeoJSON } from '../../../../../../store/ducks/tasks';
 
+import { BoundingBox, viewport } from '@mapbox/geo-viewport';
 import GeojsonExtent from '@mapbox/geojson-extent';
 import { Dictionary } from '@onaio/utils';
 import {
@@ -318,7 +319,8 @@ export const buildGsLiteSymbolLayers = (
     symbolLayout: {
       ...symbolLayerTemplate.symbolLayout,
       ...{ [REACT_MAPBOX_GL_ICON_IMAGE]: iconGoal },
-      [REACT_MAPBOX_GL_ICON_SIZE]: currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+      'icon-allow-overlap': true,
+      [REACT_MAPBOX_GL_ICON_SIZE]: ['interpolate', ['linear'], ['zoom'], 1, 0.002, 22, 0.044],
     },
   };
 
@@ -430,6 +432,16 @@ export const getMapBounds = (jurisdiction: Jurisdiction | null) => {
   }
   mapBounds = mapBounds === null ? undefined : mapBounds;
   return mapBounds;
+};
+
+/** dynamically get the bounds and zoom for the maps viewport.
+ * ref: https://github.com/mapbox/mapbox-gl-js/issues/1970#issuecomment-297465871
+ */
+export const setMapViewPortZoomFactory = (mapBounds: BoundingBox) => (map: Map) => {
+  const mapEl = map.getCanvas().getBoundingClientRect();
+  const mapDim: [number, number] = [mapEl.height, mapEl.width];
+  const newBounds = viewport(mapBounds, mapDim, 0, 20, 512);
+  map.zoomTo(newBounds.zoom, { duration: 1000 });
 };
 
 /**
