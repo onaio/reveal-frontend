@@ -45,6 +45,75 @@ Array [
 ]
 `;
 
+exports[`src/components/locationIdToNames renders jurisdiction names as links for Dynamic-FI 1`] = `
+<li
+  key="0"
+>
+  <Link
+    to="/focus-investigation/view/f45b9380-c970-4dd1-8533-9e95ab12f128"
+  >
+    <LinkAnchor
+      href="/focus-investigation/view/f45b9380-c970-4dd1-8533-9e95ab12f128"
+      navigate={[Function]}
+    >
+      <a
+        href="/focus-investigation/view/f45b9380-c970-4dd1-8533-9e95ab12f128"
+        onClick={[Function]}
+      >
+        Namibia
+      </a>
+    </LinkAnchor>
+  </Link>
+  <h2
+    className="mock-child"
+  >
+    Mock child render function
+  </h2>
+</li>
+`;
+
+exports[`src/components/locationIdToNames renders jurisdiction names as links for Dynamic-FI 2`] = `
+<li
+  key="1"
+>
+  <Link
+    to="/focus-investigation/view/3951"
+  >
+    <LinkAnchor
+      href="/focus-investigation/view/3951"
+      navigate={[Function]}
+    >
+      <a
+        href="/focus-investigation/view/3951"
+        onClick={[Function]}
+      >
+        Akros_1
+      </a>
+    </LinkAnchor>
+  </Link>
+  <h2
+    className="mock-child"
+  >
+    Mock child render function
+  </h2>
+</li>
+`;
+
+exports[`src/components/locationIdToNames renders jurisdiction names as links for Dynamic-FI 3`] = `
+Array [
+  <h2
+    className="mock-child"
+  >
+    Mock child render function
+  </h2>,
+  <h2
+    className="mock-child"
+  >
+    Mock child render function
+  </h2>,
+]
+`;
+
 exports[`src/components/locationIdToNames renders jurisdiction names as links for FI 1`] = `
 <li
   key="0"
