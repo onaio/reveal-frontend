@@ -171,4 +171,14 @@ describe('reducers/IRS/GenericJurisdiction', () => {
       fixtures.namibiaIRSJurisdictions[1],
     ]);
   });
+
+  it('does not Fetches IRS jurisdictions with null jurisdiction keys', () => {
+    // action creators dispatch
+    const jurs = [...fixtures.namibiaIRSJurisdictions, ...fixtures.nullJurisdiction];
+    store.dispatch(fetchGenericJurisdictions('na-jurisdictions', jurs as NamibiaJurisdiction[]));
+    // null jurisdictions are not stored
+    expect(getGenericJurisdictionsById(store.getState(), 'na-jurisdictions')).toEqual(
+      keyBy(fixtures.namibiaIRSJurisdictions, 'id')
+    );
+  });
 });
