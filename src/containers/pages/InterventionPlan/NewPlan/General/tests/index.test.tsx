@@ -101,7 +101,17 @@ describe('containers/pages/NewPlan', () => {
       .find('select[name="interventionType"]')
       .simulate('change', { target: { name: 'interventionType', value: 'Dynamic-FI' } });
     wrapper.update();
-    expect(wrapper.find('JurisdictionDetails').length).toEqual(0);
+
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+
+    expect(wrapper.find('JurisdictionDetails').length).toEqual(1);
 
     wrapper.unmount();
   });
