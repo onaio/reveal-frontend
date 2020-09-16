@@ -118,13 +118,7 @@ export const fetchGenericJurisdictions = (
 ): FetchGenericJurisdictionsAction => ({
   objects: keyBy(
     objList
-      .filter(
-        jur =>
-          jur.jurisdiction_depth &&
-          jur.jurisdiction_id &&
-          jur.jurisdiction_name_path &&
-          jur.jurisdiction_path
-      )
+      .filter(jur => jur.jurisdiction_id && jur.jurisdiction_name_path && jur.jurisdiction_path)
       .map(
         (obj: GenericJurisdiction): GenericJurisdiction => {
           /** ensure geojson is parsed */
