@@ -10,9 +10,10 @@ import PlanForm, {
   propsForUpdatingPlans,
 } from '../../../../components/forms/PlanForm';
 import { getPlanFormValues } from '../../../../components/forms/PlanForm/helpers';
+import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
+import { COULD_NOT_LOAD_PLAN, HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { HOME_URL, NEW_PLAN_URL, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
@@ -65,18 +66,21 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   }
 
   useEffect(() => {
+    if (!planIdentifier) {
+      return;
+    }
     loadData().catch(err => displayError(err));
   }, []);
 
-  if (!planIdentifier) {
-    return null; /** we should make this into a better error page */
-  }
-
-  if (loading === true) {
+  if (loading) {
     return <Loading />;
   }
 
-  const pageTitle: string = plan ? `${UPDATE_PLAN}: ${plan.title}` : UPDATE_PLAN;
+  if (!plan) {
+    return <ErrorPage errorMessage={COULD_NOT_LOAD_PLAN} />;
+  }
+
+  const pageTitle: string = `${UPDATE_PLAN}: ${plan.title}`;
 
   const breadcrumbProps = {
     currentPage: {

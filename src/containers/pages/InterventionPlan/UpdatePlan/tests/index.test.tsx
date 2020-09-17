@@ -10,6 +10,8 @@ import {
   generatePlanDefinition,
   getPlanFormValues,
 } from '../../../../../components/forms/PlanForm/helpers';
+import { fiReasonTestPlan } from '../../../../../components/forms/PlanForm/tests/fixtures';
+import { COULD_NOT_LOAD_PLAN } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { PLAN_UPDATE_URL } from '../../../../../constants';
 import store from '../../../../../store';
@@ -286,5 +288,49 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     expect(store.getState().PlanDefinition).toEqual({
       planDefinitionsById: {},
     });
+  });
+
+  it('shows error when plan was not found', async () => {
+    fetch.mockResponseOnce(JSON.stringify([]));
+    const mock: any = jest.fn();
+    const thisPlansId = fiReasonTestPlan.identifier;
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: thisPlansId },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${thisPlansId}`,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedUpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://reveal-stage.smartregister.org/opensrp/rest/plans/311d4728-8e88-575d-8189-e88d9a4ae3b6',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+    ]);
+    // shows error message
+    expect(wrapper.text().includes(COULD_NOT_LOAD_PLAN)).toBeTruthy();
   });
 });
