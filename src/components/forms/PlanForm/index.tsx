@@ -200,7 +200,7 @@ const PlanForm = (props: PlanFormProps) => {
   const editMode: boolean = initialValues.identifier !== '';
 
   let filteredFIReasons: FIReasonType[] = [...FIReasons];
-  if (ENABLED_FI_REASONS.length) {
+  if (ENABLED_FI_REASONS.length && !editMode) {
     filteredFIReasons = FIReasons.filter((reason: FIReasonType) =>
       ENABLED_FI_REASONS.includes(reason)
     );
@@ -536,33 +536,21 @@ const PlanForm = (props: PlanFormProps) => {
             {isFIOrDynamicFI(values.interventionType) && (
               <FormGroup>
                 <Label for="fiReason">{FOCUS_INVESTIGATION_STATUS_REASON}</Label>
-                {editMode ? (
-                  <Field
-                    required={isFIOrDynamicFI(values.interventionType)}
-                    type="input"
-                    readOnly={true}
-                    name="fiReason"
-                    id="fiReason"
-                    disabled={disabledFields.includes('fiReason')}
-                    className={errors.fiReason ? 'form-control is-invalid' : 'form-control'}
-                  />
-                ) : (
-                  <Field
-                    required={isFIOrDynamicFI(values.interventionType)}
-                    component="select"
-                    name="fiReason"
-                    id="fiReason"
-                    disabled={disabledFields.includes('fiReason')}
-                    className={errors.fiReason ? 'form-control is-invalid' : 'form-control'}
-                  >
-                    <option>----</option>
-                    {filteredFIReasons.map(e => (
-                      <option key={e} value={e}>
-                        {FIReasonsDisplay[e]}
-                      </option>
-                    ))}
-                  </Field>
-                )}
+                <Field
+                  required={isFIOrDynamicFI(values.interventionType)}
+                  component="select"
+                  name="fiReason"
+                  id="fiReason"
+                  disabled={disabledFields.includes('fiReason')}
+                  className={errors.fiReason ? 'form-control is-invalid' : 'form-control'}
+                >
+                  <option>----</option>
+                  {filteredFIReasons.map(e => (
+                    <option key={e} value={e}>
+                      {FIReasonsDisplay[e]}
+                    </option>
+                  ))}
+                </Field>
                 <ErrorMessage
                   name="fiReason"
                   component="small"
