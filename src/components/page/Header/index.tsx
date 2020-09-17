@@ -132,6 +132,13 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
       ENABLE_CONFIG_FORM ||
       ENABLE_JURISDICTION_METADATA_UPLOAD ||
       ENABLE_POPULATION_SERVER_SETTINGS;
+
+    const enableMonitorDropdown =
+      ENABLE_IRS ||
+      ENABLE_FI ||
+      ENABLE_DYNAMIC_MDA ||
+      ENABLE_MDA_POINT ||
+      ENABLE_IRS_PERFORMANCE_REPORT;
     return (
       <div>
         <Navbar light={true} expand="md">
@@ -187,7 +194,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                 </NavItem>
               )}
 
-              {(ENABLE_IRS || ENABLE_FI || ENABLE_DYNAMIC_MDA || ENABLE_MDA_POINT) && (
+              {enableMonitorDropdown && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle
                     nav={true}

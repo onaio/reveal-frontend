@@ -4,7 +4,7 @@ import { FlushThunks } from 'redux-testkit';
 import store from '../../../../../index';
 import reducer, {
   FetchIRSDataCollectors,
-  getAllIRSCollectortsByIds,
+  getAllIRSCollectorsByIds,
   getIRSCollectorArrayByDistrictId,
   getIRSCollectorArrayByName,
   getIRSCollectorArrayByPlanId,
@@ -31,7 +31,7 @@ describe('reducers/opensrp/performanceReport/dataCollectorReport', () => {
   });
 
   it('should have initial state', () => {
-    expect(getAllIRSCollectortsByIds(store.getState())).toEqual({});
+    expect(getAllIRSCollectorsByIds(store.getState())).toEqual({});
     expect(IRSCollectorsArrayBaseSelector(store.getState())).toEqual([]);
     expect(IRSDataCollectorArraySelector(store.getState(), {})).toEqual([]);
   });
@@ -43,7 +43,7 @@ describe('reducers/opensrp/performanceReport/dataCollectorReport', () => {
       (district: IRSCollectorPerformance) => district.id
     );
 
-    expect(getAllIRSCollectortsByIds(store.getState())).toEqual(allDistricts);
+    expect(getAllIRSCollectorsByIds(store.getState())).toEqual(allDistricts);
 
     expect(IRSCollectorsArrayBaseSelector(store.getState())).toEqual(fixtures.dataCollectorsReport);
 

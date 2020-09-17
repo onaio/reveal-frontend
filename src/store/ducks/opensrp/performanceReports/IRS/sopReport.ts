@@ -36,9 +36,9 @@ const reducer = reducerFactory<IRSSOPPerformance>(reducerName);
 export default reducer;
 
 // actions
-/** actionCreator returns action to to add Item records to store */
+/** actionCreator returns action to add Item records to store */
 export const FetchIRSSOPs = fetchActionCreatorFactory<IRSSOPPerformance>(reducerName, 'id');
-/** actionCreator returns action to to remove Item records to store */
+/** actionCreator returns action to remove Item records to store */
 export const removeIRSSOPs = removeActionCreatorFactory(reducerName);
 
 // selectors
@@ -135,6 +135,7 @@ export const getIRSSOPArrayByCollector = () =>
  *    - plan id
  *    - district id
  *    - data collector
+ *    - sop
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *

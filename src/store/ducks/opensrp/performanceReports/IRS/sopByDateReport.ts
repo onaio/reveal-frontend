@@ -33,12 +33,12 @@ const reducer = reducerFactory<IRSSOPByDatePerformance>(reducerName);
 export default reducer;
 
 // actions
-/** actionCreator returns action to to add Item records to store */
+/** actionCreator returns action to add Item records to store */
 export const FetchIRSSOPByDate = fetchActionCreatorFactory<IRSSOPByDatePerformance>(
   reducerName,
   'id'
 );
-/** actionCreator returns action to to remove Item records to store */
+/** actionCreator returns action to remove Item records to store */
 export const removeIRSSOPByDate = removeActionCreatorFactory(reducerName);
 
 // selectors
@@ -156,6 +156,7 @@ export const getIRSSOPDateArrayBySOP = () =>
  *    - district id
  *    - data collector
  *    - sprayer operator
+ *    - date
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *
@@ -165,7 +166,7 @@ export const getIRSSOPDateArrayBySOP = () =>
  * @param  state - the redux store
  * @param {SOPDateFilters} props - the data collector filters object
  */
-export const makeIRSSOByDatePArraySelector = (orderByDate?: boolean) => {
+export const makeIRSSODateArraySelector = (orderByDate?: boolean) => {
   return createSelector(
     [
       getIRSSOPDateArrayByPlanId(),

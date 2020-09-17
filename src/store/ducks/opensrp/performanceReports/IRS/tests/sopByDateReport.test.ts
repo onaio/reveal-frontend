@@ -12,7 +12,7 @@ import reducer, {
   getIRSSOPDateArrayBySOP,
   IRSSOPByDatePerformance,
   IRSSOPDatesBaseSelector,
-  makeIRSSOByDatePArraySelector,
+  makeIRSSODateArraySelector,
   reducerName,
   removeIRSSOPByDate,
 } from '../sopByDateReport';
@@ -21,7 +21,7 @@ import * as fixtures from './fixtures';
 reducerRegistry.register(reducerName, reducer);
 
 // reselect selector
-const IRSSOPByDateArraySelector = makeIRSSOByDatePArraySelector();
+const IRSSOPByDateArraySelector = makeIRSSODateArraySelector();
 
 describe('reducers/opensrp/performanceReport/sopByDateReport', () => {
   let flushThunks;

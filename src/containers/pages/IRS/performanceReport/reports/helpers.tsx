@@ -10,27 +10,27 @@ import { Cell } from 'react-table';
 import { SUPERSET_MAX_RECORDS } from '../../../../../configs/env';
 import { RouteParams } from '../../../../../helpers/utils';
 
-// number of days worked  column
+/** number of days worked  column */
 const daysWorkedColumn = {
   Header: 'Number Days Worked',
   accessor: 'days_worked',
 };
 
-// structures found column
+/** structures found column */
 const foundColumn = {
   Header: 'Found',
   accessor: 'found',
   maxWidth: 105,
 };
 
-// structures sprayed column
+/** structures sprayed column */
 const sprayedColumn = {
   Header: 'Sprayed',
   accessor: 'sprayed',
   maxWidth: 105,
 };
 
-// avarage structured sprayed columns
+/** avarage structured sprayed columns */
 const averageStructuresColumn = {
   Cell: (cell: Cell) => <div>{Math.round(cell.value)}</div>,
   Header: 'Average Structure Per Day',
@@ -38,7 +38,7 @@ const averageStructuresColumn = {
   maxWidth: 105,
 };
 
-// start time, end time and time time duration in the field
+/** start time, end time and time time duration in the field */
 const averageTimeColumns = [
   {
     Header: 'Average Start Time',

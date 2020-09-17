@@ -39,12 +39,12 @@ const reducer = reducerFactory<IRSDistrictPerformance>(reducerName);
 export default reducer;
 
 // actions
-/** actionCreator returns action to to add Item records to store */
+/** actionCreator returns action to add Item records to store */
 export const FetchIRSDistricts = fetchActionCreatorFactory<IRSDistrictPerformance>(
   reducerName,
   'id'
 );
-/** actionCreator returns action to to remove Item records to store */
+/** actionCreator returns action to remove Item records to store */
 export const removeIRSDistricts = removeActionCreatorFactory(reducerName);
 
 // selectors
@@ -126,6 +126,7 @@ export const getIRSDistrictArrayByDistrictId = () =>
  * of the following:
  *    - plan id
  *    - district id
+ *    - district_name
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *

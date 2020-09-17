@@ -34,17 +34,17 @@ const reducer = reducerFactory<IRSCollectorPerformance>(reducerName);
 export default reducer;
 
 // actions
-/** actionCreator returns action to to add Item records to store */
+/** actionCreator returns action to add Item records to store */
 export const FetchIRSDataCollectors = fetchActionCreatorFactory<IRSCollectorPerformance>(
   reducerName,
   'id'
 );
-/** actionCreator returns action to to remove Item records to store */
+/** actionCreator returns action to remove Item records to store */
 export const removeIRSDataCollectors = removeActionCreatorFactory(reducerName);
 
 // selectors
 /** get all data collectors by ids */
-export const getAllIRSCollectortsByIds = getItemsByIdFactory<IRSCollectorPerformance>(reducerName);
+export const getAllIRSCollectorsByIds = getItemsByIdFactory<IRSCollectorPerformance>(reducerName);
 
 /** This interface represents the structure of data collectors filter options/params */
 export interface DataCollectorFilters {
@@ -79,7 +79,7 @@ export const getDistrictId = (_: Partial<Store>, props: DataCollectorFilters) =>
  * @param state - the redux store
  */
 export const IRSCollectorsArrayBaseSelector = (state: Partial<Store>): IRSCollectorPerformance[] =>
-  values(getAllIRSCollectortsByIds(state) || {});
+  values(getAllIRSCollectorsByIds(state) || {});
 
 /** getIRSCollectorArrayByPlanId
  * Gets an array of data collector objects filtered by plan id
@@ -122,6 +122,7 @@ export const getIRSCollectorArrayByDistrictId = () =>
  * of the following:
  *    - plan id
  *    - district id
+ *    - data_collector
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *

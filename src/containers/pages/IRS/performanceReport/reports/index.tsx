@@ -47,7 +47,7 @@ import DistrictReducer, {
 } from '../../../../../store/ducks/opensrp/performanceReports/IRS/districtReport';
 import SOPByDateReducer, {
   FetchIRSSOPByDate,
-  makeIRSSOByDatePArraySelector,
+  makeIRSSODateArraySelector,
   reducerName as SOPByDateReducerName,
 } from '../../../../../store/ducks/opensrp/performanceReports/IRS/sopByDateReport';
 import SOPReducer, {
@@ -74,7 +74,7 @@ reducerRegistry.register(SOPByDateReducerName, SOPByDateReducer);
 const IRSDistrictsArraySelector = makeIRSDistrictArraySelector();
 const dataCollectorArraySelector = makeIRSCollectorArraySelector();
 const SOPArraySelector = makeIRSSOPArraySelector();
-const SOPByDateArraySelector = makeIRSSOByDatePArraySelector(true);
+const SOPByDateArraySelector = makeIRSSODateArraySelector(true);
 
 /** generic IRSPerfomenceReport props */
 export interface IRSPerfomenceReportProps {
@@ -96,6 +96,7 @@ export interface IRSPerfomenceReportProps {
   urlParamField: string | null;
 }
 
+/** IRSPerfomenceReport displays districts, data collectors, sop and evevent dates IRS performance reports  */
 const IRSPerfomenceReport = (
   props: IRSPerfomenceReportProps & RouteComponentProps<RouteParams>
 ) => {

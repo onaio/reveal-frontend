@@ -8,7 +8,7 @@ import { Router } from 'react-router';
 import { IRSPlanPerfomenceReport } from '../';
 import { PERFORMANCE_REPORT_IRS_PLAN_URL } from '../../../../../../constants';
 import store from '../../../../../../store';
-import { genericFetchPlans, GenericPlan } from '../../../../../../store/ducks/generic/plans';
+import { GenericPlan } from '../../../../../../store/ducks/generic/plans';
 import * as fixtures from '../../../../../../store/ducks/generic/tests/fixtures';
 
 jest.mock('../../../../../../configs/env');
@@ -105,8 +105,9 @@ describe('IRS performance report', () => {
   });
 
   it('renders plans correctly when connected to store', async () => {
-    store.dispatch(genericFetchPlans(fixtures.plans as GenericPlan[]));
-
+    const service = jest
+      .fn()
+      .mockImplementationOnce(() => Promise.resolve(fixtures.plans as GenericPlan[]));
     const props = {
       fetchPlans: jest.fn(),
       history,
@@ -122,7 +123,7 @@ describe('IRS performance report', () => {
         path: `${PERFORMANCE_REPORT_IRS_PLAN_URL}`,
         url: `${PERFORMANCE_REPORT_IRS_PLAN_URL}`,
       },
-      service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
+      service,
     };
     const wrapper = mount(
       <Provider store={store}>
