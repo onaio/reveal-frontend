@@ -7,6 +7,7 @@ import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import PlanForm, {
   LocationChildRenderProp,
+  PlanFormProps,
   propsForUpdatingPlans,
 } from '../../../../components/forms/PlanForm';
 import { getPlanFormValues } from '../../../../components/forms/PlanForm/helpers';
@@ -99,10 +100,12 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     ],
   };
 
+  const initialValues = getPlanFormValues(plan);
+
   const planStatus = (plan && plan.status) || '';
-  const planFormProps = {
+  const planFormProps: Partial<PlanFormProps> = {
     ...propsForUpdatingPlans(planStatus),
-    ...(plan && { initialValues: getPlanFormValues(plan) }),
+    initialValues,
     /** a renderProp prop. this tells the planForm; I will give you a component that knows of the plan you are displaying,
      * the component will get jurisdictions associated with that plan and render them as links, what you(planForm)
      * will do, is provide a child prop(a renderProp) that tells the mentioned component what other stuff you would wish
