@@ -5,11 +5,18 @@ import { Link } from 'react-router-dom';
 import { Cell } from 'react-table';
 import Col from 'reactstrap/lib/Col';
 import Row from 'reactstrap/lib/Row';
+import { format } from 'util';
 import LinkAsButton from '../../../../../components/LinkAsButton';
 import HeaderBreadcrumbs, {
   BreadCrumbProps,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { CREATE_NEW_PLAN, DATE_CREATED, NAME, STATUS_HEADER } from '../../../../../configs/lang';
+import {
+  CREATE_NEW_PLAN,
+  DATE_CREATED,
+  NAME,
+  PLANS_USER_FILTER_NOTIFICATION,
+  STATUS_HEADER,
+} from '../../../../../configs/lang';
 import { planStatusDisplay } from '../../../../../configs/settings';
 import { ASSIGN_JURISDICTIONS_URL } from '../../../../../constants';
 import { PlanRecord } from '../../../../../store/ducks/plans';
@@ -56,12 +63,13 @@ interface Options {
   pageTitle: string;
   breadCrumbProps: BreadCrumbProps;
   newPlanUrl: string;
+  userParam?: string;
 }
 /** creates a render prop that receives a render function for the plans list table and
  * renders the whole view.
  */
 export const draftPlansPageBodyFactory = (options: Options) => {
-  const { pageTitle, breadCrumbProps, newPlanUrl, addPlanBtnText } = options;
+  const { pageTitle, breadCrumbProps, newPlanUrl, addPlanBtnText, userParam } = options;
   return (renderConnectedTable: RenderProp) => {
     return (
       <div className="mb-5">
@@ -72,6 +80,7 @@ export const draftPlansPageBodyFactory = (options: Options) => {
         <Row>
           <Col md={8}>
             <h3 className="mt-3 mb-3 page-title">{pageTitle}</h3>
+            {userParam && <p>{format(PLANS_USER_FILTER_NOTIFICATION, userParam)}</p>}
           </Col>
           {newPlanUrl && (
             <Col md={4}>
