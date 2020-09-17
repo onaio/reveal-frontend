@@ -122,7 +122,9 @@ export const PlanSchema = Yup.object().shape({
   caseNum: Yup.string(),
   date: Yup.string().required(DATE_IS_REQUIRED),
   end: Yup.date().required(REQUIRED),
-  fiReason: Yup.string().oneOf(FIReasons.map(e => e)),
+  fiReason: Yup.string()
+    .oneOf(FIReasons.map(e => e))
+    .required(REQUIRED),
   fiStatus: Yup.string().oneOf(fiStatusCodes),
   identifier: Yup.string(),
   interventionType: Yup.string()
