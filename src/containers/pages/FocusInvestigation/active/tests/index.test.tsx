@@ -485,6 +485,9 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
+    expect(wrapper.find('.user-filter-info').text()).toMatchInlineSnapshot(
+      `"User filter on: Only plans assigned to ghost are listed."`
+    );
     expect(
       wrapper
         .find('Table')
