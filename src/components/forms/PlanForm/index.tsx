@@ -200,7 +200,7 @@ const PlanForm = (props: PlanFormProps) => {
   const editMode: boolean = initialValues.identifier !== '';
 
   let filteredFIReasons: FIReasonType[] = [...FIReasons];
-  if (ENABLED_FI_REASONS.length) {
+  if (ENABLED_FI_REASONS.length && !editMode) {
     filteredFIReasons = FIReasons.filter((reason: FIReasonType) =>
       ENABLED_FI_REASONS.includes(reason)
     );
