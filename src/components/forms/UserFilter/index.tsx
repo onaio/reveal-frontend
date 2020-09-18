@@ -85,8 +85,11 @@ export const BaseUserSelectFilter = (props: BaseUserSelectFilterPropTypes) => {
     userNameAsValue: true,
   };
 
+  const filterActive = defaultUserNameValue !== SELECT_USERNAME && !!defaultUserNameValue.trim();
+
   return (
     <DropDownRenderer
+      filterActive={filterActive}
       // tslint:disable-next-line:jsx-no-lambda
       renderToggle={() => (
         <>

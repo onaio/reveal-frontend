@@ -35,6 +35,7 @@ import {
   LOADING,
   NAME,
   NO_INVESTIGATIONS_FOUND,
+  PLANS_USER_FILTER_NOTIFICATION,
   REACTIVE,
   ROUTINE_TITLE,
   START_DATE,
@@ -196,6 +197,7 @@ class ActiveFocusInvestigation extends React.Component<
   }
 
   public render() {
+    const { userName } = this.props;
     const breadcrumbProps: BreadCrumbProps = {
       currentPage: {
         label: `${FOCUS_INVESTIGATIONS}`,
@@ -340,6 +342,9 @@ class ActiveFocusInvestigation extends React.Component<
         <h2 className="mb-3 mt-5 page-title">{pageTitle}</h2>
         <hr />
         <h3 className="mb-3 mt-5 page-title">{REACTIVE}</h3>
+        {userName && (
+          <p className="user-filter-info">{format(PLANS_USER_FILTER_NOTIFICATION, userName)}</p>
+        )}
         <div>
           <DrillDownTable
             {...createTableProps(

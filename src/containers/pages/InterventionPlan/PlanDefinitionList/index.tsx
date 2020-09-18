@@ -3,8 +3,8 @@ import { RouteComponentProps } from 'react-router';
 import { BreadCrumbProps } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { HIDDEN_PLAN_STATUSES } from '../../../../configs/env';
 import { ADD_PLAN, HOME, PLANS } from '../../../../configs/lang';
-import { HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL } from '../../../../constants';
-import { getPlanStatusToDisplay } from '../../../../helpers/utils';
+import { HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL, QUERY_PARAM_USER } from '../../../../constants';
+import { getPlanStatusToDisplay, getQueryParams } from '../../../../helpers/utils';
 import {
   createConnectedOpenSRPPlansList,
   OpenSRPPlanListViewProps,
@@ -31,12 +31,15 @@ export const PlanDefinitionList = (props: RouteComponentProps) => {
   };
 
   const planStatuses = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
+  const allQueryParams = getQueryParams(props.location);
+  const userParam = allQueryParams[QUERY_PARAM_USER] as string;
 
   const renderBody = draftPlansPageBodyFactory({
     addPlanBtnText: ADD_PLAN,
     breadCrumbProps,
     newPlanUrl: NEW_PLAN_URL,
     pageTitle,
+    userParam,
   });
 
   const opensrpListProps: Partial<OpenSRPPlanListViewProps> & RouteComponentProps = {

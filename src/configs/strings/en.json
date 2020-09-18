@@ -1600,5 +1600,9 @@
     "message": "There are no descendant jurisdictions that are targeted.",
     "description": "Info message shown when there are no selected jurisdiction records found"
   },
-  "TOTAL": { "message": "Total", "description": "Total" }
+  "TOTAL": { "message": "Total", "description": "Total" },
+  "USER_FILTER_NOTIFICATION": {
+    "message": "User filter on: Only plans assigned to %s are listed.",
+    "description": "Info message to indicate plans are filtered by a specific user"
+  }
 }
