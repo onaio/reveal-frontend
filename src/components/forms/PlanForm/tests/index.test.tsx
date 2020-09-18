@@ -576,7 +576,6 @@ describe('containers/forms/PlanForm - Submission', () => {
         .first()
         .props() as any).formik.errors
     ).toEqual({
-      fiReason: 'Required',
       jurisdictions: [
         {
           id: 'Required',
@@ -668,15 +667,15 @@ describe('containers/forms/PlanForm - Submission', () => {
       wrapper.update();
     });
 
-    // fiStatus should be as expected
-    expect(wrapper.find('small.fiStatus-error').text()).toMatchInlineSnapshot(
-      `"fiStatus must be one of the following values: A1, A2, B1, B2"`
-    );
+    // there is no FIReason error due to default value
+    expect(wrapper.find('small.fiReason-error').length).toEqual(0);
 
     // Set wrong fiReason field value
     wrapper
       .find('select[name="fiReason"]')
       .simulate('change', { target: { name: 'fiReason', value: 'justin' } });
+
+    wrapper.find('form').simulate('submit');
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
