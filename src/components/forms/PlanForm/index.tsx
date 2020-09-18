@@ -7,6 +7,8 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import {
   Button,
+  Card,
+  CardBody,
   FormGroup,
   InputGroup,
   InputGroupAddon,
@@ -15,6 +17,7 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
+  UncontrolledCollapse,
 } from 'reactstrap';
 import { format } from 'util';
 import {
@@ -82,7 +85,6 @@ import { OpenSRPService } from '../../../services/opensrp';
 import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
-import { Accordion } from '../../page/Accordion';
 import JurisdictionSelect from '../JurisdictionSelect';
 import { getConditionAndTriggers } from './components/actions';
 import {
@@ -988,36 +990,43 @@ const PlanForm = (props: PlanFormProps) => {
                               />
                             </FormGroup>
                           </fieldset>
-                          <Accordion
-                            accordionId={`plan-trigger-conditions-${index}`}
-                            accordions={[
-                              {
-                                accordionBody: () => (
-                                  <>
-                                    {actionTriggers.hasOwnProperty(
-                                      values.activities[index].actionCode
-                                    ) && (
-                                      <fieldset className="triggers-fieldset">
-                                        <legend>{TRIGGERS_LABEL}</legend>
-                                        {actionTriggers[values.activities[index].actionCode]}
-                                      </fieldset>
-                                    )}
-                                    {actionConditions.hasOwnProperty(
-                                      values.activities[index].actionCode
-                                    ) && (
-                                      <fieldset className="conditions-fieldset">
-                                        <legend>{CONDITIONS_LABEL}</legend>
-                                        {actionConditions[values.activities[index].actionCode]}
-                                      </fieldset>
-                                    )}
-                                  </>
-                                ),
-                                cardHeaderId: `trigger-condition-card-header-${index}`,
-                                collapsibleBodyId: `trigger-condition-collapsible-body-${index}`,
-                                headerText: `${TRIGGERS_LABEL} ${AND} ${CONDITIONS_LABEL}`,
-                              },
-                            ]}
-                          />
+                          {(actionTriggers.hasOwnProperty(values.activities[index].actionCode) ||
+                            actionConditions.hasOwnProperty(
+                              values.activities[index].actionCode
+                            )) && (
+                            <div>
+                              <Button
+                                className="btn-light btn-block"
+                                id={`plan-trigger-conditions-${index}`}
+                              >
+                                {`${TRIGGERS_LABEL} ${AND} ${CONDITIONS_LABEL}`}
+                              </Button>
+                              <UncontrolledCollapse toggler={`#plan-trigger-conditions-${index}`}>
+                                <Card>
+                                  <CardBody>
+                                    <React.Fragment>
+                                      {actionTriggers.hasOwnProperty(
+                                        values.activities[index].actionCode
+                                      ) && (
+                                        <fieldset className="triggers-fieldset">
+                                          <legend>{TRIGGERS_LABEL}</legend>
+                                          {actionTriggers[values.activities[index].actionCode]}
+                                        </fieldset>
+                                      )}
+                                      {actionConditions.hasOwnProperty(
+                                        values.activities[index].actionCode
+                                      ) && (
+                                        <fieldset className="conditions-fieldset">
+                                          <legend>{CONDITIONS_LABEL}</legend>
+                                          {actionConditions[values.activities[index].actionCode]}
+                                        </fieldset>
+                                      )}
+                                    </React.Fragment>
+                                  </CardBody>
+                                </Card>
+                              </UncontrolledCollapse>
+                            </div>
+                          )}
                         </fieldset>
                       </div>
                     </div>
