@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/page/Accordion works correctly: card-header 1`] = `null`;
+
+exports[`src/components/page/Accordion works correctly: collapsed 1`] = `
+<div
+  aria-labelledby="card-header"
+  className="collapse"
+  data-parent="#accordionId"
+  id="collapsible-body"
+>
+  <div
+    className="card-body"
+  >
+    <div
+      className="winston"
+    >
+      History will be kind to me for I intend to write it
+    </div>
+  </div>
+</div>
+`;
