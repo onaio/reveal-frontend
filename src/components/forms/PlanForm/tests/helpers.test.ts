@@ -2,6 +2,7 @@ import MockDate from 'mockdate';
 import {
   PlanActionCodes,
   planActivities as planActivitiesFromConfig,
+  PlanDefinition,
 } from '../../../../configs/settings';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType } from '../../../../store/ducks/plans';
@@ -29,6 +30,7 @@ import {
   expectedExtractActivityFromPlanformResult,
   expectedPlanDefinition,
   extractedActivitiesFromForms,
+  fiReasonTestPlan,
   planActivities,
   planActivityWithEmptyfields,
   planActivityWithoutTargets,
@@ -234,5 +236,11 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(isFIOrDynamicFI(InterventionType.FI)).toBeTruthy();
     expect(isFIOrDynamicFI(InterventionType.DynamicFI)).toBeTruthy();
     expect(isFIOrDynamicFI(InterventionType.IRS)).toBeFalsy();
+  });
+
+  it('getPlanFormValues missing fi reason', () => {
+    // what is the eventual form initial values
+    const res = getPlanFormValues(fiReasonTestPlan as PlanDefinition);
+    expect(res.fiReason).toBeUndefined();
   });
 });
