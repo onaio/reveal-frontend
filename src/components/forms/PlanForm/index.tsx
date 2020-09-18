@@ -124,7 +124,7 @@ export const defaultInitialValues: PlanFormFields = {
   end: moment()
     .add(DEFAULT_PLAN_DURATION_DAYS, 'days')
     .toDate(),
-  fiReason: undefined,
+  fiReason: FIReasons[0],
   fiStatus: undefined,
   identifier: '',
   interventionType: defaultInterventionType,
@@ -200,7 +200,7 @@ const PlanForm = (props: PlanFormProps) => {
   const editMode: boolean = initialValues.identifier !== '';
 
   let filteredFIReasons: FIReasonType[] = [...FIReasons];
-  if (ENABLED_FI_REASONS.length) {
+  if (ENABLED_FI_REASONS.length && !editMode) {
     filteredFIReasons = FIReasons.filter((reason: FIReasonType) =>
       ENABLED_FI_REASONS.includes(reason)
     );

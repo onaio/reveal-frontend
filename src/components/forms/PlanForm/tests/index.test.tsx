@@ -1,5 +1,6 @@
 import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { authenticateUser } from '@onaio/session-reducer';
+import { act } from '@testing-library/react';
 import { mount, ReactWrapper, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { cloneDeep } from 'lodash';
@@ -650,10 +651,6 @@ describe('containers/forms/PlanForm - Submission', () => {
       .find('select[name="interventionType"]')
       .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
 
-    // Set wrong fiReason field value
-    wrapper
-      .find('select[name="fiReason"]')
-      .simulate('change', { target: { name: 'fiReason', value: 'justin' } });
     // Set wrong fiStatus field value
     wrapper
       .find('select[name="fiStatus"]')
@@ -662,6 +659,21 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper
       .find('select[name="status"]')
       .simulate('change', { target: { name: 'status', value: 'Ona' } });
+
+    wrapper.find('form').simulate('submit');
+
+    await act(async () => {
+      await new Promise<any>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    // there is no FIReason error due to default value
+    expect(wrapper.find('small.fiReason-error').length).toEqual(0);
+
+    // Set wrong fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'justin' } });
 
     wrapper.find('form').simulate('submit');
 
