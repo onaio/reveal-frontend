@@ -95,6 +95,13 @@ export const showDefinitionUriFor = [
   InterventionType.DynamicMDA,
 ];
 
+/**
+ * Check if intervention type id FI or Dynamic FI
+ * @param {InterventionType} interventionType - intervention type
+ */
+export const isFIOrDynamicFI = (interventionType: InterventionType): boolean =>
+  [InterventionType.DynamicFI, InterventionType.FI].includes(interventionType);
+
 /** Yup validation schema for PlanForm */
 export const PlanSchema = Yup.object().shape({
   activities: Yup.array().of(
@@ -122,7 +129,13 @@ export const PlanSchema = Yup.object().shape({
   caseNum: Yup.string(),
   date: Yup.string().required(DATE_IS_REQUIRED),
   end: Yup.date().required(REQUIRED),
-  fiReason: Yup.string().oneOf(FIReasons.map(e => e)),
+  fiReason: Yup.string().when('interventionType', {
+    is: value => isFIOrDynamicFI(value),
+    otherwise: Yup.string(),
+    then: Yup.string()
+      .oneOf(FIReasons.map(e => e))
+      .required(REQUIRED),
+  }),
   fiStatus: Yup.string().oneOf(fiStatusCodes),
   identifier: Yup.string(),
   interventionType: Yup.string()
@@ -785,10 +798,3 @@ export const onSubmitSuccess = (
   setSubmitting(false);
   setAreWeDoneHere(true);
 };
-
-/**
- * Check if intervention type id FI or Dynamic FI
- * @param {InterventionType} interventionType - intervention type
- */
-export const isFIOrDynamicFI = (interventionType: InterventionType): boolean =>
-  [InterventionType.DynamicFI, InterventionType.FI].includes(interventionType);

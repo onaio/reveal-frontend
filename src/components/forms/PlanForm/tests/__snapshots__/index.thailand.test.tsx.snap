@@ -60,6 +60,7 @@ exports[`Thailand: containers/forms/PlanForm renders correctly: fiReason field 1
   onBlur={[Function]}
   onChange={[Function]}
   required={true}
+  value="Routine"
 >
   <option>
     ----
