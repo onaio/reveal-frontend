@@ -124,7 +124,7 @@ export const defaultInitialValues: PlanFormFields = {
   end: moment()
     .add(DEFAULT_PLAN_DURATION_DAYS, 'days')
     .toDate(),
-  fiReason: undefined,
+  fiReason: FIReasons[0],
   fiStatus: undefined,
   identifier: '',
   interventionType: defaultInterventionType,
