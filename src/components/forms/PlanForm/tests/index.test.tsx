@@ -1,5 +1,6 @@
 import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { authenticateUser } from '@onaio/session-reducer';
+import { act } from '@testing-library/react';
 import { mount, ReactWrapper, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { cloneDeep } from 'lodash';
@@ -575,6 +576,7 @@ describe('containers/forms/PlanForm - Submission', () => {
         .first()
         .props() as any).formik.errors
     ).toEqual({
+      fiReason: 'Required',
       jurisdictions: [
         {
           id: 'Required',
@@ -650,10 +652,6 @@ describe('containers/forms/PlanForm - Submission', () => {
       .find('select[name="interventionType"]')
       .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
 
-    // Set wrong fiReason field value
-    wrapper
-      .find('select[name="fiReason"]')
-      .simulate('change', { target: { name: 'fiReason', value: 'justin' } });
     // Set wrong fiStatus field value
     wrapper
       .find('select[name="fiStatus"]')
@@ -664,6 +662,21 @@ describe('containers/forms/PlanForm - Submission', () => {
       .simulate('change', { target: { name: 'status', value: 'Ona' } });
 
     wrapper.find('form').simulate('submit');
+
+    await act(async () => {
+      await new Promise<any>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    // fiStatus should be as expected
+    expect(wrapper.find('small.fiStatus-error').text()).toMatchInlineSnapshot(
+      `"fiStatus must be one of the following values: A1, A2, B1, B2"`
+    );
+
+    // Set wrong fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'justin' } });
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
