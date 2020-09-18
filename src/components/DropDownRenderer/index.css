@@ -7,3 +7,8 @@
   font-size: 16px !important;
   margin: 5px;
 }
+
+.btn-outline-secondary-active {
+  color: #28a745 !important;
+  border-color: #28a745 !important;
+}

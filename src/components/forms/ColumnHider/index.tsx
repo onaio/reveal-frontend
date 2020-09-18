@@ -13,9 +13,11 @@ export const ColumnHider = <T extends object>({ allColumns }: DrillDownInstanceP
    * per page.
    */
   const salt = uuid();
+  const anyColumnHidden = allColumns.some(column => !column.isVisible);
   return (
     <>
       <DropDownRenderer
+        filterActive={anyColumnHidden}
         // tslint:disable-next-line: jsx-no-lambda
         renderToggle={() => (
           <>
