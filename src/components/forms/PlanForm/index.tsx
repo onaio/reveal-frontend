@@ -32,6 +32,7 @@ import {
   ADD_ACTIVITY,
   ADD_CODED_ACTIVITY,
   AN_ERROR_OCCURRED,
+  AND,
   CASE_NUMBER,
   CONDITIONS_LABEL,
   DEFINITION_URI,
@@ -81,6 +82,7 @@ import { OpenSRPService } from '../../../services/opensrp';
 import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
 import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
+import { Accordion } from '../../page/Accordion';
 import JurisdictionSelect from '../JurisdictionSelect';
 import { getConditionAndTriggers } from './components/actions';
 import {
@@ -986,18 +988,36 @@ const PlanForm = (props: PlanFormProps) => {
                               />
                             </FormGroup>
                           </fieldset>
-                          {actionTriggers.hasOwnProperty(values.activities[index].actionCode) && (
-                            <fieldset className="triggers-fieldset">
-                              <legend>{TRIGGERS_LABEL}</legend>
-                              {actionTriggers[values.activities[index].actionCode]}
-                            </fieldset>
-                          )}
-                          {actionConditions.hasOwnProperty(values.activities[index].actionCode) && (
-                            <fieldset className="conditions-fieldset">
-                              <legend>{CONDITIONS_LABEL}</legend>
-                              {actionConditions[values.activities[index].actionCode]}
-                            </fieldset>
-                          )}
+                          <Accordion
+                            accordionId={`plan-trigger-conditions-${index}`}
+                            accordions={[
+                              {
+                                accordionBody: () => (
+                                  <>
+                                    {actionTriggers.hasOwnProperty(
+                                      values.activities[index].actionCode
+                                    ) && (
+                                      <fieldset className="triggers-fieldset">
+                                        <legend>{TRIGGERS_LABEL}</legend>
+                                        {actionTriggers[values.activities[index].actionCode]}
+                                      </fieldset>
+                                    )}
+                                    {actionConditions.hasOwnProperty(
+                                      values.activities[index].actionCode
+                                    ) && (
+                                      <fieldset className="conditions-fieldset">
+                                        <legend>{CONDITIONS_LABEL}</legend>
+                                        {actionConditions[values.activities[index].actionCode]}
+                                      </fieldset>
+                                    )}
+                                  </>
+                                ),
+                                cardHeaderId: `trigger-condition-card-header-${index}`,
+                                collapsibleBodyId: `trigger-condition-collapsible-body-${index}`,
+                                headerText: `${TRIGGERS_LABEL} ${AND} ${CONDITIONS_LABEL}`,
+                              },
+                            ]}
+                          />
                         </fieldset>
                       </div>
                     </div>
