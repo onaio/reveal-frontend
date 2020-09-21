@@ -779,6 +779,11 @@ export function getGoalUnitFromActionCode(actionCode: PlanActionCodesType): Goal
 export const isPlanTypeEnabled = (planType: InterventionType): boolean =>
   DISPLAYED_PLAN_TYPES.includes(planType);
 
+/**
+ * Check if plan type should be created
+ * @param {InterventionType} planType - plan type
+ * @param {boolean} isEditMode - are we editing or creating a plan
+ */
 export const shouldPlanTypeBeCreated = (planType: InterventionType, isEditMode: boolean): boolean =>
   isEditMode || PLAN_TYPES_ALLOWED_TO_CREATE.includes(planType);
 
