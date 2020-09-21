@@ -23,6 +23,12 @@ const history = createBrowserHistory();
 const middlewares: any = [];
 const mockStore = configureMockStore(middlewares);
 
+/** place to mount the application/component to the JSDOM document during testing.
+ * https://github.com/reactstrap/reactstrap/issues/773#issuecomment-373451256
+ */
+const div = document.createElement('div');
+document.body.appendChild(div);
+
 jest.mock('../../../../../../configs/env');
 
 describe('containers/pages/NewPlan', () => {
@@ -43,7 +49,8 @@ describe('containers/pages/NewPlan', () => {
         <Router history={history}>
           <ConnectedBaseNewPlan />
         </Router>
-      </Provider>
+      </Provider>,
+      { attachTo: div }
     );
 
     // check that page title is displayed
