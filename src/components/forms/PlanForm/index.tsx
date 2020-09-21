@@ -84,6 +84,7 @@ import DatePickerWrapper from '../../DatePickerWrapper';
 import JurisdictionSelect from '../JurisdictionSelect';
 import { getConditionAndTriggers } from './components/actions';
 import {
+  displayPlanTypeOnForm,
   doesFieldHaveErrors,
   generatePlanDefinition,
   getFormActivities,
@@ -93,7 +94,6 @@ import {
   onSubmitSuccess,
   planActivitiesMap,
   PlanSchema,
-  shouldPlanTypeBeCreated,
   showDefinitionUriFor,
 } from './helpers';
 import './style.css';
@@ -352,22 +352,22 @@ const PlanForm = (props: PlanFormProps) => {
                 }}
                 className={errors.interventionType ? 'form-control is-invalid' : 'form-control'}
               >
-                {shouldPlanTypeBeCreated(InterventionType.FI, editMode) && (
+                {displayPlanTypeOnForm(InterventionType.FI, editMode) && (
                   <option value={InterventionType.FI}>{FOCUS_INVESTIGATION}</option>
                 )}
-                {shouldPlanTypeBeCreated(InterventionType.IRS, editMode) && (
+                {displayPlanTypeOnForm(InterventionType.IRS, editMode) && (
                   <option value={InterventionType.IRS}>{IRS_TITLE}</option>
                 )}
-                {shouldPlanTypeBeCreated(InterventionType.MDAPoint, editMode) && (
+                {displayPlanTypeOnForm(InterventionType.MDAPoint, editMode) && (
                   <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>
                 )}
-                {shouldPlanTypeBeCreated(InterventionType.DynamicFI, editMode) && (
+                {displayPlanTypeOnForm(InterventionType.DynamicFI, editMode) && (
                   <option value={InterventionType.DynamicFI}>{DYNAMIC_FI_TITLE}</option>
                 )}
-                {shouldPlanTypeBeCreated(InterventionType.DynamicIRS, editMode) && (
+                {displayPlanTypeOnForm(InterventionType.DynamicIRS, editMode) && (
                   <option value={InterventionType.DynamicIRS}>{DYNAMIC_IRS_TITLE}</option>
                 )}
-                {shouldPlanTypeBeCreated(InterventionType.DynamicMDA, editMode) && (
+                {displayPlanTypeOnForm(InterventionType.DynamicMDA, editMode) && (
                   <option value={InterventionType.DynamicMDA}>{DYNAMIC_MDA_TITLE}</option>
                 )}
               </Field>

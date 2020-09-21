@@ -780,11 +780,11 @@ export const isPlanTypeEnabled = (planType: InterventionType): boolean =>
   DISPLAYED_PLAN_TYPES.includes(planType);
 
 /**
- * Check if plan type should be created
+ * Check if plan type should be created and display all plan types on edit mode
  * @param {InterventionType} planType - plan type
  * @param {boolean} isEditMode - are we editing or creating a plan
  */
-export const shouldPlanTypeBeCreated = (planType: InterventionType, isEditMode: boolean): boolean =>
+export const displayPlanTypeOnForm = (planType: InterventionType, isEditMode: boolean): boolean =>
   isEditMode || PLAN_TYPES_ALLOWED_TO_CREATE.includes(planType);
 
 /**
