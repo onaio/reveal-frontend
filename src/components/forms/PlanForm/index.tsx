@@ -994,7 +994,7 @@ const PlanForm = (props: PlanFormProps) => {
                             actionConditions.hasOwnProperty(
                               values.activities[index].actionCode
                             )) && (
-                            <div>
+                            <div id={`plan-trigger-conditions-div-${index}`}>
                               <Button
                                 className="btn-light btn-block"
                                 id={`plan-trigger-conditions-${index}`}
