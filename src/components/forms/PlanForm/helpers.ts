@@ -751,6 +751,8 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
   const taskGenerationStatus: taskGenerationStatusType =
     taskGenerationStatusContext.length > 0
       ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
+      : isDynamicPlan(planObject)
+      ? taskGenerationStatuses[2]
       : taskGenerationStatuses[1];
 
   return {
