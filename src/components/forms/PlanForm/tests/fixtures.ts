@@ -1166,117 +1166,140 @@ export const fiReasonTestPlan = {
 };
 
 export const DynamicFIPlan = {
-  identifier: '895b1079-e861-5527-8a9b-154c3538a265',
+  identifier: '7c48f3f1-79c6-5b76-8432-43d04bd67c32',
   version: '1',
-  name: 'Dynamic-FI-2020-08-10',
-  title: 'Dynamic-FI active test 2020-08-10 ',
+  name: 'Dynamic-FI-2020-09-16',
+  title: 'Test Plan by QA 2020-09-16',
   status: 'active',
-  date: '2020-08-10',
-  effectivePeriod: { start: '2020-08-10', end: '2020-08-30' },
+  date: '2020-09-16',
+  effectivePeriod: { start: '2020-09-16', end: '2020-10-06' },
   useContext: [
     { code: 'interventionType', valueCodableConcept: 'Dynamic-FI' },
-    { code: 'taskGenerationStatus', valueCodableConcept: 'False' },
+    { code: 'fiStatus', valueCodableConcept: 'A1' },
+    { code: 'fiReason', valueCodableConcept: 'Routine' },
+    { code: 'taskGenerationStatus', valueCodableConcept: 'True' },
+    { code: 'teamAssignmentStatus', valueCodableConcept: 'True' },
   ],
-  jurisdiction: [{ code: 'ecfbf048-fb7a-47d8-a12b-61bf5d2a6e7b' }],
-  serverVersion: 1597066466150,
+  jurisdiction: [{ code: '45abb6b7-b3ca-4b82-851b-856a4da0335b' }],
+  serverVersion: 1600346630940,
   goal: [
     {
       id: 'RACD_register_families',
-      description:
-        'Register all families \u0026amp; family members in all residential structures enumerated (100%) within the operational area',
+      description: 'ลงทะเบียนครัวเรือนและสมาชิกในครัวเรือน (100%) ภายในพื้นที่ปฏิบัติงาน',
       priority: 'medium-priority',
       target: [
         {
-          measure: 'Percent of residential structures with full family registration',
+          measure: 'ร้อยละของบ้าน/สิ่งปลูกสร้างที่ได้ลงทะเบียนข้อมูลครัวเรือน',
           detail: {
-            detailQuantity: { value: 100.0, comparator: '\u0026gt;\u003d', unit: 'Percent' },
+            detailQuantity: {
+              value: 100.0,
+              comparator: '\u0026amp;amp;gt;\u003d',
+              unit: 'Percent',
+            },
           },
-          due: '2020-08-17',
+          due: '2020-09-23',
         },
       ],
     },
     {
       id: 'RACD_Blood_Screening',
-      description:
-        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      description: 'เจาะเลือดรอบบ้านผู้ป่วยในรัศมี 1 กิโลเมตร (100%)',
       priority: 'medium-priority',
       target: [
         {
-          measure: 'Number of registered people tested',
+          measure: 'จำนวนผู้ที่ได้รับการเจาะโลหิต',
           detail: {
-            detailQuantity: { value: 100.0, comparator: '\u0026gt;\u003d', unit: 'Person(s)' },
+            detailQuantity: {
+              value: 100.0,
+              comparator: '\u0026amp;amp;gt;\u003d',
+              unit: 'Person(s)',
+            },
           },
-          due: '2020-08-17',
+          due: '2020-09-23',
         },
       ],
     },
     {
       id: 'RACD_bednet_distribution',
-      description: 'Visit 100% of residential structures in the operational area and provide nets',
+      description: 'แจกมุ้งทุกหลังคาเรือนในพื้นที่ปฏิบัติงาน (100%)',
       priority: 'medium-priority',
       target: [
         {
-          measure: 'Percent of residential structures received nets',
+          measure: 'จำนวนบ้าน/สิ่งปลูกสร้างที่ได้รับมุ้ง',
           detail: {
-            detailQuantity: { value: 100.0, comparator: '\u0026gt;\u003d', unit: 'Percent' },
+            detailQuantity: {
+              value: 100.0,
+              comparator: '\u0026amp;amp;gt;\u003d',
+              unit: 'Percent',
+            },
           },
-          due: '2020-08-17',
+          due: '2020-09-23',
         },
       ],
     },
     {
       id: 'Larval_Dipping',
-      description: 'Perform a minimum of three larval dipping activities in the operational area',
+      description: 'ดำเนินกิจกรรมจับลูกน้ำอย่างน้อย 3 แห่งในพื้นที่ปฏิบัติงาน',
       priority: 'medium-priority',
       target: [
         {
-          measure: 'Number of larval dipping activities completed',
+          measure: 'จำนวนกิจกรรมการตักลูกน้ำ',
           detail: {
-            detailQuantity: { value: 3.0, comparator: '\u0026gt;\u003d', unit: 'activit(y|ies)' },
+            detailQuantity: {
+              value: 3.0,
+              comparator: '\u0026amp;amp;gt;\u003d',
+              unit: 'activit(y|ies)',
+            },
           },
-          due: '2020-08-17',
+          due: '2020-09-23',
         },
       ],
     },
     {
       id: 'Mosquito_Collection',
-      description:
-        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      description: 'กิจกรรมจับยุงกำหนดไว้อย่างน้อย 3 แห่ง',
       priority: 'medium-priority',
       target: [
         {
-          measure: 'Number of mosquito collection activities completed',
+          measure: 'จำนวนกิจกรรมการจับยุง',
           detail: {
-            detailQuantity: { value: 3.0, comparator: '\u0026gt;\u003d', unit: 'activit(y|ies)' },
+            detailQuantity: {
+              value: 3.0,
+              comparator: '\u0026amp;amp;gt;\u003d',
+              unit: 'activit(y|ies)',
+            },
           },
-          due: '2020-08-17',
+          due: '2020-09-23',
         },
       ],
     },
     {
       id: 'BCC_Focus',
-      description: 'Complete at least 1 BCC activity for the operational area',
+      description: 'ให้สุขศึกษาในพื้นที่ปฏิบัติงานอย่างน้อย 1 ครั้ง',
       priority: 'medium-priority',
       target: [
         {
-          measure: 'BCC Activities Completed',
+          measure: 'จำนวนกิจกรรมการให้สุขศึกษา',
           detail: {
-            detailQuantity: { value: 1.0, comparator: '\u0026gt;\u003d', unit: 'activit(y|ies)' },
+            detailQuantity: {
+              value: 1.0,
+              comparator: '\u0026amp;amp;gt;\u003d',
+              unit: 'activit(y|ies)',
+            },
           },
-          due: '2020-08-17',
+          due: '2020-09-23',
         },
       ],
     },
   ],
   action: [
     {
-      identifier: '2d76779d-7712-5886-994a-f3761de80fb2',
+      identifier: '574dfa8f-5b9c-5230-8839-d3b9b45dbc83',
       prefix: 1,
-      title: 'Family Registration',
-      description:
-        'Register all families \u0026amp; family members in all residential structures enumerated (100%) within the operational area',
+      title: 'ลงทะเบียนครัวเรือน',
+      description: 'ลงทะเบียนครัวเรือนและสมาชิกในครัวเรือน (100%) ภายในพื้นที่ปฏิบัติงาน',
       code: 'RACD Register Family',
-      timingPeriod: { start: '2020-08-10', end: '2020-08-17' },
+      timingPeriod: { start: '2020-09-16', end: '2020-09-23' },
       reason: 'Routine',
       goalId: 'RACD_register_families',
       subjectCodableConcept: { text: 'Location' },
@@ -1297,14 +1320,8 @@ export const DynamicFIPlan = {
           expression: {
             description: 'Structure is residential or type does not exist',
             expression:
-              '$this.type.where(id\u003d\u0027locationType\u0027).exists().not() or $this.type.where(id\u003d\u0027locationType\u0027).text \u003d \u0027Residential Structure\u0027',
-          },
-        },
-        {
-          kind: 'applicability',
-          expression: {
-            description: 'Family does not exist for structure',
-            expression: '$this.contained.exists().not()',
+              '$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id\u003d\u0027locationType\u0027).exists().not() or $this.type.where(id\u003d\u0027locationType\u0027).text \u003d \u0027Residential Structure\u0027) and $this.contained.exists().not())',
+            subjectCodableConcept: { text: 'Family' },
           },
         },
         {
@@ -1312,7 +1329,7 @@ export const DynamicFIPlan = {
           expression: {
             description: 'Apply to residential structures in Register_Structure questionnaires',
             expression:
-              'questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Residential Structure\u0027',
+              '$this.is(FHIR.Location) or (questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Residential Structure\u0027)',
           },
         },
       ],
@@ -1320,13 +1337,12 @@ export const DynamicFIPlan = {
       type: 'create',
     },
     {
-      identifier: '7eaa8790-242f-577a-a1aa-b158f6f68022',
+      identifier: '52e355e7-2cec-5fb9-bb4f-036ee96243f9',
       prefix: 2,
-      title: 'Blood Screening',
-      description:
-        'Visit all residential structures (100%) within a 1 km radius of a confirmed index case and test each registered person',
+      title: 'กิจกรรมการเจาะโลหิต',
+      description: 'เจาะเลือดรอบบ้านผู้ป่วยในรัศมี 1 กิโลเมตร (100%)',
       code: 'Blood Screening',
-      timingPeriod: { start: '2020-08-10', end: '2020-08-17' },
+      timingPeriod: { start: '2020-09-16', end: '2020-09-23' },
       reason: 'Investigation',
       goalId: 'RACD_Blood_Screening',
       subjectCodableConcept: { text: 'Person' },
@@ -1350,7 +1366,7 @@ export const DynamicFIPlan = {
             description:
               'Person is older than 5 years or person associated with questionnaire response if older than 5 years',
             expression:
-              '($this.is(FHIR.Patient) and $this.birthDate \u0026lt;\u003d today() - 5 \u0027years\u0027) or ($this.contained.where(Patient.birthDate \u0026lt;\u003d today() - 5 \u0027years\u0027).exists())',
+              '($this.is(FHIR.Patient) and $this.birthDate \u0026amp;amp;lt;\u003d today() - 5 \u0027years\u0027) or ($this.contained.where(Patient.birthDate \u0026amp;amp;lt;\u003d today() - 5 \u0027years\u0027).exists())',
           },
         },
       ],
@@ -1358,12 +1374,12 @@ export const DynamicFIPlan = {
       type: 'create',
     },
     {
-      identifier: '2c8e3487-7553-5662-8588-ec27aaaa7691',
+      identifier: '7350fd5e-2c0f-551e-9561-369c9f3f1f52',
       prefix: 3,
-      title: 'Bednet Distribution',
-      description: 'Visit 100% of residential structures in the operational area and provide nets',
+      title: 'กิจกรรมสำรวจ/ชุบ/แจกมุ้ง',
+      description: 'แจกมุ้งทุกหลังคาเรือนในพื้นที่ปฏิบัติงาน (100%)',
       code: 'Bednet Distribution',
-      timingPeriod: { start: '2020-08-10', end: '2020-08-17' },
+      timingPeriod: { start: '2020-09-16', end: '2020-09-23' },
       reason: 'Routine',
       goalId: 'RACD_bednet_distribution',
       subjectCodableConcept: { text: 'Location' },
@@ -1384,14 +1400,8 @@ export const DynamicFIPlan = {
           expression: {
             description: 'Structure is residential or type does not exist',
             expression:
-              '$this.type.where(id\u003d\u0027locationType\u0027).exists().not() or $this.type.where(id\u003d\u0027locationType\u0027).text \u003d \u0027Residential Structure\u0027',
-          },
-        },
-        {
-          kind: 'applicability',
-          expression: {
-            description: 'Family exists for structure',
-            expression: '$this.contained.exists()',
+              '$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id\u003d\u0027locationType\u0027).exists().not() or $this.type.where(id\u003d\u0027locationType\u0027).text \u003d \u0027Residential Structure\u0027) and $this.contained.exists())',
+            subjectCodableConcept: { text: 'Family' },
           },
         },
         {
@@ -1399,7 +1409,7 @@ export const DynamicFIPlan = {
           expression: {
             description: 'Register structure event submitted for a residential structure',
             expression:
-              'questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Residential Structure\u0027',
+              '$this.is(FHIR.Location)  or (questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Residential Structure\u0027)',
           },
         },
       ],
@@ -1407,12 +1417,12 @@ export const DynamicFIPlan = {
       type: 'create',
     },
     {
-      identifier: '66b9d8b4-9a15-53af-8483-59ac3caf9210',
+      identifier: 'e9f18b1a-59c6-5d3a-b42a-18dcb9012c59',
       prefix: 4,
-      title: 'Larval Dipping',
-      description: 'Perform a minimum of three larval dipping activities in the operational area',
+      title: 'กิจกรรมการตักลูกน้ำ',
+      description: 'ดำเนินกิจกรรมจับลูกน้ำอย่างน้อย 3 แห่งในพื้นที่ปฏิบัติงาน',
       code: 'Larval Dipping',
-      timingPeriod: { start: '2020-08-10', end: '2020-08-17' },
+      timingPeriod: { start: '2020-09-16', end: '2020-09-23' },
       reason: 'Investigation',
       goalId: 'Larval_Dipping',
       subjectCodableConcept: { text: 'Location' },
@@ -1433,7 +1443,7 @@ export const DynamicFIPlan = {
           expression: {
             description: 'Structure is a larval breeding site',
             expression:
-              '$this.type.where(id\u003d\u0027locationType\u0027).text \u003d \u0027Larval Breeding Site\u0027',
+              '$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id\u003d\u0027locationType\u0027).text \u003d \u0027Larval Breeding Site\u0027',
           },
         },
         {
@@ -1441,7 +1451,7 @@ export const DynamicFIPlan = {
           expression: {
             description: 'Apply to larval breeding sites in Register_Structure questionnaires',
             expression:
-              'questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Larval Breeding Site\u0027',
+              '$this.is(FHIR.Location) or (questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Larval Breeding Site\u0027)',
           },
         },
       ],
@@ -1449,13 +1459,12 @@ export const DynamicFIPlan = {
       type: 'create',
     },
     {
-      identifier: 'de42267a-9366-5a6c-be3c-86529b0b669a',
+      identifier: 'd9d1cd1c-ff6d-5ec8-bb49-106ab9a01416',
       prefix: 5,
-      title: 'Mosquito Collection',
-      description:
-        'Set a minimum of three mosquito collection traps and complete the mosquito collection process',
+      title: 'กิจกรรมการจับยุง',
+      description: 'กิจกรรมจับยุงกำหนดไว้อย่างน้อย 3 แห่ง',
       code: 'Mosquito Collection',
-      timingPeriod: { start: '2020-08-10', end: '2020-08-17' },
+      timingPeriod: { start: '2020-09-16', end: '2020-09-23' },
       reason: 'Investigation',
       goalId: 'Mosquito_Collection',
       subjectCodableConcept: { text: 'Location' },
@@ -1476,7 +1485,7 @@ export const DynamicFIPlan = {
           expression: {
             description: 'Structure is a mosquito collection point',
             expression:
-              '$this.type.where(id\u003d\u0027locationType\u0027).text \u003d \u0027Mosquito Collection Point\u0027',
+              '$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id\u003d\u0027locationType\u0027).text \u003d \u0027Mosquito Collection Point\u0027',
           },
         },
         {
@@ -1484,7 +1493,7 @@ export const DynamicFIPlan = {
           expression: {
             description: 'Apply to mosquito collection point in Register_Structure questionnaires',
             expression:
-              'questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Mosquito Collection Point\u0027',
+              '$this.is(FHIR.Location) or (questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Mosquito Collection Point\u0027)',
           },
         },
       ],
@@ -1492,12 +1501,12 @@ export const DynamicFIPlan = {
       type: 'create',
     },
     {
-      identifier: '64f87159-b222-533c-860c-cdb761e02d69',
+      identifier: 'f1604872-d055-58d2-91e9-861d74d08509',
       prefix: 6,
-      title: 'Behaviour Change Communication',
-      description: 'Conduct BCC activity',
+      title: 'กิจกรรมการให้สุขศึกษา',
+      description: 'ดำเนินกิจกรรมให้สุขศึกษา',
       code: 'BCC',
-      timingPeriod: { start: '2020-08-10', end: '2020-08-17' },
+      timingPeriod: { start: '2020-09-16', end: '2020-09-23' },
       reason: 'Routine',
       goalId: 'BCC_Focus',
       subjectCodableConcept: { text: 'Jurisdiction' },
