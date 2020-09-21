@@ -333,12 +333,19 @@ export type REACT_APP_VERSION = typeof REACT_APP_VERSION;
 export const REACT_APP_NAME = process.env.REACT_APP_NAME;
 export type REACT_APP_NAME = typeof REACT_APP_NAME;
 
-/** list of plan types to be added to intervention type field when adding plans */
-export const ENABLED_PLAN_TYPES = String(
-  process.env.REACT_APP_ENABLED_PLAN_TYPES ||
+/** list of plan types displayed */
+export const DISPLAYED_PLAN_TYPES = String(
+  process.env.REACT_APP_DISPLAYED_PLAN_TYPES ||
     'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'
 ).split(',');
-export type ENABLED_PLAN_TYPES = typeof ENABLED_PLAN_TYPES;
+export type DISPLAYED_PLAN_TYPES = typeof DISPLAYED_PLAN_TYPES;
+
+/** list of plan types that can be created */
+export const PLAN_TYPES_ALLOWED_TO_CREATE = String(
+  process.env.REACT_APP_PLAN_TYPES_ALLOWED_TO_CREATE ||
+    'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'
+).split(',');
+export type PLAN_TYPES_ALLOWED_TO_CREATE = typeof PLAN_TYPES_ALLOWED_TO_CREATE;
 
 /** list of FI reasons enabled */
 export const ENABLED_FI_REASONS = String(process.env.REACT_APP_ENABLED_FI_REASONS || '').split(',');

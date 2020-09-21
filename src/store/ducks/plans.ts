@@ -5,7 +5,7 @@ import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { FIReasonType, FIStatusType } from '../../components/forms/PlanForm/types';
-import { ENABLED_PLAN_TYPES } from '../../configs/env';
+import { DISPLAYED_PLAN_TYPES } from '../../configs/env';
 import { descendingOrderSort, removeNullJurisdictionPlans } from '../../helpers/utils';
 
 /** the reducer name */
@@ -598,7 +598,7 @@ export const makePlansArraySelector = (planKey?: string, sortField?: string) => 
           )
         : intersect([plans, plans2, plans3, plans4, plans5, plans6, plans7], JSON.stringify);
       return allPlans.filter(planType =>
-        ENABLED_PLAN_TYPES.includes(planType.plan_intervention_type)
+        DISPLAYED_PLAN_TYPES.includes(planType.plan_intervention_type)
       );
     }
   );
