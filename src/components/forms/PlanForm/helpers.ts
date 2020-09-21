@@ -595,7 +595,9 @@ export const getTaskGenerationValue = (
   let taskGenerationStatusValue: taskGenerationStatusType | undefined;
   /** we should probably add a validation check for the envs higher at point of entry */
   taskGenerationStatusValue =
-    isDynamic && configuredEnv && taskGenerationStatuses.includes(configuredEnv as any)
+    isDynamic &&
+    configuredEnv &&
+    taskGenerationStatuses.includes(configuredEnv as taskGenerationStatusType)
       ? (configuredEnv as taskGenerationStatusType)
       : undefined;
   return taskGenerationStatusValue;
