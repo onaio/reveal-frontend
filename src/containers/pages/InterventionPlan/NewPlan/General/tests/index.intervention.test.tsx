@@ -15,7 +15,7 @@ const history = createBrowserHistory();
 
 jest.mock('../../../../../../configs/env', () => ({
   ENABLED_FI_REASONS: ['Case Triggered', 'Routine'],
-  ENABLED_PLAN_TYPES: ['IRS'],
+  PLAN_TYPES_ALLOWED_TO_CREATE: ['IRS'],
   PLAN_TYPES_WITH_MULTI_JURISDICTIONS: ['IRS', 'MDA-Point', 'Dynamic-IRS', 'Dynamic-MDA'],
 }));
 

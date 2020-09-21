@@ -4,7 +4,7 @@ import { get, keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
-import { ENABLED_PLAN_TYPES } from '../../../../configs/env';
+import { DISPLAYED_PLAN_TYPES } from '../../../../configs/env';
 import { PlanDefinition } from '../../../../configs/settings';
 import { descendingOrderSort, isPlanDefinitionOfType } from '../../../../helpers/utils';
 import { InterventionType } from '../../plans';
@@ -242,7 +242,7 @@ export const getPlanDefinitionsArrayByPlanIds = (planKey?: string) => {
  */
 export const FilterPlanDefinitionsByInterventionType = (
   plans: PlanDefinition[],
-  filters: string[] = ENABLED_PLAN_TYPES
+  filters: string[] = DISPLAYED_PLAN_TYPES
 ) => {
   return plans.filter(
     plan =>

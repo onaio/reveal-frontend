@@ -45,9 +45,21 @@ Below is a list of currently supported environment variables:
 - _optional_; _(boolean)_
 - default: `false`
 - whether to filter plans by the logged in user right of the bat by default
-  
+
 8. **REACT_APP_OPENSRP_MAX_PLANS_PER_REQUEST**
 
 - **Optional**
 - limit of the number of plans to get using the `plans/getAll` endpoint in a single request
 - default: `2000`
+
+9. **REACT_APP_DISPLAYED_PLAN_TYPES**
+
+- Controls plans displayed on the site.
+- Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
+- Variable is **not required** and if not provided all the above options are loaded.
+
+10. **REACT_APP_PLAN_TYPES_ALLOWED_TO_CREATE**
+
+- Controls plans which can be created from the create plans form.
+- Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
+- Variable is **not required** and if not provided all the above options are loaded.

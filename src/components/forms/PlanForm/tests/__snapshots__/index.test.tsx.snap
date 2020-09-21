@@ -26,6 +26,21 @@ exports[`containers/forms/PlanForm - Edit ACTIVE renders all fields correctly in
   >
     MDA Point
   </option>
+  <option
+    value="Dynamic-FI"
+  >
+    Dynamic FI
+  </option>
+  <option
+    value="Dynamic-IRS"
+  >
+    Dynamic IRS
+  </option>
+  <option
+    value="Dynamic-MDA"
+  >
+    Dynamic MDA
+  </option>
 </select>
 `;
 
@@ -271,6 +286,21 @@ exports[`containers/forms/PlanForm - Edit COMPLETE renders all fields correctly 
   >
     MDA Point
   </option>
+  <option
+    value="Dynamic-FI"
+  >
+    Dynamic FI
+  </option>
+  <option
+    value="Dynamic-IRS"
+  >
+    Dynamic IRS
+  </option>
+  <option
+    value="Dynamic-MDA"
+  >
+    Dynamic MDA
+  </option>
 </select>
 `;
 
@@ -515,6 +545,21 @@ exports[`containers/forms/PlanForm - Edit DRAFT renders all fields correctly in 
     value="MDA-Point"
   >
     MDA Point
+  </option>
+  <option
+    value="Dynamic-FI"
+  >
+    Dynamic FI
+  </option>
+  <option
+    value="Dynamic-IRS"
+  >
+    Dynamic IRS
+  </option>
+  <option
+    value="Dynamic-MDA"
+  >
+    Dynamic MDA
   </option>
 </select>
 `;
