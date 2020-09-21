@@ -276,7 +276,7 @@ describe('containers/forms/PlanForm/helpers', () => {
   it('getPlanFormValues gets the correct value for task generationStatus', () => {
     let sampleDynamicPlan = cloneDeep((DynamicFIPlan as unknown) as PlanDefinition);
     let res = getPlanFormValues(sampleDynamicPlan);
-    expect(res.taskGenerationStatus).toEqual('False');
+    expect(res.taskGenerationStatus).toEqual('True');
 
     sampleDynamicPlan = cloneDeep((DynamicFIPlan as unknown) as PlanDefinition);
     sampleDynamicPlan.useContext = [
