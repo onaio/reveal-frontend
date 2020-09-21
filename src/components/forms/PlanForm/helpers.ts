@@ -11,7 +11,8 @@ import {
   DEFAULT_ACTIVITY_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
   DEFAULT_TIME,
-  ENABLED_PLAN_TYPES,
+  DISPLAYED_PLAN_TYPES,
+  PLAN_TYPES_ALLOWED_TO_CREATE,
   PLAN_UUID_NAMESPACE,
 } from '../../../configs/env';
 import { DATE_IS_REQUIRED, NAME_IS_REQUIRED, REQUIRED } from '../../../configs/lang';
@@ -776,7 +777,10 @@ export function getGoalUnitFromActionCode(actionCode: PlanActionCodesType): Goal
  * @param {InterventionType} planType - plan type
  */
 export const isPlanTypeEnabled = (planType: InterventionType): boolean =>
-  ENABLED_PLAN_TYPES.includes(planType);
+  DISPLAYED_PLAN_TYPES.includes(planType);
+
+export const shouldPlanTypeBeCreated = (planType: InterventionType, isEditMode: boolean): boolean =>
+  isEditMode || PLAN_TYPES_ALLOWED_TO_CREATE.includes(planType);
 
 /**
  * Handle after form successful submission to the api

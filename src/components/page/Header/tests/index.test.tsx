@@ -77,7 +77,7 @@ describe('components/page/Header', () => {
 
   it('shows plans drop down option in the nav when with enabled plans', () => {
     const envModule = require('../../../../configs/env');
-    envModule.ENABLED_PLAN_TYPES = ['Dynamic-MDA'];
+    envModule.DISPLAYED_PLAN_TYPES = ['Dynamic-MDA'];
     const props = {
       authenticated: true,
       user: {
@@ -99,7 +99,7 @@ describe('components/page/Header', () => {
 
   it('Does not show plans drop down option in the nav', () => {
     const envModule = require('../../../../configs/env');
-    envModule.ENABLED_PLAN_TYPES = [];
+    envModule.DISPLAYED_PLAN_TYPES = [];
 
     const props = {
       authenticated: true,

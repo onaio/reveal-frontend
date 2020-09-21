@@ -14,8 +14,8 @@ const fetch = require('jest-fetch-mock');
 const history = createBrowserHistory();
 
 jest.mock('../../../../../../configs/env', () => ({
+  DISPLAYED_PLAN_TYPES: ['IRS'],
   ENABLED_FI_REASONS: ['Case Triggered', 'Routine'],
-  ENABLED_PLAN_TYPES: ['IRS'],
   PLAN_TYPES_WITH_MULTI_JURISDICTIONS: ['IRS', 'MDA-Point', 'Dynamic-IRS', 'Dynamic-MDA'],
 }));
 

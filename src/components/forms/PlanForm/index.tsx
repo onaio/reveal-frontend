@@ -22,7 +22,7 @@ import {
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
   ENABLED_FI_REASONS,
-  ENABLED_PLAN_TYPES,
+  PLAN_TYPES_ALLOWED_TO_CREATE,
   PLAN_TYPES_WITH_MULTI_JURISDICTIONS,
 } from '../../../configs/env';
 import {
@@ -90,10 +90,10 @@ import {
   getGoalUnitFromActionCode,
   getNameTitle,
   isFIOrDynamicFI,
-  isPlanTypeEnabled,
   onSubmitSuccess,
   planActivitiesMap,
   PlanSchema,
+  shouldPlanTypeBeCreated,
   showDefinitionUriFor,
 } from './helpers';
 import './style.css';
@@ -112,8 +112,8 @@ const initialJurisdictionValues: PlanJurisdictionFormFields = {
 };
 
 /** default intervention type displayed */
-const defaultInterventionType = ENABLED_PLAN_TYPES
-  ? (ENABLED_PLAN_TYPES[0] as InterventionType)
+const defaultInterventionType = PLAN_TYPES_ALLOWED_TO_CREATE
+  ? (PLAN_TYPES_ALLOWED_TO_CREATE[0] as InterventionType)
   : InterventionType.FI;
 
 /** initial values for plan Form */
@@ -352,22 +352,22 @@ const PlanForm = (props: PlanFormProps) => {
                 }}
                 className={errors.interventionType ? 'form-control is-invalid' : 'form-control'}
               >
-                {isPlanTypeEnabled(InterventionType.FI) && (
+                {shouldPlanTypeBeCreated(InterventionType.FI, editMode) && (
                   <option value={InterventionType.FI}>{FOCUS_INVESTIGATION}</option>
                 )}
-                {isPlanTypeEnabled(InterventionType.IRS) && (
+                {shouldPlanTypeBeCreated(InterventionType.IRS, editMode) && (
                   <option value={InterventionType.IRS}>{IRS_TITLE}</option>
                 )}
-                {isPlanTypeEnabled(InterventionType.MDAPoint) && (
+                {shouldPlanTypeBeCreated(InterventionType.MDAPoint, editMode) && (
                   <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>
                 )}
-                {isPlanTypeEnabled(InterventionType.DynamicFI) && (
+                {shouldPlanTypeBeCreated(InterventionType.DynamicFI, editMode) && (
                   <option value={InterventionType.DynamicFI}>{DYNAMIC_FI_TITLE}</option>
                 )}
-                {isPlanTypeEnabled(InterventionType.DynamicIRS) && (
+                {shouldPlanTypeBeCreated(InterventionType.DynamicIRS, editMode) && (
                   <option value={InterventionType.DynamicIRS}>{DYNAMIC_IRS_TITLE}</option>
                 )}
-                {isPlanTypeEnabled(InterventionType.DynamicMDA) && (
+                {shouldPlanTypeBeCreated(InterventionType.DynamicMDA, editMode) && (
                   <option value={InterventionType.DynamicMDA}>{DYNAMIC_MDA_TITLE}</option>
                 )}
               </Field>
