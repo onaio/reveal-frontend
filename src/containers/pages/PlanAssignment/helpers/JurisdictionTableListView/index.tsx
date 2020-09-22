@@ -5,7 +5,7 @@ import { RouteComponentProps } from 'react-router';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/TreeWalker';
 import {
-  ACTION,
+  ACTIONS,
   ASSIGN_PLANS,
   HOME,
   NAME,
@@ -140,7 +140,7 @@ const JurisdictionTableListView = (props: JurisdictionTableListViewPropTypes) =>
       ),
     ];
   });
-  const headerItems = [NAME, TEAMS_ASSIGNMENT, ACTION];
+  const headerItems = [NAME, TEAMS_ASSIGNMENT, ACTIONS];
   const tableClass = 'table table-bordered';
   const renderHeaders = () => {
     return (
