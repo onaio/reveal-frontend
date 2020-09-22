@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router';
 import HeaderBreadcrumb from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { defaultWalkerProps, WithWalkerProps } from '../../../../../components/TreeWalker';
 import {
+  ACTION,
   ASSIGN_PLANS,
   HOME,
   NAME,
@@ -117,6 +118,8 @@ const JurisdictionTableListView = (props: JurisdictionTableListViewPropTypes) =>
       return { label: org.name, value: org.identifier };
     });
 
+    const isLeafNode = !node.hasChildren();
+
     return [
       <JurisdictionCell
         key={`${node.model.id}-jurisdiction`}
@@ -124,18 +127,20 @@ const JurisdictionTableListView = (props: JurisdictionTableListViewPropTypes) =>
         url={`${ASSIGN_PLAN_URL}/${plan.identifier}/${node.model.id}`}
       />,
       <AssignedOrgs key={`${node.model.id}-txt`} id={node.model.id} orgs={jurisdictionOrgs} />,
-      <EditOrgs
-        defaultValue={selectedOrgs}
-        jurisdiction={node}
-        existingAssignments={jurisdictionAssignments}
-        key={`${node.model.id}-form`}
-        options={orgOptions}
-        plan={plan}
-        submitCallBackFunc={submitCallBackFunc}
-      />,
+      isLeafNode && (
+        <EditOrgs
+          defaultValue={selectedOrgs}
+          jurisdiction={node}
+          existingAssignments={jurisdictionAssignments}
+          key={`${node.model.id}-form`}
+          options={orgOptions}
+          plan={plan}
+          submitCallBackFunc={submitCallBackFunc}
+        />
+      ),
     ];
   });
-  const headerItems = [NAME, TEAMS_ASSIGNMENT, ''];
+  const headerItems = [NAME, TEAMS_ASSIGNMENT, ACTION];
   const tableClass = 'table table-bordered';
   const renderHeaders = () => {
     return (
