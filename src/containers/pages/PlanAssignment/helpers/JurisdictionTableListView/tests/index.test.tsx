@@ -99,4 +99,57 @@ describe('PlanAssignment/JurisdictionTableListView', () => {
     expect(toJson(wrapper.find('JurisdictionCell span'))).toMatchSnapshot('JurisdictionCell');
     wrapper.unmount();
   });
+
+  it('non-leaf nodes do not cannot assign', async () => {
+    if (!(raKsh3Node && raKashikishiHAHCNode && raNchelengeNode && raLuapulaNode && raZambiaNode)) {
+      fail();
+    }
+    const callBack: any = jest.fn();
+    const orgs = [organization1, organization2, organization3];
+    const props = {
+      assignments,
+      currentChildren: [raKashikishiHAHCNode],
+      currentNode: raNchelengeNode,
+      hierarchy: [raZambiaNode, raLuapulaNode, raNchelengeNode],
+      history,
+      location: {
+        hash: '',
+        pathname: `/assign/${plans[0].identifier}/${raNchelengeNode.model.id}`,
+        search: '',
+        state: {},
+      },
+      match: {
+        isExact: true,
+        params: { jurisdictionId: raNchelengeNode.model.id, planId: plans[0].identifier },
+        path: '/assign/:planId/:jurisdictionId',
+        url: `/assign/${plans[0].identifier}/${raNchelengeNode.model.id}`,
+      },
+      organizations: orgs,
+      plan: plans[0],
+      submitCallBackFunc: callBack,
+    };
+
+    const wrapper = mount(
+      <MemoryRouter
+        initialEntries={[
+          {
+            pathname: `/assign/${plans[0].identifier}/${raNchelengeNode.id}`,
+            search: '',
+            state: {},
+          },
+        ]}
+      >
+        <JurisdictionTableListView {...props} />
+      </MemoryRouter>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    expect(toJson(wrapper.find('thead'))).toMatchSnapshot('Table headers');
+    expect(wrapper.find('EditOrgs').length).toEqual(0);
+    expect(toJson(wrapper.find('JurisdictionCell span'))).toMatchSnapshot('JurisdictionCell');
+    wrapper.unmount();
+  });
 });
