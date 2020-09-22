@@ -14,6 +14,9 @@ import { removePlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDe
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
+const div = document.createElement('div');
+document.body.appendChild(div);
+
 const history = createBrowserHistory();
 
 jest.mock('../PlanLocationNames', () => {
@@ -51,7 +54,8 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     const wrapper = mount(
       <Router history={history}>
         <UpdatePlan {...props} />
-      </Router>
+      </Router>,
+      { attachTo: div }
     );
     await act(async () => {
       await new Promise<unknown>(resolve => setImmediate(resolve));
@@ -78,6 +82,8 @@ describe('components/InterventionPlan/UpdatePlan', () => {
 
   it('checking taskGeneration status is correct for dynamic-fI plans where one is not defined', async () => {
     fetch.mockResponseOnce(JSON.stringify({}));
+    const otherDiv = document.createElement('div');
+    document.body.appendChild(otherDiv);
 
     const plan = cloneDeep(DynamicFIPlan) as PlanDefinition;
     plan.useContext = [
@@ -102,7 +108,8 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     const wrapper = mount(
       <Router history={history}>
         <UpdatePlan {...props} />
-      </Router>
+      </Router>,
+      { attachTo: otherDiv }
     );
     await act(async () => {
       await new Promise<unknown>(resolve => setImmediate(resolve));
