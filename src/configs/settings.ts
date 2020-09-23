@@ -131,6 +131,7 @@ import {
   FI_REASON_CODE,
   FI_STATUS_CODE,
   HIGH_PRIORITIY,
+  INTERNAL,
   INTERVENTION_TYPE_CODE,
   INVESTIGATION,
   IRS_ACTIVITY_CODE,
@@ -329,7 +330,7 @@ export const PlanActionCodes = [
 
 /** Allowed taskGenerationStatus values */
 /* tslint:disable-next-line no-useless-cast */
-export const taskGenerationStatuses = [TRUE, FALSE, DISABLED] as const;
+export const taskGenerationStatuses = [TRUE, FALSE, DISABLED, INTERNAL] as const;
 
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {

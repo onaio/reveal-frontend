@@ -1164,3 +1164,365 @@ export const fiReasonTestPlan = {
   ],
   version: '1',
 };
+
+export const DynamicFIPlan = {
+  identifier: '7c48f3f1-79c6-5b76-8432-43d04bd67c32',
+  version: '1',
+  name: 'Dynamic-FI-2020-09-16',
+  title: 'Test Plan by QA 2020-09-16',
+  status: 'active',
+  date: '2020-09-16',
+  effectivePeriod: { start: '2020-09-16', end: '2020-10-06' },
+  useContext: [
+    { code: 'interventionType', valueCodableConcept: 'Dynamic-FI' },
+    { code: 'fiStatus', valueCodableConcept: 'A1' },
+    { code: 'fiReason', valueCodableConcept: 'Routine' },
+    { code: 'taskGenerationStatus', valueCodableConcept: 'True' },
+    { code: 'teamAssignmentStatus', valueCodableConcept: 'True' },
+  ],
+  jurisdiction: [{ code: '45abb6b7-b3ca-4b82-851b-856a4da0335b' }],
+  serverVersion: 1600346630940,
+  goal: [
+    {
+      id: 'RACD_register_families',
+      description: 'ลงทะเบียนครัวเรือนและสมาชิกในครัวเรือน (100%) ภายในพื้นที่ปฏิบัติงาน',
+      priority: 'medium-priority',
+      target: [
+        {
+          measure: 'ร้อยละของบ้าน/สิ่งปลูกสร้างที่ได้ลงทะเบียนข้อมูลครัวเรือน',
+          detail: {
+            detailQuantity: {
+              value: 100.0,
+              comparator: '\u0026amp;amp;gt;\u003d',
+              unit: 'Percent',
+            },
+          },
+          due: '2020-09-23',
+        },
+      ],
+    },
+    {
+      id: 'RACD_Blood_Screening',
+      description: 'เจาะเลือดรอบบ้านผู้ป่วยในรัศมี 1 กิโลเมตร (100%)',
+      priority: 'medium-priority',
+      target: [
+        {
+          measure: 'จำนวนผู้ที่ได้รับการเจาะโลหิต',
+          detail: {
+            detailQuantity: {
+              value: 100.0,
+              comparator: '\u0026amp;amp;gt;\u003d',
+              unit: 'Person(s)',
+            },
+          },
+          due: '2020-09-23',
+        },
+      ],
+    },
+    {
+      id: 'RACD_bednet_distribution',
+      description: 'แจกมุ้งทุกหลังคาเรือนในพื้นที่ปฏิบัติงาน (100%)',
+      priority: 'medium-priority',
+      target: [
+        {
+          measure: 'จำนวนบ้าน/สิ่งปลูกสร้างที่ได้รับมุ้ง',
+          detail: {
+            detailQuantity: {
+              value: 100.0,
+              comparator: '\u0026amp;amp;gt;\u003d',
+              unit: 'Percent',
+            },
+          },
+          due: '2020-09-23',
+        },
+      ],
+    },
+    {
+      id: 'Larval_Dipping',
+      description: 'ดำเนินกิจกรรมจับลูกน้ำอย่างน้อย 3 แห่งในพื้นที่ปฏิบัติงาน',
+      priority: 'medium-priority',
+      target: [
+        {
+          measure: 'จำนวนกิจกรรมการตักลูกน้ำ',
+          detail: {
+            detailQuantity: {
+              value: 3.0,
+              comparator: '\u0026amp;amp;gt;\u003d',
+              unit: 'activit(y|ies)',
+            },
+          },
+          due: '2020-09-23',
+        },
+      ],
+    },
+    {
+      id: 'Mosquito_Collection',
+      description: 'กิจกรรมจับยุงกำหนดไว้อย่างน้อย 3 แห่ง',
+      priority: 'medium-priority',
+      target: [
+        {
+          measure: 'จำนวนกิจกรรมการจับยุง',
+          detail: {
+            detailQuantity: {
+              value: 3.0,
+              comparator: '\u0026amp;amp;gt;\u003d',
+              unit: 'activit(y|ies)',
+            },
+          },
+          due: '2020-09-23',
+        },
+      ],
+    },
+    {
+      id: 'BCC_Focus',
+      description: 'ให้สุขศึกษาในพื้นที่ปฏิบัติงานอย่างน้อย 1 ครั้ง',
+      priority: 'medium-priority',
+      target: [
+        {
+          measure: 'จำนวนกิจกรรมการให้สุขศึกษา',
+          detail: {
+            detailQuantity: {
+              value: 1.0,
+              comparator: '\u0026amp;amp;gt;\u003d',
+              unit: 'activit(y|ies)',
+            },
+          },
+          due: '2020-09-23',
+        },
+      ],
+    },
+  ],
+  action: [
+    {
+      identifier: '574dfa8f-5b9c-5230-8839-d3b9b45dbc83',
+      prefix: 1,
+      title: 'ลงทะเบียนครัวเรือน',
+      description: 'ลงทะเบียนครัวเรือนและสมาชิกในครัวเรือน (100%) ภายในพื้นที่ปฏิบัติงาน',
+      code: 'RACD Register Family',
+      timingPeriod: { start: '2020-09-16', end: '2020-09-23' },
+      reason: 'Routine',
+      goalId: 'RACD_register_families',
+      subjectCodableConcept: { text: 'Location' },
+      trigger: [
+        { type: 'named-event', name: 'plan-activation' },
+        {
+          type: 'named-event',
+          name: 'event-submission',
+          expression: {
+            description: 'Trigger when a Register_Structure event is submitted',
+            expression: 'questionnaire \u003d \u0027Register_Structure\u0027',
+          },
+        },
+      ],
+      condition: [
+        {
+          kind: 'applicability',
+          expression: {
+            description: 'Structure is residential or type does not exist',
+            expression:
+              '$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id\u003d\u0027locationType\u0027).exists().not() or $this.type.where(id\u003d\u0027locationType\u0027).text \u003d \u0027Residential Structure\u0027) and $this.contained.exists().not())',
+            subjectCodableConcept: { text: 'Family' },
+          },
+        },
+        {
+          kind: 'applicability',
+          expression: {
+            description: 'Apply to residential structures in Register_Structure questionnaires',
+            expression:
+              '$this.is(FHIR.Location) or (questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Residential Structure\u0027)',
+          },
+        },
+      ],
+      definitionUri: 'family_register.json',
+      type: 'create',
+    },
+    {
+      identifier: '52e355e7-2cec-5fb9-bb4f-036ee96243f9',
+      prefix: 2,
+      title: 'กิจกรรมการเจาะโลหิต',
+      description: 'เจาะเลือดรอบบ้านผู้ป่วยในรัศมี 1 กิโลเมตร (100%)',
+      code: 'Blood Screening',
+      timingPeriod: { start: '2020-09-16', end: '2020-09-23' },
+      reason: 'Investigation',
+      goalId: 'RACD_Blood_Screening',
+      subjectCodableConcept: { text: 'Person' },
+      trigger: [
+        { type: 'named-event', name: 'plan-activation' },
+        {
+          type: 'named-event',
+          name: 'event-submission',
+          expression: {
+            description:
+              'Trigger when a Family Registration or Family Member Registration event is submitted',
+            expression:
+              'questionnaire \u003d \u0027Family_Registration\u0027 or questionnaire \u003d \u0027Family_Member_Registration\u0027',
+          },
+        },
+      ],
+      condition: [
+        {
+          kind: 'applicability',
+          expression: {
+            description:
+              'Person is older than 5 years or person associated with questionnaire response if older than 5 years',
+            expression:
+              '($this.is(FHIR.Patient) and $this.birthDate \u0026amp;amp;lt;\u003d today() - 5 \u0027years\u0027) or ($this.contained.where(Patient.birthDate \u0026amp;amp;lt;\u003d today() - 5 \u0027years\u0027).exists())',
+          },
+        },
+      ],
+      definitionUri: 'blood_screening.json',
+      type: 'create',
+    },
+    {
+      identifier: '7350fd5e-2c0f-551e-9561-369c9f3f1f52',
+      prefix: 3,
+      title: 'กิจกรรมสำรวจ/ชุบ/แจกมุ้ง',
+      description: 'แจกมุ้งทุกหลังคาเรือนในพื้นที่ปฏิบัติงาน (100%)',
+      code: 'Bednet Distribution',
+      timingPeriod: { start: '2020-09-16', end: '2020-09-23' },
+      reason: 'Routine',
+      goalId: 'RACD_bednet_distribution',
+      subjectCodableConcept: { text: 'Location' },
+      trigger: [
+        { type: 'named-event', name: 'plan-activation' },
+        {
+          type: 'named-event',
+          name: 'event-submission',
+          expression: {
+            description: 'Trigger when a Family Registration event is submitted',
+            expression: 'questionnaire \u003d \u0027Family_Registration\u0027',
+          },
+        },
+      ],
+      condition: [
+        {
+          kind: 'applicability',
+          expression: {
+            description: 'Structure is residential or type does not exist',
+            expression:
+              '$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id\u003d\u0027locationType\u0027).exists().not() or $this.type.where(id\u003d\u0027locationType\u0027).text \u003d \u0027Residential Structure\u0027) and $this.contained.exists())',
+            subjectCodableConcept: { text: 'Family' },
+          },
+        },
+        {
+          kind: 'applicability',
+          expression: {
+            description: 'Register structure event submitted for a residential structure',
+            expression:
+              '$this.is(FHIR.Location)  or (questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Residential Structure\u0027)',
+          },
+        },
+      ],
+      definitionUri: 'bednet_distribution.json',
+      type: 'create',
+    },
+    {
+      identifier: 'e9f18b1a-59c6-5d3a-b42a-18dcb9012c59',
+      prefix: 4,
+      title: 'กิจกรรมการตักลูกน้ำ',
+      description: 'ดำเนินกิจกรรมจับลูกน้ำอย่างน้อย 3 แห่งในพื้นที่ปฏิบัติงาน',
+      code: 'Larval Dipping',
+      timingPeriod: { start: '2020-09-16', end: '2020-09-23' },
+      reason: 'Investigation',
+      goalId: 'Larval_Dipping',
+      subjectCodableConcept: { text: 'Location' },
+      trigger: [
+        { type: 'named-event', name: 'plan-activation' },
+        {
+          type: 'named-event',
+          name: 'event-submission',
+          expression: {
+            description: 'Trigger when a Register_Structure event is submitted',
+            expression: 'questionnaire \u003d \u0027Register_Structure\u0027',
+          },
+        },
+      ],
+      condition: [
+        {
+          kind: 'applicability',
+          expression: {
+            description: 'Structure is a larval breeding site',
+            expression:
+              '$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id\u003d\u0027locationType\u0027).text \u003d \u0027Larval Breeding Site\u0027',
+          },
+        },
+        {
+          kind: 'applicability',
+          expression: {
+            description: 'Apply to larval breeding sites in Register_Structure questionnaires',
+            expression:
+              '$this.is(FHIR.Location) or (questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Larval Breeding Site\u0027)',
+          },
+        },
+      ],
+      definitionUri: 'larval_dipping_form.json',
+      type: 'create',
+    },
+    {
+      identifier: 'd9d1cd1c-ff6d-5ec8-bb49-106ab9a01416',
+      prefix: 5,
+      title: 'กิจกรรมการจับยุง',
+      description: 'กิจกรรมจับยุงกำหนดไว้อย่างน้อย 3 แห่ง',
+      code: 'Mosquito Collection',
+      timingPeriod: { start: '2020-09-16', end: '2020-09-23' },
+      reason: 'Investigation',
+      goalId: 'Mosquito_Collection',
+      subjectCodableConcept: { text: 'Location' },
+      trigger: [
+        { type: 'named-event', name: 'plan-activation' },
+        {
+          type: 'named-event',
+          name: 'event-submission',
+          expression: {
+            description: 'Trigger when a Register_Structure event is submitted',
+            expression: 'questionnaire \u003d \u0027Register_Structure\u0027',
+          },
+        },
+      ],
+      condition: [
+        {
+          kind: 'applicability',
+          expression: {
+            description: 'Structure is a mosquito collection point',
+            expression:
+              '$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id\u003d\u0027locationType\u0027).text \u003d \u0027Mosquito Collection Point\u0027',
+          },
+        },
+        {
+          kind: 'applicability',
+          expression: {
+            description: 'Apply to mosquito collection point in Register_Structure questionnaires',
+            expression:
+              '$this.is(FHIR.Location) or (questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Mosquito Collection Point\u0027)',
+          },
+        },
+      ],
+      definitionUri: 'mosquito_collection_form.json',
+      type: 'create',
+    },
+    {
+      identifier: 'f1604872-d055-58d2-91e9-861d74d08509',
+      prefix: 6,
+      title: 'กิจกรรมการให้สุขศึกษา',
+      description: 'ดำเนินกิจกรรมให้สุขศึกษา',
+      code: 'BCC',
+      timingPeriod: { start: '2020-09-16', end: '2020-09-23' },
+      reason: 'Routine',
+      goalId: 'BCC_Focus',
+      subjectCodableConcept: { text: 'Jurisdiction' },
+      trigger: [{ type: 'named-event', name: 'plan-activation' }],
+      condition: [
+        {
+          kind: 'applicability',
+          expression: {
+            description: 'Jurisdiction type location',
+            expression: 'Location.physicalType.text \u003d \u0027jdn\u0027',
+          },
+        },
+      ],
+      definitionUri: 'behaviour_change_communication.json',
+      type: 'create',
+    },
+  ],
+  experimental: false,
+};

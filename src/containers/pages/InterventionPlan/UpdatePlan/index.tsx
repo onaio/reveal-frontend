@@ -33,7 +33,7 @@ import { getEventId, planIsReactive } from './utils';
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
 /** UpdatePlanProps interface */
-interface UpdatePlanProps {
+export interface UpdatePlanProps {
   fetchPlan: typeof addPlanDefinition;
   plan: PlanDefinition | null;
   service: typeof OpenSRPService;
