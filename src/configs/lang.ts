@@ -837,3 +837,5 @@ export const PLANS_USER_FILTER_NOTIFICATION = translate(
   'PLANS_USER_FILTER_NOTIFICATION',
   'User filter on: Only plans assigned to %s are listed.'
 );
+
+export const MOP_UP_REPORTING_TITLE = translate('MOP_UP_REPORTING_TITLE', 'IRS Mop-up Reporting');

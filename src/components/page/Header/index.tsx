@@ -24,6 +24,7 @@ import {
   ENABLE_FI,
   ENABLE_IRS,
   ENABLE_IRS_PERFORMANCE_REPORT,
+  ENABLE_IRS_MOP_PUP_REPORTING,
   ENABLE_JURISDICTION_METADATA_UPLOAD,
   ENABLE_MDA_POINT,
   ENABLE_PLANNING,
@@ -52,6 +53,7 @@ import {
   MDA_POINT_REPORTING_TITLE,
   MDA_REPORTING_TITLE,
   MONITOR,
+  MOP_UP_REPORTING_TITLE,
   ORGANIZATIONS_LABEL,
   PLAN_TITLE,
   PLANNING_PAGE_TITLE,
@@ -68,6 +70,7 @@ import {
   CLIENTS_LIST_URL,
   EDIT_SERVER_SETTINGS_URL,
   FI_URL,
+  IRS_MOP_UP_REPORT_URL,
   JSON_VALIDATORS_URL,
   JURISDICTION_METADATA_URL,
   LOGOUT_URL,
@@ -133,12 +136,14 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
       ENABLE_JURISDICTION_METADATA_UPLOAD ||
       ENABLE_POPULATION_SERVER_SETTINGS;
 
-    const enableMonitorDropdown =
+    const enableMonitorDropDown =
       ENABLE_IRS ||
       ENABLE_FI ||
       ENABLE_DYNAMIC_MDA ||
       ENABLE_MDA_POINT ||
       ENABLE_IRS_PERFORMANCE_REPORT;
+      ENABLE_IRS_MOP_PUP_REPORTING;
+
     return (
       <div>
         <Navbar light={true} expand="md">
@@ -194,7 +199,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                 </NavItem>
               )}
 
-              {enableMonitorDropdown && (
+              {enableMonitorDropDown && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle
                     nav={true}
@@ -261,6 +266,19 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                             activeClassName="active"
                           >
                             {MDA_REPORTING_TITLE}
+                          </NavLink>
+                        </DropdownItem>
+                      </div>
+                    )}
+                    {ENABLE_IRS_MOP_PUP_REPORTING && (
+                      <div>
+                        <DropdownItem>
+                          <NavLink
+                            to={IRS_MOP_UP_REPORT_URL}
+                            className="nav-link"
+                            activeClassName="active"
+                          >
+                            {MOP_UP_REPORTING_TITLE}
                           </NavLink>
                         </DropdownItem>
                       </div>
