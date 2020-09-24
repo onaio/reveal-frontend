@@ -57,3 +57,9 @@ Below is a list of currently supported environment variables:
 - Controls plans which can be created from the create plans form.
 - Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
 - Variable is **not required** and if not provided all the above options are loaded.
+  
+9. **REACT_APP_TASK_GENERATION_STATUS**
+
+- _not required_; _(ENUM<["True", "False", "Disabled", "internal"]>)_
+- no defaults, applies a heuristic to pick the correct value when env isn't configured
+- configures the value to be used for taskGenerationStatus context for dynamicPlans
