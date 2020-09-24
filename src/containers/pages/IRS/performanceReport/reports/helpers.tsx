@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DrillDownColumn, DropDownCellProps } from '@onaio/drill-down-table';
 import superset, {
   SupersetAdhocFilterOption,
@@ -54,6 +55,28 @@ const averageTimeColumns = [
   },
 ];
 
+/** data quality check columns */
+const dataQualityCheck = {
+  Cell: (cell: Cell<Dictionary>) => {
+    return cell.value ? (
+      <FontAwesomeIcon className="check-icon" icon="check" />
+    ) : (
+      <FontAwesomeIcon className="times-icon" icon="times" />
+    );
+  },
+  Header: 'Data Quality Check',
+  accessor: 'data_quality_check',
+  maxWidth: 105,
+  sortable: false,
+};
+
+/** insectside usage rate column */
+const insectSideUsageRate = {
+  Cell: (cell: Cell) => <div>{(cell.value || 0).toFixed(2)}</div>,
+  Header: 'Insectcide Usage Rate*',
+  accessor: 'usage_rate',
+};
+
 /** District tables columns */
 const districtColumns = [
   {
@@ -67,6 +90,8 @@ const districtColumns = [
   },
   averageStructuresColumn,
   ...averageTimeColumns,
+  insectSideUsageRate,
+  dataQualityCheck,
 ];
 
 /** data colecctors table columns */
@@ -79,6 +104,8 @@ const dataCollectorsColumns = [
   daysWorkedColumn,
   averageStructuresColumn,
   ...averageTimeColumns,
+  insectSideUsageRate,
+  dataQualityCheck,
 ];
 
 /** sprayer operator columns */
@@ -103,6 +130,16 @@ const sopColumns = [
   },
   averageStructuresColumn,
   ...averageTimeColumns,
+  insectSideUsageRate,
+  dataQualityCheck,
+  {
+    Header: 'Found Difference (Latest Submission)',
+    accessor: 'found_diff',
+  },
+  {
+    Header: 'Sprayed Difference (Latest Submission)',
+    accessor: 'sprayed_diff',
+  },
 ];
 
 /** sprayer operator dates columns */
@@ -146,6 +183,19 @@ const sopByDateColumns = [
     ],
   },
   ...averageTimeColumns,
+  {
+    Header: 'Bottles/Sachets Used',
+    accessor: 'bottles_empty',
+  },
+  dataQualityCheck,
+  {
+    Header: 'Found Difference',
+    accessor: 'found_diff',
+  },
+  {
+    Header: 'Sprayed Difference',
+    accessor: 'sprayed_diff',
+  },
 ];
 
 /** export all IRS performance table columns */

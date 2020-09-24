@@ -63,6 +63,7 @@ import {
   RouterParamFields,
   supersetFilters,
 } from './helpers';
+import './index.css';
 
 /** register the reducers */
 reducerRegistry.register(DistrictReducerName, DistrictReducer);

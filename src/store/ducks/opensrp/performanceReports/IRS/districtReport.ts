@@ -13,8 +13,14 @@ import { createSelector } from 'reselect';
 export const reducerName = 'IRSDistrictPerformance';
 
 export interface IRSPerformanceCommonFields {
+  bottles_empty: number;
+  daily_found: number;
+  daily_sprayed: number;
+  data_quality_check: boolean;
   end_time: string;
   field_duration: string;
+  found_diff: number;
+  sprayed_diff: number;
   start_time: string;
 }
 
@@ -32,6 +38,7 @@ export interface IRSDistrictPerformance extends IRSPerformanceCommonFields {
   plan_id: string;
   refused: number;
   sprayed: number;
+  usage_rate: number;
 }
 
 /** generic IRS district Reducer */

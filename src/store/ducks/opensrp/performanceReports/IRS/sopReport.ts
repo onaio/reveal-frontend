@@ -29,6 +29,7 @@ export interface IRSSOPPerformance extends IRSPerformanceCommonFields {
   refused: number;
   sop: string;
   sprayed: number;
+  usage_rate: number;
 }
 
 /** generic IRS SOP Reducer */

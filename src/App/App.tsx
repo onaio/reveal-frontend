@@ -33,6 +33,8 @@ import {
 import { LOGIN_PROMPT } from '../configs/lang';
 import { providers } from '../configs/settings';
 
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import '@onaio/drill-down-table/dist/table.css';
 import { CustomLogout } from '../components/Logout';
 import { Footer } from '../components/page/Footer';
@@ -136,7 +138,9 @@ library.add(
   faMap,
   faUser,
   faTextHeight,
-  faHome
+  faHome,
+  faTimes,
+  faCheck
 );
 
 toast.configure({

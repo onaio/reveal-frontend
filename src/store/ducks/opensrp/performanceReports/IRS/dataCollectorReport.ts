@@ -27,6 +27,7 @@ export interface IRSCollectorPerformance extends IRSPerformanceCommonFields {
   plan_id: string;
   refused: number;
   sprayed: number;
+  usage_rate: number;
 }
 
 /** generic IRS data collector Reducer */
