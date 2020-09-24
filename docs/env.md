@@ -4,82 +4,88 @@ This document describes the environment variables in this code base and how to u
 
 Below is a list of currently supported environment variables:
 
-1. **REACT_APP_ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS**
+* **REACT_APP_ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS**
 
-- Controls the identifier options displayed when downloading jurisdiction metadata.
-- Options: POPULATION, RISK, COVERAGE and TARGET
-- Variable is **not required** and if not provided all the options are loaded.
+   - Controls the identifier options displayed when downloading jurisdiction metadata.
+   - Options: POPULATION, RISK, COVERAGE and TARGET
+   - Variable is **not required** and if not provided all the options are loaded.
 
-2. **REACT_APP_KEYCLOAK_LOGOUT_URL**
+* **REACT_APP_KEYCLOAK_LOGOUT_URL**
 
-- url to logout from the keycloak server
-- **Required**
-- default: `https://keycloak-stage.smartregister.org/auth/realms/reveal-stage/protocol/openid-connect/logout`
+   - url to logout from the keycloak server
+   - **Required**
+   - default: `https://keycloak-stage.smartregister.org/auth/realms/reveal-stage/protocol/openid-connect/logout`
 
-3. **REACT_APP_SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY**
+* **REACT_APP_SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY**
 
-- A Boolean that enables and disables team assignment (by not showing team assignment form) for non-operational areas.
-- **Not required**
-- Default value: `false`.
+   - A Boolean that enables and disables team assignment (by not showing team assignment form) for non-operational areas.
+   - **Not required**
+   - Default value: `false`.
 
-4. **REACT_APP_ENABLED_FI_REASONS**
+* **REACT_APP_ENABLED_FI_REASONS**
 
-- Focus investigation reasons to be enabled on plan form.
-- Options: Case Triggered and Routine
-- **Required**
+   - Focus investigation reasons to be enabled on plan form.
+   - Options: Case Triggered and Routine
+   - **Required**
 
-5. **REACT_APP_ENABLE_HOME_MANAGE_PLANS_LINK**
+* **REACT_APP_ENABLE_HOME_MANAGE_PLANS_LINK**
 
-- Enable or disable manage plans home page link.
-- **Not required**
-- Default value: `false`.
+   - Enable or disable manage plans home page link.
+   - **Not required**
+   - Default value: `false`.
 
-6. **REACT_APP_ENABLE_HOME_PLANNING_VIEW_LINK**
+* **REACT_APP_ENABLE_HOME_PLANNING_VIEW_LINK**
 
-- Enable or disable planning view home page link.
-- **Not required**
-- Default value: `false`.
+   - Enable or disable planning view home page link.
+   - **Not required**
+   - Default value: `false`.
 
-7. **REACT_APP_SUPERSET_IRS_DISTRICT_PERFORMANCE_REPORT_SLICE**
+* **REACT_APP_SUPERSET_IRS_DISTRICT_PERFORMANCE_REPORT_SLICE**
 
-- IRS Performance Reporting districts Superset slice id
-- **Required**
+   - IRS Performance Reporting districts Superset slice id
+   - **Required**
 
-8. **REACT_APP_SUPERSET_IRS_DATA_COLLECTORS_PERFORMANCE_REPORT_SLICE**
+* **REACT_APP_SUPERSET_IRS_DATA_COLLECTORS_PERFORMANCE_REPORT_SLICE**
 
-- IRS Performance Reporting data collectors Superset slice id
-- **Required**
+   - IRS Performance Reporting data collectors Superset slice id
+   - **Required**
 
-9. **REACT_APP_SUPERSET_IRS_SOP_PERFORMANCE_REPORT_SLICE**
+* **REACT_APP_SUPERSET_IRS_SOP_PERFORMANCE_REPORT_SLICE**
 
-- IRS Performance Reporting spray operators Superset slice id
-- **Required**
+   - IRS Performance Reporting spray operators Superset slice id
+   - **Required**
 
-10. **REACT_APP_SUPERSET_IRS_SOP_BY_DATE_PERFORMANCE_REPORT_SLICE**
+* **REACT_APP_SUPERSET_IRS_SOP_BY_DATE_PERFORMANCE_REPORT_SLICE**
 
-- IRS Performance Reporting spray event date Superset slice id
-- **Required**
+    - IRS Performance Reporting spray event date Superset slice id
+    - **Required**
 
-11. **REACT_APP_ENABLE_DEFAULT_PLAN_USER_FILTER**
+* **REACT_APP_ENABLE_DEFAULT_PLAN_USER_FILTER**
 
-- _optional_; _(boolean)_
-- default: `false`
-- whether to filter plans by the logged in user right of the bat by default
+    - _optional_; _(boolean)_
+    - default: `false`
+    - whether to filter plans by the logged in user right of the bat by default
 
-12. **REACT_APP_DISPLAYED_PLAN_TYPES**
+* **REACT_APP_DISPLAYED_PLAN_TYPES**
 
-- Controls plans displayed on the site.
-- Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
-- Variable is **not required** and if not provided all the above options are loaded.
+    - Controls plans displayed on the site.
+    - Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
+    - Variable is **not required** and if not provided all the above options are loaded.
 
-13. **REACT_APP_PLAN_TYPES_ALLOWED_TO_CREATE**
+* **REACT_APP_PLAN_TYPES_ALLOWED_TO_CREATE**
 
-- Controls plans which can be created from the create plans form.
-- Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
-- Variable is **not required** and if not provided all the above options are loaded.
+    - Controls plans which can be created from the create plans form.
+    - Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
+    - Variable is **not required** and if not provided all the above options are loaded.
 
-14. **REACT_APP_TASK_GENERATION_STATUS**
+* **REACT_APP_TASK_GENERATION_STATUS**
 
-- _not required_; _(ENUM<["True", "False", "Disabled", "internal"]>)_
-- no defaults, applies a heuristic to pick the correct value when env isn't configured
-- configures the value to be used for taskGenerationStatus context for dynamicPlans
+   - _not required_; _(ENUM<["True", "False", "Disabled", "internal"]>)_
+   - no defaults, applies a heuristic to pick the correct value when env isn't configured
+   - configures the value to be used for taskGenerationStatus context for dynamicPlans
+
+* **REACT_APP_ENABLE_IRS_MOP_PUP_REPORTING**
+
+  - **not Required**; _(string)_
+  - to activate set the env to `true`, any other value will be interpreted as false
+  - enables the monitor IRS mop up reporting page
