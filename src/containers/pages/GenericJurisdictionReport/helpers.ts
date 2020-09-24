@@ -247,6 +247,10 @@ export const zambiaMDALowerJurisdictions = [
     accessor: 'structures_visited_per',
   },
   {
+    Header: '# of children treated',
+    accessor: 'n_events_where_pzqdistributed',
+  },
+  {
     Header: 'PZQ Tablets Distributed',
     accessor: 'total_pzqdistributed',
   },

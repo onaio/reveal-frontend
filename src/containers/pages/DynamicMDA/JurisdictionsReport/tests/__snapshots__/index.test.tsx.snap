@@ -92,4 +92,4 @@ exports[`components/MDA Reports/JurisdictionReport renders correctly: page title
 </h3>
 `;
 
-exports[`components/MDA Reports/JurisdictionReport renders correctly: table headers 1`] = `"NameExpected Children Found (%)Expected Children Treated (%)Registered Children Treated (%)Structures Visited (%)PZQ Tablets Distributed"`;
+exports[`components/MDA Reports/JurisdictionReport renders correctly: table headers 1`] = `"NameExpected Children Found (%)Expected Children Treated (%)Registered Children Treated (%)Structures Visited (%)# of children treatedPZQ Tablets Distributed"`;
