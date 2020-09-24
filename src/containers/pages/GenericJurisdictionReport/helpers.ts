@@ -247,7 +247,7 @@ export const zambiaMDALowerJurisdictions = [
     accessor: 'structures_visited_per',
   },
   {
-    Header: '# of children treated',
+    Header: '# Of Children Treated',
     accessor: 'n_events_where_pzqdistributed',
   },
   {
