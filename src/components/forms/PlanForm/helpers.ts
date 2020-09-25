@@ -11,8 +11,10 @@ import {
   DEFAULT_ACTIVITY_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
   DEFAULT_TIME,
-  ENABLED_PLAN_TYPES,
+  DISPLAYED_PLAN_TYPES,
+  PLAN_TYPES_ALLOWED_TO_CREATE,
   PLAN_UUID_NAMESPACE,
+  TASK_GENERATION_STATUS,
 } from '../../../configs/env';
 import { DATE_IS_REQUIRED, NAME_IS_REQUIRED, REQUIRED } from '../../../configs/lang';
 import {
@@ -95,6 +97,13 @@ export const showDefinitionUriFor = [
   InterventionType.DynamicMDA,
 ];
 
+/**
+ * Check if intervention type id FI or Dynamic FI
+ * @param {InterventionType} interventionType - intervention type
+ */
+export const isFIOrDynamicFI = (interventionType: InterventionType): boolean =>
+  [InterventionType.DynamicFI, InterventionType.FI].includes(interventionType);
+
 /** Yup validation schema for PlanForm */
 export const PlanSchema = Yup.object().shape({
   activities: Yup.array().of(
@@ -122,7 +131,13 @@ export const PlanSchema = Yup.object().shape({
   caseNum: Yup.string(),
   date: Yup.string().required(DATE_IS_REQUIRED),
   end: Yup.date().required(REQUIRED),
-  fiReason: Yup.string().oneOf(FIReasons.map(e => e)),
+  fiReason: Yup.string().when('interventionType', {
+    is: value => isFIOrDynamicFI(value),
+    otherwise: Yup.string(),
+    then: Yup.string()
+      .oneOf(FIReasons.map(e => e))
+      .required(REQUIRED),
+  }),
   fiStatus: Yup.string().oneOf(fiStatusCodes),
   identifier: Yup.string(),
   interventionType: Yup.string()
@@ -555,6 +570,40 @@ export function doesFieldHaveErrors(
 }
 
 /**
+ * Check if the plan is a dynamic plan
+ * @param planObject - the plan
+ */
+export const isDynamicPlan = <T extends Pick<PlanDefinition, 'action'> = PlanDefinition>(
+  planObject: T
+) =>
+  planObject.action
+    .map(action => {
+      return Object.keys(action).includes(CONDITION) || Object.keys(action).includes(TRIGGER);
+    })
+    .includes(true);
+
+/** try to deduce the task generation status value from envs, if cant get a proper valid value
+ * return undefined
+ * @param - configuredEnv -  env of what the task generation status value should be
+ * @param - planDefinition actions , to help deduce if plan is dynamic
+ */
+export const getTaskGenerationValue = (
+  configuredEnv: string | undefined,
+  planActions: Pick<PlanDefinition, 'action'>
+) => {
+  const isDynamic = isDynamicPlan(planActions);
+  let taskGenerationStatusValue: taskGenerationStatusType | undefined;
+  /** we should probably add a validation check for the envs higher at point of entry */
+  taskGenerationStatusValue =
+    isDynamic &&
+    configuredEnv &&
+    taskGenerationStatuses.includes(configuredEnv as taskGenerationStatusType)
+      ? (configuredEnv as taskGenerationStatusType)
+      : undefined;
+  return taskGenerationStatusValue;
+};
+
+/**
  * Generate an OpenSRP plan definition object from the PlanForm
  * @param formValue - the value gotten from the PlanForm
  * @returns {PlanDefinition} - the plan definition object
@@ -574,6 +623,16 @@ export function generatePlanDefinition(
         ? parseInt(DEFAULT_PLAN_VERSION, 10) + 1
         : parseInt(formValue.version, 10) + 1
       : formValue.version;
+
+  const actionAndGoals = extractActivitiesFromPlanForm(
+    formValue.activities,
+    planObj ? planObj.identifier : '',
+    planObj
+  );
+
+  const taskGenerationStatusValue =
+    getTaskGenerationValue(TASK_GENERATION_STATUS, actionAndGoals) ??
+    formValue.taskGenerationStatus;
 
   const useContext: UseContext[] = [
     {
@@ -601,16 +660,12 @@ export function generatePlanDefinition(
   if (formValue.taskGenerationStatus) {
     useContext.push({
       code: TASK_GENERATION_STATUS_CODE,
-      valueCodableConcept: formValue.taskGenerationStatus,
+      valueCodableConcept: taskGenerationStatusValue,
     });
   }
 
   return {
-    ...extractActivitiesFromPlanForm(
-      formValue.activities,
-      planObj ? planObj.identifier : '',
-      planObj
-    ), // action and goal
+    ...actionAndGoals, // action and goal
     date: moment(formValue.date).format(DATE_FORMAT.toUpperCase()),
     effectivePeriod: {
       end: moment(formValue.end).format(DATE_FORMAT.toUpperCase()),
@@ -630,17 +685,6 @@ export function generatePlanDefinition(
     version: planVersion as string,
   };
 }
-
-/**
- * Check if the plan is a dynamic plan
- * @param planObject - the plan
- */
-export const isDynamicPlan = (planObject: PlanDefinition) =>
-  planObject.action
-    .map(action => {
-      return Object.keys(action).includes(CONDITION) || Object.keys(action).includes(TRIGGER);
-    })
-    .includes(true);
 
 /**
  * Get plan form field values from plan definition object
@@ -706,16 +750,12 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     }
   }
 
-  let taskGenerationStatus: taskGenerationStatusType;
-
-  if (isDynamicPlan(planObject)) {
-    taskGenerationStatus = taskGenerationStatuses[2]; // Disabled
-  } else {
-    taskGenerationStatus =
-      taskGenerationStatusContext.length > 0
-        ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
-        : taskGenerationStatuses[1];
-  }
+  const taskGenerationStatus: taskGenerationStatusType =
+    taskGenerationStatusContext.length > 0
+      ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
+      : isDynamicPlan(planObject)
+      ? taskGenerationStatuses[2]
+      : taskGenerationStatuses[1];
 
   return {
     activities,
@@ -763,7 +803,15 @@ export function getGoalUnitFromActionCode(actionCode: PlanActionCodesType): Goal
  * @param {InterventionType} planType - plan type
  */
 export const isPlanTypeEnabled = (planType: InterventionType): boolean =>
-  ENABLED_PLAN_TYPES.includes(planType);
+  DISPLAYED_PLAN_TYPES.includes(planType);
+
+/**
+ * Check if plan type should be created and display all plan types on edit mode
+ * @param {InterventionType} planType - plan type
+ * @param {boolean} isEditMode - are we editing or creating a plan
+ */
+export const displayPlanTypeOnForm = (planType: InterventionType, isEditMode: boolean): boolean =>
+  isEditMode || PLAN_TYPES_ALLOWED_TO_CREATE.includes(planType);
 
 /**
  * Handle after form successful submission to the api
@@ -785,10 +833,3 @@ export const onSubmitSuccess = (
   setSubmitting(false);
   setAreWeDoneHere(true);
 };
-
-/**
- * Check if intervention type id FI or Dynamic FI
- * @param {InterventionType} interventionType - intervention type
- */
-export const isFIOrDynamicFI = (interventionType: InterventionType): boolean =>
-  [InterventionType.DynamicFI, InterventionType.FI].includes(interventionType);

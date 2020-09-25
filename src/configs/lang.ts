@@ -756,7 +756,7 @@ export const SELECTED_JURISDICTIONS = translate('SELECTED_JURISDICTIONS', 'Selec
 export const GOAL_LABEL = translate('GOAL_LABEL', 'Goal');
 export const EXPRESSION_LABEL = translate('EXPRESSION_LABEL', 'Expression');
 export const TRIGGERS_LABEL = translate('TRIGGERS_LABEL', 'Triggers');
-export const CONDITIONS_LABEL = translate('CONDITIONS_LABEL', 'Triggers');
+export const CONDITIONS_LABEL = translate('CONDITIONS_LABEL', 'Conditions');
 export const DEFINITION_URI = translate('DEFINITION_URI', 'Definition Uri');
 
 export const SAVE_DRAFT = translate('SAVE_DRAFT', 'save draft');
@@ -832,3 +832,8 @@ export const COVERAGE_LABEL = translate('COVERAGE_LABEL', 'Coverage');
 export const TARGET_LABEL = translate('TARGET_LABEL', 'Target');
 export const POPULATION_LABEL = translate('POPULATION_LABEL', 'Population');
 export const RISK_TEXT = translate('RISK_TEXT', 'Risk');
+
+export const PLANS_USER_FILTER_NOTIFICATION = translate(
+  'PLANS_USER_FILTER_NOTIFICATION',
+  'User filter on: Only plans assigned to %s are listed.'
+);

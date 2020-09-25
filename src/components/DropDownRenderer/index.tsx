@@ -4,12 +4,14 @@ import './index.css';
 
 /** DropDownRenderer props */
 export interface DropDownRendererProps {
+  filterActive?: boolean;
   renderMenu: () => React.ReactNode;
   renderToggle: () => React.ReactNode;
 }
 
 /** default props */
 export const defaultDropDownRenderProps = {
+  filterActive: false,
   renderMenu: () => null,
   renderToggle: () => null,
 };
@@ -18,6 +20,7 @@ export const defaultDropDownRenderProps = {
 export const DropDownRenderer = (props: DropDownRendererProps = defaultDropDownRenderProps) => {
   const [isOpen, setIsOpen] = React.useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const activeClass = props.filterActive ? ' btn-outline-secondary-active' : '';
   return (
     <Dropdown
       size="sm"
@@ -26,7 +29,7 @@ export const DropDownRenderer = (props: DropDownRendererProps = defaultDropDownR
       isOpen={isOpen}
       toggle={toggle}
     >
-      <DropdownToggle outline={true} className="filter-bar-btns">
+      <DropdownToggle outline={true} className={`filter-bar-btns${activeClass}`}>
         {props.renderToggle()}
       </DropdownToggle>
       {props.renderMenu()}

@@ -44,7 +44,7 @@ jest.mock('../../../../../configs/env', () => {
   const orig = require.requireActual('../../../../../configs/__mocks__/env');
   return {
     ...orig,
-    ENABLED_PLAN_TYPES: ['FI', 'IRS', 'MDA', 'MDA-Point', 'Dynamic-FI'],
+    DISPLAYED_PLAN_TYPES: ['FI', 'IRS', 'MDA', 'MDA-Point', 'Dynamic-FI'],
   };
 });
 
@@ -179,7 +179,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     // aim here is to see if an error is raised
     const errorHandlerSpy = jest.spyOn(errorUtils, 'displayError');
     const envModule = require('../../../../../configs/env');
-    envModule.ENABLED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
+    envModule.DISPLAYED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
       ','
     );
     const mock: any = jest.fn();
@@ -206,7 +206,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
 
   it('works with the Redux store', async () => {
     const envModule = require('../../../../../configs/env');
-    envModule.ENABLED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
+    envModule.DISPLAYED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
       ','
     );
     store.dispatch(fetchPlans([...fixtures.plans, fixtures.plan104]));
@@ -233,10 +233,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
 
   it('calls superset with the correct params', async () => {
     const envModule = require('../../../../../configs/env');
-    envModule.ENABLED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
+    envModule.DISPLAYED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
       ','
     );
-    // export const ENABLED_PLAN_TYPES = ['FI', 'IRS', 'MDA', 'MDA-Point', 'Dynamic-FI'];
+    // export const DISPLAYED_PLAN_TYPES = ['FI', 'IRS', 'MDA', 'MDA-Point', 'Dynamic-FI'];
     const actualFormData = superset.getFormData;
     const getFormDataMock: any = jest.fn();
     getFormDataMock.mockImplementation((...args: any) => {
@@ -485,6 +485,9 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
+    expect(wrapper.find('.user-filter-info').text()).toMatchInlineSnapshot(
+      `"User filter on: Only plans assigned to ghost are listed."`
+    );
     expect(
       wrapper
         .find('Table')

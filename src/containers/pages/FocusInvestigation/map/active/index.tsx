@@ -46,7 +46,6 @@ import {
   POLYGON,
   RACD_REGISTER_FAMILY_ID,
 } from '../../../../../constants';
-import { supersetFIPlansParamFilters } from '../../../../../helpers/dataLoading/plans';
 import { displayError } from '../../../../../helpers/errors';
 import { getGoalReport } from '../../../../../helpers/indicators';
 import {
@@ -102,9 +101,12 @@ import {
   fetchData,
   getDetailViewPlanInvestigationContainer,
   getMapBounds,
+  setMapViewPortZoomFactory,
   supersetCall,
 } from './helpers/utils';
 import './style.css';
+
+import { supersetFIPlansParamFilters } from '../../../../../helpers/dataLoading/plans';
 
 /** register reducers */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
@@ -342,6 +344,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     : undefined;
 
   const mapBounds = getMapBounds(jurisdiction);
+  const setMapViewPortZoom = setMapViewPortZoomFactory(mapBounds);
 
   return (
     <div>
@@ -375,6 +378,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
               mapCenter={mapCenter}
               mapBounds={mapBounds}
               onClickHandler={buildOnClickHandler(plan.plan_id)}
+              onLoad={setMapViewPortZoom}
             />
           </div>
         </div>

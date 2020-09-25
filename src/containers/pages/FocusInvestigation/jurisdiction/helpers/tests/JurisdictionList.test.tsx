@@ -28,7 +28,7 @@ describe('containers/FocusInvestigation/Jurisdiction/JurisdictionList', () => {
 
   it('getMapStateToProps works as expected', () => {
     const envModule = require('../../../../../../configs/env');
-    envModule.ENABLED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
+    envModule.DISPLAYED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
       ','
     );
     store.dispatch(fetchPlans([plan99, plan101, plan102, plan103, plan104] as Plan[]));

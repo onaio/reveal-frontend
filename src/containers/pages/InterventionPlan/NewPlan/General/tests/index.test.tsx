@@ -23,6 +23,12 @@ const history = createBrowserHistory();
 const middlewares: any = [];
 const mockStore = configureMockStore(middlewares);
 
+/** place to mount the application/component to the JSDOM document during testing.
+ * https://github.com/reactstrap/reactstrap/issues/773#issuecomment-373451256
+ */
+const div = document.createElement('div');
+document.body.appendChild(div);
+
 jest.mock('../../../../../../configs/env');
 
 describe('containers/pages/NewPlan', () => {
@@ -43,7 +49,8 @@ describe('containers/pages/NewPlan', () => {
         <Router history={history}>
           <ConnectedBaseNewPlan />
         </Router>
-      </Provider>
+      </Provider>,
+      { attachTo: div }
     );
 
     // check that page title is displayed
@@ -95,6 +102,23 @@ describe('containers/pages/NewPlan', () => {
       .simulate('change', { target: { name: 'interventionType', value: 'IRS' } });
     wrapper.update();
     expect(wrapper.find('JurisdictionDetails').length).toEqual(0);
+
+    // change to Dynamic-FI
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'Dynamic-FI' } });
+    wrapper.update();
+
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+
+    expect(wrapper.find('JurisdictionDetails').length).toEqual(1);
 
     wrapper.unmount();
   });

@@ -1,7 +1,9 @@
+import { cloneDeep } from 'lodash';
 import MockDate from 'mockdate';
 import {
   PlanActionCodes,
   planActivities as planActivitiesFromConfig,
+  PlanDefinition,
 } from '../../../../configs/settings';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType } from '../../../../store/ducks/plans';
@@ -15,12 +17,14 @@ import {
   getGoalUnitFromActionCode,
   getNameTitle,
   getPlanFormValues,
+  getTaskGenerationValue,
   isFIOrDynamicFI,
   onSubmitSuccess,
 } from '../helpers';
 import { GoalUnit, PlanActionCodesType, PlanActivities, PlanFormFields } from '../types';
 import {
   activities,
+  DynamicFIPlan,
   event,
   event2,
   event3,
@@ -29,6 +33,7 @@ import {
   expectedExtractActivityFromPlanformResult,
   expectedPlanDefinition,
   extractedActivitiesFromForms,
+  fiReasonTestPlan,
   planActivities,
   planActivityWithEmptyfields,
   planActivityWithoutTargets,
@@ -234,5 +239,55 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(isFIOrDynamicFI(InterventionType.FI)).toBeTruthy();
     expect(isFIOrDynamicFI(InterventionType.DynamicFI)).toBeTruthy();
     expect(isFIOrDynamicFI(InterventionType.IRS)).toBeFalsy();
+  });
+
+  it('getPlanFormValues missing fi reason', () => {
+    // what is the eventual form initial values
+    const res = getPlanFormValues(fiReasonTestPlan as PlanDefinition);
+    expect(res.fiReason).toBeUndefined();
+  });
+
+  it('able to generate the correct task generationStatus value', () => {
+    // when configured env is undefined
+    let configuredEnv;
+    let sampleDynamicPlan = cloneDeep((DynamicFIPlan as unknown) as PlanDefinition);
+    let res = getTaskGenerationValue(configuredEnv, sampleDynamicPlan);
+    expect(res).toEqual(undefined);
+
+    // here everything is in the nominal case
+    configuredEnv = 'internal';
+    sampleDynamicPlan = cloneDeep((DynamicFIPlan as unknown) as PlanDefinition);
+    res = getTaskGenerationValue(configuredEnv, sampleDynamicPlan);
+    expect(res).toEqual('internal');
+
+    // here the env is invalid
+    configuredEnv = 'invalid';
+    sampleDynamicPlan = cloneDeep((DynamicFIPlan as unknown) as PlanDefinition);
+    res = getTaskGenerationValue(configuredEnv, sampleDynamicPlan);
+    expect(res).toEqual(undefined);
+
+    // here the plan is not dynamic
+    configuredEnv = 'internal';
+    sampleDynamicPlan = cloneDeep((fiReasonTestPlan as unknown) as PlanDefinition);
+    res = getTaskGenerationValue(configuredEnv, sampleDynamicPlan);
+    expect(res).toEqual(undefined);
+  });
+
+  it('getPlanFormValues gets the correct value for task generationStatus', () => {
+    let sampleDynamicPlan = cloneDeep((DynamicFIPlan as unknown) as PlanDefinition);
+    let res = getPlanFormValues(sampleDynamicPlan);
+    expect(res.taskGenerationStatus).toEqual('True');
+
+    sampleDynamicPlan = cloneDeep((DynamicFIPlan as unknown) as PlanDefinition);
+    sampleDynamicPlan.useContext = [
+      { code: 'interventionType', valueCodableConcept: 'Dynamic-FI' },
+      { code: 'taskGenerationStatus', valueCodableConcept: 'internal' },
+    ];
+    res = getPlanFormValues(sampleDynamicPlan);
+    expect(res.taskGenerationStatus).toEqual('internal');
+
+    sampleDynamicPlan = cloneDeep((fiReasonTestPlan as unknown) as PlanDefinition);
+    res = getPlanFormValues(sampleDynamicPlan);
+    expect(res.taskGenerationStatus).toEqual('False');
   });
 });

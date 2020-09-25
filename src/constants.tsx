@@ -31,6 +31,7 @@ export const HIGH_PRIORITIY = 'high-priority';
 export const TRUE = 'True';
 export const FALSE = 'False';
 export const DISABLED = 'Disabled';
+export const INTERNAL = 'internal';
 export const INTERVENTION_TYPE_CODE = 'interventionType';
 export const FI_STATUS_CODE = 'fiStatus';
 export const FI_REASON_CODE = 'fiReason';

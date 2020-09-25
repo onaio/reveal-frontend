@@ -34,7 +34,7 @@ import {
   NAVBAR_BRAND_IMG_SRC,
   WEBSITE_NAME,
 } from '../../../configs/env';
-import { ENABLED_PLAN_TYPES } from '../../../configs/env';
+import { DISPLAYED_PLAN_TYPES } from '../../../configs/env';
 import {
   ABOUT,
   ADMIN,
@@ -123,7 +123,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
   public render() {
     const { authenticated, user } = this.props;
     const path = this.props.location.pathname;
-    const enablePlansDropDown = ENABLED_PLAN_TYPES.length > 0;
+    const enablePlansDropDown = DISPLAYED_PLAN_TYPES.length > 0;
     const enableAdminDropDown =
       ENABLE_TEAMS ||
       ENABLE_PRACTITIONERS ||

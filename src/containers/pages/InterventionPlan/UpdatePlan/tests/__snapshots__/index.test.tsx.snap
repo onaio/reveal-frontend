@@ -1,5 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/InterventionPlan/UpdatePlan deduces the fiReason field value correctly: fiReason field 1`] = `
+<select
+  className="form-control"
+  disabled={true}
+  id="fiReason"
+  name="fiReason"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={true}
+  value="Routine"
+>
+  <option>
+    ----
+  </option>
+  <option
+    key="Routine"
+    value="Routine"
+  >
+    Routine
+  </option>
+  <option
+    key="Case Triggered"
+    value="Case Triggered"
+  >
+    Case Triggered
+  </option>
+</select>
+`;
+
 exports[`components/InterventionPlan/UpdatePlan renders plan Location names component: Renders PlanLocation Mock 1`] = `
 <div
   id="Helmuth"

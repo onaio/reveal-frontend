@@ -17,5 +17,12 @@ describe('src/forms/filterForms/helpers', () => {
     wrapper.find('button.filter-bar-btns').simulate('click');
     wrapper.update();
     expect(toJson(wrapper)).toMatchSnapshot();
+    expect(wrapper.find('.btn-outline-secondary-active').length).toBeFalsy();
+  });
+
+  it('applies active class', () => {
+    props.filterActive = true;
+    const wrapper = mount(<DropDownRenderer {...props} />);
+    expect(wrapper.find('.btn-outline-secondary-active').length).toBeTruthy();
   });
 });

@@ -1,5 +1,6 @@
 import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { authenticateUser } from '@onaio/session-reducer';
+import { act } from '@testing-library/react';
 import { mount, ReactWrapper, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { cloneDeep } from 'lodash';
@@ -19,6 +20,14 @@ import * as fixtures from './fixtures';
 const fetch = require('jest-fetch-mock');
 
 jest.mock('../../../../configs/env');
+
+fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+
+/** place to mount the application/component to the JSDOM document during testing.
+ * https://github.com/reactstrap/reactstrap/issues/773#issuecomment-373451256
+ */
+const div = document.createElement('div');
+document.body.appendChild(div);
 
 describe('containers/forms/PlanForm', () => {
   beforeEach(() => {
@@ -97,11 +106,11 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders dynamic plans correctly', () => {
-    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const wrapper = mount(
       <MemoryRouter>
         <PlanForm />
-      </MemoryRouter>
+      </MemoryRouter>,
+      { attachTo: div }
     );
     wrapper
       .find('#interventionType select')
@@ -245,7 +254,8 @@ describe('containers/forms/PlanForm', () => {
     const wrapper = mount(
       <MemoryRouter>
         <PlanForm />
-      </MemoryRouter>
+      </MemoryRouter>,
+      { attachTo: div }
     );
 
     function checkJurisdtictions(num: number) {
@@ -650,10 +660,6 @@ describe('containers/forms/PlanForm - Submission', () => {
       .find('select[name="interventionType"]')
       .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
 
-    // Set wrong fiReason field value
-    wrapper
-      .find('select[name="fiReason"]')
-      .simulate('change', { target: { name: 'fiReason', value: 'justin' } });
     // Set wrong fiStatus field value
     wrapper
       .find('select[name="fiStatus"]')
@@ -662,6 +668,21 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper
       .find('select[name="status"]')
       .simulate('change', { target: { name: 'status', value: 'Ona' } });
+
+    wrapper.find('form').simulate('submit');
+
+    await act(async () => {
+      await new Promise<any>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    // there is no FIReason error due to default value
+    expect(wrapper.find('small.fiReason-error').length).toEqual(0);
+
+    // Set wrong fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'justin' } });
 
     wrapper.find('form').simulate('submit');
 
@@ -967,7 +988,11 @@ describe('containers/forms/PlanForm - Submission', () => {
       ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(plans[1]),
     };
-    const wrapper = mount(<PlanForm {...props} />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...props} />
+      </MemoryRouter>
+    );
 
     wrapper.find('form').simulate('submit');
 
@@ -1007,7 +1032,12 @@ describe('containers/forms/PlanForm - Submission', () => {
       ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(plans[5]),
     };
-    const wrapper = mount(<PlanForm {...props} />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...props} />
+      </MemoryRouter>,
+      { attachTo: div }
+    );
 
     wrapper.find('form').simulate('submit');
 
@@ -1046,7 +1076,11 @@ describe('containers/forms/PlanForm - Submission', () => {
       ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(planMissingFIReason),
     };
-    const wrapper = mount(<PlanForm {...propsMissingFiReason} />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...propsMissingFiReason} />
+      </MemoryRouter>
+    );
     expect(wrapper.find('Formik').prop('initialValues')).toEqual({
       ...propsMissingFiReason.initialValues,
       fiReason: 'Routine',
@@ -1072,7 +1106,11 @@ describe('containers/forms/PlanForm - Submission', () => {
       ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(planInvalidFiReason),
     };
-    const wrapper = mount(<PlanForm {...propsInvalidFiReason} />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...propsInvalidFiReason} />
+      </MemoryRouter>
+    );
     expect(wrapper.find('Formik').prop('initialValues')).toEqual({
       ...propsInvalidFiReason.initialValues,
       fiReason: 'Routine',
@@ -1096,7 +1134,11 @@ describe('containers/forms/PlanForm - Submission', () => {
       initialValues: getPlanFormValues(plans[1]),
     };
 
-    const wrapper = mount(<PlanForm {...props} />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...props} />
+      </MemoryRouter>
+    );
 
     wrapper.find('form').simulate('submit');
 
@@ -1127,7 +1169,11 @@ describe('containers/forms/PlanForm - Submission', () => {
       initialValues: getPlanFormValues(plans[1]),
     };
 
-    const wrapper = mount(<PlanForm {...props} />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...props} />
+      </MemoryRouter>
+    );
 
     wrapper.find('form').simulate('submit');
 

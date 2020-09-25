@@ -1604,5 +1604,9 @@
   "IRS_PERFORMANCE_REPORTING_TITLE": {
     "message": "IRS Performance Reporting",
     "description": "title: IRS Performance Reporting"
+  },
+  "USER_FILTER_NOTIFICATION": {
+    "message": "User filter on: Only plans assigned to %s are listed.",
+    "description": "Info message to indicate plans are filtered by a specific user"
   }
 }
