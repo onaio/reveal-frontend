@@ -178,7 +178,7 @@ describe('containers/pages/IRS/Mopup/reports/', () => {
         .at(1)
         .text()
     ).toMatchInlineSnapshot(
-      `"CDZ_18(2020)Chadiza(2020)4103730.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`
+      `"CDZ_18(2020)Chadiza(2020)4103730.00%0.00%0.00%NO visitedNo Decision form"`
     );
 
     wrapper.find('.tr').forEach(data => {

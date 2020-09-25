@@ -60,38 +60,38 @@ exports[`containers/pages/IRS/Mopup/reports/ works with store: at District level
 
 exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 1`] = `"Health FacilitySpray AreaStructures on GroundVisited SprayedStructures remaining to spray to reach 90% SETLA DaysSpray EffectivenessFound coverageSpray coverageDate of Last VisitDate of last Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 2`] = `"CDZ_11(2020)Chadiza(2020)9508660.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 2`] = `"CDZ_11(2020)Chadiza(2020)9508660.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 3`] = `"CDZ_18(2020)Chadiza(2020)4103730.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 3`] = `"CDZ_18(2020)Chadiza(2020)4103730.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 4`] = `"CDZ_31(2020)Chadiza(2020)1101010.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 4`] = `"CDZ_31(2020)Chadiza(2020)1101010.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 5`] = `"CDZ_3(2020)Chadiza(2020)38421325225.47%8.85%5.47%September 21, 2020 12:00 AMSeptember 21, 2020 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 5`] = `"CDZ_3(2020)Chadiza(2020)38421325225.47%8.85%5.47%21-Sep21-Sep"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 6`] = `"CDZ_33(2020)Chadiza(2020)100910.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 6`] = `"CDZ_33(2020)Chadiza(2020)100910.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 7`] = `"CDZ_36(2020)Chadiza(2020)90910.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 7`] = `"CDZ_36(2020)Chadiza(2020)90910.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 8`] = `"CDZ_45(2020)Chadiza(2020)70710.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 8`] = `"CDZ_45(2020)Chadiza(2020)70710.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 9`] = `"CDZ_47(2020)Chadiza(2020)70710.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 9`] = `"CDZ_47(2020)Chadiza(2020)70710.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 10`] = `"CDZ_49(2020)Chadiza(2020)70710.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 10`] = `"CDZ_49(2020)Chadiza(2020)70710.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 11`] = `"CDZ_53(2020)Chadiza(2020)60610.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 11`] = `"CDZ_53(2020)Chadiza(2020)60610.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 12`] = `"CDZ_59(2020)Chadiza(2020)40410.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 12`] = `"CDZ_59(2020)Chadiza(2020)40410.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 13`] = `"CDZ_61(2020)Chadiza(2020)40410.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 13`] = `"CDZ_61(2020)Chadiza(2020)40410.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 14`] = `"CDZ_63(2020)Chadiza(2020)30310.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 14`] = `"CDZ_63(2020)Chadiza(2020)30310.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 15`] = `"CDZ_66(2020)Chadiza(2020)20210.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 15`] = `"CDZ_66(2020)Chadiza(2020)20210.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 16`] = `"CDZ_7(2020)Chadiza(2020)2060186130.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 16`] = `"CDZ_7(2020)Chadiza(2020)2060186130.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 17`] = `"CDZ_9(2020)Chadiza(2020)137012490.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 17`] = `"CDZ_9(2020)Chadiza(2020)137012490.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 18`] = `"Chadiza Central NHC (other)Chadiza(2020)00000.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 18`] = `"Chadiza Central NHC (other)Chadiza(2020)00000.00%0.00%0.00%NO visitedNo Decision form"`;
 
-exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 19`] = `"Chadiza Central NHC_OtherChadiza(2020)00000.00%0.00%0.00%January 1, 1970 12:00 AMJanuary 1, 1970 12:00 AM"`;
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 19`] = `"Chadiza Central NHC_OtherChadiza(2020)00000.00%0.00%0.00%NO visitedNo Decision form"`;
