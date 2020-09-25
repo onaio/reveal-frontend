@@ -1,4 +1,4 @@
-import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
+import { DrillDownColumn, DrillDownFilter, DrillDownTableProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
 import { Cell } from 'react-table';
@@ -300,7 +300,8 @@ export type TableProps = Pick<
   | 'rootParentId'
   | 'useDrillDown'
   | 'renderNullDataComponent'
->;
+  | 'hasChildren'
+> & { drillDownFilter?: DrillDownFilter<Dictionary> };
 
 export type GetColumnsToUse = (
   jurisdiction: GenericJurisdiction[],
@@ -328,7 +329,7 @@ export const getColumnsToUse: GetColumnsToUse = (
   const currLevelData = jurisdiction.filter(el => el.jurisdiction_parent_id === jurisdictionId);
   return currLevelData &&
     currLevelData.length > 0 &&
-    currLevelData[0].jurisdiction_depth >= +focusAreaLevel
+    currLevelData[0].jurisdiction_depth > +focusAreaLevel
     ? get(plansTableColumns, focusAreaColumn, null)
     : get(plansTableColumns, jurisdictionColumn, null);
 };
