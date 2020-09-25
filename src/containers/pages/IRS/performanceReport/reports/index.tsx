@@ -170,7 +170,7 @@ const IRSPerfomenceReport = (
         );
       }
     } catch (e) {
-      // todo - handle error https://github.com/onaio/reveal-frontend/issues/300
+      displayError(e);
     } finally {
       setLoading(false);
     }
