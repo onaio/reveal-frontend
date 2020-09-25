@@ -882,3 +882,7 @@ export const TLA_DAYS_AREAS_TO_REACH_90 = translate(
   'TLA_DAYS_AREAS_TO_REACH_90',
   'TLA days needed for areas needed to reach 90%'
 );
+
+export const NOT_VISITED = translate('NO_VISITED', 'NO visited');
+
+export const NO_DECISION_FORM = translate('NO_DECISION_FORM', 'No Decision form');
