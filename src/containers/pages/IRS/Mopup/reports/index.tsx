@@ -13,7 +13,6 @@ import { MOP_UP_REPORTING_TITLE } from '../../../../../configs/lang';
 import { IRS_MOP_UP_REPORT_URL } from '../../../../../constants';
 import { RouteParams } from '../../../../../helpers/utils';
 import supersetFetch from '../../../../../services/superset';
-import store from '../../../../../store';
 import {
   fetchGenericJurisdictions,
   GenericJurisdiction,
@@ -30,11 +29,6 @@ import {
   GenericJurisdictionReport,
 } from '../../../GenericJurisdictionReport';
 import { getColumns, IRSMopupTableCell } from './helpers';
-import { mopupFocusAreas, mopupIRSJurisdictions } from './tests/fixtures/fixtures';
-
-// TODO - remove fixtures
-store.dispatch(fetchGenericJurisdictions('200', mopupIRSJurisdictions));
-store.dispatch(fetchGenericJurisdictions('201', mopupFocusAreas));
 
 /** register the reducers */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
