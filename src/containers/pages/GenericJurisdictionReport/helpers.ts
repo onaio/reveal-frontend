@@ -1,4 +1,4 @@
-import { DrillDownColumn, DrillDownFilter, DrillDownTableProps } from '@onaio/drill-down-table';
+import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
 import { Cell } from 'react-table';
@@ -301,7 +301,7 @@ export type TableProps = Pick<
   | 'useDrillDown'
   | 'renderNullDataComponent'
   | 'hasChildren'
-> & { drillDownFilter?: DrillDownFilter<Dictionary> };
+>;
 
 export type GetColumnsToUse = (
   jurisdiction: GenericJurisdiction[],

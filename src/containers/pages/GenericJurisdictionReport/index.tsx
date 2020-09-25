@@ -1,9 +1,4 @@
-import {
-  DrillDownColumn,
-  DrillDownFilter,
-  DrillDownTable,
-  HasChildrenFuncType,
-} from '@onaio/drill-down-table';
+import { DrillDownColumn, DrillDownTable, HasChildrenFuncType } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
@@ -73,8 +68,6 @@ export interface GenericJurisdictionProps {
   service: typeof supersetFetch;
   /** Array of superset slices containing the reporting jurisdiction data */
   slices: string[];
-  /** TODO - docstring */
-  drillDownFilter?: DrillDownFilter<Dictionary>;
 }
 
 /** Renders generic Jurisdictions reports */
@@ -109,7 +102,6 @@ const GenericJurisdictionReport = (
     LegendIndicatorComp,
     cellComponent,
     columnsGetter,
-    drillDownFilter,
   } = props;
 
   /** async function to load the data */
@@ -262,7 +254,6 @@ const GenericJurisdictionReport = (
     resize: true,
     rootParentId: jurisdictionId || '',
     useDrillDown: true,
-    ...(drillDownFilter ? { drillDownFilter } : {}),
   };
 
   const currentTitle = currentJurisdictionName
