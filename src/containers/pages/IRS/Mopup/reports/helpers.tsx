@@ -4,6 +4,24 @@ import { ceil, get } from 'lodash';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Cell } from 'react-table';
+import {
+  DATE_OF_LAST_DECISION_FROM,
+  DATE_OF_LAST_VISIT,
+  FOUND_COVERAGE,
+  HEALTH_CENTERS_TO_MOP_UP,
+  HEALTH_FACILITY,
+  NAME,
+  SPRAY_AREA_HEADER,
+  SPRAY_AREAS_TO_MOPUP,
+  SPRAY_COVERAGE,
+  SPRAY_EFFECTIVENESS,
+  STRUCTURES_ON_GROUND,
+  STRUCTURES_REMAINING_TO_SPRAY_TO_REACH_90_SE,
+  STRUCTURES_TO_SPRAY_TO_REACH_90,
+  TLA_DAYS,
+  TLA_DAYS_AREAS_TO_REACH_90,
+  VISITED_SPRAYED,
+} from '../../../../../configs/lang';
 import { renderPercentage } from '../../../../../helpers/indicators';
 import { GenericJurisdiction } from '../../../../../store/ducks/generic/jurisdictions';
 import { friendlyDate } from '../../../../../store/ducks/opensrp/events/utils';
@@ -11,66 +29,66 @@ import { friendlyDate } from '../../../../../store/ducks/opensrp/events/utils';
 /** focus Areas mop-up reporting columns */
 export const ZambiaIRSMopupFocusArea = [
   {
-    Header: 'Health Facility',
+    Header: HEALTH_FACILITY,
     accessor: 'jurisdiction_name',
   },
   {
-    Header: 'Spray Area',
+    Header: SPRAY_AREA_HEADER,
     accessor: 'health_center_jurisdiction_name',
   },
   {
-    Header: 'Structures on Ground',
+    Header: STRUCTURES_ON_GROUND,
     accessor: 'totstruct',
   },
   {
-    Header: 'Visited Sprayed',
+    Header: VISITED_SPRAYED,
     accessor: 'sprayedstruct',
   },
   {
     Cell: ({ value }: Cell) => ceil(value),
-    Header: 'Structures remaining to spray to reach 90% SE',
+    Header: STRUCTURES_REMAINING_TO_SPRAY_TO_REACH_90_SE,
     accessor: 'structures_remaining_to_90_se',
   },
-  { Cell: ({ value }: Cell) => ceil(value), Header: 'TLA Days', accessor: 'tla_days_to_90_se' },
+  { Cell: ({ value }: Cell) => ceil(value), Header: TLA_DAYS, accessor: 'tla_days_to_90_se' },
   {
     Cell: (cell: Cell) => renderPercentage(cell),
-    Header: 'Spray Effectiveness',
+    Header: SPRAY_EFFECTIVENESS,
     accessor: 'spray_effectiveness',
   },
-  { Cell: (cell: Cell) => renderPercentage(cell), Header: 'Found coverage', accessor: 'spraytarg' },
-  { Cell: (cell: Cell) => renderPercentage(cell), Header: 'Spray coverage', accessor: 'spraycov' },
+  { Cell: (cell: Cell) => renderPercentage(cell), Header: FOUND_COVERAGE, accessor: 'spraytarg' },
+  { Cell: (cell: Cell) => renderPercentage(cell), Header: SPRAY_COVERAGE, accessor: 'spraycov' },
   {
     Cell: ({ value }: Cell) => friendlyDate(value),
-    Header: 'Date of Last Visit',
+    Header: DATE_OF_LAST_VISIT,
     accessor: 'latest_spray_event_date',
   },
   {
     Cell: ({ value }: Cell) => friendlyDate(value),
-    Header: 'Date of last Decision form',
+    Header: DATE_OF_LAST_DECISION_FROM,
     accessor: 'latest_sa_event_date',
   },
 ];
 
 export const zambiaMopupJurisdiction = [
   {
-    Header: 'Name',
+    Header: NAME,
     accessor: 'jurisdiction_name',
   },
   {
-    Header: 'Health Centers to Mop-up',
+    Header: HEALTH_CENTERS_TO_MOP_UP,
     accessor: 'num_health_centers_below_90_se',
   },
   {
-    Header: 'Spray Areas to to Mop-up',
+    Header: SPRAY_AREAS_TO_MOPUP,
     accessor: 'num_spray_areas_below_90_se',
   },
   {
-    Header: 'Structures to spray or areas to react 90%',
+    Header: STRUCTURES_TO_SPRAY_TO_REACH_90,
     accessor: 'structures_remaining_to_90_se',
   },
   {
     Cell: ({ value }: Cell) => ceil(value),
-    Header: 'TLA days needed for areas needed to reach 90%',
+    Header: TLA_DAYS_AREAS_TO_REACH_90,
     accessor: 'tla_days_to_90_se',
   },
 ];
