@@ -58,6 +58,7 @@ import {
   FI_URL,
   GA_ENV_TEST,
   HOME_URL,
+  IRS_MOP_UP_REPORT_URL,
   JSON_VALIDATORS_URL,
   JURISDICTION_METADATA_URL,
   LOGOUT_URL,
@@ -108,6 +109,8 @@ import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsRe
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import { IRSPlanPerfomenceReport } from '../containers/pages/IRS/performanceReport/plans';
 import ConnectedIRSPerfomenceReport from '../containers/pages/IRS/performanceReport/reports';
+import { IRSMopUpReporting } from '../containers/pages/IRS/Mopup/plans';
+import ConnectedMopup from '../containers/pages/IRS/Mopup/reports';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
 import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
@@ -608,6 +611,27 @@ const App = () => {
                   exact={true}
                   path={`${ASSIGN_JURISDICTIONS_URL}/:planId`}
                   component={ConnectedEntryView}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={IRS_MOP_UP_REPORT_URL}
+                  component={IRSMopUpReporting}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${IRS_MOP_UP_REPORT_URL}/:planId`}
+                  component={ConnectedMopup}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${IRS_MOP_UP_REPORT_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedMopup}
                 />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
