@@ -105,6 +105,7 @@ import { DraftPlans } from '../containers/pages/InterventionPlan/PlanningView/Dr
 import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan';
 import { OpenSRPPlansList } from '../containers/pages/IRS/assignments';
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
+import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
 import { IRSPlanPerfomenceReport } from '../containers/pages/IRS/performanceReport/plans';
 import ConnectedIRSPerfomenceReport from '../containers/pages/IRS/performanceReport/reports';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
@@ -266,7 +267,7 @@ const App = () => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
-                  component={4}
+                  component={ConnectedIRSReportingMap}
                 />
                 {/* IRS performance Reporting view */}
                 <ConnectedPrivateRoute
