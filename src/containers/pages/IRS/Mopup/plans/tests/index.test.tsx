@@ -5,6 +5,7 @@ import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { IRSMopUpReporting } from '..';
+import { MOP_UP_REPORTING_TITLE } from '../../../../../../configs/lang';
 import { IRS_MOP_UP_REPORT_URL } from '../../../../../../constants';
 import store from '../../../../../../store';
 import { GenericPlan } from '../../../../../../store/ducks/generic/plans';
@@ -14,7 +15,7 @@ jest.mock('../../../../../../configs/env');
 
 const history = createBrowserHistory();
 
-describe('IRS mop-up report', () => {
+describe('IRS mop-up plans list', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -75,12 +76,11 @@ describe('IRS mop-up report', () => {
       await new Promise(resolve => setImmediate(resolve));
       wrapper.update();
     });
-    expect(wrapper.find('h3.page-title').text()).toEqual('IRS Performance Reporting');
 
-    expect(wrapper.find('.tbody .tr').length).toEqual(3);
+    expect(wrapper.find('h3.page-title').text()).toEqual(MOP_UP_REPORTING_TITLE);
+
+    expect(wrapper.find('DrillDownTable').text()).toMatchSnapshot();
+
     expect(wrapper.find('GenericPlansList').length).toBe(1);
-    expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot(
-      'GenericPlansList props: connected to store'
-    );
   });
 });
