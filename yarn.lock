@@ -2428,10 +2428,10 @@
     react-table "^7.0.6"
     reactstrap "^8.4.1"
 
-"@onaio/drill-down-table@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@onaio/drill-down-table/-/drill-down-table-1.0.3.tgz#3c9c47ac64197d783b249312b73867d2a8a5a8e2"
-  integrity sha512-b66irawi3Kk4T+k73K6gSP/yK2ekBHTcOV6NdwOmLAP9lTvphCH7YM8pHJdWVkCDrDmI9c4pDHPe0pQ5Rvq4qQ==
+"@onaio/drill-down-table@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@onaio/drill-down-table/-/drill-down-table-1.0.4.tgz#68a0262dc370b282369d90709cdeb5e94b1012b3"
+  integrity sha512-xidUjsYaPB/hddkuKooOpcrGHkGPfJ4XXEsnJEzARZz41mZ+Iy7S+NOIiwn4DlSJ5M34ZAYbppKF3PsCl8qe9A==
   dependencies:
     react-table "^7.0.6"
     reactstrap "^8.4.1"
@@ -6600,12 +6600,7 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001038:
-  version "1.0.30001124"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001124.tgz"
-  integrity sha512-zQW8V3CdND7GHRH6rxm6s59Ww4g/qGWTheoboW9nfeMg7sUoopIfKCcNZUjwYRCOrvereh3kwDpZj4VLQ7zGtA==
-
-caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001035, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001124:
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001035, caniuse-lite@^1.0.30001038, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001124:
   version "1.0.30001124"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001124.tgz"
   integrity sha512-zQW8V3CdND7GHRH6rxm6s59Ww4g/qGWTheoboW9nfeMg7sUoopIfKCcNZUjwYRCOrvereh3kwDpZj4VLQ7zGtA==

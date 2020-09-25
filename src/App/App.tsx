@@ -33,6 +33,8 @@ import {
 import { LOGIN_PROMPT } from '../configs/lang';
 import { providers } from '../configs/settings';
 
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import '@onaio/drill-down-table/dist/table.css';
 import { CustomLogout } from '../components/Logout';
 import { Footer } from '../components/page/Footer';
@@ -68,6 +70,7 @@ import {
   NEW_PLAN_URL,
   NEW_PLANNING_PLAN_URL,
   ORGANIZATIONS_LIST_URL,
+  PERFORMANCE_REPORT_IRS_PLAN_URL,
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
@@ -103,6 +106,8 @@ import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan
 import { OpenSRPPlansList } from '../containers/pages/IRS/assignments';
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
+import { IRSPlanPerfomenceReport } from '../containers/pages/IRS/performanceReport/plans';
+import ConnectedIRSPerfomenceReport from '../containers/pages/IRS/performanceReport/reports';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
 import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
@@ -134,7 +139,9 @@ library.add(
   faMap,
   faUser,
   faTextHeight,
-  faHome
+  faHome,
+  faTimes,
+  faCheck
 );
 
 toast.configure({
@@ -261,6 +268,42 @@ const App = () => {
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedIRSReportingMap}
+                />
+                {/* IRS performance Reporting view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={PERFORMANCE_REPORT_IRS_PLAN_URL}
+                  component={IRSPlanPerfomenceReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId`}
+                  component={ConnectedIRSPerfomenceReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedIRSPerfomenceReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/:dataCollector`}
+                  component={ConnectedIRSPerfomenceReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/:dataCollector/:sop`}
+                  component={ConnectedIRSPerfomenceReport}
                 />
                 {/* MDA Reporting plan table view */}
                 <ConnectedPrivateRoute

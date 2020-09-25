@@ -23,6 +23,7 @@ import {
   ENABLE_DYNAMIC_MDA,
   ENABLE_FI,
   ENABLE_IRS,
+  ENABLE_IRS_PERFORMANCE_REPORT,
   ENABLE_JURISDICTION_METADATA_UPLOAD,
   ENABLE_MDA_POINT,
   ENABLE_PLANNING,
@@ -42,6 +43,7 @@ import {
   FOCUS_INVESTIGATION,
   FORM_DRAFT_FILES,
   HOME,
+  IRS_PERFORMANCE_REPORTING_TITLE,
   IRS_REPORTING_TITLE,
   JSON_VALIDATORS,
   JURISDICTION_METADATA,
@@ -71,6 +73,7 @@ import {
   LOGOUT_URL,
   MANIFEST_RELEASE_URL,
   ORGANIZATIONS_LIST_URL,
+  PERFORMANCE_REPORT_IRS_PLAN_URL,
   PLAN_LIST_URL,
   PLANNING_VIEW_URL,
   PRACTITIONERS_LIST_URL,
@@ -129,6 +132,13 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
       ENABLE_CONFIG_FORM ||
       ENABLE_JURISDICTION_METADATA_UPLOAD ||
       ENABLE_POPULATION_SERVER_SETTINGS;
+
+    const enableMonitorDropdown =
+      ENABLE_IRS ||
+      ENABLE_FI ||
+      ENABLE_DYNAMIC_MDA ||
+      ENABLE_MDA_POINT ||
+      ENABLE_IRS_PERFORMANCE_REPORT;
     return (
       <div>
         <Navbar light={true} expand="md">
@@ -184,7 +194,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                 </NavItem>
               )}
 
-              {(ENABLE_IRS || ENABLE_FI || ENABLE_DYNAMIC_MDA || ENABLE_MDA_POINT) && (
+              {enableMonitorDropdown && (
                 <UncontrolledDropdown nav={true} inNavbar={true}>
                   <DropdownToggle
                     nav={true}
@@ -212,6 +222,19 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                             activeClassName="active"
                           >
                             {IRS_REPORTING_TITLE}
+                          </NavLink>
+                        </DropdownItem>
+                      </div>
+                    )}
+                    {ENABLE_IRS_PERFORMANCE_REPORT && (
+                      <div>
+                        <DropdownItem>
+                          <NavLink
+                            to={PERFORMANCE_REPORT_IRS_PLAN_URL}
+                            className="nav-link"
+                            activeClassName="active"
+                          >
+                            {IRS_PERFORMANCE_REPORTING_TITLE}
                           </NavLink>
                         </DropdownItem>
                       </div>

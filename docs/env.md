@@ -40,25 +40,45 @@ Below is a list of currently supported environment variables:
 - **Not required**
 - Default value: `false`.
 
-7. **REACT_APP_ENABLE_DEFAULT_PLAN_USER_FILTER**
+7. **REACT_APP_SUPERSET_IRS_DISTRICT_PERFORMANCE_REPORT_SLICE**
+
+- IRS Performance Reporting districts Superset slice id
+- **Required**
+
+8. **REACT_APP_SUPERSET_IRS_DATA_COLLECTORS_PERFORMANCE_REPORT_SLICE**
+
+- IRS Performance Reporting data collectors Superset slice id
+- **Required**
+
+9. **REACT_APP_SUPERSET_IRS_SOP_PERFORMANCE_REPORT_SLICE**
+
+- IRS Performance Reporting spray operators Superset slice id
+- **Required**
+
+10. **REACT_APP_SUPERSET_IRS_SOP_BY_DATE_PERFORMANCE_REPORT_SLICE**
+
+- IRS Performance Reporting spray event date Superset slice id
+- **Required**
+
+11. **REACT_APP_ENABLE_DEFAULT_PLAN_USER_FILTER**
 
 - _optional_; _(boolean)_
 - default: `false`
 - whether to filter plans by the logged in user right of the bat by default
 
-8. **REACT_APP_DISPLAYED_PLAN_TYPES**
+12. **REACT_APP_DISPLAYED_PLAN_TYPES**
 
 - Controls plans displayed on the site.
 - Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
 - Variable is **not required** and if not provided all the above options are loaded.
 
-8. **REACT_APP_PLAN_TYPES_ALLOWED_TO_CREATE**
+13. **REACT_APP_PLAN_TYPES_ALLOWED_TO_CREATE**
 
 - Controls plans which can be created from the create plans form.
 - Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
 - Variable is **not required** and if not provided all the above options are loaded.
-  
-9. **REACT_APP_TASK_GENERATION_STATUS**
+
+14. **REACT_APP_TASK_GENERATION_STATUS**
 
 - _not required_; _(ENUM<["True", "False", "Disabled", "internal"]>)_
 - no defaults, applies a heuristic to pick the correct value when env isn't configured
