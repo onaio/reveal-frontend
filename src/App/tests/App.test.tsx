@@ -66,11 +66,11 @@ describe('App', () => {
     );
     // before resolving get oauth state request, the user is logged out
     expect(wrapper.text()).toMatchInlineSnapshot(
-      `"HomePlanManage PlansAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingMDA ReportingAdminTeamsPractitionersUsersClientsAboutLogin v0.4.2"`
+      `"HomePlanManage PlansAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingMDA ReportingIRS Mop-up ReportingAdminTeamsPractitionersUsersClientsAboutLogin v0.4.2"`
     );
     expect(toJson(wrapper.find('footer'))).toMatchSnapshot('footer');
     expect(wrapper.text()).toMatchInlineSnapshot(
-      `"HomePlanManage PlansAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingMDA ReportingAdminTeamsPractitionersUsersClientsAboutLogin v0.4.2"`
+      `"HomePlanManage PlansAssignMonitorFocus InvestigationIRS ReportingMDA Point ReportingMDA ReportingIRS Mop-up ReportingAdminTeamsPractitionersUsersClientsAboutLogin v0.4.2"`
     );
 
     await act(async () => {
