@@ -329,7 +329,7 @@ export const getColumnsToUse: GetColumnsToUse = (
   const currLevelData = jurisdiction.filter(el => el.jurisdiction_parent_id === jurisdictionId);
   return currLevelData &&
     currLevelData.length > 0 &&
-    currLevelData[0].jurisdiction_depth > +focusAreaLevel
+    currLevelData[0].jurisdiction_depth >= +focusAreaLevel
     ? get(plansTableColumns, focusAreaColumn, null)
     : get(plansTableColumns, jurisdictionColumn, null);
 };
