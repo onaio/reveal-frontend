@@ -1,4 +1,4 @@
-import { DrillDownColumn, DrillDownTable, hasChildrenFunc } from '@onaio/drill-down-table';
+import { DrillDownColumn, DrillDownTable, HasChildrenFuncType } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
@@ -56,7 +56,7 @@ export interface GenericJurisdictionProps {
   /** Jurisdiction depth of the lowest level jurisdictions */
   focusAreaLevel: string;
   /** Indicates whether jurisdiction has children or not */
-  hasChildren: typeof hasChildrenFunc;
+  hasChildren: HasChildrenFuncType;
   LegendIndicatorComp: React.ElementType<any> | null;
   /** The reporting jurisdiction columns */
   jurisdictionColumn: string;
@@ -245,6 +245,7 @@ const GenericJurisdictionReport = (
         },
       ];
     },
+    hasChildren,
     identifierField: 'jurisdiction_id',
     linkerField: 'jurisdiction_name',
     paginate: false,

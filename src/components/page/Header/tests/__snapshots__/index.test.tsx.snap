@@ -266,6 +266,43 @@ exports[`components/page/Header renders header correctly 8`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
+  to="/mopup"
+>
+  <Link
+    aria-current={null}
+    className="nav-link"
+    to={
+      Object {
+        "hash": "",
+        "pathname": "/mopup",
+        "search": "",
+        "state": null,
+      }
+    }
+  >
+    <LinkAnchor
+      aria-current={null}
+      className="nav-link"
+      href="/mopup"
+      navigate={[Function]}
+    >
+      <a
+        aria-current={null}
+        className="nav-link"
+        href="/mopup"
+        onClick={[Function]}
+      >
+        IRS Mop-up Reporting
+      </a>
+    </LinkAnchor>
+  </Link>
+</NavLink>
+`;
+
+exports[`components/page/Header renders header correctly 9`] = `
+<NavLink
+  activeClassName="active"
+  className="nav-link"
   to="/teams"
 >
   <Link
@@ -299,7 +336,7 @@ exports[`components/page/Header renders header correctly 8`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 9`] = `
+exports[`components/page/Header renders header correctly 10`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -336,7 +373,7 @@ exports[`components/page/Header renders header correctly 9`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 10`] = `
+exports[`components/page/Header renders header correctly 11`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -373,7 +410,7 @@ exports[`components/page/Header renders header correctly 10`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 11`] = `
+exports[`components/page/Header renders header correctly 12`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -410,7 +447,7 @@ exports[`components/page/Header renders header correctly 11`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 12`] = `
+exports[`components/page/Header renders header correctly 13`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -447,7 +484,7 @@ exports[`components/page/Header renders header correctly 12`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 13`] = `
+exports[`components/page/Header renders header correctly 14`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -750,6 +787,43 @@ exports[`components/page/Header renders header correctly when authenticated 8`] 
 <NavLink
   activeClassName="active"
   className="nav-link"
+  to="/mopup"
+>
+  <Link
+    aria-current={null}
+    className="nav-link"
+    to={
+      Object {
+        "hash": "",
+        "pathname": "/mopup",
+        "search": "",
+        "state": null,
+      }
+    }
+  >
+    <LinkAnchor
+      aria-current={null}
+      className="nav-link"
+      href="/mopup"
+      navigate={[Function]}
+    >
+      <a
+        aria-current={null}
+        className="nav-link"
+        href="/mopup"
+        onClick={[Function]}
+      >
+        IRS Mop-up Reporting
+      </a>
+    </LinkAnchor>
+  </Link>
+</NavLink>
+`;
+
+exports[`components/page/Header renders header correctly when authenticated 9`] = `
+<NavLink
+  activeClassName="active"
+  className="nav-link"
   to="/teams"
 >
   <Link
@@ -783,7 +857,7 @@ exports[`components/page/Header renders header correctly when authenticated 8`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 9`] = `
+exports[`components/page/Header renders header correctly when authenticated 10`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -820,7 +894,7 @@ exports[`components/page/Header renders header correctly when authenticated 9`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 10`] = `
+exports[`components/page/Header renders header correctly when authenticated 11`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -857,7 +931,7 @@ exports[`components/page/Header renders header correctly when authenticated 10`]
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 11`] = `
+exports[`components/page/Header renders header correctly when authenticated 12`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -894,7 +968,7 @@ exports[`components/page/Header renders header correctly when authenticated 11`]
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 12`] = `
+exports[`components/page/Header renders header correctly when authenticated 13`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -931,7 +1005,7 @@ exports[`components/page/Header renders header correctly when authenticated 12`]
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 13`] = `
+exports[`components/page/Header renders header correctly when authenticated 14`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"

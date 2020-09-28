@@ -300,6 +300,7 @@ export type TableProps = Pick<
   | 'rootParentId'
   | 'useDrillDown'
   | 'renderNullDataComponent'
+  | 'hasChildren'
 >;
 
 export type GetColumnsToUse = (

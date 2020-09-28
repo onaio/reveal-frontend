@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store 5`] = `"NameHealth Centers to Mop-upSpray Areas to to Mop-upStructures to spray or areas to react 90%TLA days needed for areas needed to reach 90%"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store 6`] = `"Chadiza(2020)1693522233"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store 7`] = `"Chadiza District (2020) (other)0000"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store 8`] = `"Sinalo(2020)11555437"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store 9`] = `"Chadiza District (2020) (other)00"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  1 1`] = `"Home"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  1 2`] = `"Zambia(vl 2020)"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  2 1`] = `"IRS Mop-up Reporting"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  2 2`] = `"7"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  3 1`] = `"VL Zambia 2020 Traning Plan"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  3 2`] = `"629"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  4 1`] = `"23007"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  5 1`] = `"1521"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  table headers1 1`] = `"Name"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  table headers2 1`] = `"Health Centers to Mop-up"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  table headers3 1`] = `"Spray Areas to to Mop-up"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  table headers4 1`] = `"Structures to spray or areas to react 90%"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store:  table headers5 1`] = `"TLA days needed for areas needed to reach 90%"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at District level 1`] = `"NameHealth Centers to Mop-upSpray Areas to to Mop-upStructures to spray or areas to react 90%TLA days needed for areas needed to reach 90%"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at District level 2`] = `"Chadiza(2020) (other)0000"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at District level 3`] = `"Chadiza Central NHC11682655"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at District level 4`] = `"Changaya NHC11433122"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at District level 5`] = `"Kamwala1865444"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at District level 6`] = `"Kapachi NHC11340727"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at District level 7`] = `"Mbingwa NHC1323316"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at District level 8`] = `"Mlolo NHC1260141"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at District level 9`] = `"Tigwilizane NHC1921414"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at District level 10`] = `"Yobe NHC1425617"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at District level 11`] = `"Chadiza(2020) (other)00"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 1`] = `"Health FacilitySpray AreaStructures on GroundVisited SprayedStructures remaining to spray to reach 90% SETLA DaysSpray EffectivenessFound coverageSpray coverageDate of Last VisitDate of last Decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 2`] = `"CDZ_11(2020)Chadiza(2020)9508660.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 3`] = `"CDZ_18(2020)Chadiza(2020)4103730.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 4`] = `"CDZ_31(2020)Chadiza(2020)1101010.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 5`] = `"CDZ_3(2020)Chadiza(2020)38421325225.47%8.85%5.47%21-Sep21-Sep"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 6`] = `"CDZ_33(2020)Chadiza(2020)100910.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 7`] = `"CDZ_36(2020)Chadiza(2020)90910.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 8`] = `"CDZ_45(2020)Chadiza(2020)70710.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 9`] = `"CDZ_47(2020)Chadiza(2020)70710.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 10`] = `"CDZ_49(2020)Chadiza(2020)70710.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 11`] = `"CDZ_53(2020)Chadiza(2020)60610.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 12`] = `"CDZ_59(2020)Chadiza(2020)40410.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 13`] = `"CDZ_61(2020)Chadiza(2020)40410.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 14`] = `"CDZ_63(2020)Chadiza(2020)30310.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 15`] = `"CDZ_66(2020)Chadiza(2020)20210.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 16`] = `"CDZ_7(2020)Chadiza(2020)2060186130.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 17`] = `"CDZ_9(2020)Chadiza(2020)137012490.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 18`] = `"Chadiza Central NHC (other)Chadiza(2020)00000.00%0.00%0.00%Not visitedNo decision form"`;
+
+exports[`containers/pages/IRS/Mopup/reports/ works with store: at focus Area level 19`] = `"Chadiza Central NHC_OtherChadiza(2020)00000.00%0.00%0.00%Not visitedNo decision form"`;
