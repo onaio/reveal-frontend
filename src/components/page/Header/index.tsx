@@ -23,7 +23,7 @@ import {
   ENABLE_DYNAMIC_MDA,
   ENABLE_FI,
   ENABLE_IRS,
-  ENABLE_IRS_MOP_PUP_REPORTING,
+  ENABLE_IRS_MOPUP_REPORTING,
   ENABLE_IRS_PERFORMANCE_REPORT,
   ENABLE_JURISDICTION_METADATA_UPLOAD,
   ENABLE_MDA_POINT,
@@ -142,7 +142,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
       ENABLE_DYNAMIC_MDA ||
       ENABLE_MDA_POINT ||
       ENABLE_IRS_PERFORMANCE_REPORT ||
-      ENABLE_IRS_MOP_PUP_REPORTING;
+      ENABLE_IRS_MOPUP_REPORTING;
 
     return (
       <div>
@@ -270,7 +270,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                         </DropdownItem>
                       </div>
                     )}
-                    {ENABLE_IRS_MOP_PUP_REPORTING && (
+                    {ENABLE_IRS_MOPUP_REPORTING && (
                       <div>
                         <DropdownItem>
                           <NavLink
