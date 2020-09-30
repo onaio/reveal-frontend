@@ -1184,6 +1184,38 @@ describe('containers/forms/PlanForm - Submission', () => {
     expect(displayErrorMock).toHaveBeenCalledWith('API is down', AN_ERROR_OCCURRED, false);
   });
 
+  it('before submit callback used correctly', async () => {
+    // ensure that we are logged in so that we can get the OpenSRP token from Redux
+
+    const aDiv = document.createElement('div');
+    document.body.appendChild(aDiv);
+
+    const beforeSubmitSample = () => false;
+    fetch.mockResponse(JSON.stringify({}));
+    fetch.resetMocks();
+
+    const initialValues = {
+      ...getPlanFormValues(fixtures.DynamicFIPlan as any),
+    };
+
+    const props = {
+      ...propsForUpdatingPlans(),
+      beforeSubmit: beforeSubmitSample,
+      initialValues,
+    };
+
+    const wrapper = mount(<PlanForm {...props} />, { attachTo: aDiv });
+
+    wrapper.find('form').simulate('submit');
+
+    await act(async () => {
+      await new Promise<any>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+    // payload was not submitted
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
   it('New plan is added to store if addPlan prop is available and status is 200', async () => {
     // ensure that we are logged in so that we can get the OpenSRP token from Redux
     const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);

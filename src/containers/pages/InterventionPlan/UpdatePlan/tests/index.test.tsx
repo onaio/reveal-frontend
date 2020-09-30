@@ -80,6 +80,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...updatePlanFormProps,
       addPlan: expect.any(Function),
+      beforeSubmit: expect.any(Function),
       renderLocationNames: expect.any(Function),
     });
     wrapper.unmount();

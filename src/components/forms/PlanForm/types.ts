@@ -6,6 +6,7 @@ import {
   PlanActionCodes,
   PlanActivity,
   PlanActivityTitles,
+  PlanDefinition,
   taskGenerationStatuses,
   useContextCodes,
 } from '../../../configs/settings';
@@ -103,3 +104,6 @@ export interface PlanFormFields {
   title: string;
   version: string;
 }
+
+/** type of function to be called with payload before submission */
+export type BeforeSubmit = (payload: PlanDefinition) => boolean;
