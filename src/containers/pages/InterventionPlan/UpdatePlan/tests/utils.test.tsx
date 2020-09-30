@@ -1,5 +1,13 @@
+import {
+  COMPLETE_PLAN_MESSAGE,
+  PLAN_CHANGES_HAVE_NOT_BEEN_SAVED,
+  RETIRE_PLAN_MESSAGE,
+} from '../../../../../configs/lang';
+import { PlanDefinition } from '../../../../../configs/settings';
 import * as utils from '../../../../../helpers/errors';
-import { getEventId, planIsReactive } from '../utils';
+import * as helperUtils from '../../../../../helpers/utils';
+import { PlanStatus } from '../../../../../store/ducks/plans';
+import { beforeSubmitFactory, getEventId, planIsReactive } from '../utils';
 import { planDefinition1, planDefinition2 } from './fixtures';
 
 describe('src/containers/pages/InterventionPlan/updatePlan/utils', () => {
@@ -23,5 +31,45 @@ describe('src/containers/pages/InterventionPlan/updatePlan/utils', () => {
     getEventId(planDefinition1);
     getEventId(planDefinition2);
     expect(displayErrorMock).toHaveBeenCalledTimes(1);
+  });
+
+  it('beforeSubmit works', () => {
+    delete (window as any).confirm;
+    const confirmMock = jest.fn(() => false);
+    (window as any).confirm = confirmMock;
+
+    const infoMockGrowl = jest.fn();
+    (helperUtils as any).infoGrowl = infoMockGrowl;
+
+    const originalPlanMock = ({ status: PlanStatus.DRAFT } as unknown) as PlanDefinition;
+    const payloadPlanMock = ({ status: PlanStatus.COMPLETE } as unknown) as PlanDefinition;
+
+    const beforeSubmit = beforeSubmitFactory(originalPlanMock);
+
+    const res = beforeSubmit(payloadPlanMock);
+
+    expect(confirmMock).toHaveBeenCalledWith(COMPLETE_PLAN_MESSAGE);
+    expect(infoMockGrowl).toHaveBeenCalledWith(PLAN_CHANGES_HAVE_NOT_BEEN_SAVED);
+    expect(res).toBeFalsy();
+  });
+
+  it('beforeSubmit works', () => {
+    delete (window as any).confirm;
+    const confirmMock = jest.fn(() => false);
+    (window as any).confirm = confirmMock;
+
+    const infoMockGrowl = jest.fn();
+    (helperUtils as any).infoGrowl = infoMockGrowl;
+
+    const originalPlanMock = ({ status: PlanStatus.DRAFT } as unknown) as PlanDefinition;
+    const payloadPlanMock = ({ status: PlanStatus.RETIRED } as unknown) as PlanDefinition;
+
+    const beforeSubmit = beforeSubmitFactory(originalPlanMock);
+
+    const res = beforeSubmit(payloadPlanMock);
+
+    expect(confirmMock).toHaveBeenCalledWith(RETIRE_PLAN_MESSAGE);
+    expect(infoMockGrowl).toHaveBeenCalledWith(PLAN_CHANGES_HAVE_NOT_BEEN_SAVED);
+    expect(res).toBeFalsy();
   });
 });

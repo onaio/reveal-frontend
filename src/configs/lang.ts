@@ -886,3 +886,15 @@ export const TLA_DAYS_AREAS_TO_REACH_90 = translate(
 export const NOT_VISITED = translate('NO_VISITED', 'Not visited');
 
 export const NO_DECISION_FORM = translate('NO_DECISION_FORM', 'No decision form');
+export const RETIRE_PLAN_MESSAGE = translate(
+  'RETIRE_PLAN_MESSAGE',
+  'You are about to retire a plan, click ok to proceed'
+);
+export const COMPLETE_PLAN_MESSAGE = translate(
+  'COMPLETE_PLAN_MESSAGE',
+  'You are about to complete a plan, click ok to proceed'
+);
+export const PLAN_CHANGES_HAVE_NOT_BEEN_SAVED = translate(
+  'PLAN_CHANGES_HAVE_NOT_BEEN_SAVED',
+  'Changes to plan have not been saved'
+);
