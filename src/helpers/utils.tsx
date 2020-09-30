@@ -724,6 +724,14 @@ export const successGrowl = (message: string) =>
     type: toast.TYPE.SUCCESS,
   });
 
+/** Send a growl info message
+ * @param message - the info message
+ */
+export const infoGrowl = (message: string) =>
+  growl(message, {
+    type: toast.TYPE.INFO,
+  });
+
 /**
  * Creates a key with an empty array if it didn't exist
  * @param {Dictionary} target - object to be
