@@ -114,12 +114,16 @@ const GenericJurisdictionReport = (
           { comparator: planId, operator: '==', subject: 'plan_id' },
         ]);
       }
+      const allPromises: Array<Promise<unknown>> = [];
 
-      await service(reportingPlanSlice, fetchPlansParams).then((result: GenericPlan[]) => {
-        fetchPlans(result);
-      });
+      const plansPromise = service(reportingPlanSlice, fetchPlansParams).then(
+        (result: GenericPlan[]) => {
+          fetchPlans(result);
+        }
+      );
+      allPromises.push(plansPromise);
 
-      slices.forEach(async slice => {
+      slices.forEach(slice => {
         let fetchJurisdictionsParams: SupersetFormData | null = null;
         if (planId) {
           fetchJurisdictionsParams = superset.getFormData(
@@ -128,12 +132,16 @@ const GenericJurisdictionReport = (
             { jurisdiction_depth: true, jurisdiction_name: true }
           );
         }
-        await service(slice, fetchJurisdictionsParams).then((result: GenericJurisdiction[]) => {
-          fetchJurisdictions(slice, result);
-        });
+        const aPromise = service(slice, fetchJurisdictionsParams).then(
+          (result: GenericJurisdiction[]) => {
+            fetchJurisdictions(slice, result);
+          }
+        );
+        allPromises.push(aPromise);
       });
+      await Promise.all(allPromises);
     } catch (e) {
-      // todo - handle error https://github.com/onaio/reveal-frontend/issues/300
+      displayError(e);
     } finally {
       setLoading(false);
     }
