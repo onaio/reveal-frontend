@@ -90,14 +90,6 @@ export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
       value: 'spraysuccess',
     },
     {
-      denominator: 'sprayed_rooms_eligible',
-      description: 'Percent of rooms sprayed over eligible',
-      numerator: 'sprayed_rooms_sprayed',
-      title: 'Spray Coverage (Rooms)',
-      unit: 'room(s)',
-      value: 'roomcov',
-    },
-    {
       denominator: 'foundstruct',
       description: 'reasons given for not sprayed structures',
       listDisplay: 'notsprayed_reasons_counts',
