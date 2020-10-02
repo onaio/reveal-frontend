@@ -34,7 +34,7 @@ exports[`containers/pages/IRS/performanceReport/reports/ renders correctly data 
 
 exports[`containers/pages/IRS/performanceReport/reports/ renders correctly data collectors page: data collector table header 5 1`] = `"Average End Time"`;
 
-exports[`containers/pages/IRS/performanceReport/reports/ renders correctly data collectors page: data collector table header 6 1`] = `"Duration in Field (hours:minutes)"`;
+exports[`containers/pages/IRS/performanceReport/reports/ renders correctly data collectors page: data collector table header 6 1`] = `"Average Duration in the Field per Day"`;
 
 exports[`containers/pages/IRS/performanceReport/reports/ renders correctly data collectors page: data collector table header 7 1`] = `"Insectcide Usage Rate*"`;
 
@@ -72,7 +72,7 @@ exports[`containers/pages/IRS/performanceReport/reports/ renders correctly distr
 
 exports[`containers/pages/IRS/performanceReport/reports/ renders correctly district page: districts table header 5 1`] = `"Average End Time"`;
 
-exports[`containers/pages/IRS/performanceReport/reports/ renders correctly district page: districts table header 6 1`] = `"Duration in Field (hours:minutes)"`;
+exports[`containers/pages/IRS/performanceReport/reports/ renders correctly district page: districts table header 6 1`] = `"Average Duration in the Field per Day"`;
 
 exports[`containers/pages/IRS/performanceReport/reports/ renders correctly district page: districts table header 7 1`] = `"Insectcide Usage Rate*"`;
 
@@ -180,7 +180,7 @@ exports[`containers/pages/IRS/performanceReport/reports/ renders correctly spray
 
 exports[`containers/pages/IRS/performanceReport/reports/ renders correctly spray operator by date page: sop by date table header 31 1`] = `"Average End Time"`;
 
-exports[`containers/pages/IRS/performanceReport/reports/ renders correctly spray operator by date page: sop by date table header 32 1`] = `"Duration in Field (hours:minutes)"`;
+exports[`containers/pages/IRS/performanceReport/reports/ renders correctly spray operator by date page: sop by date table header 32 1`] = `"Average Duration in the Field per Day"`;
 
 exports[`containers/pages/IRS/performanceReport/reports/ renders correctly spray operator by date page: sop by date table header 33 1`] = `"Bottles/Sachets Used"`;
 
@@ -264,7 +264,7 @@ exports[`containers/pages/IRS/performanceReport/reports/ renders correctly spray
 
 exports[`containers/pages/IRS/performanceReport/reports/ renders correctly spray operator page: sop table header 19 1`] = `"Average End Time"`;
 
-exports[`containers/pages/IRS/performanceReport/reports/ renders correctly spray operator page: sop table header 20 1`] = `"Duration in Field (hours:minutes)"`;
+exports[`containers/pages/IRS/performanceReport/reports/ renders correctly spray operator page: sop table header 20 1`] = `"Average Duration in the Field per Day"`;
 
 exports[`containers/pages/IRS/performanceReport/reports/ renders correctly spray operator page: sop table header 21 1`] = `"Insectcide Usage Rate*"`;
 
