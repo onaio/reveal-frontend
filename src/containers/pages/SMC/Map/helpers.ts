@@ -1,6 +1,14 @@
 import GeojsonExtent from '@mapbox/geojson-extent';
 import { Dictionary } from '@onaio/utils';
-import { BLACK, GREY, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
+import {
+  BLACK,
+  GREY,
+  RED,
+  TASK_GREEN,
+  TASK_ORANGE,
+  TASK_RED,
+  TASK_YELLOW,
+} from '../../../../colors';
 import { GisidaProps } from '../../../../components/GisidaWrapper';
 import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../../../configs/settings';
 import { MAIN_PLAN, STRUCTURE_LAYER } from '../../../../constants';
@@ -23,9 +31,13 @@ export const defaultIndicatorStop = [
 export const SMCIndicatorStops: { [key: string]: string[][] } = {
   nigeria2020: [
     ['Complete', TASK_GREEN],
-    ['No Tasks', TASK_ORANGE],
+    ['SPAQ Complete', TASK_ORANGE],
+    ['SMC Complete', TASK_ORANGE],
+    ['No Tasks', GREY],
     ['Not Visited', TASK_YELLOW],
-    ['Not Eligible', BLACK],
+    ['Not Eligible', GREY],
+    ['Ineligible', GREY],
+    ['Not Dispensed', RED],
   ],
 };
 
@@ -74,16 +86,16 @@ export const SMCIndicatorRows: { [key: string]: IndicatorRows } = {
       description: 'Percent of eligible children treated over total eligible',
       numerator: 'treated_children',
       title: 'Individual Distribution Effectiveness',
-      unit: 'children',
-      value: 'treatement_coverage',
+      // unit: 'children',
+      value: 'treatment_coverage',
     },
     {
       denominator: 'treated_children',
       description: 'Percent of treated at HF of referrals by CDD over total',
-      listDisplay: 'notsprayed_reasons_counts',
+      // listDisplay: 'notsprayed_reasons_counts',
       numerator: 'referred_children',
       title: 'Percentage',
-      unit: 'children treated',
+      // unit: 'children treated',
       value: 'referral_treatment_rate',
     },
   ],
