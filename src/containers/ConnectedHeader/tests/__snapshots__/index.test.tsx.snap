@@ -173,6 +173,20 @@ Object {
                 </NavLink>
               </DropdownItem>
             </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  className="nav-link"
+                  to="/mopup"
+                >
+                  IRS Mop-up Reporting
+                </NavLink>
+              </DropdownItem>
+            </div>
           </DropdownMenu>
         </UncontrolledDropdown>
         <UncontrolledDropdown
@@ -449,6 +463,20 @@ Object {
                   to="/intervention/mda/report"
                 >
                   MDA Reporting
+                </NavLink>
+              </DropdownItem>
+            </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  className="nav-link"
+                  to="/mopup"
+                >
+                  IRS Mop-up Reporting
                 </NavLink>
               </DropdownItem>
             </div>

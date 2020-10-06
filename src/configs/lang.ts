@@ -37,6 +37,10 @@ export const HOME_TITLE = translate('HOME_TITLE', 'Home page');
 export const IRS_TITLE = translate('IRS_TITLE', 'IRS');
 export const PLANNING_PAGE_TITLE = translate('PLANNING_PAGE_TITLE', 'Planning tool');
 export const IRS_REPORTING_TITLE = translate('IRS_REPORTING_TITLE', 'IRS Reporting');
+export const IRS_PERFORMANCE_REPORTING_TITLE = translate(
+  'IRS_PERFORMANCE_REPORTING_TITLE',
+  'IRS Performance Reporting'
+);
 export const MDA_REPORTING_TITLE = translate('MDA_REPORTING_TITLE', 'MDA Reporting');
 export const CONDITIONAL_FORMATTING_RULES = translate(
   'CONDITIONAL_FORMATTING_RULES',
@@ -832,4 +836,65 @@ export const RISK_TEXT = translate('RISK_TEXT', 'Risk');
 export const PLANS_USER_FILTER_NOTIFICATION = translate(
   'PLANS_USER_FILTER_NOTIFICATION',
   'User filter on: Only plans assigned to %s are listed.'
+);
+
+export const MOP_UP_REPORTING_TITLE = translate('MOP_UP_REPORTING_TITLE', 'IRS Mop-up Reporting');
+
+export const HEALTH_FACILITY = translate('HEALTH_FACILITY', 'Health Facility');
+
+export const STRUCTURES_ON_GROUND = translate('STRUCTURES_ON_GROUND', 'Structures on Ground');
+
+export const VISITED_SPRAYED = translate('VISITED_SPRAYED', 'Visited Sprayed');
+
+export const STRUCTURES_REMAINING_TO_SPRAY_TO_REACH_90_SE = translate(
+  'STRUCTURES_REMAINING_TO_SPRAY_TO_REACH_90_SE',
+  'Structures remaining to spray to reach 90% SE'
+);
+
+export const TLA_DAYS = translate('TLA_DAYS', 'TLA Days');
+
+export const SPRAY_EFFECTIVENESS = translate('SPRAY_EFFECTIVENESS', 'Spray Effectiveness');
+
+export const FOUND_COVERAGE = translate('FOUND_COVERAGE', 'Found coverage');
+
+export const SPRAY_COVERAGE = translate('SPRAY_COVERAGE', 'Spray coverage');
+
+export const DATE_OF_LAST_VISIT = translate('DATE_OF_LAST_VISIT', 'Date of Last Visit');
+
+export const DATE_OF_LAST_DECISION_FROM = translate(
+  'DATE_OF_LAST_DECISION_FROM',
+  'Date of last Decision form'
+);
+
+export const HEALTH_CENTERS_TO_MOP_UP = translate(
+  'HEALTH_CENTERS_TO_MOP_UP',
+  'Health Centers to Mop-up'
+);
+
+export const SPRAY_AREAS_TO_MOPUP = translate('SPRAY_AREAS_TO_MOPUP', 'Spray Areas to to Mop-up');
+
+export const STRUCTURES_TO_SPRAY_TO_REACH_90 = translate(
+  'STRUCTURES_TO_SPRAY_TO_REACH_90',
+  'Structures to spray or areas to react 90%'
+);
+
+export const TLA_DAYS_AREAS_TO_REACH_90 = translate(
+  'TLA_DAYS_AREAS_TO_REACH_90',
+  'TLA days needed for areas needed to reach 90%'
+);
+
+export const NOT_VISITED = translate('NO_VISITED', 'Not visited');
+
+export const NO_DECISION_FORM = translate('NO_DECISION_FORM', 'No decision form');
+export const RETIRE_PLAN_MESSAGE = translate(
+  'RETIRE_PLAN_MESSAGE',
+  'You are about to retire a plan, click ok to proceed'
+);
+export const COMPLETE_PLAN_MESSAGE = translate(
+  'COMPLETE_PLAN_MESSAGE',
+  'You are about to complete a plan, click ok to proceed'
+);
+export const PLAN_CHANGES_HAVE_NOT_BEEN_SAVED = translate(
+  'PLAN_CHANGES_HAVE_NOT_BEEN_SAVED',
+  'Changes to plan have not been saved'
 );

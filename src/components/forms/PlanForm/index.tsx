@@ -102,6 +102,7 @@ import {
 } from './helpers';
 import './style.css';
 import {
+  BeforeSubmit,
   FIReasonType,
   PlanActionCodesType,
   PlanActivityFormFields,
@@ -170,6 +171,7 @@ export interface PlanFormProps {
   ) => JSX.Element;
   /** a render prop that renders the plan's location names */
   addPlan?: typeof addPlanDefinition /** Add new/update plan to redux store */;
+  beforeSubmit: BeforeSubmit /** called before submission starts, return true to proceed with submission */;
 }
 
 /** Plan Form component */
@@ -268,6 +270,12 @@ const PlanForm = (props: PlanFormProps) => {
         onSubmit={(values, { setSubmitting }) => {
           const payload = generatePlanDefinition(values);
           const apiService = new OpenSRPService(OPENSRP_PLANS);
+
+          const continueWithSubmit = props.beforeSubmit(payload);
+          if (!continueWithSubmit) {
+            setSubmitting(false);
+            return;
+          }
 
           if (editMode) {
             apiService
@@ -1112,6 +1120,7 @@ const PlanForm = (props: PlanFormProps) => {
 export const defaultProps: PlanFormProps = {
   allFormActivities: getFormActivities(planActivities),
   allowMoreJurisdictions: true,
+  beforeSubmit: () => true,
   cascadingSelect: true,
   disabledActivityFields: [],
   disabledFields: [],

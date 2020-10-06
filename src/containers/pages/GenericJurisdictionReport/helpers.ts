@@ -247,6 +247,10 @@ export const zambiaMDALowerJurisdictions = [
     accessor: 'structures_visited_per',
   },
   {
+    Header: '# Of Children Treated',
+    accessor: 'n_events_where_pzqdistributed',
+  },
+  {
     Header: 'PZQ Tablets Distributed',
     accessor: 'total_pzqdistributed',
   },
@@ -296,6 +300,7 @@ export type TableProps = Pick<
   | 'rootParentId'
   | 'useDrillDown'
   | 'renderNullDataComponent'
+  | 'hasChildren'
 >;
 
 export type GetColumnsToUse = (

@@ -27,13 +27,13 @@ import planDefinitionReducer, {
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 import ConnectedCaseDetails, { CaseDetailsProps } from './CaseDetails';
 import ConnectedPlanLocationNames from './PlanLocationNames';
-import { getEventId, planIsReactive } from './utils';
+import { beforeSubmitFactory, getEventId, planIsReactive } from './utils';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
 /** UpdatePlanProps interface */
-interface UpdatePlanProps {
+export interface UpdatePlanProps {
   fetchPlan: typeof addPlanDefinition;
   plan: PlanDefinition | null;
   service: typeof OpenSRPService;
@@ -101,10 +101,12 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   };
 
   const initialValues = getPlanFormValues(plan);
+  const beforeSubmit = beforeSubmitFactory(plan);
 
   const planStatus = (plan && plan.status) || '';
   const planFormProps: Partial<PlanFormProps> = {
     ...propsForUpdatingPlans(planStatus),
+    beforeSubmit,
     initialValues,
     /** a renderProp prop. this tells the planForm; I will give you a component that knows of the plan you are displaying,
      * the component will get jurisdictions associated with that plan and render them as links, what you(planForm)
