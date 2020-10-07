@@ -20,11 +20,12 @@ import {
 import { AN_ERROR_OCCURRED } from '../../../../../../configs/lang';
 import { CASE_CLASSIFICATION_LABEL, END_DATE, START_DATE } from '../../../../../../configs/lang';
 import {
-  ACTION_CODE,
   CASE_CONFIRMATION_CODE,
   CASE_CONFIRMATION_GOAL_ID,
   CURRENT_INDEX_CASES,
   FEATURE_COLLECTION,
+  GOAL_CONFIRMATION_GOAL_ID,
+  GOAL_ID,
   JURISDICTION_ID,
   LARVAL_DIPPING_ID,
   MAIN_PLAN,
@@ -127,7 +128,7 @@ export const fetchData = async (
     /** filter caseConfirmation tasks by action code and jurisdiction_id */
     const tasksParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
       { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
-      { comparator: CASE_CONFIRMATION_CODE, operator: '==', subject: ACTION_CODE },
+      { comparator: GOAL_CONFIRMATION_GOAL_ID, operator: '==', subject: GOAL_ID },
     ]);
 
     supersetCall(
