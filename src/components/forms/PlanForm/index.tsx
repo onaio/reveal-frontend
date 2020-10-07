@@ -268,7 +268,7 @@ const PlanForm = (props: PlanFormProps) => {
         initialValues={initialValues}
         /* tslint:disable-next-line jsx-no-lambda */
         onSubmit={(values, { setSubmitting }) => {
-          const payload = generatePlanDefinition(values);
+          const payload = generatePlanDefinition(values, null, editMode);
           const apiService = new OpenSRPService('plans');
 
           const continueWithSubmit = props.beforeSubmit(payload);

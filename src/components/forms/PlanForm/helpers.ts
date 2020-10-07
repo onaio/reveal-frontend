@@ -57,6 +57,7 @@ import {
   FAMILY_REGISTRATION_ACTIVITY_CODE,
   FI_REASON_CODE,
   FI_STATUS_CODE,
+  IGNORE,
   INTERVENTION_TYPE_CODE,
   IRS_ACTIVITY_CODE,
   LARVAL_DIPPING_ACTIVITY_CODE,
@@ -610,7 +611,8 @@ export const getTaskGenerationValue = (
  */
 export function generatePlanDefinition(
   formValue: PlanFormFields,
-  planObj: PlanDefinition | null = null
+  planObj: PlanDefinition | null = null,
+  isEditMode: boolean = false
 ): PlanDefinition {
   const planIdentifier =
     formValue.identifier && formValue.identifier !== '' // is this an existing plan?
@@ -657,10 +659,10 @@ export function generatePlanDefinition(
     useContext.push({ code: OPENSRP_EVENT_ID_CODE, valueCodableConcept: formValue.opensrpEventId });
   }
 
-  if (formValue.taskGenerationStatus) {
+  if (formValue.taskGenerationStatus && (taskGenerationStatusValue !== IGNORE || isEditMode)) {
     useContext.push({
       code: TASK_GENERATION_STATUS_CODE,
-      valueCodableConcept: taskGenerationStatusValue,
+      valueCodableConcept: isEditMode ? formValue.taskGenerationStatus : taskGenerationStatusValue,
     });
   }
 
