@@ -57,6 +57,7 @@ import {
   FAMILY_REGISTRATION_ACTIVITY_CODE,
   FI_REASON_CODE,
   FI_STATUS_CODE,
+  IGNORE,
   INTERVENTION_TYPE_CODE,
   IRS_ACTIVITY_CODE,
   LARVAL_DIPPING_ACTIVITY_CODE,
@@ -66,6 +67,7 @@ import {
   NAMED_EVENT_TRIGGER_TYPE,
   OPENSRP_EVENT_ID_CODE,
   TASK_GENERATION_STATUS_CODE,
+  TEAM_ASSIGNMENT_STATUS_CODE,
   TRIGGER,
 } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
@@ -156,6 +158,7 @@ export const PlanSchema = Yup.object().shape({
     .oneOf(Object.values(PlanStatus))
     .required(REQUIRED),
   taskGenerationStatus: Yup.string().oneOf(taskGenerationStatuses.map(e => e)),
+  teamAssignmentStatus: Yup.string(),
   title: Yup.string().required(REQUIRED),
   version: Yup.string(),
 });
@@ -610,7 +613,8 @@ export const getTaskGenerationValue = (
  */
 export function generatePlanDefinition(
   formValue: PlanFormFields,
-  planObj: PlanDefinition | null = null
+  planObj: PlanDefinition | null = null,
+  isEditMode: boolean = false
 ): PlanDefinition {
   const planIdentifier =
     formValue.identifier && formValue.identifier !== '' // is this an existing plan?
@@ -657,10 +661,17 @@ export function generatePlanDefinition(
     useContext.push({ code: OPENSRP_EVENT_ID_CODE, valueCodableConcept: formValue.opensrpEventId });
   }
 
-  if (formValue.taskGenerationStatus) {
+  if (formValue.taskGenerationStatus && (taskGenerationStatusValue !== IGNORE || isEditMode)) {
     useContext.push({
       code: TASK_GENERATION_STATUS_CODE,
-      valueCodableConcept: taskGenerationStatusValue,
+      valueCodableConcept: isEditMode ? formValue.taskGenerationStatus : taskGenerationStatusValue,
+    });
+  }
+
+  if (formValue.teamAssignmentStatus && formValue.teamAssignmentStatus.trim() && isEditMode) {
+    useContext.push({
+      code: TEAM_ASSIGNMENT_STATUS_CODE,
+      valueCodableConcept: formValue.teamAssignmentStatus,
     });
   }
 
@@ -698,6 +709,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
   const eventIdUseContext = [];
   const caseNumUseContext = [];
   const taskGenerationStatusContext = [];
+  const teamAssignmentStatusContext = [];
 
   for (const context of planObject.useContext) {
     switch (context.code) {
@@ -718,6 +730,9 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
         break;
       case TASK_GENERATION_STATUS_CODE:
         taskGenerationStatusContext.push(context);
+        break;
+      case TEAM_ASSIGNMENT_STATUS_CODE:
+        teamAssignmentStatusContext.push(context);
         break;
     }
   }
@@ -757,6 +772,11 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
       ? taskGenerationStatuses[2]
       : taskGenerationStatuses[1];
 
+  const teamAssignmentStatus: string =
+    teamAssignmentStatusContext.length > 0
+      ? taskGenerationStatusContext[0].valueCodableConcept
+      : '';
+
   return {
     activities,
     caseNum: caseNumUseContext.length > 0 ? caseNumUseContext[0].valueCodableConcept : '',
@@ -782,6 +802,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     start: parseISO(`${planObject.effectivePeriod.start}${DEFAULT_TIME}`),
     status: planObject.status as PlanStatus,
     taskGenerationStatus,
+    teamAssignmentStatus,
     title: planObject.title,
     version: planObject.version,
   };

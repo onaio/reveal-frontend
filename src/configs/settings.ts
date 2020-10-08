@@ -131,6 +131,7 @@ import {
   FI_REASON_CODE,
   FI_STATUS_CODE,
   HIGH_PRIORITIY,
+  IGNORE,
   INTERNAL,
   INTERVENTION_TYPE_CODE,
   INVESTIGATION,
@@ -153,6 +154,7 @@ import {
   RACD_REGISTER_FAMILY_CODE,
   ROUTINE,
   TASK_GENERATION_STATUS_CODE,
+  TEAM_ASSIGNMENT_STATUS_CODE,
   TRUE,
 } from '../constants';
 import {
@@ -310,6 +312,7 @@ export const useContextCodes = [
   OPENSRP_EVENT_ID_CODE,
   CASE_NUMBER_CODE,
   TASK_GENERATION_STATUS_CODE,
+  TEAM_ASSIGNMENT_STATUS_CODE,
 ] as const;
 
 /** Plan activity code values */
@@ -330,7 +333,7 @@ export const PlanActionCodes = [
 
 /** Allowed taskGenerationStatus values */
 /* tslint:disable-next-line no-useless-cast */
-export const taskGenerationStatuses = [TRUE, FALSE, DISABLED, INTERNAL] as const;
+export const taskGenerationStatuses = [TRUE, FALSE, DISABLED, INTERNAL, IGNORE] as const;
 
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {
