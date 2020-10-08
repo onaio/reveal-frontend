@@ -1,5 +1,7 @@
 /** This module handles settings taken from environment variables */
 
+import { IGNORE } from '../constants';
+
 /** The website name */
 export const WEBSITE_NAME = process.env.REACT_APP_WEBSITE_NAME || 'Reveal';
 export type WEBSITE_NAME = typeof WEBSITE_NAME;
@@ -459,7 +461,7 @@ export const ENABLE_DEFAULT_PLAN_USER_FILTER =
   process.env.REACT_APP_ENABLE_DEFAULT_PLAN_USER_FILTER === 'true';
 export type ENABLE_DEFAULT_PLAN_USER_FILTER = typeof ENABLE_DEFAULT_PLAN_USER_FILTER;
 
-export const TASK_GENERATION_STATUS = process.env.REACT_APP_TASK_GENERATION_STATUS || 'ignore';
+export const TASK_GENERATION_STATUS = process.env.REACT_APP_TASK_GENERATION_STATUS || IGNORE;
 export type TASK_GENERATION_STATUS = typeof TASK_GENERATION_STATUS;
 
 export const ENABLE_IRS_MOPUP_REPORTING = process.env.REACT_APP_ENABLE_IRS_MOPUP_REPORTING;
