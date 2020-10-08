@@ -174,7 +174,14 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
       /**
        * Fetch plans incase the plan is not available e.g when page is refreshed
        */
-      const { supersetService, fetchPlansActionCreator } = props;
+      const { supersetService, fetchPlansActionCreator, match } = props;
+      if (match.params.id) {
+        supersetFIPlansParamFilters.push({
+          comparator: match.params.id,
+          operator: '==',
+          subject: 'id',
+        });
+      }
       const supersetParams = superset.getFormData(
         SUPERSET_MAX_RECORDS,
         supersetFIPlansParamFilters
