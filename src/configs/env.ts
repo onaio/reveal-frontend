@@ -1,5 +1,7 @@
 /** This module handles settings taken from environment variables */
 
+import { IGNORE } from '../constants';
+
 /** The website name */
 export const WEBSITE_NAME = process.env.REACT_APP_WEBSITE_NAME || 'Reveal';
 export type WEBSITE_NAME = typeof WEBSITE_NAME;
@@ -463,7 +465,8 @@ export const OPENSRP_MAX_PLANS_PER_REQUEST = Number(
   process.env.REACT_APP_OPENSRP_MAX_PLANS_PER_REQUEST || '2000'
 );
 export type OPENSRP_MAX_PLANS_PER_REQUEST = typeof OPENSRP_MAX_PLANS_PER_REQUEST;
-export const TASK_GENERATION_STATUS = process.env.REACT_APP_TASK_GENERATION_STATUS;
+
+export const TASK_GENERATION_STATUS = process.env.REACT_APP_TASK_GENERATION_STATUS || IGNORE;
 export type TASK_GENERATION_STATUS = typeof TASK_GENERATION_STATUS;
 
 export const ENABLE_IRS_MOPUP_REPORTING = process.env.REACT_APP_ENABLE_IRS_MOPUP_REPORTING;

@@ -77,6 +77,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
       { code: 'fiStatus', valueCodableConcept: 'A1' },
       { code: 'fiReason', valueCodableConcept: 'Routine' },
       { code: 'taskGenerationStatus', valueCodableConcept: 'True' },
+      { code: 'teamAssignmentStatus', valueCodableConcept: 'True' },
     ]);
   });
 

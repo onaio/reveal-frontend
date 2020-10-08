@@ -101,6 +101,7 @@ export interface PlanFormFields {
   start: Date;
   status: PlanStatus;
   taskGenerationStatus: taskGenerationStatusType;
+  teamAssignmentStatus?: string;
   title: string;
   version: string;
 }
