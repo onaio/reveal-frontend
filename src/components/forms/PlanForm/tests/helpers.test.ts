@@ -5,7 +5,7 @@ import {
   planActivities as planActivitiesFromConfig,
   PlanDefinition,
 } from '../../../../configs/settings';
-import { IGNORE } from '../../../../constants';
+import { IGNORE, TRUE } from '../../../../constants';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType } from '../../../../store/ducks/plans';
 import {
@@ -137,7 +137,29 @@ describe('containers/forms/PlanForm/helpers', () => {
     MockDate.reset();
   });
 
-  it('generatePlanDefinition should ignore taskGenerationStatus if specified when creating plan', () => {
+  it('generatePlanDefinition should use value of TASK_GENERATION_STATUS defined on create if value not ignore', () => {
+    MockDate.set('1/30/2000', 0);
+    const envModule = require('../../../../configs/env');
+    envModule.PLAN_UUID_NAMESPACE = '85f7dbbf-07d0-4c92-aa2d-d50d141dde00';
+    envModule.ACTION_UUID_NAMESPACE = '35968df5-f335-44ae-8ae5-25804caa2d86';
+    envModule.TASK_GENERATION_STATUS = TRUE;
+    const planCopy = {
+      ...plans[5],
+      version: 2,
+    };
+    // remove serverVersion
+    const { serverVersion, ...expectedDynamicPlan } = planCopy;
+    expectedDynamicPlan.action[0].type = 'create';
+    expectedDynamicPlan.useContext = expectedDynamicPlan.useContext.concat({
+      code: 'taskGenerationStatus',
+      valueCodableConcept: TRUE,
+    });
+    expect(generatePlanDefinition(planFormValues3 as PlanFormFields, null, false)).toEqual(
+      expectedDynamicPlan
+    );
+  });
+
+  it('generatePlanDefinition should ignore taskGenerationStatus if specified when creating plan and keep value on edit', () => {
     MockDate.set('1/30/2000', 0);
     const envModule = require('../../../../configs/env');
     envModule.PLAN_UUID_NAMESPACE = '85f7dbbf-07d0-4c92-aa2d-d50d141dde00';
@@ -149,18 +171,25 @@ describe('containers/forms/PlanForm/helpers', () => {
     };
     // remove serverVersion
     const { serverVersion, ...expectedDynamicPlan } = planCopy;
+    const expectedDynamicPlanCopy = { ...expectedDynamicPlan };
 
     // on create
     expectedDynamicPlan.action[0].type = 'create';
     expect(generatePlanDefinition(planFormValues3 as PlanFormFields)).toEqual(expectedDynamicPlan);
 
-    // on edit
+    // on edit when taskGenerationStatus is present
     expectedDynamicPlan.useContext = expectedDynamicPlan.useContext.concat({
       code: 'taskGenerationStatus',
       valueCodableConcept: planFormValues3.taskGenerationStatus,
     });
     expect(generatePlanDefinition(planFormValues3 as PlanFormFields, null, true)).toEqual(
       expectedDynamicPlan
+    );
+
+    // on edit when taskGenerationStatus is not present
+    const { taskGenerationStatus, ...planFormValues3Copy } = planFormValues3;
+    expect(generatePlanDefinition(planFormValues3Copy as PlanFormFields, null, true)).toEqual(
+      expectedDynamicPlanCopy
     );
   });
 
