@@ -773,6 +773,7 @@ export const planFormValues = {
   start: parseISO(`2019-08-09${DEFAULT_TIME}`),
   status: 'draft',
   taskGenerationStatus: 'False',
+  teamAssignmentStatus: '',
   title: 'IRS 2019-08-09',
   version: '1',
 };
@@ -901,6 +902,7 @@ export const planFormValues2 = {
   start: moment('2019-05-20T00:00:00.000Z').toDate(),
   status: 'active',
   taskGenerationStatus: 'False',
+  teamAssignmentStatus: '',
   title: 'A2-Lusaka Akros Test Focus 2',
   version: '1',
 };

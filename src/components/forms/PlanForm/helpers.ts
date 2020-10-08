@@ -67,6 +67,7 @@ import {
   NAMED_EVENT_TRIGGER_TYPE,
   OPENSRP_EVENT_ID_CODE,
   TASK_GENERATION_STATUS_CODE,
+  TEAM_ASSIGNMENT_STATUS_CODE,
   TRIGGER,
 } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
@@ -157,6 +158,7 @@ export const PlanSchema = Yup.object().shape({
     .oneOf(Object.values(PlanStatus))
     .required(REQUIRED),
   taskGenerationStatus: Yup.string().oneOf(taskGenerationStatuses.map(e => e)),
+  teamAssignmentStatus: Yup.string(),
   title: Yup.string().required(REQUIRED),
   version: Yup.string(),
 });
@@ -666,6 +668,13 @@ export function generatePlanDefinition(
     });
   }
 
+  if (formValue.teamAssignmentStatus && formValue.teamAssignmentStatus.trim() && isEditMode) {
+    useContext.push({
+      code: TEAM_ASSIGNMENT_STATUS_CODE,
+      valueCodableConcept: formValue.teamAssignmentStatus,
+    });
+  }
+
   return {
     ...actionAndGoals, // action and goal
     date: moment(formValue.date).format(DATE_FORMAT.toUpperCase()),
@@ -700,6 +709,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
   const eventIdUseContext = [];
   const caseNumUseContext = [];
   const taskGenerationStatusContext = [];
+  const teamAssignmentStatusContext = [];
 
   for (const context of planObject.useContext) {
     switch (context.code) {
@@ -720,6 +730,9 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
         break;
       case TASK_GENERATION_STATUS_CODE:
         taskGenerationStatusContext.push(context);
+        break;
+      case TEAM_ASSIGNMENT_STATUS_CODE:
+        teamAssignmentStatusContext.push(context);
         break;
     }
   }
@@ -759,6 +772,11 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
       ? taskGenerationStatuses[2]
       : taskGenerationStatuses[1];
 
+  const teamAssignmentStatus: string =
+    teamAssignmentStatusContext.length > 0
+      ? taskGenerationStatusContext[0].valueCodableConcept
+      : '';
+
   return {
     activities,
     caseNum: caseNumUseContext.length > 0 ? caseNumUseContext[0].valueCodableConcept : '',
@@ -784,6 +802,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     start: parseISO(`${planObject.effectivePeriod.start}${DEFAULT_TIME}`),
     status: planObject.status as PlanStatus,
     taskGenerationStatus,
+    teamAssignmentStatus,
     title: planObject.title,
     version: planObject.version,
   };

@@ -139,6 +139,7 @@ export const defaultInitialValues: PlanFormFields = {
   start: moment().toDate(),
   status: PlanStatus.DRAFT,
   taskGenerationStatus: 'False',
+  teamAssignmentStatus: '',
   title: '',
   version: DEFAULT_PLAN_VERSION,
 };
@@ -615,6 +616,12 @@ const PlanForm = (props: PlanFormProps) => {
                 type="hidden"
                 name="taskGenerationStatus"
                 id="taskGenerationStatus"
+                readOnly={true}
+              />
+              <Field
+                type="hidden"
+                name="teamAssignmentStatus"
+                id="teamAssignmentStatus"
                 readOnly={true}
               />
             </FormGroup>
@@ -1154,6 +1161,7 @@ export const propsForUpdatingPlans = (
     'fiStatus',
     'start',
     'taskGenerationStatus',
+    'teamAssignmentStatus',
     'title',
     'version',
   ];

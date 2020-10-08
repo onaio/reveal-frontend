@@ -39,6 +39,7 @@ export const FI_REASON_CODE = 'fiReason';
 export const OPENSRP_EVENT_ID_CODE = 'opensrpEventId';
 export const CASE_NUMBER_CODE = 'caseNum';
 export const TASK_GENERATION_STATUS_CODE = 'taskGenerationStatus';
+export const TEAM_ASSIGNMENT_STATUS_CODE = 'teamAssignmentStatus';
 export const GA_ENV_TEST = 'test';
 export const PLAN_ID = 'plan_id';
 export const PLAN_INTERVENTION_TYPE = 'plan_intervention_type';

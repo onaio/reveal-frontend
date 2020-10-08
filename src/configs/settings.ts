@@ -154,6 +154,7 @@ import {
   RACD_REGISTER_FAMILY_CODE,
   ROUTINE,
   TASK_GENERATION_STATUS_CODE,
+  TEAM_ASSIGNMENT_STATUS_CODE,
   TRUE,
 } from '../constants';
 import {
@@ -311,6 +312,7 @@ export const useContextCodes = [
   OPENSRP_EVENT_ID_CODE,
   CASE_NUMBER_CODE,
   TASK_GENERATION_STATUS_CODE,
+  TEAM_ASSIGNMENT_STATUS_CODE,
 ] as const;
 
 /** Plan activity code values */
