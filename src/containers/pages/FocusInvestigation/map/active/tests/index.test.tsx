@@ -331,11 +331,12 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
           row_limit: 3000,
         },
       ],
+      ['123', jurisdictionParams],
     ];
 
     await flushPromises();
     expect(supersetServiceMock.mock.calls).toEqual(callList);
-    expect(supersetServiceMock).toHaveBeenCalledTimes(6);
+    expect(supersetServiceMock).toHaveBeenCalledTimes(7);
     expect((superset.getFormData as any).mock.calls).toEqual(getformDataCallList);
     wrapper.unmount();
   });
@@ -383,7 +384,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       </Provider>
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(supersetServiceMock.mock.calls.length).toEqual(6);
+    expect(supersetServiceMock.mock.calls.length).toEqual(7);
     wrapper.unmount();
   });
 
@@ -561,6 +562,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const fetchPlansActionCreatorMock: any = jest.fn();
     const fetchStructuresActionCreatorMock: any = jest.fn();
     const fetchTasksActionCreatorMock: any = jest.fn();
+    const fetchIndexCasesDetailsActionCreator: any = jest.fn();
     const plan = fixtures.plan1;
     void utils.fetchData(
       fetchGoalsActionsCreatorMock,
@@ -568,11 +570,12 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       fetchPlansActionCreatorMock,
       fetchStructuresActionCreatorMock,
       fetchTasksActionCreatorMock,
+      fetchIndexCasesDetailsActionCreator,
       plan,
       supersetServiceMock
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(supersetServiceMock.mock.calls.length).toBe(6);
+    expect(supersetServiceMock.mock.calls.length).toBe(7);
   });
 
   it('should not fetch data if no plan id is provided', async () => {
@@ -582,12 +585,14 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const fetchPlansActionCreatorMock: any = jest.fn();
     const fetchStructuresActionCreatorMock: any = jest.fn();
     const fetchTasksActionCreatorMock: any = jest.fn();
+    const fetchIndexCasesDetailsActionCreator: any = jest.fn();
     void utils.fetchData(
       fetchGoalsActionsCreatorMock,
       fetchJurisdictionsActionCreatorMock,
       fetchPlansActionCreatorMock,
       fetchStructuresActionCreatorMock,
       fetchTasksActionCreatorMock,
+      fetchIndexCasesDetailsActionCreator,
       {} as planDucks.Plan,
       supersetServiceMock
     );
@@ -603,6 +608,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const fetchPlansActionCreatorMock: any = jest.fn();
     const fetchStructuresActionCreatorMock: any = jest.fn();
     const fetchTasksActionCreatorMock: any = jest.fn();
+    const fetchIndexCasesDetailsActionCreator: any = jest.fn();
     const plan = fixtures.plan1;
     void utils.fetchData(
       fetchGoalsActionsCreatorMock,
@@ -610,11 +616,12 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       fetchPlansActionCreatorMock,
       fetchStructuresActionCreatorMock,
       fetchTasksActionCreatorMock,
+      fetchIndexCasesDetailsActionCreator,
       plan,
       supersetServiceMock
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(displayErrorMock.mock.calls.length).toBe(6);
+    expect(displayErrorMock.mock.calls.length).toBe(7);
   });
 
   it('handles errors correctly when fetching data', async () => {
@@ -639,7 +646,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       </Provider>
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(displayErrorMock).toHaveBeenCalledTimes(6);
+    expect(displayErrorMock).toHaveBeenCalledTimes(7);
     wrapper.unmount();
   });
 

@@ -10,6 +10,10 @@ export const existingState = {
     currentGoal: null,
     goalsById: { '19b86421-3cb2-5698-9f11-c1bdafbe5e6d': globalFixtures.goal3 },
   },
+  indexCasesDetails: {
+    objectsById: {},
+    totalRecords: 0,
+  },
   jurisdictions: {
     allJurisdictionIds: {
       '450fc15b-5bd2-468a-927a-49cb10d3bcac': {
