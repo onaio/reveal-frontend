@@ -80,7 +80,7 @@ export const getTaskId = (_: Partial<Store>, props: IndexCaseFilters) => props.t
 /** indexCasesArrayBaseSelector select an array of all index cases
  * @param state - the redux store
  */
-export const indexCasesArrayBaseSelector = (state: Partial<Store>): IndexCaseFilters[] =>
+export const indexCasesArrayBaseSelector = (state: Partial<Store>): IndexCasesDetails[] =>
   values(getAllIndexCaseDetailsByIds(state) || {});
 
 /** getIndexCaseArrayByPlanId
