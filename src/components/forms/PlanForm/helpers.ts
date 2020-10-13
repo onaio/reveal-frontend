@@ -774,7 +774,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
 
   const teamAssignmentStatus: string =
     teamAssignmentStatusContext.length > 0
-      ? taskGenerationStatusContext[0].valueCodableConcept
+      ? teamAssignmentStatusContext[0].valueCodableConcept
       : '';
 
   return {
