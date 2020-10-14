@@ -431,18 +431,21 @@ describe('helpers/utils', () => {
     const resultCopy = { ...result };
 
     const expectedPayload = {
+      _id: '36ff5f7a-c13f-5205-9125-52cc324b935b',
       identifier: 'jurisdiction_metadata-coverage',
       settings: [
         {
           description: 'Jurisdiction Metadata for test1 id 79b139c-3a20-4656-b684-d2d9ed83c94e',
           key: '79b139c-3a20-4656-b684-d2d9ed83c94e',
           label: 'test1',
+          uuid: 'e0968f38-be3b-56b7-babe-fd644c60860b',
           value: '30',
         },
         {
           description: 'Jurisdiction Metadata for test2 id 02ebbc84-5e29-4cd5-9b79-c594058923e9',
           key: '02ebbc84-5e29-4cd5-9b79-c594058923e9',
           label: 'test2',
+          uuid: '7aaf15cc-150c-546c-b5d3-0c2738a48d6c',
           value: '50',
         },
       ],

@@ -1180,7 +1180,7 @@ export const DynamicFIPlan = {
     { code: 'fiStatus', valueCodableConcept: 'A1' },
     { code: 'fiReason', valueCodableConcept: 'Routine' },
     { code: 'taskGenerationStatus', valueCodableConcept: 'True' },
-    { code: 'teamAssignmentStatus', valueCodableConcept: 'True' },
+    { code: 'teamAssignmentStatus', valueCodableConcept: 'False' },
   ],
   jurisdiction: [{ code: '45abb6b7-b3ca-4b82-851b-856a4da0335b' }],
   serverVersion: 1600346630940,
