@@ -27,6 +27,7 @@ import {
   ONADATA_OAUTH_STATE,
   OPENSRP_MAX_PLANS_PER_REQUEST,
   OPENSRP_OAUTH_STATE,
+  PLAN_UUID_NAMESPACE,
 } from '../configs/env';
 import {
   ACTION,
@@ -958,9 +959,11 @@ export interface Setting {
   label: string;
   value: string | unknown;
   key: string;
+  uuid: string;
 }
 
 export interface SettingConfiguration {
+  _id: string;
   type: string;
   identifier: string;
   providerId?: string;
@@ -990,6 +993,7 @@ export const creatSettingsPayloads = (
     const filteredHeaders = headers.filter(f => ![JURISDICTION_ID, JURISDICTION_NAME].includes(f));
     loop1: for (const header of filteredHeaders) {
       const settings: Setting[] = [];
+      const identifier = `jurisdiction_metadata-${header}`;
       // add the metadata values with jurisdiction as the key
       for (const item of data) {
         const entries = Object.entries(item);
@@ -999,10 +1003,15 @@ export const creatSettingsPayloads = (
             break loop1;
           }
           if (key === header && value) {
+            const uuid = generateNameSpacedUUID(
+              `${identifier}-${item.jurisdiction_id}`,
+              PLAN_UUID_NAMESPACE
+            );
             const setting: Setting = {
               description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
               key: item.jurisdiction_id,
               label: item.jurisdiction_name ? item.jurisdiction_name : item.jurisdiction_id,
+              uuid,
               value,
             };
             settings.push(setting);
@@ -1011,7 +1020,8 @@ export const creatSettingsPayloads = (
       }
       if (settings.length) {
         const payload: SettingConfiguration = {
-          identifier: `jurisdiction_metadata-${header}`,
+          _id: generateNameSpacedUUID(identifier, PLAN_UUID_NAMESPACE),
+          identifier,
           settings,
           type: SETTINGS_CONFIGURATION,
         };
