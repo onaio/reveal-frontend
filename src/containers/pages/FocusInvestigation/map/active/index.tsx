@@ -107,6 +107,10 @@ import {
 import './style.css';
 
 import { supersetFIPlansParamFilters } from '../../../../../helpers/dataLoading/plans';
+import indexCasesReducer, {
+  fetchIndexCaseDetails,
+  reducerName as indexCasesReducerName,
+} from '../../../../../store/ducks/opensrp/indexCasesDetails';
 
 /** register reducers */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
@@ -114,12 +118,14 @@ reducerRegistry.register(goalsReducerName, goalsReducer);
 reducerRegistry.register(structuresReducerName, structuresReducer);
 reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(tasksReducerName, tasksReducer);
+reducerRegistry.register(indexCasesReducerName, indexCasesReducer);
 
 /** interface to describe props for ActiveFI Map component */
 export interface MapSingleFIProps {
   currentGoal: string | null;
   setCurrentGoalActionCreator: typeof setCurrentGoal;
   fetchGoalsActionCreator: typeof fetchGoals;
+  fetchIndexCaseActionCreator: typeof fetchIndexCaseDetails;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
   fetchStructuresActionCreator: typeof setStructures;
@@ -150,6 +156,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   currentPointIndexCases: null,
   currentPolyIndexCases: null,
   fetchGoalsActionCreator: fetchGoals,
+  fetchIndexCaseActionCreator: fetchIndexCaseDetails,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
   fetchStructuresActionCreator: setStructures,
@@ -213,6 +220,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
         props.fetchPlansActionCreator,
         props.fetchStructuresActionCreator,
         props.fetchTasksActionCreator,
+        props.fetchIndexCaseActionCreator,
         props.plan,
         props.supersetService
       ).catch((_: Error) => displayError(new Error(AN_ERROR_OCCURRED)));
@@ -587,6 +595,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): MapStateToProps 
 /** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
   fetchGoalsActionCreator: fetchGoals,
+  fetchIndexCaseActionCreator: fetchIndexCaseDetails,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
   fetchStructuresActionCreator: setStructures,

@@ -143,6 +143,7 @@ describe('reducers/tasks', () => {
             task_execution_end_date: '2019-04-01',
             task_execution_start_date: '2019-04-08',
             task_focus: 'Bednet Distribution',
+            task_id: 'moshT',
             task_status: 'Ready',
             task_task_for: 'da765947-5e4d-49f7-9eb8-2d2d00681f65',
           },
