@@ -18,6 +18,7 @@ export enum InterventionType {
   DynamicMDA = 'Dynamic-MDA',
   FI = 'FI',
   IRS = 'IRS',
+  IRSLite = 'IRS-Lite',
   MDA = 'MDA',
   MDAPoint = 'MDA-Point',
 }
@@ -579,7 +580,11 @@ export const getPlansArrayByTitle = (planKey?: string) =>
  * @param {PlanFilters} props - the plan filters object
  * @param {string} sortField - sort by field
  */
-export const makePlansArraySelector = (planKey?: string, sortField?: string) => {
+export const makePlansArraySelector = (
+  planKey?: string,
+  sortField?: string,
+  interventionTypes?: InterventionType[]
+) => {
   return createSelector(
     [
       getPlansArrayByInterventionType(planKey),
@@ -598,7 +603,7 @@ export const makePlansArraySelector = (planKey?: string, sortField?: string) => 
           )
         : intersect([plans, plans2, plans3, plans4, plans5, plans6, plans7], JSON.stringify);
       return allPlans.filter(planType =>
-        DISPLAYED_PLAN_TYPES.includes(planType.plan_intervention_type)
+        (interventionTypes || DISPLAYED_PLAN_TYPES).includes(planType.plan_intervention_type)
       );
     }
   );

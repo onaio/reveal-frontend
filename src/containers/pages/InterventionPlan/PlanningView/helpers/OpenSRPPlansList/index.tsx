@@ -35,6 +35,7 @@ import plansByUserReducer, {
 import plansReducer, {
   fetchPlanRecords,
   FetchPlanRecordsAction,
+  InterventionType,
   makePlansArraySelector,
   PlanRecord,
   reducerName as plansReducerName,
@@ -52,6 +53,7 @@ export type RenderProp = () => React.ReactNode;
 export interface OpenSRPPlanListViewProps
   extends Omit<BaseListComponentProps, 'loadData' | 'getTableProps'> {
   fetchPlanRecordsCreator: ActionCreator<FetchPlanRecordsAction>;
+  interventionTypes?: InterventionType[];
   planStatuses: string[];
   serviceClass: typeof OpenSRPService;
   sortByDate: boolean;
@@ -184,7 +186,11 @@ const mapStateToProps = (
   state: Partial<Store>,
   ownProps: RouteComponentProps & OpenSRPPlanListViewProps
 ): MapStateToProps & UserName => {
-  const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
+  const plansArraySelector = makePlansArraySelector(
+    PLAN_RECORD_BY_ID,
+    undefined,
+    ownProps.interventionTypes
+  );
   const title = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const statusList = ownProps.planStatuses;
   const dataSelectors: DataSelectors = {
