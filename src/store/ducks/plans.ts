@@ -5,7 +5,6 @@ import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { FIReasonType, FIStatusType } from '../../components/forms/PlanForm/types';
-import { DISPLAYED_PLAN_TYPES } from '../../configs/env';
 import { descendingOrderSort, removeNullJurisdictionPlans } from '../../helpers/utils';
 
 /** the reducer name */
@@ -580,11 +579,7 @@ export const getPlansArrayByTitle = (planKey?: string) =>
  * @param {PlanFilters} props - the plan filters object
  * @param {string} sortField - sort by field
  */
-export const makePlansArraySelector = (
-  planKey?: string,
-  sortField?: string,
-  interventionTypes?: InterventionType[]
-) => {
+export const makePlansArraySelector = (planKey?: string, sortField?: string) => {
   return createSelector(
     [
       getPlansArrayByInterventionType(planKey),
@@ -596,15 +591,12 @@ export const makePlansArraySelector = (
       getPlansArrayByPlanIds(planKey),
     ],
     (plans, plans2, plans3, plans4, plans5, plans6, plans7) => {
-      const allPlans = sortField
+      return sortField
         ? descendingOrderSort(
             intersect([plans, plans2, plans3, plans4, plans5, plans6, plans7], JSON.stringify),
             sortField
           )
         : intersect([plans, plans2, plans3, plans4, plans5, plans6, plans7], JSON.stringify);
-      return allPlans.filter(planType =>
-        (interventionTypes || DISPLAYED_PLAN_TYPES).includes(planType.plan_intervention_type)
-      );
     }
   );
 };

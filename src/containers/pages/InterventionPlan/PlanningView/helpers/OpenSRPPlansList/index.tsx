@@ -22,6 +22,7 @@ import {
 import { getQueryParams } from '../../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../../services/opensrp';
 
+import { DISPLAYED_PLAN_TYPES } from '../../../../../../configs/env';
 import {
   LOADING,
   NO_DATA_FOUND,
@@ -174,6 +175,7 @@ interface UserName {
 
 /** data selector interface */
 interface DataSelectors {
+  interventionType: InterventionType[];
   planIds?: string[] | null;
   statusList: string[];
   title: string;
@@ -186,15 +188,16 @@ const mapStateToProps = (
   state: Partial<Store>,
   ownProps: RouteComponentProps & OpenSRPPlanListViewProps
 ): MapStateToProps & UserName => {
-  const plansArraySelector = makePlansArraySelector(
-    PLAN_RECORD_BY_ID,
-    undefined,
-    ownProps.interventionTypes
-  );
+  const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
   const title = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const statusList = ownProps.planStatuses;
+  const { planStatuses, interventionTypes } = ownProps;
+  const interventionType =
+    interventionTypes && interventionTypes.length
+      ? interventionTypes
+      : (DISPLAYED_PLAN_TYPES as InterventionType[]);
   const dataSelectors: DataSelectors = {
-    statusList,
+    interventionType,
+    statusList: planStatuses,
     title,
   };
   // useName selector
