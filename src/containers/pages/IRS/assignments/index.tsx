@@ -4,6 +4,7 @@ import React from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Cell } from 'react-table';
 import { BreadCrumbProps } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { ASSIGN_TEAMS_PLAN_TYPES_DISPLAYED } from '../../../../configs/env';
 import {
   ASSIGN_PLANS,
   END_DATE,
@@ -15,7 +16,7 @@ import {
 } from '../../../../configs/lang';
 import { planStatusDisplay } from '../../../../configs/settings';
 import { ASSIGN_PLAN_URL, HOME_URL } from '../../../../constants';
-import { PlanRecord, PlanStatus } from '../../../../store/ducks/plans';
+import { InterventionType, PlanRecord, PlanStatus } from '../../../../store/ducks/plans';
 import {
   createConnectedOpenSRPPlansList,
   OpenSRPPlanListViewProps,
@@ -91,6 +92,7 @@ export const OpenSRPPlansList = (props: RouteComponentProps) => {
 
   const opensrpListProps: Partial<OpenSRPPlanListViewProps> & RouteComponentProps = {
     ...props,
+    interventionTypes: ASSIGN_TEAMS_PLAN_TYPES_DISPLAYED as InterventionType[],
     planStatuses: [PlanStatus.ACTIVE],
     renderBody,
     sortByDate: true,
