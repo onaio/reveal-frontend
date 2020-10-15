@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 0 1`] = `"TitleInterventionStart DateEnd DatePlan Status"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 1 1`] = `"IRS 2019-08-30mIRS2019-08-302019-09-14active"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly:  tr index 2 1`] = `"Berg Namibia 2019IRS2019-08-292019-09-18active"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      to="/"
+    >
+      <LinkAnchor
+        href="/"
+        navigate={[Function]}
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    Assign Plans
+  </li>,
+]
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan definition list correctly: page title 1`] = `
+<h3
+  className="mt-3 mb-3 page-title"
+>
+  Assign Plans
+</h3>
+`;

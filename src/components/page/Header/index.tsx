@@ -23,6 +23,8 @@ import {
   ENABLE_DYNAMIC_MDA,
   ENABLE_FI,
   ENABLE_IRS,
+  ENABLE_IRS_LITE,
+  ENABLE_IRS_LITE_MOPUP_REPORTING,
   ENABLE_IRS_MOPUP_REPORTING,
   ENABLE_IRS_PERFORMANCE_REPORT,
   ENABLE_JURISDICTION_METADATA_UPLOAD,
@@ -44,7 +46,7 @@ import {
   FOCUS_INVESTIGATION,
   FORM_DRAFT_FILES,
   HOME,
-  IRS_PERFORMANCE_REPORTING_TITLE,
+  IRS_LITE_REPORTING_TITLE,
   IRS_REPORTING_TITLE,
   JSON_VALIDATORS,
   JURISDICTION_METADATA,
@@ -76,11 +78,11 @@ import {
   LOGOUT_URL,
   MANIFEST_RELEASE_URL,
   ORGANIZATIONS_LIST_URL,
-  PERFORMANCE_REPORT_IRS_PLAN_URL,
   PLAN_LIST_URL,
   PLANNING_VIEW_URL,
   PRACTITIONERS_LIST_URL,
   REACT_LOGIN_URL,
+  REPORT_IRS_LITE_PLAN_URL,
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
@@ -142,7 +144,10 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
       ENABLE_DYNAMIC_MDA ||
       ENABLE_MDA_POINT ||
       ENABLE_IRS_PERFORMANCE_REPORT ||
-      ENABLE_IRS_MOPUP_REPORTING;
+      ENABLE_IRS_MOPUP_REPORTING ||
+      ENABLE_IRS_LITE ||
+      ENABLE_IRS_PERFORMANCE_REPORT ||
+      ENABLE_IRS_LITE_MOPUP_REPORTING;
 
     return (
       <div>
@@ -231,15 +236,15 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                         </DropdownItem>
                       </div>
                     )}
-                    {ENABLE_IRS_PERFORMANCE_REPORT && (
+                    {ENABLE_IRS_LITE && (
                       <div>
                         <DropdownItem>
                           <NavLink
-                            to={PERFORMANCE_REPORT_IRS_PLAN_URL}
+                            to={REPORT_IRS_LITE_PLAN_URL}
                             className="nav-link"
                             activeClassName="active"
                           >
-                            {IRS_PERFORMANCE_REPORTING_TITLE}
+                            {IRS_LITE_REPORTING_TITLE}
                           </NavLink>
                         </DropdownItem>
                       </div>

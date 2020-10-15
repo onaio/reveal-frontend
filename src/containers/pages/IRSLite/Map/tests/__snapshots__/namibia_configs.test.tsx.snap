@@ -1,0 +1,262 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Namibia configs: Indicator item breakdown 1`] = `
+Array [
+  <p
+    className="indicator-breakdown"
+  >
+    Progress: 
+    7 of 14 room(s)
+     
+    (50%)
+  </p>,
+  <p
+    className="indicator-breakdown"
+  >
+    Progress: 
+    7 of 14 room(s)
+     
+    (50%)
+  </p>,
+]
+`;
+
+exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Namibia configs: Legend items 1`] = `
+Array [
+  <div
+    className="sidebar-legend-item"
+    key="0"
+  >
+    <span
+      className="sidebar-legend-color"
+      style={
+        Object {
+          "backgroundColor": "#68BB0C",
+        }
+      }
+    />
+    <span
+      className="sidebar-legend-label"
+    >
+      Sprayed
+    </span>
+  </div>,
+  <div
+    className="sidebar-legend-item"
+    key="1"
+  >
+    <span
+      className="sidebar-legend-color"
+      style={
+        Object {
+          "backgroundColor": "#F12525",
+        }
+      }
+    />
+    <span
+      className="sidebar-legend-label"
+    >
+      Not Sprayed
+    </span>
+  </div>,
+  <div
+    className="sidebar-legend-item"
+    key="2"
+  >
+    <span
+      className="sidebar-legend-color"
+      style={
+        Object {
+          "backgroundColor": "#FF851B",
+        }
+      }
+    />
+    <span
+      className="sidebar-legend-label"
+    >
+      Partially Sprayed
+    </span>
+  </div>,
+  <div
+    className="sidebar-legend-item"
+    key="3"
+  >
+    <span
+      className="sidebar-legend-color"
+      style={
+        Object {
+          "backgroundColor": "#FFCA16",
+        }
+      }
+    />
+    <span
+      className="sidebar-legend-label"
+    >
+      Not Visited
+    </span>
+  </div>,
+  <div
+    className="sidebar-legend-item"
+    key="4"
+  >
+    <span
+      className="sidebar-legend-color"
+      style={
+        Object {
+          "backgroundColor": "#000",
+        }
+      }
+    />
+    <span
+      className="sidebar-legend-label"
+    >
+      Not Eligible
+    </span>
+  </div>,
+]
+`;
+
+exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Namibia configs: Response item ProgressBar 1`] = `
+Array [
+  <ProgressBar
+    animate={false}
+    cssClass="progress-bar-striped"
+    decimalPoints={0}
+    height="10px"
+    lineColor="#0000FF"
+    lineColorThresholds={
+      Object {
+        "GREEN_THRESHOLD": Object {
+          "color": "#2ECC40",
+          "name": "Green",
+          "orEquals": true,
+          "value": 1,
+        },
+        "GREY_THRESHOLD": Object {
+          "color": "#dddddd",
+          "name": "Grey",
+          "value": 0.2,
+        },
+        "RED_THRESHOLD": Object {
+          "color": "#FF4136",
+          "name": "Red",
+          "orEquals": true,
+          "value": 0.75,
+        },
+        "YELLOW_THRESHOLD": Object {
+          "color": "#FFDC00",
+          "name": "Yellow",
+          "value": 0.9,
+        },
+      }
+    }
+    max={100}
+    min={0}
+    showLabel={false}
+    stripped={false}
+    value={50}
+  >
+    <div
+      className="progress"
+    >
+      <div
+        aria-valuemax={100}
+        aria-valuemin={0}
+        aria-valuenow={50}
+        className="progress-bar 
+          "
+        role="progressbar"
+        style={
+          Object {
+            "backgroundColor": "#FF4136",
+            "width": "50%",
+          }
+        }
+      />
+    </div>
+  </ProgressBar>,
+  <ProgressBar
+    animate={false}
+    cssClass="progress-bar-striped"
+    decimalPoints={0}
+    height="10px"
+    lineColor="#0000FF"
+    lineColorThresholds={
+      Object {
+        "GREEN_THRESHOLD": Object {
+          "color": "#2ECC40",
+          "name": "Green",
+          "orEquals": true,
+          "value": 1,
+        },
+        "GREY_THRESHOLD": Object {
+          "color": "#dddddd",
+          "name": "Grey",
+          "value": 0.2,
+        },
+        "RED_THRESHOLD": Object {
+          "color": "#FF4136",
+          "name": "Red",
+          "orEquals": true,
+          "value": 0.75,
+        },
+        "YELLOW_THRESHOLD": Object {
+          "color": "#FFDC00",
+          "name": "Yellow",
+          "value": 0.9,
+        },
+      }
+    }
+    max={100}
+    min={0}
+    showLabel={false}
+    stripped={false}
+    value={50}
+  >
+    <div
+      className="progress"
+    >
+      <div
+        aria-valuemax={100}
+        aria-valuemin={0}
+        aria-valuenow={50}
+        className="progress-bar 
+          "
+        role="progressbar"
+        style={
+          Object {
+            "backgroundColor": "#FF4136",
+            "width": "50%",
+          }
+        }
+      />
+    </div>
+  </ProgressBar>,
+]
+`;
+
+exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Namibia configs: Response item descriptions 1`] = `
+Array [
+  <p
+    className="indicator-description"
+  >
+    Percent of structures sprayed over targeted
+  </p>,
+  <p
+    className="indicator-description"
+  >
+    Percent of structures sprayed over found
+  </p>,
+]
+`;
+
+exports[`Namibia configs: components/IRS Reports/IRSReportingMap Namibia configs: renders correctly: Namibia configs: Response item titles 1`] = `
+Array [
+  <h6>
+    Target Coverage
+  </h6>,
+  <h6>
+    Found Coverage
+  </h6>,
+]
+`;

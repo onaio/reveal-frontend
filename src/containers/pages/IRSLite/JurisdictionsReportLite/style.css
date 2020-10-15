@@ -1,0 +1,50 @@
+.irs-report-table .ReactTable .rt-thead.-headerGroups .rt-th {
+  white-space: normal;
+}
+
+.irs-report-table .ReactTable .rt-thead.-header .rt-th {
+  font-weight: normal;
+  white-space: normal;
+}
+
+.irs-report-indicator-container {
+  padding: 7px 5px;
+}
+
+.irs-report-table .ReactTable .rt-resizable-header {
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+
+.irs-report-table .ReactTable .rt-resizer:before {
+  display: inline-block;
+  position: absolute;
+  right: 25px;
+  top: 3px;
+  color: transparent;
+  content: '.';
+  background-size: 18px 18px;
+  background-repeat: no-repeat;
+  height: 0;
+  width: 0;
+}
+
+.irs-report-table .ReactTable .rt-th:hover .rt-resizer:before {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #999;
+}
+
+.irs-report-table .ReactTable .rt-th.-sort-asc .rt-resizer:before,
+.irs-report-table .ReactTable .rt-th.-sort-asc:hover .rt-resizer:before {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid black;
+}
+
+.irs-report-table .ReactTable .rt-th.-sort-desc .rt-resizer:before,
+.irs-report-table .ReactTable .rt-th.-sort-desc:hover .rt-resizer:before {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid black;
+}

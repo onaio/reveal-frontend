@@ -1,0 +1,344 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/IRS Reports/IRSPlansList handles a case insensitive search: search results props 1`] = `
+Array [
+  Object {
+    "jurisdiction_root_parent_ids": Array [
+      "f45b9380-c970-4dd1-8533-9e95ab12f128",
+    ],
+    "plan_date": "2019-08-29",
+    "plan_effective_period_end": "2019-09-18",
+    "plan_effective_period_start": "2019-08-29",
+    "plan_id": "c6e59ec1-8c54-5fdf-acf3-ee3692983f38",
+    "plan_intervention_type": "IRS",
+    "plan_name": "Berg-Namibia-2019",
+    "plan_status": "active",
+    "plan_title": "Berg Namibia 2019",
+    "plan_version": "2",
+  },
+]
+`;
+
+exports[`components/IRS Reports/IRSPlansList handles search correctly: search results props 1`] = `
+Array [
+  Object {
+    "jurisdiction_root_parent_ids": Array [
+      "f45b9380-c970-4dd1-8533-9e95ab12f128",
+    ],
+    "plan_date": "2019-08-29",
+    "plan_effective_period_end": "2019-09-18",
+    "plan_effective_period_start": "2019-08-29",
+    "plan_id": "c6e59ec1-8c54-5fdf-acf3-ee3692983f38",
+    "plan_intervention_type": "IRS",
+    "plan_name": "Berg-Namibia-2019",
+    "plan_status": "active",
+    "plan_title": "Berg Namibia 2019",
+    "plan_version": "2",
+  },
+]
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders empty table if no search matches: search results props 1`] = `Array []`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: GenericPlansList props 1`] = `
+Object {
+  "fetchPlans": [Function],
+  "history": Object {
+    "action": "POP",
+    "block": [Function],
+    "createHref": [Function],
+    "go": [Function],
+    "goBack": [Function],
+    "goForward": [Function],
+    "length": 1,
+    "listen": [Function],
+    "location": Object {
+      "hash": "",
+      "pathname": "/",
+      "search": "",
+      "state": undefined,
+    },
+    "push": [Function],
+    "replace": [Function],
+  },
+  "location": Object {
+    "hash": "",
+    "pathname": "/intervention/irs/report",
+    "search": "",
+    "state": undefined,
+  },
+  "match": Object {
+    "isExact": true,
+    "params": Object {},
+    "path": "/intervention/irs/report/",
+    "url": "/intervention/irs/report/",
+  },
+  "pageTitle": "IRS Plans",
+  "pageUrl": "/intervention/irs/report",
+  "plans": Array [
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "f45b9380-c970-4dd1-8533-9e95ab12f128",
+      ],
+      "plan_date": "2019-09-05",
+      "plan_effective_period_end": "2019-09-25",
+      "plan_effective_period_start": "2019-09-05",
+      "plan_id": "727c3d40-e118-564a-b231-aac633e6abce",
+      "plan_intervention_type": "IRS",
+      "plan_name": "IRS-2019-09-05-TEST",
+      "plan_status": "retired",
+      "plan_title": "IRS 2019-09-05 TEST",
+      "plan_version": "2",
+    },
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "f45b9380-c970-4dd1-8533-9e95ab12f128",
+      ],
+      "plan_date": "2019-08-30",
+      "plan_effective_period_end": "2019-09-14",
+      "plan_effective_period_start": "2019-08-30",
+      "plan_id": "02e358ed-87fe-5720-8782-0afe28cb7e8c",
+      "plan_intervention_type": "IRS",
+      "plan_name": "IRS-2019-08-30m",
+      "plan_status": "active",
+      "plan_title": "IRS 2019-08-30m",
+      "plan_version": "2",
+    },
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "f45b9380-c970-4dd1-8533-9e95ab12f128",
+      ],
+      "plan_date": "2019-08-29",
+      "plan_effective_period_end": "2019-09-18",
+      "plan_effective_period_start": "2019-08-29",
+      "plan_id": "c6e59ec1-8c54-5fdf-acf3-ee3692983f38",
+      "plan_intervention_type": "IRS",
+      "plan_name": "Berg-Namibia-2019",
+      "plan_status": "active",
+      "plan_title": "Berg Namibia 2019",
+      "plan_version": "2",
+    },
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "Metrociti",
+      ],
+      "plan_date": "2019-08-29",
+      "plan_effective_period_end": "2019-09-18",
+      "plan_effective_period_start": "2019-08-29",
+      "plan_id": "UUID-1-test",
+      "plan_intervention_type": "Dynamic-IRS",
+      "plan_name": "forget me stick",
+      "plan_status": "active",
+      "plan_title": "MegaMind",
+      "plan_version": "2",
+    },
+  ],
+  "service": [Function],
+  "supersetReportingSlice": "13",
+}
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      to="/"
+    >
+      <LinkAnchor
+        href="/"
+        navigate={[Function]}
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    IRS Plans
+  </li>,
+]
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: page title 1`] = `
+<h3
+  className="mt-3 mb-3 page-title"
+>
+  IRS Plans
+</h3>
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: table header-1 1`] = `"Title"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: table header-2 1`] = `"Date Created"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: table header-3 1`] = `"Start Date"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: table header-4 1`] = `"End Date"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: table header-5 1`] = `"Status"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: the full rendered rows tr index 0 1`] = `"TitleDate CreatedStart DateEnd DateStatus"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: the full rendered rows tr index 1 1`] = `"IRS 2019-09-05 TEST2019-09-052019-09-052019-09-25retired"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: the full rendered rows tr index 2 1`] = `"IRS 2019-08-30m2019-08-302019-08-302019-09-14active"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: the full rendered rows tr index 3 1`] = `"Berg Namibia 20192019-08-292019-08-292019-09-18active"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: the full rendered rows tr index 4 1`] = `"MegaMind2019-08-292019-08-292019-09-18active"`;
+
+exports[`components/IRS Reports/IRSPlansList renders plan list view correctly: title column styling 1`] = `
+Object {
+  "boxSizing": "border-box",
+  "cursor": "pointer",
+  "flex": "200 0 auto",
+  "minWidth": "660px",
+  "position": "relative",
+  "width": "200px",
+}
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plans correctly when connected to store: GenericPlansList props: connected to store 1`] = `
+Object {
+  "fetchPlans": [Function],
+  "history": Object {
+    "action": "POP",
+    "block": [Function],
+    "createHref": [Function],
+    "go": [Function],
+    "goBack": [Function],
+    "goForward": [Function],
+    "length": 1,
+    "listen": [Function],
+    "location": Object {
+      "hash": "",
+      "pathname": "/",
+      "search": "",
+      "state": undefined,
+    },
+    "push": [Function],
+    "replace": [Function],
+  },
+  "location": Object {
+    "hash": "",
+    "pathname": "/intervention/irs/report",
+    "search": "",
+    "state": undefined,
+  },
+  "match": Object {
+    "isExact": true,
+    "params": Object {},
+    "path": "/intervention/irs/report",
+    "url": "/intervention/irs/report",
+  },
+  "pageTitle": "IRS Plans",
+  "pageUrl": "/intervention/irs/report",
+  "plans": Array [
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "f45b9380-c970-4dd1-8533-9e95ab12f128",
+      ],
+      "plan_date": "2019-08-30",
+      "plan_effective_period_end": "2019-09-14",
+      "plan_effective_period_start": "2019-08-30",
+      "plan_id": "02e358ed-87fe-5720-8782-0afe28cb7e8c",
+      "plan_intervention_type": "IRS",
+      "plan_name": "IRS-2019-08-30m",
+      "plan_status": "active",
+      "plan_title": "IRS 2019-08-30m",
+      "plan_version": "2",
+    },
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "f45b9380-c970-4dd1-8533-9e95ab12f128",
+      ],
+      "plan_date": "2019-08-29",
+      "plan_effective_period_end": "2019-09-18",
+      "plan_effective_period_start": "2019-08-29",
+      "plan_id": "c6e59ec1-8c54-5fdf-acf3-ee3692983f38",
+      "plan_intervention_type": "IRS",
+      "plan_name": "Berg-Namibia-2019",
+      "plan_status": "active",
+      "plan_title": "Berg Namibia 2019",
+      "plan_version": "2",
+    },
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "Metrociti",
+      ],
+      "plan_date": "2019-08-29",
+      "plan_effective_period_end": "2019-09-18",
+      "plan_effective_period_start": "2019-08-29",
+      "plan_id": "UUID-1-test",
+      "plan_intervention_type": "Dynamic-IRS",
+      "plan_name": "forget me stick",
+      "plan_status": "active",
+      "plan_title": "MegaMind",
+      "plan_version": "2",
+    },
+  ],
+  "service": [MockFunction] {
+    "calls": Array [
+      Array [
+        "13",
+      ],
+    ],
+    "results": Array [
+      Object {
+        "type": "return",
+        "value": Promise {},
+      },
+    ],
+  },
+  "supersetReportingSlice": "13",
+}
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plans correctly when connected to store: breadcrumbs: connected to store 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      to="/"
+    >
+      <LinkAnchor
+        href="/"
+        navigate={[Function]}
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    IRS Plans
+  </li>,
+]
+`;
+
+exports[`components/IRS Reports/IRSPlansList renders plans correctly when connected to store: page title: connected to store 1`] = `
+<h3
+  className="mt-3 mb-3 page-title"
+>
+  IRS Plans
+</h3>
+`;

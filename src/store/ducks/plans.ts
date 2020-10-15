@@ -18,6 +18,7 @@ export enum InterventionType {
   DynamicMDA = 'Dynamic-MDA',
   FI = 'FI',
   IRS = 'IRS',
+  IRSLite = 'IRS-Lite',
   MDA = 'MDA',
   MDAPoint = 'MDA-Point',
 }
