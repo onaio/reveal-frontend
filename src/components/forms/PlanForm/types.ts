@@ -31,7 +31,7 @@ export type UseContextCodesType = typeof useContextCodes[number];
 export type PlanActionCodesType = typeof PlanActionCodes[number];
 
 /** Task generation status type */
-export type taskGenerationStatusType = typeof taskGenerationStatuses[number];
+export type taskGenerationStatusType = keyof typeof taskGenerationStatuses;
 
 /** Plan activity title type */
 export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
