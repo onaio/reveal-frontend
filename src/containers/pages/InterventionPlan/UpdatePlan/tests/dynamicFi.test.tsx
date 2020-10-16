@@ -131,7 +131,6 @@ describe('components/InterventionPlan/UpdatePlan', () => {
       { code: 'interventionType', valueCodableConcept: 'Dynamic-FI' },
       { code: 'fiStatus', valueCodableConcept: 'A1' },
       { code: 'fiReason', valueCodableConcept: 'Routine' },
-      { code: 'taskGenerationStatus', valueCodableConcept: 'Disabled' },
     ]);
   });
 });

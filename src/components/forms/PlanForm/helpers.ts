@@ -661,7 +661,11 @@ export function generatePlanDefinition(
     useContext.push({ code: OPENSRP_EVENT_ID_CODE, valueCodableConcept: formValue.opensrpEventId });
   }
 
-  if (formValue.taskGenerationStatus && (taskGenerationStatusValue !== IGNORE || isEditMode)) {
+  if (
+    formValue.taskGenerationStatus &&
+    formValue.taskGenerationStatus !== IGNORE &&
+    (taskGenerationStatusValue !== IGNORE || isEditMode)
+  ) {
     useContext.push({
       code: TASK_GENERATION_STATUS_CODE,
       valueCodableConcept: isEditMode ? formValue.taskGenerationStatus : taskGenerationStatusValue,
@@ -769,7 +773,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     taskGenerationStatusContext.length > 0
       ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
       : isDynamicPlan(planObject)
-      ? taskGenerationStatuses[2]
+      ? taskGenerationStatuses[4]
       : taskGenerationStatuses[1];
 
   const teamAssignmentStatus: string =
