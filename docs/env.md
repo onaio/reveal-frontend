@@ -95,3 +95,9 @@ Below is a list of currently supported environment variables:
   - **not Required**; _(string)_
   - to activate set the env to `true`, any other value will be interpreted as false
   - enables the monitor IRS mop up reporting page
+
+- **REACT_APP_ASSIGN_TEAMS_PLAN_TYPES_DISPLAYED**
+
+  - Contains plan intervention types displayed on plan assign page
+  - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
+  - Variable is **not required** and if not provided interventions on `REACT_APP_DISPLAYED_PLAN_TYPES` are loaded.
