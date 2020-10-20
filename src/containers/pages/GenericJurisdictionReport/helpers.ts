@@ -132,6 +132,50 @@ export const ZambiaJurisdictionsColumns = [
   },
 ];
 
+/** columns for Zambia IRS Lite jurisdictions */
+export const IRSLiteZambiaJurisdictionsColumns = [
+  {
+    Header: 'Total Spray Areas',
+    accessor: 'totareas',
+  },
+  {
+    Header: 'Spray Areas Targeted',
+    accessor: 'targareas',
+  },
+  {
+    Header: 'Spray Areas Visited',
+    accessor: 'visitedareas',
+  },
+  {
+    Header: 'Total Structures',
+    accessor: 'totstruct',
+  },
+  {
+    Header: 'Targeted Structures',
+    accessor: 'targstruct',
+  },
+  {
+    Header: 'Structures Sprayed',
+    accessor: 'sprayed',
+  },
+  {
+    Header: '% Total Structures Sprayed',
+    accessor: 'spraycov',
+  },
+  {
+    Header: '% Targeted Structures Sprayed',
+    accessor: 'spraycovTarg',
+  },
+  {
+    Header: 'Structures Found',
+    accessor: 'found',
+  },
+  {
+    Header: 'Found Coverage',
+    accessor: 'foundcoverage',
+  },
+];
+
 /** columns for  mda point jurisdictions */
 export const mdaJurisdictionsColumns = [
   {
@@ -277,6 +321,8 @@ zambiaMDAUpperJurisdictions.splice(
  * These are all the table columns for IRS that we know about.
  */
 export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionary>> } = {
+  irsLiteZambiaFocusArea2020: IRSLiteZambiaJurisdictionsColumns,
+  irsLiteZambiaJurisdictions2020: IRSLiteZambiaJurisdictionsColumns,
   mdaJurisdictionsColumns,
   namibia2019: NamibiaColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
