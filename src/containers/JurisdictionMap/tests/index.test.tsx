@@ -3,6 +3,7 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router';
 import * as errorHelpers from '../../../helpers/errors';
@@ -13,6 +14,7 @@ import jurisdictionReducer, {
 } from '../../../store/ducks/jurisdictions';
 import { jurisdiction1 } from '../../../store/ducks/tests/fixtures';
 import { AN_ERROR_OCCURRED } from '../.././../configs/lang';
+import * as mapUtil from '../../pages/FocusInvestigation/map/active/helpers/utils';
 import ConnectedJurisdictionMap, {
   defaultProps,
   JurisdictionMap,
@@ -23,6 +25,13 @@ import ConnectedJurisdictionMap, {
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 
 jest.mock('../../../configs/env');
+
+jest.mock('../../../components/GisidaLite', () => {
+  const MemoizedGisidaLiteMock = () => <div>Mock component</div>;
+  return {
+    MemoizedGisidaLite: MemoizedGisidaLiteMock,
+  };
+});
 
 describe('containers/JurisdictionMap', () => {
   beforeEach(() => {
@@ -64,13 +73,15 @@ describe('containers/JurisdictionMap', () => {
     /** Show loading indicator */
     expect(wrapper.find('JurisdictionMap>Ripple').length).toEqual(1);
 
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
     wrapper.update();
 
     /** No longer show loading indicator */
     expect(wrapper.find('JurisdictionMap>Ripple').length).toEqual(0);
 
-    expect(wrapper.find('div.super-custom').length).toEqual(1);
+    // expect(wrapper.find('div.super-custom').length).toEqual(1);
 
     expect(supersetServiceMock.mock.calls).toEqual([
       [
@@ -93,17 +104,6 @@ describe('containers/JurisdictionMap', () => {
 
     expect(callbackMock.mock.calls).toEqual([[jurisdiction1]]);
     expect(callbackMock).toHaveBeenCalledTimes(1);
-
-    expect(wrapper.find('GisidaWrapper').props()).toEqual({
-      currentGoal: null,
-      geoData: jurisdiction1,
-      goal: null,
-      handlers: [],
-      minHeight: '200px',
-      pointFeatureCollection: null,
-      polygonFeatureCollection: null,
-      structures: null,
-    });
   });
 
   it('renders fetch error correctly', async () => {
@@ -124,7 +124,9 @@ describe('containers/JurisdictionMap', () => {
       </MemoryRouter>
     );
 
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
     wrapper.update();
 
     expect(mockDisplayError.mock.calls).toEqual([[new Error(AN_ERROR_OCCURRED)]]);
@@ -153,7 +155,9 @@ describe('containers/JurisdictionMap', () => {
       </MemoryRouter>
     );
 
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
     wrapper.update();
 
     expect(mockDisplayError.mock.calls).toEqual([[error]]);
@@ -165,6 +169,7 @@ describe('containers/JurisdictionMap', () => {
   it('works when connected to the store', async () => {
     store.dispatch(fetchJurisdictions([jurisdiction1]));
 
+    const buildJurisdictionLayersSpy = jest.spyOn(mapUtil, 'buildJurisdictionLayers');
     const supersetServiceMock: any = jest.fn();
     supersetServiceMock.mockImplementation(async () => [jurisdiction1]);
 
@@ -182,18 +187,12 @@ describe('containers/JurisdictionMap', () => {
       </Provider>
     );
 
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
     wrapper.update();
 
-    expect(wrapper.find('GisidaWrapper').props()).toEqual({
-      currentGoal: null,
-      geoData: jurisdiction1,
-      goal: null,
-      handlers: [],
-      minHeight: '200px',
-      pointFeatureCollection: null,
-      polygonFeatureCollection: null,
-      structures: null,
-    });
+    expect(buildJurisdictionLayersSpy).toBeCalledTimes(1);
+    expect(buildJurisdictionLayersSpy).toBeCalledWith(jurisdiction1);
   });
 });
