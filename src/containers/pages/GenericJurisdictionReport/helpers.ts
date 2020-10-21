@@ -135,6 +135,11 @@ export const ZambiaJurisdictionsColumns = [
 /** columns for Zambia IRS Lite jurisdictions */
 export const IRSLiteZambiaJurisdictionsColumns = [
   {
+    Header: 'Name',
+    accessor: 'jurisdiction_name',
+    minWidth: 360,
+  },
+  {
     Header: 'Total Spray Areas',
     accessor: 'totareas',
   },

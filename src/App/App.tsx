@@ -114,6 +114,7 @@ import { IRSPlanPerfomenceReport } from '../containers/pages/IRS/performanceRepo
 import ConnectedIRSPerfomenceReport from '../containers/pages/IRS/performanceReport/reports';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
 import ConnectedJurisdictionReportLite from '../containers/pages/IRSLite/JurisdictionsReportLite';
+import ConnectedIRSLiteReportingMap from '../containers/pages/IRSLite/MapLite';
 import ConnectedIRSLitePlansList from '../containers/pages/IRSLite/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
 import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
@@ -288,6 +289,14 @@ const App = () => {
                   exact={true}
                   path={`${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedJurisdictionReportLite}
+                />
+                {/* IRS Reporting Map view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
+                  component={ConnectedIRSLiteReportingMap}
                 />
                 {/* IRS Reporting Map view */}
                 <ConnectedPrivateRoute

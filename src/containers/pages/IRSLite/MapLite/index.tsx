@@ -17,18 +17,18 @@ import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/Heade
 import Loading from '../../../../components/page/Loading';
 import {
   HIDDEN_MAP_LEGEND_ITEMS,
-  SUPERSET_IRS_REPORTING_INDICATOR_ROWS,
-  SUPERSET_IRS_REPORTING_INDICATOR_STOPS,
-  SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES,
-  SUPERSET_IRS_REPORTING_PLANS_SLICE,
-  SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
+  SUPERSET_IRS_LITE_REPORTING_INDICATOR_ROWS,
+  SUPERSET_IRS_LITE_REPORTING_INDICATOR_STOPS,
+  SUPERSET_IRS_LITE_REPORTING_JURISDICTIONS_FOCUS_AREA_SLICE,
+  SUPERSET_IRS_LITE_REPORTING_PLANS_SLICE,
+  SUPERSET_IRS_LITE_REPORTING_STRUCTURES_DATA_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_MAX_RECORDS,
 } from '../../../../configs/env';
 import {
   AN_ERROR_OCCURRED,
   HOME,
-  IRS_REPORTING_TITLE,
+  IRS_LITE_REPORTING_TITLE,
   LEGEND_LABEL,
   MAP_LOAD_ERROR,
   NUMERATOR_OF_DENOMINATOR_UNITS,
@@ -36,7 +36,7 @@ import {
   STRUCTURES,
 } from '../../../../configs/lang';
 import { indicatorThresholdsIRS } from '../../../../configs/settings';
-import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import { HOME_URL, REPORT_IRS_LITE_PLAN_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -81,8 +81,8 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
 reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer);
 
-const slices = SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
-const focusAreaSlice = slices.pop();
+// const slices = SUPERSET_IRS_LITE_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
+const focusAreaSlice = SUPERSET_IRS_LITE_REPORTING_JURISDICTIONS_FOCUS_AREA_SLICE;
 
 /** interface for IRSReportingMap */
 interface IRSReportingMapProps {
@@ -163,10 +163,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
 
       // get the structures
       await service(
-        SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
+        SUPERSET_IRS_LITE_REPORTING_STRUCTURES_DATA_SLICE,
         fetchStructureParams
       ).then((result: GenericStructure[]) =>
-        fetchStructures(SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE, result)
+        fetchStructures(SUPERSET_IRS_LITE_REPORTING_STRUCTURES_DATA_SLICE, result)
       );
 
       if (focusAreaSlice) {
@@ -192,7 +192,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
 
       // get the plan
       await service(
-        SUPERSET_IRS_REPORTING_PLANS_SLICE,
+        SUPERSET_IRS_LITE_REPORTING_PLANS_SLICE,
         fetchPlansParams
       ).then((result: GenericPlan[]) => fetchPlans(result));
     } catch (e) {
@@ -220,7 +220,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
     return <ErrorPage errorMessage={AN_ERROR_OCCURRED} />;
   }
 
-  const baseURL = `${REPORT_IRS_PLAN_URL}/${plan.plan_id}`;
+  const baseURL = `${REPORT_IRS_LITE_PLAN_URL}/${plan.plan_id}`;
   const focusAreaURL = `${baseURL}/${focusArea.jurisdiction_id}`;
 
   const pageTitle = `${plan.plan_title}: ${focusArea.jurisdiction_name}`;
@@ -236,8 +236,8 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
         url: HOME_URL,
       },
       {
-        label: IRS_REPORTING_TITLE,
-        url: REPORT_IRS_PLAN_URL,
+        label: IRS_LITE_REPORTING_TITLE,
+        url: REPORT_IRS_LITE_PLAN_URL,
       },
       {
         label: plan.plan_title,
@@ -251,7 +251,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   const newPages = breadcrumbProps.pages.concat(jurisdictionBreadCrumbs);
   breadcrumbProps.pages = newPages;
 
-  const indicatorRows = get(IRSIndicatorRows, SUPERSET_IRS_REPORTING_INDICATOR_ROWS, null);
+  const indicatorRows = get(IRSIndicatorRows, SUPERSET_IRS_LITE_REPORTING_INDICATOR_ROWS, null);
   let sidebarIndicatorRows = null;
   if (indicatorRows !== null) {
     sidebarIndicatorRows = getIndicatorRows(indicatorRows, focusArea);
@@ -259,7 +259,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
 
   const indicatorStops = get(
     IRSIndicatorStops,
-    SUPERSET_IRS_REPORTING_INDICATOR_STOPS,
+    SUPERSET_IRS_LITE_REPORTING_INDICATOR_STOPS,
     defaultIndicatorStop
   );
 
@@ -381,7 +381,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const jurisdiction = getJurisdictionById(state, jurisdictionId);
   const structures = getGenericStructures(
     state,
-    SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
+    SUPERSET_IRS_LITE_REPORTING_STRUCTURES_DATA_SLICE,
     jurisdictionId,
     planId
   );
@@ -407,6 +407,6 @@ const mapDispatchToProps = {
 };
 
 /** Connected IRSReportingMap component */
-const ConnectedIRSReportingMap = connect(mapStateToProps, mapDispatchToProps)(IRSReportingMap);
+const ConnectedIRSLiteReportingMap = connect(mapStateToProps, mapDispatchToProps)(IRSReportingMap);
 
-export default ConnectedIRSReportingMap;
+export default ConnectedIRSLiteReportingMap;
