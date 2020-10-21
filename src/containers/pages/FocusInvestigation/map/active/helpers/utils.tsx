@@ -299,7 +299,13 @@ export const buildStructureLayers = (
 };
 
 /** describes the last arg to buildGsLiteLayers */
+export interface CircleColor {
+  property: string;
+  stops: string[][];
+  type: string;
+}
 interface ExtraVars {
+  circleColor?: CircleColor;
   useId?: string; // override the goalId to be used for the layer;
 }
 
@@ -386,17 +392,22 @@ export const buildGsLiteLayers = (
 ) => {
   const idToUse = extraVars.useId ? extraVars.useId : currentGoal;
   const gsLayers = [];
+  const defaultCirclePaint = {
+    ...circleLayerTemplate.circlePaint,
+    'circle-color': ['get', 'color'],
+    'circle-stroke-color': ['get', 'color'],
+    'circle-stroke-opacity': 1,
+  };
+  // default circle color or data driven circle styling
+  const circlePaint = extraVars.circleColor
+    ? { 'circle-color': extraVars.circleColor }
+    : defaultCirclePaint;
 
   if (pointFeatureCollection && pointFeatureCollection.features.length) {
     gsLayers.push(
       <GeoJSONLayer
         {...circleLayerTemplate}
-        circlePaint={{
-          ...circleLayerTemplate.circlePaint,
-          'circle-color': ['get', 'color'],
-          'circle-stroke-color': ['get', 'color'],
-          'circle-stroke-opacity': 1,
-        }}
+        circlePaint={circlePaint}
         id={`${idToUse}-point`}
         key={`${idToUse}-point`}
         data={pointFeatureCollection}

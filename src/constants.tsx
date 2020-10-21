@@ -66,6 +66,7 @@ export const TIMELINE_SLIDER_STEP1 = '1';
 export const TIMELINE_SLIDER_STEP2 = '2';
 export const TIMELINE_SLIDER_STEP3 = '3';
 export const MODAL_BUTTON_CLASS = 'focus-investigation btn btn-primary float-right mt-0';
+export const BUSINESS_STATUS = 'business_status';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
@@ -256,3 +257,4 @@ export const SUPERSET_ACCESS_DENIED_MESSAGE = 'Access is Denied';
 /** React Mapbox GL strings */
 export const REACT_MAPBOX_GL_ICON_IMAGE = 'icon-image';
 export const REACT_MAPBOX_GL_ICON_SIZE = 'icon-size';
+export const CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE = 'categorical';

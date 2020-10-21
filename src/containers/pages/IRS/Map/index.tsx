@@ -1,3 +1,5 @@
+import { viewport } from '@mapbox/geo-viewport';
+import GeojsonExtent from '@mapbox/geojson-extent';
 import { ProgressBar } from '@onaio/progress-indicators';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
@@ -10,7 +12,7 @@ import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
-import GisidaWrapper from '../../../../components/GisidaWrapper';
+import { MemoizedGisidaLite } from '../../../../components/GisidaLite';
 import NotFound from '../../../../components/NotFound';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -36,7 +38,12 @@ import {
   STRUCTURES,
 } from '../../../../configs/lang';
 import { indicatorThresholdsIRS } from '../../../../configs/settings';
-import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import {
+  BUSINESS_STATUS,
+  CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  HOME_URL,
+  REPORT_IRS_PLAN_URL,
+} from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -66,12 +73,17 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../store/ducks/jurisdictions';
 import {
+  buildGsLiteLayers,
+  buildJurisdictionLayers,
+  CircleColor,
+} from '../../FocusInvestigation/map/active/helpers/utils';
+import {
   defaultIndicatorStop,
-  getGisidaWrapperProps,
   getIndicatorRows,
   getJurisdictionBreadcrumbs,
   IRSIndicatorRows,
   IRSIndicatorStops,
+  mapOnClickHandler,
 } from './helpers';
 import './style.css';
 
@@ -263,8 +275,6 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
     defaultIndicatorStop
   );
 
-  const gisidaWrapperProps = getGisidaWrapperProps(jurisdiction, structures, indicatorStops);
-
   /**
    * Create list elements from dictionary
    * @param {Dictionary} dict
@@ -279,6 +289,31 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
     return typeof dict === 'string' ? createList(JSON.parse(dict)) : createList(dict);
   };
 
+  let mapCenter;
+  let mapBounds;
+  let zoom;
+  if (structures && structures.features.length) {
+    mapBounds = GeojsonExtent(structures);
+    // get map zoom and center values
+    const centerAndZoom = viewport(mapBounds, [600, 400]);
+    mapCenter = centerAndZoom.center;
+    zoom = centerAndZoom.zoom;
+  }
+
+  // define circle paint colors
+  const circleColor: CircleColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+
+  // map layers
+  const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
+  const structuresLayers = buildGsLiteLayers('all_structure', structures as any, null, {
+    circleColor,
+  });
+  const gsLayers = [...jurisdictionLayers, ...structuresLayers];
+
   return (
     <div>
       <Helmet>
@@ -292,10 +327,14 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       </Row>
       <Row noGutters={true}>
         <Col xs={9}>
-          {gisidaWrapperProps ? (
-            <div className="map irs-reporting-map">
-              <GisidaWrapper {...gisidaWrapperProps} />
-            </div>
+          {gsLayers.length ? (
+            <MemoizedGisidaLite
+              layers={[...gsLayers]}
+              zoom={zoom}
+              mapCenter={mapCenter}
+              mapBounds={mapBounds}
+              onClickHandler={mapOnClickHandler}
+            />
           ) : (
             <div>{MAP_LOAD_ERROR}</div>
           )}
