@@ -1,8 +1,10 @@
+import { viewport } from '@mapbox/geo-viewport';
+import GeojsonExtent from '@mapbox/geojson-extent';
 import { SingleObject } from '@onaio/cbv';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import React, { useEffect, useState } from 'react';
-import GisidaWrapper from '../../components/GisidaWrapper';
+import { MemoizedGisidaLite } from '../../components/GisidaLite';
 import Loading from '../../components/page/Loading';
 import { SUPERSET_JURISDICTIONS_SLICE } from '../../configs/env';
 import { AN_ERROR_OCCURRED, JURISDICTION_LOADING_ERROR } from '../../configs/lang';
@@ -15,6 +17,7 @@ import jurisdictionReducer, {
   makeJurisdictionByIdSelector,
   reducerName as jurisdictionReducerName,
 } from '../../store/ducks/jurisdictions';
+import { buildJurisdictionLayers } from '../pages/FocusInvestigation/map/active/helpers/utils';
 
 /** register the jurisdictions reducer */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
@@ -81,9 +84,26 @@ export const JurisdictionMap = (props: JurisdictionMapProps) => {
     callback(jurisdiction);
   }
 
+  const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
+  let mapCenter;
+  let mapBounds;
+  let zoom;
+  if (jurisdiction && jurisdiction.geojson && jurisdiction.geojson.geometry) {
+    mapBounds = GeojsonExtent(jurisdiction.geojson);
+    const centerAndZoom = viewport(mapBounds, [200, 100]);
+    zoom = centerAndZoom.zoom;
+    mapCenter = centerAndZoom.center;
+  }
+
   return (
     <div className={cssClass}>
-      <GisidaWrapper geoData={jurisdiction} minHeight={minHeight} />
+      <MemoizedGisidaLite
+        layers={jurisdictionLayers}
+        zoom={zoom}
+        mapCenter={mapCenter}
+        mapBounds={mapBounds}
+        mapHeight={minHeight}
+      />
     </div>
   );
 };
