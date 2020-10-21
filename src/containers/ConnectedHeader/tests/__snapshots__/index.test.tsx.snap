@@ -181,7 +181,7 @@ Object {
                 <NavLink
                   activeClassName="active"
                   className="nav-link"
-                  to="/mopup"
+                  to="/intervention/irs/mopup"
                 >
                   IRS Mop-up Reporting
                 </NavLink>
@@ -474,7 +474,7 @@ Object {
                 <NavLink
                   activeClassName="active"
                   className="nav-link"
-                  to="/mopup"
+                  to="/intervention/irs/mopup"
                 >
                   IRS Mop-up Reporting
                 </NavLink>
