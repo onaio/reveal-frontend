@@ -57,8 +57,6 @@
     "fast_array_intersect": "^1.1.0",
     "flat-to-nested": "^1.1.0",
     "formik": "^1.5.8",
-    "gisida": "^1.2.5",
-    "gisida-react": "^1.2.8",
     "history": "^4.9.0",
     "lodash": "^4.17.11",
     "mapbox-gl": "^1.11.0",

@@ -2,9 +2,6 @@ const path = require('path');
 const { mapKeys } = require('lodash');
 
 const allowedSnapshots = {
-  'src/components/GisidaWrapper/tests/__snapshots__/index.test.tsx.snap': [
-    'components/GisidaWrapper renders map component with FeatureCollection 1',
-  ],
   'src/containers/pages/AssigmentMapWrapper/tests/__snapshots__/index.test.tsx.snap': [
     'containers/pages/AssigmentMapWrapper renders jurisdictions assignment map 1',
   ],
