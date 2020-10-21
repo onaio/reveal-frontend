@@ -67,6 +67,7 @@ export const TIMELINE_SLIDER_STEP2 = '2';
 export const TIMELINE_SLIDER_STEP3 = '3';
 export const MODAL_BUTTON_CLASS = 'focus-investigation btn btn-primary float-right mt-0';
 export const BUSINESS_STATUS = 'business_status';
+export const IRS_REPORT_STRUCTURES = 'irs_report_structures';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';

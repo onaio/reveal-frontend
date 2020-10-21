@@ -42,6 +42,7 @@ import {
   BUSINESS_STATUS,
   CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
   HOME_URL,
+  IRS_REPORT_STRUCTURES,
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
@@ -309,7 +310,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
 
   // map layers
   const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
-  const structuresLayers = buildGsLiteLayers('all_structure', structures as any, null, {
+  const structuresLayers = buildGsLiteLayers(IRS_REPORT_STRUCTURES, structures as any, null, {
     circleColor,
   });
   const gsLayers = [...jurisdictionLayers, ...structuresLayers];

@@ -553,6 +553,12 @@ Array [
 ]
 `;
 
+exports[`components/IRS Reports/IRSReportingMap renders correctly: map renders correctly 1`] = `
+<div>
+  Mock component
+</div>
+`;
+
 exports[`components/IRS Reports/IRSReportingMap renders correctly: page title 1`] = `
 <h3
   className="mb-3 page-title"
