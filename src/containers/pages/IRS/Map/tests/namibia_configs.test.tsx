@@ -5,9 +5,9 @@ import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
-import { SUPERSET_IRS_REPORTING_INDICATOR_STOPS } from '../../../../../configs/env';
 import { MAP, REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
@@ -27,11 +27,9 @@ import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
 import jurisdictionReducer, {
   fetchJurisdictions,
   getJurisdictionById,
-  Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import * as fixtures from '../../JurisdictionsReport/fixtures';
-import { getGisidaWrapperProps, IRSIndicatorStops } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -118,7 +116,10 @@ describe('Namibia configs: components/IRS Reports/IRSReportingMap', () => {
         <IRSReportingMap {...props} />
       </Router>
     );
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
+
     expect(toJson(wrapper.find('.sidebar-legend-item'))).toMatchSnapshot(
       'Namibia configs: Legend items'
     );
@@ -133,12 +134,6 @@ describe('Namibia configs: components/IRS Reports/IRSReportingMap', () => {
     );
     expect(toJson(wrapper.find('.responseItem ProgressBar'))).toMatchSnapshot(
       'Namibia configs: Response item ProgressBar'
-    );
-
-    const indicatorStops = IRSIndicatorStops[SUPERSET_IRS_REPORTING_INDICATOR_STOPS];
-
-    expect(wrapper.find('GisidaWrapper').props()).toEqual(
-      getGisidaWrapperProps(jurisdiction as Jurisdiction, structures, indicatorStops)
     );
 
     // superset called with expected parameters
