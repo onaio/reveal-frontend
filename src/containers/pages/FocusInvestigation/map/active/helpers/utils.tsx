@@ -69,7 +69,7 @@ import {
   Point,
   Polygon,
 } from 'geojson';
-import { EventData, LngLat, Map } from 'mapbox-gl';
+import mapboxgl, { EventData, LngLat, Map } from 'mapbox-gl';
 import moment from 'moment';
 import { FeatureCollection } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';

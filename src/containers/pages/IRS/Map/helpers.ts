@@ -1,5 +1,5 @@
 import { Dictionary } from '@onaio/utils';
-import { EventData, LngLat, Map } from 'mapbox-gl';
+import mapboxgl, { EventData, LngLat, Map } from 'mapbox-gl';
 import { BLACK, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
 import { STATUS_HEADER } from '../../../../configs/lang';
 import { FEATURE } from '../../../../constants';

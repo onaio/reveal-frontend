@@ -81,8 +81,6 @@ describe('containers/JurisdictionMap', () => {
     /** No longer show loading indicator */
     expect(wrapper.find('JurisdictionMap>Ripple').length).toEqual(0);
 
-    // expect(wrapper.find('div.super-custom').length).toEqual(1);
-
     expect(supersetServiceMock.mock.calls).toEqual([
       [
         1 /** this comes from the envs mock */,

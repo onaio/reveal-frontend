@@ -88,7 +88,7 @@ export const JurisdictionMap = (props: JurisdictionMapProps) => {
   let mapCenter;
   let mapBounds;
   let zoom;
-  if (jurisdiction && jurisdiction.geojson && jurisdiction.geojson.geometry) {
+  if (jurisdiction?.geojson?.geometry) {
     mapBounds = GeojsonExtent(jurisdiction.geojson);
     const centerAndZoom = viewport(mapBounds, [200, 100]);
     zoom = centerAndZoom.zoom;

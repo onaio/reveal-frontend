@@ -1,7 +1,7 @@
 import { Dictionary } from '@onaio/utils';
 import { Feature } from '@turf/turf';
 import { History } from 'history';
-import { EventData, Map } from 'mapbox-gl';
+import mapboxgl, { EventData, Map } from 'mapbox-gl';
 import { AssignmentMapWrapperProps } from '..';
 import { PLAN_TYPES_WITH_MULTI_JURISDICTIONS } from '../../../../configs/env';
 import { getPlanType } from '../../../../helpers/utils';
