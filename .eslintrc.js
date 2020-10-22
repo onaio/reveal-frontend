@@ -23,8 +23,8 @@ const allowedSnapshots = {
   'src/containers/pages/IRS/Map/tests/__snapshots__/index.test.tsx.snap': [
     'components/IRS Reports/IRSReportingMap renders correctly: Indicator item breakdown 1',
   ],
-  'src/containers/pages/IRSLite/Map/tests/__snapshots__/index.test.tsx.snap': [
-    'components/IRS Lite Reports/IRSReportingMap renders correctly: Indicator item breakdown 1',
+  'src/containers/pages/IRSLite/MapLite/tests/__snapshots__/index.test.tsx.snap': [
+    'components/IRS Lite Reports/IRSReportingMapLite renders correctly: Indicator item breakdown 1',
   ],
   'src/containers/pages/MDAPoint/ChildReports/tests/__snapshots__/index.test.tsx.snap': [
     'components/MDA Reports/MDAPlansList should render school reports correctly: breadcrumbs 1',
