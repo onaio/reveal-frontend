@@ -11,7 +11,7 @@ import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 /** The default indicator stop */
 export const defaultIndicatorStop = [
   ['Sprayed', TASK_GREEN],
-  ['Not Sprayed ', TASK_RED],
+  ['Not Sprayed', TASK_RED],
   ['Partially Sprayed', TASK_ORANGE],
   ['Not Visited', TASK_YELLOW],
   ['Not Eligible', BLACK],
@@ -56,53 +56,33 @@ export type IndicatorRows = IndicatorRowItem[];
  * These are all the indicator rows for IRS that we know about.
  */
 export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
-  namibia2019: [
+  zambia2020: [
     {
-      denominator: 'jurisdiction_target',
-      description: 'Percent of structures sprayed over targeted',
-      numerator: 'structuressprayed',
-      title: 'Target Coverage',
-      unit: 'room(s)',
-      value: 'targetcoverage',
-    },
-    {
-      denominator: 'structuresfound',
-      description: 'Percent of structures sprayed over found',
-      numerator: 'structuressprayed',
-      title: 'Found Coverage',
-      unit: 'room(s)',
-      value: 'foundcoverage',
-    },
-  ],
-  zambia2019: [
-    {
-      denominator: 'totstruct',
-      description: 'Percent of structures sprayed over total',
-      numerator: 'sprayedstruct',
+      denominator: 'sprayed',
+      description: 'Percent of Total Structures Sprayed',
+      numerator: 'totstruct',
       title: 'Spray Coverage (Effectiveness)',
       value: 'spraycov',
     },
     {
-      denominator: 'totstruct',
-      description: 'Percent of structures found over total',
-      numerator: 'foundstruct',
+      denominator: 'sprayed',
+      description: 'Percent of Targeted Structures Sprayed',
+      numerator: 'targstruct',
+      title: 'Targeted Spray Coverage (Effectiveness)',
+      value: 'spraycovtarg',
+    },
+    {
+      denominator: 'found',
+      description: 'Percent of found structures over targeted',
+      numerator: 'targstruct',
       title: 'Found Coverage',
-      value: 'spraytarg',
+      value: 'spraycovtarg',
     },
     {
-      denominator: 'foundstruct',
+      denominator: 'found',
       description: 'Percent of structures sprayed over found',
-      numerator: 'sprayedstruct',
+      numerator: 'sprayed',
       title: 'Spray Success Rate (PMI SC)',
-      value: 'spraysuccess',
-    },
-    {
-      denominator: 'foundstruct',
-      description: 'reasons given for not sprayed structures',
-      listDisplay: 'notsprayed_reasons_counts',
-      numerator: 'sprayedstruct',
-      title: 'Reasons for not-sprayed structures',
-      unit: 'structures not sprayed',
       value: 'spraysuccess',
     },
   ],
@@ -121,6 +101,7 @@ export const structuresLayerBuilder = (
   const structuresPopup: Dictionary = {
     body: `<div>
           <p class="heading">{{structure_type}}</p>
+          <p>Name: {{structure_name}}</p>
           <p>Status: {{business_status}}</p>
         </div>`,
     join: ['structure_jurisdiction_id', 'structure_jurisdiction_id'],

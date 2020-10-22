@@ -168,18 +168,21 @@ export const IRSLiteZambiaJurisdictionsColumns = [
     accessor: 'sprayed',
   },
   {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: '% Total Structures Sprayed',
     accessor: 'spraycov',
   },
   {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: '% Targeted Structures Sprayed',
-    accessor: 'spraycovTarg',
+    accessor: 'spraycovtarg',
   },
   {
     Header: 'Structures Found',
     accessor: 'found',
   },
   {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
     accessor: 'foundcoverage',
   },
