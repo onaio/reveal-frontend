@@ -2,7 +2,11 @@ import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
 import { Cell } from 'react-table';
-import { getIRSThresholdAdherenceIndicator, renderPercentage } from '../../../helpers/indicators';
+import {
+  getIRSLiteThresholdAdherenceIndicator,
+  getIRSThresholdAdherenceIndicator,
+  renderPercentage,
+} from '../../../helpers/indicators';
 import { GenericJurisdiction } from '../../../store/ducks/generic/jurisdictions';
 
 /** columns for Namibia IRS jurisdictions */
@@ -178,6 +182,11 @@ export const IRSLiteZambiaJurisdictionsColumns = [
   {
     Header: 'Found Coverage',
     accessor: 'foundcoverage',
+  },
+  {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
+    Header: 'Success Rate',
+    accessor: 'spraysuccess',
   },
 ];
 

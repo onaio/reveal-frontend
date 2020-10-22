@@ -11,7 +11,7 @@ import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 /** The default indicator stop */
 export const defaultIndicatorStop = [
   ['Sprayed', TASK_GREEN],
-  ['Not Sprayed', TASK_RED],
+  ['Not Sprayed ', TASK_RED],
   ['Partially Sprayed', TASK_ORANGE],
   ['Not Visited', TASK_YELLOW],
   ['Not Eligible', BLACK],
@@ -29,6 +29,13 @@ export const IRSIndicatorStops: { [key: string]: string[][] } = {
     ['Not Visited', TASK_YELLOW],
     ['Not Eligible', BLACK],
   ],
+};
+
+/** IRS Lite Indicator stops
+ * These are all the indicator stops for IRS Lite that we know about.
+ */
+export const IRSLiteIndicatorStops: { [key: string]: string[][] } = {
+  zambia2020: defaultIndicatorStop,
 };
 
 /** interface to describe and indicator row item */

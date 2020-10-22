@@ -35,7 +35,7 @@ import {
   PROGRESS,
   STRUCTURES,
 } from '../../../../configs/lang';
-import { indicatorThresholdsIRS } from '../../../../configs/settings';
+import { indicatorThresholdsIRSLite } from '../../../../configs/settings';
 import { HOME_URL, REPORT_IRS_LITE_PLAN_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
@@ -71,7 +71,7 @@ import {
   getIndicatorRows,
   getJurisdictionBreadcrumbs,
   IRSIndicatorRows,
-  IRSIndicatorStops,
+  IRSLiteIndicatorStops,
 } from './helpers';
 import './style.css';
 
@@ -258,7 +258,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   }
 
   const indicatorStops = get(
-    IRSIndicatorStops,
+    IRSLiteIndicatorStops,
     SUPERSET_IRS_LITE_REPORTING_INDICATOR_STOPS,
     defaultIndicatorStop
   );
@@ -331,7 +331,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
                   {!row.listDisplay && <p className="indicator-description">{row.description}</p>}
                   {!row.listDisplay && (
                     <ProgressBar
-                      lineColorThresholds={indicatorThresholdsIRS || null}
+                      lineColorThresholds={indicatorThresholdsIRSLite || null}
                       value={row.value}
                     />
                   )}
