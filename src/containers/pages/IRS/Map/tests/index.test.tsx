@@ -8,14 +8,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
-import { GREY } from '../../../../../colors';
-import { SUPERSET_IRS_REPORTING_INDICATOR_STOPS } from '../../../../../configs/env';
-import {
-  circleLayerConfig,
-  fillLayerConfig,
-  lineLayerConfig,
-} from '../../../../../configs/settings';
-import { MAIN_PLAN, MAP, REPORT_IRS_PLAN_URL, STRUCTURE_LAYER } from '../../../../../constants';
+import { MAP, REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -37,16 +30,23 @@ import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
 import jurisdictionReducer, {
   fetchJurisdictions,
   getJurisdictionById,
-  Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
+import * as mapUtils from '../../../FocusInvestigation/map/active/helpers/utils';
 import * as fixtures from '../../JurisdictionsReport/fixtures';
-import { getGisidaWrapperProps, IRSIndicatorStops } from '../helpers';
+import { IRSIndicatorStops } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
 jest.mock('../../../../../configs/env');
+
+jest.mock('../../../../../components/GisidaLite', () => {
+  const MemoizedGisidaLiteMock = () => <div>Mock component</div>;
+  return {
+    MemoizedGisidaLite: MemoizedGisidaLiteMock,
+  };
+});
 
 /** register the reducers */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
@@ -209,9 +209,8 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     expect(toJson(wrapper.find('.list-unstyled'))).toMatchSnapshot('No sprayed reasons');
     expect(wrapper.find('.list-unstyled li').length).toEqual(3);
 
-    const indicatorStops = IRSIndicatorStops[SUPERSET_IRS_REPORTING_INDICATOR_STOPS];
-    expect(wrapper.find('GisidaWrapper').props()).toEqual(
-      getGisidaWrapperProps(jurisdiction as Jurisdiction, structures, indicatorStops)
+    expect(toJson(wrapper.find('MemoizedGisidaLiteMock div'))).toMatchSnapshot(
+      'map renders correctly'
     );
 
     expect(supersetServiceMock.mock.calls).toEqual([
@@ -382,7 +381,8 @@ describe('components/IRS Reports/IRSReportingMap', () => {
 
   it('renders both Points and Polygons correctly', () => {
     const mock: any = jest.fn();
-
+    const buildGsLiteLayersSpy = jest.spyOn(mapUtils, 'buildGsLiteLayers');
+    const buildJurisdictionLayersSpy = jest.spyOn(mapUtils, 'buildJurisdictionLayers');
     const kmz421StructureData = superset.processData(fixtures.ZambiaKMZ421StructuresJSON) || [];
 
     store.dispatch(fetchGenericStructures('zm-kmz421-structures', kmz421StructureData));
@@ -397,8 +397,6 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       'zm-kmz421-structures',
       '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
     );
-
-    const indicatorStops = IRSIndicatorStops[SUPERSET_IRS_REPORTING_INDICATOR_STOPS];
 
     const props = {
       focusArea: getGenericJurisdictionByJurisdictionId(
@@ -423,102 +421,22 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       plan: plans[0] as GenericPlan,
       structures,
     };
-    const wrapper = mount(
+    mount(
       <Router history={history}>
         <IRSReportingMap {...props} />
       </Router>
     );
 
-    expect(wrapper.find('GisidaWrapper').props()).toEqual(
-      getGisidaWrapperProps(jurisdiction as Jurisdiction, structures, indicatorStops)
-    );
+    expect(buildGsLiteLayersSpy).toBeCalledTimes(1);
+    expect(buildGsLiteLayersSpy).toBeCalledWith('irs_report_structures', structures, null, {
+      circleColor: {
+        property: 'business_status',
+        stops: IRSIndicatorStops.zambia2019,
+        type: 'categorical',
+      },
+    });
 
-    const structuresPopup = {
-      body: `<div>
-          <p class="heading">{{structure_type}}</p>
-          <p>Status: {{business_status}}</p>
-        </div>`,
-      join: ['structure_jurisdiction_id', 'structure_jurisdiction_id'],
-    };
-
-    const structureStatusColors = {
-      default: GREY,
-      property: 'business_status',
-      stops: indicatorStops,
-      type: 'categorical',
-    };
-
-    expect((wrapper.find('GisidaWrapper').props() as any).layers).toEqual([
-      {
-        ...lineLayerConfig,
-        id: `${MAIN_PLAN}-${(jurisdiction as Jurisdiction).jurisdiction_id}`,
-        source: {
-          ...lineLayerConfig.source,
-          data: {
-            ...lineLayerConfig.source.data,
-            data: JSON.stringify((jurisdiction as Jurisdiction).geojson),
-          },
-        },
-        visible: true,
-      },
-      {
-        ...circleLayerConfig,
-        filter: ['==', '$type', 'Point'],
-        id: `${STRUCTURE_LAYER}-circle`,
-        paint: {
-          ...circleLayerConfig.paint,
-          'circle-color': structureStatusColors,
-          'circle-radius': ['interpolate', ['exponential', 2], ['zoom'], 15.75, 2.5, 20.8, 50],
-          'circle-stroke-color': structureStatusColors,
-          'circle-stroke-opacity': 1,
-        },
-        popup: structuresPopup,
-        source: {
-          ...circleLayerConfig.source,
-          data: {
-            data: JSON.stringify(structures),
-            type: 'stringified-geojson',
-          },
-          type: 'geojson',
-        },
-        visible: true,
-      },
-      {
-        ...fillLayerConfig,
-        filter: ['==', '$type', 'Polygon'],
-        id: `${STRUCTURE_LAYER}-fill`,
-        paint: {
-          ...fillLayerConfig.paint,
-          'fill-color': structureStatusColors,
-          'fill-outline-color': structureStatusColors,
-        },
-        popup: structuresPopup,
-        source: {
-          ...fillLayerConfig.source,
-          data: {
-            ...fillLayerConfig.source.data,
-            data: JSON.stringify(structures),
-          },
-        },
-        visible: true,
-      },
-      {
-        ...lineLayerConfig,
-        filter: ['==', '$type', 'Polygon'],
-        id: `${STRUCTURE_LAYER}-line`,
-        paint: {
-          'line-color': structureStatusColors,
-          'line-opacity': 1,
-          'line-width': 2,
-        },
-        source: {
-          ...lineLayerConfig.source,
-          data: {
-            ...lineLayerConfig.source.data,
-            data: JSON.stringify(structures),
-          },
-        },
-      },
-    ]);
+    expect(buildJurisdictionLayersSpy).toBeCalledTimes(1);
+    expect(buildJurisdictionLayersSpy).toBeCalledWith(jurisdiction);
   });
 });
