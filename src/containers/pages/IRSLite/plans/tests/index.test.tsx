@@ -6,8 +6,8 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import ConnectedIRSPlansList, { IRSPlansList } from '../';
-import { REPORT_IRS_PLAN_URL } from '../../../../../constants';
+import ConnectedIRSLitePlansList, { IRSPlansList } from '../';
+import { REPORT_IRS_LITE_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import { genericFetchPlans, GenericPlan } from '../../../../../store/ducks/generic/plans';
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
@@ -18,7 +18,7 @@ const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
 
-describe('components/IRS Reports/IRSPlansList', () => {
+describe('components/IRS Lite Reports/IRSPlansList', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -28,17 +28,17 @@ describe('components/IRS Reports/IRSPlansList', () => {
       history,
       location: {
         hash: '',
-        pathname: REPORT_IRS_PLAN_URL,
+        pathname: REPORT_IRS_LITE_PLAN_URL,
         search: '',
         state: undefined,
       },
       match: {
         isExact: true,
         params: {},
-        path: `${REPORT_IRS_PLAN_URL}/`,
-        url: `${REPORT_IRS_PLAN_URL}/`,
+        path: `${REPORT_IRS_LITE_PLAN_URL}/`,
+        url: `${REPORT_IRS_LITE_PLAN_URL}/`,
       },
-      plans: fixtures.plans as GenericPlan[],
+      plans: fixtures.irsLitePlans as GenericPlan[],
     };
     shallow(
       <Router history={history}>
@@ -53,17 +53,17 @@ describe('components/IRS Reports/IRSPlansList', () => {
       history,
       location: {
         hash: '',
-        pathname: REPORT_IRS_PLAN_URL,
+        pathname: REPORT_IRS_LITE_PLAN_URL,
         search: '',
         state: undefined,
       },
       match: {
         isExact: true,
         params: {},
-        path: `${REPORT_IRS_PLAN_URL}/`,
-        url: `${REPORT_IRS_PLAN_URL}/`,
+        path: `${REPORT_IRS_LITE_PLAN_URL}/`,
+        url: `${REPORT_IRS_LITE_PLAN_URL}/`,
       },
-      plans: fixtures.plans as GenericPlan[],
+      plans: fixtures.irsLitePlans as GenericPlan[],
     };
     const wrapper = mount(
       <Router history={history}>
@@ -83,7 +83,7 @@ describe('components/IRS Reports/IRSPlansList', () => {
         expect(tableHeader.at(i).text()).toMatchSnapshot(`table header-${i + 1}`);
       });
     expect(tableHeader.first().props().style).toMatchSnapshot('title column styling');
-    expect(wrapper.find('.tbody .tr').length).toEqual(4);
+    expect(wrapper.find('.tbody .tr').length).toEqual(1);
     expect(wrapper.find('GenericPlansList').length).toBe(1);
     expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('GenericPlansList props');
     renderTable(wrapper, 'the full rendered rows');
@@ -108,29 +108,29 @@ describe('components/IRS Reports/IRSPlansList', () => {
   });
 
   it('renders plans correctly when connected to store', async () => {
-    store.dispatch(genericFetchPlans(fixtures.plans as GenericPlan[]));
+    store.dispatch(genericFetchPlans(fixtures.irsLitePlans as GenericPlan[]));
 
     const props = {
       fetchPlans: jest.fn(),
       history,
       location: {
         hash: '',
-        pathname: REPORT_IRS_PLAN_URL,
+        pathname: REPORT_IRS_LITE_PLAN_URL,
         search: '',
         state: undefined,
       },
       match: {
         isExact: true,
         params: {},
-        path: `${REPORT_IRS_PLAN_URL}`,
-        url: `${REPORT_IRS_PLAN_URL}`,
+        path: `${REPORT_IRS_LITE_PLAN_URL}`,
+        url: `${REPORT_IRS_LITE_PLAN_URL}`,
       },
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedIRSPlansList {...props} />
+          <ConnectedIRSLitePlansList {...props} />
         </Router>
       </Provider>
     );
@@ -143,80 +143,37 @@ describe('components/IRS Reports/IRSPlansList', () => {
     );
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title: connected to store');
 
-    expect(wrapper.find('.tbody .tr').length).toEqual(3);
+    expect(wrapper.find('.tbody .tr').length).toEqual(1);
     expect(wrapper.find('GenericPlansList').length).toBe(1);
     expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot(
       'GenericPlansList props: connected to store'
     );
   });
 
-  it('handles search correctly', async () => {
-    store.dispatch(genericFetchPlans(fixtures.plans as GenericPlan[]));
-
-    const props = {
-      fetchPlans: jest.fn(),
-      history,
-      location: {
-        hash: '',
-        pathname: REPORT_IRS_PLAN_URL,
-        search: '?title=Berg',
-        state: undefined,
-      },
-      match: {
-        isExact: true,
-        params: {},
-        path: `${REPORT_IRS_PLAN_URL}`,
-        url: `${REPORT_IRS_PLAN_URL}`,
-      },
-      service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedIRSPlansList {...props} />
-        </Router>
-      </Provider>
-    );
-    await act(async () => {
-      await new Promise(resolve => setImmediate(resolve));
-      wrapper.update();
-    });
-
-    expect((wrapper.find('GenericPlansList').props() as any).plans).toMatchSnapshot(
-      'search results props'
-    );
-    expect(
-      wrapper
-        .find('.tbody .tr .td a')
-        .at(0)
-        .text()
-    ).toEqual('Berg Namibia 2019');
-  });
-
   it('handles a case insensitive search', async () => {
-    store.dispatch(genericFetchPlans(fixtures.plans as GenericPlan[]));
+    store.dispatch(genericFetchPlans(fixtures.irsLitePlans as GenericPlan[]));
 
     const props = {
       fetchPlans: jest.fn(),
       history,
       location: {
         hash: '',
-        pathname: REPORT_IRS_PLAN_URL,
+        pathname: REPORT_IRS_LITE_PLAN_URL,
         search: '?title=BERG',
         state: undefined,
       },
       match: {
         isExact: true,
         params: {},
-        path: `${REPORT_IRS_PLAN_URL}`,
-        url: `${REPORT_IRS_PLAN_URL}`,
+        path: `${REPORT_IRS_LITE_PLAN_URL}`,
+        url: `${REPORT_IRS_LITE_PLAN_URL}`,
       },
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedIRSPlansList {...props} />
+          <ConnectedIRSLitePlansList {...props} />
         </Router>
       </Provider>
     );
@@ -231,29 +188,29 @@ describe('components/IRS Reports/IRSPlansList', () => {
   });
 
   it('renders empty table if no search matches', async () => {
-    store.dispatch(genericFetchPlans(fixtures.plans as GenericPlan[]));
+    store.dispatch(genericFetchPlans(fixtures.irsLitePlans as GenericPlan[]));
 
     const props = {
       fetchPlans: jest.fn(),
       history,
       location: {
         hash: '',
-        pathname: REPORT_IRS_PLAN_URL,
+        pathname: REPORT_IRS_LITE_PLAN_URL,
         search: '?title=Amazon',
         state: undefined,
       },
       match: {
         isExact: true,
         params: {},
-        path: `${REPORT_IRS_PLAN_URL}`,
-        url: `${REPORT_IRS_PLAN_URL}`,
+        path: `${REPORT_IRS_LITE_PLAN_URL}`,
+        url: `${REPORT_IRS_LITE_PLAN_URL}`,
       },
       service: jest.fn().mockImplementationOnce(() => Promise.resolve([])),
     };
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedIRSPlansList {...props} />
+          <ConnectedIRSLitePlansList {...props} />
         </Router>
       </Provider>
     );

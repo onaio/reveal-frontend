@@ -7,7 +7,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
-import { MAP, REPORT_IRS_PLAN_URL } from '../../../../../constants';
+import { MAP, REPORT_IRS_LITE_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -18,18 +18,13 @@ import IRSPlansReducer, {
   GenericPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../../store/ducks/generic/plans';
-import genericStructuresReducer, {
-  fetchGenericStructures,
-  getGenericStructures,
-  reducerName as genericStructuresReducerName,
-} from '../../../../../store/ducks/generic/structures';
 import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
 import jurisdictionReducer, {
   fetchJurisdictions,
   getJurisdictionById,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
-import * as fixtures from '../../JurisdictionsReport/fixtures';
+import * as fixtures from '../../JurisdictionsReportLite/fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -37,12 +32,11 @@ const fetch = require('jest-fetch-mock');
 jest.mock('../../../../../configs/env', () => ({
   GISIDA_MAPBOX_TOKEN: 'hunter2',
   GISIDA_TIMEOUT: 3000,
-  HIDDEN_MAP_LEGEND_ITEMS: ['Partially Sprayed', 'Not Visited'],
-  SUPERSET_IRS_REPORTING_INDICATOR_ROWS: 'zambia2019',
-  SUPERSET_IRS_REPORTING_INDICATOR_STOPS: 'zambia2019',
-  SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES: '11,12',
-  SUPERSET_IRS_REPORTING_PLANS_SLICE: '13',
-  SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE: '14',
+  HIDDEN_MAP_LEGEND_ITEMS: [],
+  SUPERSET_IRS_LITE_REPORTING_INDICATOR_ROWS: 'zambia2020',
+  SUPERSET_IRS_LITE_REPORTING_INDICATOR_STOPS: 'zambia2020',
+  SUPERSET_IRS_LITE_REPORTING_JURISDICTIONS_DATA_SLICES: '11,12',
+  SUPERSET_IRS_LITE_REPORTING_PLANS_SLICE: '13',
   SUPERSET_JURISDICTIONS_SLICE: 1,
   SUPERSET_MAX_RECORDS: 2000,
 }));
@@ -51,16 +45,13 @@ jest.mock('../../../../../configs/env', () => ({
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
-reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer);
 
 /** set up data in the store needed for this view */
 const focusAreaData = superset.processData(fixtures.ZambiaFocusAreasJSON) || [];
-const structureData = superset.processData(fixtures.ZambiaStructuresJSON) || [];
 const jurisdictionData = superset.processData(fixtures.ZambiaAkros1JSON) || [];
 const jurisdiction2Data = superset.processData(fixtures.ZambiaKMZ421JSON) || [];
 
 store.dispatch(fetchGenericJurisdictions('zm-focusAreas', focusAreaData));
-store.dispatch(fetchGenericStructures('zm-structures', structureData));
 store.dispatch(fetchJurisdictions(jurisdictionData));
 store.dispatch(fetchJurisdictions(jurisdiction2Data));
 
@@ -81,18 +72,12 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     const focusArea = getGenericJurisdictionByJurisdictionId(
       store.getState(),
       'zm-focusAreas',
-      '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
-    );
-
-    const structures = getGenericStructures(
-      store.getState(),
-      'zm-structures',
-      '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
+      '0f973eb6-7204-55f6-9f54-299d10647a9c'
     );
 
     const jurisdiction = getJurisdictionById(
       store.getState(),
-      '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
+      '56e45196-882b-55ac-ba9e-3caeacb431a9'
     );
 
     const props = {
@@ -103,17 +88,16 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       match: {
         isExact: true,
         params: {
-          jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
+          jurisdictionId: '56e45196-882b-55ac-ba9e-3caeacb431a9',
           planId: (plans[0] as GenericPlan).plan_id,
         },
-        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
-        url: `${REPORT_IRS_PLAN_URL}/${
+        path: `${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_LITE_PLAN_URL}/${
           (plans[0] as GenericPlan).plan_id
-        }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
+        }/56e45196-882b-55ac-ba9e-3caeacb431a9/${MAP}`,
       },
       plan: plans[0] as GenericPlan,
       service: supersetServiceMock,
-      structures,
     };
     const wrapper = mount(
       <Router history={history}>
@@ -122,7 +106,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     );
     await flushPromises();
     wrapper.update();
-    expect(wrapper.find('.sidebar-legend-item').length).toEqual(3);
+    expect(wrapper.find('.sidebar-legend-item').length).toEqual(5);
     expect(toJson(wrapper.find('.sidebar-legend-item'))).toMatchSnapshot('Legend items');
     wrapper.unmount();
   });

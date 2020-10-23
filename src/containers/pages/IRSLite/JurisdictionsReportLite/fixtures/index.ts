@@ -1,82 +1,15 @@
 import { DrillDownColumn } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { Cell } from 'react-table';
-import { getIRSThresholdAdherenceIndicator } from '../../../../../helpers/indicators';
+import { getIRSLiteThresholdAdherenceIndicator } from '../../../../../helpers/indicators';
 
 /* tslint:disable no-var-requires */
 export const ZambiaJurisdictionsJSON = require('./zambia_jurisdictions.json');
-export const NamibiaJurisdictionsJSON = require('./namibia_jurisdictions.json');
 export const ZambiaFocusAreasJSON = require('./zambia_focus_areas.json');
-export const NamibiaFocusAreasJSON = require('./namibia_focus_areas.json');
 export const ZambiaStructuresJSON = require('./zambia_structures.json');
 export const ZambiaAkros1JSON = require('./zambia_akros1.json');
-export const NamibiaAkros1JSON = require('./namibia_akros1.json');
 export const ZambiaKMZ421StructuresJSON = require('./zambia_kmz_421_structures.json');
 export const ZambiaKMZ421JSON = require('./zambia_kmz_421.json');
-export const NamibiaColumns: Array<DrillDownColumn<Dictionary>> = [
-  {
-    Header: 'Name',
-    accessor: 'jurisdiction_name',
-    minWidth: 180,
-  },
-  {
-    Header: 'Structures Targeted',
-    accessor: 'jurisdiction_target',
-  },
-  {
-    Header: 'Structures Found',
-    accessor: 'structuresfound',
-  },
-  {
-    Header: 'Structures Sprayed',
-    accessor: 'structuressprayed',
-  },
-  {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: 'Target Coverage',
-    accessor: 'targetcoverage',
-  },
-  {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: 'Found Coverage',
-    accessor: 'foundcoverage',
-  },
-  {
-    Header: 'Refusals',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
-        Header: 'Following first visit',
-        accessor: 'refusalsfirst',
-        id: 'refusalsfirst',
-      },
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
-        Header: 'Following mop-up',
-        accessor: 'refusalsmopup',
-        id: 'refusalsmopup',
-      },
-    ],
-  },
-  {
-    Header: 'Locked',
-    columns: [
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
-        Header: 'Following first visit',
-        accessor: 'lockedfirst',
-        id: 'lockedfirst',
-      },
-      {
-        Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
-        Header: 'Following mop-up',
-        accessor: 'lockedmopup',
-        id: 'lockedmopup',
-      },
-    ],
-    // headerClassName: 'centered',
-  },
-];
 
 export const ZambiaFocusAreasColumns: Array<DrillDownColumn<Dictionary>> = [
   {
@@ -97,24 +30,24 @@ export const ZambiaFocusAreasColumns: Array<DrillDownColumn<Dictionary>> = [
     accessor: 'sprayedstruct',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: 'Spray Coverage (Effectiveness)',
     accessor: 'spraycov',
   },
   {
     Header: 'Found Coverage',
 
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
 
     accessor: 'spraytarg',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: 'Spray Success Rate (PMI SC)',
     accessor: 'spraysuccess',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: 'Structures remaining to spray to reach 90% SE',
     accessor: 'structures_remaining_to_90_se',
   },
@@ -135,17 +68,12 @@ export const ZambiaJurisdictionsColumns: Array<DrillDownColumn<Dictionary>> = [
     accessor: 'totareas',
   },
   {
-    Header: 'Targeted Spray Areas',
+    Header: 'Spray Areas Targeted',
     accessor: 'targareas',
   },
   {
-    Header: 'Spray areas visited',
+    Header: 'Spray Areas Visited',
     accessor: 'visitedareas',
-  },
-  {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: '% visited Spray Areas Effectively sprayed',
-    accessor: 'perctvisareaseffect',
   },
   {
     Header: 'Total Structures',
@@ -156,25 +84,30 @@ export const ZambiaJurisdictionsColumns: Array<DrillDownColumn<Dictionary>> = [
     accessor: 'targstruct',
   },
   {
-    Header: 'Sprayed Structures',
-    accessor: 'sprayedstruct',
+    Header: 'Structures Sprayed',
+    accessor: 'sprayed',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
-    Header: 'Spray coverage of targeted (Progress)',
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
+    Header: '% Total Structures Sprayed',
+    accessor: 'spraycov',
+  },
+  {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
+    Header: '% Targeted Structures Sprayed',
     accessor: 'spraycovtarg',
   },
   {
     Header: 'Structures Found',
-    accessor: 'foundstruct',
+    accessor: 'found',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
     accessor: 'foundcoverage',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: 'Success Rate',
     accessor: 'spraysuccess',
   },
@@ -195,7 +128,7 @@ export const mdaPointColumns = [
     accessor: 'mmacov',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: 'MMA Coverage (%)',
     accessor: 'mmacovper',
   },
@@ -208,12 +141,12 @@ export const mdaPointColumns = [
     accessor: 'sacrefmedreason',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: 'ADR Reported (%)',
     accessor: 'mmaadr',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: 'ADR Severe (%)',
     accessor: 'mmaadrsev',
   },

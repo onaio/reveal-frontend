@@ -58,23 +58,23 @@ export type IndicatorRows = IndicatorRowItem[];
 export const IRSIndicatorRows: { [key: string]: IndicatorRows } = {
   zambia2020: [
     {
-      denominator: 'sprayed',
+      denominator: 'totstruct',
       description: 'Percent of Total Structures Sprayed',
-      numerator: 'totstruct',
+      numerator: 'sprayed',
       title: 'Spray Coverage (Effectiveness)',
       value: 'spraycov',
     },
     {
-      denominator: 'sprayed',
+      denominator: 'targstruct',
       description: 'Percent of Targeted Structures Sprayed',
-      numerator: 'targstruct',
+      numerator: 'sprayed',
       title: 'Targeted Spray Coverage (Effectiveness)',
       value: 'spraycovtarg',
     },
     {
-      denominator: 'found',
+      denominator: 'targstruct',
       description: 'Percent of found structures over targeted',
-      numerator: 'targstruct',
+      numerator: 'found',
       title: 'Found Coverage',
       value: 'spraycovtarg',
     },

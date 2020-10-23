@@ -66,7 +66,7 @@ const mapStateToProps = (
 ): DispatchedStateProps => {
   const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
   const plans = makeIRSPlansArraySelector(state, {
-    interventionTypes: [InterventionType.IRSLite, InterventionType.DynamicIRS],
+    interventionTypes: [InterventionType.IRSLite],
     plan_title: searchedTitle,
     statusList: allowedPlanStatusList,
   });

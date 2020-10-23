@@ -57,7 +57,7 @@ describe('reducers/IRS/GenericJurisdiction', () => {
       getGenericJurisdictionById(
         store.getState(),
         'na-jurisdictions',
-        '0001ca08-c9b7-5ea5-acc5-dc9b2fce5d24'
+        'fc6ea38c-df35-4ded-9b29-cdc7b6766cd3'
       )
     ).toEqual(fixtures.namibiaIRSJurisdictions[0]);
 
