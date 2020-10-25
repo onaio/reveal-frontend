@@ -84,8 +84,8 @@ reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer)
 // const slices = SUPERSET_IRS_LITE_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
 const focusAreaSlice = SUPERSET_IRS_LITE_REPORTING_JURISDICTIONS_FOCUS_AREA_SLICE;
 
-/** interface for IRSReportingMap */
-interface IRSReportingMapProps {
+/** interface for IRSLiteReportingMap */
+interface IRSLiteReportingMapProps {
   fetchFocusAreas: typeof fetchGenericJurisdictions;
   fetchJurisdictionsAction: typeof fetchJurisdictions;
   fetchPlans: typeof genericFetchPlans;
@@ -97,8 +97,8 @@ interface IRSReportingMapProps {
   structures: StructureFeatureCollection | null;
 }
 
-/** IRSReportingMap default props */
-const defaultProps: IRSReportingMapProps = {
+/** IRSLiteReportingMap default props */
+const defaultProps: IRSLiteReportingMapProps = {
   fetchFocusAreas: fetchGenericJurisdictions,
   fetchJurisdictionsAction: fetchJurisdictions,
   fetchPlans: genericFetchPlans,
@@ -111,7 +111,9 @@ const defaultProps: IRSReportingMapProps = {
 };
 
 /** The IRS Reporting Map component */
-const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<RouteParams>) => {
+const IRSLiteReportingMap = (
+  props: IRSLiteReportingMapProps & RouteComponentProps<RouteParams>
+) => {
   const [loading, setLoading] = useState<boolean>(true);
   const {
     fetchFocusAreas,
@@ -359,9 +361,9 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   );
 };
 
-IRSReportingMap.defaultProps = defaultProps;
+IRSLiteReportingMap.defaultProps = defaultProps;
 
-export { IRSReportingMap };
+export { IRSLiteReportingMap };
 
 /** Connect the component to the store */
 
@@ -406,7 +408,10 @@ const mapDispatchToProps = {
   fetchStructures: fetchGenericStructures,
 };
 
-/** Connected IRSReportingMap component */
-const ConnectedIRSLiteReportingMap = connect(mapStateToProps, mapDispatchToProps)(IRSReportingMap);
+/** Connected IRSLiteReportingMap component */
+const ConnectedIRSLiteReportingMap = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IRSLiteReportingMap);
 
 export default ConnectedIRSLiteReportingMap;

@@ -68,7 +68,7 @@ exports[`containers/forms/PlanForm - Edit ACTIVE renders all fields correctly in
   readOnly={false}
   required={true}
   type="text"
-  value="2019-08-30"
+  value="2019-08-29"
 />
 `;
 
@@ -186,7 +186,7 @@ exports[`containers/forms/PlanForm - Edit ACTIVE renders all fields correctly in
   readOnly={false}
   required={true}
   type="text"
-  value="2019-05-20"
+  value="2019-05-19"
 />
 `;
 
@@ -328,7 +328,7 @@ exports[`containers/forms/PlanForm - Edit COMPLETE renders all fields correctly 
   readOnly={false}
   required={true}
   type="text"
-  value="2019-08-30"
+  value="2019-08-29"
 />
 `;
 
@@ -446,7 +446,7 @@ exports[`containers/forms/PlanForm - Edit COMPLETE renders all fields correctly 
   readOnly={false}
   required={true}
   type="text"
-  value="2019-05-20"
+  value="2019-05-19"
 />
 `;
 
@@ -588,7 +588,7 @@ exports[`containers/forms/PlanForm - Edit DRAFT renders all fields correctly in 
   readOnly={false}
   required={true}
   type="text"
-  value="2019-08-30"
+  value="2019-08-29"
 />
 `;
 
@@ -706,7 +706,7 @@ exports[`containers/forms/PlanForm - Edit DRAFT renders all fields correctly in 
   readOnly={false}
   required={true}
   type="text"
-  value="2019-05-20"
+  value="2019-05-19"
 />
 `;
 
@@ -952,7 +952,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
   readOnly={false}
   required={true}
   type="text"
-  value="2019-07-30"
+  value="2019-07-29"
 />
 `;
 
@@ -969,7 +969,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
   readOnly={false}
   required={true}
   type="text"
-  value="2019-07-10"
+  value="2019-07-09"
 />
 `;
 
@@ -1131,7 +1131,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
   readOnly={false}
   required={true}
   type="text"
-  value="2019-07-30"
+  value="2019-07-29"
 />
 `;
 
@@ -1148,7 +1148,7 @@ exports[`containers/forms/PlanForm - Edit renders activity fields correctly: act
   readOnly={false}
   required={true}
   type="text"
-  value="2019-07-10"
+  value="2019-07-09"
 />
 `;
 

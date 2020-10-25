@@ -1,0 +1,64 @@
+{
+  "cache_key": null,
+  "cached_dttm": null,
+  "cache_timeout": 86400,
+  "errors": [],
+  "form_data": {
+    "adhoc_filters": [
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": "ce13e7f4-6926-4be0-9117-519bd1cc4bb2",
+        "operator": "==",
+        "subject": "jurisdiction_id"
+      }
+    ],
+    "all_columns": ["jurisdiction_id", "geojson"],
+    "color_pn": true,
+    "datasource": "186__table",
+    "groupby": [],
+    "metrics": [],
+    "order_by_cols": [],
+    "order_desc": true,
+    "percent_metrics": [],
+    "queryFields": {
+      "groupby": "groupby",
+      "metrics": "metrics"
+    },
+    "query_mode": "raw",
+    "row_limit": 1,
+    "show_cell_bars": true,
+    "table_timestamp_format": "smart_date",
+    "time_grain_sqla": "P1D",
+    "time_range": "No filter",
+    "time_range_endpoints": ["inclusive", "exclusive"],
+    "viz_type": "table",
+    "slice_id": 626,
+    "where": "",
+    "having": "",
+    "having_filters": [],
+    "filters": [
+      {
+        "col": "jurisdiction_id",
+        "op": "==",
+        "val": "ce13e7f4-6926-4be0-9117-519bd1cc4bb2"
+      }
+    ]
+  },
+  "is_cached": false,
+  "query": "SELECT jurisdiction_id AS jurisdiction_id,\n       geojson AS geojson\nFROM\n  (SELECT jurisdiction_id,\n          jsonb_build_object('type', 'Feature', 'id', jurisdiction_id, 'geometry', ST_AsGeoJSON(jurisdiction_geometry)::jsonb, 'properties', to_jsonb(row) - 'jurisdiction_id' - 'jurisdiction_geometry') AS geojson\n   FROM\n     (SELECT jurisdiction_id,\n             jurisdiction_name,\n             jurisdiction_parent_id,\n             jurisdiction_geometry\n      FROM\n        (SELECT uuid_generate_v5('6ba7b810-9dad-11d1-80b4-00c04fd430c8', concat(plans.identifier, plan_jurisdiction.jurisdiction_id)) AS id,\n                plans.identifier AS plan_id,\n                plans.title AS plan_title,\n                plans.name AS plan_name,\n                plans.status AS plan_status,\n                tree.jurisdiction_id AS jurisdiction_id,\n                plans.fi_status AS plan_fi_status,\n                plans.fi_reason AS plan_fi_reason,\n                plans.date AS plan_date,\n                plans.effective_period_start AS plan_effective_period_start,\n                plans.effective_period_end AS plan_effective_period_end,\n                plans.intervention_type AS plan_intervention_type,\n                plans.version AS plan_version,\n                tree.jurisdiction_parent_id AS jurisdiction_parent_id,\n                tree.jurisdiction_name AS jurisdiction_name,\n                tree.jurisdiction_geometry AS jurisdiction_geometry,\n                tree.jurisdiction_depth AS jurisdiction_depth,\n                tree.jurisdiction_path AS jurisdiction_path,\n                tree.jurisdiction_name_path AS jurisdiction_name_path,\n                tree.jurisdiction_root_parent_id AS jurisdiction_root_parent_id,\n                tree.jurisdiction_root_parent_name AS jurisdiction_root_parent_name\n         FROM reveal_stage.plans\n         LEFT JOIN reveal_stage.plan_jurisdiction ON plans.identifier = plan_jurisdiction.plan_id\n         LEFT JOIN LATERAL\n           (SELECT jurisdiction_id,\n                   jurisdiction_parent_id,\n                   jurisdiction_name,\n                   jurisdiction_geometry,\n                   jurisdiction_depth,\n                   jurisdiction_path,\n                   jurisdiction_name_path,\n                   jurisdiction_root_parent_id,\n                   jurisdiction_root_parent_name\n            FROM pending.jurisdictions_materialized_view\n            WHERE jurisdiction_id = plan_jurisdiction.jurisdiction_id ) AS tree ON true\n         ORDER BY plans.date DESC, plans.identifier) AS plans_materialized_view) row) AS expr_qry\nWHERE jurisdiction_id = 'ce13e7f4-6926-4be0-9117-519bd1cc4bb2'\nLIMIT 1",
+  "from_dttm": null,
+  "to_dttm": null,
+  "status": "success",
+  "stacktrace": null,
+  "rowcount": 1,
+  "data": {
+    "records": [
+      {
+        "jurisdiction_id": "ce13e7f4-6926-4be0-9117-519bd1cc4bb2",
+        "geojson": "{\"id\": \"ce13e7f4-6926-4be0-9117-519bd1cc4bb2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"MultiPolygon\", \"coordinates\": [[[[27.7483015785551, -16.7677717058995], [27.7160167282894, -16.7924169179064], [27.6826875636802, -16.7850266301748], [27.6456068339883, -16.772868522764], [27.5762176522229, -16.7800989919749], [27.5511379390647, -16.7673762865863], [27.6278920350894, -16.6447632305386], [27.6763549811974, -16.6699424123124], [27.7880299995849, -16.6889799997272], [27.7853663389854, -16.6995272297978], [27.7804302318697, -16.7240152636934], [27.7760935264951, -16.739988715207], [27.7647513739768, -16.7537248117506], [27.7483015785551, -16.7677717058995]]]]}, \"properties\": {\"jurisdiction_name\": \"so_Sompani_Health_Post_MACEPA_IRS_Lite_2020\", \"jurisdiction_parent_id\": \"032a9542-dab7-4a76-9e2e-bc7eb99a259c\"}}"
+      }
+    ],
+    "columns": ["jurisdiction_id", "geojson"]
+  }
+}

@@ -6,7 +6,7 @@ import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router';
-import { IRSReportingMap } from '../';
+import { IRSLiteReportingMap } from '../';
 import { MAP, REPORT_IRS_LITE_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
@@ -18,6 +18,11 @@ import IRSPlansReducer, {
   GenericPlan,
   reducerName as IRSPlansReducerName,
 } from '../../../../../store/ducks/generic/plans';
+import genericStructuresReducer, {
+  fetchGenericStructures,
+  getGenericStructures,
+  reducerName as genericStructuresReducerName,
+} from '../../../../../store/ducks/generic/structures';
 import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
 import jurisdictionReducer, {
   fetchJurisdictions,
@@ -35,8 +40,10 @@ jest.mock('../../../../../configs/env', () => ({
   HIDDEN_MAP_LEGEND_ITEMS: [],
   SUPERSET_IRS_LITE_REPORTING_INDICATOR_ROWS: 'zambia2020',
   SUPERSET_IRS_LITE_REPORTING_INDICATOR_STOPS: 'zambia2020',
-  SUPERSET_IRS_LITE_REPORTING_JURISDICTIONS_DATA_SLICES: '11,12',
+  SUPERSET_IRS_LITE_REPORTING_JURISDICTIONS_DATA_SLICES: '11',
+  SUPERSET_IRS_LITE_REPORTING_JURISDICTIONS_FOCUS_AREA_SLICE: '12',
   SUPERSET_IRS_LITE_REPORTING_PLANS_SLICE: '13',
+  SUPERSET_IRS_LITE_REPORTING_STRUCTURES_DATA_SLICE: '14',
   SUPERSET_JURISDICTIONS_SLICE: 1,
   SUPERSET_MAX_RECORDS: 2000,
 }));
@@ -45,19 +52,20 @@ jest.mock('../../../../../configs/env', () => ({
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
+reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer);
 
 /** set up data in the store needed for this view */
 const focusAreaData = superset.processData(fixtures.ZambiaFocusAreasJSON) || [];
-const jurisdictionData = superset.processData(fixtures.ZambiaAkros1JSON) || [];
-const jurisdiction2Data = superset.processData(fixtures.ZambiaKMZ421JSON) || [];
+const structureData = superset.processData(fixtures.ZambiaStructuresJSON) || [];
+const jurisdictionData = superset.processData(fixtures.ZambiaJurisdictionsJSON) || [];
 
 store.dispatch(fetchGenericJurisdictions('zm-focusAreas', focusAreaData));
+store.dispatch(fetchGenericStructures('zm-structures', structureData));
 store.dispatch(fetchJurisdictions(jurisdictionData));
-store.dispatch(fetchJurisdictions(jurisdiction2Data));
 
 const history = createBrowserHistory();
 
-describe('components/IRS Reports/IRSReportingMap', () => {
+describe('components/IRS Reports/IRSLiteReportingMap', () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
@@ -72,12 +80,18 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     const focusArea = getGenericJurisdictionByJurisdictionId(
       store.getState(),
       'zm-focusAreas',
-      '0f973eb6-7204-55f6-9f54-299d10647a9c'
+      'ce13e7f4-6926-4be0-9117-519bd1cc4bb2'
+    );
+
+    const structures = getGenericStructures(
+      store.getState(),
+      'zm-structures',
+      'ce13e7f4-6926-4be0-9117-519bd1cc4bb2'
     );
 
     const jurisdiction = getJurisdictionById(
       store.getState(),
-      '56e45196-882b-55ac-ba9e-3caeacb431a9'
+      'ce13e7f4-6926-4be0-9117-519bd1cc4bb2'
     );
 
     const props = {
@@ -88,20 +102,21 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       match: {
         isExact: true,
         params: {
-          jurisdictionId: '56e45196-882b-55ac-ba9e-3caeacb431a9',
+          jurisdictionId: 'ce13e7f4-6926-4be0-9117-519bd1cc4bb2',
           planId: (plans[0] as GenericPlan).plan_id,
         },
         path: `${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
         url: `${REPORT_IRS_LITE_PLAN_URL}/${
           (plans[0] as GenericPlan).plan_id
-        }/56e45196-882b-55ac-ba9e-3caeacb431a9/${MAP}`,
+        }/ce13e7f4-6926-4be0-9117-519bd1cc4bb2/${MAP}`,
       },
       plan: plans[0] as GenericPlan,
       service: supersetServiceMock,
+      structures,
     };
     const wrapper = mount(
       <Router history={history}>
-        <IRSReportingMap {...props} />
+        <IRSLiteReportingMap {...props} />
       </Router>
     );
     await flushPromises();
