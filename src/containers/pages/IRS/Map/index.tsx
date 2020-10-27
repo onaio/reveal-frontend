@@ -29,11 +29,15 @@ import {
 } from '../../../../configs/env';
 import {
   AN_ERROR_OCCURRED,
+  FOCUS_AREA_HEADER,
   HOME,
   IRS_REPORTING_TITLE,
+  ITEM_NOT_FOUND,
+  JURISDICTION,
   LEGEND_LABEL,
   MAP_LOAD_ERROR,
   NUMERATOR_OF_DENOMINATOR_UNITS,
+  PLAN_TITLE,
   PROGRESS,
   STRUCTURES,
 } from '../../../../configs/lang';
@@ -230,6 +234,15 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   }
 
   if (!focusArea || !plan || !jurisdiction) {
+    if (!focusArea) {
+      displayError(new Error(format(ITEM_NOT_FOUND, FOCUS_AREA_HEADER)));
+    }
+    if (!plan) {
+      displayError(new Error(format(ITEM_NOT_FOUND, PLAN_TITLE)));
+    }
+    if (!jurisdiction) {
+      displayError(new Error(format(ITEM_NOT_FOUND, JURISDICTION)));
+    }
     return <ErrorPage errorMessage={AN_ERROR_OCCURRED} />;
   }
 

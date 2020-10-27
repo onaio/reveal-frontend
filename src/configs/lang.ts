@@ -898,3 +898,13 @@ export const PLAN_CHANGES_HAVE_NOT_BEEN_SAVED = translate(
   'PLAN_CHANGES_HAVE_NOT_BEEN_SAVED',
   'Changes to plan have not been saved'
 );
+
+export const ITEM_NOT_FOUND = translate('ITEM_NOT_FOUND', '%s not found');
+export const NO_JURISDICTION_FOUND = translate(
+  'NO_JURISDICTION_FEATURES',
+  'Map failed to load: No jurisdiction found'
+);
+export const INVALID_GEOMETRIES = translate(
+  'INVALID_GEOMETRIES',
+  'Map failed to load: data has invalid geometries'
+);
