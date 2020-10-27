@@ -48,6 +48,13 @@ jest.mock('../../../../../configs/env', () => ({
   SUPERSET_MAX_RECORDS: 2000,
 }));
 
+jest.mock('../../../../../components/GisidaLite', () => {
+  const MemoizedGisidaLiteMock = () => <div>Mock component</div>;
+  return {
+    MemoizedGisidaLite: MemoizedGisidaLiteMock,
+  };
+});
+
 /** register the reducers */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
