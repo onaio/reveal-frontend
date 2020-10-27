@@ -333,7 +333,13 @@ export const PlanActionCodes = [
 
 /** Allowed taskGenerationStatus values */
 /* tslint:disable-next-line no-useless-cast */
-export const taskGenerationStatuses = [TRUE, FALSE, DISABLED, INTERNAL, IGNORE] as const;
+export const taskGenerationStatuses = {
+  [FALSE]: FALSE,
+  [TRUE]: TRUE,
+  [DISABLED]: DISABLED,
+  [IGNORE]: IGNORE,
+  [INTERNAL]: INTERNAL,
+} as const;
 
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {

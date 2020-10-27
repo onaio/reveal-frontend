@@ -94,6 +94,7 @@ const planFormPropsLookUp = {
   [InterventionType.DynamicMDA]: {
     ...managePlansLocationFieldProps,
   },
+  [InterventionType.IRSLite]: {},
 };
 
 /** Simple component that loads the new plan form and allows you to create a new plan */

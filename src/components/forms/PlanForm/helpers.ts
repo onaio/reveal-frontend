@@ -57,7 +57,6 @@ import {
   FAMILY_REGISTRATION_ACTIVITY_CODE,
   FI_REASON_CODE,
   FI_STATUS_CODE,
-  IGNORE,
   INTERVENTION_TYPE_CODE,
   IRS_ACTIVITY_CODE,
   LARVAL_DIPPING_ACTIVITY_CODE,
@@ -157,7 +156,7 @@ export const PlanSchema = Yup.object().shape({
   status: Yup.string()
     .oneOf(Object.values(PlanStatus))
     .required(REQUIRED),
-  taskGenerationStatus: Yup.string().oneOf(taskGenerationStatuses.map(e => e)),
+  taskGenerationStatus: Yup.string().oneOf(Object.values(taskGenerationStatuses)),
   teamAssignmentStatus: Yup.string(),
   title: Yup.string().required(REQUIRED),
   version: Yup.string(),
@@ -600,7 +599,7 @@ export const getTaskGenerationValue = (
   taskGenerationStatusValue =
     isDynamic &&
     configuredEnv &&
-    taskGenerationStatuses.includes(configuredEnv as taskGenerationStatusType)
+    Object.values(taskGenerationStatuses).includes(configuredEnv as taskGenerationStatusType)
       ? (configuredEnv as taskGenerationStatusType)
       : undefined;
   return taskGenerationStatusValue;
@@ -661,7 +660,11 @@ export function generatePlanDefinition(
     useContext.push({ code: OPENSRP_EVENT_ID_CODE, valueCodableConcept: formValue.opensrpEventId });
   }
 
-  if (formValue.taskGenerationStatus && (taskGenerationStatusValue !== IGNORE || isEditMode)) {
+  if (
+    formValue.taskGenerationStatus &&
+    formValue.taskGenerationStatus !== taskGenerationStatuses.ignore &&
+    (taskGenerationStatusValue !== taskGenerationStatuses.ignore || isEditMode)
+  ) {
     useContext.push({
       code: TASK_GENERATION_STATUS_CODE,
       valueCodableConcept: isEditMode ? formValue.taskGenerationStatus : taskGenerationStatusValue,
@@ -769,12 +772,12 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     taskGenerationStatusContext.length > 0
       ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
       : isDynamicPlan(planObject)
-      ? taskGenerationStatuses[2]
-      : taskGenerationStatuses[1];
+      ? taskGenerationStatuses.ignore
+      : taskGenerationStatuses.False;
 
   const teamAssignmentStatus: string =
     teamAssignmentStatusContext.length > 0
-      ? taskGenerationStatusContext[0].valueCodableConcept
+      ? teamAssignmentStatusContext[0].valueCodableConcept
       : '';
 
   return {

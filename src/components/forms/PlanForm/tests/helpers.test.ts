@@ -159,6 +159,28 @@ describe('containers/forms/PlanForm/helpers', () => {
     );
   });
 
+  it('plans with no task generation status are not added task generation status', () => {
+    MockDate.set('1/30/2000', 0);
+    const envModule = require('../../../../configs/env');
+    envModule.PLAN_UUID_NAMESPACE = '85f7dbbf-07d0-4c92-aa2d-d50d141dde00';
+    envModule.ACTION_UUID_NAMESPACE = '35968df5-f335-44ae-8ae5-25804caa2d86';
+    envModule.TASK_GENERATION_STATUS = TRUE;
+    const noTaskGenerationstatus = getPlanFormValues(plans[5]);
+    const planCopy = {
+      ...plans[5],
+      version: 2,
+    };
+    // remove serverVersion
+    const { serverVersion, ...expectedDynamicPlan } = planCopy;
+    expectedDynamicPlan.action[0].type = 'create';
+    // on create
+    expect(generatePlanDefinition(noTaskGenerationstatus, null, false)).toEqual(
+      expectedDynamicPlan
+    );
+    // on edit
+    expect(generatePlanDefinition(noTaskGenerationstatus, null, true)).toEqual(expectedDynamicPlan);
+  });
+
   it('generatePlanDefinition should ignore taskGenerationStatus if specified when creating plan and keep value on edit', () => {
     MockDate.set('1/30/2000', 0);
     const envModule = require('../../../../configs/env');

@@ -66,6 +66,8 @@ export const TIMELINE_SLIDER_STEP1 = '1';
 export const TIMELINE_SLIDER_STEP2 = '2';
 export const TIMELINE_SLIDER_STEP3 = '3';
 export const MODAL_BUTTON_CLASS = 'focus-investigation btn btn-primary float-right mt-0';
+export const BUSINESS_STATUS = 'business_status';
+export const IRS_REPORT_STRUCTURES = 'irs_report_structures';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
@@ -81,7 +83,7 @@ export const REPORT_MDA_POINT_PLAN_URL = `/intervention/mda-point/report`;
 export const REPORT_MDA_PLAN_URL = `/intervention/mda/report`;
 export const MDA_POINT_LOCATION_REPORT_URL = '/intervention/mda-point/location-report';
 export const MDA_POINT_CHILD_REPORT_URL = '/intervention/mda-point/child-report';
-export const IRS_MOP_UP_REPORT_URL = '/mopup';
+export const IRS_MOP_UP_REPORT_URL = '/intervention/irs/mopup';
 export const ASSIGN_PLAN_URL = `/assign`;
 export const FI_URL = '/focus-investigation';
 export const FI_FILTER_URL = '/focus-investigation/filter';
@@ -258,3 +260,4 @@ export const SUPERSET_ACCESS_DENIED_MESSAGE = 'Access is Denied';
 /** React Mapbox GL strings */
 export const REACT_MAPBOX_GL_ICON_IMAGE = 'icon-image';
 export const REACT_MAPBOX_GL_ICON_SIZE = 'icon-size';
+export const CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE = 'categorical';

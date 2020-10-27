@@ -1,6 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { cloneDeep, keyBy, keys, pickBy, values } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
+import { DISPLAYED_PLAN_TYPES } from '../../../configs/env';
 import { FIReasons } from '../../../configs/settings';
 import { PLAN_RECORD_BY_ID, SORT_BY_EFFECTIVE_PERIOD_START_FIELD } from '../../../constants';
 import store from '../../index';
@@ -192,6 +193,7 @@ describe('reducers/plans', () => {
     ).toEqual([fixtures.plan1, fixtures.plan22]);
     expect(
       plansArraySelector(store.getState(), {
+        interventionType: DISPLAYED_PLAN_TYPES as InterventionType[],
         planIds: null,
       }).length
     ).toEqual(5);

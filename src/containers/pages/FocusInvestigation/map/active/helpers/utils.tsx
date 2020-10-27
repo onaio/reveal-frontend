@@ -10,15 +10,23 @@ import {
   symbolLayerTemplate,
 } from '../../../../../../components/GisidaLite/helpers';
 import {
+  DATE_FORMAT,
   SUPERSET_GOALS_SLICE,
+  SUPERSET_JURISDICTION_EVENTS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_MAX_RECORDS,
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
 } from '../../../../../../configs/env';
-import { AN_ERROR_OCCURRED } from '../../../../../../configs/lang';
-import { CASE_CLASSIFICATION_LABEL, END_DATE, START_DATE } from '../../../../../../configs/lang';
+import {
+  AN_ERROR_OCCURRED,
+  CASE_CLASSIFICATION_LABEL,
+  CASE_NUMBER,
+  DIAGNOSIS_DATE,
+  END_DATE,
+  START_DATE,
+} from '../../../../../../configs/lang';
 import {
   CASE_CONFIRMATION_CODE,
   CASE_CONFIRMATION_GOAL_ID,
@@ -61,8 +69,14 @@ import {
   Point,
   Polygon,
 } from 'geojson';
-import { EventData, LngLat, Map } from 'mapbox-gl';
+import mapboxgl, { EventData, LngLat, Map } from 'mapbox-gl';
+import moment from 'moment';
 import { FeatureCollection } from '../../../../../../helpers/utils';
+import store from '../../../../../../store';
+import {
+  fetchIndexCaseDetails,
+  makeIndexCasesArraySelector,
+} from '../../../../../../store/ducks/opensrp/indexCasesDetails';
 import './handlers.css';
 
 /** abstracts code that actually makes the superset Call since it is quite similar */
@@ -104,6 +118,7 @@ export const fetchData = async (
   fetchPlansActionCreator: typeof fetchPlans,
   fetchStructuresActionCreator: typeof setStructures,
   fetchTasksActionCreator: typeof fetchTasks,
+  fetchIndexCaseActionCreator: typeof fetchIndexCaseDetails,
   plan: Plan,
   supersetService: typeof supersetFetch
 ): Promise<void> => {
@@ -171,6 +186,13 @@ export const fetchData = async (
       fetchTasksActionCreator,
       supersetService,
       tasksParams
+    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+
+    supersetCall(
+      SUPERSET_JURISDICTION_EVENTS_SLICE,
+      fetchIndexCaseActionCreator,
+      supersetService,
+      jurisdictionsParams
     ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
   }
 };
@@ -277,7 +299,13 @@ export const buildStructureLayers = (
 };
 
 /** describes the last arg to buildGsLiteLayers */
+export interface CircleColor {
+  property: string;
+  stops: string[][];
+  type: string;
+}
 interface ExtraVars {
+  circleColor?: CircleColor;
   useId?: string; // override the goalId to be used for the layer;
 }
 
@@ -364,17 +392,22 @@ export const buildGsLiteLayers = (
 ) => {
   const idToUse = extraVars.useId ? extraVars.useId : currentGoal;
   const gsLayers = [];
+  const defaultCirclePaint = {
+    ...circleLayerTemplate.circlePaint,
+    'circle-color': ['get', 'color'],
+    'circle-stroke-color': ['get', 'color'],
+    'circle-stroke-opacity': 1,
+  };
+  // default circle color or data driven circle styling
+  const circlePaint = extraVars.circleColor
+    ? { 'circle-color': extraVars.circleColor }
+    : defaultCirclePaint;
 
   if (pointFeatureCollection && pointFeatureCollection.features.length) {
     gsLayers.push(
       <GeoJSONLayer
         {...circleLayerTemplate}
-        circlePaint={{
-          ...circleLayerTemplate.circlePaint,
-          'circle-color': ['get', 'color'],
-          'circle-stroke-color': ['get', 'color'],
-          'circle-stroke-opacity': 1,
-        }}
+        circlePaint={circlePaint}
         id={`${idToUse}-point`}
         key={`${idToUse}-point`}
         data={pointFeatureCollection}
@@ -465,6 +498,7 @@ export interface FeatureWithLayer
  * Build mapbox component onclick event handler
  */
 export const buildOnClickHandler = (currentPlanId: string) => {
+  const indexCasesArraySelector = makeIndexCasesArraySelector();
   function clickHandler(map: Map, event: EventData) {
     /** differentiate between current index cases and historical index cases by use of plan_id
      * current_case will be index_case belonging to this plan
@@ -491,8 +525,18 @@ export const buildOnClickHandler = (currentPlanId: string) => {
           feature.properties.action_code === CASE_CONFIRMATION_CODE &&
           feature.properties.plan_id !== currentPlanId
         ) {
+          const details = indexCasesArraySelector(store.getState(), {
+            jurisdiction_id: feature.properties.jurisdiction_id,
+            task_id: feature.properties.task_id,
+          })[0];
+          const diagnosisDate = details?.date_of_diagnosis
+            ? moment(details.date_of_diagnosis).format(DATE_FORMAT.toUpperCase())
+            : '_';
           description += '<p class="heading">historical index cases </b></p>';
-          description += '<p></p><br/><br/>';
+          description += `<p>${CASE_NUMBER}: ${details?.case_number || '_'}</p>`;
+          description += `<p>${CASE_CLASSIFICATION_LABEL}: ${details?.case_classification ||
+            '_'}</p>`;
+          description += `<p>${DIAGNOSIS_DATE}: ${diagnosisDate}</p>`;
           return;
         }
         // Splitting into two lines to fix breaking tests

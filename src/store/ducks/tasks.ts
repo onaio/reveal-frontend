@@ -28,6 +28,7 @@ export interface InitialProperties {
   task_execution_end_date: string;
   task_execution_start_date: string;
   task_focus: string;
+  task_id?: string;
   task_status: string;
   task_task_for: string;
 }
@@ -147,6 +148,7 @@ export const fetchTasks = (tasksList: InitialTask[] = []): FetchTasksAction => (
           task.geojson.geometry = JSON.parse(task.geojson.geometry);
         }
         (task as Task).geojson.properties.color = getColor(task);
+        (task as Task).geojson.properties.task_id = task.task_identifier;
         return task as Task;
       }
     ),
