@@ -8,7 +8,6 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { IRSLiteReportingMap } from '../';
-import { SUPERSET_IRS_LITE_REPORTING_INDICATOR_STOPS } from '../../../../../configs/env';
 import { MAP, REPORT_IRS_LITE_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
@@ -29,12 +28,10 @@ import genericStructuresReducer, {
 import jurisdictionReducer, {
   fetchJurisdictions,
   getJurisdictionById,
-  Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
 import { InterventionType } from '../../../../../store/ducks/plans';
 import * as fixtures from '../../JurisdictionsReportLite/fixtures';
-import { getGisidaWrapperProps, IRSIndicatorStops } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -229,13 +226,6 @@ describe('components/IRS Reports/IRSLiteReportingMap', () => {
       'Response item ProgressBar'
     );
 
-    expect(wrapper.find('GisidaWrapper')).toBeTruthy();
-
-    const indicatorStops = IRSIndicatorStops[SUPERSET_IRS_LITE_REPORTING_INDICATOR_STOPS];
-    expect(wrapper.find('GisidaWrapper').props()).toEqual(
-      getGisidaWrapperProps(jurisdiction as Jurisdiction, structures, indicatorStops)
-    );
-
     expect(supersetServiceMock.mock.calls).toEqual([
       [
         1,
@@ -349,6 +339,5 @@ describe('components/IRS Reports/IRSLiteReportingMap', () => {
     );
 
     expect(wrapper.find('NotFound')).not.toBe({});
-    expect(wrapper.find('GisidaWrapper')).toEqual({});
   });
 });

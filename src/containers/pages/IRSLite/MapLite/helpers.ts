@@ -1,12 +1,12 @@
-import GeojsonExtent from '@mapbox/geojson-extent';
 import { Dictionary } from '@onaio/utils';
+import mapboxgl, { EventData, LngLat, Map } from 'mapbox-gl';
 import { BLACK, GREY, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
-import { GisidaProps } from '../../../../components/GisidaWrapper';
+import { STATUS_HEADER } from '../../../../configs/lang';
 import { circleLayerConfig, fillLayerConfig, lineLayerConfig } from '../../../../configs/settings';
-import { MAIN_PLAN, STRUCTURE_LAYER } from '../../../../constants';
+import { FEATURE } from '../../../../constants';
+import { STRUCTURE_LAYER } from '../../../../constants';
 import { GenericJurisdiction } from '../../../../store/ducks/generic/jurisdictions';
 import { StructureFeatureCollection } from '../../../../store/ducks/generic/structures';
-import { Jurisdiction } from '../../../../store/ducks/jurisdictions';
 
 /** The default indicator stop */
 export const defaultIndicatorStop = [
@@ -183,71 +183,6 @@ export const structuresLayerBuilder = (
   return structuresLayers;
 };
 
-/** Get Gisida Wrapper Props
- * @param {Jurisdiction} jurisdiction - the jurisdiction (with geojson field)
- * @param {StructureFeatureCollection} structures - Feature Collection of structures
- * @param {string[][]} indicatorStops - the indicator stops
- */
-export const getGisidaWrapperProps = (
-  jurisdiction: Jurisdiction,
-  structures: StructureFeatureCollection | null,
-  indicatorStops: string[][] = defaultIndicatorStop
-): GisidaProps | null => {
-  if (!jurisdiction.geojson) {
-    return null;
-  }
-  const layers: Dictionary[] = [];
-
-  // define line layer for Jurisdiction outline
-  const jurisdictionLineLayer = {
-    ...lineLayerConfig,
-    id: `${MAIN_PLAN}-${jurisdiction.jurisdiction_id}`,
-    source: {
-      ...lineLayerConfig.source,
-      data: {
-        ...lineLayerConfig.source.data,
-        data: JSON.stringify(jurisdiction.geojson),
-      },
-    },
-    visible: true,
-  };
-  layers.push(jurisdictionLineLayer);
-
-  // Define structures layers
-  let structuresLayers: Dictionary[] = [];
-  if (structures) {
-    structuresLayers = structuresLayerBuilder(structures, indicatorStops);
-  }
-
-  // define feature collection of all geoms being rendered
-  const featureCollection =
-    !structures || !structures.features || !structures.features.length
-      ? { features: [jurisdiction.geojson], type: 'FeatureCollection' }
-      : {
-          ...structures,
-          features: [...structures.features, jurisdiction.geojson],
-        };
-  // define bounds for gisida map position
-  const bounds = GeojsonExtent(featureCollection);
-
-  for (const structureLayer of structuresLayers) {
-    layers.push(structureLayer);
-  }
-
-  const gisidaWrapperProps: GisidaProps = {
-    bounds,
-    currentGoal: null,
-    geoData: null,
-    goal: null,
-    handlers: [],
-    layers,
-    pointFeatureCollection: null,
-    polygonFeatureCollection: null,
-    structures: null,
-  };
-  return gisidaWrapperProps;
-};
-
 /** Get breadcrumbs for a jurisdiction object
  * This uses the jurisdiction_name_path and jurisdiction_path fields to get
  * the breadcrumbs of the parents of a given jurisdiction object
@@ -303,4 +238,32 @@ export const getIndicatorRows = (defaultRows: IndicatorRows, focusArea: Dictiona
     });
   });
   return rows;
+};
+
+export const mapOnClickHandler = (map: Map, event: EventData) => {
+  const features = event.target.queryRenderedFeatures(event.point) as Dictionary[];
+  let description: string = '';
+  features.forEach((feature: any) => {
+    if (
+      feature &&
+      feature.geometry &&
+      feature.geometry.coordinates &&
+      feature.properties &&
+      feature.properties.business_status
+    ) {
+      description += `<p class="heading">${FEATURE}</b></p>`;
+      description += `<p>${STATUS_HEADER}: ${feature.properties.business_status}</p><br/><br/>`;
+    }
+  });
+  if (description.length) {
+    description = '<div style=min-width:150px>' + description + '</div>';
+    const coordinates: LngLat = event.lngLat;
+    while (Math.abs(event.lngLat.lng - coordinates.lng) > 180) {
+      coordinates.lng += event.lngLat.lng > coordinates.lng ? 360 : -360;
+    }
+    new mapboxgl.Popup()
+      .setLngLat(coordinates)
+      .setHTML(description)
+      .addTo(map);
+  }
 };
