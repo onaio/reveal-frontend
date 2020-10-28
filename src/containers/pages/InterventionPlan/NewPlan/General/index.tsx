@@ -73,17 +73,6 @@ const planFormPropsLookUp = {
     jurisdictionLabel: FOCUS_AREA_HEADER,
     redirectAfterAction: PLAN_LIST_URL,
   },
-  [InterventionType.IRSLite]: {
-    allowMoreJurisdictions: true,
-    cascadingSelect: true,
-    initialValues: {
-      ...defaultInitialValues,
-      activities: planActivitiesMap[InterventionType.IRS],
-      interventionType: InterventionType.IRS,
-    },
-    jurisdictionLabel: FOCUS_AREA_HEADER,
-    redirectAfterAction: PLAN_LIST_URL,
-  },
   [InterventionType.FI]: {},
   [InterventionType.MDA]: {},
   [InterventionType.MDAPoint]: {},
