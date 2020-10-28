@@ -18,7 +18,7 @@ const ResponseAdherence: React.ElementType = () => {
             <tbody>
               <tr style={{ background: colors.GREEN }}>
                 <td>{GREEN}</td>
-                <td>;&gt;=</td>
+                <td>>=</td>
                 <td>{IndicatorThresholdItemPercentage(GREEN_THRESHOLD)}</td>
               </tr>
               <tr style={{ background: colors.ORANGE }}>
@@ -33,7 +33,7 @@ const ResponseAdherence: React.ElementType = () => {
               </tr>
               <tr style={{ background: colors.YELLOW }}>
                 <td>{YELLOW}</td>
-                <td>;&gt;=</td>
+                <td>>=</td>
                 <td>{IndicatorThresholdItemPercentage(YELLOW_THRESHOLD)}</td>
               </tr>
             </tbody>
