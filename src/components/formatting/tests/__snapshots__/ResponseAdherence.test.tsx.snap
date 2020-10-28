@@ -39,7 +39,7 @@ exports[`src/components/formatting/ResponseAdherence renders ResponseAdherence c
                   Green
                 </td>
                 <td>
-                  ;&gt;=
+                  &gt;=
                 </td>
                 <td>
                   90%
@@ -90,7 +90,7 @@ exports[`src/components/formatting/ResponseAdherence renders ResponseAdherence c
                   Yellow
                 </td>
                 <td>
-                  ;&gt;=
+                  &gt;=
                 </td>
                 <td>
                   20%
