@@ -11,7 +11,7 @@ import { PlanDefinition } from '../../../../src/configs/settings';
 import { MemoizedGisidaLite } from '../../../components/GisidaLite';
 import Loading from '../../../components/page/Loading';
 import { getJurisdictions } from '../../../components/TreeWalker/helpers';
-import { INVALID_GEOMETRIES, MAP_LOAD_ERROR, NO_JURISDICTION_FOUND } from '../../../configs/lang';
+import { INVALID_GEOMETRIES, JURISDICTION_NOT_FOUND, MAP_LOAD_ERROR } from '../../../configs/lang';
 import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import {
@@ -148,7 +148,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
             setLoading(false);
             setHasValidGeoms(false);
             hideBottomBreadCrumbCallback(true);
-            displayError(new Error(NO_JURISDICTION_FOUND));
+            displayError(new Error(JURISDICTION_NOT_FOUND));
           }
         })
         .finally(() => {
