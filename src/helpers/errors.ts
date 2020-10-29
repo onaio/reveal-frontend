@@ -1,5 +1,6 @@
 import { HTTPError, NetworkError } from '@opensrp/server-service';
 import { toast, ToastOptions } from 'react-toastify';
+import { TOAST_AUTO_CLOSE_DELAY } from '../configs/env';
 import { ACCESS_DENIED, NETWORK_ERROR, USER_HAS_NO_VALID_ASSIGNMENTS } from '../configs/lang';
 import { growl } from './utils';
 
@@ -17,7 +18,7 @@ type ServiceError = HTTPError | Error | NetworkError;
 export const displayError = (
   error: ServiceError,
   customMessage: string = '',
-  autoClose: false = false
+  autoClose: number | false = TOAST_AUTO_CLOSE_DELAY
 ) => {
   const toastOptions: ToastOptions = { autoClose, type: toast.TYPE.ERROR };
 
