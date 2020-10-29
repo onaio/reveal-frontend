@@ -128,7 +128,7 @@ describe('components/IRS Reports/IRSLiteReportingMap', () => {
     );
     await flushPromises();
     wrapper.update();
-    expect(wrapper.find('.sidebar-legend-item').length).toEqual(5);
+    expect(wrapper.find('.sidebar-legend-item').length).toEqual(3);
     expect(toJson(wrapper.find('.sidebar-legend-item'))).toMatchSnapshot('Legend items');
     wrapper.unmount();
   });
