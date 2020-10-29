@@ -29,7 +29,6 @@ import {
 } from '../../../../configs/env';
 import {
   AN_ERROR_OCCURRED,
-  FOCUS_AREA_NOT_FOUND,
   HOME,
   IRS_REPORTING_TITLE,
   JURISDICTION_NOT_FOUND,
@@ -201,7 +200,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
         await service(focusAreaSlice, fetchFocusAreaParams).then(
           (result: GenericJurisdiction[]) => {
             if (!result || (result && !result.length)) {
-              displayError(new Error(FOCUS_AREA_NOT_FOUND));
+              displayError(new Error(JURISDICTION_NOT_FOUND));
             }
             fetchFocusAreas(focusAreaSlice, result);
           }

@@ -9,11 +9,7 @@ import { act } from 'react-dom/test-utils';
 import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
-import {
-  FOCUS_AREA_NOT_FOUND,
-  JURISDICTION_NOT_FOUND,
-  PLAN_NOT_FOUND,
-} from '../../../../../configs/lang';
+import { JURISDICTION_NOT_FOUND, PLAN_NOT_FOUND } from '../../../../../configs/lang';
 import { MAP, REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import * as errors from '../../../../../helpers/errors';
 import store from '../../../../../store';
@@ -500,7 +496,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     expect(displayErrorSpy).toHaveBeenCalledTimes(3);
     expect(displayErrorSpy.mock.calls).toEqual([
       [new Error(JURISDICTION_NOT_FOUND)],
-      [new Error(FOCUS_AREA_NOT_FOUND)],
+      [new Error(JURISDICTION_NOT_FOUND)],
       [new Error(PLAN_NOT_FOUND)],
     ]);
   });

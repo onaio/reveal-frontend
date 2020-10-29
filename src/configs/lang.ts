@@ -908,7 +908,3 @@ export const JURISDICTION_NOT_FOUND = translate(
   'JURISDICTION_NOT_FOUND',
   'Map failed to load: Jurisdiction not found'
 );
-export const FOCUS_AREA_NOT_FOUND = translate(
-  'FOCUS_AREA_NOT_FOUND',
-  'Map failed to load: no focus area found'
-);
