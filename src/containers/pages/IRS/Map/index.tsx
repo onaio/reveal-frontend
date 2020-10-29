@@ -29,15 +29,14 @@ import {
 } from '../../../../configs/env';
 import {
   AN_ERROR_OCCURRED,
-  FOCUS_AREA_HEADER,
+  FOCUS_AREA_NOT_FOUND,
   HOME,
   IRS_REPORTING_TITLE,
-  ITEM_NOT_FOUND,
-  JURISDICTION,
+  JURISDICTION_NOT_FOUND,
   LEGEND_LABEL,
   MAP_LOAD_ERROR,
   NUMERATOR_OF_DENOMINATOR_UNITS,
-  PLAN_TITLE,
+  PLAN_NOT_FOUND,
   PROGRESS,
   STRUCTURES,
 } from '../../../../configs/lang';
@@ -165,10 +164,14 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       }
 
       // get the jurisdiction
-      await service(
-        SUPERSET_JURISDICTIONS_SLICE,
-        fetchLocationParams
-      ).then((result: Jurisdiction[]) => fetchJurisdictionsAction(result));
+      await service(SUPERSET_JURISDICTIONS_SLICE, fetchLocationParams).then(
+        (result: Jurisdiction[]) => {
+          if (!result || (result && !result.length)) {
+            displayError(new Error(JURISDICTION_NOT_FOUND));
+          }
+          fetchJurisdictionsAction(result);
+        }
+      );
 
       let fetchStructureParams: SupersetFormData | null = null;
       if (jurisdictionId && planId) {
@@ -195,8 +198,13 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
           ]);
         }
         // get the focus area
-        await service(focusAreaSlice, fetchFocusAreaParams).then((result: GenericJurisdiction[]) =>
-          fetchFocusAreas(focusAreaSlice, result)
+        await service(focusAreaSlice, fetchFocusAreaParams).then(
+          (result: GenericJurisdiction[]) => {
+            if (!result || (result && !result.length)) {
+              displayError(new Error(FOCUS_AREA_NOT_FOUND));
+            }
+            fetchFocusAreas(focusAreaSlice, result);
+          }
         );
       }
 
@@ -208,10 +216,14 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       }
 
       // get the plan
-      await service(
-        SUPERSET_IRS_REPORTING_PLANS_SLICE,
-        fetchPlansParams
-      ).then((result: GenericPlan[]) => fetchPlans(result));
+      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE, fetchPlansParams).then(
+        (result: GenericPlan[]) => {
+          if (!result || (result && !result.length)) {
+            displayError(new Error(PLAN_NOT_FOUND));
+          }
+          fetchPlans(result);
+        }
+      );
     } catch (e) {
       displayError(e);
     } finally {
@@ -234,15 +246,6 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   }
 
   if (!focusArea || !plan || !jurisdiction) {
-    if (!focusArea) {
-      displayError(new Error(format(ITEM_NOT_FOUND, FOCUS_AREA_HEADER)));
-    }
-    if (!plan) {
-      displayError(new Error(format(ITEM_NOT_FOUND, PLAN_TITLE)));
-    }
-    if (!jurisdiction) {
-      displayError(new Error(format(ITEM_NOT_FOUND, JURISDICTION)));
-    }
     return <ErrorPage errorMessage={AN_ERROR_OCCURRED} />;
   }
 
