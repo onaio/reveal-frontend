@@ -1,6 +1,6 @@
 import { Dictionary } from '@onaio/utils';
 import mapboxgl, { EventData, LngLat, Map } from 'mapbox-gl';
-import { BLACK, TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
+import { TASK_GREEN, TASK_ORANGE, TASK_RED, TASK_YELLOW } from '../../../../colors';
 import { STATUS_HEADER } from '../../../../configs/lang';
 import { FEATURE } from '../../../../constants';
 import { GenericJurisdiction } from '../../../../store/ducks/generic/jurisdictions';
@@ -11,7 +11,6 @@ export const defaultIndicatorStop = [
   ['Not Sprayed', TASK_RED],
   ['Partially Sprayed', TASK_ORANGE],
   ['Not Visited', TASK_YELLOW],
-  ['Not Eligible', BLACK],
 ];
 
 /** IRS Lite Indicator stops
