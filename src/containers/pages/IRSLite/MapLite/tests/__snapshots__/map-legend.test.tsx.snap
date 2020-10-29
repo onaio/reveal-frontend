@@ -46,24 +46,6 @@ Array [
       className="sidebar-legend-color"
       style={
         Object {
-          "backgroundColor": "#FF851B",
-        }
-      }
-    />
-    <span
-      className="sidebar-legend-label"
-    >
-      Partially Sprayed
-    </span>
-  </div>,
-  <div
-    className="sidebar-legend-item"
-    key="3"
-  >
-    <span
-      className="sidebar-legend-color"
-      style={
-        Object {
           "backgroundColor": "#FFCA16",
         }
       }
@@ -72,24 +54,6 @@ Array [
       className="sidebar-legend-label"
     >
       Not Visited
-    </span>
-  </div>,
-  <div
-    className="sidebar-legend-item"
-    key="4"
-  >
-    <span
-      className="sidebar-legend-color"
-      style={
-        Object {
-          "backgroundColor": "#000",
-        }
-      }
-    />
-    <span
-      className="sidebar-legend-label"
-    >
-      Not Eligible
     </span>
   </div>,
 ]
