@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/IRS Reports/IRSLiteReportingMap renders map legend correctly with hidden items: Legend items 1`] = `
+Array [
+  <div
+    className="sidebar-legend-item"
+    key="0"
+  >
+    <span
+      className="sidebar-legend-color"
+      style={
+        Object {
+          "backgroundColor": "#68BB0C",
+        }
+      }
+    />
+    <span
+      className="sidebar-legend-label"
+    >
+      Sprayed
+    </span>
+  </div>,
+  <div
+    className="sidebar-legend-item"
+    key="1"
+  >
+    <span
+      className="sidebar-legend-color"
+      style={
+        Object {
+          "backgroundColor": "#F12525",
+        }
+      }
+    />
+    <span
+      className="sidebar-legend-label"
+    >
+      Not Sprayed
+    </span>
+  </div>,
+  <div
+    className="sidebar-legend-item"
+    key="2"
+  >
+    <span
+      className="sidebar-legend-color"
+      style={
+        Object {
+          "backgroundColor": "#FFCA16",
+        }
+      }
+    />
+    <span
+      className="sidebar-legend-label"
+    >
+      Not Visited
+    </span>
+  </div>,
+]
+`;
