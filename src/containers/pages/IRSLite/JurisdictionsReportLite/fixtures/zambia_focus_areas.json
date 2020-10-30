@@ -1,0 +1,134 @@
+{
+  "cache_key": null,
+  "cached_dttm": null,
+  "cache_timeout": 86400,
+  "errors": [],
+  "form_data": {
+    "adhoc_filters": [
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": "ce13e7f4-6926-4be0-9117-519bd1cc4bb2",
+        "operator": "==",
+        "subject": "jurisdiction_id"
+      },
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": "17f89152-51a6-476c-9246-8fee6f9e6ebf",
+        "operator": "==",
+        "subject": "plan_id"
+      }
+    ],
+    "all_columns": [
+      "id",
+      "plan_id",
+      "jurisdiction_id",
+      "jurisdiction_parent_id",
+      "jurisdiction_name",
+      "jurisdiction_depth",
+      "jurisdiction_path",
+      "jurisdiction_name_path",
+      "targareas",
+      "visitedareas",
+      "found",
+      "sprayed",
+      "totstruct",
+      "targstruct",
+      "totareas",
+      "spraycov",
+      "spraycovtarg",
+      "foundcoverage",
+      "spraysuccess"
+    ],
+    "color_pn": true,
+    "datasource": "180__table",
+    "groupby": [],
+    "metrics": ["count"],
+    "order_by_cols": [],
+    "order_desc": true,
+    "percent_metrics": [],
+    "queryFields": {
+      "groupby": "groupby",
+      "metrics": "metrics"
+    },
+    "query_mode": "raw",
+    "row_limit": 1,
+    "show_cell_bars": true,
+    "slice_id": 617,
+    "table_timestamp_format": "smart_date",
+    "time_grain_sqla": "P1D",
+    "time_range": "No filter",
+    "time_range_endpoints": ["inclusive", "exclusive"],
+    "url_params": {},
+    "viz_type": "table",
+    "where": "",
+    "having": "",
+    "having_filters": [],
+    "filters": [
+      {
+        "col": "jurisdiction_id",
+        "op": "==",
+        "val": "ce13e7f4-6926-4be0-9117-519bd1cc4bb2"
+      },
+      {
+        "col": "plan_id",
+        "op": "==",
+        "val": "17f89152-51a6-476c-9246-8fee6f9e6ebf"
+      }
+    ]
+  },
+  "is_cached": false,
+  "query": "SELECT id AS id,\n       plan_id AS plan_id,\n       jurisdiction_id AS jurisdiction_id,\n       jurisdiction_parent_id AS jurisdiction_parent_id,\n       jurisdiction_name AS jurisdiction_name,\n       jurisdiction_depth AS jurisdiction_depth,\n       jurisdiction_path AS jurisdiction_path,\n       jurisdiction_name_path AS jurisdiction_name_path,\n       targareas AS targareas,\n       visitedareas AS visitedareas,\n       found AS found,\n                sprayed AS sprayed,\n                totstruct AS totstruct,\n                targstruct AS targstruct,\n                totareas AS totareas,\n                spraycov AS spraycov,\n                spraycovtarg AS spraycovtarg,\n                foundcoverage AS foundcoverage,\n                spraysuccess AS spraysuccess\nFROM pending.zambia_irs_lite_operational_areas\nWHERE jurisdiction_id = 'ce13e7f4-6926-4be0-9117-519bd1cc4bb2'\n  AND plan_id = '17f89152-51a6-476c-9246-8fee6f9e6ebf'\nLIMIT 1",
+  "from_dttm": null,
+  "to_dttm": null,
+  "status": "success",
+  "stacktrace": null,
+  "rowcount": 1,
+  "data": {
+    "records": [
+      {
+        "id": "0f973eb6-7204-55f6-9f54-299d10647a9c",
+        "plan_id": "17f89152-51a6-476c-9246-8fee6f9e6ebf",
+        "jurisdiction_id": "ce13e7f4-6926-4be0-9117-519bd1cc4bb2",
+        "jurisdiction_parent_id": "032a9542-dab7-4a76-9e2e-bc7eb99a259c",
+        "jurisdiction_name": "so_Sompani_Health_Post_MACEPA_IRS_Lite_2020",
+        "jurisdiction_depth": 3,
+        "jurisdiction_path": "[\"03557b7e-0ddf-41f7-93c8-155669757a16\", \"48a04a67-ac6f-4d5e-bbc6-09b77ba1253d\", \"032a9542-dab7-4a76-9e2e-bc7eb99a259c\"]",
+        "jurisdiction_name_path": "[\"Zambia MACEPA IRS Lite 2020\", \"Southern MACEPA IRS Lite 2020\", \"Gwembe MACEPA IRS Lite 2020\"]",
+        "targareas": 93.0,
+        "visitedareas": 16.0,
+        "found": 34.0,
+        "sprayed": 24.0,
+        "totstruct": 0,
+        "targstruct": 0,
+        "totareas": 93,
+        "spraycov": 0.0,
+        "spraycovtarg": 0.0,
+        "foundcoverage": 0.0,
+        "spraysuccess": 0.7058823529411765
+      }
+    ],
+    "columns": [
+      "id",
+      "plan_id",
+      "jurisdiction_id",
+      "jurisdiction_parent_id",
+      "jurisdiction_name",
+      "jurisdiction_depth",
+      "jurisdiction_path",
+      "jurisdiction_name_path",
+      "targareas",
+      "visitedareas",
+      "found",
+      "sprayed",
+      "totstruct",
+      "targstruct",
+      "totareas",
+      "spraycov",
+      "spraycovtarg",
+      "foundcoverage",
+      "spraysuccess"
+    ]
+  }
+}

@@ -2,7 +2,11 @@ import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
 import { Cell } from 'react-table';
-import { getIRSThresholdAdherenceIndicator, renderPercentage } from '../../../helpers/indicators';
+import {
+  getIRSLiteThresholdAdherenceIndicator,
+  getIRSThresholdAdherenceIndicator,
+  renderPercentage,
+} from '../../../helpers/indicators';
 import { GenericJurisdiction } from '../../../store/ducks/generic/jurisdictions';
 
 /** columns for Namibia IRS jurisdictions */
@@ -127,6 +131,63 @@ export const ZambiaJurisdictionsColumns = [
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Success Rate',
+    accessor: 'spraysuccess',
+  },
+];
+
+/** columns for Zambia IRS Lite jurisdictions */
+export const IRSLiteZambiaJurisdictionsColumns = [
+  {
+    Header: 'Name',
+    accessor: 'jurisdiction_name',
+    minWidth: 360,
+  },
+  {
+    Header: 'Total Spray Areas',
+    accessor: 'totareas',
+  },
+  {
+    Header: 'Spray Areas Targeted',
+    accessor: 'targareas',
+  },
+  {
+    Header: 'Spray Areas Visited',
+    accessor: 'visitedareas',
+  },
+  {
+    Header: 'Total Structures',
+    accessor: 'totstruct',
+  },
+  {
+    Header: 'Targeted Structures',
+    accessor: 'targstruct',
+  },
+  {
+    Header: 'Structures Sprayed',
+    accessor: 'sprayed',
+  },
+  {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
+    Header: '% Total Structures Sprayed',
+    accessor: 'spraycov',
+  },
+  {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
+    Header: '% Targeted Structures Sprayed',
+    accessor: 'spraycovtarg',
+  },
+  {
+    Header: 'Structures Found',
+    accessor: 'found',
+  },
+  {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
+    Header: 'Found Coverage',
+    accessor: 'foundcoverage',
+  },
+  {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: 'Success Rate',
     accessor: 'spraysuccess',
   },
@@ -277,6 +338,8 @@ zambiaMDAUpperJurisdictions.splice(
  * These are all the table columns for IRS that we know about.
  */
 export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionary>> } = {
+  irsLiteZambiaFocusArea2020: IRSLiteZambiaJurisdictionsColumns,
+  irsLiteZambiaJurisdictions2020: IRSLiteZambiaJurisdictionsColumns,
   mdaJurisdictionsColumns,
   namibia2019: NamibiaColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,

@@ -41,6 +41,12 @@ export const IRS_PERFORMANCE_REPORTING_TITLE = translate(
   'IRS_PERFORMANCE_REPORTING_TITLE',
   'IRS Performance Reporting'
 );
+export const IRS_LITE_REPORTING_TITLE = translate('IRS_LITE_REPORTING_TITLE', 'IRS Lite Reporting');
+export const IRS_LITE_PERFORMANCE_REPORTING_TITLE = translate(
+  'IRS_LITE_PERFORMANCE_REPORTING_TITLE',
+  'IRS Lite Performance Reporting'
+);
+
 export const MDA_REPORTING_TITLE = translate('MDA_REPORTING_TITLE', 'MDA Reporting');
 export const CONDITIONAL_FORMATTING_RULES = translate(
   'CONDITIONAL_FORMATTING_RULES',
@@ -152,6 +158,7 @@ export const REMOVE = translate('REMOVE', 'Remove');
 export const UPLOAD = translate('UPLOAD', 'Upload');
 
 export const IRS_PLANS = translate('IRS_PLANS', 'IRS Plans');
+export const IRS_LITE_PLANS = translate('IRS_LITE_PLANS', 'IRS Lite Plans');
 export const MDA_PLANS = translate('MDA_PLANS', 'MDA Plans');
 export const MDA_POINT_PLANS = translate('MDA_POINT_PLANS', 'MDA Point Plans');
 export const COUNTRY = translate('COUNTRY', 'Country');

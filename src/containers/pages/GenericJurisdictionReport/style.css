@@ -27,12 +27,14 @@
   padding: 10px !important;
   height: auto !important;
   display: flex;
+  word-break: break-all;
 }
 
 .generic-report-table .td[datatd='pm-0'] div {
   padding: 0 5px !important;
   line-height: inherit;
   height: initial;
+  word-break: break-all;
 }
 
 .generic-report-table .irs-report-indicator-container {

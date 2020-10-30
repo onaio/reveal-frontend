@@ -1650,6 +1650,33 @@ export const indicatorThresholdsIRS: IndicatorThresholds = {
 };
 /** END IRS Reporting configs */
 
+/** IRS Reporting configs */
+export const indicatorThresholdsIRSLite: IndicatorThresholds = {
+  GREEN_THRESHOLD: {
+    color: '#2ECC40',
+    name: IRS_GREEN_THRESHOLD,
+    orEquals: true,
+    value: 1,
+  },
+  GREY_THRESHOLD: {
+    color: '#dddddd',
+    name: IRS_GREY_THRESHOLD,
+    value: 0.2,
+  },
+  RED_THRESHOLD: {
+    color: '#FF4136',
+    name: IRS_RED_THRESHOLD,
+    orEquals: true,
+    value: 0.75,
+  },
+  YELLOW_THRESHOLD: {
+    color: '#FFDC00',
+    name: IRS_YELLOW_THRESHOLD,
+    value: 0.9,
+  },
+};
+/** END IRS Reporting configs */
+
 /** Namibia IRS Reporting configs */
 export const indicatorThresholdsIRSNamibia: IndicatorThresholds = {
   GREEN_THRESHOLD: {
@@ -1730,6 +1757,26 @@ export const irsReportingCongif: {
 } = {
   // Namibia Structures Configs
   [process.env.REACT_APP_SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE_NA as string]: {
+    indicatorThresholds: indicatorThresholdsIRS,
+  } as IrsReportingConfig,
+};
+/* tslint:enable:object-literal-sort-keys */
+
+/** Thresholds lookup
+ * For custom indicator thresholds, define it and add it here,
+ * otherwise the default indicator thresholds will be used.
+ */
+export const indicatorThresholdsLookUpIRSLite: IndicatorThresholdsLookUp = {
+  irsLite2020: indicatorThresholdsIRSLite,
+};
+
+/* tslint:disable:object-literal-sort-keys */
+/** The actual configuration object controlling how IRS Reporting is handled for different clients */
+export const irsLiteReportingCongif: {
+  [key: string]: IrsReportingConfig;
+} = {
+  // Namibia Structures Configs
+  [process.env.REACT_APP_SUPERSET_IRS_LITE_REPORTING_STRUCTURES_DATA_SLICE_NA as string]: {
     indicatorThresholds: indicatorThresholdsIRS,
   } as IrsReportingConfig,
 };
