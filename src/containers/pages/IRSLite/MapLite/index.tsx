@@ -19,33 +19,31 @@ import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/Heade
 import Loading from '../../../../components/page/Loading';
 import {
   HIDDEN_MAP_LEGEND_ITEMS,
-  SUPERSET_IRS_REPORTING_INDICATOR_ROWS,
-  SUPERSET_IRS_REPORTING_INDICATOR_STOPS,
-  SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES,
-  SUPERSET_IRS_REPORTING_PLANS_SLICE,
-  SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
+  SUPERSET_IRS_LITE_REPORTING_INDICATOR_ROWS,
+  SUPERSET_IRS_LITE_REPORTING_INDICATOR_STOPS,
+  SUPERSET_IRS_LITE_REPORTING_JURISDICTIONS_FOCUS_AREA_SLICE,
+  SUPERSET_IRS_LITE_REPORTING_PLANS_SLICE,
+  SUPERSET_IRS_LITE_REPORTING_STRUCTURES_DATA_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_MAX_RECORDS,
 } from '../../../../configs/env';
 import {
   AN_ERROR_OCCURRED,
   HOME,
-  IRS_REPORTING_TITLE,
-  JURISDICTION_NOT_FOUND,
+  IRS_LITE_REPORTING_TITLE,
   LEGEND_LABEL,
   MAP_LOAD_ERROR,
   NUMERATOR_OF_DENOMINATOR_UNITS,
-  PLAN_NOT_FOUND,
   PROGRESS,
   STRUCTURES,
 } from '../../../../configs/lang';
-import { indicatorThresholdsIRS } from '../../../../configs/settings';
+import { indicatorThresholdsIRSLite } from '../../../../configs/settings';
 import {
   BUSINESS_STATUS,
   CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
   HOME_URL,
   IRS_REPORT_STRUCTURES,
-  REPORT_IRS_PLAN_URL,
+  REPORT_IRS_LITE_PLAN_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
@@ -78,14 +76,14 @@ import jurisdictionReducer, {
 import {
   buildGsLiteLayers,
   buildJurisdictionLayers,
-  CircleColor,
+  PolygonColor,
 } from '../../FocusInvestigation/map/active/helpers/utils';
 import {
   defaultIndicatorStop,
   getIndicatorRows,
   getJurisdictionBreadcrumbs,
   IRSIndicatorRows,
-  IRSIndicatorStops,
+  IRSLiteIndicatorStops,
   mapOnClickHandler,
 } from './helpers';
 import './style.css';
@@ -96,11 +94,11 @@ reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
 reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
 reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer);
 
-const slices = SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
-const focusAreaSlice = slices.pop();
+// const slices = SUPERSET_IRS_LITE_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
+const focusAreaSlice = SUPERSET_IRS_LITE_REPORTING_JURISDICTIONS_FOCUS_AREA_SLICE;
 
-/** interface for IRSReportingMap */
-interface IRSReportingMapProps {
+/** interface for IRSLiteReportingMap */
+interface IRSLiteReportingMapProps {
   fetchFocusAreas: typeof fetchGenericJurisdictions;
   fetchJurisdictionsAction: typeof fetchJurisdictions;
   fetchPlans: typeof genericFetchPlans;
@@ -112,8 +110,8 @@ interface IRSReportingMapProps {
   structures: StructureFeatureCollection | null;
 }
 
-/** IRSReportingMap default props */
-const defaultProps: IRSReportingMapProps = {
+/** IRSLiteReportingMap default props */
+const defaultProps: IRSLiteReportingMapProps = {
   fetchFocusAreas: fetchGenericJurisdictions,
   fetchJurisdictionsAction: fetchJurisdictions,
   fetchPlans: genericFetchPlans,
@@ -126,7 +124,9 @@ const defaultProps: IRSReportingMapProps = {
 };
 
 /** The IRS Reporting Map component */
-const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<RouteParams>) => {
+const IRSLiteReportingMap = (
+  props: IRSLiteReportingMapProps & RouteComponentProps<RouteParams>
+) => {
   const [loading, setLoading] = useState<boolean>(true);
   const {
     fetchFocusAreas,
@@ -163,14 +163,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       }
 
       // get the jurisdiction
-      await service(SUPERSET_JURISDICTIONS_SLICE, fetchLocationParams).then(
-        (result: Jurisdiction[]) => {
-          if (!result || (result && !result.length)) {
-            displayError(new Error(JURISDICTION_NOT_FOUND));
-          }
-          fetchJurisdictionsAction(result);
-        }
-      );
+      await service(
+        SUPERSET_JURISDICTIONS_SLICE,
+        fetchLocationParams
+      ).then((result: Jurisdiction[]) => fetchJurisdictionsAction(result));
 
       let fetchStructureParams: SupersetFormData | null = null;
       if (jurisdictionId && planId) {
@@ -182,10 +178,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
 
       // get the structures
       await service(
-        SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
+        SUPERSET_IRS_LITE_REPORTING_STRUCTURES_DATA_SLICE,
         fetchStructureParams
       ).then((result: GenericStructure[]) =>
-        fetchStructures(SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE, result)
+        fetchStructures(SUPERSET_IRS_LITE_REPORTING_STRUCTURES_DATA_SLICE, result)
       );
 
       if (focusAreaSlice) {
@@ -197,13 +193,8 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
           ]);
         }
         // get the focus area
-        await service(focusAreaSlice, fetchFocusAreaParams).then(
-          (result: GenericJurisdiction[]) => {
-            if (!result || (result && !result.length)) {
-              displayError(new Error(JURISDICTION_NOT_FOUND));
-            }
-            fetchFocusAreas(focusAreaSlice, result);
-          }
+        await service(focusAreaSlice, fetchFocusAreaParams).then((result: GenericJurisdiction[]) =>
+          fetchFocusAreas(focusAreaSlice, result)
         );
       }
 
@@ -215,14 +206,10 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       }
 
       // get the plan
-      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE, fetchPlansParams).then(
-        (result: GenericPlan[]) => {
-          if (!result || (result && !result.length)) {
-            displayError(new Error(PLAN_NOT_FOUND));
-          }
-          fetchPlans(result);
-        }
-      );
+      await service(
+        SUPERSET_IRS_LITE_REPORTING_PLANS_SLICE,
+        fetchPlansParams
+      ).then((result: GenericPlan[]) => fetchPlans(result));
     } catch (e) {
       displayError(e);
     } finally {
@@ -248,7 +235,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
     return <ErrorPage errorMessage={AN_ERROR_OCCURRED} />;
   }
 
-  const baseURL = `${REPORT_IRS_PLAN_URL}/${plan.plan_id}`;
+  const baseURL = `${REPORT_IRS_LITE_PLAN_URL}/${plan.plan_id}`;
   const focusAreaURL = `${baseURL}/${focusArea.jurisdiction_id}`;
 
   const pageTitle = `${plan.plan_title}: ${focusArea.jurisdiction_name}`;
@@ -264,8 +251,8 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
         url: HOME_URL,
       },
       {
-        label: IRS_REPORTING_TITLE,
-        url: REPORT_IRS_PLAN_URL,
+        label: IRS_LITE_REPORTING_TITLE,
+        url: REPORT_IRS_LITE_PLAN_URL,
       },
       {
         label: plan.plan_title,
@@ -279,15 +266,15 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   const newPages = breadcrumbProps.pages.concat(jurisdictionBreadCrumbs);
   breadcrumbProps.pages = newPages;
 
-  const indicatorRows = get(IRSIndicatorRows, SUPERSET_IRS_REPORTING_INDICATOR_ROWS, null);
+  const indicatorRows = get(IRSIndicatorRows, SUPERSET_IRS_LITE_REPORTING_INDICATOR_ROWS, null);
   let sidebarIndicatorRows = null;
   if (indicatorRows !== null) {
     sidebarIndicatorRows = getIndicatorRows(indicatorRows, focusArea);
   }
 
   const indicatorStops = get(
-    IRSIndicatorStops,
-    SUPERSET_IRS_REPORTING_INDICATOR_STOPS,
+    IRSLiteIndicatorStops,
+    SUPERSET_IRS_LITE_REPORTING_INDICATOR_STOPS,
     defaultIndicatorStop
   );
 
@@ -308,7 +295,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   let mapCenter;
   let mapBounds;
   let zoom;
-  if (structures && structures.features.length) {
+  if (structures && structures.features && structures.features.length) {
     mapBounds = GeojsonExtent(structures);
     // get map zoom and center values
     const centerAndZoom = viewport(mapBounds, [600, 400]);
@@ -316,8 +303,15 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
     zoom = centerAndZoom.zoom;
   }
 
-  // define circle paint colors
-  const circleColor: CircleColor = {
+  // define polygon paint colors
+  const polygonColor: PolygonColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+
+  // define polygon line paint colors
+  const polygonLineColor: PolygonColor = {
     property: BUSINESS_STATUS,
     stops: indicatorStops,
     type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
@@ -325,8 +319,9 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
 
   // map layers
   const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
-  const structuresLayers = buildGsLiteLayers(IRS_REPORT_STRUCTURES, structures as any, null, {
-    circleColor,
+  const structuresLayers = buildGsLiteLayers(IRS_REPORT_STRUCTURES, null, structures as any, {
+    polygonColor,
+    polygonLineColor,
   });
   const gsLayers = [...jurisdictionLayers, ...structuresLayers];
 
@@ -386,7 +381,7 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
                   {!row.listDisplay && <p className="indicator-description">{row.description}</p>}
                   {!row.listDisplay && (
                     <ProgressBar
-                      lineColorThresholds={indicatorThresholdsIRS || null}
+                      lineColorThresholds={indicatorThresholdsIRSLite || null}
                       value={row.value}
                     />
                   )}
@@ -414,9 +409,9 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   );
 };
 
-IRSReportingMap.defaultProps = defaultProps;
+IRSLiteReportingMap.defaultProps = defaultProps;
 
-export { IRSReportingMap };
+export { IRSLiteReportingMap };
 
 /** Connect the component to the store */
 
@@ -436,7 +431,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
   const jurisdiction = getJurisdictionById(state, jurisdictionId);
   const structures = getGenericStructures(
     state,
-    SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE,
+    SUPERSET_IRS_LITE_REPORTING_STRUCTURES_DATA_SLICE,
     jurisdictionId,
     planId
   );
@@ -461,7 +456,10 @@ const mapDispatchToProps = {
   fetchStructures: fetchGenericStructures,
 };
 
-/** Connected IRSReportingMap component */
-const ConnectedIRSReportingMap = connect(mapStateToProps, mapDispatchToProps)(IRSReportingMap);
+/** Connected IRSLiteReportingMap component */
+const ConnectedIRSLiteReportingMap = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IRSLiteReportingMap);
 
-export default ConnectedIRSReportingMap;
+export default ConnectedIRSLiteReportingMap;

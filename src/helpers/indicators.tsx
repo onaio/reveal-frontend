@@ -11,6 +11,7 @@ import {
   GREEN_THRESHOLD,
   IndicatorThresholds,
   indicatorThresholdsIRS,
+  indicatorThresholdsIRSLite,
   irsReportingCongif,
   ORANGE_THRESHOLD,
   YELLOW_THRESHOLD,
@@ -196,6 +197,27 @@ export function getThresholdAdherenceIndicator(cell: Cell, configId: string) {
 export function getIRSThresholdAdherenceIndicator(
   cell: Cell,
   thresholds: IndicatorThresholds | null = indicatorThresholdsIRS
+) {
+  // determine if cell.value is a number
+  const isNumber = !Number.isNaN(Number(cell.value));
+  // determine cell background color
+  const cellColor = thresholds ? getThresholdColor(cell, thresholds) : WHITE;
+
+  return (
+    <div className="irs-report-indicator-container" style={{ backgroundColor: cellColor }}>
+      {isNumber ? IndicatorThresholdItemPercentage(cell.value) : 'NaN'}
+    </div>
+  );
+}
+
+/** Renders an indicator Cell based on cell.value and threshold configs
+ * @param {Cell} cell - the ReactTable.Cell being rendered in an indicator drilldown table
+ * @param {IndicatorThresholds | null} thresholds - the indicator thresholds
+ * @returns {React.ReactElement} - the ReactTable.Cell element to be rendered for the indicator
+ */
+export function getIRSLiteThresholdAdherenceIndicator(
+  cell: Cell,
+  thresholds: IndicatorThresholds | null = indicatorThresholdsIRSLite
 ) {
   // determine if cell.value is a number
   const isNumber = !Number.isNaN(Number(cell.value));

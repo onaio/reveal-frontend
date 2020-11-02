@@ -304,8 +304,15 @@ export interface CircleColor {
   stops: string[][];
   type: string;
 }
+export interface PolygonColor {
+  property: string;
+  stops: string[][];
+  type: string;
+}
 interface ExtraVars {
   circleColor?: CircleColor;
+  polygonColor?: PolygonColor;
+  polygonLineColor?: PolygonColor;
   useId?: string; // override the goalId to be used for the layer;
 }
 
@@ -392,18 +399,19 @@ export const buildGsLiteLayers = (
 ) => {
   const idToUse = extraVars.useId ? extraVars.useId : currentGoal;
   const gsLayers = [];
-  const defaultCirclePaint = {
-    ...circleLayerTemplate.circlePaint,
-    'circle-color': ['get', 'color'],
-    'circle-stroke-color': ['get', 'color'],
-    'circle-stroke-opacity': 1,
-  };
-  // default circle color or data driven circle styling
-  const circlePaint = extraVars.circleColor
-    ? { 'circle-color': extraVars.circleColor }
-    : defaultCirclePaint;
 
   if (pointFeatureCollection && pointFeatureCollection.features.length) {
+    const defaultCirclePaint = {
+      ...circleLayerTemplate.circlePaint,
+      'circle-color': ['get', 'color'],
+      'circle-stroke-color': ['get', 'color'],
+      'circle-stroke-opacity': 1,
+    };
+    // default circle color or data driven circle styling
+    const circlePaint = extraVars.circleColor
+      ? { 'circle-color': extraVars.circleColor }
+      : defaultCirclePaint;
+
     gsLayers.push(
       <GeoJSONLayer
         {...circleLayerTemplate}
@@ -414,16 +422,38 @@ export const buildGsLiteLayers = (
       />
     );
   }
-  if (polygonFeatureCollection && polygonFeatureCollection.features.length) {
+  if (
+    polygonFeatureCollection &&
+    polygonFeatureCollection.features &&
+    polygonFeatureCollection.features.length
+  ) {
+    const defaultFillPaint = {
+      ...fillLayerTemplate.fillPaint,
+      'fill-color': ['get', 'color'],
+      'fill-outline-color': ['get', 'color'],
+    };
+
+    const defaultLinePaint = {
+      ...lineLayerTemplate.linePaint,
+      'line-color': ['get', 'color'],
+      'line-opacity': 1,
+      'line-width': 2,
+    };
+
+    // default circle color or data driven circle styling
+    const fillPaint = extraVars.polygonColor
+      ? { 'fill-color': extraVars.polygonColor }
+      : defaultFillPaint;
+
+    // default circle color or data driven circle styling
+    const linePaint = extraVars.polygonLineColor
+      ? { 'line-color': extraVars.polygonLineColor }
+      : defaultLinePaint;
+
     gsLayers.push(
       <GeoJSONLayer
         {...lineLayerTemplate}
-        linePaint={{
-          ...lineLayerTemplate.linePaint,
-          'line-color': ['get', 'color'],
-          'line-opacity': 1,
-          'line-width': 2,
-        }}
+        linePaint={linePaint}
         data={polygonFeatureCollection}
         id={`${idToUse}-fill-line`}
         key={`${idToUse}-fill-line`}
@@ -432,11 +462,7 @@ export const buildGsLiteLayers = (
     gsLayers.push(
       <GeoJSONLayer
         {...fillLayerTemplate}
-        fillPaint={{
-          ...fillLayerTemplate.fillPaint,
-          'fill-color': ['get', 'color'],
-          'fill-outline-color': ['get', 'color'],
-        }}
+        fillPaint={fillPaint}
         data={polygonFeatureCollection}
         id={`${idToUse}-fill`}
         key={`${idToUse}-fill`}

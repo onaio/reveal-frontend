@@ -5,10 +5,13 @@ import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
+import { JURISDICTION_NOT_FOUND, PLAN_NOT_FOUND } from '../../../../../configs/lang';
 import { MAP, REPORT_IRS_PLAN_URL } from '../../../../../constants';
+import * as errors from '../../../../../helpers/errors';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -190,7 +193,9 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       </Router>
     );
     const helmet = Helmet.peek();
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
     expect(helmet.title).toEqual('IRS 2019-09-05 TEST: Akros_1');
@@ -369,7 +374,9 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       </Router>
     );
 
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
 
     // not sprayed should not be response item titles
     expect(toJson(wrapper.find('.responseItem h6'))).toMatchSnapshot('Response item titles');
@@ -379,7 +386,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     wrapper.unmount();
   });
 
-  it('renders both Points and Polygons correctly', () => {
+  it('renders both Points and Polygons correctly', async () => {
     const mock: any = jest.fn();
     const buildGsLiteLayersSpy = jest.spyOn(mapUtils, 'buildGsLiteLayers');
     const buildJurisdictionLayersSpy = jest.spyOn(mapUtils, 'buildJurisdictionLayers');
@@ -426,7 +433,6 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         <IRSReportingMap {...props} />
       </Router>
     );
-
     expect(buildGsLiteLayersSpy).toBeCalledTimes(1);
     expect(buildGsLiteLayersSpy).toBeCalledWith('irs_report_structures', structures, null, {
       circleColor: {
@@ -438,5 +444,60 @@ describe('components/IRS Reports/IRSReportingMap', () => {
 
     expect(buildJurisdictionLayersSpy).toBeCalledTimes(1);
     expect(buildJurisdictionLayersSpy).toBeCalledWith(jurisdiction);
+  });
+
+  it('displays error correctly', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const mock: any = jest.fn();
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+    const displayErrorSpy = jest.spyOn(errors, 'displayError');
+
+    const props = {
+      focusArea: null,
+      history,
+      jurisdiction: null,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: 'invalid-jur-id',
+          planId: (plans[0] as GenericPlan).plan_id,
+        },
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/invali-plan-id/invalid-jur-id/${MAP}`,
+      },
+      plan: null,
+      service: supersetServiceMock,
+      structures: [] as any,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSReportingMap {...props} />
+      </Router>
+    );
+    await act(async () => {
+      await flushPromises();
+    });
+    wrapper.update();
+    expect(
+      wrapper
+        .find('.global-error-container p')
+        .at(0)
+        .text()
+    ).toMatchInlineSnapshot(`"An error ocurred. Please try and refresh the page."`);
+    expect(
+      wrapper
+        .find('.global-error-container p')
+        .at(1)
+        .text()
+    ).toMatchInlineSnapshot(`"The specific error is: An Error Ocurred"`);
+    expect(displayErrorSpy).toHaveBeenCalledTimes(3);
+    expect(displayErrorSpy.mock.calls).toEqual([
+      [new Error(JURISDICTION_NOT_FOUND)],
+      [new Error(JURISDICTION_NOT_FOUND)],
+      [new Error(PLAN_NOT_FOUND)],
+    ]);
   });
 });

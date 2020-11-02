@@ -1,0 +1,234 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when Operational Areas are loaded: header on Spray Areas display 0 1`] = `"Name"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when Operational Areas are loaded: header on Spray Areas display 1 1`] = `"Total Spray Areas"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when Operational Areas are loaded: header on Spray Areas display 2 1`] = `"Spray Areas Targeted"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when Operational Areas are loaded: header on Spray Areas display 3 1`] = `"Spray Areas Visited"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when Operational Areas are loaded: header on Spray Areas display 4 1`] = `"Total Structures"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when Operational Areas are loaded: header on Spray Areas display 5 1`] = `"Targeted Structures"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when Operational Areas are loaded: header on Spray Areas display 6 1`] = `"Structures Sprayed"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when Operational Areas are loaded: header on Spray Areas display 7 1`] = `"% Total Structures Sprayed"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when Operational Areas are loaded: header on Spray Areas display 8 1`] = `"% Targeted Structures Sprayed"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when Operational Areas are loaded: header on Spray Areas display 9 1`] = `"Structures Found"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when Operational Areas are loaded: header on Spray Areas display 10 1`] = `"Found Coverage"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when Operational Areas are loaded: header on Spray Areas display 11 1`] = `"Success Rate"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when provinces are loaded: header on provinces display 0 1`] = `"Name"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when provinces are loaded: header on provinces display 1 1`] = `"Total Spray Areas"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when provinces are loaded: header on provinces display 2 1`] = `"Spray Areas Targeted"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when provinces are loaded: header on provinces display 3 1`] = `"Spray Areas Visited"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when provinces are loaded: header on provinces display 4 1`] = `"Total Structures"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when provinces are loaded: header on provinces display 5 1`] = `"Targeted Structures"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when provinces are loaded: header on provinces display 6 1`] = `"Structures Sprayed"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when provinces are loaded: header on provinces display 7 1`] = `"% Total Structures Sprayed"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when provinces are loaded: header on provinces display 8 1`] = `"% Targeted Structures Sprayed"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when provinces are loaded: header on provinces display 9 1`] = `"Structures Found"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when provinces are loaded: header on provinces display 10 1`] = `"Found Coverage"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite display correct headers when provinces are loaded: header on provinces display 11 1`] = `"Success Rate"`;
+
+exports[`components/IRS Reports/JurisdictionReportLite drills down correctly 1`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs-lite/report/17f89152-51a6-476c-9246-8fee6f9e6ebf",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "loading": false,
+  "loadingComponent": [Function],
+  "paginate": false,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "renderNullDataComponent": [Function],
+  "resize": true,
+  "rootParentId": "",
+  "useDrillDown": true,
+}
+`;
+
+exports[`components/IRS Reports/JurisdictionReportLite drills down correctly 2`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs-lite/report/17f89152-51a6-476c-9246-8fee6f9e6ebf",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "loading": false,
+  "loadingComponent": [Function],
+  "paginate": false,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "renderNullDataComponent": [Function],
+  "resize": true,
+  "rootParentId": "03557b7e-0ddf-41f7-93c8-155669757a16",
+  "useDrillDown": true,
+}
+`;
+
+exports[`components/IRS Reports/JurisdictionReportLite drills down correctly 3`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs-lite/report/17f89152-51a6-476c-9246-8fee6f9e6ebf",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "loading": false,
+  "loadingComponent": [Function],
+  "paginate": false,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "renderNullDataComponent": [Function],
+  "resize": true,
+  "rootParentId": "48a04a67-ac6f-4d5e-bbc6-09b77ba1253d",
+  "useDrillDown": true,
+}
+`;
+
+exports[`components/IRS Reports/JurisdictionReportLite drills down correctly 4`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs-lite/report/17f89152-51a6-476c-9246-8fee6f9e6ebf",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "loading": false,
+  "loadingComponent": [Function],
+  "paginate": false,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "renderNullDataComponent": [Function],
+  "resize": true,
+  "rootParentId": "032a9542-dab7-4a76-9e2e-bc7eb99a259c",
+  "useDrillDown": true,
+}
+`;
+
+exports[`components/IRS Reports/JurisdictionReportLite renders correctly 1`] = `
+Object {
+  "CellComponent": [Function],
+  "columns": Any<Object>,
+  "data": Any<Object>,
+  "extraCellProps": Object {
+    "urlPath": "/intervention/irs-lite/report/17f89152-51a6-476c-9246-8fee6f9e6ebf",
+  },
+  "getTdProps": [Function],
+  "hasChildren": [Function],
+  "identifierField": "jurisdiction_id",
+  "linkerField": "jurisdiction_name",
+  "loading": false,
+  "loadingComponent": [Function],
+  "paginate": false,
+  "parentIdentifierField": "jurisdiction_parent_id",
+  "renderNullDataComponent": [Function],
+  "resize": true,
+  "rootParentId": "",
+  "useDrillDown": true,
+}
+`;
+
+exports[`components/IRS Reports/JurisdictionReportLite renders correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      to="/"
+    >
+      <LinkAnchor
+        href="/"
+        navigate={[Function]}
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="1"
+      to="/intervention/irs-lite/report"
+    >
+      <LinkAnchor
+        href="/intervention/irs-lite/report"
+        navigate={[Function]}
+      >
+        <a
+          href="/intervention/irs-lite/report"
+          onClick={[Function]}
+        >
+          IRS Lite Reporting
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    IRS 2019-09-05 TEST
+  </li>,
+]
+`;
+
+exports[`components/IRS Reports/JurisdictionReportLite renders correctly: page title 1`] = `
+<h3
+  className="mb-3 page-title"
+>
+  IRS Lite Reporting: IRS 2019-09-05 TEST
+</h3>
+`;
+
+exports[`components/IRS Reports/JurisdictionReportLite renders correctly: title column styling 1`] = `
+Object {
+  "boxSizing": "border-box",
+  "cursor": "pointer",
+  "flex": "200 0 auto",
+  "minWidth": "360px",
+  "position": "relative",
+  "width": "200px",
+}
+`;

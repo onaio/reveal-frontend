@@ -79,6 +79,7 @@ import {
   PRACTITIONERS_LIST_URL,
   REACT_CALLBACK_PATH,
   REACT_LOGIN_URL,
+  REPORT_IRS_LITE_PLAN_URL,
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
@@ -112,6 +113,9 @@ import ConnectedMopup from '../containers/pages/IRS/Mopup/reports';
 import { IRSPlanPerfomenceReport } from '../containers/pages/IRS/performanceReport/plans';
 import ConnectedIRSPerfomenceReport from '../containers/pages/IRS/performanceReport/reports';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import ConnectedJurisdictionReportLite from '../containers/pages/IRSLite/JurisdictionsReportLite';
+import ConnectedIRSLiteReportingMap from '../containers/pages/IRSLite/MapLite';
+import ConnectedIRSLitePlansList from '../containers/pages/IRSLite/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
 import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
 import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/ManualSelectJurisdiction';
@@ -263,6 +267,36 @@ const App = () => {
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedJurisdictionReport}
+                />
+                {/* IRS Lite Reporting plan table view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={REPORT_IRS_LITE_PLAN_URL}
+                  component={ConnectedIRSLitePlansList}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_IRS_LITE_PLAN_URL}/:planId`}
+                  component={ConnectedJurisdictionReportLite}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedJurisdictionReportLite}
+                />
+                {/* IRS Reporting Map view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
+                  component={ConnectedIRSLiteReportingMap}
                 />
                 {/* IRS Reporting Map view */}
                 <ConnectedPrivateRoute
