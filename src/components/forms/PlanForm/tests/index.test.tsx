@@ -6,14 +6,14 @@ import toJson from 'enzyme-to-json';
 import { cloneDeep } from 'lodash';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import PlanForm, { propsForUpdatingPlans } from '..';
+import PlanForm, { defaultInitialValues, propsForUpdatingPlans } from '..';
 import { AN_ERROR_OCCURRED } from '../../../../configs/lang';
 import * as helperErrors from '../../../../helpers/errors';
 import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
-import { generatePlanDefinition, getPlanFormValues } from '../helpers';
+import { generatePlanDefinition, getPlanFormValues, planActivitiesMap } from '../helpers';
 import * as fixtures from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
@@ -385,6 +385,50 @@ describe('containers/forms/PlanForm', () => {
     // there is now a modal to add more activities
     expect(wrapper.find(`Button .add-more-activities`).length).toEqual(1);
 
+    wrapper.unmount();
+  });
+
+  it('removing dynamic activities works correctly', () => {
+    const defaults = {
+      ...defaultInitialValues,
+      activities: planActivitiesMap[InterventionType.DynamicFI],
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm initialValues={defaults} />
+      </MemoryRouter>,
+      { attachTo: div }
+    );
+
+    // change interventionType to Dynamic-FI
+    wrapper
+      .find('#interventionType select')
+      .simulate('change', { target: { value: 'Dynamic-FI', name: 'interventionType' } });
+    wrapper.update();
+    // there are initially 7 activities
+    expect(wrapper.find(`.removeActivity`).length).toEqual(6);
+    // lets get the form input values of the triggers
+    const expectedInputValues = wrapper.find('.triggers-fieldset input').map(e => e.props().value);
+    const expectedTextValues = wrapper
+      .find('.triggers-fieldset textarea')
+      .map(e => e.props().value);
+    // lets remove one activity
+    wrapper
+      .find(`.removeActivity`)
+      .first()
+      .simulate('click');
+    wrapper.update();
+    // 1 less activity
+    expect(wrapper.find(`.removeActivity`).length).toEqual(5);
+    // the slice values are determined by the type of activity that was removed
+    // the meaning is that we should be left with ALL the triggers excluding the ones removed
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedInputValues.slice(2)
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedTextValues.slice(4)
+    );
     wrapper.unmount();
   });
 });
