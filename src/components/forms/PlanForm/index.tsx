@@ -241,7 +241,6 @@ const PlanForm = (props: PlanFormProps) => {
     if (planActivitiesMap.hasOwnProperty(values.interventionType)) {
       return planActivitiesMap[values.interventionType];
     }
-
     return allFormActivities;
   }
 
@@ -1098,14 +1097,22 @@ const PlanForm = (props: PlanFormProps) => {
                                   e =>
                                     !values.activities.map(f => f.actionCode).includes(e.actionCode)
                                 )
-                                .map(g => (
-                                  <li key={g.actionCode}>
+                                .map(thisActivity => (
+                                  <li key={thisActivity.actionCode}>
                                     <button
                                       type="button"
                                       className="btn btn-primary btn-sm mb-1 addActivity"
-                                      onClick={() => arrayHelpers.push(g)}
+                                      onClick={() => {
+                                        values.activities.push(thisActivity);
+                                        const newActivityValues = getConditionAndTriggers(
+                                          values.activities,
+                                          disabledFields.includes('activities')
+                                        );
+                                        setActionConditions(newActivityValues.conditions);
+                                        setActionTriggers(newActivityValues.triggers);
+                                      }}
                                     >
-                                      {format(ADD_CODED_ACTIVITY, g.actionCode)}
+                                      {format(ADD_CODED_ACTIVITY, thisActivity.actionCode)}
                                     </button>
                                   </li>
                                 ))}
