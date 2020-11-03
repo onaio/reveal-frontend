@@ -1390,6 +1390,19 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
     const expectedConditionTextValues = wrapper
       .find('.conditions-fieldset textarea')
       .map(e => e.props().value);
+    // the names of the input fields should be indexed from zero (0)
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Original activity trigger text input names'
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Original activity trigger text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Original activity conditions text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Original activity conditions text input names'
+    );
     // lets remove one activity
     await act(async () => {
       wrapper
@@ -1417,6 +1430,19 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
     // this one does not change because currently there are no conditions with an input field
     expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().value)).toEqual(
       expectedConditionInputValues
+    );
+    // the names of the input fields should STILL be indexed from zero (0)
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Changed activity trigger text input names'
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Changed activity trigger text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Changed activity conditions text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Changed activity conditions text input names'
     );
     wrapper.unmount();
   });
