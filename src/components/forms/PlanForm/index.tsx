@@ -695,7 +695,7 @@ const PlanForm = (props: PlanFormProps) => {
               render={arrayHelpers => (
                 <div>
                   {values.activities.map((arrItem, index) => (
-                    <div className="card mb-3" key={`div${JSON.stringify(arrItem)}`}>
+                    <div className="card mb-3" key={`div${arrItem.actionCode}`}>
                       <h5 className="card-header position-relative">
                         {values.activities[index].actionTitle}
                         {values.activities && values.activities.length > 1 && !editMode && (
@@ -710,7 +710,7 @@ const PlanForm = (props: PlanFormProps) => {
                         )}
                       </h5>
                       <div className="card-body">
-                        <fieldset key={`fieldset${JSON.stringify(arrItem)}`}>
+                        <fieldset key={`fieldset${arrItem.actionCode}`}>
                           {errors.activities && errors.activities[index] && (
                             <div
                               className={`alert alert-danger activities-${index}-errors`}
