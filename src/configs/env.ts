@@ -395,7 +395,9 @@ export const PLAN_TYPES_ALLOWED_TO_CREATE = String(
 export type PLAN_TYPES_ALLOWED_TO_CREATE = typeof PLAN_TYPES_ALLOWED_TO_CREATE;
 
 /** list of FI reasons enabled */
-export const ENABLED_FI_REASONS = String(process.env.REACT_APP_ENABLED_FI_REASONS || '').split(',');
+export const ENABLED_FI_REASONS = String(
+  process.env.REACT_APP_ENABLED_FI_REASONS || 'Routine'
+).split(',');
 export type ENABLED_FI_REASONS = typeof ENABLED_FI_REASONS;
 
 export const NAVBAR_BRAND_IMG_SRC =

@@ -3,17 +3,18 @@ import { authenticateUser } from '@onaio/session-reducer';
 import { act } from '@testing-library/react';
 import { mount, ReactWrapper, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { cloneDeep } from 'lodash';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import PlanForm, { propsForUpdatingPlans } from '..';
+import PlanForm, { defaultInitialValues, propsForUpdatingPlans } from '..';
 import { AN_ERROR_OCCURRED } from '../../../../configs/lang';
 import * as helperErrors from '../../../../helpers/errors';
 import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
-import { generatePlanDefinition, getPlanFormValues } from '../helpers';
+import { generatePlanDefinition, getPlanFormValues, planActivitiesMap } from '../helpers';
 import * as fixtures from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
@@ -940,7 +941,9 @@ describe('containers/forms/PlanForm - Submission', () => {
     // submit button should not be disabled
     expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
 
@@ -994,7 +997,9 @@ describe('containers/forms/PlanForm - Submission', () => {
       </MemoryRouter>
     );
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
@@ -1039,7 +1044,9 @@ describe('containers/forms/PlanForm - Submission', () => {
       { attachTo: div }
     );
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
@@ -1140,7 +1147,9 @@ describe('containers/forms/PlanForm - Submission', () => {
       </MemoryRouter>
     );
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
@@ -1256,7 +1265,9 @@ describe('containers/forms/PlanForm - Submission', () => {
       .find('select[name="fiStatus"]')
       .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
 
@@ -1339,5 +1350,167 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper.update();
     expect(wrapper.find('#planform-submit-button button').prop('disabled')).toEqual(false);
     expect(wrapper.find('#planform-submit-button button').text()).toEqual('Save Plan');
+  });
+});
+
+describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    fetch.resetMocks();
+  });
+
+  it('removing dynamic activities works correctly', async () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    const defaults = {
+      ...defaultInitialValues,
+      activities: planActivitiesMap[InterventionType.DynamicFI],
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm initialValues={defaults} />
+      </MemoryRouter>,
+      { attachTo: container }
+    );
+
+    // change interventionType to Dynamic-FI
+    await act(async () => {
+      wrapper
+        .find('#interventionType select')
+        .simulate('change', { target: { value: 'Dynamic-FI', name: 'interventionType' } });
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    // there are initially 6 activities
+    expect(wrapper.find(`.removeActivity`).length).toEqual(6);
+    // lets get the form input values of the triggers
+    const expectedTriggerInputValues = wrapper
+      .find('.triggers-fieldset input')
+      .map(e => e.props().value);
+    const expectedTriggerTextValues = wrapper
+      .find('.triggers-fieldset textarea')
+      .map(e => e.props().value);
+    const expectedConditionInputValues = wrapper
+      .find('.conditions-fieldset input')
+      .map(e => e.props().value);
+    const expectedConditionTextValues = wrapper
+      .find('.conditions-fieldset textarea')
+      .map(e => e.props().value);
+    // the names of the input fields should be indexed from zero (0)
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Original activity trigger text input names'
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Original activity trigger text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Original activity conditions text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Original activity conditions text input names'
+    );
+    // lets remove one activity
+    await act(async () => {
+      wrapper
+        .find(`.removeActivity`)
+        .first()
+        .simulate('click');
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    // 1 less activity
+    expect(wrapper.find(`.removeActivity`).length).toEqual(5);
+    // the slice values are determined by the type of activity that was removed
+    // the meaning is that we should be left with ALL the triggers excluding the ones removed
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedTriggerInputValues.slice(2)
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedTriggerTextValues.slice(2)
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedConditionTextValues.slice(4)
+    );
+    // this one does not change because currently there are no conditions with an input field
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedConditionInputValues
+    );
+    // the names of the input fields should STILL be indexed from zero (0)
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Changed activity trigger text input names'
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Changed activity trigger text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Changed activity conditions text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Changed activity conditions text input names'
+    );
+    // there should now be one button to add activities
+    expect(wrapper.find(`button.add-more-activities`).length).toEqual(1);
+    // lets bring up the modal that allows us to add activities
+    await act(async () => {
+      wrapper
+        .find(`button.add-more-activities`)
+        .first()
+        .simulate('click');
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    // there should be one activity that can be added back
+    expect(wrapper.find(`button.addActivity`).length).toEqual(1);
+    // lets click the button in the modal and add back the activity we had removed
+    await act(async () => {
+      wrapper
+        .find(`button.addActivity`)
+        .first()
+        .simulate('click');
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    // we should have 6 activities again
+    expect(wrapper.find(`.removeActivity`).length).toEqual(6);
+    // and now we come full circle.  The inputs should be what we had on initial load,
+    // with those of the first activity moved to the end of the arrays
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedTriggerInputValues.slice(2).concat(expectedTriggerInputValues.slice(0, 2))
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedTriggerTextValues.slice(2).concat(expectedTriggerTextValues.slice(0, 2))
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedConditionTextValues.slice(4).concat(expectedConditionTextValues.slice(0, 4))
+    );
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedConditionInputValues
+    );
+    // the names of the input fields should STILL STILL! be indexed from zero (0)
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Final activity trigger text input names'
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Final activity trigger text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Final activity conditions text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Final activity conditions text input names'
+    );
+    // there should not be any button to add activities
+    expect(wrapper.find(`button.add-more-activities`).length).toEqual(0);
+    wrapper.unmount();
   });
 });
