@@ -25,7 +25,7 @@ export const getConditionAndTriggers = (
           <FormGroup
             className="condition-group"
             row={true}
-            key={`${element.actionCode}-${index}-condition-${mapIndex}`}
+            key={`${element.actionCode}-condition-${index}-${mapIndex}`}
           >
             {item.expression && (
               <React.Fragment>
@@ -69,7 +69,7 @@ export const getConditionAndTriggers = (
           <FormGroup
             className="trigger-group"
             row={true}
-            key={`${element.actionCode}-${index}-trigger-${mapIndex}`}
+            key={`${element.actionCode}-trigger-${index}-${mapIndex}`}
           >
             {item.name && (
               <React.Fragment>
