@@ -387,50 +387,6 @@ describe('containers/forms/PlanForm', () => {
 
     wrapper.unmount();
   });
-
-  it('removing dynamic activities works correctly', () => {
-    const defaults = {
-      ...defaultInitialValues,
-      activities: planActivitiesMap[InterventionType.DynamicFI],
-    };
-
-    const wrapper = mount(
-      <MemoryRouter>
-        <PlanForm initialValues={defaults} />
-      </MemoryRouter>,
-      { attachTo: div }
-    );
-
-    // change interventionType to Dynamic-FI
-    wrapper
-      .find('#interventionType select')
-      .simulate('change', { target: { value: 'Dynamic-FI', name: 'interventionType' } });
-    wrapper.update();
-    // there are initially 7 activities
-    expect(wrapper.find(`.removeActivity`).length).toEqual(6);
-    // lets get the form input values of the triggers
-    const expectedInputValues = wrapper.find('.triggers-fieldset input').map(e => e.props().value);
-    const expectedTextValues = wrapper
-      .find('.triggers-fieldset textarea')
-      .map(e => e.props().value);
-    // lets remove one activity
-    wrapper
-      .find(`.removeActivity`)
-      .first()
-      .simulate('click');
-    wrapper.update();
-    // 1 less activity
-    expect(wrapper.find(`.removeActivity`).length).toEqual(5);
-    // the slice values are determined by the type of activity that was removed
-    // the meaning is that we should be left with ALL the triggers excluding the ones removed
-    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().value)).toEqual(
-      expectedInputValues.slice(2)
-    );
-    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().value)).toEqual(
-      expectedTextValues.slice(4)
-    );
-    wrapper.unmount();
-  });
 });
 
 describe('containers/forms/PlanForm - Edit', () => {
@@ -1383,5 +1339,64 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper.update();
     expect(wrapper.find('#planform-submit-button button').prop('disabled')).toEqual(false);
     expect(wrapper.find('#planform-submit-button button').text()).toEqual('Save Plan');
+  });
+});
+
+describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    fetch.resetMocks();
+  });
+
+  it('removing dynamic activities works correctly', async () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    const defaults = {
+      ...defaultInitialValues,
+      activities: planActivitiesMap[InterventionType.DynamicFI],
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm initialValues={defaults} />
+      </MemoryRouter>,
+      { attachTo: container }
+    );
+
+    // change interventionType to Dynamic-FI
+    await act(async () => {
+      wrapper
+        .find('#interventionType select')
+        .simulate('change', { target: { value: 'Dynamic-FI', name: 'interventionType' } });
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    // there are initially 7 activities
+    expect(wrapper.find(`.removeActivity`).length).toEqual(6);
+    // lets get the form input values of the triggers
+    const expectedInputValues = wrapper.find('.triggers-fieldset input').map(e => e.props().value);
+    const expectedTextValues = wrapper
+      .find('.triggers-fieldset textarea')
+      .map(e => e.props().value);
+    // lets remove one activity
+    wrapper
+      .find(`.removeActivity`)
+      .first()
+      .simulate('click');
+    wrapper.update();
+    // 1 less activity
+    expect(wrapper.find(`.removeActivity`).length).toEqual(5);
+    // the slice values are determined by the type of activity that was removed
+    // the meaning is that we should be left with ALL the triggers excluding the ones removed
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedInputValues.slice(2)
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedTextValues.slice(4)
+    );
+    wrapper.unmount();
   });
 });
