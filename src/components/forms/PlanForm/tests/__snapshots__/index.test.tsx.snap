@@ -1,5 +1,171 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Changed activity conditions text input names 1`] = `Array []`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Changed activity conditions text textarea names 1`] = `
+Array [
+  "activities[0].condition[0].expression",
+  "activities[0].condition[0].description",
+  "activities[1].condition[0].expression",
+  "activities[1].condition[0].description",
+  "activities[1].condition[1].expression",
+  "activities[1].condition[1].description",
+  "activities[2].condition[0].expression",
+  "activities[2].condition[0].description",
+  "activities[2].condition[1].expression",
+  "activities[2].condition[1].description",
+  "activities[3].condition[0].expression",
+  "activities[3].condition[0].description",
+  "activities[3].condition[1].expression",
+  "activities[3].condition[1].description",
+  "activities[4].condition[0].expression",
+  "activities[4].condition[0].description",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Changed activity trigger text input names 1`] = `
+Array [
+  "activities[0].trigger[0].name",
+  "activities[0].trigger[1].name",
+  "activities[1].trigger[0].name",
+  "activities[1].trigger[1].name",
+  "activities[2].trigger[0].name",
+  "activities[2].trigger[1].name",
+  "activities[3].trigger[0].name",
+  "activities[3].trigger[1].name",
+  "activities[4].trigger[0].name",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Changed activity trigger text textarea names 1`] = `
+Array [
+  "activities[0].trigger[1].expression",
+  "activities[0].trigger[1].description",
+  "activities[1].trigger[1].expression",
+  "activities[1].trigger[1].description",
+  "activities[2].trigger[1].expression",
+  "activities[2].trigger[1].description",
+  "activities[3].trigger[1].expression",
+  "activities[3].trigger[1].description",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Final activity conditions text input names 1`] = `Array []`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Final activity conditions text textarea names 1`] = `
+Array [
+  "activities[0].condition[0].expression",
+  "activities[0].condition[0].description",
+  "activities[1].condition[0].expression",
+  "activities[1].condition[0].description",
+  "activities[1].condition[1].expression",
+  "activities[1].condition[1].description",
+  "activities[2].condition[0].expression",
+  "activities[2].condition[0].description",
+  "activities[2].condition[1].expression",
+  "activities[2].condition[1].description",
+  "activities[3].condition[0].expression",
+  "activities[3].condition[0].description",
+  "activities[3].condition[1].expression",
+  "activities[3].condition[1].description",
+  "activities[4].condition[0].expression",
+  "activities[4].condition[0].description",
+  "activities[5].condition[0].expression",
+  "activities[5].condition[0].description",
+  "activities[5].condition[1].expression",
+  "activities[5].condition[1].description",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Final activity trigger text input names 1`] = `
+Array [
+  "activities[0].trigger[0].name",
+  "activities[0].trigger[1].name",
+  "activities[1].trigger[0].name",
+  "activities[1].trigger[1].name",
+  "activities[2].trigger[0].name",
+  "activities[2].trigger[1].name",
+  "activities[3].trigger[0].name",
+  "activities[3].trigger[1].name",
+  "activities[4].trigger[0].name",
+  "activities[5].trigger[0].name",
+  "activities[5].trigger[1].name",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Final activity trigger text textarea names 1`] = `
+Array [
+  "activities[0].trigger[1].expression",
+  "activities[0].trigger[1].description",
+  "activities[1].trigger[1].expression",
+  "activities[1].trigger[1].description",
+  "activities[2].trigger[1].expression",
+  "activities[2].trigger[1].description",
+  "activities[3].trigger[1].expression",
+  "activities[3].trigger[1].description",
+  "activities[5].trigger[1].expression",
+  "activities[5].trigger[1].description",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Original activity conditions text input names 1`] = `Array []`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Original activity conditions text textarea names 1`] = `
+Array [
+  "activities[0].condition[0].expression",
+  "activities[0].condition[0].description",
+  "activities[0].condition[1].expression",
+  "activities[0].condition[1].description",
+  "activities[1].condition[0].expression",
+  "activities[1].condition[0].description",
+  "activities[2].condition[0].expression",
+  "activities[2].condition[0].description",
+  "activities[2].condition[1].expression",
+  "activities[2].condition[1].description",
+  "activities[3].condition[0].expression",
+  "activities[3].condition[0].description",
+  "activities[3].condition[1].expression",
+  "activities[3].condition[1].description",
+  "activities[4].condition[0].expression",
+  "activities[4].condition[0].description",
+  "activities[4].condition[1].expression",
+  "activities[4].condition[1].description",
+  "activities[5].condition[0].expression",
+  "activities[5].condition[0].description",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Original activity trigger text input names 1`] = `
+Array [
+  "activities[0].trigger[0].name",
+  "activities[0].trigger[1].name",
+  "activities[1].trigger[0].name",
+  "activities[1].trigger[1].name",
+  "activities[2].trigger[0].name",
+  "activities[2].trigger[1].name",
+  "activities[3].trigger[0].name",
+  "activities[3].trigger[1].name",
+  "activities[4].trigger[0].name",
+  "activities[4].trigger[1].name",
+  "activities[5].trigger[0].name",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Original activity trigger text textarea names 1`] = `
+Array [
+  "activities[0].trigger[1].expression",
+  "activities[0].trigger[1].description",
+  "activities[1].trigger[1].expression",
+  "activities[1].trigger[1].description",
+  "activities[2].trigger[1].expression",
+  "activities[2].trigger[1].description",
+  "activities[3].trigger[1].expression",
+  "activities[3].trigger[1].description",
+  "activities[4].trigger[1].expression",
+  "activities[4].trigger[1].description",
+]
+`;
+
 exports[`containers/forms/PlanForm - Edit ACTIVE renders all fields correctly in edit mode: Active Plan : interventionType field 1`] = `
 <select
   className="form-control"

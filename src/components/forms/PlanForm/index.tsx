@@ -241,7 +241,6 @@ const PlanForm = (props: PlanFormProps) => {
     if (planActivitiesMap.hasOwnProperty(values.interventionType)) {
       return planActivitiesMap[values.interventionType];
     }
-
     return allFormActivities;
   }
 
@@ -694,8 +693,8 @@ const PlanForm = (props: PlanFormProps) => {
               /* tslint:disable-next-line jsx-no-lambda */
               render={arrayHelpers => (
                 <div>
-                  {values.activities.map((_, index) => (
-                    <div className="card mb-3" key={index}>
+                  {values.activities.map((arrItem, index) => (
+                    <div className="card mb-3" key={`div${arrItem.actionCode}-${index}`}>
                       <h5 className="card-header position-relative">
                         {values.activities[index].actionTitle}
                         {values.activities && values.activities.length > 1 && !editMode && (
@@ -703,14 +702,27 @@ const PlanForm = (props: PlanFormProps) => {
                             type="button"
                             className="close position-absolute removeArrItem removeActivity"
                             aria-label="Close"
-                            onClick={() => arrayHelpers.remove(index)}
+                            onClick={() => {
+                              /** when we remove an item, we want to also remove its value from
+                               * the values object otherwise the Formik state gets out of sync
+                               */
+                              arrayHelpers.remove(index);
+                              const newActivityValues = getConditionAndTriggers(
+                                values.activities.filter(
+                                  e => e.actionCode !== values.activities[index].actionCode
+                                ),
+                                disabledFields.includes('activities')
+                              );
+                              setActionConditions(newActivityValues.conditions);
+                              setActionTriggers(newActivityValues.triggers);
+                            }}
                           >
                             <span aria-hidden="true">&times;</span>
                           </button>
                         )}
                       </h5>
                       <div className="card-body">
-                        <fieldset key={index}>
+                        <fieldset key={`fieldset${arrItem.actionCode}-${index}`}>
                           {errors.activities && errors.activities[index] && (
                             <div
                               className={`alert alert-danger activities-${index}-errors`}
@@ -1085,14 +1097,22 @@ const PlanForm = (props: PlanFormProps) => {
                                   e =>
                                     !values.activities.map(f => f.actionCode).includes(e.actionCode)
                                 )
-                                .map(g => (
-                                  <li key={g.actionCode}>
+                                .map(thisActivity => (
+                                  <li key={thisActivity.actionCode}>
                                     <button
                                       type="button"
                                       className="btn btn-primary btn-sm mb-1 addActivity"
-                                      onClick={() => arrayHelpers.push(g)}
+                                      onClick={() => {
+                                        values.activities.push(thisActivity);
+                                        const newActivityValues = getConditionAndTriggers(
+                                          values.activities,
+                                          disabledFields.includes('activities')
+                                        );
+                                        setActionConditions(newActivityValues.conditions);
+                                        setActionTriggers(newActivityValues.triggers);
+                                      }}
                                     >
-                                      {format(ADD_CODED_ACTIVITY, g.actionCode)}
+                                      {format(ADD_CODED_ACTIVITY, thisActivity.actionCode)}
                                     </button>
                                   </li>
                                 ))}
