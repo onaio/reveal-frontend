@@ -703,7 +703,20 @@ const PlanForm = (props: PlanFormProps) => {
                             type="button"
                             className="close position-absolute removeArrItem removeActivity"
                             aria-label="Close"
-                            onClick={() => arrayHelpers.remove(index)}
+                            onClick={() => {
+                              /** when we remove an item, we want to also remove its value from
+                               * the values object otherwise the Formik state gets out of sync
+                               */
+                              arrayHelpers.remove(index);
+                              const newActivityValues = getConditionAndTriggers(
+                                values.activities.filter(
+                                  e => e.actionCode !== values.activities[index].actionCode
+                                ),
+                                disabledFields.includes('activities')
+                              );
+                              setActionConditions(newActivityValues.conditions);
+                              setActionTriggers(newActivityValues.triggers);
+                            }}
                           >
                             <span aria-hidden="true">&times;</span>
                           </button>
