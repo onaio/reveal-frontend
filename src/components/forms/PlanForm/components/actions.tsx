@@ -39,7 +39,6 @@ export const getConditionAndTriggers = (
                   name={`activities[${index}].condition[${mapIndex}].expression`}
                   id={`activities[${index}].condition[${mapIndex}].expression`}
                   disabled={disabledFields}
-                  value={item.expression}
                 />
               </React.Fragment>
             )}
@@ -55,7 +54,6 @@ export const getConditionAndTriggers = (
                   name={`activities[${index}].condition[${mapIndex}].description`}
                   id={`activities[${index}].condition[${mapIndex}].description`}
                   disabled={disabledFields}
-                  value={item.description}
                 />
               </React.Fragment>
             )}
@@ -84,7 +82,6 @@ export const getConditionAndTriggers = (
                   name={`activities[${index}].trigger[${mapIndex}].name`}
                   id={`activities[${index}].trigger[${mapIndex}].name`}
                   disabled={disabledFields}
-                  value={item.name}
                 />
               </React.Fragment>
             )}
@@ -100,7 +97,6 @@ export const getConditionAndTriggers = (
                   name={`activities[${index}].trigger[${mapIndex}].expression`}
                   id={`activities[${index}].trigger[${mapIndex}].expression`}
                   disabled={disabledFields}
-                  value={item.expression}
                 />
               </React.Fragment>
             )}
@@ -116,7 +112,6 @@ export const getConditionAndTriggers = (
                   name={`activities[${index}].trigger[${mapIndex}].description`}
                   id={`activities[${index}].trigger[${mapIndex}].description`}
                   disabled={disabledFields}
-                  value={item.description}
                 />
               </React.Fragment>
             )}
