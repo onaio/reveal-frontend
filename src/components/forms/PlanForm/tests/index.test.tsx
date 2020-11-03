@@ -1385,7 +1385,7 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
       await flushPromises();
       wrapper.update();
     });
-    // there are initially 7 activities
+    // there are initially 6 activities
     expect(wrapper.find(`.removeActivity`).length).toEqual(6);
     // lets get the form input values of the triggers
     const expectedTriggerInputValues = wrapper
