@@ -941,7 +941,9 @@ describe('containers/forms/PlanForm - Submission', () => {
     // submit button should not be disabled
     expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
 
@@ -995,7 +997,9 @@ describe('containers/forms/PlanForm - Submission', () => {
       </MemoryRouter>
     );
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
@@ -1040,7 +1044,9 @@ describe('containers/forms/PlanForm - Submission', () => {
       { attachTo: div }
     );
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
@@ -1141,7 +1147,9 @@ describe('containers/forms/PlanForm - Submission', () => {
       </MemoryRouter>
     );
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
@@ -1257,7 +1265,9 @@ describe('containers/forms/PlanForm - Submission', () => {
       .find('select[name="fiStatus"]')
       .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
 
