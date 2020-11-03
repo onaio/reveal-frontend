@@ -1444,6 +1444,63 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
     expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
       'Changed activity conditions text input names'
     );
+    // there should now be one button to add activities
+    expect(wrapper.find(`button.add-more-activities`).length).toEqual(1);
+    // lets bring up the modal that allows us to add activities
+    await act(async () => {
+      wrapper
+        .find(`button.add-more-activities`)
+        .first()
+        .simulate('click');
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    // there should be one activity that can be added back
+    expect(wrapper.find(`button.addActivity`).length).toEqual(1);
+    // lets click the button in the modal and add back the activity we had removed
+    await act(async () => {
+      wrapper
+        .find(`button.addActivity`)
+        .first()
+        .simulate('click');
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    // we should have 6 activities again
+    expect(wrapper.find(`.removeActivity`).length).toEqual(6);
+    // and now we come full circle.  The inputs should be what we had on initial load,
+    // with those of the first activity moved to the end of the arrays
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedTriggerInputValues.slice(2).concat(expectedTriggerInputValues.slice(0, 2))
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedTriggerTextValues.slice(2).concat(expectedTriggerTextValues.slice(0, 2))
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedConditionTextValues.slice(4).concat(expectedConditionTextValues.slice(0, 4))
+    );
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedConditionInputValues
+    );
+    // the names of the input fields should STILL STILL! be indexed from zero (0)
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Final activity trigger text input names'
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Final activity trigger text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Final activity conditions text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Final activity conditions text input names'
+    );
+    // there should not be any button to add activities
+    expect(wrapper.find(`button.add-more-activities`).length).toEqual(0);
     wrapper.unmount();
   });
 });
