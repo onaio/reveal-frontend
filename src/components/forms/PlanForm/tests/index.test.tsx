@@ -3,6 +3,7 @@ import { authenticateUser } from '@onaio/session-reducer';
 import { act } from '@testing-library/react';
 import { mount, ReactWrapper, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { cloneDeep } from 'lodash';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
@@ -1377,25 +1378,45 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
     // there are initially 7 activities
     expect(wrapper.find(`.removeActivity`).length).toEqual(6);
     // lets get the form input values of the triggers
-    const expectedInputValues = wrapper.find('.triggers-fieldset input').map(e => e.props().value);
-    const expectedTextValues = wrapper
+    const expectedTriggerInputValues = wrapper
+      .find('.triggers-fieldset input')
+      .map(e => e.props().value);
+    const expectedTriggerTextValues = wrapper
       .find('.triggers-fieldset textarea')
       .map(e => e.props().value);
+    const expectedConditionInputValues = wrapper
+      .find('.conditions-fieldset input')
+      .map(e => e.props().value);
+    const expectedConditionTextValues = wrapper
+      .find('.conditions-fieldset textarea')
+      .map(e => e.props().value);
     // lets remove one activity
-    wrapper
-      .find(`.removeActivity`)
-      .first()
-      .simulate('click');
-    wrapper.update();
+    await act(async () => {
+      wrapper
+        .find(`.removeActivity`)
+        .first()
+        .simulate('click');
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     // 1 less activity
     expect(wrapper.find(`.removeActivity`).length).toEqual(5);
     // the slice values are determined by the type of activity that was removed
     // the meaning is that we should be left with ALL the triggers excluding the ones removed
     expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().value)).toEqual(
-      expectedInputValues.slice(2)
+      expectedTriggerInputValues.slice(2)
     );
     expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().value)).toEqual(
-      expectedTextValues.slice(4)
+      expectedTriggerTextValues.slice(2)
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedConditionTextValues.slice(4)
+    );
+    // this one does not change because currently there are no conditions with an input field
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedConditionInputValues
     );
     wrapper.unmount();
   });
