@@ -79,6 +79,7 @@ import {
   buildGsLiteLayers,
   buildJurisdictionLayers,
   CircleColor,
+  PolygonColor,
 } from '../../FocusInvestigation/map/active/helpers/utils';
 import {
   defaultIndicatorStop,
@@ -322,11 +323,25 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
     stops: indicatorStops,
     type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
   };
+  // define polygon paint colors
+  const polygonColor: PolygonColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+  // define polygon line paint colors
+  const polygonLineColor: PolygonColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
 
   // map layers
   const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
   const structuresLayers = buildGsLiteLayers(IRS_REPORT_STRUCTURES, structures as any, null, {
     circleColor,
+    polygonColor,
+    polygonLineColor,
   });
   const gsLayers = [...jurisdictionLayers, ...structuresLayers];
 
