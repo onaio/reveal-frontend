@@ -159,14 +159,6 @@
         "task_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
         "plan_id": "d24c4bb9-f45d-43b6-8322-7a5b00f00e59",
         "geojson": "{\"id\": \"0dc2d15b-be1d-45d3-93d8-043a3a916f30\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [28.3519531622633, -15.4193286900638]}, \"properties\": {\"plan_id\": \"d24c4bb9-f45d-43b6-8322-7a5b00f00e59\", \"task_id\": \"d24c4bb9-f45d-43b6-8322-7a5b00f00e59\", \"event_date\": \"2019-09-18T00:00:00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 4, \"rooms_eligible\": 5, \"structure_code\": \"1f1d3077-17c7-445b-acc1-670c009e60cc\", \"structure_name\": \"1f1d3077-17c7-445b-acc1-670c009e60cc\", \"structure_type\": \"Residential Structure\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"1f1d3077-17c7-445b-acc1-670c009e60cc\"}}"
-      },
-      {
-        "id": "7028dfdc-baff-4681-a4d8-31ada86322fe",
-        "structure_id": "7028dfdc-baff-4681-a4d8-31ada86322fe",
-        "jurisdiction_id": "1f1d3077-17c7-445b-acc1-670c009e60cc",
-        "task_id": "9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d",
-        "plan_id": "d24c4bb9-f45d-43b6-8322-7a5b00f00e59",
-        "geojson": "{\"id\": \"7028dfdc-baff-4681-a4d8-31ada86322fe\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Polygon\", \"coordinates\": [[[28.3513007003671, -15.419340299815, 0], [28.3513167002056, -15.4194643999621, 0], [28.3510929003172, -15.4194912995837, 0], [28.3510767997545, -15.419367200336, 0], [28.3513007003671, -15.419340299815, 0]]]}, \"properties\": {\"id\": \"6b1c440b-4632-52c6-8f02-7d8570058933\", \"plan_id\": \"d24c4bb9-f45d-43b6-8322-7a5b00f00e59\", \"task_id\": \"60d33cc9-146a-4e9c-831c-9800f43d1941\", \"event_date\": \"2019-10-03T00: 00: 00\", \"eligibility\": \"eligible\", \"rooms_sprayed\": 2, \"rooms_eligible\": 3, \"structure_code\": \"7028dfdc-baff-4681-a4d8-31ada86322fe\", \"structure_name\": \"some name\", \"structure_type\": \"Feature\", \"business_status\": \"Partially Sprayed\", \"structure_sprayed\": \"yes\", \"structure_jurisdiction_id\": \"bb92aa65cf4936c5ba188409016fe1f1\"}}"
       }
     ],
     "columns": ["id", "structure_id", "jurisdiction_id", "task_id", "plan_id", "geojson"]
