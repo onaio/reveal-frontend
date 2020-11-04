@@ -95,7 +95,7 @@ describe('reducers/IRS/GenericStructure', () => {
     });
   });
 
-  it('gets structures by structure type', () => {
+  it('Filters structures by structure type', () => {
     const kmz421StructureData = superset.processData(ZambiaKMZ421StructuresJSON) || [];
     store.dispatch(fetchGenericStructures('zm-kmz421-structures', kmz421StructureData));
 
