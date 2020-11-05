@@ -192,6 +192,43 @@ exports[`components/page/Header renders header correctly 6`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
+  to="/intervention/irs/mopup"
+>
+  <Link
+    aria-current={null}
+    className="nav-link"
+    to={
+      Object {
+        "hash": "",
+        "pathname": "/intervention/irs/mopup",
+        "search": "",
+        "state": null,
+      }
+    }
+  >
+    <LinkAnchor
+      aria-current={null}
+      className="nav-link"
+      href="/intervention/irs/mopup"
+      navigate={[Function]}
+    >
+      <a
+        aria-current={null}
+        className="nav-link"
+        href="/intervention/irs/mopup"
+        onClick={[Function]}
+      >
+        IRS Mop-up Reporting
+      </a>
+    </LinkAnchor>
+  </Link>
+</NavLink>
+`;
+
+exports[`components/page/Header renders header correctly 7`] = `
+<NavLink
+  activeClassName="active"
+  className="nav-link"
   to="/intervention/mda-point/report"
 >
   <Link
@@ -225,7 +262,7 @@ exports[`components/page/Header renders header correctly 6`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 7`] = `
+exports[`components/page/Header renders header correctly 8`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -256,43 +293,6 @@ exports[`components/page/Header renders header correctly 7`] = `
         onClick={[Function]}
       >
         MDA Reporting
-      </a>
-    </LinkAnchor>
-  </Link>
-</NavLink>
-`;
-
-exports[`components/page/Header renders header correctly 8`] = `
-<NavLink
-  activeClassName="active"
-  className="nav-link"
-  to="/intervention/irs/mopup"
->
-  <Link
-    aria-current={null}
-    className="nav-link"
-    to={
-      Object {
-        "hash": "",
-        "pathname": "/intervention/irs/mopup",
-        "search": "",
-        "state": null,
-      }
-    }
-  >
-    <LinkAnchor
-      aria-current={null}
-      className="nav-link"
-      href="/intervention/irs/mopup"
-      navigate={[Function]}
-    >
-      <a
-        aria-current={null}
-        className="nav-link"
-        href="/intervention/irs/mopup"
-        onClick={[Function]}
-      >
-        IRS Mop-up Reporting
       </a>
     </LinkAnchor>
   </Link>
@@ -713,6 +713,43 @@ exports[`components/page/Header renders header correctly when authenticated 6`] 
 <NavLink
   activeClassName="active"
   className="nav-link"
+  to="/intervention/irs/mopup"
+>
+  <Link
+    aria-current={null}
+    className="nav-link"
+    to={
+      Object {
+        "hash": "",
+        "pathname": "/intervention/irs/mopup",
+        "search": "",
+        "state": null,
+      }
+    }
+  >
+    <LinkAnchor
+      aria-current={null}
+      className="nav-link"
+      href="/intervention/irs/mopup"
+      navigate={[Function]}
+    >
+      <a
+        aria-current={null}
+        className="nav-link"
+        href="/intervention/irs/mopup"
+        onClick={[Function]}
+      >
+        IRS Mop-up Reporting
+      </a>
+    </LinkAnchor>
+  </Link>
+</NavLink>
+`;
+
+exports[`components/page/Header renders header correctly when authenticated 7`] = `
+<NavLink
+  activeClassName="active"
+  className="nav-link"
   to="/intervention/mda-point/report"
 >
   <Link
@@ -746,7 +783,7 @@ exports[`components/page/Header renders header correctly when authenticated 6`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 7`] = `
+exports[`components/page/Header renders header correctly when authenticated 8`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -777,43 +814,6 @@ exports[`components/page/Header renders header correctly when authenticated 7`] 
         onClick={[Function]}
       >
         MDA Reporting
-      </a>
-    </LinkAnchor>
-  </Link>
-</NavLink>
-`;
-
-exports[`components/page/Header renders header correctly when authenticated 8`] = `
-<NavLink
-  activeClassName="active"
-  className="nav-link"
-  to="/intervention/irs/mopup"
->
-  <Link
-    aria-current={null}
-    className="nav-link"
-    to={
-      Object {
-        "hash": "",
-        "pathname": "/intervention/irs/mopup",
-        "search": "",
-        "state": null,
-      }
-    }
-  >
-    <LinkAnchor
-      aria-current={null}
-      className="nav-link"
-      href="/intervention/irs/mopup"
-      navigate={[Function]}
-    >
-      <a
-        aria-current={null}
-        className="nav-link"
-        href="/intervention/irs/mopup"
-        onClick={[Function]}
-      >
-        IRS Mop-up Reporting
       </a>
     </LinkAnchor>
   </Link>
