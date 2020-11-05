@@ -17,7 +17,6 @@ import {
 import {
   BACKEND_ACTIVE,
   CLIENT_LABEL,
-  ENABLE_ABOUT,
   ENABLE_ASSIGN,
   ENABLE_CONFIG_FORM,
   ENABLE_DYNAMIC_MDA,
@@ -38,7 +37,6 @@ import {
 } from '../../../configs/env';
 import { DISPLAYED_PLAN_TYPES } from '../../../configs/env';
 import {
-  ABOUT,
   ADMIN,
   ASSIGN,
   CLIENTS_TITLE,
@@ -64,7 +62,6 @@ import {
   SERVER_SETTINGS,
   SIGN_OUT,
   STUDENTS_TITLE,
-  USERS,
 } from '../../../configs/lang';
 import {
   ASSIGN_PLAN_URL,
@@ -332,13 +329,6 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                         </NavLink>
                       </DropdownItem>
                     )}
-                    {ENABLE_USERS && (
-                      <DropdownItem>
-                        <NavLink to="/404" className="nav-link" activeClassName="active">
-                          {USERS}
-                        </NavLink>
-                      </DropdownItem>
-                    )}
                     {ENABLE_MDA_POINT && (
                       <div>
                         <DropdownItem>
@@ -409,14 +399,6 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     )}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-              )}
-
-              {ENABLE_ABOUT && (
-                <NavItem>
-                  <NavLink to="/404" className="nav-link" activeClassName="active">
-                    {ABOUT}
-                  </NavLink>
-                </NavItem>
               )}
             </Nav>
             <Nav className="ml-0" navbar={true}>
