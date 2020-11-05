@@ -52,26 +52,6 @@ export type SUPERSET_GOALS_SLICE = typeof SUPERSET_GOALS_SLICE;
 export const SUPERSET_TASKS_SLICE = 4;
 export type SUPERSET_TASKS_SLICE = typeof SUPERSET_TASKS_SLICE;
 
-/** Do you want to enable team assignment? */
-export const ENABLE_ASSIGN = true;
-
-/** Do you want to enable the IRS features? */
-export const ENABLE_IRS = true;
-
-/** Do you want to enable the Focus Investigation features? */
-export const ENABLE_FI = true;
-
-export const ENABLE_PRACTITIONERS = true;
-
-/** Do you want to enable the users page? */
-export const ENABLE_USERS = false;
-
-/** Do you want to enable the about page? */
-export const ENABLE_ABOUT = false;
-
-/** Do you want to enable views dealing with teams */
-export const ENABLE_TEAMS = true;
-
 export const SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES = '11,12';
 export type SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES = typeof SUPERSET_IRS_REPORTING_JURISDICTIONS_DATA_SLICES;
 export const SUPERSET_IRS_REPORTING_PLANS_SLICE = '13';
@@ -210,6 +190,14 @@ export const PLAN_TYPES_WITH_MULTI_JURISDICTIONS = [
 
 export const SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY = false;
 
+// Menu items
+export const ENABLE_ASSIGN = true;
+export const ENABLE_IRS = true;
+export const ENABLE_FI = true;
+export const ENABLE_PRACTITIONERS = true;
+export const ENABLE_USERS = false;
+export const ENABLE_ABOUT = false;
+export const ENABLE_TEAMS = true;
 export const ENABLE_HOME_MANAGE_PLANS_LINK = true;
 export const ENABLE_HOME_PLANNING_VIEW_LINK = true;
 export const ENABLE_DEFAULT_PLAN_USER_FILTER = false;
@@ -218,6 +206,7 @@ export const ENABLE_IRS_PERFORMANCE_REPORT = true;
 export const ENABLE_IRS_LITE = true;
 export const ENABLE_MDA_POINT = true;
 export const ENABLE_DYNAMIC_MDA = true;
+
 export const SUPERSET_IRS_MOPUP_REPORTING_JURISDICTIONS_DATA_SLICES = '200,201';
 export const SUPERSET_IRS_MOPUP_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL = '4';
 export const SUPERSET_JURISDICTION_EVENTS_SLICE = '123';
