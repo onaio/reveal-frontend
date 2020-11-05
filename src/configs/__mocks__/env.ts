@@ -64,10 +64,10 @@ export const ENABLE_FI = true;
 export const ENABLE_PRACTITIONERS = true;
 
 /** Do you want to enable the users page? */
-export const ENABLE_USERS = true;
+export const ENABLE_USERS = false;
 
 /** Do you want to enable the about page? */
-export const ENABLE_ABOUT = true;
+export const ENABLE_ABOUT = false;
 
 /** Do you want to enable views dealing with teams */
 export const ENABLE_TEAMS = true;
