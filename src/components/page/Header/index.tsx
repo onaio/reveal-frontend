@@ -17,7 +17,6 @@ import {
 import {
   BACKEND_ACTIVE,
   CLIENT_LABEL,
-  ENABLE_ABOUT,
   ENABLE_ASSIGN,
   ENABLE_CONFIG_FORM,
   ENABLE_DYNAMIC_MDA,
@@ -38,7 +37,6 @@ import {
 } from '../../../configs/env';
 import { DISPLAYED_PLAN_TYPES } from '../../../configs/env';
 import {
-  ABOUT,
   ADMIN,
   ASSIGN,
   CLIENTS_TITLE,
@@ -46,6 +44,7 @@ import {
   FORM_DRAFT_FILES,
   HOME,
   IRS_LITE_REPORTING_TITLE,
+  IRS_PERFORMANCE_REPORTING_TITLE,
   IRS_REPORTING_TITLE,
   JSON_VALIDATORS,
   JURISDICTION_METADATA,
@@ -63,7 +62,6 @@ import {
   SERVER_SETTINGS,
   SIGN_OUT,
   STUDENTS_TITLE,
-  USERS,
 } from '../../../configs/lang';
 import {
   ASSIGN_PLAN_URL,
@@ -77,6 +75,7 @@ import {
   LOGOUT_URL,
   MANIFEST_RELEASE_URL,
   ORGANIZATIONS_LIST_URL,
+  PERFORMANCE_REPORT_IRS_PLAN_URL,
   PLAN_LIST_URL,
   PLANNING_VIEW_URL,
   PRACTITIONERS_LIST_URL,
@@ -144,8 +143,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
       ENABLE_MDA_POINT ||
       ENABLE_IRS_PERFORMANCE_REPORT ||
       ENABLE_IRS_MOPUP_REPORTING ||
-      ENABLE_IRS_LITE ||
-      ENABLE_IRS_PERFORMANCE_REPORT;
+      ENABLE_IRS_LITE;
 
     return (
       <div>
@@ -247,6 +245,32 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                         </DropdownItem>
                       </div>
                     )}
+                    {ENABLE_IRS_PERFORMANCE_REPORT && (
+                      <div>
+                        <DropdownItem>
+                          <NavLink
+                            to={PERFORMANCE_REPORT_IRS_PLAN_URL}
+                            className="nav-link"
+                            activeClassName="active"
+                          >
+                            {IRS_PERFORMANCE_REPORTING_TITLE}
+                          </NavLink>
+                        </DropdownItem>
+                      </div>
+                    )}
+                    {ENABLE_IRS_MOPUP_REPORTING && (
+                      <div>
+                        <DropdownItem>
+                          <NavLink
+                            to={IRS_MOP_UP_REPORT_URL}
+                            className="nav-link"
+                            activeClassName="active"
+                          >
+                            {MOP_UP_REPORTING_TITLE}
+                          </NavLink>
+                        </DropdownItem>
+                      </div>
+                    )}
                     {ENABLE_MDA_POINT && (
                       <div>
                         <DropdownItem>
@@ -269,19 +293,6 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                             activeClassName="active"
                           >
                             {MDA_REPORTING_TITLE}
-                          </NavLink>
-                        </DropdownItem>
-                      </div>
-                    )}
-                    {ENABLE_IRS_MOPUP_REPORTING && (
-                      <div>
-                        <DropdownItem>
-                          <NavLink
-                            to={IRS_MOP_UP_REPORT_URL}
-                            className="nav-link"
-                            activeClassName="active"
-                          >
-                            {MOP_UP_REPORTING_TITLE}
                           </NavLink>
                         </DropdownItem>
                       </div>
@@ -315,13 +326,6 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           activeClassName="active"
                         >
                           {PRACTITIONERS}
-                        </NavLink>
-                      </DropdownItem>
-                    )}
-                    {ENABLE_USERS && (
-                      <DropdownItem>
-                        <NavLink to="/404" className="nav-link" activeClassName="active">
-                          {USERS}
                         </NavLink>
                       </DropdownItem>
                     )}
@@ -395,14 +399,6 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                     )}
                   </DropdownMenu>
                 </UncontrolledDropdown>
-              )}
-
-              {ENABLE_ABOUT && (
-                <NavItem>
-                  <NavLink to="/404" className="nav-link" activeClassName="active">
-                    {ABOUT}
-                  </NavLink>
-                </NavItem>
               )}
             </Nav>
             <Nav className="ml-0" navbar={true}>
