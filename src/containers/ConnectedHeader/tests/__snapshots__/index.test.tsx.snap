@@ -153,6 +153,48 @@ Object {
                 <NavLink
                   activeClassName="active"
                   className="nav-link"
+                  to="/intervention/irs-lite/report"
+                >
+                  IRS Lite Reporting
+                </NavLink>
+              </DropdownItem>
+            </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  className="nav-link"
+                  to="/intervention/irs/performance/report"
+                >
+                  IRS Performance Reporting
+                </NavLink>
+              </DropdownItem>
+            </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  className="nav-link"
+                  to="/intervention/irs/mopup"
+                >
+                  IRS Mop-up Reporting
+                </NavLink>
+              </DropdownItem>
+            </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  className="nav-link"
                   to="/intervention/mda-point/report"
                 >
                   MDA Point Reporting
@@ -170,20 +212,6 @@ Object {
                   to="/intervention/mda/report"
                 >
                   MDA Reporting
-                </NavLink>
-              </DropdownItem>
-            </div>
-            <div>
-              <DropdownItem
-                tag="button"
-                toggle={true}
-              >
-                <NavLink
-                  activeClassName="active"
-                  className="nav-link"
-                  to="/intervention/irs/mopup"
-                >
-                  IRS Mop-up Reporting
                 </NavLink>
               </DropdownItem>
             </div>
@@ -231,18 +259,6 @@ Object {
                 Practitioners
               </NavLink>
             </DropdownItem>
-            <DropdownItem
-              tag="button"
-              toggle={true}
-            >
-              <NavLink
-                activeClassName="active"
-                className="nav-link"
-                to="/404"
-              >
-                Users
-              </NavLink>
-            </DropdownItem>
             <div>
               <DropdownItem
                 tag="button"
@@ -259,17 +275,6 @@ Object {
             </div>
           </DropdownMenu>
         </UncontrolledDropdown>
-        <NavItem
-          tag="li"
-        >
-          <NavLink
-            activeClassName="active"
-            className="nav-link"
-            to="/404"
-          >
-            About
-          </NavLink>
-        </NavItem>
       </Nav>
       <Nav
         className="ml-0"
@@ -446,6 +451,48 @@ Object {
                 <NavLink
                   activeClassName="active"
                   className="nav-link"
+                  to="/intervention/irs-lite/report"
+                >
+                  IRS Lite Reporting
+                </NavLink>
+              </DropdownItem>
+            </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  className="nav-link"
+                  to="/intervention/irs/performance/report"
+                >
+                  IRS Performance Reporting
+                </NavLink>
+              </DropdownItem>
+            </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  className="nav-link"
+                  to="/intervention/irs/mopup"
+                >
+                  IRS Mop-up Reporting
+                </NavLink>
+              </DropdownItem>
+            </div>
+            <div>
+              <DropdownItem
+                tag="button"
+                toggle={true}
+              >
+                <NavLink
+                  activeClassName="active"
+                  className="nav-link"
                   to="/intervention/mda-point/report"
                 >
                   MDA Point Reporting
@@ -463,20 +510,6 @@ Object {
                   to="/intervention/mda/report"
                 >
                   MDA Reporting
-                </NavLink>
-              </DropdownItem>
-            </div>
-            <div>
-              <DropdownItem
-                tag="button"
-                toggle={true}
-              >
-                <NavLink
-                  activeClassName="active"
-                  className="nav-link"
-                  to="/intervention/irs/mopup"
-                >
-                  IRS Mop-up Reporting
                 </NavLink>
               </DropdownItem>
             </div>
@@ -524,18 +557,6 @@ Object {
                 Practitioners
               </NavLink>
             </DropdownItem>
-            <DropdownItem
-              tag="button"
-              toggle={true}
-            >
-              <NavLink
-                activeClassName="active"
-                className="nav-link"
-                to="/404"
-              >
-                Users
-              </NavLink>
-            </DropdownItem>
             <div>
               <DropdownItem
                 tag="button"
@@ -552,17 +573,6 @@ Object {
             </div>
           </DropdownMenu>
         </UncontrolledDropdown>
-        <NavItem
-          tag="li"
-        >
-          <NavLink
-            activeClassName="active"
-            className="nav-link"
-            to="/404"
-          >
-            About
-          </NavLink>
-        </NavItem>
       </Nav>
       <Nav
         className="ml-0"
