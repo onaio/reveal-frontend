@@ -16,6 +16,10 @@ export const existingState = {
   },
   jurisdictions: {
     allJurisdictionIds: {
+      '313056f2-2a21-454e-9f88-63207acb00d4': {
+        id: '313056f2-2a21-454e-9f88-63207acb00d4',
+        isLoaded: true,
+      },
       '450fc15b-5bd2-468a-927a-49cb10d3bcac': {
         id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
         isLoaded: true,
