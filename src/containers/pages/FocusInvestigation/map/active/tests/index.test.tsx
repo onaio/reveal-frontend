@@ -26,6 +26,7 @@ import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { MapSingleFIProps, SingleActiveFIMap } from '../../active/';
 import * as utils from '../helpers/utils';
 import * as fixturesMap from './fixtures';
+import { pGoals, pJurisdiction, pPlan, pTasks } from './fixtures';
 
 jest.mock('../../../../../../components/GisidaLite', () => {
   const GisidaLiteMock = () => <div>I love oov</div>;
@@ -204,6 +205,43 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     // does not render the current plan under other plans select dropdown
     const otherPlansSelectProps = wrapper.find(SelectComponent).props();
     expect(otherPlansSelectProps.plansArray).toEqual([]);
+
+    wrapper.unmount();
+  });
+
+  it('works correctly with Redux store when there is just one goal', () => {
+    const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
+    store.dispatch(fetchGoals(pGoals));
+    store.dispatch(fetchJurisdictions(pJurisdiction));
+    store.dispatch(fetchPlans(pPlan));
+    store.dispatch(fetchTasks(pTasks));
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: pPlan[0].id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/13`,
+      },
+      pointFeatureCollection: wrapFeatureCollection(pTasks),
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    wrapper.update();
+
+    const mapProps = wrapper.find('MemoizedGisidaLiteMock').props();
+    expect((mapProps as any).mapCenter).toEqual([99.36859975, 11.33824805]);
+    expect((mapProps as any).mapBounds).toEqual([99.3564178, 11.3296907, 99.3807817, 11.3468054]);
+    // Check Gisida component map layers
+    expect((mapProps as any).layers.map((e: any) => e.key)).toMatchSnapshot('GisidaLite layers');
 
     wrapper.unmount();
   });

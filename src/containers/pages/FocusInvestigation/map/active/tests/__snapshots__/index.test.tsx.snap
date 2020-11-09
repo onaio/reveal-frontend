@@ -358,6 +358,13 @@ exports[`containers/pages/FocusInvestigation/activeMap renders correct detail vi
 </div>
 `;
 
+exports[`containers/pages/FocusInvestigation/activeMap works correctly with Redux store when there is just one goal: GisidaLite layers 1`] = `
+Array [
+  "main-plan-layer-313056f2-2a21-454e-9f88-63207acb00d4",
+  "RACD_register_families-point",
+]
+`;
+
 exports[`containers/pages/FocusInvestigation/activeMap works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks): Should not be clickable tag 1`] = `ReactWrapper {}`;
 
 exports[`containers/pages/FocusInvestigation/activeMap works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks): should be active by default 1`] = `ReactWrapper {}`;
