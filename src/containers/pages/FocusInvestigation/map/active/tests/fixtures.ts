@@ -16,6 +16,10 @@ export const existingState = {
   },
   jurisdictions: {
     allJurisdictionIds: {
+      '313056f2-2a21-454e-9f88-63207acb00d4': {
+        id: '313056f2-2a21-454e-9f88-63207acb00d4',
+        isLoaded: true,
+      },
       '450fc15b-5bd2-468a-927a-49cb10d3bcac': {
         id: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
         isLoaded: true,
@@ -68,3 +72,12 @@ export const processedStructuresJSON = superset.processData(structuresJSON) || [
 export const processedGoalsJSON = superset.processData(goalsJSON) || [];
 export const processedPlansTasksJson = superset.processData(plansTasksJSON) || [];
 export const processedCaseConfirmationTasksJSON = superset.processData(caseConfirmationJSON) || [];
+// หุบเขาคลองเพลิน from Thailand production
+export const oneGoalJurisdiction = require('./supersetFixtures/one-goal/jurisdiction.json');
+export const oneGoalTasks = require('./supersetFixtures/one-goal/task_structures.json');
+export const oneGoalPlan = require('./supersetFixtures/one-goal/plan.json');
+export const oneGoalGoals = require('./supersetFixtures/one-goal/goals.json');
+export const processedOneGoalJurisdiction = superset.processData(oneGoalJurisdiction) || [];
+export const processedOneGoalTasks = superset.processData(oneGoalTasks) || [];
+export const processedOneGoalPlan = superset.processData(oneGoalPlan) || [];
+export const processedOneGoalGoals = superset.processData(oneGoalGoals) || [];

@@ -1,0 +1,65 @@
+{
+  "cache_key": null,
+  "cached_dttm": null,
+  "cache_timeout": 60,
+  "errors": [],
+  "form_data": {
+    "adhoc_filters": [
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "operator": "==",
+        "subject": "jurisdiction_id"
+      }
+    ],
+    "all_columns": ["jurisdiction_id", "geojson"],
+    "color_pn": true,
+    "datasource": "8__table",
+    "groupby": [],
+    "metrics": ["count"],
+    "order_by_cols": [],
+    "order_desc": true,
+    "percent_metrics": [],
+    "queryFields": {
+      "groupby": "groupby",
+      "metrics": "metrics"
+    },
+    "query_mode": "raw",
+    "row_limit": 15000,
+    "show_cell_bars": true,
+    "slice_id": 2,
+    "table_timestamp_format": "smart_date",
+    "time_grain_sqla": "P1D",
+    "time_range": "No filter",
+    "time_range_endpoints": ["inclusive", "exclusive"],
+    "url_params": {},
+    "viz_type": "table",
+    "where": "",
+    "having": "",
+    "having_filters": [],
+    "filters": [
+      {
+        "col": "jurisdiction_id",
+        "op": "==",
+        "val": "313056f2-2a21-454e-9f88-63207acb00d4"
+      }
+    ]
+  },
+  "is_cached": false,
+  "query": "SELECT jurisdiction_id AS jurisdiction_id,\n       geojson AS geojson\nFROM thailand_prod.jurisdictions_geojson_slice\nWHERE jurisdiction_id = '313056f2-2a21-454e-9f88-63207acb00d4'\nLIMIT 15000",
+  "from_dttm": null,
+  "to_dttm": null,
+  "status": "success",
+  "stacktrace": null,
+  "rowcount": 1,
+  "data": {
+    "records": [
+      {
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "geojson": "{\"id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"type\": \"Feature\", \"geometry\": {\"type\": \"MultiPolygon\", \"coordinates\": [[[[99.3807817, 11.3305513], [99.3802295, 11.331759], [99.3787856, 11.3325363], [99.3777096, 11.3342159], [99.3763081, 11.3354374], [99.3744677, 11.3362841], [99.373137, 11.3372557], [99.3724292, 11.3381996], [99.3710843, 11.3388381], [99.3683803, 11.3399624], [99.3654357, 11.3426691], [99.3628025, 11.3443763], [99.3610329, 11.3454868], [99.3598155, 11.3456811], [99.3578194, 11.3467221], [99.356885, 11.3468054], [99.3564178, 11.3460558], [99.3578052, 11.345223], [99.3589377, 11.3443486], [99.3608064, 11.3437101], [99.3622363, 11.3429328], [99.360679, 11.3419057], [99.3586121, 11.3396848], [99.3599004, 11.3379775], [99.3610471, 11.3365617], [99.3618399, 11.3346323], [99.3637227, 11.3318006], [99.3679839, 11.3306763], [99.3748729, 11.33001], [99.3789359, 11.3296907], [99.3807817, 11.3305513]]]]}, \"properties\": {\"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\"}}"
+      }
+    ],
+    "columns": ["jurisdiction_id", "geojson"]
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "cache_key": null,
+  "cached_dttm": null,
+  "cache_timeout": 60,
+  "errors": [],
+  "form_data": {
+    "adhoc_filters": [
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": ["FI", "Dynamic-FI"],
+        "operator": "in",
+        "subject": "plan_intervention_type"
+      },
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": "093399fc-602a-566a-b300-fce0d96496c1",
+        "operator": "==",
+        "subject": "id"
+      }
+    ],
+    "all_columns": [
+      "id",
+      "plan_id",
+      "plan_title",
+      "plan_name",
+      "plan_status",
+      "jurisdiction_id",
+      "plan_fi_status",
+      "plan_fi_reason",
+      "plan_date",
+      "plan_effective_period_start",
+      "plan_effective_period_end",
+      "plan_intervention_type",
+      "plan_version",
+      "jurisdiction_parent_id",
+      "jurisdiction_name",
+      "jurisdiction_geometry",
+      "jurisdiction_depth",
+      "jurisdiction_path",
+      "jurisdiction_name_path",
+      "jurisdiction_root_parent_id",
+      "jurisdiction_root_parent_name"
+    ],
+    "color_pn": true,
+    "datasource": "5__table",
+    "granularity_sqla": "plan_date",
+    "groupby": [],
+    "metrics": null,
+    "order_by_cols": [],
+    "order_desc": true,
+    "percent_metrics": [],
+    "queryFields": {
+      "groupby": "groupby",
+      "metrics": "metrics"
+    },
+    "query_mode": "raw",
+    "row_limit": 15000,
+    "show_cell_bars": true,
+    "slice_id": 1,
+    "table_timestamp_format": "smart_date",
+    "time_grain_sqla": "P1D",
+    "time_range": "No filter",
+    "time_range_endpoints": ["inclusive", "exclusive"],
+    "url_params": {},
+    "viz_type": "table",
+    "where": "",
+    "having": "",
+    "having_filters": [],
+    "filters": [
+      {
+        "col": "plan_intervention_type",
+        "op": "in",
+        "val": ["FI", "Dynamic-FI"]
+      },
+      {
+        "col": "id",
+        "op": "==",
+        "val": "093399fc-602a-566a-b300-fce0d96496c1"
+      }
+    ]
+  },
+  "is_cached": false,
+  "query": "SELECT id AS id,\n       plan_id AS plan_id,\n       plan_title AS plan_title,\n       plan_name AS plan_name,\n       plan_status AS plan_status,\n       jurisdiction_id AS jurisdiction_id,\n       plan_fi_status AS plan_fi_status,\n       plan_fi_reason AS plan_fi_reason,\n       plan_date AS plan_date,\n       plan_effective_period_start AS plan_effective_period_start,\n       plan_effective_period_end AS plan_effective_period_end,\n       plan_intervention_type AS plan_intervention_type,\n       plan_version AS plan_version,\n       jurisdiction_parent_id AS jurisdiction_parent_id,\n       jurisdiction_name AS jurisdiction_name,\n       jurisdiction_geometry AS jurisdiction_geometry,\n       jurisdiction_depth AS jurisdiction_depth,\n       jurisdiction_path AS jurisdiction_path,\n       jurisdiction_name_path AS jurisdiction_name_path,\n       jurisdiction_root_parent_id AS jurisdiction_root_parent_id,\n       jurisdiction_root_parent_name AS jurisdiction_root_parent_name\nFROM thailand_prod.plans_materialzied_view\nWHERE plan_intervention_type IN ('FI',\n                                 'Dynamic-FI')\n  AND id = '093399fc-602a-566a-b300-fce0d96496c1'\nLIMIT 15000",
+  "from_dttm": null,
+  "to_dttm": null,
+  "status": "success",
+  "stacktrace": null,
+  "rowcount": 1,
+  "data": {
+    "records": [
+      {
+        "id": "093399fc-602a-566a-b300-fce0d96496c1",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "plan_title": "A1-\u0e2b\u0e38\u0e1a\u0e40\u0e02\u0e32\u0e04\u0e25\u0e2d\u0e07\u0e40\u0e1e\u0e25\u0e34\u0e19-2020-11-02",
+        "plan_name": "Dynamic-FI-2020-11-02",
+        "plan_status": "complete",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "plan_fi_status": "A1",
+        "plan_fi_reason": "Routine",
+        "plan_date": "2020-11-02",
+        "plan_effective_period_start": "2020-11-02",
+        "plan_effective_period_end": "2020-11-04",
+        "plan_intervention_type": "Dynamic-FI",
+        "plan_version": "2",
+        "jurisdiction_parent_id": "a713ec5c-6f5f-4539-aeca-1998efa1d58d",
+        "jurisdiction_name": "\u0e2b\u0e38\u0e1a\u0e40\u0e02\u0e32\u0e04\u0e25\u0e2d\u0e07\u0e40\u0e1e\u0e25\u0e34\u0e19 (7704030901)",
+        "jurisdiction_geometry": "0106000000010000000103000000010000001F000000941A35BA5ED85840F24C1E053EA926405DDE1CAE55D85840AD4ECE50DCA92640870CF5053ED858403777AA3242AA2640A8D8E2642CD858403E9BB0581EAB264013AE916E15D85840E6B56D73BEAB2640223A5F47F7D758406054F76D2DAC26405DFB027AE1D7584078C773C7ACAC2640D48448E1D5D75840620A7B7F28AD2640C8235DD8BFD758400E47FC2F7CAD2640673FF78A93D7584045BD3B8D0FAE26409E126B4C63D7584013B3035372AF26400D1AFA2738D75840F408241752B02640EC91BC291BD758403E6656A5E3B026400246973707D75840CCB0F61CFDB02640F5375783E6D65840D399208F85B12640B6DB2E34D7D658400327367A90B1264096AD9A8CCFD65840A72ECF392EB12640AE15C847E6D658406EA7AD11C1B026404BB3D4D5F8D65840C6D8AE754EB02640000CBA7317D758401A9C2DC5FAAF2640247B29E12ED75840907351E394AF2640A8565F5D15D75840C9A18F430EAF2640CB5C2A80F3D6584088E5852AEBAD26404FF4AF9B08D7584053910A630BAD264033B44B651BD758401E2CADD051AC2640D4388A6228D75840DB5EC1EC54AB26400554933B47D758401B96ABC4E1A9264017FD570C8DD75840E41F6C674EA92640076AE7EAFDD75840B7B41A12F7A82640F1715C7C40D8584038972C38CDA82640941A35BA5ED85840F24C1E053EA92640",
+        "jurisdiction_depth": 5,
+        "jurisdiction_path": "[\"4c10b50e-a240-4db9-8303-42faaa3b98e8\", \"21673bf0-954a-4712-9bf9-79df55bd26ae\", \"831ecffe-576f-4410-8928-fc09fe865bbd\", \"f2081e17-6009-4396-8c81-ee3dfbd616cf\", \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\"]",
+        "jurisdiction_name_path": "[\"\\u0e23\\u0e32\\u0e0a\\u0e2d\\u0e32\\u0e13\\u0e32\\u0e08\\u0e31\\u0e01\\u0e23\\u0e44\\u0e17\\u0e22\", \"\\u0e1b\\u0e23\\u0e30\\u0e08\\u0e27\\u0e1a\\u0e04\\u0e35\\u0e23\\u0e35\\u0e02\\u0e31\\u0e19\\u0e18\\u0e4c (77)\", \"\\u0e1a\\u0e32\\u0e07\\u0e2a\\u0e30\\u0e1e\\u0e32\\u0e19 (7704)\", \"\\u0e23\\u0e48\\u0e2d\\u0e19\\u0e17\\u0e2d\\u0e07 (770403)\", \"\\u0e2b\\u0e21\\u0e39\\u0e48\\u0e17\\u0e35\\u0e48 9 (77040309)\"]",
+        "jurisdiction_root_parent_id": "4c10b50e-a240-4db9-8303-42faaa3b98e8",
+        "jurisdiction_root_parent_name": "\u0e23\u0e32\u0e0a\u0e2d\u0e32\u0e13\u0e32\u0e08\u0e31\u0e01\u0e23\u0e44\u0e17\u0e22"
+      }
+    ],
+    "columns": [
+      "id",
+      "plan_id",
+      "plan_title",
+      "plan_name",
+      "plan_status",
+      "jurisdiction_id",
+      "plan_fi_status",
+      "plan_fi_reason",
+      "plan_date",
+      "plan_effective_period_start",
+      "plan_effective_period_end",
+      "plan_intervention_type",
+      "plan_version",
+      "jurisdiction_parent_id",
+      "jurisdiction_name",
+      "jurisdiction_geometry",
+      "jurisdiction_depth",
+      "jurisdiction_path",
+      "jurisdiction_name_path",
+      "jurisdiction_root_parent_id",
+      "jurisdiction_root_parent_name"
+    ]
+  }
+}
