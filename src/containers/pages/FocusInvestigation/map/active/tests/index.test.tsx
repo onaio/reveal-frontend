@@ -128,6 +128,17 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       'MemoizedGisidaLiteMock div'
     );
 
+    const mapProps = wrapper.find('MemoizedGisidaLiteMock').props();
+    expect((mapProps as any).mapCenter).toEqual([101.178374290466, 15.067896479158]);
+    expect((mapProps as any).mapBounds).toEqual([
+      101.164855957031,
+      15.0577022766384,
+      101.191892623901,
+      15.0780906816776,
+    ]);
+    // Check Gisida component map layers
+    expect((mapProps as any).layers.map((e: any) => e.key)).toMatchSnapshot('GisidaLite layers');
+
     // how about the selectPlan component
     expect(wrapper.find('SelectPlan').length).toEqual(1);
 

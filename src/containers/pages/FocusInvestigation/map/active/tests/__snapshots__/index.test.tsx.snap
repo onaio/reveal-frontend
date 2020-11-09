@@ -209,6 +209,17 @@ exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap
 </Breadcrumb>
 `;
 
+exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title: GisidaLite layers 1`] = `
+Array [
+  "main-plan-layer-450fc15b-5bd2-468a-927a-49cb10d3bcac",
+  "structures-line",
+  "structures-fill",
+  "RACD_blood_screening_1km_radius-point",
+  "RACD_blood_screening_1km_radius-fill-line",
+  "RACD_blood_screening_1km_radius-fill",
+]
+`;
+
 exports[`containers/pages/FocusInvestigation/activeMap renders SingleActiveFimap correctly & changes page title: MemoizedGisidaLiteMock div 1`] = `
 <div>
   I love oov
