@@ -539,7 +539,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): MapStateToProps 
     });
   }
 
-  if (plan && jurisdiction && goals && goals.length > 1) {
+  if (plan && jurisdiction && goals && goals.length > 0) {
     /** include all complete index cases including current index case */
     currentPointIndexCases = getTasksFCSelector(state, {
       actionCode: CASE_CONFIRMATION_CODE,
