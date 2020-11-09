@@ -26,7 +26,12 @@ import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { MapSingleFIProps, SingleActiveFIMap } from '../../active/';
 import * as utils from '../helpers/utils';
 import * as fixturesMap from './fixtures';
-import { pGoals, pJurisdiction, pPlan, pTasks } from './fixtures';
+import {
+  processedOneGoalGoals,
+  processedOneGoalJurisdiction,
+  processedOneGoalPlan,
+  processedOneGoalTasks,
+} from './fixtures';
 
 jest.mock('../../../../../../components/GisidaLite', () => {
   const GisidaLiteMock = () => <div>I love oov</div>;
@@ -212,20 +217,20 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
   it('works correctly with Redux store when there is just one goal', () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
-    store.dispatch(fetchGoals(pGoals));
-    store.dispatch(fetchJurisdictions(pJurisdiction));
-    store.dispatch(fetchPlans(pPlan));
-    store.dispatch(fetchTasks(pTasks));
+    store.dispatch(fetchGoals(processedOneGoalGoals));
+    store.dispatch(fetchJurisdictions(processedOneGoalJurisdiction));
+    store.dispatch(fetchPlans(processedOneGoalPlan));
+    store.dispatch(fetchTasks(processedOneGoalTasks));
     const props = {
       history,
       location: mock,
       match: {
         isExact: true,
-        params: { id: pPlan[0].id },
+        params: { id: processedOneGoalPlan[0].id },
         path: `${FI_SINGLE_URL}/:id`,
         url: `${FI_SINGLE_URL}/13`,
       },
-      pointFeatureCollection: wrapFeatureCollection(pTasks),
+      pointFeatureCollection: wrapFeatureCollection(processedOneGoalTasks),
       supersetService: supersetServiceMock,
     };
     const wrapper = mount(
