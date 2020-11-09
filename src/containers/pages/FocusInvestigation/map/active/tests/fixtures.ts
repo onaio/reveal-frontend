@@ -68,3 +68,12 @@ export const processedStructuresJSON = superset.processData(structuresJSON) || [
 export const processedGoalsJSON = superset.processData(goalsJSON) || [];
 export const processedPlansTasksJson = superset.processData(plansTasksJSON) || [];
 export const processedCaseConfirmationTasksJSON = superset.processData(caseConfirmationJSON) || [];
+// หุบเขาคลองเพลิน from Thailand production
+export const jurisdiction = require('./supersetFixtures/one-goal/jurisdiction.json');
+export const tasks = require('./supersetFixtures/one-goal/task_structures.json');
+export const plan = require('./supersetFixtures/one-goal/plan.json');
+export const goals = require('./supersetFixtures/one-goal/goals.json');
+export const pJurisdiction = superset.processData(jurisdiction) || [];
+export const pTasks = superset.processData(tasks) || [];
+export const pPlan = superset.processData(plan) || [];
+export const pGoals = superset.processData(goals) || [];
