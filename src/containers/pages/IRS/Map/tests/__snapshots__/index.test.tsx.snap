@@ -1,5 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`components/IRS Reports/IRSReportingMap calls GisidaLite with the correct props: GisidaLite layers 1`] = `
+Array [
+  "main-plan-layer-92a0c5f3-8b47-465e-961b-2998ad3f00a5",
+  "irs_report_structures-point",
+  "irs_report_structures-fill-line",
+  "irs_report_structures-fill",
+]
+`;
+
 exports[`components/IRS Reports/IRSReportingMap does not show not sprayed reasons count if they are not: No sprayed reasons 1`] = `null`;
 
 exports[`components/IRS Reports/IRSReportingMap does not show not sprayed reasons count if they are not: Response item titles 1`] = `
