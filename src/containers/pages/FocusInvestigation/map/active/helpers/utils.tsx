@@ -62,6 +62,7 @@ import GeojsonExtent from '@mapbox/geojson-extent';
 import { Dictionary } from '@onaio/utils';
 import {
   Feature,
+  FeatureCollection as GeoJsonFeatureCollection,
   LineString,
   MultiLineString,
   MultiPoint,
@@ -393,8 +394,8 @@ export const buildGsLiteSymbolLayers = (
  */
 export const buildGsLiteLayers = (
   currentGoal: string | null,
-  pointFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
-  polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
+  pointFeatureCollection: FeatureCollection<TaskGeoJSON> | GeoJsonFeatureCollection | null,
+  polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | GeoJsonFeatureCollection | null,
   extraVars: ExtraVars
 ) => {
   const idToUse = extraVars.useId ? extraVars.useId : currentGoal;
