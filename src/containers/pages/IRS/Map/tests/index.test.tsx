@@ -1,5 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
+import { featureCollection } from '@turf/helpers';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
@@ -10,7 +11,7 @@ import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
 import { JURISDICTION_NOT_FOUND, PLAN_NOT_FOUND } from '../../../../../configs/lang';
-import { MAP, REPORT_IRS_PLAN_URL } from '../../../../../constants';
+import { MAP, MULTI_POLYGON, POINT, POLYGON, REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import * as errors from '../../../../../helpers/errors';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
@@ -73,6 +74,7 @@ const history = createBrowserHistory();
 describe('components/IRS Reports/IRSReportingMap', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('renders without crashing', () => {
@@ -428,22 +430,48 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       plan: plans[0] as GenericPlan,
       structures,
     };
-    mount(
+
+    const points = structures?.features.filter(feature => feature.geometry.type === POINT);
+    const polygons = structures?.features.filter(feature =>
+      [POLYGON, MULTI_POLYGON].includes(feature.geometry.type)
+    );
+
+    const pointsFC = points ? featureCollection(points) : null;
+    const polygonsFC = polygons ? featureCollection(polygons) : null;
+
+    const wrapper = mount(
       <Router history={history}>
         <IRSReportingMap {...props} />
       </Router>
     );
-    expect(buildGsLiteLayersSpy).toBeCalledTimes(1);
-    expect(buildGsLiteLayersSpy).toBeCalledWith('irs_report_structures', structures, null, {
+
+    await act(async () => {
+      await flushPromises();
+    });
+
+    expect(buildGsLiteLayersSpy).toBeCalledTimes(2);
+    expect(buildGsLiteLayersSpy).toBeCalledWith('irs_report_structures', pointsFC, polygonsFC, {
       circleColor: {
+        property: 'business_status',
+        stops: IRSIndicatorStops.zambia2019,
+        type: 'categorical',
+      },
+      polygonColor: {
+        property: 'business_status',
+        stops: IRSIndicatorStops.zambia2019,
+        type: 'categorical',
+      },
+      polygonLineColor: {
         property: 'business_status',
         stops: IRSIndicatorStops.zambia2019,
         type: 'categorical',
       },
     });
 
-    expect(buildJurisdictionLayersSpy).toBeCalledTimes(1);
+    expect(buildJurisdictionLayersSpy).toBeCalledTimes(2);
     expect(buildJurisdictionLayersSpy).toBeCalledWith(jurisdiction);
+
+    wrapper.unmount();
   });
 
   it('calls GisidaLite with the correct props', async () => {
@@ -502,6 +530,7 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     expect((mapProps as any).mapBounds).toEqual([32.565511, -13.9880892, 32.5732597, -13.9833719]);
     // Check Gisida component map layers
     expect((mapProps as any).layers.map((e: any) => e.key)).toMatchSnapshot('GisidaLite layers');
+    wrapper.unmount();
   });
 
   it('displays error correctly', async () => {
