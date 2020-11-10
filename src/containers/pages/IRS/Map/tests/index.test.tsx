@@ -446,6 +446,64 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     expect(buildJurisdictionLayersSpy).toBeCalledWith(jurisdiction);
   });
 
+  it('calls GisidaLite with the correct props', async () => {
+    const mock: any = jest.fn();
+    const kmz421StructureData = superset.processData(fixtures.ZambiaKMZ421StructuresJSON) || [];
+
+    store.dispatch(fetchGenericStructures('zm-kmz421-structures', kmz421StructureData));
+
+    const jurisdiction = getJurisdictionById(
+      store.getState(),
+      '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+    );
+
+    const structures = getGenericStructures(
+      store.getState(),
+      'zm-kmz421-structures',
+      '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+    );
+
+    const props = {
+      focusArea: getGenericJurisdictionByJurisdictionId(
+        store.getState(),
+        'zm-focusAreas',
+        '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+      ),
+      history,
+      jurisdiction,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: '92a0c5f3-8b47-465e-961b-2998ad3f00a5',
+          planId: (plans[0] as GenericPlan).plan_id,
+        },
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/${
+          (plans[0] as GenericPlan).plan_id
+        }/92a0c5f3-8b47-465e-961b-2998ad3f00a5/${MAP}`,
+      },
+      plan: plans[0] as GenericPlan,
+      structures,
+    };
+
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSReportingMap {...props} />
+      </Router>
+    );
+
+    await act(async () => {
+      await flushPromises();
+    });
+
+    const mapProps = wrapper.find('MemoizedGisidaLiteMock').props();
+    expect((mapProps as any).mapCenter).toEqual([32.569385350000005, -13.98573055]);
+    expect((mapProps as any).mapBounds).toEqual([32.565511, -13.9880892, 32.5732597, -13.9833719]);
+    // Check Gisida component map layers
+    expect((mapProps as any).layers.map((e: any) => e.key)).toMatchSnapshot('GisidaLite layers');
+  });
+
   it('displays error correctly', async () => {
     fetch.mockResponseOnce(JSON.stringify({}));
     const mock: any = jest.fn();
