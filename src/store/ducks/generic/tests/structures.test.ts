@@ -2,6 +2,7 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../..';
+import { ZambiaKMZ421StructuresJSON } from '../../../../containers/pages/IRS/JurisdictionsReport/fixtures';
 import reducer, {
   addGenericStructure,
   fetchGenericStructures,
@@ -92,6 +93,31 @@ describe('reducers/IRS/GenericStructure', () => {
       features: [],
       type: 'FeatureCollection',
     });
+  });
+
+  it('Filters structures by structure type', () => {
+    const kmz421StructureData = superset.processData(ZambiaKMZ421StructuresJSON) || [];
+    store.dispatch(fetchGenericStructures('zm-kmz421-structures', kmz421StructureData));
+
+    const structureType = ['Polygon'];
+
+    expect(
+      getGenericStructures(
+        store.getState(),
+        'zm-kmz421-structures',
+        '92a0c5f3-8b47-465e-961b-2998ad3f00a5',
+        'd40c1227-644b-55d6-b3f3-bed42380322f',
+        structureType
+      )
+    ).toEqual({
+      features: kmz421StructureData
+        .filter(e => structureType.includes(e?.geojson?.geometry?.type))
+        .map(e => e?.geojson),
+      type: 'FeatureCollection',
+    });
+
+    // reset
+    store.dispatch(removeGenericStructures('zm-kmz421-structures'));
   });
 
   it('Fetching structures does not replace the store', () => {

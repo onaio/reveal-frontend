@@ -4,6 +4,8 @@ import { ProgressBar } from '@onaio/progress-indicators';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
+import { featureCollection } from '@turf/helpers';
+import geojson from 'geojson';
 import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -45,6 +47,9 @@ import {
   CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
   HOME_URL,
   IRS_REPORT_STRUCTURES,
+  MULTI_POLYGON,
+  POINT,
+  POLYGON,
   REPORT_IRS_PLAN_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
@@ -79,6 +84,7 @@ import {
   buildGsLiteLayers,
   buildJurisdictionLayers,
   CircleColor,
+  PolygonColor,
 } from '../../FocusInvestigation/map/active/helpers/utils';
 import {
   defaultIndicatorStop,
@@ -322,12 +328,39 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
     stops: indicatorStops,
     type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
   };
+  // define polygon paint colors
+  const polygonColor: PolygonColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+  // define polygon line paint colors
+  const polygonLineColor: PolygonColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+
+  const points = structures?.features.filter(feature => feature.geometry.type === POINT);
+  const polygons = structures?.features.filter(feature =>
+    [POLYGON, MULTI_POLYGON].includes(feature.geometry.type)
+  );
+
+  const pointsFC = points ? featureCollection(points) : null;
+  const polygonsFC = polygons ? featureCollection(polygons) : null;
 
   // map layers
   const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
-  const structuresLayers = buildGsLiteLayers(IRS_REPORT_STRUCTURES, structures as any, null, {
-    circleColor,
-  });
+  const structuresLayers = buildGsLiteLayers(
+    IRS_REPORT_STRUCTURES,
+    pointsFC as geojson.FeatureCollection,
+    polygonsFC as geojson.FeatureCollection,
+    {
+      circleColor,
+      polygonColor,
+      polygonLineColor,
+    }
+  );
   const gsLayers = [...jurisdictionLayers, ...structuresLayers];
 
   return (

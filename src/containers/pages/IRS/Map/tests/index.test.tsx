@@ -1,5 +1,6 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
+import { featureCollection } from '@turf/helpers';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
@@ -10,7 +11,7 @@ import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
 import { JURISDICTION_NOT_FOUND, PLAN_NOT_FOUND } from '../../../../../configs/lang';
-import { MAP, REPORT_IRS_PLAN_URL } from '../../../../../constants';
+import { MAP, MULTI_POLYGON, POINT, POLYGON, REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import * as errors from '../../../../../helpers/errors';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
@@ -73,6 +74,7 @@ const history = createBrowserHistory();
 describe('components/IRS Reports/IRSReportingMap', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('renders without crashing', () => {
@@ -428,14 +430,39 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       plan: plans[0] as GenericPlan,
       structures,
     };
-    mount(
+
+    const points = structures?.features.filter(feature => feature.geometry.type === POINT);
+    const polygons = structures?.features.filter(feature =>
+      [POLYGON, MULTI_POLYGON].includes(feature.geometry.type)
+    );
+
+    const pointsFC = points ? featureCollection(points) : null;
+    const polygonsFC = polygons ? featureCollection(polygons) : null;
+
+    const wrapper = mount(
       <Router history={history}>
         <IRSReportingMap {...props} />
       </Router>
     );
+
+    // TODO: investigate why un-commenting the following renders the component twice
+    // await act(async () => {
+    //   await flushPromises();
+    // });
+
     expect(buildGsLiteLayersSpy).toBeCalledTimes(1);
-    expect(buildGsLiteLayersSpy).toBeCalledWith('irs_report_structures', structures, null, {
+    expect(buildGsLiteLayersSpy).toBeCalledWith('irs_report_structures', pointsFC, polygonsFC, {
       circleColor: {
+        property: 'business_status',
+        stops: IRSIndicatorStops.zambia2019,
+        type: 'categorical',
+      },
+      polygonColor: {
+        property: 'business_status',
+        stops: IRSIndicatorStops.zambia2019,
+        type: 'categorical',
+      },
+      polygonLineColor: {
         property: 'business_status',
         stops: IRSIndicatorStops.zambia2019,
         type: 'categorical',
@@ -444,6 +471,67 @@ describe('components/IRS Reports/IRSReportingMap', () => {
 
     expect(buildJurisdictionLayersSpy).toBeCalledTimes(1);
     expect(buildJurisdictionLayersSpy).toBeCalledWith(jurisdiction);
+
+    wrapper.unmount();
+  });
+
+  it('calls GisidaLite with the correct props', async () => {
+    const mock: any = jest.fn();
+    const kmz421StructureData = superset.processData(fixtures.ZambiaKMZ421StructuresJSON) || [];
+
+    store.dispatch(fetchGenericStructures('zm-kmz421-structures', kmz421StructureData));
+
+    const jurisdiction = getJurisdictionById(
+      store.getState(),
+      '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+    );
+
+    const structures = getGenericStructures(
+      store.getState(),
+      'zm-kmz421-structures',
+      '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+    );
+
+    const props = {
+      focusArea: getGenericJurisdictionByJurisdictionId(
+        store.getState(),
+        'zm-focusAreas',
+        '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+      ),
+      history,
+      jurisdiction,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: '92a0c5f3-8b47-465e-961b-2998ad3f00a5',
+          planId: (plans[0] as GenericPlan).plan_id,
+        },
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/${
+          (plans[0] as GenericPlan).plan_id
+        }/92a0c5f3-8b47-465e-961b-2998ad3f00a5/${MAP}`,
+      },
+      plan: plans[0] as GenericPlan,
+      structures,
+    };
+
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSReportingMap {...props} />
+      </Router>
+    );
+
+    await act(async () => {
+      await flushPromises();
+    });
+
+    const mapProps = wrapper.find('MemoizedGisidaLiteMock').props();
+    expect((mapProps as any).mapCenter).toEqual([32.569385350000005, -13.98573055]);
+    expect((mapProps as any).mapBounds).toEqual([32.565511, -13.9880892, 32.5732597, -13.9833719]);
+    // Check Gisida component map layers
+    expect((mapProps as any).layers.map((e: any) => e.key)).toMatchSnapshot('GisidaLite layers');
+    wrapper.unmount();
   });
 
   it('displays error correctly', async () => {
