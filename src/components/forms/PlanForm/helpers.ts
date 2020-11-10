@@ -530,7 +530,7 @@ export const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [str
   let title;
 
   const currentDate = target.name === 'date' ? target.value : formValues.date;
-  if (currentInterventionType === InterventionType.FI) {
+  if (isFIOrDynamicFI(currentInterventionType as InterventionType)) {
     const result = [
       currentFiStatus,
       currentJurisdiction,

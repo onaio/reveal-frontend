@@ -211,8 +211,8 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
   React.useEffect(() => {
     if (props.plan) {
       /**
-       * Plans present in state e.g when accesing this view from a list of plans or
-       * when the plans are expilcity fetched as in the above if block
+       * Plans present in state e.g when accessing this view from a list of plans or
+       * when the plans are explicitly fetched as in the above if block
        */
       fetchData(
         props.fetchGoalsActionCreator,
@@ -539,7 +539,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): MapStateToProps 
     });
   }
 
-  if (plan && jurisdiction && goals && goals.length > 1) {
+  if (plan && jurisdiction && goals && goals.length > 0) {
     /** include all complete index cases including current index case */
     currentPointIndexCases = getTasksFCSelector(state, {
       actionCode: CASE_CONFIRMATION_CODE,

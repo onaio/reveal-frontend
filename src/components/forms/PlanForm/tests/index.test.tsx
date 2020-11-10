@@ -1513,4 +1513,55 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
     expect(wrapper.find(`button.add-more-activities`).length).toEqual(0);
     wrapper.unmount();
   });
+
+  it('Plan title is set correctly for dynamic FI plans', async () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    const defaults = {
+      ...defaultInitialValues,
+      activities: planActivitiesMap[InterventionType.DynamicFI],
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm initialValues={defaults} />
+      </MemoryRouter>,
+      { attachTo: container }
+    );
+
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'Dynamic-FI' } });
+    // set jurisdiction id
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Nevada' } });
+    // Set fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'Routine' } });
+    // Set fiStatus field value
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'B2' } });
+
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.name
+    ).toEqual('B2-Nevada-2017-07-13');
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.title
+    ).toEqual('B2 Nevada 2017-07-13');
+  });
 });

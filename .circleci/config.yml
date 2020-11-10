@@ -16,9 +16,9 @@ jobs:
           REACT_APP_THEME_COLOR: '000000'
           REACT_APP_ENABLE_IRS: 'true'
           REACT_APP_ENABLE_FI: 'true'
-          REACT_APP_ENABLE_USERS: 'true'
+          REACT_APP_ENABLE_USERS: 'false'
           REACT_APP_ENABLE_ASSIGN: 'true'
-          REACT_APP_ENABLE_ABOUT: 'true'
+          REACT_APP_ENABLE_ABOUT: 'false'
           REACT_APP_ENABLE_TEAMS: 'true'
           REACT_APP_ENABLE_PRACTITIONERS: 'true'
           REACT_APP_DISABLE_LOGIN_PROTECTION: 'false'
@@ -42,8 +42,8 @@ jobs:
           REACT_APP_IRS_PLAN_COUNTRIES: 'NA,TH'
           REACT_APP_EXPRESS_OAUTH_GET_STATE_URL: 'http://localhost:3000/oauth/state'
           REACT_APP_EXPRESS_OAUTH_LOGOUT_URL: 'http://localhost:3000/logout'
-          REACT_APP_BACKEND_ACTIVE: true
-          REACT_APP_ENABLE_MDA_POINT: true
+          REACT_APP_BACKEND_ACTIVE: 'true'
+          REACT_APP_ENABLE_MDA_POINT: 'true'
 
     working_directory: ~/repo
 
