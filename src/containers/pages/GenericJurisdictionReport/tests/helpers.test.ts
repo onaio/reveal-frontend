@@ -73,7 +73,6 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
         jurisdictionId
       )
     ).toEqual(helpers.zambiaMDALowerJurisdictions);
-
     // jurisdiction_depth of 1
     jurisdictionId = 'ecfbf048-fb7a-47d8-a12b-61bf5d2a6e7b';
     expect(
@@ -85,5 +84,31 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
         jurisdictionId
       )
     ).toEqual(helpers.zambiaMDAUpperJurisdictions);
+  });
+
+  it('getColumnsToUse: should work with "is_leaf_node"', () => {
+    const jurisdictions = superset.processData(fixtures.ZambiaJurisdictionsJSON) || [];
+    const focusAreas = superset.processData(fixtures.ZambiaFocusAreasJSON) || [];
+    const jurisdictionColumn = 'zambiaJurisdictions2019';
+    const focusAreaColumn = 'zambiaFocusArea2019';
+    // lets test cases where "is_focus_area" is defined in the data
+    expect(
+      getColumnsToUse(
+        jurisdictions.concat(focusAreas),
+        jurisdictionColumn,
+        focusAreaColumn,
+        '-1', // --> something that actually cant work if "is_focus_area" fails
+        'ee21d269-1179-4d04-aea9-900155f890cd'
+      )
+    ).toEqual(helpers.ZambiaJurisdictionsColumns);
+    expect(
+      getColumnsToUse(
+        jurisdictions.concat(focusAreas),
+        jurisdictionColumn,
+        focusAreaColumn,
+        '-1', // --> something that actually cant work if "is_focus_area" fails
+        '4bcbad9e-77cd-47df-8674-fdf0fdf2d831'
+      )
+    ).toEqual(helpers.ZambiaFocusAreasColumns);
   });
 });
