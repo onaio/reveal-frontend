@@ -394,11 +394,14 @@ export const getColumnsToUse: GetColumnsToUse = (
   // Determine if this is a focus area level by checking if "is_leaf_node" exists and is true
   // Otherwise use the focusAreaLevel
   // TODO: remove focusAreaLevel once we fully transition to using "is_leaf_node"
-  let isFocusArea: boolean = true;
-  if (currLevelData[0].hasOwnProperty('is_leaf_node')) {
-    isFocusArea = currLevelData[0].is_leaf_node;
-  } else {
-    isFocusArea = currLevelData[0].jurisdiction_depth >= +focusAreaLevel;
+  let isFocusArea: boolean = false;
+
+  if (currLevelData.length > 0) {
+    if (currLevelData[0].hasOwnProperty('is_leaf_node')) {
+      isFocusArea = currLevelData[0].is_leaf_node;
+    } else {
+      isFocusArea = currLevelData[0].jurisdiction_depth >= +focusAreaLevel;
+    }
   }
 
   return currLevelData && currLevelData.length > 0 && isFocusArea
