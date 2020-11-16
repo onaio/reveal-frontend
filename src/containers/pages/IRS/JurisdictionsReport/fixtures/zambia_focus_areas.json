@@ -35,7 +35,8 @@
       "spraycov",
       "spraytarg",
       "spraysuccess",
-      "roomcov"
+      "roomcov",
+      "is_leaf_node"
     ],
     "order_by_cols": ["[\"jurisdiction_depth\", true]"],
     "adhoc_filters": [
@@ -92,6 +93,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -115,6 +117,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -138,6 +141,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -161,6 +165,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -184,6 +189,7 @@
         "spraytarg": 1.0,
         "spraysuccess": 0.8055555555555556,
         "roomcov": 0.8671875,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -207,6 +213,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -230,6 +237,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -253,6 +261,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -297,6 +306,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -341,6 +351,7 @@
         "spraytarg": 1.0,
         "spraysuccess": 1.0,
         "roomcov": 1.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -364,6 +375,7 @@
         "spraytarg": 1.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -387,6 +399,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1082,6 +1095,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1105,6 +1119,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1128,6 +1143,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1151,6 +1167,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1174,6 +1191,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1197,6 +1215,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1220,6 +1239,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1243,6 +1263,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1266,6 +1287,7 @@
         "spraytarg": 1.0,
         "spraysuccess": 0.7777777777777778,
         "roomcov": 0.9354838709677419,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1289,6 +1311,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1312,6 +1335,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1335,6 +1359,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1358,6 +1383,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1381,6 +1407,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1404,6 +1431,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1427,6 +1455,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1450,6 +1479,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1473,6 +1503,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1496,6 +1527,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1519,6 +1551,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1542,6 +1575,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1565,6 +1599,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1588,6 +1623,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1611,6 +1647,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1634,6 +1671,7 @@
         "spraytarg": 1.0,
         "spraysuccess": 0.5,
         "roomcov": 0.8636363636363636,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1657,6 +1695,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1680,6 +1719,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1703,6 +1743,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1726,6 +1767,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1749,6 +1791,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1772,6 +1815,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1795,6 +1839,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1818,6 +1863,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1841,6 +1887,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1864,6 +1911,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1887,6 +1935,7 @@
         "spraytarg": 1.0,
         "spraysuccess": 0.7157894736842105,
         "roomcov": 0.8666666666666667,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1910,6 +1959,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1933,6 +1983,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1956,6 +2007,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -1979,6 +2031,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2002,6 +2055,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2025,6 +2079,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2048,6 +2103,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2071,6 +2127,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2094,6 +2151,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2117,6 +2175,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2140,6 +2199,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2163,6 +2223,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2186,6 +2247,7 @@
         "spraytarg": 1.0,
         "spraysuccess": 0.25,
         "roomcov": 0.5714285714285714,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2209,6 +2271,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2232,6 +2295,7 @@
         "spraytarg": 1.0,
         "spraysuccess": 0.875,
         "roomcov": 0.9142857142857143,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2255,6 +2319,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2278,6 +2343,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2301,6 +2367,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2324,6 +2391,7 @@
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       },
@@ -2347,6 +2415,7 @@
         "spraytarg": 0.8,
         "spraysuccess": 0.7777777777777778,
         "roomcov": 0.8840579710144928,
+        "is_leaf_node": true,
         "notsprayed_reasons": "[\"locked\", \"locked\", \"locked\", \"locked\", \"other\"]",
         "notsprayed_reasons_counts": "{\"locked\": 13, \"refused\": 2, \"other\": 1}"
       }
