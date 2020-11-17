@@ -32,12 +32,13 @@ export const NamibiaColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Target Coverage',
     accessor: 'targetcoverage',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
-
     accessor: 'foundcoverage',
+    sortType: 'basic',
   },
   {
     Header: 'Refusals',
@@ -46,15 +47,15 @@ export const NamibiaColumns = [
         Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following first visit',
         accessor: 'refusalsfirst',
-
         id: 'refusalsfirst',
+        sortType: 'basic',
       },
       {
         Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following mop-up',
         accessor: 'refusalsmopup',
-
         id: 'refusalsmopup',
+        sortType: 'basic',
       },
     ],
   },
@@ -65,15 +66,15 @@ export const NamibiaColumns = [
         Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following first visit',
         accessor: 'lockedfirst',
-
         id: 'lockedfirst',
+        sortType: 'basic',
       },
       {
         Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following mop-up',
         accessor: 'lockedmopup',
-
         id: 'lockedmopup',
+        sortType: 'basic',
       },
     ],
   },
@@ -102,6 +103,7 @@ export const ZambiaJurisdictionsColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: '% visited Spray Areas Effectively sprayed',
     accessor: 'perctvisareaseffect',
+    sortType: 'basic',
   },
   {
     Header: 'Total Structures',
@@ -119,6 +121,7 @@ export const ZambiaJurisdictionsColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray coverage of targeted (Progress)',
     accessor: 'spraycovtarg',
+    sortType: 'basic',
   },
   {
     Header: 'Structures Found',
@@ -128,11 +131,13 @@ export const ZambiaJurisdictionsColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
     accessor: 'foundcoverage',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Success Rate',
     accessor: 'spraysuccess',
+    sortType: 'basic',
   },
 ];
 
@@ -171,11 +176,13 @@ export const IRSLiteZambiaJurisdictionsColumns = [
     Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: '% Total Structures Sprayed',
     accessor: 'spraycov',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: '% Targeted Structures Sprayed',
     accessor: 'spraycovtarg',
+    sortType: 'basic',
   },
   {
     Header: 'Structures Found',
@@ -185,11 +192,13 @@ export const IRSLiteZambiaJurisdictionsColumns = [
     Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
     accessor: 'foundcoverage',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
     Header: 'Success Rate',
     accessor: 'spraysuccess',
+    sortType: 'basic',
   },
 ];
 
@@ -212,6 +221,7 @@ export const mdaJurisdictionsColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'MMA Coverage (%)',
     accessor: 'mmacovper',
+    sortType: 'basic',
   },
   {
     Header: 'SACs Refused',
@@ -225,11 +235,13 @@ export const mdaJurisdictionsColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'ADR Reported (%)',
     accessor: 'mmaadr',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'ADR Severe (%)',
     accessor: 'mmaadrsev',
+    sortType: 'basic',
   },
   {
     Header: 'Alb Tablets Distributed',
@@ -260,16 +272,19 @@ export const ZambiaFocusAreasColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray Coverage (Effectiveness)',
     accessor: 'spraycov',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
     accessor: 'spraytarg',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray Success Rate (PMI SC)',
     accessor: 'spraysuccess',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => {
@@ -301,11 +316,13 @@ export const zambiaMDALowerJurisdictions = [
     Cell: (cell: Cell) => renderPercentage(cell),
     Header: 'Registered Children Treated (%)',
     accessor: 'registeredchildrentreated_per',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => renderPercentage(cell),
     Header: 'Structures Visited (%)',
     accessor: 'structures_visited_per',
+    sortType: 'basic',
   },
   {
     Header: '# Of Children Treated',
@@ -326,11 +343,13 @@ zambiaMDAUpperJurisdictions.splice(
     Cell: (cell: Cell) => renderPercentage(cell),
     Header: 'Expected Children Found (%)',
     accessor: 'expectedchildren_found',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => renderPercentage(cell),
     Header: 'Expected Children Treated (%)',
     accessor: 'expectedchildren_treated',
+    sortType: 'basic',
   }
 );
 
