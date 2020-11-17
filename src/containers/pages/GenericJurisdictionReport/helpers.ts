@@ -298,6 +298,7 @@ export const ZambiaFocusAreasColumns = [
     },
     Header: 'Structures remaining to spray to reach 90% SE',
     accessor: 'structures_remaining_to_90_se',
+    sortType: 'basic',
   },
   {
     Header: 'Reviewed with decision',
