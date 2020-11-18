@@ -178,13 +178,14 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
 
 /** Map View for Single Active Focus Investigation */
 const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RouteParams>) => {
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     if (!props.plan) {
       /**
        * Fetch plans incase the plan is not available e.g when page is refreshed
        */
+      setIsLoading(true);
       const { supersetService, fetchPlansActionCreator, match } = props;
       if (match.params.id) {
         supersetFIPlansParamFilters.push({
