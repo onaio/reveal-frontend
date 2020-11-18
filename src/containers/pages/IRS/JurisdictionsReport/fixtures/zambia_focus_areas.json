@@ -671,7 +671,7 @@
         "sprayed_rooms_sprayed": 0,
         "foundstruct": 0,
         "sprayedstruct": 0,
-        "spraycov": 0.0,
+        "spraycov": 0.23,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0
@@ -1691,7 +1691,7 @@
         "sprayed_rooms_sprayed": 0,
         "foundstruct": 0,
         "sprayedstruct": 0,
-        "spraycov": 0.0,
+        "spraycov": 0.81,
         "spraytarg": 0.0,
         "spraysuccess": 0.0,
         "roomcov": 0.0,
