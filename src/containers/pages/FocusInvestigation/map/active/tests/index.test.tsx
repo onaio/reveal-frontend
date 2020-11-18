@@ -773,6 +773,34 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
+  it('should show error page when no plans or jurisdictions', async () => {
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const props = {
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+      },
+      plan: null,
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    expect(wrapper.find('ErrorPage').length).toBeTruthy();
+    expect(wrapper.find('ErrorPage').text()).toMatchInlineSnapshot(
+      `"An error ocurred. Please try and refresh the page.The specific error is: Plan or Jurisdiction not found"`
+    );
+    wrapper.unmount();
+  });
+
   /**
    * @todo Investigate why this test case that contains jest.spyon is leading to failure of other tests
    * above. It is intentionally put at the end to eliminate this
