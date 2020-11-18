@@ -25,6 +25,7 @@ import {
   INVESTIGATION,
   MEASURE,
   NUMERATOR_OF_DENOMINATOR_UNITS,
+  PLAN_OR_JURISDICTION_NOT_FOUND,
   PLAN_SELECT_PLACEHOLDER,
   PROGRESS,
   REACTIVE_INVESTIGATION,
@@ -106,6 +107,7 @@ import {
 } from './helpers/utils';
 import './style.css';
 
+import { ErrorPage } from '../../../../../components/page/ErrorPage';
 import { supersetFIPlansParamFilters } from '../../../../../helpers/dataLoading/plans';
 import indexCasesReducer, {
   fetchIndexCaseDetails,
@@ -176,6 +178,8 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
 
 /** Map View for Single Active Focus Investigation */
 const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RouteParams>) => {
+  const [isLoading, setIsLoading] = React.useState(true);
+
   React.useEffect(() => {
     if (!props.plan) {
       /**
@@ -201,7 +205,10 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
         fetchPlansActionCreator,
         supersetService,
         supersetParams
-      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+      )
+        // tslint:disable-next-line: no-floating-promises
+        .catch(() => displayError(new Error(AN_ERROR_OCCURRED)))
+        .finally(() => setIsLoading(false));
     }
     /**
      * We do not need to re-run since this effect doesn't depend on any values from props or state
@@ -214,6 +221,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
        * Plans present in state e.g when accessing this view from a list of plans or
        * when the plans are explicitly fetched as in the above if block
        */
+      setIsLoading(true);
       fetchData(
         props.fetchGoalsActionCreator,
         props.fetchJurisdictionsActionCreator,
@@ -223,7 +231,10 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
         props.fetchIndexCaseActionCreator,
         props.plan,
         props.supersetService
-      ).catch((_: Error) => displayError(new Error(AN_ERROR_OCCURRED)));
+      )
+        // tslint:disable-next-line: no-floating-promises
+        .catch((_: Error) => displayError(new Error(AN_ERROR_OCCURRED)))
+        .finally(() => setIsLoading(false));
     }
     /**
      * Only re-run effect if props.plan.plan_id changes
@@ -253,8 +264,12 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     currentPointIndexCases,
     currentPolyIndexCases,
   } = props;
-  if (!jurisdiction || !plan) {
+  if (isLoading) {
     return <Loading />;
+  }
+
+  if (!plan || !jurisdiction) {
+    return <ErrorPage errorMessage={PLAN_OR_JURISDICTION_NOT_FOUND} />;
   }
 
   /** filter out this plan form plans by focusArea */
