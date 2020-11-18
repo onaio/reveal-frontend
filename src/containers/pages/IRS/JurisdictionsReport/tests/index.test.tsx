@@ -543,4 +543,100 @@ describe('components/IRS Reports/JurisdictionReport', () => {
       .map((node, i) => expect(node.text()).toMatchSnapshot(`header on Spray Areas display ${i}`));
     expect(wrapper.find('.thead .th').length).toEqual(9);
   });
+
+  it('sorts computed columns correctly', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+    store.dispatch(fetchGenericJurisdictions('11', jurisdictionData));
+    store.dispatch(fetchGenericJurisdictions('12', focusAreaData));
+    const props = {
+      history,
+      location: {
+        hash: '',
+        pathname: REPORT_IRS_PLAN_URL,
+        search: '',
+        state: undefined,
+      },
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: '2bf9915d-8725-4061-983d-5938802ac0f0',
+          planId: '9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d',
+        },
+        path: `${REPORT_IRS_PLAN_URL}/:planId`,
+        url: `${REPORT_IRS_PLAN_URL}/9f1e0cfa-5313-49ff-af2c-f7dbf4fbdb9d`,
+      },
+      service: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedJurisdictionReport {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    // sorting of computed column
+
+    // row not sorted
+    expect(
+      wrapper.find('.tbody .tr').map(row =>
+        row
+          .find('.td')
+          .at(4)
+          .text()
+      )
+    ).toEqual(['100%', '100%', '23%', '0%', '50%', '81%', '0%']);
+
+    // sort in ascending order
+    wrapper
+      .find('.thead .th')
+      .at(4)
+      .simulate('click');
+    wrapper.update();
+    expect(
+      wrapper.find('.tbody .tr').map(row =>
+        row
+          .find('.td')
+          .at(4)
+          .text()
+      )
+    ).toEqual(['0%', '0%', '23%', '50%', '81%', '100%', '100%']);
+
+    // sort in descending order
+    wrapper
+      .find('.thead .th')
+      .at(4)
+      .simulate('click');
+    wrapper.update();
+    expect(
+      wrapper.find('.tbody .tr').map(row =>
+        row
+          .find('.td')
+          .at(4)
+          .text()
+      )
+    ).toEqual(['100%', '100%', '81%', '50%', '23%', '0%', '0%']);
+
+    // Clear sort
+    wrapper
+      .find('.thead .th')
+      .at(4)
+      .simulate('click');
+    wrapper.update();
+    expect(
+      wrapper.find('.tbody .tr').map(row =>
+        row
+          .find('.td')
+          .at(4)
+          .text()
+      )
+    ).toEqual(['100%', '100%', '23%', '0%', '50%', '81%', '0%']);
+  });
 });
