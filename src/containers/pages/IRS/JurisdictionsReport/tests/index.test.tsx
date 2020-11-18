@@ -583,8 +583,9 @@ describe('components/IRS Reports/JurisdictionReport', () => {
     });
 
     // sorting of computed column
+    // test uses column 5 `Spray Coverage (Effectiveness)` of zambia focus area
 
-    // row not sorted
+    // initial column state
     expect(
       wrapper.find('.tbody .tr').map(row =>
         row
