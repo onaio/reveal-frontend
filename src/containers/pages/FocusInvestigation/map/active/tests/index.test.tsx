@@ -1,4 +1,5 @@
 import superset from '@onaio/superset-connector';
+import { act } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
@@ -92,7 +93,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     );
   });
 
-  it('renders SingleActiveFimap correctly & changes page title', () => {
+  it('renders SingleActiveFimap correctly & changes page title', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -118,6 +119,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     // what is passed as the document page title text
     const helmet = Helmet.peek();
@@ -153,7 +158,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
-  it('works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks)', () => {
+  it('works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks)', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
@@ -181,7 +186,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     // case confirmation activity link si not clickable
     expect(wrapper.find(CASE_CONFIRMATION_GOAL_ID)).toMatchSnapshot('Should not be clickable tag');
@@ -214,7 +222,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
-  it('works correctly with Redux store when there is just one goal', () => {
+  it('works correctly with Redux store when there is just one goal', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     store.dispatch(fetchGoals(processedOneGoalGoals));
@@ -240,7 +248,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     const mapProps = wrapper.find('MemoizedGisidaLiteMock').props();
     expect((mapProps as any).mapCenter).toEqual([99.36859975, 11.33824805]);
@@ -388,7 +399,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       ['123', jurisdictionParams],
     ];
 
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
     expect(supersetServiceMock.mock.calls).toEqual(callList);
     expect(supersetServiceMock).toHaveBeenCalledTimes(7);
     expect((superset.getFormData as any).mock.calls).toEqual(getformDataCallList);
@@ -412,7 +425,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
     expect(supersetServiceMock.mock.calls.length).toEqual(1);
     wrapper.unmount();
   });
@@ -437,12 +452,14 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
     expect(supersetServiceMock.mock.calls.length).toEqual(7);
     wrapper.unmount();
   });
 
-  it('displays the correct badge and mark complete when plan status is active', () => {
+  it('displays the correct badge and mark complete when plan status is active', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -468,12 +485,16 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(wrapper.find('Badge').prop('color')).toEqual('warning');
     expect(toJson(wrapper.find('MarkCompleteLink'))).toMatchSnapshot('mark complete link');
     wrapper.unmount();
   });
 
-  it('displays the correct badge and mark complete link when the plan status is draft', () => {
+  it('displays the correct badge and mark complete link when the plan status is draft', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -499,12 +520,16 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(wrapper.find('Badge').prop('color')).toEqual('warning');
     expect(wrapper.find('MarkCompleteLink').isEmptyRender()).toBe(true);
     wrapper.unmount();
   });
 
-  it('displays the correct badge and mark complete link when the plan status is complete', () => {
+  it('displays the correct badge and mark complete link when the plan status is complete', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -530,12 +555,16 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(wrapper.find('Badge').prop('color')).toEqual('success');
     expect(wrapper.find('MarkCompleteLink').isEmptyRender()).toBe(true);
     wrapper.unmount();
   });
 
-  it('renders correct detail view when plan focus investigation reason is routine', () => {
+  it('renders correct detail view when plan focus investigation reason is routine', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -561,6 +590,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(
       toJson(
         wrapper
@@ -572,7 +605,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
-  it('renders correct detail view when plan focus investigation reason is case triggered', () => {
+  it('renders correct detail view when plan focus investigation reason is case triggered', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -598,6 +631,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(
       toJson(
         wrapper
@@ -699,7 +736,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
     expect(displayErrorMock).toHaveBeenCalledTimes(7);
     wrapper.unmount();
   });
@@ -726,9 +765,39 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
     expect(displayErrorMock).toHaveBeenCalledTimes(1);
     expect(displayErrorMock).toHaveBeenCalledWith(new Error(AN_ERROR_OCCURRED));
+    wrapper.unmount();
+  });
+
+  it('should show error page when no plans or jurisdictions', async () => {
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const props = {
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+      },
+      plan: null,
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    expect(wrapper.find('ErrorPage').length).toBeTruthy();
+    expect(wrapper.find('ErrorPage').text()).toMatchInlineSnapshot(
+      `"An error ocurred. Please try and refresh the page.The specific error is: Plan or Jurisdiction not found"`
+    );
     wrapper.unmount();
   });
 
@@ -736,7 +805,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
    * @todo Investigate why this test case that contains jest.spyon is leading to failure of other tests
    * above. It is intentionally put at the end to eliminate this
    */
-  it('selectors get called with correct arguments', () => {
+  it('selectors get called with correct arguments', async () => {
     // spy on the selectors
     const planByIdMock = jest.spyOn(planDucks, 'getPlanById');
     const currentGoalMock = jest.spyOn(goalDucks, 'getCurrentGoal');
@@ -772,6 +841,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
+    await act(async () => {
+      await flushPromises();
+    });
 
     // define expected results
     const planByIdExpected = [fixturesMap.existingState, 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f'];
