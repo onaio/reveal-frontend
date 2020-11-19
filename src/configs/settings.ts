@@ -789,10 +789,8 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-            description:
-              'Trigger when a Family Registration or Family Member Registration event is submitted',
-            expression:
-              "questionnaire = 'Family_Registration' or questionnaire = 'Family_Member_Registration'",
+            description: 'Trigger when a Family Member Registration event is submitted',
+            expression: "questionnaire = 'Family_Member_Registration'",
           },
           name: 'event-submission',
           type: NAMED_EVENT_TRIGGER_TYPE,
