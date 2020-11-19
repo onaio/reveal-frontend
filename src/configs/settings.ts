@@ -704,14 +704,6 @@ export const planActivities: PlanActivities = {
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
-        {
-          expression: {
-            description: 'Register structure event submitted for a residential structure',
-            expression:
-              "$this.is(FHIR.Location)  or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')",
-          },
-          kind: APPLICABILITY_CONDITION_KIND,
-        },
       ],
       definitionUri: 'bednet_distribution.json',
       description: BEDNET_ACTIVITY_DESCRIPTION,
