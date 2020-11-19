@@ -312,7 +312,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(wrapper.find('GisidaLite').text()).toEqual('Map is in the box');
   });
 
-  it('displays loader if plan not found', async () => {
+  it('displays error page if plan not found', async () => {
     // use dispatch
     store.dispatch(fetchPlans([]));
     store.dispatch(fetchJurisdictions(fixturesMap.processedJurisdictionJSON));
@@ -353,10 +353,14 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(componentProps.currentPolyIndexCases).toEqual(null);
     expect(componentProps.historicalPointIndexCases).toEqual(null);
     expect(componentProps.historicalPolyIndexCases).toEqual(null);
-    expect(wrapper.find('Ripple').length).toEqual(1);
+
+    expect(wrapper.find('ErrorPage').length).toBeTruthy();
+    expect(wrapper.find('ErrorPage').text()).toMatchInlineSnapshot(
+      `"An error ocurred. Please try and refresh the page.The specific error is: Plan or Jurisdiction not found"`
+    );
   });
 
-  it('displays loader if jurisdiction not found', async () => {
+  it('displays error page if jurisdiction not found', async () => {
     // use dispatch
     store.dispatch(fetchPlans(fixturesMap.processedPlansJSON));
     store.dispatch(fetchJurisdictions([]));
@@ -397,6 +401,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(componentProps.currentPolyIndexCases).toEqual(null);
     expect(componentProps.historicalPointIndexCases).toEqual(null);
     expect(componentProps.historicalPolyIndexCases).toEqual(null);
-    expect(wrapper.find('Ripple').length).toEqual(1);
+
+    expect(wrapper.find('ErrorPage').length).toBeTruthy();
+    expect(wrapper.find('ErrorPage').text()).toMatchInlineSnapshot(
+      `"An error ocurred. Please try and refresh the page.The specific error is: Plan or Jurisdiction not found"`
+    );
   });
 });
