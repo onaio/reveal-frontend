@@ -1001,5 +1001,5 @@ export const formatDates = (
   fallbackText: string = INVALID_DATE
 ) => {
   const date = moment(value);
-  return date.isValid() ? date.format(dateFormat) : fallbackText;
+  return date.isValid() && typeof value === 'string' ? date.format(dateFormat) : fallbackText;
 };
