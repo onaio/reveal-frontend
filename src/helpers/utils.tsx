@@ -7,6 +7,7 @@ import { Color } from 'csstype';
 import { Location } from 'history';
 import { findKey, trimStart, uniq } from 'lodash';
 import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
+import moment from 'moment';
 import querystring from 'querystring';
 import { MouseEvent } from 'react';
 import React from 'react';
@@ -31,6 +32,7 @@ import {
   ACTION,
   FAILED_TO_EXTRACT_PLAN_RECORD,
   FOCUS_AREA_HEADER,
+  INVALID_DATE,
   JURISDICTION_ID,
   JURISDICTION_METADATA,
   JURISDICTION_NAME,
@@ -985,4 +987,19 @@ export type DefaultDrillDownPropsType = Pick<
  */
 export const getPlanStatusToDisplay = (planStatuses: string[]): string[] => {
   return Object.values(PlanStatus).filter(status => !planStatuses.includes(status));
+};
+
+/**
+ *
+ * @param {string | number} value - string date
+ * @param {string} dateFarmat - format of returned date
+ * @param {string} fallbackText fall back value when string date not valid
+ */
+export const formatDates = (
+  value: string | number,
+  dateFormat: string,
+  fallbackText: string = INVALID_DATE
+) => {
+  const date = moment(value);
+  return date.isValid() ? date.format(dateFormat) : fallbackText;
 };

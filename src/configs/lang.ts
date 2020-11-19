@@ -915,3 +915,5 @@ export const JURISDICTION_NOT_FOUND = translate(
   'JURISDICTION_NOT_FOUND',
   'Map failed to load: Jurisdiction not found'
 );
+
+export const INVALID_DATE = translate('INVALID_DATE', 'Invalid Date');
