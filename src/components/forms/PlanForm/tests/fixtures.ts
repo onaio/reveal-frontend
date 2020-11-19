@@ -1406,14 +1406,6 @@ export const DynamicFIPlan = {
             subjectCodableConcept: { text: 'Family' },
           },
         },
-        {
-          kind: 'applicability',
-          expression: {
-            description: 'Register structure event submitted for a residential structure',
-            expression:
-              '$this.is(FHIR.Location)  or (questionnaire \u003d \u0027Register_Structure\u0027 and $this.item.where(linkId\u003d\u0027structureType\u0027).answer.value \u003d\u0027Residential Structure\u0027)',
-          },
-        },
       ],
       definitionUri: 'bednet_distribution.json',
       type: 'create',
