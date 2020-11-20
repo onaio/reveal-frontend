@@ -990,7 +990,7 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description: 'Trigger when a Register_Structure event is submitted',
-            expression: "questionnaire = 'Register_Structure'",
+            expression: "questionnaire = 'Register_Structure' or questionnaire = 'Archive_Family'",
           },
           name: 'event-submission',
           type: NAMED_EVENT_TRIGGER_TYPE,
