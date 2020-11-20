@@ -1,7 +1,6 @@
 import { DropDownCellProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { ceil, get } from 'lodash';
-import moment from 'moment';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Cell } from 'react-table';
@@ -26,14 +25,8 @@ import {
   VISITED_SPRAYED,
 } from '../../../../../configs/lang';
 import { renderPercentage } from '../../../../../helpers/indicators';
+import { formatDates } from '../../../../../helpers/utils';
 import { GenericJurisdiction } from '../../../../../store/ducks/generic/jurisdictions';
-
-const formatDates = (value: string | number, fallbackText: string) => {
-  if (typeof value === 'string') {
-    return moment(value).format('DD-MMM');
-  }
-  return fallbackText;
-};
 
 /** focus Areas mop-up reporting columns */
 export const ZambiaIRSMopupFocusArea = [
@@ -67,12 +60,12 @@ export const ZambiaIRSMopupFocusArea = [
   { Cell: (cell: Cell) => renderPercentage(cell), Header: FOUND_COVERAGE, accessor: 'spraytarg' },
   { Cell: (cell: Cell) => renderPercentage(cell), Header: SPRAY_COVERAGE, accessor: 'spraycov' },
   {
-    Cell: ({ value }: Cell) => formatDates(value, NOT_VISITED),
+    Cell: ({ value }: Cell) => formatDates(value, 'DD-MMM', NOT_VISITED),
     Header: DATE_OF_LAST_VISIT,
     accessor: 'latest_spray_event_date',
   },
   {
-    Cell: ({ value }: Cell) => formatDates(value, NO_DECISION_FORM),
+    Cell: ({ value }: Cell) => formatDates(value, 'DD-MMM', NO_DECISION_FORM),
     Header: DATE_OF_LAST_DECISION_FROM,
     accessor: 'latest_sa_event_date',
   },
