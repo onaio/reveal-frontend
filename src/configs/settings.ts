@@ -704,14 +704,6 @@ export const planActivities: PlanActivities = {
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
-        {
-          expression: {
-            description: 'Register structure event submitted for a residential structure',
-            expression:
-              "$this.is(FHIR.Location)  or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')",
-          },
-          kind: APPLICABILITY_CONDITION_KIND,
-        },
       ],
       definitionUri: 'bednet_distribution.json',
       description: BEDNET_ACTIVITY_DESCRIPTION,
@@ -797,10 +789,8 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-            description:
-              'Trigger when a Family Registration or Family Member Registration event is submitted',
-            expression:
-              "questionnaire = 'Family_Registration' or questionnaire = 'Family_Member_Registration'",
+            description: 'Trigger when a Family Member Registration event is submitted',
+            expression: "questionnaire = 'Family_Member_Registration'",
           },
           name: 'event-submission',
           type: NAMED_EVENT_TRIGGER_TYPE,
