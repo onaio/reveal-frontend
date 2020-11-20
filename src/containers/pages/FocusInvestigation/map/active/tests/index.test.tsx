@@ -743,6 +743,33 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
+  it("should skip fetching data for slices with id '0'", async () => {
+    const envModule = require('../../../../../../configs/env');
+    envModule.SUPERSET_JURISDICTIONS_SLICE = '0';
+    envModule.SUPERSET_JURISDICTION_EVENTS_SLICE = '0';
+    envModule.SUPERSET_PLANS_SLICE = '0';
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const fetchGoalsActionsCreatorMock: any = jest.fn();
+    const fetchJurisdictionsActionCreatorMock: any = jest.fn();
+    const fetchPlansActionCreatorMock: any = jest.fn();
+    const fetchStructuresActionCreatorMock: any = jest.fn();
+    const fetchTasksActionCreatorMock: any = jest.fn();
+    const fetchIndexCasesDetailsActionCreator: any = jest.fn();
+    const plan = fixtures.plan1;
+    void utils.fetchData(
+      fetchGoalsActionsCreatorMock,
+      fetchJurisdictionsActionCreatorMock,
+      fetchPlansActionCreatorMock,
+      fetchStructuresActionCreatorMock,
+      fetchTasksActionCreatorMock,
+      fetchIndexCasesDetailsActionCreator,
+      plan,
+      supersetServiceMock
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(supersetServiceMock.mock.calls.length).toBe(4);
+  });
+
   it('handles fetchData promise errors correctly', async () => {
     jest.spyOn(utils, 'fetchData').mockReturnValue(Promise.reject('fetch data promise failed'));
     const supersetServiceMock: any = jest.fn(() => Promise.reject('error'));
