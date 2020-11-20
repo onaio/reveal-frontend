@@ -129,11 +129,6 @@ export const fetchData = async (
       { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
     ]);
 
-    /** define superset params for filtering by plan_id */
-    const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-      { comparator: plan.plan_id, operator: '==', subject: PLAN_ID },
-    ]);
-
     /** define superset params for goals */
     const goalsParams = superset.getFormData(
       SUPERSET_MAX_RECORDS,
@@ -141,10 +136,12 @@ export const fetchData = async (
       { action_prefix: true }
     );
 
-    /** filter caseConfirmation tasks by action code and jurisdiction_id */
-    const tasksParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-      { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
-      { comparator: GOAL_CONFIRMATION_GOAL_ID, operator: '==', subject: GOAL_ID },
+    /** filter caseConfirmation tasks by action code and jurisdiction_id or by plan_id */
+    const allTasksParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
+      {
+        sqlExpression: `(${PLAN_ID} = '${plan.plan_id}') OR 
+            (${JURISDICTION_ID} = '${plan.jurisdiction_id}' AND ${GOAL_ID} = '${GOAL_CONFIRMATION_GOAL_ID}')`,
+      },
     ]);
 
     if (SUPERSET_JURISDICTIONS_SLICE !== '0') {
@@ -188,14 +185,7 @@ export const fetchData = async (
         SUPERSET_TASKS_SLICE,
         fetchTasksActionCreator,
         supersetService,
-        supersetParams
-      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
-
-      supersetCall<FetchTasksAction>(
-        SUPERSET_TASKS_SLICE,
-        fetchTasksActionCreator,
-        supersetService,
-        tasksParams
+        allTasksParams
       ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
     }
 
