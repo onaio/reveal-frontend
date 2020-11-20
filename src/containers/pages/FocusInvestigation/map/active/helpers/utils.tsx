@@ -147,54 +147,66 @@ export const fetchData = async (
       { comparator: GOAL_CONFIRMATION_GOAL_ID, operator: '==', subject: GOAL_ID },
     ]);
 
-    supersetCall(
-      SUPERSET_JURISDICTIONS_SLICE,
-      fetchJurisdictionsActionCreator,
-      supersetService,
-      jurisdictionsParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    if (SUPERSET_JURISDICTIONS_SLICE !== '0') {
+      supersetCall(
+        SUPERSET_JURISDICTIONS_SLICE,
+        fetchJurisdictionsActionCreator,
+        supersetService,
+        jurisdictionsParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    }
 
-    supersetCall<SetStructuresAction>(
-      SUPERSET_STRUCTURES_SLICE,
-      fetchStructuresActionCreator,
-      supersetService,
-      jurisdictionsParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    if (SUPERSET_STRUCTURES_SLICE !== '0') {
+      supersetCall<SetStructuresAction>(
+        SUPERSET_STRUCTURES_SLICE,
+        fetchStructuresActionCreator,
+        supersetService,
+        jurisdictionsParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    }
 
-    supersetCall<FetchPlansAction>(
-      SUPERSET_PLANS_SLICE,
-      fetchPlansActionCreator,
-      supersetService,
-      jurisdictionsParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    if (SUPERSET_PLANS_SLICE !== '0') {
+      supersetCall<FetchPlansAction>(
+        SUPERSET_PLANS_SLICE,
+        fetchPlansActionCreator,
+        supersetService,
+        jurisdictionsParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    }
 
-    supersetCall<FetchGoalsAction>(
-      SUPERSET_GOALS_SLICE,
-      fetchGoalsActionCreator,
-      supersetService,
-      goalsParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    if (SUPERSET_GOALS_SLICE !== '0') {
+      supersetCall<FetchGoalsAction>(
+        SUPERSET_GOALS_SLICE,
+        fetchGoalsActionCreator,
+        supersetService,
+        goalsParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    }
 
-    supersetCall<FetchTasksAction>(
-      SUPERSET_TASKS_SLICE,
-      fetchTasksActionCreator,
-      supersetService,
-      supersetParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    if (SUPERSET_TASKS_SLICE !== '0') {
+      supersetCall<FetchTasksAction>(
+        SUPERSET_TASKS_SLICE,
+        fetchTasksActionCreator,
+        supersetService,
+        supersetParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
 
-    supersetCall<FetchTasksAction>(
-      SUPERSET_TASKS_SLICE,
-      fetchTasksActionCreator,
-      supersetService,
-      tasksParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+      supersetCall<FetchTasksAction>(
+        SUPERSET_TASKS_SLICE,
+        fetchTasksActionCreator,
+        supersetService,
+        tasksParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    }
 
-    supersetCall(
-      SUPERSET_JURISDICTION_EVENTS_SLICE,
-      fetchIndexCaseActionCreator,
-      supersetService,
-      jurisdictionsParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    if (SUPERSET_JURISDICTION_EVENTS_SLICE !== '0') {
+      supersetCall(
+        SUPERSET_JURISDICTION_EVENTS_SLICE,
+        fetchIndexCaseActionCreator,
+        supersetService,
+        jurisdictionsParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    }
   }
 };
 
