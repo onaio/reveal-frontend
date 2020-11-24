@@ -313,10 +313,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       adhoc_filters: [
         {
           clause: 'WHERE',
-          comparator: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
-          expressionType: 'SIMPLE',
-          operator: '==',
-          subject: 'plan_id',
+          expressionType: 'SQL',
+          sqlExpression: `(plan_id = '10f9e9fa-ce34-4b27-a961-72fab5206ab6') OR 
+            (jurisdiction_id = '450fc15b-5bd2-468a-927a-49cb10d3bcac' AND goal_id = 'Case_Confirmation')`,
         },
       ],
       row_limit: 3000,
@@ -345,7 +344,6 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
           },
         ],
       ],
-      [3000, [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }]],
       [
         3000,
         [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }],
@@ -355,14 +353,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         3000,
         [
           {
-            comparator: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
-            operator: '==',
-            subject: 'jurisdiction_id',
-          },
-          {
-            comparator: 'Case_Confirmation',
-            operator: '==',
-            subject: 'goal_id',
+            sqlExpression: `(plan_id = '10f9e9fa-ce34-4b27-a961-72fab5206ab6') OR 
+            (jurisdiction_id = '450fc15b-5bd2-468a-927a-49cb10d3bcac' AND goal_id = 'Case_Confirmation')`,
           },
         ],
       ],
@@ -374,28 +366,6 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       [0, jurisdictionParams],
       [3, goalParams],
       [4, supersetParams],
-      [
-        4,
-        {
-          adhoc_filters: [
-            {
-              clause: 'WHERE',
-              comparator: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
-              expressionType: 'SIMPLE',
-              operator: '==',
-              subject: 'jurisdiction_id',
-            },
-            {
-              clause: 'WHERE',
-              comparator: 'Case_Confirmation',
-              expressionType: 'SIMPLE',
-              operator: '==',
-              subject: 'goal_id',
-            },
-          ],
-          row_limit: 3000,
-        },
-      ],
       ['123', jurisdictionParams],
     ];
 
@@ -403,7 +373,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       await flushPromises();
     });
     expect(supersetServiceMock.mock.calls).toEqual(callList);
-    expect(supersetServiceMock).toHaveBeenCalledTimes(7);
+    expect(supersetServiceMock).toHaveBeenCalledTimes(6);
     expect((superset.getFormData as any).mock.calls).toEqual(getformDataCallList);
     wrapper.unmount();
   });
@@ -455,7 +425,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     await act(async () => {
       await new Promise<unknown>(resolve => setImmediate(resolve));
     });
-    expect(supersetServiceMock.mock.calls.length).toEqual(7);
+    expect(supersetServiceMock.mock.calls.length).toEqual(6);
     wrapper.unmount();
   });
 
@@ -666,7 +636,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       supersetServiceMock
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(supersetServiceMock.mock.calls.length).toBe(7);
+    expect(supersetServiceMock.mock.calls.length).toBe(6);
   });
 
   it('should not fetch data if no plan id is provided', async () => {
@@ -712,7 +682,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       supersetServiceMock
     );
     await new Promise<unknown>(resolve => setImmediate(resolve));
-    expect(displayErrorMock.mock.calls.length).toBe(7);
+    expect(displayErrorMock.mock.calls.length).toBe(6);
   });
 
   it('handles errors correctly when fetching data', async () => {
@@ -739,8 +709,35 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     await act(async () => {
       await new Promise<unknown>(resolve => setImmediate(resolve));
     });
-    expect(displayErrorMock).toHaveBeenCalledTimes(7);
+    expect(displayErrorMock).toHaveBeenCalledTimes(6);
     wrapper.unmount();
+  });
+
+  it("should skip fetching data for slices with id '0'", async () => {
+    const envModule = require('../../../../../../configs/env');
+    envModule.SUPERSET_JURISDICTIONS_SLICE = '0';
+    envModule.SUPERSET_JURISDICTION_EVENTS_SLICE = '0';
+    envModule.SUPERSET_PLANS_SLICE = '0';
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const fetchGoalsActionsCreatorMock: any = jest.fn();
+    const fetchJurisdictionsActionCreatorMock: any = jest.fn();
+    const fetchPlansActionCreatorMock: any = jest.fn();
+    const fetchStructuresActionCreatorMock: any = jest.fn();
+    const fetchTasksActionCreatorMock: any = jest.fn();
+    const fetchIndexCasesDetailsActionCreator: any = jest.fn();
+    const plan = fixtures.plan1;
+    void utils.fetchData(
+      fetchGoalsActionsCreatorMock,
+      fetchJurisdictionsActionCreatorMock,
+      fetchPlansActionCreatorMock,
+      fetchStructuresActionCreatorMock,
+      fetchTasksActionCreatorMock,
+      fetchIndexCasesDetailsActionCreator,
+      plan,
+      supersetServiceMock
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(supersetServiceMock.mock.calls.length).toBe(3);
   });
 
   it('handles fetchData promise errors correctly', async () => {
