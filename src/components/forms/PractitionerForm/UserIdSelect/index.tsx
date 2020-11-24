@@ -133,7 +133,7 @@ export const UserIdSelect = (props: Props) => {
   };
 
   /** pull all practioners */
-  const allPrectitioners = async () => {
+  const getAllPractitioners = async () => {
     let filterParams = {
       pageNumber: 1,
       pageSize: PRACTITIONER_REQUEST_PAGE_SIZE,
@@ -178,7 +178,7 @@ export const UserIdSelect = (props: Props) => {
     if (props.showPractitioners) {
       return;
     }
-    const practitioners = await allPrectitioners();
+    const practitioners = await getAllPractitioners();
 
     const practitionerUserIds = practitioners.map(practitioner => practitioner.userId);
     const unMatchedUsers = allUsers.filter(user => !practitionerUserIds.includes(user.id));
