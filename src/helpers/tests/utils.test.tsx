@@ -34,6 +34,7 @@ import {
   descendingOrderSort,
   extractPlan,
   extractPlanRecordResponseFromPlanPayload,
+  formatDates,
   generateNameSpacedUUID,
   getColor,
   getColorByValue,
@@ -487,5 +488,16 @@ describe('helpers/utils', () => {
     expect(getPlanStatusToDisplay([])).toEqual(['active', 'complete', 'draft', 'retired']);
     expect(getPlanStatusToDisplay(['active'])).toEqual(['complete', 'draft', 'retired']);
     expect(getPlanStatusToDisplay(['active', 'draft'])).toEqual(['complete', 'retired']);
+  });
+
+  it('formatDates - formats dates correctly', () => {
+    // valid date
+    expect(formatDates('2020-09-26 00:00:00', 'YYYY-MM-DD')).toEqual('2020-09-26');
+    expect(formatDates('2020-09-26 00:00:00', 'DD-MMM')).toEqual('26-Sep');
+
+    // invalid dates
+    expect(formatDates('test', 'YYYY-MM-HH')).toEqual('Invalid Date');
+    const customInvalidMessage = 'Date provided is not valid';
+    expect(formatDates('test', 'YYYY-MM-HH', customInvalidMessage)).toEqual(customInvalidMessage);
   });
 });
