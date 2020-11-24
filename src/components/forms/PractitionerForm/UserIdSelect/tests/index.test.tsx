@@ -293,4 +293,60 @@ describe('src/*/forms/userIdSelect', () => {
 
     expect(wrapper.find('div').text()).toEqual(`${USERS_FETCH_ERROR}`);
   });
+  it('should stop practitioner api call if no data returned', async () => {
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify([practitioners[0], practitioners[1]]))
+      .once(JSON.stringify([practitioners[2], practitioners[3]]))
+      .once(JSON.stringify([]))
+      .once(JSON.stringify([practitioners[4]]));
+
+    const props = {
+      serviceClass: OpenSRPService,
+    };
+    mount(<UserIdSelect {...props} />);
+    // tslint:disable-next-line:promise-must-complete
+    await act(async () => {
+      await flushPromises();
+    });
+
+    const defaultCallParams = {
+      headers: {
+        accept: 'application/json',
+        authorization: 'Bearer null',
+        'content-type': 'application/json;charset=UTF-8',
+      },
+      method: 'GET',
+    };
+
+    const practitionerCall1 = [
+      'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=1&pageSize=1000',
+      defaultCallParams,
+    ];
+
+    const practitionerCall2 = [
+      'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=2&pageSize=1000',
+      defaultCallParams,
+    ];
+
+    const practitionerCall3 = [
+      'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=3&pageSize=1000',
+      defaultCallParams,
+    ];
+
+    const calls = [
+      ['https://test.smartregister.org/opensrp/rest/user/count', defaultCallParams],
+      [
+        'https://test.smartregister.org/opensrp/rest/user?page_size=1000&source=Keycloak&start_index=0',
+        defaultCallParams,
+      ],
+      // only three call to practitioner API
+      practitionerCall1,
+      practitionerCall2,
+      practitionerCall3,
+    ];
+    expect(fetch.mock.calls.length).toEqual(5);
+    expect(fetch.mock.calls).toEqual(calls);
+  });
 });
