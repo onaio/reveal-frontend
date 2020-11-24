@@ -5,7 +5,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
-import { USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
+import { PRACTITIONER_REQUEST_PAGE_SIZE, USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
 import { SELECT, USERS_FETCH_ERROR } from '../../../../configs/lang';
 import {
   OPENSRP_KEYCLOAK_PARAM,
@@ -136,7 +136,7 @@ export const UserIdSelect = (props: Props) => {
   const allPrectitioners = async () => {
     let filterParams = {
       pageNumber: 1,
-      pageSize: 100,
+      pageSize: PRACTITIONER_REQUEST_PAGE_SIZE,
     };
     const allPractitioners = [];
     let response: Practitioner[];

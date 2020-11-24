@@ -358,6 +358,10 @@ const usersRequestPageSize = process.env.REACT_APP_USERS_REQUEST_PAGE_SIZE || '1
 export const USERS_REQUEST_PAGE_SIZE = parseInt(usersRequestPageSize, 10);
 export type USERS_REQUEST_PAGE_SIZE = typeof USERS_REQUEST_PAGE_SIZE;
 
+const practitionerRequestPageSize = process.env.REACT_APP_PRACTITIONER_REQUEST_PAGE_SIZE || '200';
+export const PRACTITIONER_REQUEST_PAGE_SIZE = parseInt(practitionerRequestPageSize, 10);
+export type PRACTITIONER_REQUEST_PAGE_SIZE = typeof PRACTITIONER_REQUEST_PAGE_SIZE;
+
 const toastAutoCloseDelay = process.env.REACT_APP_TOAST_AUTO_CLOSE_DELAY || '2000';
 
 export const TOAST_AUTO_CLOSE_DELAY = parseInt(toastAutoCloseDelay, 10);
