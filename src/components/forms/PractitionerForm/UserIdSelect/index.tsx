@@ -132,6 +132,33 @@ export const UserIdSelect = (props: Props) => {
     return allUsers;
   };
 
+  /** pull all practioners */
+  const allPrectitioners = async () => {
+    let filterParams = {
+      pageNumber: 1,
+      pageSize: 100,
+    };
+    const allPractitioners = [];
+    let response: Practitioner[];
+    const service = new props.serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
+
+    do {
+      response = await service.list(filterParams).catch(err => {
+        displayError(err);
+      });
+
+      allPractitioners.push(...response);
+
+      // modify filter params to point to next page number
+      filterParams = {
+        ...filterParams,
+        pageNumber: filterParams.pageNumber + 1,
+      };
+    } while (response && response.length);
+
+    return allPractitioners;
+  };
+
   /** depending on the value of showPracitioners; it filters out User objects that have
    * already been mapped to an existing practitioner, this is an effort towards ensuring a 1-1
    * mapping between a user and a practitioner entity
@@ -147,9 +174,7 @@ export const UserIdSelect = (props: Props) => {
     if (props.showPractitioners) {
       return;
     }
-    const practitioners: Practitioner[] = await new props.serviceClass(
-      OPENSRP_PRACTITIONER_ENDPOINT
-    ).list();
+    const practitioners = await allPrectitioners();
 
     const practitionerUserIds = practitioners.map(practitioner => practitioner.userId);
     const unMatchedUsers = allUsers.filter(user => !practitionerUserIds.includes(user.id));
