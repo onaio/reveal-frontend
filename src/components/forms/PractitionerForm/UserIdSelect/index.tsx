@@ -140,14 +140,18 @@ export const UserIdSelect = (props: Props) => {
     };
     const allPractitioners = [];
     let response: Practitioner[];
+    let serverError = false;
     const service = new props.serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
 
     do {
       response = await service.list(filterParams).catch(err => {
         displayError(err);
+        serverError = true;
       });
 
-      allPractitioners.push(...response);
+      if (!serverError) {
+        allPractitioners.push(...response);
+      }
 
       // modify filter params to point to next page number
       filterParams = {
