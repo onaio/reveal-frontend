@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import { OPENSRP_PRACTITIONER_ENDPOINT } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { growl } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
@@ -39,4 +40,42 @@ export const loadPractitioner = async (
     .catch((err: Error) => {
       growl(err.message, { type: toast.TYPE.ERROR });
     });
+};
+
+/**
+ * load all practioners with pagination
+ * @param { typeof OpenSRPService } serviceClass -  the OpenSRP service
+ * @param { number } pageSize - number of records per page
+ */
+export const getAllPractitioners = async (
+  serviceClass: typeof OpenSRPService,
+  pageSize: number = 1000
+) => {
+  let filterParams = {
+    pageNumber: 1,
+    pageSize,
+  };
+  const allPractitioners = [];
+  let response: Practitioner[];
+  let serverError = false;
+  const service = new serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
+
+  do {
+    response = await service.list(filterParams).catch(err => {
+      displayError(err);
+      serverError = true;
+    });
+
+    if (!serverError) {
+      allPractitioners.push(...response);
+    }
+
+    // modify filter params to point to next page number
+    filterParams = {
+      ...filterParams,
+      pageNumber: filterParams.pageNumber + 1,
+    };
+  } while (response && response.length);
+
+  return allPractitioners;
 };

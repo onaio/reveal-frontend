@@ -9,14 +9,13 @@ import { PRACTITIONER_REQUEST_PAGE_SIZE, USERS_REQUEST_PAGE_SIZE } from '../../.
 import { SELECT, USERS_FETCH_ERROR } from '../../../../configs/lang';
 import {
   OPENSRP_KEYCLOAK_PARAM,
-  OPENSRP_PRACTITIONER_ENDPOINT,
   OPENSRP_USERS_COUNT_ENDPOINT,
   OPENSRP_USERS_ENDPOINT,
 } from '../../../../constants';
+import { getAllPractitioners } from '../../../../containers/pages/PractitionerViews/helpers/serviceHooks';
 import { displayError } from '../../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
-import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
 // props interface to UserIdSelect component
 export interface Props {
@@ -132,37 +131,6 @@ export const UserIdSelect = (props: Props) => {
     return allUsers;
   };
 
-  /** pull all practioners */
-  const getAllPractitioners = async () => {
-    let filterParams = {
-      pageNumber: 1,
-      pageSize: PRACTITIONER_REQUEST_PAGE_SIZE,
-    };
-    const allPractitioners = [];
-    let response: Practitioner[];
-    let serverError = false;
-    const service = new props.serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
-
-    do {
-      response = await service.list(filterParams).catch(err => {
-        displayError(err);
-        serverError = true;
-      });
-
-      if (!serverError) {
-        allPractitioners.push(...response);
-      }
-
-      // modify filter params to point to next page number
-      filterParams = {
-        ...filterParams,
-        pageNumber: filterParams.pageNumber + 1,
-      };
-    } while (response && response.length);
-
-    return allPractitioners;
-  };
-
   /** depending on the value of showPracitioners; it filters out User objects that have
    * already been mapped to an existing practitioner, this is an effort towards ensuring a 1-1
    * mapping between a user and a practitioner entity
@@ -178,7 +146,10 @@ export const UserIdSelect = (props: Props) => {
     if (props.showPractitioners) {
       return;
     }
-    const practitioners = await getAllPractitioners();
+    const practitioners = await getAllPractitioners(
+      props.serviceClass,
+      PRACTITIONER_REQUEST_PAGE_SIZE
+    );
 
     const practitionerUserIds = practitioners.map(practitioner => practitioner.userId);
     const unMatchedUsers = allUsers.filter(user => !practitionerUserIds.includes(user.id));
