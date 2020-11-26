@@ -121,6 +121,8 @@ describe('src/*/forms/userIdSelect', () => {
       wrapper.update();
     });
 
+    wrapper.setProps({ allPractitioners: practitioners });
+    wrapper.update();
     // now look at passed options to Select
     const selectWrapperProps = wrapper.find('Select').props();
     const selectWrapperOptions = (selectWrapperProps as any).options;
@@ -240,6 +242,9 @@ describe('src/*/forms/userIdSelect', () => {
       await flushPromises();
       wrapper.update();
     });
+
+    wrapper.setProps({ allPractitioners: practitioners });
+    wrapper.update();
 
     // now look at passed options to Select
     const selectWrapperProps = wrapper.find('Select').props();
