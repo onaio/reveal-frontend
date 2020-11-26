@@ -35,7 +35,7 @@ export interface Props {
 /** default props for UserIdSelect component */
 export const defaultProps = {
   ReactSelectDefaultValue: { label: '', value: '' },
-  allPractitioners: [] as any,
+  allPractitioners: [] as Practitioner[],
   className: '',
   serviceClass: OpenSRPService,
   showPractitioners: false,
