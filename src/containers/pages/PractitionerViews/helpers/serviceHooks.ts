@@ -46,36 +46,40 @@ export const loadPractitioner = async (
  * load all practioners with pagination
  * @param { typeof OpenSRPService } serviceClass -  the OpenSRP service
  * @param { number } pageSize - number of records per page
+ * @param { number } pageNumber - page to fetch records from
+ * @param { boolean } getAll - determine if to get all availble pages recusively
  */
-export const getAllPractitioners = async (
+export const getAllPractitioners = (
   serviceClass: typeof OpenSRPService,
-  pageSize: number = 1000
+  pageSize: number = 1000,
+  pageNumber: number = 1,
+  getAll: boolean = false
 ) => {
-  let filterParams = {
-    pageNumber: 1,
-    pageSize,
-  };
-  const allPractitioners = [];
-  let response: Practitioner[];
-  let serverError = false;
   const service = new serviceClass(OPENSRP_PRACTITIONER_ENDPOINT);
 
-  do {
-    response = await service.list(filterParams).catch(err => {
-      displayError(err);
-      serverError = true;
-    });
-
-    if (!serverError) {
-      allPractitioners.push(...response);
-    }
-
-    // modify filter params to point to next page number
-    filterParams = {
-      ...filterParams,
-      pageNumber: filterParams.pageNumber + 1,
+  const getPractitionersByPage = (currentPage: number, results: Practitioner[] = []) => {
+    const filterParamss = {
+      pageNumber: currentPage,
+      pageSize,
     };
-  } while (response && response.length);
+    if (results.length || pageNumber === currentPage) {
+      return service
+        .list(filterParamss)
+        .then((res: Practitioner[]) => {
+          if (res && res.length) {
+            store.dispatch(fetchPractitioners(res));
+          }
+          if (getAll) {
+            const newPage = ++currentPage;
+            // tslint:disable-next-line: no-floating-promises
+            getPractitionersByPage(newPage, res);
+          }
+        })
+        .catch(err => displayError(err));
+    } else {
+      return Promise.resolve();
+    }
+  };
 
-  return allPractitioners;
+  return getPractitionersByPage(pageNumber);
 };
