@@ -30,7 +30,8 @@ export async function loadPlansByUserFilter<T>(
   userName: string,
   actionCreator: ActionCreator<FetchPlansByUserAction> = fetchPlansByUser,
   service: typeof OpenSRPService = OpenSRPService,
-  responseActionCreator?: ActionCreator<AnyAction>
+  responseActionCreator?: ActionCreator<AnyAction>,
+  extractPlans?: boolean
 ) {
   const serve = new service(`${OPENSRP_PLANS_BY_USER_FILTER}/${userName}`);
   return serve
@@ -41,7 +42,14 @@ export async function loadPlansByUserFilter<T>(
       }
       store.dispatch(actionCreator(response, userName));
       if (responseActionCreator) {
-        store.dispatch(responseActionCreator(response));
+        if (extractPlans) {
+          const extractedPlanRecords = response
+            .map(plan => extractPlanRecordResponseFromPlanPayload(plan as any))
+            .filter(plan => !!plan);
+          store.dispatch(responseActionCreator(extractedPlanRecords));
+        } else {
+          store.dispatch(responseActionCreator(response));
+        }
       }
     })
     .catch((err: Error) => {
