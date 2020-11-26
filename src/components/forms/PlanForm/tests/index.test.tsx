@@ -1564,4 +1564,69 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
         .props() as any).formik.values.title
     ).toEqual('B2 Nevada 2017-07-13');
   });
+
+  it('triggers and conditions are set correctly for dynamic FI plans', async () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    const defaults = {
+      ...defaultInitialValues,
+      activities: planActivitiesMap[InterventionType.DynamicFI],
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm initialValues={defaults} />
+      </MemoryRouter>,
+      { attachTo: container }
+    );
+
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'Dynamic-FI' } });
+
+    wrapper.update();
+
+    // dynamic fi conditions
+    const conditions = wrapper.find('.conditions-fieldset');
+    expect(conditions.length).toEqual(6);
+    expect(conditions.at(0).text()).toMatchInlineSnapshot(
+      `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists().not())DescriptionStructure is residential or type does not existExpression$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')DescriptionApply to residential structures in Register_Structure questionnaires"`
+    );
+    expect(conditions.at(1).text()).toMatchInlineSnapshot(
+      `"ConditionsExpression($this.is(FHIR.Patient) and $this.birthDate <= today() - 5 'years') or ($this.contained.where(Patient.birthDate <= today() - 5 'years').exists())DescriptionPerson is older than 5 years or person associated with questionnaire response if older than 5 years"`
+    );
+    expect(conditions.at(2).text()).toMatchInlineSnapshot(
+      `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists())DescriptionStructure is residential or type does not exist"`
+    );
+    expect(conditions.at(3).text()).toMatchInlineSnapshot(
+      `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').text = 'Larval Breeding Site'DescriptionStructure is a larval breeding siteExpression$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Larval Breeding Site')DescriptionApply to larval breeding sites in Register_Structure questionnaires"`
+    );
+    expect(conditions.at(4).text()).toMatchInlineSnapshot(
+      `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').text = 'Mosquito Collection Point'DescriptionStructure is a mosquito collection pointExpression$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Mosquito Collection Point')DescriptionApply to mosquito collection point in Register_Structure questionnaires"`
+    );
+    expect(conditions.at(5).text()).toMatchInlineSnapshot(
+      `"ConditionsExpressionLocation.physicalType.text = 'jdn'DescriptionJurisdiction type location"`
+    );
+
+    // dynamic fi trigers
+    const trigers = wrapper.find('.triggers-fieldset');
+    expect(trigers.length).toEqual(6);
+    expect(trigers.at(0).text()).toMatchInlineSnapshot(
+      `"TriggersNameNameExpressionquestionnaire = 'Register_Structure' or questionnaire = 'Archive_Family'DescriptionTrigger when a Register_Structure event is submitted"`
+    );
+    expect(trigers.at(1).text()).toMatchInlineSnapshot(
+      `"TriggersNameNameExpressionquestionnaire = 'Family_Member_Registration'DescriptionTrigger when a Family Member Registration event is submitted"`
+    );
+    expect(trigers.at(2).text()).toMatchInlineSnapshot(
+      `"TriggersNameNameExpressionquestionnaire = 'Family_Registration'DescriptionTrigger when a Family Registration event is submitted"`
+    );
+    expect(trigers.at(3).text()).toMatchInlineSnapshot(
+      `"TriggersNameNameExpressionquestionnaire = 'Register_Structure'DescriptionTrigger when a Register_Structure event is submitted"`
+    );
+    expect(trigers.at(4).text()).toMatchInlineSnapshot(
+      `"TriggersNameNameExpressionquestionnaire = 'Register_Structure'DescriptionTrigger when a Register_Structure event is submitted"`
+    );
+    expect(trigers.at(5).text()).toMatchInlineSnapshot(`"TriggersName"`);
+  });
 });
