@@ -23,7 +23,11 @@ import HeaderBreadCrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { SUPERSET_MAX_RECORDS, SUPERSET_PLANS_SLICE } from '../../../../configs/env';
+import {
+  ENABLE_DEFAULT_PLAN_USER_FILTER,
+  SUPERSET_MAX_RECORDS,
+  SUPERSET_PLANS_SLICE,
+} from '../../../../configs/env';
 import {
   ADD_FOCUS_INVESTIGATION,
   CASE_CLASSIFICATION_HEADER,
@@ -179,7 +183,14 @@ class ActiveFocusInvestigation extends React.Component<
 
   public componentDidMount() {
     const { userName } = this.props;
-    this.fetchSupersetPlans();
+
+    if (!ENABLE_DEFAULT_PLAN_USER_FILTER) {
+      this.fetchSupersetPlans();
+    } else {
+      this.setState({
+        loading: false,
+      });
+    }
 
     if (userName) {
       this.setState({
@@ -218,6 +229,9 @@ class ActiveFocusInvestigation extends React.Component<
       prevUserPlanIds &&
       !_.isEqual([...userPlanIds].sort(), [...prevUserPlanIds].sort())
     ) {
+      this.setState({
+        loading: true,
+      });
       const superseFilters = [
         ...supersetFIPlansParamFilters,
         {
