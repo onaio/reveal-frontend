@@ -208,21 +208,17 @@ class ActiveFocusInvestigation extends React.Component<
           });
         })
         .catch(err => displayError(err));
-    }
-    if (
-      userPlanIds &&
-      prevProps.userPlanIds &&
-      _.isEqual(userPlanIds.sort(), prevProps.userPlanIds?.sort())
-    ) {
-      const superseFilters = [
-        ...supersetFIPlansParamFilters,
-        {
-          comparator: [...userPlanIds],
-          operator: 'in',
-          subject: 'plan_id',
-        },
-      ] as SupersetAdhocFilterOption[];
-      this.fetchSupersetPlans(superseFilters);
+      if (userPlanIds && userPlanIds.length) {
+        const superseFilters = [
+          ...supersetFIPlansParamFilters,
+          {
+            comparator: [...userPlanIds],
+            operator: 'in',
+            subject: 'plan_id',
+          },
+        ] as SupersetAdhocFilterOption[];
+        this.fetchSupersetPlans(superseFilters);
+      }
     }
   }
 

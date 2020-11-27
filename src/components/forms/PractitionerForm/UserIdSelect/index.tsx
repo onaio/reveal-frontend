@@ -139,7 +139,6 @@ export const UserIdSelect = (props: Props) => {
   const loadData = async () => {
     const allUsers = await loadUsers();
     if (props.showPractitioners && isMounted.current) {
-      // setState with all unfiltered users if component is mounted
       setUsers(allUsers);
       setSelectIsLoading(false);
     }
