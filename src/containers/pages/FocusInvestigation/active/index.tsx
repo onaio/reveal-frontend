@@ -197,6 +197,8 @@ class ActiveFocusInvestigation extends React.Component<
 
   public componentDidUpdate(prevProps: ActiveFIProps) {
     const { userName, userPlanIds } = this.props;
+    const prevUserPlanIds =
+      prevProps.userPlanIds && prevProps.userPlanIds.length ? prevProps.userPlanIds : [];
     if (userName && prevProps.userName !== userName) {
       this.setState({
         loadingPlansByUser: true,
@@ -208,17 +210,23 @@ class ActiveFocusInvestigation extends React.Component<
           });
         })
         .catch(err => displayError(err));
-      if (userPlanIds && userPlanIds.length) {
-        const superseFilters = [
-          ...supersetFIPlansParamFilters,
-          {
-            comparator: [...userPlanIds],
-            operator: 'in',
-            subject: 'plan_id',
-          },
-        ] as SupersetAdhocFilterOption[];
-        this.fetchSupersetPlans(superseFilters);
-      }
+    }
+    if (
+      userName &&
+      userPlanIds &&
+      userPlanIds.length &&
+      prevUserPlanIds &&
+      !_.isEqual([...userPlanIds].sort(), [...prevUserPlanIds].sort())
+    ) {
+      const superseFilters = [
+        ...supersetFIPlansParamFilters,
+        {
+          comparator: [...userPlanIds],
+          operator: 'in',
+          subject: 'plan_id',
+        },
+      ] as SupersetAdhocFilterOption[];
+      this.fetchSupersetPlans(superseFilters);
     }
   }
 
