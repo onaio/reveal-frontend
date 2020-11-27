@@ -50,6 +50,7 @@ Object {
         "value": "Select username",
       }
     }
+    allPractitioners={Array []}
     className=""
     onChangeHandler={[Function]}
     serviceClass={[Function]}
