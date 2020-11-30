@@ -12,6 +12,7 @@ import { practitioners, sortedUsers, users } from './fixtures';
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
 jest.mock('../../../../../configs/env.ts', () => ({
+  PRACTITIONER_REQUEST_PAGE_SIZE: 1000,
   USERS_REQUEST_PAGE_SIZE: 1000,
 }));
 
@@ -71,40 +72,33 @@ describe('src/*/forms/userIdSelect', () => {
       await flushPromises();
     });
 
+    const defaultCallParams = {
+      headers: {
+        accept: 'application/json',
+        authorization: 'Bearer null',
+        'content-type': 'application/json;charset=UTF-8',
+      },
+      method: 'GET',
+    };
+
+    const practitionerCall1 = [
+      'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=1&pageSize=1000',
+      defaultCallParams,
+    ];
+
+    const practitionerCall2 = [
+      'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=2&pageSize=1000',
+      defaultCallParams,
+    ];
+
     const calls = [
-      [
-        'https://test.smartregister.org/opensrp/rest/user/count',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
-      ],
+      ['https://test.smartregister.org/opensrp/rest/user/count', defaultCallParams],
       [
         'https://test.smartregister.org/opensrp/rest/user?page_size=1000&source=Keycloak&start_index=0',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
+        defaultCallParams,
       ],
-      [
-        'https://test.smartregister.org/opensrp/rest/practitioner',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
-      ],
+      practitionerCall1,
+      practitionerCall2,
     ];
     expect(fetch.mock.calls).toEqual(calls);
   });
@@ -115,7 +109,8 @@ describe('src/*/forms/userIdSelect', () => {
     fetch
       .once(JSON.stringify(users.length))
       .once(JSON.stringify(users))
-      .once(JSON.stringify(practitioners));
+      .once(JSON.stringify(practitioners))
+      .once(JSON.stringify([]));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -126,6 +121,8 @@ describe('src/*/forms/userIdSelect', () => {
       wrapper.update();
     });
 
+    wrapper.setProps({ allPractitioners: practitioners });
+    wrapper.update();
     // now look at passed options to Select
     const selectWrapperProps = wrapper.find('Select').props();
     const selectWrapperOptions = (selectWrapperProps as any).options;
@@ -207,7 +204,8 @@ describe('src/*/forms/userIdSelect', () => {
     fetch
       .once(JSON.stringify(users.length))
       .once(JSON.stringify(users))
-      .once(JSON.stringify(practitioners));
+      .once(JSON.stringify(practitioners))
+      .once(JSON.stringify([]));
     const props = {
       serviceClass: OpenSRPService,
       userNameAsValue: true,
@@ -233,7 +231,8 @@ describe('src/*/forms/userIdSelect', () => {
     fetch
       .once(JSON.stringify(users.length))
       .once(JSON.stringify(users))
-      .once(JSON.stringify(practitioners));
+      .once(JSON.stringify(practitioners))
+      .once(JSON.stringify([]));
     const props = {
       serviceClass: OpenSRPService,
     };
@@ -243,6 +242,9 @@ describe('src/*/forms/userIdSelect', () => {
       await flushPromises();
       wrapper.update();
     });
+
+    wrapper.setProps({ allPractitioners: practitioners });
+    wrapper.update();
 
     // now look at passed options to Select
     const selectWrapperProps = wrapper.find('Select').props();
@@ -295,5 +297,61 @@ describe('src/*/forms/userIdSelect', () => {
     });
 
     expect(wrapper.find('div').text()).toEqual(`${USERS_FETCH_ERROR}`);
+  });
+  it('should stop practitioner api call if no data returned', async () => {
+    fetch
+      .once(JSON.stringify(users.length))
+      .once(JSON.stringify(users))
+      .once(JSON.stringify([practitioners[0], practitioners[1]]))
+      .once(JSON.stringify([practitioners[2], practitioners[3]]))
+      .once(JSON.stringify([]))
+      .once(JSON.stringify([practitioners[4]]));
+
+    const props = {
+      serviceClass: OpenSRPService,
+    };
+    mount(<UserIdSelect {...props} />);
+    // tslint:disable-next-line:promise-must-complete
+    await act(async () => {
+      await flushPromises();
+    });
+
+    const defaultCallParams = {
+      headers: {
+        accept: 'application/json',
+        authorization: 'Bearer null',
+        'content-type': 'application/json;charset=UTF-8',
+      },
+      method: 'GET',
+    };
+
+    const practitionerCall1 = [
+      'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=1&pageSize=1000',
+      defaultCallParams,
+    ];
+
+    const practitionerCall2 = [
+      'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=2&pageSize=1000',
+      defaultCallParams,
+    ];
+
+    const practitionerCall3 = [
+      'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=3&pageSize=1000',
+      defaultCallParams,
+    ];
+
+    const calls = [
+      ['https://test.smartregister.org/opensrp/rest/user/count', defaultCallParams],
+      [
+        'https://test.smartregister.org/opensrp/rest/user?page_size=1000&source=Keycloak&start_index=0',
+        defaultCallParams,
+      ],
+      // only three call to practitioner API
+      practitionerCall1,
+      practitionerCall2,
+      practitionerCall3,
+    ];
+    expect(fetch.mock.calls.length).toEqual(5);
+    expect(fetch.mock.calls).toEqual(calls);
   });
 });

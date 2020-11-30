@@ -2,6 +2,7 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import PractitionerForm from '..';
 import * as helpers from '../../../../helpers/utils';
 import UserIdSelect from '../UserIdSelect';
@@ -55,16 +56,19 @@ describe('src/components/PractitionerForm', () => {
     fetch
       .once(JSON.stringify(users.length))
       .once(JSON.stringify(users))
-      .once(JSON.stringify(practitioners));
+      .once(JSON.stringify(practitioners))
+      .once(JSON.stringify([]));
 
     // looking for each fields
     const wrapper = mount(<PractitionerForm />);
+    await act(async () => {
+      await flushPromises();
+    });
 
-    await flushPromises();
     wrapper.update();
     expect(fetch.mock.calls).toEqual([
       [
-        'https://test.smartregister.org/opensrp/rest/practitioner',
+        'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=1&pageSize=100',
         {
           headers: {
             accept: 'application/json',
@@ -97,7 +101,18 @@ describe('src/components/PractitionerForm', () => {
         },
       ],
       [
-        'https://test.smartregister.org/opensrp/rest/practitioner',
+        'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=1&pageSize=100',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+      [
+        'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=2&pageSize=100',
         {
           headers: {
             accept: 'application/json',
@@ -150,7 +165,8 @@ describe('src/components/PractitionerForm', () => {
     fetch
       .once(JSON.stringify(users.length))
       .once(JSON.stringify(users))
-      .once(JSON.stringify(practitioners));
+      .once(JSON.stringify(practitioners))
+      .once(JSON.stringify([]));
     (helpers as any).generateNameSpacedUUID = jest.fn(() => 'someUUId');
     const wrapper = mount(<PractitionerForm />);
 
@@ -167,9 +183,11 @@ describe('src/components/PractitionerForm', () => {
 
     wrapper.find('form').simulate('submit');
 
-    await new Promise<any>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await flushPromises();
+    });
 
-    expect(fetch.mock.calls[3]).toEqual([
+    expect(fetch.mock.calls[4]).toEqual([
       'https://test.smartregister.org/opensrp/rest/practitioner',
       {
         'Cache-Control': 'no-cache',
