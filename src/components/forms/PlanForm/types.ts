@@ -52,6 +52,7 @@ export enum GoalUnit {
 export interface PlanActivityExpression {
   description: string;
   expression: string;
+  subjectCodableConceptText: string;
 }
 
 /** Interface for Plan activity trigger */

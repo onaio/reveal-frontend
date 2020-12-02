@@ -177,6 +177,7 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
       condition.push({
         description: iterator.expression.description || '',
         expression: iterator.expression.expression || '',
+        subjectCodableConceptText: iterator.expression.subjectCodableConcept?.text || '',
       });
     }
   }
