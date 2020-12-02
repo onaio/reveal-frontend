@@ -181,9 +181,20 @@ class ActiveFocusInvestigation extends React.Component<
       });
   }
 
-  public componentDidMount() {
-    const { userName } = this.props;
+  public getFilterOptions(userPlanIdentifiers: string[]) {
+    const superseFilters = [
+      ...supersetFIPlansParamFilters,
+      {
+        comparator: [...userPlanIdentifiers],
+        operator: 'in',
+        subject: 'plan_id',
+      },
+    ] as SupersetAdhocFilterOption[];
+    return superseFilters;
+  }
 
+  public componentDidMount() {
+    const { userName, userPlanIds } = this.props;
     if (!ENABLE_DEFAULT_PLAN_USER_FILTER) {
       this.fetchSupersetPlans();
     } else {
@@ -203,6 +214,14 @@ class ActiveFocusInvestigation extends React.Component<
           });
         })
         .catch(err => displayError(err));
+    }
+
+    if (userName && userPlanIds && userPlanIds.length) {
+      this.setState({
+        loading: true,
+      });
+      const superseFilters = this.getFilterOptions(userPlanIds);
+      this.fetchSupersetPlans(superseFilters);
     }
   }
 
@@ -232,14 +251,7 @@ class ActiveFocusInvestigation extends React.Component<
       this.setState({
         loading: true,
       });
-      const superseFilters = [
-        ...supersetFIPlansParamFilters,
-        {
-          comparator: [...userPlanIds],
-          operator: 'in',
-          subject: 'plan_id',
-        },
-      ] as SupersetAdhocFilterOption[];
+      const superseFilters = this.getFilterOptions(userPlanIds);
       this.fetchSupersetPlans(superseFilters);
     }
   }

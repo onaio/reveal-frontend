@@ -231,68 +231,6 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     wrapper.find('DrillDownTable').forEach(table => renderTable(table));
   });
 
-  it('calls superset with the correct params', async () => {
-    const envModule = require('../../../../../configs/env');
-    envModule.DISPLAYED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
-      ','
-    );
-    // export const DISPLAYED_PLAN_TYPES = ['FI', 'IRS', 'MDA', 'MDA-Point', 'Dynamic-FI'];
-    const actualFormData = superset.getFormData;
-    const getFormDataMock: any = jest.fn();
-    getFormDataMock.mockImplementation((...args: any) => {
-      return actualFormData(...args);
-    });
-    superset.getFormData = getFormDataMock;
-    const mock: any = jest.fn();
-    const supersetMock: any = jest.fn();
-    supersetMock.mockImplementation(() => Promise.resolve(fixtures.plans));
-    const props = {
-      history,
-      location: mock,
-      match: mock,
-      supersetService: supersetMock,
-    };
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <ConnectedActiveFocusInvestigation {...props} />
-        </Router>
-      </Provider>
-    );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
-    const supersetParams = {
-      adhoc_filters: [
-        {
-          clause: 'WHERE',
-          comparator: [InterventionType.FI, InterventionType.DynamicFI],
-          expressionType: 'SIMPLE',
-          operator: 'in',
-          subject: 'plan_intervention_type',
-        },
-      ],
-
-      row_limit: 3000,
-    };
-
-    const supersetCallList = [
-      [
-        3000,
-        [
-          {
-            comparator: [InterventionType.FI, InterventionType.DynamicFI],
-            operator: 'in',
-            subject: 'plan_intervention_type',
-          },
-        ],
-      ],
-    ];
-
-    expect((superset.getFormData as any).mock.calls).toEqual(supersetCallList);
-    expect(supersetMock).toHaveBeenCalledWith(0, supersetParams);
-    wrapper.unmount();
-  });
-
   it('does not show loading when we have resolved promises', async () => {
     // resolve superset's request with empty data, it should not show the loader.
     const mock: any = jest.fn();
@@ -407,6 +345,11 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   });
 
   it('filters plans by userName resulting in no plans', async () => {
+    const envModule = require('../../../../../configs/env');
+    envModule.DISPLAYED_PLAN_TYPES = ['FI', 'IRS', 'MDA', 'MDA-Point', 'Dynamic-FI'];
+    envModule.ENABLE_DEFAULT_PLAN_USER_FILTER = true;
+    envModule.SUPERSET_MAX_RECORDS = 3000;
+    envModule.SUPERSET_PLANS_SLICE = 0;
     const planDef1 = cloneDeep(planDefFixtures.plans[0]);
     planDef1.identifier = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
     const userName = 'ghost';
@@ -454,6 +397,11 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
   });
 
   it('filters plans by userName', async () => {
+    const envModule = require('../../../../../configs/env');
+    envModule.DISPLAYED_PLAN_TYPES = ['FI', 'IRS', 'MDA', 'MDA-Point', 'Dynamic-FI'];
+    envModule.ENABLE_DEFAULT_PLAN_USER_FILTER = true;
+    envModule.SUPERSET_MAX_RECORDS = 3000;
+    envModule.SUPERSET_PLANS_SLICE = 0;
     const planDef1 = cloneDeep(planDefFixtures.plans[0]);
     planDef1.identifier = '10f9e9fa-ce34-4b27-a961-72fab5206ab6';
     const userName = 'ghost';
@@ -485,6 +433,27 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     await new Promise(resolve => setImmediate(resolve));
     wrapper.update();
 
+    expect(props.supersetService).toHaveBeenCalledTimes(1);
+    expect(props.supersetService).toHaveBeenCalledWith(0, {
+      adhoc_filters: [
+        {
+          clause: 'WHERE',
+          comparator: ['FI', 'Dynamic-FI'],
+          expressionType: 'SIMPLE',
+          operator: 'in',
+          subject: 'plan_intervention_type',
+        },
+        {
+          clause: 'WHERE',
+          comparator: ['10f9e9fa-ce34-4b27-a961-72fab5206ab6'],
+          expressionType: 'SIMPLE',
+          operator: 'in',
+          subject: 'plan_id',
+        },
+      ],
+      row_limit: 3000,
+    });
+
     expect(wrapper.find('.user-filter-info').text()).toMatchInlineSnapshot(
       `"User filter on: Only plans assigned to ghost are listed."`
     );
@@ -502,7 +471,75 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     ).toEqual([selectedPlan1]);
   });
 
+  it('calls superset with the correct params', async () => {
+    const envModule = require('../../../../../configs/env');
+    envModule.DISPLAYED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
+      ','
+    );
+    envModule.ENABLE_DEFAULT_PLAN_USER_FILTER = false;
+    // export const DISPLAYED_PLAN_TYPES = ['FI', 'IRS', 'MDA', 'MDA-Point', 'Dynamic-FI'];
+    const actualFormData = superset.getFormData;
+    const getFormDataMock: any = jest.fn();
+    getFormDataMock.mockImplementation((...args: any) => {
+      return actualFormData(...args);
+    });
+    superset.getFormData = getFormDataMock;
+    const mock: any = jest.fn();
+    const supersetMock: any = jest.fn();
+    supersetMock.mockImplementationOnce(() => Promise.resolve(fixtures.plans));
+    const props = {
+      history,
+      location: mock,
+      match: mock,
+      supersetService: supersetMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedActiveFocusInvestigation {...props} />
+        </Router>
+      </Provider>
+    );
+    await new Promise(resolve => setImmediate(resolve));
+    wrapper.update();
+    const supersetParams = {
+      adhoc_filters: [
+        {
+          clause: 'WHERE',
+          comparator: [InterventionType.FI, InterventionType.DynamicFI],
+          expressionType: 'SIMPLE',
+          operator: 'in',
+          subject: 'plan_intervention_type',
+        },
+      ],
+
+      row_limit: 3000,
+    };
+
+    const supersetCallList = [
+      [
+        3000,
+        [
+          {
+            comparator: [InterventionType.FI, InterventionType.DynamicFI],
+            operator: 'in',
+            subject: 'plan_intervention_type',
+          },
+        ],
+      ],
+    ];
+
+    expect((superset.getFormData as any).mock.calls).toEqual(supersetCallList);
+    expect(supersetMock).toHaveBeenCalledWith(0, supersetParams);
+    wrapper.unmount();
+  });
+
   it('should handle falsy result correctly', async () => {
+    const envModule = require('../../../../../configs/env');
+    envModule.DISPLAYED_PLAN_TYPES = ['FI', 'IRS', 'MDA', 'MDA-Point', 'Dynamic-FI'];
+    envModule.ENABLE_DEFAULT_PLAN_USER_FILTER = false;
+    envModule.SUPERSET_MAX_RECORDS = 3000;
+    envModule.SUPERSET_PLANS_SLICE = 0;
     const supersetServiceMock: any = jest
       .fn(() => Promise.resolve(fixtures.plans))
       .mockImplementationOnce(async () => null);
