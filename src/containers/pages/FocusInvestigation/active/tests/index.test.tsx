@@ -445,7 +445,7 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         },
         {
           clause: 'WHERE',
-          comparator: ['10f9e9fa-ce34-4b27-a961-72fab5206ab6'],
+          comparator: [planDef1.identifier],
           expressionType: 'SIMPLE',
           operator: 'in',
           subject: 'plan_id',
@@ -477,7 +477,6 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
       ','
     );
     envModule.ENABLE_DEFAULT_PLAN_USER_FILTER = false;
-    // export const DISPLAYED_PLAN_TYPES = ['FI', 'IRS', 'MDA', 'MDA-Point', 'Dynamic-FI'];
     const actualFormData = superset.getFormData;
     const getFormDataMock: any = jest.fn();
     getFormDataMock.mockImplementation((...args: any) => {
