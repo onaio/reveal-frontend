@@ -347,9 +347,12 @@ export interface PlanActionTimingPeriod {
   start: string;
 }
 
+/** plan action subjectCodableConcept text type  */
+export type subjectCodableConceptType = 'Family' | 'Person' | 'Location' | 'Jurisdiction';
+
 /** Plan Action subjectCodableConcept */
 export interface PlanActionsubjectCodableConcept {
-  text: 'Family' | 'Person' | 'Location' | 'Jurisdiction';
+  text: subjectCodableConceptType;
 }
 
 /** Plan Expression */

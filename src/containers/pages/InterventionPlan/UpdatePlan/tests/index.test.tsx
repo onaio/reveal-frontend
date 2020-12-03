@@ -1,5 +1,7 @@
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import { cloneDeep } from 'lodash';
 import React from 'react';
@@ -12,17 +14,26 @@ import {
   generatePlanDefinition,
   getPlanFormValues,
 } from '../../../../../components/forms/PlanForm/helpers';
-import { fiReasonTestPlan } from '../../../../../components/forms/PlanForm/tests/fixtures';
+import {
+  DynamicFIPlan,
+  fiReasonTestPlan,
+} from '../../../../../components/forms/PlanForm/tests/fixtures';
 import { COULD_NOT_LOAD_PLAN } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { PLAN_UPDATE_URL } from '../../../../../constants';
 import store from '../../../../../store';
+import planDefinitionReducer, {
+  reducerName as planDefinitionReducerName,
+} from '../../../../../store/ducks/opensrp/PlanDefinition';
 import { removePlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { planDefinition1, planDefinition2, updatePlanFormProps } from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
+
+/** register the plan definitions reducer */
+reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
 const history = createBrowserHistory();
 
@@ -399,5 +410,73 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     ]);
     // shows error message
     expect(wrapper.text().includes(COULD_NOT_LOAD_PLAN)).toBeTruthy();
+  });
+
+  it('edit plans created with old templates', async () => {
+    // create divs for condition and triggers toggles - should equal number of activities
+    [0, 1, 2, 3, 4, 5].forEach(id => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    // mock window confirmation dialogue and simulate true click
+    const confirmSpy = jest.spyOn(window, 'confirm');
+    confirmSpy.mockImplementation(jest.fn(() => true));
+
+    // create a mismatch of dynamicFI plan to edit and the default template plan
+    const planCopy = { ...DynamicFIPlan };
+    const newCondition = {
+      expression: {
+        description: 'Register structure event submitted for a residential structure',
+        expression:
+          "$this.is(FHIR.Location)  or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')",
+      },
+      kind: 'applicability',
+    };
+    planCopy.action[0].condition = [...planCopy.action[0].condition, newCondition];
+
+    // store.dispatch(addPlanDefinition(planCopy as PlanDefinition));
+    fetch.mockResponse(JSON.stringify(planCopy));
+
+    const mock: any = jest.fn();
+    const thisPlansId = planCopy.identifier;
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: thisPlansId },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${thisPlansId}`,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedUpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: 'retired' } });
+
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+
+    expect(confirmSpy).toBeCalledTimes(1);
+    expect(confirmSpy).toBeCalledWith('You are about to retire a plan, click ok to proceed');
+
+    expect(fetch.mock.calls[1][0]).toEqual(
+      'https://reveal-stage.smartregister.org/opensrp/rest/plans'
+    );
+    expect(fetch.mock.calls[1][1].method).toEqual('PUT');
   });
 });

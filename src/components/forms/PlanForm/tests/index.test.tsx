@@ -1435,7 +1435,7 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
       expectedTriggerTextValues.slice(2)
     );
     expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().value)).toEqual(
-      expectedConditionTextValues.slice(4)
+      expectedConditionTextValues.slice(5)
     );
     // this one does not change because currently there are no conditions with an input field
     expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().value)).toEqual(
@@ -1491,7 +1491,7 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
       expectedTriggerTextValues.slice(2).concat(expectedTriggerTextValues.slice(0, 2))
     );
     expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().value)).toEqual(
-      expectedConditionTextValues.slice(4).concat(expectedConditionTextValues.slice(0, 4))
+      expectedConditionTextValues.slice(5).concat(expectedConditionTextValues.slice(0, 5))
     );
     expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().value)).toEqual(
       expectedConditionInputValues
@@ -1591,13 +1591,13 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
     const conditions = wrapper.find('.conditions-fieldset');
     expect(conditions.length).toEqual(6);
     expect(conditions.at(0).text()).toMatchInlineSnapshot(
-      `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists().not())DescriptionStructure is residential or type does not existExpression$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')DescriptionApply to residential structures in Register_Structure questionnaires"`
+      `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists().not())DescriptionStructure is residential or type does not existFamilyExpression$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')DescriptionApply to residential structures in Register_Structure questionnaires"`
     );
     expect(conditions.at(1).text()).toMatchInlineSnapshot(
       `"ConditionsExpression($this.is(FHIR.Patient) and $this.birthDate <= today() - 5 'years') or ($this.contained.where(Patient.birthDate <= today() - 5 'years').exists())DescriptionPerson is older than 5 years or person associated with questionnaire response if older than 5 years"`
     );
     expect(conditions.at(2).text()).toMatchInlineSnapshot(
-      `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists())DescriptionStructure is residential or type does not exist"`
+      `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists())DescriptionStructure is residential or type does not existFamily"`
     );
     expect(conditions.at(3).text()).toMatchInlineSnapshot(
       `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').text = 'Larval Breeding Site'DescriptionStructure is a larval breeding siteExpression$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Larval Breeding Site')DescriptionApply to larval breeding sites in Register_Structure questionnaires"`
