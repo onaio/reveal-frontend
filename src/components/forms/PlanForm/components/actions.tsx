@@ -57,6 +57,19 @@ export const getConditionAndTriggers = (
                 />
               </React.Fragment>
             )}
+            {item.subjectCodableConceptText && (
+              <React.Fragment>
+                <Field
+                  className="form-control col-sm-10"
+                  required={false}
+                  component="textarea"
+                  name={`activities[${index}].condition[${mapIndex}].subjectCodableConceptText`}
+                  id={`activities[${index}].condition[${mapIndex}].subjectCodableConceptText`}
+                  disabled={true}
+                  hidden={true}
+                />
+              </React.Fragment>
+            )}
           </FormGroup>
         );
       });
