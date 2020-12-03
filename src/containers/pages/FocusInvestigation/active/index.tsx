@@ -23,11 +23,7 @@ import HeaderBreadCrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import {
-  ENABLE_DEFAULT_PLAN_USER_FILTER,
-  SUPERSET_MAX_RECORDS,
-  SUPERSET_PLANS_SLICE,
-} from '../../../../configs/env';
+import { SUPERSET_MAX_RECORDS, SUPERSET_PLANS_SLICE } from '../../../../configs/env';
 import {
   ADD_FOCUS_INVESTIGATION,
   CASE_CLASSIFICATION_HEADER,
@@ -161,10 +157,11 @@ class ActiveFocusInvestigation extends React.Component<
   public fetchSupersetPlans(
     supersetFilters: Array<
       SupersetSQLFilterOption | SupersetAdhocFilterOption
-    > = supersetFIPlansParamFilters
+    > = supersetFIPlansParamFilters,
+    numberOfRecords: number = SUPERSET_MAX_RECORDS
   ) {
     const { fetchPlansActionCreator, supersetService } = this.props;
-    const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, supersetFilters);
+    const supersetParams = superset.getFormData(numberOfRecords, supersetFilters);
     supersetService(SUPERSET_PLANS_SLICE, supersetParams)
       .then((result: Plan[]) => {
         if (result) {
@@ -195,13 +192,7 @@ class ActiveFocusInvestigation extends React.Component<
 
   public componentDidMount() {
     const { userName, userPlanIds } = this.props;
-    if (!ENABLE_DEFAULT_PLAN_USER_FILTER) {
-      this.fetchSupersetPlans();
-    } else {
-      this.setState({
-        loading: false,
-      });
-    }
+    this.fetchSupersetPlans();
 
     if (userName) {
       this.setState({
@@ -221,7 +212,7 @@ class ActiveFocusInvestigation extends React.Component<
         loading: true,
       });
       const superseFilters = this.getFilterOptions(userPlanIds);
-      this.fetchSupersetPlans(superseFilters);
+      this.fetchSupersetPlans(superseFilters, userPlanIds.length);
     }
   }
 
@@ -252,7 +243,7 @@ class ActiveFocusInvestigation extends React.Component<
         loading: true,
       });
       const superseFilters = this.getFilterOptions(userPlanIds);
-      this.fetchSupersetPlans(superseFilters);
+      this.fetchSupersetPlans(superseFilters, userPlanIds.length);
     }
   }
 
