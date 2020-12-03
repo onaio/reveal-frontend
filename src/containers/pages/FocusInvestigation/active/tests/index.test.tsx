@@ -4,6 +4,7 @@ import { renderTable } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import { mount, shallow } from 'enzyme';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import { cloneDeep } from 'lodash';
 import MockDate from 'mockdate';
@@ -35,6 +36,9 @@ import {
   selectedPlan1,
   selectedPlan24,
 } from './fixtures';
+
+// tslint:disable-next-line: no-var-requires
+const dataLoading = require('../../../../../helpers/dataLoading/plans');
 
 reducerRegistry.register(reducerName, reducer);
 
@@ -111,9 +115,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         <ActiveFocusInvestigation {...props} />
       </Router>
     );
-
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual(CURRENT_FOCUS_INVESTIGATION);
     expect(wrapper.find(ActiveFocusInvestigation).props().caseTriggeredPlans).toEqual(
@@ -164,8 +169,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         <ActiveFocusInvestigation {...props} />
       </Router>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     expect(wrapper.find(ActiveFocusInvestigation).props().caseTriggeredPlans).toEqual(
       activeFocusInvestigationProps.caseTriggeredPlans
     );
@@ -225,8 +232,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     expect(wrapper.text()).toMatchSnapshot('A large unstyled string of the rendered output');
     wrapper.find('DrillDownTable').forEach(table => renderTable(table));
   });
@@ -250,8 +259,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     );
     // shows ripple here
     expect(wrapper.find('Ripple').length).toEqual(1);
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     // now you dont see the ripple
     expect(wrapper.find('Ripple').length).toEqual(0);
     wrapper.unmount();
@@ -308,8 +319,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     renderTable(wrapper, 'expect the luang tr as only non header tr');
     wrapper.unmount();
   });
@@ -338,8 +351,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     renderTable(wrapper, 'Should only have header rows');
     expect(wrapper.text()).toMatchSnapshot('should have 2 no data found texts');
   });
@@ -371,8 +386,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     expect(
       wrapper
         .find('Table')
@@ -432,8 +449,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
 
     expect(props.supersetService).toHaveBeenCalledTimes(2);
     expect(props.supersetService.mock.calls[0]).toEqual([
@@ -477,6 +496,79 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     ).toEqual([selectedPlan1]);
   });
 
+  it('renders ActiveFocusInvestigation correctly $ changes page title', async () => {
+    const mock: any = jest.fn();
+    mock.mockImplementation(() => Promise.resolve([]));
+
+    // spy on fn for geting user assigned plans
+    const spyLoadPlansByUserFilter = jest.spyOn(dataLoading, 'loadPlansByUserFilter');
+
+    const userName = 'test_user_1';
+    const userPlanIds = ['user-1-plan-id-1', 'user-1-plan-id-2'];
+
+    const props = {
+      caseTriggeredPlans: [fixtures.plan2],
+      fetchPlansActionCreator: jest.fn(),
+      history,
+      location: mock,
+      match: mock,
+      routinePlans: [fixtures.plan1],
+      supersetService: mock,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <ActiveFocusInvestigation {...props} />
+      </Router>
+    );
+
+    await act(async () => {
+      await flushPromises();
+    });
+
+    // the only call we make to superset is for getting all plans
+    expect(props.supersetService.mock.calls.length).toEqual(1);
+    // user assigned plans not called yet
+    expect(spyLoadPlansByUserFilter).toHaveBeenCalledTimes(0);
+
+    // simulate updating of userName and userPlanIds
+    wrapper.setProps({
+      children: React.cloneElement(wrapper.props().children, { userName, userPlanIds }),
+    });
+
+    await act(async () => {
+      await flushPromises();
+    });
+
+    // make another call to superset to get user plans
+    expect(props.supersetService.mock.calls.length).toEqual(2);
+    expect(props.supersetService.mock.calls[1]).toEqual([
+      0,
+      {
+        adhoc_filters: [
+          {
+            clause: 'WHERE',
+            comparator: ['FI', 'Dynamic-FI'],
+            expressionType: 'SIMPLE',
+            operator: 'in',
+            subject: 'plan_intervention_type',
+          },
+          {
+            clause: 'WHERE',
+            comparator: userPlanIds,
+            expressionType: 'SIMPLE',
+            operator: 'in',
+            subject: 'plan_id',
+          },
+        ],
+        row_limit: 2,
+      },
+    ]);
+
+    // user assigned plans called on passing user name
+    expect(spyLoadPlansByUserFilter).toHaveBeenCalledTimes(1);
+    expect(spyLoadPlansByUserFilter).toHaveBeenCalledWith(userName);
+  });
+
   it('calls superset with the correct params', async () => {
     const envModule = require('../../../../../configs/env');
     envModule.DISPLAYED_PLAN_TYPES = 'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'.split(
@@ -506,8 +598,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
         </Router>
       </Provider>
     );
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     const supersetParams = {
       adhoc_filters: [
         {
@@ -563,8 +657,10 @@ describe('containers/pages/ActiveFocusInvestigation', () => {
     // shows ripple here
     expect(wrapper.find('Ripple').length).toEqual(1);
 
-    await new Promise(resolve => setImmediate(resolve));
-    wrapper.update();
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     expect(props.fetchPlansActionCreator).not.toHaveBeenCalled();
 
     // now you dont see the ripple
