@@ -371,9 +371,6 @@ const PlanForm = (props: PlanFormProps) => {
                 {isPlanTypeEnabled(InterventionType.MDAPoint) && (
                   <option value={InterventionType.MDAPoint}>{MDAPointTitle}</option>
                 )}
-                {/* {isPlanTypeEnabled(InterventionType.MDAPoint) && (
-                  <option value={InterventionType.MDAPoint}>{SMC_TITLE}</option>
-                )} */}
                 {isPlanTypeEnabled(InterventionType.DynamicFI) && (
                   <option value={InterventionType.DynamicFI}>{DYNAMIC_FI_TITLE}</option>
                 )}

@@ -19,8 +19,6 @@ const SMCTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps
   let url = '';
   if (hasChildren) {
     url = urlPath ? `${urlPath}/${original.jurisdiction_id}` : '';
-  } else {
-    url = '';
   }
   const val = original.is_virtual_jurisdiction ? (
     <span className="plan-jurisdiction-name name-label">{cellValue}</span>
@@ -35,16 +33,7 @@ const SMCTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps
       <Link to={`${urlPath}/${original.jurisdiction_id}/${MAP}`}>{cellValue}</Link>
     </span>
   );
-  return (
-    <div>
-      {hasChildren ? (
-        <Link to={url}>{cellValue}</Link>
-      ) : (
-        // <Link to={`${urlPath}/${original.jurisdiction_id}/${MAP}`}>{cellValue}</Link>
-        val
-      )}
-    </div>
-  );
+  return <div>{hasChildren ? <Link to={url}>{cellValue}</Link> : val}</div>;
 };
 
 export default SMCTableCell;
