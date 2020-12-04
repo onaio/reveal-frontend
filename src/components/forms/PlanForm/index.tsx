@@ -23,6 +23,7 @@ import {
   DEFAULT_PLAN_VERSION,
   ENABLED_FI_REASONS,
   ENABLED_PLAN_TYPES,
+  MDA_POINT_FORM_INTERVENTION_TITLE,
 } from '../../../configs/env';
 import {
   ACTION,
@@ -103,6 +104,16 @@ import {
   PlanFormFields,
   PlanJurisdictionFormFields,
 } from './types';
+
+/** different titles for MDA point itrevention type */
+const MDAPonitInterventionTitles = {
+  MDA_POINT_TITLE,
+  SMC_TITLE,
+} as const;
+type MDAPonitInterventionTitles = keyof typeof MDAPonitInterventionTitles;
+const MDAPointTitle =
+  MDAPonitInterventionTitles[MDA_POINT_FORM_INTERVENTION_TITLE as MDAPonitInterventionTitles] ||
+  MDA_POINT_TITLE;
 
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {
@@ -358,11 +369,11 @@ const PlanForm = (props: PlanFormProps) => {
                   <option value={InterventionType.IRS}>{IRS_TITLE}</option>
                 )}
                 {isPlanTypeEnabled(InterventionType.MDAPoint) && (
-                  <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>
+                  <option value={InterventionType.MDAPoint}>{MDAPointTitle}</option>
                 )}
-                {isPlanTypeEnabled(InterventionType.SMC) && (
-                  <option value={InterventionType.SMC}>{SMC_TITLE}</option>
-                )}
+                {/* {isPlanTypeEnabled(InterventionType.MDAPoint) && (
+                  <option value={InterventionType.MDAPoint}>{SMC_TITLE}</option>
+                )} */}
                 {isPlanTypeEnabled(InterventionType.DynamicFI) && (
                   <option value={InterventionType.DynamicFI}>{DYNAMIC_FI_TITLE}</option>
                 )}

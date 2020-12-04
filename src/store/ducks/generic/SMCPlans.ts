@@ -145,7 +145,7 @@ export default function reducer(
  */
 export function getSMCPlansById(
   state: Partial<Store>,
-  interventionType: InterventionType = InterventionType.SMC
+  interventionType: InterventionType = InterventionType.MDAPoint
 ): { [key: string]: SMCPlan } {
   if (interventionType) {
     return keyBy(getSMCPlansArray(state, interventionType), 'plan_id');
@@ -169,7 +169,7 @@ export function getSMCPlanById(state: Partial<Store>, planId: string): SMCPlan |
  */
 export function getSMCPlansArray(
   state: Partial<Store>,
-  interventionType: InterventionType = InterventionType.SMC
+  interventionType: InterventionType = InterventionType.MDAPoint
 ): SMCPlan[] {
   const result = values((state as any)[reducerName].SMCPlansById);
   return result.filter((e: SMCPlan) => e.plan_intervention_type === interventionType);
