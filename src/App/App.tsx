@@ -128,10 +128,10 @@ import ConnectedSingleOrgView from '../containers/pages/OrganizationViews/Single
 import { ConnectedPlanAssignment } from '../containers/pages/PlanAssignment';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
+import { EditServerSettings } from '../containers/pages/ServerSettings/EditSettings';
 import ConnectedSMCJurisdictionReport from '../containers/pages/SMC/jurisdictionsReport';
 import ConnectedSMCReportingMap from '../containers/pages/SMC/Map';
 import ConnectedSMCPlansList from '../containers/pages/SMC/plans';
-import { EditServerSettings } from '../containers/pages/ServerSettings/EditSettings';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 import store from '../store';
 import { getOauthProviderState } from '../store/selectors';
@@ -261,27 +261,6 @@ const App = (props: AppProps) => {
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   exact={true}
                   path={`${REPORT_SMC_PLAN_URL}/:planId`}
-                  component={ConnectedSMCJurisdictionReport}
-                />
-                <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId`}
-                  component={ConnectedSMCJurisdictionReport}
-                />
-                <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId`}
-                  component={ConnectedSMCJurisdictionReport}
-                />
-                <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedSMCJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
