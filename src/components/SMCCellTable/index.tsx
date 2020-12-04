@@ -20,7 +20,6 @@ const SMCTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps
   if (hasChildren) {
     url = urlPath ? `${urlPath}/${original.jurisdiction_id}` : '';
   } else {
-    // url = `${SMC_LOCATION_REPORT_URL}/${plan_id}/${jurisdiction_id}`;
     url = '';
   }
   const val = original.is_virtual_jurisdiction ? (
