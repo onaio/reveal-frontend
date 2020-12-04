@@ -25,6 +25,7 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
     expect(Object.keys(helpers.plansTableColumns)).toEqual([
       'mdaJurisdictionsColumns',
       'namibia2019',
+      'smcJurisdictionsColumns',
       'zambiaFocusArea2019',
       'zambiaJurisdictions2019',
       'zambiaMDALower2020',
