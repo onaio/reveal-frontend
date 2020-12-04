@@ -16,7 +16,6 @@ export interface LinkedCellProps extends DropDownCellProps {
 const SMCTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps) => {
   const { cell, cellValue, hasChildren, urlPath } = props;
   const original: Dictionary = cell.row.original;
-  const { plan_id, jurisdiction_id } = original;
   let url = '';
   if (hasChildren) {
     url = urlPath ? `${urlPath}/${original.jurisdiction_id}` : '';
