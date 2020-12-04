@@ -9,11 +9,11 @@ import { QUERY_PARAM_TITLE, REPORT_SMC_PLAN_URL } from '../../../../constants';
 import { getPlanStatusToDisplay, getQueryParams } from '../../../../helpers/utils';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
+import { GenericPlan } from '../../../../store/ducks/generic/plans';
 import SMCPlansReducer, {
   fetchSMCPlans,
   makeSMCPlansArraySelector,
   reducerName as SMCPlansReducerName,
-  SMCPlan,
 } from '../../../../store/ducks/generic/SMCPlans';
 import { GenericPlanListProps, GenericPlansList } from '../../GenericPlansList';
 
@@ -50,7 +50,7 @@ export { SMCPlansList };
 
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps extends RouteComponentProps<RouteParams> {
-  plans: SMCPlan[];
+  plans: GenericPlan[];
 }
 
 /** map state to props */
