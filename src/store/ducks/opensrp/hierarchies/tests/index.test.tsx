@@ -15,6 +15,7 @@ import reducer, {
   getNodesInSelectedTree,
   getRootByNodeId,
   getSelectedHierarchy,
+  getStructuresCount,
   getTreeById,
   reducerName,
   selectNode,
@@ -167,12 +168,12 @@ describe('reducers/opensrp/hierarchies', () => {
       ...filters,
       leafNodesOnly: false,
     });
-    expect(allSelected.length).toEqual(3);
+    expect(allSelected.length).toEqual(4);
     allSelected = getAllSelectedNodes()(store.getState(), {
       leafNodesOnly: true,
       ...filters,
     });
-    expect(allSelected.length).toEqual(1);
+    expect(allSelected.length).toEqual(2);
   });
 
   it('can hold multiple trees', () => {
@@ -271,6 +272,38 @@ describe('reducers/opensrp/hierarchies', () => {
     }
     const nodesNumOriginally = origTree.all(node => !!node).length;
     expect(nodesNumOriginally).toEqual(64);
+  });
+
+  it('getStructuresCount works', () => {
+    // should be able to select then deselect using deselect action
+    const structureCountSelector = getStructuresCount();
+    const rootJurisdictionId = '2942';
+    const filters = {
+      planId,
+      rootJurisdictionId,
+    };
+    store.dispatch(fetchTree(sampleHierarchy));
+
+    /** This function generates the callback function  */
+    const getCallback = (ids: string[]) => {
+      return (node: TreeNode, jurisdictionsIds: string[] = ids) => {
+        const isLeafNodePastThreshHold =
+          !node.hasChildren() && jurisdictionsIds.includes(node.model.id);
+        return isLeafNodePastThreshHold;
+      };
+    };
+
+    // should just work nicely
+    store.dispatch(
+      autoSelectNodes(rootJurisdictionId, getCallback(['3951']), planId, 'Auto-Selection')
+    );
+    expect(structureCountSelector(store.getState(), filters)).toEqual(159);
+
+    // should still work even when the tree node does not have a structureCount property
+    store.dispatch(
+      autoSelectNodes(rootJurisdictionId, getCallback(['1337']), planId, 'Auto-Selection')
+    );
+    expect(structureCountSelector(store.getState(), filters)).toEqual(0);
   });
 
   it('deselects nodes correctly', () => {
