@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { cloneDeep } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import reducer, {
   autoSelectNodes,
@@ -168,12 +169,12 @@ describe('reducers/opensrp/hierarchies', () => {
       ...filters,
       leafNodesOnly: false,
     });
-    expect(allSelected.length).toEqual(4);
+    expect(allSelected.length).toEqual(3);
     allSelected = getAllSelectedNodes()(store.getState(), {
       leafNodesOnly: true,
       ...filters,
     });
-    expect(allSelected.length).toEqual(2);
+    expect(allSelected.length).toEqual(1);
   });
 
   it('can hold multiple trees', () => {
@@ -282,7 +283,30 @@ describe('reducers/opensrp/hierarchies', () => {
       planId,
       rootJurisdictionId,
     };
-    store.dispatch(fetchTree(sampleHierarchy));
+
+    const testHierarchy = cloneDeep(sampleHierarchy);
+
+    // Add a node that does not have the structureCount field
+    (testHierarchy as any).locationsHierarchy.map['2942'].children['3019'].children['1337'] = {
+      id: '1337',
+      label: 'No structure count',
+      node: {
+        attributes: {
+          // missing structureCount
+          geographicLevel: 2,
+        },
+        locationId: '1337',
+        name: 'No structure count',
+        parentLocation: {
+          locationId: '3019',
+          voided: false,
+        },
+        voided: false,
+      },
+      parent: '3019',
+    };
+
+    store.dispatch(fetchTree(testHierarchy));
 
     /** This function generates the callback function  */
     const getCallback = (ids: string[]) => {
