@@ -23,7 +23,7 @@ import GenericJurisdictionsReducer, {
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../store/ducks/generic/jurisdictions';
 import { genericFetchPlans, GenericPlan } from '../../../store/ducks/generic/plans';
-import { fetchSMCPlans } from '../../../store/ducks/generic/SMCPlans';
+import { fetchSMCPlans, SMCPLANType } from '../../../store/ducks/generic/SMCPlans';
 import { getJurisdictionBreadcrumbs } from '../IRS/Map/helpers';
 import { GetColumnsToUse, getColumnsToUse, TableProps } from './helpers';
 import './style.css';
@@ -61,7 +61,7 @@ export interface GenericJurisdictionProps {
   /** The reporting jurisdiction columns */
   jurisdictionColumn: string;
   jurisdictions: GenericJurisdiction[] | null;
-  plan: GenericPlan | null;
+  plan: GenericPlan | SMCPLANType | null;
   /** The superset reporting plan slice */
   reportingPlanSlice: string;
   /** Get superset plans for the provided superset slice  */

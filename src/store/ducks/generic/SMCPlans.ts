@@ -11,25 +11,27 @@ import { Store } from 'redux';
 import { createSelector } from 'reselect';
 import { GenericPlan } from './plans';
 
+export type SMCPLANType = Omit<GenericPlan, 'plan_fi_reason' | 'plan_fi_statusts'>;
+
 /** the reducer name */
 export const reducerName = 'SMCPlans';
 
 /** generic plans Reducer */
-const reducer = reducerFactory<GenericPlan>(reducerName);
+const reducer = reducerFactory<SMCPLANType>(reducerName);
 export default reducer;
 
 // actions
 /** actionCreator returns action to to add Item records to store */
-export const fetchSMCPlans = fetchActionCreatorFactory<GenericPlan>(reducerName, 'plan_id');
+export const fetchSMCPlans = fetchActionCreatorFactory<SMCPLANType>(reducerName, 'plan_id');
 /** actionCreator returns action to to remove Item records to store */
 export const removeSMCPlans = removeActionCreatorFactory(reducerName);
 
 // selectors
 /** get one Plan using its id */
-export const getSMCPlanById = getItemByIdFactory<GenericPlan>(reducerName);
+export const getSMCPlanById = getItemByIdFactory<SMCPLANType>(reducerName);
 
 /** get all plans by ids */
-export const getSMCPlansArray = getItemsByIdFactory<GenericPlan>(reducerName);
+export const getSMCPlansArray = getItemsByIdFactory<SMCPLANType>(reducerName);
 
 /** RESELECT USAGE STARTS HERE */
 
@@ -42,7 +44,7 @@ export interface SMCPlanFilters {
 /** SMCPlansArrayBaseSelector select an array of all plans
  * @param state - the redux store
  */
-export const SMCPlansArrayBaseSelector = (state: Partial<Store>): GenericPlan[] =>
+export const SMCPlansArrayBaseSelector = (state: Partial<Store>): SMCPLANType[] =>
   values(getSMCPlansArray(state) || {});
 
 /** getSMCPlansArrayByTitle

@@ -27,7 +27,7 @@ import { displayError } from '../../../helpers/errors';
 import { DefaultDrillDownPropsType } from '../../../helpers/utils';
 import supersetFetch from '../../../services/superset';
 import { genericFetchPlans, GenericPlan } from '../../../store/ducks/generic/plans';
-import { fetchSMCPlans } from '../../../store/ducks/generic/SMCPlans';
+import { fetchSMCPlans, SMCPLANType } from '../../../store/ducks/generic/SMCPlans';
 import './index.css';
 
 /** interface for GenericPlanList props */
@@ -35,7 +35,7 @@ export interface GenericPlanListProps {
   fetchPlans: typeof genericFetchPlans | typeof fetchSMCPlans;
   pageTitle: string;
   pageUrl: string;
-  plans: GenericPlan[];
+  plans: GenericPlan[] | SMCPLANType[];
   service: typeof supersetFetch;
   supersetReportingSlice: string;
 }

@@ -26,6 +26,7 @@ import {
 import { GenericPlan } from '../../../../store/ducks/generic/plans';
 import SMCPlansReducer, {
   reducerName as SMCPlansReducerName,
+  SMCPLANType,
 } from '../../../../store/ducks/generic/SMCPlans';
 import { fetchSMCPlans, getSMCPlanById } from '../../../../store/ducks/generic/SMCPlans';
 import {
@@ -75,7 +76,7 @@ export { SMCJurisdictionReport };
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps extends RouteComponentProps<RouteParams> {
   jurisdictions: GenericJurisdiction[] | null;
-  plan: GenericPlan | null;
+  plan: GenericPlan | SMCPLANType | null;
 }
 
 /** map state to props */
