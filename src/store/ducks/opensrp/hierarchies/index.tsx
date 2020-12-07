@@ -541,7 +541,7 @@ export const getStructuresCount = () =>
     const allSelectedLeafNodes = computeSelectedNodes(tree, true, metaByJurisdiction);
     const reducingFn = (acc: number, value: number) => acc + value;
     return allSelectedLeafNodes
-      .map(node => node.model.node.attributes.structureCount)
+      .map(node => node.model.node.attributes.structureCount || 0)
       .reduce(reducingFn, 0);
   });
 
