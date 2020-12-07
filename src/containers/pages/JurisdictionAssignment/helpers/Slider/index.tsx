@@ -84,7 +84,7 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
 
   const onChangeComplete = (val: number | Range) => {
     const metaJurOfInterest = jurisdictionsMetadata.filter(
-      metaObject => parseInt(metaObject.value, 10) > val
+      metaObject => parseInt(metaObject.value || '0', 10) >= val
     );
     const jurisdictionsIdsMeta = metaJurOfInterest.map(meta => meta.key);
     const callback = (node: TreeNode) => {
