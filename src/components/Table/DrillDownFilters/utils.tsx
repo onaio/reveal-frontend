@@ -1,12 +1,32 @@
 /** utils that abstract code that customizes the drill-down-table */
-import { RenderFiltersInBarOptions, renderPaginationFun } from '@onaio/drill-down-table';
+import {
+  DrillDownInstanceProps,
+  RenderFiltersInBarOptions,
+  RevealPagination,
+} from '@onaio/drill-down-table';
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { NEXT, OF, PAGE, PREVIOUS, ROWS_TO_DISPLAY } from '../../../configs/lang';
 import { OpenSRPService } from '../../../services/opensrp';
 import { ColumnHider } from '../../forms/ColumnHider';
 import { RowHeightFilter } from '../../forms/RowHeightPicker';
 import { createChangeHandler, SearchForm, SearchFormProps } from '../../forms/Search';
 import { UserSelectFilter } from '../../forms/UserFilter';
+
+/** custom renderProp that renders a custom pagination component
+ * @param {DrillDownInstanceProps<t>} props - the React table instance containing applied hooks.
+ */
+export const renderPaginationFun = <T extends object>(props: DrillDownInstanceProps<T>) => {
+  const allProps = {
+    ...props,
+    nextText: NEXT,
+    ofText: OF,
+    pageText: PAGE,
+    previousText: PREVIOUS,
+    rowsToDisplayText: ROWS_TO_DISPLAY,
+  };
+  return <RevealPagination {...allProps} />;
+};
 
 /** options for renderInFilterFactory function */
 export interface Options extends Partial<SearchFormProps> {

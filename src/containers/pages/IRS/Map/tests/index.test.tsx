@@ -1,21 +1,18 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
+import { featureCollection } from '@turf/helpers';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
-import { GREY } from '../../../../../colors';
-import { SUPERSET_IRS_REPORTING_INDICATOR_STOPS } from '../../../../../configs/env';
-import {
-  circleLayerConfig,
-  fillLayerConfig,
-  lineLayerConfig,
-} from '../../../../../configs/settings';
-import { MAIN_PLAN, MAP, REPORT_IRS_PLAN_URL, STRUCTURE_LAYER } from '../../../../../constants';
+import { JURISDICTION_NOT_FOUND, PLAN_NOT_FOUND } from '../../../../../configs/lang';
+import { MAP, MULTI_POLYGON, POINT, POLYGON, REPORT_IRS_PLAN_URL } from '../../../../../constants';
+import * as errors from '../../../../../helpers/errors';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -37,16 +34,23 @@ import { plans } from '../../../../../store/ducks/generic/tests/fixtures';
 import jurisdictionReducer, {
   fetchJurisdictions,
   getJurisdictionById,
-  Jurisdiction,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
+import * as mapUtils from '../../../FocusInvestigation/map/active/helpers/utils';
 import * as fixtures from '../../JurisdictionsReport/fixtures';
-import { getGisidaWrapperProps, IRSIndicatorStops } from '../helpers';
+import { IRSIndicatorStops } from '../helpers';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
 jest.mock('../../../../../configs/env');
+
+jest.mock('../../../../../components/GisidaLite', () => {
+  const MemoizedGisidaLiteMock = () => <div>Mock component</div>;
+  return {
+    MemoizedGisidaLite: MemoizedGisidaLiteMock,
+  };
+});
 
 /** register the reducers */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
@@ -70,6 +74,7 @@ const history = createBrowserHistory();
 describe('components/IRS Reports/IRSReportingMap', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('renders without crashing', () => {
@@ -190,7 +195,9 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       </Router>
     );
     const helmet = Helmet.peek();
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
     expect(helmet.title).toEqual('IRS 2019-09-05 TEST: Akros_1');
@@ -209,9 +216,8 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     expect(toJson(wrapper.find('.list-unstyled'))).toMatchSnapshot('No sprayed reasons');
     expect(wrapper.find('.list-unstyled li').length).toEqual(3);
 
-    const indicatorStops = IRSIndicatorStops[SUPERSET_IRS_REPORTING_INDICATOR_STOPS];
-    expect(wrapper.find('GisidaWrapper').props()).toEqual(
-      getGisidaWrapperProps(jurisdiction as Jurisdiction, structures, indicatorStops)
+    expect(toJson(wrapper.find('MemoizedGisidaLiteMock div'))).toMatchSnapshot(
+      'map renders correctly'
     );
 
     expect(supersetServiceMock.mock.calls).toEqual([
@@ -370,7 +376,9 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       </Router>
     );
 
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
 
     // not sprayed should not be response item titles
     expect(toJson(wrapper.find('.responseItem h6'))).toMatchSnapshot('Response item titles');
@@ -380,9 +388,10 @@ describe('components/IRS Reports/IRSReportingMap', () => {
     wrapper.unmount();
   });
 
-  it('renders both Points and Polygons correctly', () => {
+  it('renders both Points and Polygons correctly', async () => {
     const mock: any = jest.fn();
-
+    const buildGsLiteLayersSpy = jest.spyOn(mapUtils, 'buildGsLiteLayers');
+    const buildJurisdictionLayersSpy = jest.spyOn(mapUtils, 'buildJurisdictionLayers');
     const kmz421StructureData = superset.processData(fixtures.ZambiaKMZ421StructuresJSON) || [];
 
     store.dispatch(fetchGenericStructures('zm-kmz421-structures', kmz421StructureData));
@@ -397,8 +406,6 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       'zm-kmz421-structures',
       '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
     );
-
-    const indicatorStops = IRSIndicatorStops[SUPERSET_IRS_REPORTING_INDICATOR_STOPS];
 
     const props = {
       focusArea: getGenericJurisdictionByJurisdictionId(
@@ -423,102 +430,162 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       plan: plans[0] as GenericPlan,
       structures,
     };
+
+    const points = structures?.features.filter(feature => feature.geometry.type === POINT);
+    const polygons = structures?.features.filter(feature =>
+      [POLYGON, MULTI_POLYGON].includes(feature.geometry.type)
+    );
+
+    const pointsFC = points ? featureCollection(points) : null;
+    const polygonsFC = polygons ? featureCollection(polygons) : null;
+
     const wrapper = mount(
       <Router history={history}>
         <IRSReportingMap {...props} />
       </Router>
     );
 
-    expect(wrapper.find('GisidaWrapper').props()).toEqual(
-      getGisidaWrapperProps(jurisdiction as Jurisdiction, structures, indicatorStops)
+    // TODO: investigate why un-commenting the following renders the component twice
+    // await act(async () => {
+    //   await flushPromises();
+    // });
+
+    expect(buildGsLiteLayersSpy).toBeCalledTimes(1);
+    expect(buildGsLiteLayersSpy).toBeCalledWith('irs_report_structures', pointsFC, polygonsFC, {
+      circleColor: {
+        property: 'business_status',
+        stops: IRSIndicatorStops.zambia2019,
+        type: 'categorical',
+      },
+      polygonColor: {
+        property: 'business_status',
+        stops: IRSIndicatorStops.zambia2019,
+        type: 'categorical',
+      },
+      polygonLineColor: {
+        property: 'business_status',
+        stops: IRSIndicatorStops.zambia2019,
+        type: 'categorical',
+      },
+    });
+
+    expect(buildJurisdictionLayersSpy).toBeCalledTimes(1);
+    expect(buildJurisdictionLayersSpy).toBeCalledWith(jurisdiction);
+
+    wrapper.unmount();
+  });
+
+  it('calls GisidaLite with the correct props', async () => {
+    const mock: any = jest.fn();
+    const kmz421StructureData = superset.processData(fixtures.ZambiaKMZ421StructuresJSON) || [];
+
+    store.dispatch(fetchGenericStructures('zm-kmz421-structures', kmz421StructureData));
+
+    const jurisdiction = getJurisdictionById(
+      store.getState(),
+      '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
     );
 
-    const structuresPopup = {
-      body: `<div>
-          <p class="heading">{{structure_type}}</p>
-          <p>Status: {{business_status}}</p>
-        </div>`,
-      join: ['structure_jurisdiction_id', 'structure_jurisdiction_id'],
+    const structures = getGenericStructures(
+      store.getState(),
+      'zm-kmz421-structures',
+      '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+    );
+
+    const props = {
+      focusArea: getGenericJurisdictionByJurisdictionId(
+        store.getState(),
+        'zm-focusAreas',
+        '92a0c5f3-8b47-465e-961b-2998ad3f00a5'
+      ),
+      history,
+      jurisdiction,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: '92a0c5f3-8b47-465e-961b-2998ad3f00a5',
+          planId: (plans[0] as GenericPlan).plan_id,
+        },
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/${
+          (plans[0] as GenericPlan).plan_id
+        }/92a0c5f3-8b47-465e-961b-2998ad3f00a5/${MAP}`,
+      },
+      plan: plans[0] as GenericPlan,
+      structures,
     };
 
-    const structureStatusColors = {
-      default: GREY,
-      property: 'business_status',
-      stops: indicatorStops,
-      type: 'categorical',
-    };
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSReportingMap {...props} />
+      </Router>
+    );
 
-    expect((wrapper.find('GisidaWrapper').props() as any).layers).toEqual([
-      {
-        ...lineLayerConfig,
-        id: `${MAIN_PLAN}-${(jurisdiction as Jurisdiction).jurisdiction_id}`,
-        source: {
-          ...lineLayerConfig.source,
-          data: {
-            ...lineLayerConfig.source.data,
-            data: JSON.stringify((jurisdiction as Jurisdiction).geojson),
-          },
+    await act(async () => {
+      await flushPromises();
+    });
+
+    const mapProps = wrapper.find('MemoizedGisidaLiteMock').props();
+    expect((mapProps as any).mapCenter).toEqual([32.569385350000005, -13.98573055]);
+    expect((mapProps as any).mapBounds).toEqual([32.565511, -13.9880892, 32.5732597, -13.9833719]);
+    // Check Gisida component map layers
+    expect((mapProps as any).layers.map((e: any) => e.key)).toMatchSnapshot('GisidaLite layers');
+    wrapper.unmount();
+  });
+
+  it('displays error correctly', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const mock: any = jest.fn();
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+    const displayErrorSpy = jest.spyOn(errors, 'displayError');
+
+    const props = {
+      focusArea: null,
+      history,
+      jurisdiction: null,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: 'invalid-jur-id',
+          planId: (plans[0] as GenericPlan).plan_id,
         },
-        visible: true,
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/invali-plan-id/invalid-jur-id/${MAP}`,
       },
-      {
-        ...circleLayerConfig,
-        filter: ['==', '$type', 'Point'],
-        id: `${STRUCTURE_LAYER}-circle`,
-        paint: {
-          ...circleLayerConfig.paint,
-          'circle-color': structureStatusColors,
-          'circle-radius': ['interpolate', ['exponential', 2], ['zoom'], 15.75, 2.5, 20.8, 50],
-          'circle-stroke-color': structureStatusColors,
-          'circle-stroke-opacity': 1,
-        },
-        popup: structuresPopup,
-        source: {
-          ...circleLayerConfig.source,
-          data: {
-            data: JSON.stringify(structures),
-            type: 'stringified-geojson',
-          },
-          type: 'geojson',
-        },
-        visible: true,
-      },
-      {
-        ...fillLayerConfig,
-        filter: ['==', '$type', 'Polygon'],
-        id: `${STRUCTURE_LAYER}-fill`,
-        paint: {
-          ...fillLayerConfig.paint,
-          'fill-color': structureStatusColors,
-          'fill-outline-color': structureStatusColors,
-        },
-        popup: structuresPopup,
-        source: {
-          ...fillLayerConfig.source,
-          data: {
-            ...fillLayerConfig.source.data,
-            data: JSON.stringify(structures),
-          },
-        },
-        visible: true,
-      },
-      {
-        ...lineLayerConfig,
-        filter: ['==', '$type', 'Polygon'],
-        id: `${STRUCTURE_LAYER}-line`,
-        paint: {
-          'line-color': structureStatusColors,
-          'line-opacity': 1,
-          'line-width': 2,
-        },
-        source: {
-          ...lineLayerConfig.source,
-          data: {
-            ...lineLayerConfig.source.data,
-            data: JSON.stringify(structures),
-          },
-        },
-      },
+      plan: null,
+      service: supersetServiceMock,
+      structures: [] as any,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSReportingMap {...props} />
+      </Router>
+    );
+    await act(async () => {
+      await flushPromises();
+    });
+    wrapper.update();
+    expect(
+      wrapper
+        .find('.global-error-container p')
+        .at(0)
+        .text()
+    ).toMatchInlineSnapshot(`"An error ocurred. Please try and refresh the page."`);
+    expect(
+      wrapper
+        .find('.global-error-container p')
+        .at(1)
+        .text()
+    ).toMatchInlineSnapshot(`"The specific error is: An Error Ocurred"`);
+    expect(displayErrorSpy).toHaveBeenCalledTimes(3);
+    expect(displayErrorSpy.mock.calls).toEqual([
+      [new Error(JURISDICTION_NOT_FOUND)],
+      [new Error(JURISDICTION_NOT_FOUND)],
+      [new Error(PLAN_NOT_FOUND)],
     ]);
   });
 });

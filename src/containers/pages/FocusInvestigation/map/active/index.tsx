@@ -16,7 +16,7 @@ import HeaderBreadcrumb, {
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../../components/page/Loading';
 import SelectComponent from '../../../../../components/SelectPlan/';
-import { SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
+import { SUPERSET_MAX_RECORDS, SUPERSET_PLANS_SLICE } from '../../../../../configs/env';
 import {
   AN_ERROR_OCCURRED,
   FOCUS_INVESTIGATION,
@@ -25,6 +25,7 @@ import {
   INVESTIGATION,
   MEASURE,
   NUMERATOR_OF_DENOMINATOR_UNITS,
+  PLAN_OR_JURISDICTION_NOT_FOUND,
   PLAN_SELECT_PLACEHOLDER,
   PROGRESS,
   REACTIVE_INVESTIGATION,
@@ -46,7 +47,6 @@ import {
   POLYGON,
   RACD_REGISTER_FAMILY_ID,
 } from '../../../../../constants';
-import { PLAN_INTERVENTION_TYPE } from '../../../../../constants';
 import { displayError } from '../../../../../helpers/errors';
 import { getGoalReport } from '../../../../../helpers/indicators';
 import {
@@ -102,9 +102,17 @@ import {
   fetchData,
   getDetailViewPlanInvestigationContainer,
   getMapBounds,
+  setMapViewPortZoomFactory,
   supersetCall,
 } from './helpers/utils';
 import './style.css';
+
+import { ErrorPage } from '../../../../../components/page/ErrorPage';
+import { supersetFIPlansParamFilters } from '../../../../../helpers/dataLoading/plans';
+import indexCasesReducer, {
+  fetchIndexCaseDetails,
+  reducerName as indexCasesReducerName,
+} from '../../../../../store/ducks/opensrp/indexCasesDetails';
 
 /** register reducers */
 reducerRegistry.register(jurisdictionReducerName, jurisdictionReducer);
@@ -112,12 +120,14 @@ reducerRegistry.register(goalsReducerName, goalsReducer);
 reducerRegistry.register(structuresReducerName, structuresReducer);
 reducerRegistry.register(plansReducerName, plansReducer);
 reducerRegistry.register(tasksReducerName, tasksReducer);
+reducerRegistry.register(indexCasesReducerName, indexCasesReducer);
 
 /** interface to describe props for ActiveFI Map component */
 export interface MapSingleFIProps {
   currentGoal: string | null;
   setCurrentGoalActionCreator: typeof setCurrentGoal;
   fetchGoalsActionCreator: typeof fetchGoals;
+  fetchIndexCaseActionCreator: typeof fetchIndexCaseDetails;
   fetchJurisdictionsActionCreator: typeof fetchJurisdictions;
   fetchPlansActionCreator: typeof fetchPlans;
   fetchStructuresActionCreator: typeof setStructures;
@@ -148,6 +158,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
   currentPointIndexCases: null,
   currentPolyIndexCases: null,
   fetchGoalsActionCreator: fetchGoals,
+  fetchIndexCaseActionCreator: fetchIndexCaseDetails,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
   fetchStructuresActionCreator: setStructures,
@@ -167,15 +178,26 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
 
 /** Map View for Single Active Focus Investigation */
 const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RouteParams>) => {
+  const [isLoading, setIsLoading] = React.useState(false);
+
   React.useEffect(() => {
     if (!props.plan) {
       /**
        * Fetch plans incase the plan is not available e.g when page is refreshed
        */
-      const { supersetService, fetchPlansActionCreator } = props;
-      const supersetParams = superset.getFormData(2000, [
-        { comparator: InterventionType.FI, operator: '==', subject: PLAN_INTERVENTION_TYPE },
-      ]);
+      setIsLoading(true);
+      const { supersetService, fetchPlansActionCreator, match } = props;
+      if (match.params.id) {
+        supersetFIPlansParamFilters.push({
+          comparator: match.params.id,
+          operator: '==',
+          subject: 'id',
+        });
+      }
+      const supersetParams = superset.getFormData(
+        SUPERSET_MAX_RECORDS,
+        supersetFIPlansParamFilters
+      );
 
       /** TODO:// huge data set fetching to tasks slice */
 
@@ -184,7 +206,10 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
         fetchPlansActionCreator,
         supersetService,
         supersetParams
-      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+      )
+        // tslint:disable-next-line: no-floating-promises
+        .catch(() => displayError(new Error(AN_ERROR_OCCURRED)))
+        .finally(() => setIsLoading(false));
     }
     /**
      * We do not need to re-run since this effect doesn't depend on any values from props or state
@@ -194,18 +219,23 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
   React.useEffect(() => {
     if (props.plan) {
       /**
-       * Plans present in state e.g when accesing this view from a list of plans or
-       * when the plans are expilcity fetched as in the above if block
+       * Plans present in state e.g when accessing this view from a list of plans or
+       * when the plans are explicitly fetched as in the above if block
        */
+      setIsLoading(true);
       fetchData(
         props.fetchGoalsActionCreator,
         props.fetchJurisdictionsActionCreator,
         props.fetchPlansActionCreator,
         props.fetchStructuresActionCreator,
         props.fetchTasksActionCreator,
+        props.fetchIndexCaseActionCreator,
         props.plan,
         props.supersetService
-      ).catch((_: Error) => displayError(new Error(AN_ERROR_OCCURRED)));
+      )
+        // tslint:disable-next-line: no-floating-promises
+        .catch((_: Error) => displayError(new Error(AN_ERROR_OCCURRED)))
+        .finally(() => setIsLoading(false));
     }
     /**
      * Only re-run effect if props.plan.plan_id changes
@@ -235,8 +265,12 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     currentPointIndexCases,
     currentPolyIndexCases,
   } = props;
-  if (!jurisdiction || !plan) {
+  if (isLoading) {
     return <Loading />;
+  }
+
+  if (!plan || !jurisdiction) {
+    return <ErrorPage errorMessage={PLAN_OR_JURISDICTION_NOT_FOUND} />;
   }
 
   /** filter out this plan form plans by focusArea */
@@ -341,6 +375,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     : undefined;
 
   const mapBounds = getMapBounds(jurisdiction);
+  const setMapViewPortZoom = setMapViewPortZoomFactory(mapBounds);
 
   return (
     <div>
@@ -374,6 +409,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
               mapCenter={mapCenter}
               mapBounds={mapBounds}
               onClickHandler={buildOnClickHandler(plan.plan_id)}
+              onLoad={setMapViewPortZoom}
             />
           </div>
         </div>
@@ -519,7 +555,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): MapStateToProps 
     });
   }
 
-  if (plan && jurisdiction && goals && goals.length > 1) {
+  if (plan && jurisdiction && goals && goals.length > 0) {
     /** include all complete index cases including current index case */
     currentPointIndexCases = getTasksFCSelector(state, {
       actionCode: CASE_CONFIRMATION_CODE,
@@ -575,6 +611,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): MapStateToProps 
 /** map props to actions that may be dispatched by component */
 const mapDispatchToProps = {
   fetchGoalsActionCreator: fetchGoals,
+  fetchIndexCaseActionCreator: fetchIndexCaseDetails,
   fetchJurisdictionsActionCreator: fetchJurisdictions,
   fetchPlansActionCreator: fetchPlans,
   fetchStructuresActionCreator: setStructures,

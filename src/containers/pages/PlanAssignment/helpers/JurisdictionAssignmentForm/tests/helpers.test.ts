@@ -36,11 +36,11 @@ describe('PlanAssignment/helpers', () => {
       assignments[0],
       {
         ...assignments[1],
-        toDate: '2019-12-29T00:00:00+00:00',
+        toDate: '2019-12-30T00:00:00+00:00',
       },
       {
         ...assignments[2],
-        toDate: '2019-12-29T00:00:00+00:00',
+        toDate: '2019-12-30T00:00:00+00:00',
       },
     ]);
   });
@@ -61,11 +61,11 @@ describe('PlanAssignment/helpers', () => {
       assignment5,
       {
         ...assignments[1],
-        toDate: '2019-12-29T00:00:00+00:00',
+        toDate: '2019-12-30T00:00:00+00:00',
       },
       {
         ...assignments[2],
-        toDate: '2019-12-29T00:00:00+00:00',
+        toDate: '2019-12-30T00:00:00+00:00',
       },
     ]);
   });
@@ -84,11 +84,11 @@ describe('PlanAssignment/helpers', () => {
       assignments[0],
       {
         ...assignments[1],
-        toDate: '2019-12-29T00:00:00+00:00',
+        toDate: '2019-12-30T00:00:00+00:00',
       },
       {
         ...assignments[2],
-        toDate: '2019-12-29T00:00:00+00:00',
+        toDate: '2019-12-30T00:00:00+00:00',
       },
     ]);
   });

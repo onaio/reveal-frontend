@@ -1,7 +1,11 @@
+import { viewport } from '@mapbox/geo-viewport';
+import GeojsonExtent from '@mapbox/geojson-extent';
 import { ProgressBar } from '@onaio/progress-indicators';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
+import { featureCollection } from '@turf/helpers';
+import geojson from 'geojson';
 import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
@@ -10,7 +14,7 @@ import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
-import GisidaWrapper from '../../../../components/GisidaWrapper';
+import { MemoizedGisidaLite } from '../../../../components/GisidaLite';
 import NotFound from '../../../../components/NotFound';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -29,14 +33,25 @@ import {
   AN_ERROR_OCCURRED,
   HOME,
   IRS_REPORTING_TITLE,
+  JURISDICTION_NOT_FOUND,
   LEGEND_LABEL,
   MAP_LOAD_ERROR,
   NUMERATOR_OF_DENOMINATOR_UNITS,
+  PLAN_NOT_FOUND,
   PROGRESS,
   STRUCTURES,
 } from '../../../../configs/lang';
 import { indicatorThresholdsIRS } from '../../../../configs/settings';
-import { HOME_URL, REPORT_IRS_PLAN_URL } from '../../../../constants';
+import {
+  BUSINESS_STATUS,
+  CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  HOME_URL,
+  IRS_REPORT_STRUCTURES,
+  MULTI_POLYGON,
+  POINT,
+  POLYGON,
+  REPORT_IRS_PLAN_URL,
+} from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -66,12 +81,18 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../store/ducks/jurisdictions';
 import {
+  buildGsLiteLayers,
+  buildJurisdictionLayers,
+  CircleColor,
+  PolygonColor,
+} from '../../FocusInvestigation/map/active/helpers/utils';
+import {
   defaultIndicatorStop,
-  getGisidaWrapperProps,
   getIndicatorRows,
   getJurisdictionBreadcrumbs,
   IRSIndicatorRows,
   IRSIndicatorStops,
+  mapOnClickHandler,
 } from './helpers';
 import './style.css';
 
@@ -148,10 +169,14 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       }
 
       // get the jurisdiction
-      await service(
-        SUPERSET_JURISDICTIONS_SLICE,
-        fetchLocationParams
-      ).then((result: Jurisdiction[]) => fetchJurisdictionsAction(result));
+      await service(SUPERSET_JURISDICTIONS_SLICE, fetchLocationParams).then(
+        (result: Jurisdiction[]) => {
+          if (!result || (result && !result.length)) {
+            displayError(new Error(JURISDICTION_NOT_FOUND));
+          }
+          fetchJurisdictionsAction(result);
+        }
+      );
 
       let fetchStructureParams: SupersetFormData | null = null;
       if (jurisdictionId && planId) {
@@ -178,8 +203,13 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
           ]);
         }
         // get the focus area
-        await service(focusAreaSlice, fetchFocusAreaParams).then((result: GenericJurisdiction[]) =>
-          fetchFocusAreas(focusAreaSlice, result)
+        await service(focusAreaSlice, fetchFocusAreaParams).then(
+          (result: GenericJurisdiction[]) => {
+            if (!result || (result && !result.length)) {
+              displayError(new Error(JURISDICTION_NOT_FOUND));
+            }
+            fetchFocusAreas(focusAreaSlice, result);
+          }
         );
       }
 
@@ -191,10 +221,14 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       }
 
       // get the plan
-      await service(
-        SUPERSET_IRS_REPORTING_PLANS_SLICE,
-        fetchPlansParams
-      ).then((result: GenericPlan[]) => fetchPlans(result));
+      await service(SUPERSET_IRS_REPORTING_PLANS_SLICE, fetchPlansParams).then(
+        (result: GenericPlan[]) => {
+          if (!result || (result && !result.length)) {
+            displayError(new Error(PLAN_NOT_FOUND));
+          }
+          fetchPlans(result);
+        }
+      );
     } catch (e) {
       displayError(e);
     } finally {
@@ -263,8 +297,6 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
     defaultIndicatorStop
   );
 
-  const gisidaWrapperProps = getGisidaWrapperProps(jurisdiction, structures, indicatorStops);
-
   /**
    * Create list elements from dictionary
    * @param {Dictionary} dict
@@ -279,6 +311,58 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
     return typeof dict === 'string' ? createList(JSON.parse(dict)) : createList(dict);
   };
 
+  let mapCenter;
+  let mapBounds;
+  let zoom;
+  if (structures && structures.features.length) {
+    mapBounds = GeojsonExtent(structures);
+    // get map zoom and center values
+    const centerAndZoom = viewport(mapBounds, [600, 400]);
+    mapCenter = centerAndZoom.center;
+    zoom = centerAndZoom.zoom;
+  }
+
+  // define circle paint colors
+  const circleColor: CircleColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+  // define polygon paint colors
+  const polygonColor: PolygonColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+  // define polygon line paint colors
+  const polygonLineColor: PolygonColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+
+  const points = structures?.features.filter(feature => feature.geometry.type === POINT);
+  const polygons = structures?.features.filter(feature =>
+    [POLYGON, MULTI_POLYGON].includes(feature.geometry.type)
+  );
+
+  const pointsFC = points ? featureCollection(points) : null;
+  const polygonsFC = polygons ? featureCollection(polygons) : null;
+
+  // map layers
+  const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
+  const structuresLayers = buildGsLiteLayers(
+    IRS_REPORT_STRUCTURES,
+    pointsFC as geojson.FeatureCollection,
+    polygonsFC as geojson.FeatureCollection,
+    {
+      circleColor,
+      polygonColor,
+      polygonLineColor,
+    }
+  );
+  const gsLayers = [...jurisdictionLayers, ...structuresLayers];
+
   return (
     <div>
       <Helmet>
@@ -292,10 +376,14 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
       </Row>
       <Row noGutters={true}>
         <Col xs={9}>
-          {gisidaWrapperProps ? (
-            <div className="map irs-reporting-map">
-              <GisidaWrapper {...gisidaWrapperProps} />
-            </div>
+          {gsLayers.length ? (
+            <MemoizedGisidaLite
+              layers={[...gsLayers]}
+              zoom={zoom}
+              mapCenter={mapCenter}
+              mapBounds={mapBounds}
+              onClickHandler={mapOnClickHandler}
+            />
           ) : (
             <div>{MAP_LOAD_ERROR}</div>
           )}

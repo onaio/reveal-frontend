@@ -11,8 +11,10 @@ import {
   DEFAULT_ACTIVITY_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
   DEFAULT_TIME,
-  ENABLED_PLAN_TYPES,
+  DISPLAYED_PLAN_TYPES,
+  PLAN_TYPES_ALLOWED_TO_CREATE,
   PLAN_UUID_NAMESPACE,
+  TASK_GENERATION_STATUS,
 } from '../../../configs/env';
 import { DATE_IS_REQUIRED, NAME_IS_REQUIRED, REQUIRED } from '../../../configs/lang';
 import {
@@ -31,6 +33,7 @@ import {
   PlanGoalDetail,
   PlanGoaldetailQuantity,
   PlanGoalTarget,
+  subjectCodableConceptType,
   taskGenerationStatuses,
   UseContext,
 } from '../../../configs/settings';
@@ -64,6 +67,7 @@ import {
   NAMED_EVENT_TRIGGER_TYPE,
   OPENSRP_EVENT_ID_CODE,
   TASK_GENERATION_STATUS_CODE,
+  TEAM_ASSIGNMENT_STATUS_CODE,
   TRIGGER,
 } from '../../../constants';
 import { generateNameSpacedUUID } from '../../../helpers/utils';
@@ -95,6 +99,13 @@ export const showDefinitionUriFor = [
   InterventionType.DynamicMDA,
 ];
 
+/**
+ * Check if intervention type id FI or Dynamic FI
+ * @param {InterventionType} interventionType - intervention type
+ */
+export const isFIOrDynamicFI = (interventionType: InterventionType): boolean =>
+  [InterventionType.DynamicFI, InterventionType.FI].includes(interventionType);
+
 /** Yup validation schema for PlanForm */
 export const PlanSchema = Yup.object().shape({
   activities: Yup.array().of(
@@ -122,7 +133,13 @@ export const PlanSchema = Yup.object().shape({
   caseNum: Yup.string(),
   date: Yup.string().required(DATE_IS_REQUIRED),
   end: Yup.date().required(REQUIRED),
-  fiReason: Yup.string().oneOf(FIReasons.map(e => e)),
+  fiReason: Yup.string().when('interventionType', {
+    is: value => isFIOrDynamicFI(value),
+    otherwise: Yup.string(),
+    then: Yup.string()
+      .oneOf(FIReasons.map(e => e))
+      .required(REQUIRED),
+  }),
   fiStatus: Yup.string().oneOf(fiStatusCodes),
   identifier: Yup.string(),
   interventionType: Yup.string()
@@ -140,7 +157,8 @@ export const PlanSchema = Yup.object().shape({
   status: Yup.string()
     .oneOf(Object.values(PlanStatus))
     .required(REQUIRED),
-  taskGenerationStatus: Yup.string().oneOf(taskGenerationStatuses.map(e => e)),
+  taskGenerationStatus: Yup.string().oneOf(Object.values(taskGenerationStatuses)),
+  teamAssignmentStatus: Yup.string(),
   title: Yup.string().required(REQUIRED),
   version: Yup.string(),
 });
@@ -160,6 +178,8 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
       condition.push({
         description: iterator.expression.description || '',
         expression: iterator.expression.expression || '',
+        subjectCodableConceptText: (iterator.expression.subjectCodableConcept?.text ||
+          '') as subjectCodableConceptType,
       });
     }
   }
@@ -333,21 +353,18 @@ export function getPlanActivityFromActionCode(
  * @param element - form field values for one plan activity
  */
 export const getConditionFromFormField = (
-  element: PlanActivityFormFields,
-  planActivity: PlanActivity | null
+  element: PlanActivityFormFields
 ): PlanActionCondition[] | undefined => {
   return (
     element.condition &&
-    element.condition.map((item, index) => {
-      const subjectCodableConcept =
-        (planActivity &&
-          planActivity.action.condition &&
-          planActivity.action.condition[index].expression.subjectCodableConcept) ||
-        null;
+    element.condition.map(item => {
+      const subjectCodableConcept = {
+        text: item.subjectCodableConceptText,
+      };
       return {
         expression: {
           ...(item.description && { description: item.description }),
-          ...(subjectCodableConcept && { subjectCodableConcept }),
+          ...(item.subjectCodableConceptText && { subjectCodableConcept }),
           expression: item.expression,
         },
         kind: APPLICABILITY_CONDITION_KIND,
@@ -425,7 +442,7 @@ export function extractActivitiesFromPlanForm(
         };
       }
 
-      const condition = getConditionFromFormField(element, planActivity);
+      const condition = getConditionFromFormField(element);
       const trigger = getTriggerFromFormField(element);
 
       const thisActionIdentifier =
@@ -513,7 +530,7 @@ export const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [str
   let title;
 
   const currentDate = target.name === 'date' ? target.value : formValues.date;
-  if (currentInterventionType === InterventionType.FI) {
+  if (isFIOrDynamicFI(currentInterventionType as InterventionType)) {
     const result = [
       currentFiStatus,
       currentJurisdiction,
@@ -555,13 +572,48 @@ export function doesFieldHaveErrors(
 }
 
 /**
+ * Check if the plan is a dynamic plan
+ * @param planObject - the plan
+ */
+export const isDynamicPlan = <T extends Pick<PlanDefinition, 'action'> = PlanDefinition>(
+  planObject: T
+) =>
+  planObject.action
+    .map(action => {
+      return Object.keys(action).includes(CONDITION) || Object.keys(action).includes(TRIGGER);
+    })
+    .includes(true);
+
+/** try to deduce the task generation status value from envs, if cant get a proper valid value
+ * return undefined
+ * @param - configuredEnv -  env of what the task generation status value should be
+ * @param - planDefinition actions , to help deduce if plan is dynamic
+ */
+export const getTaskGenerationValue = (
+  configuredEnv: string | undefined,
+  planActions: Pick<PlanDefinition, 'action'>
+) => {
+  const isDynamic = isDynamicPlan(planActions);
+  let taskGenerationStatusValue: taskGenerationStatusType | undefined;
+  /** we should probably add a validation check for the envs higher at point of entry */
+  taskGenerationStatusValue =
+    isDynamic &&
+    configuredEnv &&
+    Object.values(taskGenerationStatuses).includes(configuredEnv as taskGenerationStatusType)
+      ? (configuredEnv as taskGenerationStatusType)
+      : undefined;
+  return taskGenerationStatusValue;
+};
+
+/**
  * Generate an OpenSRP plan definition object from the PlanForm
  * @param formValue - the value gotten from the PlanForm
  * @returns {PlanDefinition} - the plan definition object
  */
 export function generatePlanDefinition(
   formValue: PlanFormFields,
-  planObj: PlanDefinition | null = null
+  planObj: PlanDefinition | null = null,
+  isEditMode: boolean = false
 ): PlanDefinition {
   const planIdentifier =
     formValue.identifier && formValue.identifier !== '' // is this an existing plan?
@@ -574,6 +626,16 @@ export function generatePlanDefinition(
         ? parseInt(DEFAULT_PLAN_VERSION, 10) + 1
         : parseInt(formValue.version, 10) + 1
       : formValue.version;
+
+  const actionAndGoals = extractActivitiesFromPlanForm(
+    formValue.activities,
+    planObj ? planObj.identifier : '',
+    planObj
+  );
+
+  const taskGenerationStatusValue =
+    getTaskGenerationValue(TASK_GENERATION_STATUS, actionAndGoals) ??
+    formValue.taskGenerationStatus;
 
   const useContext: UseContext[] = [
     {
@@ -598,19 +660,26 @@ export function generatePlanDefinition(
     useContext.push({ code: OPENSRP_EVENT_ID_CODE, valueCodableConcept: formValue.opensrpEventId });
   }
 
-  if (formValue.taskGenerationStatus) {
+  if (
+    formValue.taskGenerationStatus &&
+    formValue.taskGenerationStatus !== taskGenerationStatuses.ignore &&
+    (taskGenerationStatusValue !== taskGenerationStatuses.ignore || isEditMode)
+  ) {
     useContext.push({
       code: TASK_GENERATION_STATUS_CODE,
-      valueCodableConcept: formValue.taskGenerationStatus,
+      valueCodableConcept: isEditMode ? formValue.taskGenerationStatus : taskGenerationStatusValue,
+    });
+  }
+
+  if (formValue.teamAssignmentStatus && formValue.teamAssignmentStatus.trim() && isEditMode) {
+    useContext.push({
+      code: TEAM_ASSIGNMENT_STATUS_CODE,
+      valueCodableConcept: formValue.teamAssignmentStatus,
     });
   }
 
   return {
-    ...extractActivitiesFromPlanForm(
-      formValue.activities,
-      planObj ? planObj.identifier : '',
-      planObj
-    ), // action and goal
+    ...actionAndGoals, // action and goal
     date: moment(formValue.date).format(DATE_FORMAT.toUpperCase()),
     effectivePeriod: {
       end: moment(formValue.end).format(DATE_FORMAT.toUpperCase()),
@@ -632,17 +701,6 @@ export function generatePlanDefinition(
 }
 
 /**
- * Check if the plan is a dynamic plan
- * @param planObject - the plan
- */
-export const isDynamicPlan = (planObject: PlanDefinition) =>
-  planObject.action
-    .map(action => {
-      return Object.keys(action).includes(CONDITION) || Object.keys(action).includes(TRIGGER);
-    })
-    .includes(true);
-
-/**
  * Get plan form field values from plan definition object
  * @param planObject - the plan definition object
  * @returns {PlanFormFields} - the plan form field values
@@ -654,6 +712,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
   const eventIdUseContext = [];
   const caseNumUseContext = [];
   const taskGenerationStatusContext = [];
+  const teamAssignmentStatusContext = [];
 
   for (const context of planObject.useContext) {
     switch (context.code) {
@@ -674,6 +733,9 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
         break;
       case TASK_GENERATION_STATUS_CODE:
         taskGenerationStatusContext.push(context);
+        break;
+      case TEAM_ASSIGNMENT_STATUS_CODE:
+        teamAssignmentStatusContext.push(context);
         break;
     }
   }
@@ -706,16 +768,17 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     }
   }
 
-  let taskGenerationStatus: taskGenerationStatusType;
+  const taskGenerationStatus: taskGenerationStatusType =
+    taskGenerationStatusContext.length > 0
+      ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
+      : isDynamicPlan(planObject)
+      ? taskGenerationStatuses.ignore
+      : taskGenerationStatuses.False;
 
-  if (isDynamicPlan(planObject)) {
-    taskGenerationStatus = taskGenerationStatuses[2]; // Disabled
-  } else {
-    taskGenerationStatus =
-      taskGenerationStatusContext.length > 0
-        ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
-        : taskGenerationStatuses[1];
-  }
+  const teamAssignmentStatus: string =
+    teamAssignmentStatusContext.length > 0
+      ? teamAssignmentStatusContext[0].valueCodableConcept
+      : '';
 
   return {
     activities,
@@ -742,6 +805,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     start: parseISO(`${planObject.effectivePeriod.start}${DEFAULT_TIME}`),
     status: planObject.status as PlanStatus,
     taskGenerationStatus,
+    teamAssignmentStatus,
     title: planObject.title,
     version: planObject.version,
   };
@@ -758,13 +822,20 @@ export function getGoalUnitFromActionCode(actionCode: PlanActionCodesType): Goal
   }
   return GoalUnit.UNKNOWN;
 }
-
 /**
  * Check if a plan type should be visible
  * @param {InterventionType} planType - plan type
  */
 export const isPlanTypeEnabled = (planType: InterventionType): boolean =>
-  ENABLED_PLAN_TYPES.includes(planType);
+  DISPLAYED_PLAN_TYPES.includes(planType);
+
+/**
+ * Check if plan type should be created and display all plan types on edit mode
+ * @param {InterventionType} planType - plan type
+ * @param {boolean} isEditMode - are we editing or creating a plan
+ */
+export const displayPlanTypeOnForm = (planType: InterventionType, isEditMode: boolean): boolean =>
+  isEditMode || PLAN_TYPES_ALLOWED_TO_CREATE.includes(planType);
 
 /**
  * Handle after form successful submission to the api

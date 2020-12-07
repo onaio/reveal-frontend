@@ -62,7 +62,7 @@ const PlanLocationNames = (props: Props) => {
       {props.locations.map((location, index) => {
         return (
           <li key={index}>
-            {isPlanDefinitionOfType(plan, InterventionType.FI) ? (
+            {isPlanDefinitionOfType(plan, [InterventionType.FI, InterventionType.DynamicFI]) ? (
               <Link to={`${FI_SINGLE_URL}/${location.identifier}`}>{location.name}</Link>
             ) : (
               <span>{location.name}</span>

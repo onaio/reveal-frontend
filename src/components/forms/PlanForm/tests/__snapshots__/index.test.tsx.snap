@@ -1,5 +1,170 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Changed activity conditions text input names 1`] = `Array []`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Changed activity conditions text textarea names 1`] = `
+Array [
+  "activities[0].condition[0].expression",
+  "activities[0].condition[0].description",
+  "activities[1].condition[0].expression",
+  "activities[1].condition[0].description",
+  "activities[1].condition[0].subjectCodableConceptText",
+  "activities[2].condition[0].expression",
+  "activities[2].condition[0].description",
+  "activities[2].condition[1].expression",
+  "activities[2].condition[1].description",
+  "activities[3].condition[0].expression",
+  "activities[3].condition[0].description",
+  "activities[3].condition[1].expression",
+  "activities[3].condition[1].description",
+  "activities[4].condition[0].expression",
+  "activities[4].condition[0].description",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Changed activity trigger text input names 1`] = `
+Array [
+  "activities[0].trigger[0].name",
+  "activities[0].trigger[1].name",
+  "activities[1].trigger[0].name",
+  "activities[1].trigger[1].name",
+  "activities[2].trigger[0].name",
+  "activities[2].trigger[1].name",
+  "activities[3].trigger[0].name",
+  "activities[3].trigger[1].name",
+  "activities[4].trigger[0].name",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Changed activity trigger text textarea names 1`] = `
+Array [
+  "activities[0].trigger[1].expression",
+  "activities[0].trigger[1].description",
+  "activities[1].trigger[1].expression",
+  "activities[1].trigger[1].description",
+  "activities[2].trigger[1].expression",
+  "activities[2].trigger[1].description",
+  "activities[3].trigger[1].expression",
+  "activities[3].trigger[1].description",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Final activity conditions text input names 1`] = `Array []`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Final activity conditions text textarea names 1`] = `
+Array [
+  "activities[0].condition[0].expression",
+  "activities[0].condition[0].description",
+  "activities[1].condition[0].expression",
+  "activities[1].condition[0].description",
+  "activities[1].condition[0].subjectCodableConceptText",
+  "activities[2].condition[0].expression",
+  "activities[2].condition[0].description",
+  "activities[2].condition[1].expression",
+  "activities[2].condition[1].description",
+  "activities[3].condition[0].expression",
+  "activities[3].condition[0].description",
+  "activities[3].condition[1].expression",
+  "activities[3].condition[1].description",
+  "activities[4].condition[0].expression",
+  "activities[4].condition[0].description",
+  "activities[5].condition[0].expression",
+  "activities[5].condition[0].description",
+  "activities[5].condition[0].subjectCodableConceptText",
+  "activities[5].condition[1].expression",
+  "activities[5].condition[1].description",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Final activity trigger text input names 1`] = `
+Array [
+  "activities[0].trigger[0].name",
+  "activities[0].trigger[1].name",
+  "activities[1].trigger[0].name",
+  "activities[1].trigger[1].name",
+  "activities[2].trigger[0].name",
+  "activities[2].trigger[1].name",
+  "activities[3].trigger[0].name",
+  "activities[3].trigger[1].name",
+  "activities[4].trigger[0].name",
+  "activities[5].trigger[0].name",
+  "activities[5].trigger[1].name",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Final activity trigger text textarea names 1`] = `
+Array [
+  "activities[0].trigger[1].expression",
+  "activities[0].trigger[1].description",
+  "activities[1].trigger[1].expression",
+  "activities[1].trigger[1].description",
+  "activities[2].trigger[1].expression",
+  "activities[2].trigger[1].description",
+  "activities[3].trigger[1].expression",
+  "activities[3].trigger[1].description",
+  "activities[5].trigger[1].expression",
+  "activities[5].trigger[1].description",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Original activity conditions text input names 1`] = `Array []`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Original activity conditions text textarea names 1`] = `
+Array [
+  "activities[0].condition[0].expression",
+  "activities[0].condition[0].description",
+  "activities[0].condition[0].subjectCodableConceptText",
+  "activities[0].condition[1].expression",
+  "activities[0].condition[1].description",
+  "activities[1].condition[0].expression",
+  "activities[1].condition[0].description",
+  "activities[2].condition[0].expression",
+  "activities[2].condition[0].description",
+  "activities[2].condition[0].subjectCodableConceptText",
+  "activities[3].condition[0].expression",
+  "activities[3].condition[0].description",
+  "activities[3].condition[1].expression",
+  "activities[3].condition[1].description",
+  "activities[4].condition[0].expression",
+  "activities[4].condition[0].description",
+  "activities[4].condition[1].expression",
+  "activities[4].condition[1].description",
+  "activities[5].condition[0].expression",
+  "activities[5].condition[0].description",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Original activity trigger text input names 1`] = `
+Array [
+  "activities[0].trigger[0].name",
+  "activities[0].trigger[1].name",
+  "activities[1].trigger[0].name",
+  "activities[1].trigger[1].name",
+  "activities[2].trigger[0].name",
+  "activities[2].trigger[1].name",
+  "activities[3].trigger[0].name",
+  "activities[3].trigger[1].name",
+  "activities[4].trigger[0].name",
+  "activities[4].trigger[1].name",
+  "activities[5].trigger[0].name",
+]
+`;
+
+exports[`containers/forms/PlanForm - Dynamic Form Activities removing dynamic activities works correctly: Original activity trigger text textarea names 1`] = `
+Array [
+  "activities[0].trigger[1].expression",
+  "activities[0].trigger[1].description",
+  "activities[1].trigger[1].expression",
+  "activities[1].trigger[1].description",
+  "activities[2].trigger[1].expression",
+  "activities[2].trigger[1].description",
+  "activities[3].trigger[1].expression",
+  "activities[3].trigger[1].description",
+  "activities[4].trigger[1].expression",
+  "activities[4].trigger[1].description",
+]
+`;
+
 exports[`containers/forms/PlanForm - Edit ACTIVE renders all fields correctly in edit mode: Active Plan : interventionType field 1`] = `
 <select
   className="form-control"
@@ -25,6 +190,21 @@ exports[`containers/forms/PlanForm - Edit ACTIVE renders all fields correctly in
     value="MDA-Point"
   >
     MDA Point
+  </option>
+  <option
+    value="Dynamic-FI"
+  >
+    Dynamic FI
+  </option>
+  <option
+    value="Dynamic-IRS"
+  >
+    Dynamic IRS
+  </option>
+  <option
+    value="Dynamic-MDA"
+  >
+    Dynamic MDA
   </option>
 </select>
 `;
@@ -271,6 +451,21 @@ exports[`containers/forms/PlanForm - Edit COMPLETE renders all fields correctly 
   >
     MDA Point
   </option>
+  <option
+    value="Dynamic-FI"
+  >
+    Dynamic FI
+  </option>
+  <option
+    value="Dynamic-IRS"
+  >
+    Dynamic IRS
+  </option>
+  <option
+    value="Dynamic-MDA"
+  >
+    Dynamic MDA
+  </option>
 </select>
 `;
 
@@ -515,6 +710,21 @@ exports[`containers/forms/PlanForm - Edit DRAFT renders all fields correctly in 
     value="MDA-Point"
   >
     MDA Point
+  </option>
+  <option
+    value="Dynamic-FI"
+  >
+    Dynamic FI
+  </option>
+  <option
+    value="Dynamic-IRS"
+  >
+    Dynamic IRS
+  </option>
+  <option
+    value="Dynamic-MDA"
+  >
+    Dynamic MDA
   </option>
 </select>
 `;
@@ -4155,6 +4365,7 @@ exports[`containers/forms/PlanForm renders correctly: fiReason field 1`] = `
   onBlur={[Function]}
   onChange={[Function]}
   required={true}
+  value="Routine"
 >
   <option>
     ----
@@ -4631,6 +4842,88 @@ Array [
 ]
 `;
 
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: Dynamic-MDA addJurisdiction button 1`] = `
+<button
+  className="btn btn-primary btn-sm mb-5 addJurisdiction"
+  onClick={[Function]}
+  type="button"
+>
+  Add
+   
+  Focus Area
+</button>
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: Dynamic-MDA removeJurisdiction buttons 1`] = `
+Array [
+  <button
+    aria-label="Close"
+    className="close position-absolute removeArrItem removeJurisdiction"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>,
+  <button
+    aria-label="Close"
+    className="close position-absolute removeArrItem removeJurisdiction"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>,
+]
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: Dynamic-irs addJurisdiction button 1`] = `
+<button
+  className="btn btn-primary btn-sm mb-5 addJurisdiction"
+  onClick={[Function]}
+  type="button"
+>
+  Add
+   
+  Focus Area
+</button>
+`;
+
+exports[`containers/forms/PlanForm renders jurisdictions fields correctly: Dynamic-irs removeJurisdiction buttons 1`] = `
+Array [
+  <button
+    aria-label="Close"
+    className="close position-absolute removeArrItem removeJurisdiction"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>,
+  <button
+    aria-label="Close"
+    className="close position-absolute removeArrItem removeJurisdiction"
+    onClick={[Function]}
+    type="button"
+  >
+    <span
+      aria-hidden="true"
+    >
+      ×
+    </span>
+  </button>,
+]
+`;
+
 exports[`containers/forms/PlanForm renders jurisdictions fields correctly: addJurisdiction button 1`] = `
 <button
   className="btn btn-primary btn-sm mb-5 addJurisdiction"
@@ -4715,33 +5008,4 @@ exports[`containers/forms/PlanForm renders jurisdictions fields correctly: juris
   type="hidden"
   value=""
 />
-`;
-
-exports[`containers/forms/PlanForm renders jurisdictions fields correctly: removeJurisdiction buttons 1`] = `
-Array [
-  <button
-    aria-label="Close"
-    className="close position-absolute removeArrItem removeJurisdiction"
-    onClick={[Function]}
-    type="button"
-  >
-    <span
-      aria-hidden="true"
-    >
-      ×
-    </span>
-  </button>,
-  <button
-    aria-label="Close"
-    className="close position-absolute removeArrItem removeJurisdiction"
-    onClick={[Function]}
-    type="button"
-  >
-    <span
-      aria-hidden="true"
-    >
-      ×
-    </span>
-  </button>,
-]
 `;

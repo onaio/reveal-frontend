@@ -7,6 +7,8 @@ import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { createConnectedOpenSRPPlansList } from '..';
+import { ASSIGN_TEAMS_PLAN_TYPES_DISPLAYED } from '../../../../../../../configs/env';
+import { USER_HAS_NO_PLAN_ASSIGNMENTS } from '../../../../../../../configs/lang';
 import { PLANNING_VIEW_URL, QUERY_PARAM_TITLE } from '../../../../../../../constants';
 import store from '../../../../../../../store';
 import {
@@ -15,6 +17,7 @@ import {
 } from '../../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import plansReducer, {
   fetchPlanRecords,
+  InterventionType,
   PlanRecordResponse,
   PlanStatus,
   reducerName as plansReducerName,
@@ -117,6 +120,46 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
     wrapper.unmount();
   });
 
+  it('errorMessage shown when there userName has no plans assigned', async () => {
+    // the assertion for the undefined plan is that we do not get an error
+    const fullList = [...plans];
+    fetch.mockResponse(JSON.stringify(fullList));
+    fetch.mockResponse(JSON.stringify([]));
+    const props = {
+      history,
+      location: {
+        hash: '',
+        pathname: '',
+        search: `?user=${'nonExistentUserName'}`,
+        state: '',
+      },
+      match: {
+        isExact: true,
+        params: {},
+        path: '',
+        url: '',
+      },
+      planStatuses: ['draft'],
+      tableColumns: draftPageColumns,
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedOpenSRPPlansList {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+    expect(wrapper.text()).toMatchSnapshot();
+    expect(wrapper.text().includes(USER_HAS_NO_PLAN_ASSIGNMENTS)).toBeTruthy();
+    wrapper.unmount();
+  });
+
   it('does not show loader for no data', async () => {
     fetch.mockReject(new Error('No Plans returned'));
     const props = {
@@ -153,6 +196,40 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
     });
 
     renderTable(wrapper, 'find No Data Found text');
+    wrapper.unmount();
+  });
+
+  it('Displays right plan interventions', async () => {
+    const envModule = require('../../../../../../../configs/env');
+    envModule.ASSIGN_TEAMS_PLAN_TYPES_DISPLAYED = [InterventionType.MDA];
+    const mock: any = jest.fn();
+    fetch.mockResponse(plansJSON);
+    const props = {
+      history,
+      interventionTypes: ASSIGN_TEAMS_PLAN_TYPES_DISPLAYED as InterventionType[],
+      location: mock,
+      match: {
+        isExact: true,
+        params: {},
+        path: '',
+        url: '',
+      },
+      tableColumns: draftPageColumns,
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedOpenSRPPlansList {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+    expect((wrapper.find('OpenSRPPlansList').props() as any).plansArray.length).toEqual(1);
     wrapper.unmount();
   });
 });

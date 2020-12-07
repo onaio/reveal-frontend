@@ -7,12 +7,14 @@ import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import PlanForm, {
   LocationChildRenderProp,
+  PlanFormProps,
   propsForUpdatingPlans,
 } from '../../../../components/forms/PlanForm';
 import { getPlanFormValues } from '../../../../components/forms/PlanForm/helpers';
+import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
+import { COULD_NOT_LOAD_PLAN, HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { HOME_URL, NEW_PLAN_URL, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
@@ -25,13 +27,13 @@ import planDefinitionReducer, {
 } from '../../../../store/ducks/opensrp/PlanDefinition';
 import ConnectedCaseDetails, { CaseDetailsProps } from './CaseDetails';
 import ConnectedPlanLocationNames from './PlanLocationNames';
-import { getEventId, planIsReactive } from './utils';
+import { beforeSubmitFactory, getEventId, planIsReactive } from './utils';
 
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
 /** UpdatePlanProps interface */
-interface UpdatePlanProps {
+export interface UpdatePlanProps {
   fetchPlan: typeof addPlanDefinition;
   plan: PlanDefinition | null;
   service: typeof OpenSRPService;
@@ -48,9 +50,6 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   const planIdentifier = props.match.params.id;
   const [loading, setLoading] = useState<boolean>(true);
 
-  if (!planIdentifier) {
-    return null; /** we should make this into a better error page */
-  }
   const apiService = new service(OPENSRP_PLANS);
 
   /** async function to load the data */
@@ -68,14 +67,21 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   }
 
   useEffect(() => {
+    if (!planIdentifier) {
+      return;
+    }
     loadData().catch(err => displayError(err));
   }, []);
 
-  if (loading === true) {
+  if (loading) {
     return <Loading />;
   }
 
-  const pageTitle: string = plan ? `${UPDATE_PLAN}: ${plan.title}` : UPDATE_PLAN;
+  if (!plan) {
+    return <ErrorPage errorMessage={COULD_NOT_LOAD_PLAN} />;
+  }
+
+  const pageTitle: string = `${UPDATE_PLAN}: ${plan.title}`;
 
   const breadcrumbProps = {
     currentPage: {
@@ -94,10 +100,14 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     ],
   };
 
+  const initialValues = getPlanFormValues(plan);
+  const beforeSubmit = beforeSubmitFactory(plan);
+
   const planStatus = (plan && plan.status) || '';
-  const planFormProps = {
+  const planFormProps: Partial<PlanFormProps> = {
     ...propsForUpdatingPlans(planStatus),
-    ...(plan && { initialValues: getPlanFormValues(plan) }),
+    beforeSubmit,
+    initialValues,
     /** a renderProp prop. this tells the planForm; I will give you a component that knows of the plan you are displaying,
      * the component will get jurisdictions associated with that plan and render them as links, what you(planForm)
      * will do, is provide a child prop(a renderProp) that tells the mentioned component what other stuff you would wish

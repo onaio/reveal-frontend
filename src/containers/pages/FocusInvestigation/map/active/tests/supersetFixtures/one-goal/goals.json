@@ -1,0 +1,113 @@
+{
+  "cache_key": null,
+  "cached_dttm": null,
+  "cache_timeout": 60,
+  "errors": [],
+  "form_data": {
+    "adhoc_filters": [
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "operator": "==",
+        "subject": "plan_id"
+      }
+    ],
+    "all_columns": [
+      "id",
+      "plan_id",
+      "jurisdiction_id",
+      "goal_id",
+      "measure",
+      "goal_value",
+      "goal_comparator",
+      "goal_unit",
+      "action_code",
+      "action_description",
+      "action_prefix",
+      "action_reason",
+      "action_title",
+      "task_count",
+      "completed_task_count",
+      "task_business_status_map"
+    ],
+    "color_pn": true,
+    "datasource": "4__table",
+    "groupby": [],
+    "metrics": ["count"],
+    "order_by_cols": ["[\"action_prefix\", true]"],
+    "order_desc": true,
+    "percent_metrics": [],
+    "queryFields": {
+      "groupby": "groupby",
+      "metrics": "metrics"
+    },
+    "query_mode": "raw",
+    "row_limit": 15000,
+    "show_cell_bars": true,
+    "slice_id": 3,
+    "table_timestamp_format": "smart_date",
+    "time_grain_sqla": "P1D",
+    "time_range": "No filter",
+    "time_range_endpoints": ["inclusive", "exclusive"],
+    "url_params": {},
+    "viz_type": "table",
+    "where": "",
+    "having": "",
+    "having_filters": [],
+    "filters": [
+      {
+        "col": "plan_id",
+        "op": "==",
+        "val": "90bf00c6-2ab6-5f67-9cad-4f942c87d082"
+      }
+    ]
+  },
+  "is_cached": false,
+  "query": "SELECT id AS id,\n       plan_id AS plan_id,\n       jurisdiction_id AS jurisdiction_id,\n       goal_id AS goal_id,\n       measure AS measure,\n       goal_value AS goal_value,\n       goal_comparator AS goal_comparator,\n       goal_unit AS goal_unit,\n       action_code AS action_code,\n       action_description AS action_description,\n       action_prefix AS action_prefix,\n       action_reason AS action_reason,\n       action_title AS action_title,\n       task_count AS task_count,\n       completed_task_count AS completed_task_count,\n       task_business_status_map AS task_business_status_map\nFROM thailand_prod.targets_materialized_view\nWHERE plan_id = '90bf00c6-2ab6-5f67-9cad-4f942c87d082'\nORDER BY action_prefix ASC\nLIMIT 15000",
+  "from_dttm": null,
+  "to_dttm": null,
+  "status": "success",
+  "stacktrace": null,
+  "rowcount": 1,
+  "data": {
+    "records": [
+      {
+        "id": "3a397bd4-5c47-5d90-9549-de314b9e9073",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "measure": "\u0e23\u0e49\u0e2d\u0e22\u0e25\u0e30\u0e02\u0e2d\u0e07\u0e1a\u0e49\u0e32\u0e19/\u0e2a\u0e34\u0e48\u0e07\u0e1b\u0e25\u0e39\u0e01\u0e2a\u0e23\u0e49\u0e32\u0e07\u0e17\u0e35\u0e48\u0e44\u0e14\u0e49\u0e25\u0e07\u0e17\u0e30\u0e40\u0e1a\u0e35\u0e22\u0e19\u0e02\u0e49\u0e2d\u0e21\u0e39\u0e25\u0e04\u0e23\u0e31\u0e27\u0e40\u0e23\u0e37\u0e2d\u0e19",
+        "goal_value": 100.0,
+        "goal_comparator": ">=",
+        "goal_unit": "Percent",
+        "action_code": "RACD Register Family",
+        "action_description": "\u0e25\u0e07\u0e17\u0e30\u0e40\u0e1a\u0e35\u0e22\u0e19\u0e04\u0e23\u0e31\u0e27\u0e40\u0e23\u0e37\u0e2d\u0e19\u0e41\u0e25\u0e30\u0e2a\u0e21\u0e32\u0e0a\u0e34\u0e01\u0e43\u0e19\u0e04\u0e23\u0e31\u0e27\u0e40\u0e23\u0e37\u0e2d\u0e19 (100%) \u0e20\u0e32\u0e22\u0e43\u0e19\u0e1e\u0e37\u0e49\u0e19\u0e17\u0e35\u0e48\u0e1b\u0e0f\u0e34\u0e1a\u0e31\u0e15\u0e34\u0e07\u0e32\u0e19",
+        "action_prefix": "1",
+        "action_reason": "Routine",
+        "action_title": "\u0e25\u0e07\u0e17\u0e30\u0e40\u0e1a\u0e35\u0e22\u0e19\u0e04\u0e23\u0e31\u0e27\u0e40\u0e23\u0e37\u0e2d\u0e19",
+        "task_count": 12,
+        "completed_task_count": 12,
+        "task_business_status_map": "{\"Complete\": 12}"
+      }
+    ],
+    "columns": [
+      "id",
+      "plan_id",
+      "jurisdiction_id",
+      "goal_id",
+      "measure",
+      "goal_value",
+      "goal_comparator",
+      "goal_unit",
+      "action_code",
+      "action_description",
+      "action_prefix",
+      "action_reason",
+      "action_title",
+      "task_count",
+      "completed_task_count",
+      "task_business_status_map"
+    ]
+  }
+}

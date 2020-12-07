@@ -2,7 +2,11 @@ import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
 import { Cell } from 'react-table';
-import { getIRSThresholdAdherenceIndicator, renderPercentage } from '../../../helpers/indicators';
+import {
+  getIRSLiteThresholdAdherenceIndicator,
+  getIRSThresholdAdherenceIndicator,
+  renderPercentage,
+} from '../../../helpers/indicators';
 import { GenericJurisdiction } from '../../../store/ducks/generic/jurisdictions';
 
 /** columns for Namibia IRS jurisdictions */
@@ -28,12 +32,13 @@ export const NamibiaColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Target Coverage',
     accessor: 'targetcoverage',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
-
     accessor: 'foundcoverage',
+    sortType: 'basic',
   },
   {
     Header: 'Refusals',
@@ -42,15 +47,15 @@ export const NamibiaColumns = [
         Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following first visit',
         accessor: 'refusalsfirst',
-
         id: 'refusalsfirst',
+        sortType: 'basic',
       },
       {
         Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following mop-up',
         accessor: 'refusalsmopup',
-
         id: 'refusalsmopup',
+        sortType: 'basic',
       },
     ],
   },
@@ -61,15 +66,15 @@ export const NamibiaColumns = [
         Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following first visit',
         accessor: 'lockedfirst',
-
         id: 'lockedfirst',
+        sortType: 'basic',
       },
       {
         Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, null),
         Header: 'Following mop-up',
         accessor: 'lockedmopup',
-
         id: 'lockedmopup',
+        sortType: 'basic',
       },
     ],
   },
@@ -98,6 +103,7 @@ export const ZambiaJurisdictionsColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: '% visited Spray Areas Effectively sprayed',
     accessor: 'perctvisareaseffect',
+    sortType: 'basic',
   },
   {
     Header: 'Total Structures',
@@ -115,6 +121,7 @@ export const ZambiaJurisdictionsColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray coverage of targeted (Progress)',
     accessor: 'spraycovtarg',
+    sortType: 'basic',
   },
   {
     Header: 'Structures Found',
@@ -124,11 +131,74 @@ export const ZambiaJurisdictionsColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
     accessor: 'foundcoverage',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Success Rate',
     accessor: 'spraysuccess',
+    sortType: 'basic',
+  },
+];
+
+/** columns for Zambia IRS Lite jurisdictions */
+export const IRSLiteZambiaJurisdictionsColumns = [
+  {
+    Header: 'Name',
+    accessor: 'jurisdiction_name',
+    minWidth: 360,
+  },
+  {
+    Header: 'Total Spray Areas',
+    accessor: 'totareas',
+  },
+  {
+    Header: 'Spray Areas Targeted',
+    accessor: 'targareas',
+  },
+  {
+    Header: 'Spray Areas Visited',
+    accessor: 'visitedareas',
+  },
+  {
+    Header: 'Total Structures',
+    accessor: 'totstruct',
+  },
+  {
+    Header: 'Targeted Structures',
+    accessor: 'targstruct',
+  },
+  {
+    Header: 'Structures Sprayed',
+    accessor: 'sprayed',
+  },
+  {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
+    Header: '% Total Structures Sprayed',
+    accessor: 'spraycov',
+    sortType: 'basic',
+  },
+  {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
+    Header: '% Targeted Structures Sprayed',
+    accessor: 'spraycovtarg',
+    sortType: 'basic',
+  },
+  {
+    Header: 'Structures Found',
+    accessor: 'found',
+  },
+  {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
+    Header: 'Found Coverage',
+    accessor: 'foundcoverage',
+    sortType: 'basic',
+  },
+  {
+    Cell: (cell: Cell) => getIRSLiteThresholdAdherenceIndicator(cell),
+    Header: 'Success Rate',
+    accessor: 'spraysuccess',
+    sortType: 'basic',
   },
 ];
 
@@ -151,6 +221,7 @@ export const mdaJurisdictionsColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'MMA Coverage (%)',
     accessor: 'mmacovper',
+    sortType: 'basic',
   },
   {
     Header: 'SACs Refused',
@@ -164,11 +235,13 @@ export const mdaJurisdictionsColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'ADR Reported (%)',
     accessor: 'mmaadr',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'ADR Severe (%)',
     accessor: 'mmaadrsev',
+    sortType: 'basic',
   },
   {
     Header: 'Alb Tablets Distributed',
@@ -199,16 +272,19 @@ export const ZambiaFocusAreasColumns = [
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray Coverage (Effectiveness)',
     accessor: 'spraycov',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Found Coverage',
     accessor: 'spraytarg',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
     Header: 'Spray Success Rate (PMI SC)',
     accessor: 'spraysuccess',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => {
@@ -222,6 +298,7 @@ export const ZambiaFocusAreasColumns = [
     },
     Header: 'Structures remaining to spray to reach 90% SE',
     accessor: 'structures_remaining_to_90_se',
+    sortType: 'basic',
   },
   {
     Header: 'Reviewed with decision',
@@ -240,11 +317,17 @@ export const zambiaMDALowerJurisdictions = [
     Cell: (cell: Cell) => renderPercentage(cell),
     Header: 'Registered Children Treated (%)',
     accessor: 'registeredchildrentreated_per',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => renderPercentage(cell),
     Header: 'Structures Visited (%)',
     accessor: 'structures_visited_per',
+    sortType: 'basic',
+  },
+  {
+    Header: '# Of Children Treated',
+    accessor: 'n_events_where_pzqdistributed',
   },
   {
     Header: 'PZQ Tablets Distributed',
@@ -261,11 +344,13 @@ zambiaMDAUpperJurisdictions.splice(
     Cell: (cell: Cell) => renderPercentage(cell),
     Header: 'Expected Children Found (%)',
     accessor: 'expectedchildren_found',
+    sortType: 'basic',
   },
   {
     Cell: (cell: Cell) => renderPercentage(cell),
     Header: 'Expected Children Treated (%)',
     accessor: 'expectedchildren_treated',
+    sortType: 'basic',
   }
 );
 /** columns for  smc point jurisdictions */
@@ -322,6 +407,8 @@ export const smcJurisdictionsColumns = [
  * These are all the table columns for IRS that we know about.
  */
 export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionary>> } = {
+  irsLiteZambiaFocusArea2020: IRSLiteZambiaJurisdictionsColumns,
+  irsLiteZambiaJurisdictions2020: IRSLiteZambiaJurisdictionsColumns,
   mdaJurisdictionsColumns,
   namibia2019: NamibiaColumns,
   smcJurisdictionsColumns,
@@ -346,6 +433,7 @@ export type TableProps = Pick<
   | 'rootParentId'
   | 'useDrillDown'
   | 'renderNullDataComponent'
+  | 'hasChildren'
 >;
 
 export type GetColumnsToUse = (
@@ -372,9 +460,21 @@ export const getColumnsToUse: GetColumnsToUse = (
   jurisdictionId: string | null
 ) => {
   const currLevelData = jurisdiction.filter(el => el.jurisdiction_parent_id === jurisdictionId);
-  return currLevelData &&
-    currLevelData.length > 0 &&
-    currLevelData[0].jurisdiction_depth >= +focusAreaLevel
+
+  // Determine if this is a focus area level by checking if "is_leaf_node" exists and is true
+  // Otherwise use the focusAreaLevel
+  // TODO: remove focusAreaLevel once we fully transition to using "is_leaf_node"
+  let isFocusArea: boolean = false;
+
+  if (currLevelData.length > 0) {
+    if (currLevelData[0].hasOwnProperty('is_leaf_node')) {
+      isFocusArea = currLevelData[0].is_leaf_node;
+    } else {
+      isFocusArea = currLevelData[0].jurisdiction_depth >= +focusAreaLevel;
+    }
+  }
+
+  return currLevelData && currLevelData.length > 0 && isFocusArea
     ? get(plansTableColumns, focusAreaColumn, null)
     : get(plansTableColumns, jurisdictionColumn, null);
 };

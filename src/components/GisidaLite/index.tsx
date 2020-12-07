@@ -3,7 +3,8 @@ import { EventData, Style } from 'mapbox-gl';
 import { Map } from 'mapbox-gl';
 import React, { Fragment, useEffect } from 'react';
 import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl';
-import { FitBounds } from 'react-mapbox-gl/lib/map';
+import { FitBounds, Props } from 'react-mapbox-gl/lib/map';
+import { Events } from 'react-mapbox-gl/lib/map-events';
 import Loading from '../../components/page/Loading';
 import { GISIDA_MAPBOX_TOKEN } from '../../configs/env';
 import { imgArr } from '../../configs/settings';
@@ -24,10 +25,11 @@ export interface GisidaLiteProps {
   mapStyle: Style | string;
   mapWidth: string;
   scrollZoom: boolean;
-  zoom: number;
+  zoom?: number;
   mapIcons: MapIcon[];
   onClickHandler?: (map: Map, event: EventData) => void;
   onMouseMoveHandler?: (map: Map, event: EventData) => void;
+  onLoad?: (map: Map) => void;
 }
 
 /** Default props for GisidaLite */
@@ -39,7 +41,6 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   mapStyle: gsLiteStyle,
   mapWidth: '100%',
   scrollZoom: true,
-  zoom: 17,
 };
 
 const Mapbox = ReactMapboxGl({
@@ -73,12 +74,9 @@ const GisidaLite = (props: GisidaLiteProps) => {
     onMouseMoveHandler,
   } = props;
 
-  if (mapCenter === undefined) {
-    return <Loading />;
-  }
-
   const runAfterMapLoaded = React.useCallback(
     (map: Map) => {
+      props.onLoad?.(map);
       if (mapIcons) {
         mapIcons.forEach(element => {
           map.loadImage(
@@ -116,6 +114,10 @@ const GisidaLite = (props: GisidaLiteProps) => {
     }
   }, [layers]);
 
+  if (mapCenter === undefined) {
+    return <Loading />;
+  }
+
   /**
    * We want to make sure when layers GeoJSON change we set renderLayers to true
    */
@@ -125,21 +127,26 @@ const GisidaLite = (props: GisidaLiteProps) => {
     }
   };
 
+  let mapBoxProps: Props & Events = {
+    center: mapCenter,
+    containerStyle: {
+      height: mapHeight,
+      width: mapWidth,
+    },
+    fitBounds: mapBounds,
+    onClick: onClickHandler,
+    onMouseMove: onMouseMoveHandler,
+    onRender,
+    onStyleLoad: runAfterMapLoaded,
+    style: mapStyle,
+  };
+
+  if (zoom) {
+    mapBoxProps = { ...mapBoxProps, zoom: [zoom] };
+  }
+
   return (
-    <Mapbox
-      center={mapCenter}
-      zoom={[zoom]}
-      style={mapStyle}
-      containerStyle={{
-        height: mapHeight,
-        width: mapWidth,
-      }}
-      fitBounds={mapBounds}
-      onStyleLoad={runAfterMapLoaded}
-      onClick={onClickHandler}
-      onRender={onRender}
-      onMouseMove={onMouseMoveHandler}
-    >
+    <Mapbox {...mapBoxProps}>
       <>
         {renderLayers &&
           layers.map((item: any) => <Fragment key={`gsLite-${item.key}`}>{item}</Fragment>)}

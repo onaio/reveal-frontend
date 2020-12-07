@@ -1,3 +1,5 @@
+import { viewport } from '@mapbox/geo-viewport';
+import GeojsonExtent from '@mapbox/geojson-extent';
 import { ProgressBar } from '@onaio/progress-indicators';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
@@ -10,7 +12,8 @@ import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
-import GisidaWrapper from '../../../../components/GisidaWrapper';
+import { MemoizedGisidaLite } from '../../../../components/GisidaLite';
+// import GisidaWrapper from '../../../../components/GisidaWrapper';
 import NotFound from '../../../../components/NotFound';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -36,7 +39,13 @@ import {
   STRUCTURES,
 } from '../../../../configs/lang';
 import { indicatorThresholdsIRS } from '../../../../configs/settings';
-import { HOME_URL, REPORT_SMC_PLAN_URL } from '../../../../constants';
+import {
+  BUSINESS_STATUS,
+  CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  HOME_URL,
+  IRS_REPORT_STRUCTURES,
+  REPORT_SMC_PLAN_URL,
+} from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -66,10 +75,16 @@ import jurisdictionReducer, {
   reducerName as jurisdictionReducerName,
 } from '../../../../store/ducks/jurisdictions';
 import {
+  buildGsLiteLayers,
+  buildJurisdictionLayers,
+  CircleColor,
+  PolygonColor,
+} from '../../FocusInvestigation/map/active/helpers/utils';
+import {
   defaultIndicatorStop,
-  getGisidaWrapperProps,
   getIndicatorRows,
   getJurisdictionBreadcrumbs,
+  mapOnClickHandler,
   SMCIndicatorRows,
   SMCIndicatorStops,
 } from './helpers';
@@ -137,6 +152,11 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
 
   /** async function to load the data */
   async function loadData() {
+    // console.log('test', focusAreaSlice)
+    // fetchFocusAreas(focusAreaSlice, testJurReport as any)
+    // fetchJurisdictionsAction(testJur as any)
+    // fetchPlans(testPlans as any)
+    // fetchStructures(SUPERSET_SMC_REPORTING_STRUCTURES_DATA_SLICE, testStructures as any)
     try {
       setLoading(!focusArea || !jurisdiction || !plan || !structures); // set loading when there is no data
 
@@ -263,7 +283,45 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
     defaultIndicatorStop
   );
 
-  const gisidaWrapperProps = getGisidaWrapperProps(jurisdiction, structures, indicatorStops);
+  let mapCenter;
+  let mapBounds;
+  let zoom;
+  if (structures && structures.features.length) {
+    mapBounds = GeojsonExtent(structures);
+    // get map zoom and center values
+    const centerAndZoom = viewport(mapBounds, [500, 300]);
+    mapCenter = centerAndZoom.center;
+    zoom = centerAndZoom.zoom;
+  }
+
+  // define circle paint colors
+  const circleColor: CircleColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+  // define polygon paint colors
+  const polygonColor: PolygonColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+  // define polygon line paint colors
+  const polygonLineColor: PolygonColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+
+  // map layers
+  const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
+  const structuresLayers = buildGsLiteLayers(IRS_REPORT_STRUCTURES, null, structures as any, {
+    circleColor,
+    polygonColor,
+    polygonLineColor,
+  });
+
+  const gsLayers = [...jurisdictionLayers, ...structuresLayers];
 
   /**
    * Create list elements from dictionary
@@ -292,9 +350,15 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
       </Row>
       <Row noGutters={true}>
         <Col xs={9}>
-          {gisidaWrapperProps ? (
+          {gsLayers ? (
             <div className="map irs-reporting-map">
-              <GisidaWrapper {...gisidaWrapperProps} />
+              <MemoizedGisidaLite
+                layers={[...gsLayers]}
+                zoom={zoom}
+                mapCenter={mapCenter}
+                mapBounds={mapBounds}
+                onClickHandler={mapOnClickHandler}
+              />
             </div>
           ) : (
             <div>{MAP_LOAD_ERROR}</div>

@@ -5,14 +5,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
-import { USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
+import { PRACTITIONER_REQUEST_PAGE_SIZE, USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
 import { SELECT, USERS_FETCH_ERROR } from '../../../../configs/lang';
 import {
   OPENSRP_KEYCLOAK_PARAM,
-  OPENSRP_PRACTITIONER_ENDPOINT,
   OPENSRP_USERS_COUNT_ENDPOINT,
   OPENSRP_USERS_ENDPOINT,
 } from '../../../../constants';
+import { getAllPractitioners } from '../../../../containers/pages/PractitionerViews/helpers/serviceHooks';
 import { displayError } from '../../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -20,19 +20,26 @@ import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
 // props interface to UserIdSelect component
 export interface Props {
+  allPractitioners: Practitioner[];
   onChangeHandler?: (value: OptionTypes) => void;
   serviceClass: typeof OpenSRPService;
   showPractitioners: boolean /** show users that are already mapped to a practitioner */;
   className: string;
   ReactSelectDefaultValue: Option;
+  /** if we are only interested in the userName -> affects how a single option
+   *    in the dropdown looks like i.e if the value will be the userId or the userName;
+   */
+  userNameAsValue: boolean;
 }
 
 /** default props for UserIdSelect component */
 export const defaultProps = {
   ReactSelectDefaultValue: { label: '', value: '' },
+  allPractitioners: [] as Practitioner[],
   className: '',
   serviceClass: OpenSRPService,
   showPractitioners: false,
+  userNameAsValue: false,
 };
 
 /** interface for each select dropdown option */
@@ -72,7 +79,7 @@ export type OptionTypes = Option | null | undefined;
 
 /** The UserIdSelect component */
 export const UserIdSelect = (props: Props) => {
-  const { onChangeHandler } = props;
+  const { onChangeHandler, userNameAsValue } = props;
   const [users, setUsers] = useState<User[]>([]);
   const [countFetchError, setCountFetchError] = useState<string>('');
   const [selectIsLoading, setSelectIsLoading] = useState<boolean>(true);
@@ -133,25 +140,14 @@ export const UserIdSelect = (props: Props) => {
    */
   const loadData = async () => {
     const allUsers = await loadUsers();
-    if (props.showPractitioners && isMounted.current) {
-      // setState with all unfiltered users if component is mounted
-      setUsers(allUsers);
-      setSelectIsLoading(false);
-    }
+    // setState with all unfiltered users if component is mounted
+    setUsers(allUsers);
+    setSelectIsLoading(false);
     // cease execution irregardless of whether component is mounted
     if (props.showPractitioners) {
       return;
     }
-    const practitioners: Practitioner[] = await new props.serviceClass(
-      OPENSRP_PRACTITIONER_ENDPOINT
-    ).list();
-
-    const practitionerUserIds = practitioners.map(practitioner => practitioner.userId);
-    const unMatchedUsers = allUsers.filter(user => !practitionerUserIds.includes(user.id));
-    if (isMounted.current) {
-      setUsers(unMatchedUsers);
-      setSelectIsLoading(false);
-    }
+    await getAllPractitioners(props.serviceClass, PRACTITIONER_REQUEST_PAGE_SIZE, 1, true);
   };
 
   useEffect(() => {
@@ -165,11 +161,20 @@ export const UserIdSelect = (props: Props) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!props.showPractitioners) {
+      const practitionerUserIds = props.allPractitioners.map(practitioner => practitioner.userId);
+      const unMatchedUsers = users.filter(user => !practitionerUserIds.includes(user.id));
+      setUsers(unMatchedUsers);
+      setSelectIsLoading(false);
+    }
+  }, [props.allPractitioners]);
+
   const options = React.useMemo(() => {
     return users
       .map((user: User) => ({
         label: user.username,
-        value: user.id,
+        value: userNameAsValue ? user.username : user.id,
       }))
       .sort((userA, userB) => {
         const userALabel = userA.label;

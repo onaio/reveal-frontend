@@ -22,6 +22,12 @@ import {
 import { getQueryParams } from '../../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../../services/opensrp';
 
+import { DISPLAYED_PLAN_TYPES } from '../../../../../../configs/env';
+import {
+  LOADING,
+  NO_DATA_FOUND,
+  USER_HAS_NO_PLAN_ASSIGNMENTS,
+} from '../../../../../../configs/lang';
 import { displayError } from '../../../../../../helpers/errors';
 import plansByUserReducer, {
   makePlansByUserNamesSelector,
@@ -30,6 +36,7 @@ import plansByUserReducer, {
 import plansReducer, {
   fetchPlanRecords,
   FetchPlanRecordsAction,
+  InterventionType,
   makePlansArraySelector,
   PlanRecord,
   reducerName as plansReducerName,
@@ -47,6 +54,7 @@ export type RenderProp = () => React.ReactNode;
 export interface OpenSRPPlanListViewProps
   extends Omit<BaseListComponentProps, 'loadData' | 'getTableProps'> {
   fetchPlanRecordsCreator: ActionCreator<FetchPlanRecordsAction>;
+  interventionTypes?: InterventionType[];
   planStatuses: string[];
   serviceClass: typeof OpenSRPService;
   sortByDate: boolean;
@@ -54,6 +62,7 @@ export interface OpenSRPPlanListViewProps
   renderBody: (renderProp: RenderProp) => React.ReactNode;
   userName?: string | null;
   userNameFilter: boolean;
+  noDataMessage: string;
 }
 
 /** default body render - allows to receive a JSX(as a render prop) from controlling component
@@ -66,6 +75,7 @@ const defaultBodyRenderer = (componentRender: RenderProp) => {
 
 export const defaultProps: OpenSRPPlanListViewProps = {
   fetchPlanRecordsCreator: fetchPlanRecords,
+  noDataMessage: NO_DATA_FOUND,
   planStatuses: [],
   plansArray: [],
   renderBody: defaultBodyRenderer,
@@ -79,15 +89,27 @@ export const defaultProps: OpenSRPPlanListViewProps = {
  * stuff like the ui and functionality of the filters to be added to the table component
  */
 const OpenSRPPlansList = (props: OpenSRPPlanListViewProps & RouteComponentProps) => {
-  const { fetchPlanRecordsCreator, serviceClass, tableColumns, userNameFilter } = props;
+  const {
+    fetchPlanRecordsCreator,
+    serviceClass,
+    tableColumns,
+    userNameFilter,
+    noDataMessage,
+  } = props;
   const loadData = (setLoading: React.Dispatch<React.SetStateAction<boolean>>) =>
     loadOpenSRPPlans(serviceClass, fetchPlanRecordsCreator, setLoading);
+  const [loadingState, setLoadingState] = React.useState(!!props.userName);
 
   useEffect(() => {
     if (props.userName) {
-      loadPlansByUserFilter(props.userName).catch(err => displayError(err));
+      setLoadingState(true);
+      loadPlansByUserFilter(props.userName)
+        .finally(() => setLoadingState(false))
+        .catch(err => displayError(err));
     }
   }, [props.userName]);
+
+  const finalNoDataMessage = loadingState ? LOADING : noDataMessage;
 
   /** topbar filters */
   let topFilterBarParams: any = {
@@ -121,7 +143,7 @@ const OpenSRPPlansList = (props: OpenSRPPlanListViewProps & RouteComponentProps)
       renderInTopFilterBar: renderInFilterFactory({
         ...topFilterBarParams,
       }),
-      renderNullDataComponent: () => <NoDataComponent />,
+      renderNullDataComponent: () => <NoDataComponent message={finalNoDataMessage} />,
       useDrillDown: false,
     };
   };
@@ -144,7 +166,7 @@ OpenSRPPlansList.defaultProps = defaultProps;
 export { OpenSRPPlansList };
 
 /** describes props returned by mapStateToProps */
-export type MapStateToProps = Pick<BaseListComponentProps, 'plansArray'>;
+export type MapStateToProps = Pick<OpenSRPPlanListViewProps, 'plansArray' | 'noDataMessage'>;
 /** describe mapDispatchToProps object */
 export type MapDispatchToProps = Pick<OpenSRPPlanListViewProps, 'fetchPlanRecordsCreator'>;
 interface UserName {
@@ -153,10 +175,13 @@ interface UserName {
 
 /** data selector interface */
 interface DataSelectors {
+  interventionType: InterventionType[];
   planIds?: string[] | null;
   statusList: string[];
   title: string;
 }
+
+const plansByUserNameSelector = makePlansByUserNamesSelector();
 
 /** maps props  to state */
 const mapStateToProps = (
@@ -165,25 +190,36 @@ const mapStateToProps = (
 ): MapStateToProps & UserName => {
   const plansArraySelector = makePlansArraySelector(PLAN_RECORD_BY_ID);
   const title = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
-  const statusList = ownProps.planStatuses;
+  const { planStatuses, interventionTypes } = ownProps;
+  const interventionType =
+    interventionTypes && interventionTypes.length
+      ? interventionTypes
+      : (DISPLAYED_PLAN_TYPES as InterventionType[]);
   const dataSelectors: DataSelectors = {
-    statusList,
+    interventionType,
+    statusList: planStatuses,
     title,
   };
   // useName selector
   const userName = getQueryParams(ownProps.location)[QUERY_PARAM_USER] as string;
+  let noDataMessage = NO_DATA_FOUND;
   if (userName) {
-    const planIds = makePlansByUserNamesSelector()(state, { userName });
+    const planIds = plansByUserNameSelector(state, { userName });
     dataSelectors.planIds = planIds;
+    if (planIds?.length === 0) {
+      noDataMessage = USER_HAS_NO_PLAN_ASSIGNMENTS;
+    }
   }
-  let plansRecordsArray = plansArraySelector(state as Registry, dataSelectors);
+
+  const plansRecordsArray = plansArraySelector(state as Registry, dataSelectors);
   // sort by date
   if (ownProps.sortByDate) {
-    plansRecordsArray = plansRecordsArray.sort(
+    plansRecordsArray.sort(
       (a: PlanRecord, b: PlanRecord) => Date.parse(b.plan_date) - Date.parse(a.plan_date)
     );
   }
   const props = {
+    noDataMessage,
     plansArray: plansRecordsArray,
     userName,
   };

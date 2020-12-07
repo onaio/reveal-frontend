@@ -200,7 +200,8 @@ export function getGenericStructures(
   state: Partial<Store>,
   reducerKey: string = 'GenericStructuresById',
   jurisdictionId: string | null = null,
-  planId: string | null = null
+  planId: string | null = null,
+  structureType: string[] | null = null
 ): StructureFeatureCollection {
   let structures = values((state as any)[reducerName][reducerKey]);
   if (jurisdictionId) {
@@ -210,6 +211,11 @@ export function getGenericStructures(
   }
   if (planId) {
     structures = structures.filter((structure: GenericStructure) => structure.plan_id === planId);
+  }
+  if (structureType) {
+    structures = structures.filter(structure =>
+      structureType.includes(structure?.geojson?.geometry?.type)
+    );
   }
   return wrapFeatureCollection(structures.map((structure: GenericStructure) => structure.geojson));
 }

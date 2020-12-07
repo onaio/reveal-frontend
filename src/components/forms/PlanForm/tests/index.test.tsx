@@ -1,24 +1,34 @@
 import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { authenticateUser } from '@onaio/session-reducer';
+import { act } from '@testing-library/react';
 import { mount, ReactWrapper, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { cloneDeep } from 'lodash';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import PlanForm, { propsForUpdatingPlans } from '..';
+import PlanForm, { defaultInitialValues, propsForUpdatingPlans } from '..';
 import { AN_ERROR_OCCURRED } from '../../../../configs/lang';
 import * as helperErrors from '../../../../helpers/errors';
 import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
-import { PlanStatus } from '../../../../store/ducks/plans';
-import { generatePlanDefinition, getPlanFormValues } from '../helpers';
+import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
+import { generatePlanDefinition, getPlanFormValues, planActivitiesMap } from '../helpers';
 import * as fixtures from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
 jest.mock('../../../../configs/env');
+
+fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
+
+/** place to mount the application/component to the JSDOM document during testing.
+ * https://github.com/reactstrap/reactstrap/issues/773#issuecomment-373451256
+ */
+const div = document.createElement('div');
+document.body.appendChild(div);
 
 describe('containers/forms/PlanForm', () => {
   beforeEach(() => {
@@ -97,11 +107,11 @@ describe('containers/forms/PlanForm', () => {
   });
 
   it('renders dynamic plans correctly', () => {
-    fetch.mockResponseOnce(fixtures.jurisdictionLevel0JSON);
     const wrapper = mount(
       <MemoryRouter>
         <PlanForm />
-      </MemoryRouter>
+      </MemoryRouter>,
+      { attachTo: div }
     );
     wrapper
       .find('#interventionType select')
@@ -122,6 +132,18 @@ describe('containers/forms/PlanForm', () => {
     expect(toJson(wrapper.find('.conditions-fieldset textarea'))).toMatchSnapshot(
       'conditions textareas'
     );
+
+    // Show FI Reason and FI status fields when Dynamic FI is selected
+    wrapper
+      .find('#interventionType select')
+      .simulate('change', { target: { value: 'Dynamic-FI', name: 'interventionType' } });
+    expect(wrapper.find('#fiStatus select').length).toBeTruthy();
+    expect(wrapper.find('#fiReason select').length).toBeTruthy();
+    // Show case number field when Case Triggered option is selected for Dynamic FI
+    wrapper
+      .find('#fiReason select')
+      .simulate('change', { target: { value: 'Case Triggered', name: 'fiReason' } });
+    expect(wrapper.find('#caseNum input').length).toBeTruthy();
 
     wrapper.unmount();
   });
@@ -233,7 +255,8 @@ describe('containers/forms/PlanForm', () => {
     const wrapper = mount(
       <MemoryRouter>
         <PlanForm />
-      </MemoryRouter>
+      </MemoryRouter>,
+      { attachTo: div }
     );
 
     function checkJurisdtictions(num: number) {
@@ -282,8 +305,52 @@ describe('containers/forms/PlanForm', () => {
     wrapper.find(`.addJurisdiction`).simulate('click');
     // there are now two buttons to remove jurisdictions
     expect(wrapper.find(`.removeJurisdiction`).length).toEqual(2);
+
+    // change interventionType to Dynamic-IRS
+    wrapper.find('#interventionType select').simulate('change', {
+      target: { value: InterventionType.DynamicIRS, name: 'interventionType' },
+    });
+
+    // there is now a button to add jurisdictions
+    expect(wrapper.find(`.addJurisdiction`).length).toEqual(1);
+    expect(toJson(wrapper.find('.addJurisdiction'))).toMatchSnapshot(
+      'Dynamic-irs addJurisdiction button'
+    );
+    // there is still no button to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
+
+    // there is no button to remove activities
+    expect(wrapper.find(`.removeActivity`).length).toEqual(0);
+    // there is no modal to add more activities
+    expect(wrapper.find(`.add-more-activities`).length).toEqual(0);
+
+    // add one jurisdiction
+    wrapper.find(`.addJurisdiction`).simulate('click');
+    // there are now two buttons to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(2);
     expect(toJson(wrapper.find('.removeJurisdiction'))).toMatchSnapshot(
-      'removeJurisdiction buttons'
+      'Dynamic-irs removeJurisdiction buttons'
+    );
+
+    // change interventionType to Dynamic-MDA
+    wrapper.find('#interventionType select').simulate('change', {
+      target: { value: InterventionType.DynamicMDA, name: 'interventionType' },
+    });
+
+    // there is now a button to add jurisdictions
+    expect(wrapper.find(`.addJurisdiction`).length).toEqual(1);
+    expect(toJson(wrapper.find('.addJurisdiction'))).toMatchSnapshot(
+      'Dynamic-MDA addJurisdiction button'
+    );
+    // there is still no button to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
+
+    // add one jurisdiction
+    wrapper.find(`.addJurisdiction`).simulate('click');
+    // there are now two buttons to remove jurisdictions
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(2);
+    expect(toJson(wrapper.find('.removeJurisdiction'))).toMatchSnapshot(
+      'Dynamic-MDA removeJurisdiction buttons'
     );
 
     // remove one jurisdiction
@@ -586,7 +653,7 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     // interventionType should be as expected
     expect(wrapper.find('small.interventionType-error').text()).toEqual(
-      'interventionType must be one of the following values: Dynamic-FI, Dynamic-IRS, Dynamic-MDA, FI, IRS, MDA, MDA-Point'
+      'interventionType must be one of the following values: Dynamic-FI, Dynamic-IRS, Dynamic-MDA, FI, IRS, IRS-Lite, MDA, MDA-Point'
     );
 
     // Set FI for interventionType field value so that we can test the other fields
@@ -594,10 +661,6 @@ describe('containers/forms/PlanForm - Submission', () => {
       .find('select[name="interventionType"]')
       .simulate('change', { target: { name: 'interventionType', value: 'FI' } });
 
-    // Set wrong fiReason field value
-    wrapper
-      .find('select[name="fiReason"]')
-      .simulate('change', { target: { name: 'fiReason', value: 'justin' } });
     // Set wrong fiStatus field value
     wrapper
       .find('select[name="fiStatus"]')
@@ -606,6 +669,21 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper
       .find('select[name="status"]')
       .simulate('change', { target: { name: 'status', value: 'Ona' } });
+
+    wrapper.find('form').simulate('submit');
+
+    await act(async () => {
+      await new Promise<any>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    // there is no FIReason error due to default value
+    expect(wrapper.find('small.fiReason-error').length).toEqual(0);
+
+    // Set wrong fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'justin' } });
 
     wrapper.find('form').simulate('submit');
 
@@ -863,7 +941,9 @@ describe('containers/forms/PlanForm - Submission', () => {
     // submit button should not be disabled
     expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
 
@@ -911,9 +991,15 @@ describe('containers/forms/PlanForm - Submission', () => {
       ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(plans[1]),
     };
-    const wrapper = mount(<PlanForm {...props} />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...props} />
+      </MemoryRouter>
+    );
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
@@ -951,9 +1037,16 @@ describe('containers/forms/PlanForm - Submission', () => {
       ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(plans[5]),
     };
-    const wrapper = mount(<PlanForm {...props} />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...props} />
+      </MemoryRouter>,
+      { attachTo: div }
+    );
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
@@ -990,7 +1083,11 @@ describe('containers/forms/PlanForm - Submission', () => {
       ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(planMissingFIReason),
     };
-    const wrapper = mount(<PlanForm {...propsMissingFiReason} />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...propsMissingFiReason} />
+      </MemoryRouter>
+    );
     expect(wrapper.find('Formik').prop('initialValues')).toEqual({
       ...propsMissingFiReason.initialValues,
       fiReason: 'Routine',
@@ -1016,7 +1113,11 @@ describe('containers/forms/PlanForm - Submission', () => {
       ...propsForUpdatingPlans(),
       initialValues: getPlanFormValues(planInvalidFiReason),
     };
-    const wrapper = mount(<PlanForm {...propsInvalidFiReason} />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...propsInvalidFiReason} />
+      </MemoryRouter>
+    );
     expect(wrapper.find('Formik').prop('initialValues')).toEqual({
       ...propsInvalidFiReason.initialValues,
       fiReason: 'Routine',
@@ -1040,9 +1141,15 @@ describe('containers/forms/PlanForm - Submission', () => {
       initialValues: getPlanFormValues(plans[1]),
     };
 
-    const wrapper = mount(<PlanForm {...props} />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...props} />
+      </MemoryRouter>
+    );
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
@@ -1071,7 +1178,11 @@ describe('containers/forms/PlanForm - Submission', () => {
       initialValues: getPlanFormValues(plans[1]),
     };
 
-    const wrapper = mount(<PlanForm {...props} />);
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm {...props} />
+      </MemoryRouter>
+    );
 
     wrapper.find('form').simulate('submit');
 
@@ -1080,6 +1191,38 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     expect(addPlanMock.mock.calls.length).toEqual(0);
     expect(displayErrorMock).toHaveBeenCalledWith('API is down', AN_ERROR_OCCURRED, false);
+  });
+
+  it('before submit callback used correctly', async () => {
+    // ensure that we are logged in so that we can get the OpenSRP token from Redux
+
+    const aDiv = document.createElement('div');
+    document.body.appendChild(aDiv);
+
+    const beforeSubmitSample = () => false;
+    fetch.mockResponse(JSON.stringify({}));
+    fetch.resetMocks();
+
+    const initialValues = {
+      ...getPlanFormValues(fixtures.DynamicFIPlan as any),
+    };
+
+    const props = {
+      ...propsForUpdatingPlans(),
+      beforeSubmit: beforeSubmitSample,
+      initialValues,
+    };
+
+    const wrapper = mount(<PlanForm {...props} />, { attachTo: aDiv });
+
+    wrapper.find('form').simulate('submit');
+
+    await act(async () => {
+      await new Promise<any>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+    // payload was not submitted
+    expect(fetch).not.toHaveBeenCalled();
   });
 
   it('New plan is added to store if addPlan prop is available and status is 200', async () => {
@@ -1122,7 +1265,9 @@ describe('containers/forms/PlanForm - Submission', () => {
       .find('select[name="fiStatus"]')
       .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
 
@@ -1205,5 +1350,283 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper.update();
     expect(wrapper.find('#planform-submit-button button').prop('disabled')).toEqual(false);
     expect(wrapper.find('#planform-submit-button button').text()).toEqual('Save Plan');
+  });
+});
+
+describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    fetch.resetMocks();
+  });
+
+  it('removing dynamic activities works correctly', async () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    const defaults = {
+      ...defaultInitialValues,
+      activities: planActivitiesMap[InterventionType.DynamicFI],
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm initialValues={defaults} />
+      </MemoryRouter>,
+      { attachTo: container }
+    );
+
+    // change interventionType to Dynamic-FI
+    await act(async () => {
+      wrapper
+        .find('#interventionType select')
+        .simulate('change', { target: { value: 'Dynamic-FI', name: 'interventionType' } });
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    // there are initially 6 activities
+    expect(wrapper.find(`.removeActivity`).length).toEqual(6);
+    // lets get the form input values of the triggers
+    const expectedTriggerInputValues = wrapper
+      .find('.triggers-fieldset input')
+      .map(e => e.props().value);
+    const expectedTriggerTextValues = wrapper
+      .find('.triggers-fieldset textarea')
+      .map(e => e.props().value);
+    const expectedConditionInputValues = wrapper
+      .find('.conditions-fieldset input')
+      .map(e => e.props().value);
+    const expectedConditionTextValues = wrapper
+      .find('.conditions-fieldset textarea')
+      .map(e => e.props().value);
+    // the names of the input fields should be indexed from zero (0)
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Original activity trigger text input names'
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Original activity trigger text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Original activity conditions text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Original activity conditions text input names'
+    );
+    // lets remove one activity
+    await act(async () => {
+      wrapper
+        .find(`.removeActivity`)
+        .first()
+        .simulate('click');
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    // 1 less activity
+    expect(wrapper.find(`.removeActivity`).length).toEqual(5);
+    // the slice values are determined by the type of activity that was removed
+    // the meaning is that we should be left with ALL the triggers excluding the ones removed
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedTriggerInputValues.slice(2)
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedTriggerTextValues.slice(2)
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedConditionTextValues.slice(5)
+    );
+    // this one does not change because currently there are no conditions with an input field
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedConditionInputValues
+    );
+    // the names of the input fields should STILL be indexed from zero (0)
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Changed activity trigger text input names'
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Changed activity trigger text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Changed activity conditions text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Changed activity conditions text input names'
+    );
+    // there should now be one button to add activities
+    expect(wrapper.find(`button.add-more-activities`).length).toEqual(1);
+    // lets bring up the modal that allows us to add activities
+    await act(async () => {
+      wrapper
+        .find(`button.add-more-activities`)
+        .first()
+        .simulate('click');
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    // there should be one activity that can be added back
+    expect(wrapper.find(`button.addActivity`).length).toEqual(1);
+    // lets click the button in the modal and add back the activity we had removed
+    await act(async () => {
+      wrapper
+        .find(`button.addActivity`)
+        .first()
+        .simulate('click');
+    });
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    // we should have 6 activities again
+    expect(wrapper.find(`.removeActivity`).length).toEqual(6);
+    // and now we come full circle.  The inputs should be what we had on initial load,
+    // with those of the first activity moved to the end of the arrays
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedTriggerInputValues.slice(2).concat(expectedTriggerInputValues.slice(0, 2))
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedTriggerTextValues.slice(2).concat(expectedTriggerTextValues.slice(0, 2))
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().value)).toEqual(
+      expectedConditionTextValues.slice(5).concat(expectedConditionTextValues.slice(0, 5))
+    );
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().value)).toEqual(
+      expectedConditionInputValues
+    );
+    // the names of the input fields should STILL STILL! be indexed from zero (0)
+    expect(wrapper.find(`.triggers-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Final activity trigger text input names'
+    );
+    expect(wrapper.find(`.triggers-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Final activity trigger text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset textarea`).map(e => e.props().name)).toMatchSnapshot(
+      'Final activity conditions text textarea names'
+    );
+    expect(wrapper.find(`.conditions-fieldset input`).map(e => e.props().name)).toMatchSnapshot(
+      'Final activity conditions text input names'
+    );
+    // there should not be any button to add activities
+    expect(wrapper.find(`button.add-more-activities`).length).toEqual(0);
+    wrapper.unmount();
+  });
+
+  it('Plan title is set correctly for dynamic FI plans', async () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    const defaults = {
+      ...defaultInitialValues,
+      activities: planActivitiesMap[InterventionType.DynamicFI],
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm initialValues={defaults} />
+      </MemoryRouter>,
+      { attachTo: container }
+    );
+
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'Dynamic-FI' } });
+    // set jurisdiction id
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Nevada' } });
+    // Set fiReason field value
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'Routine' } });
+    // Set fiStatus field value
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'B2' } });
+
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.name
+    ).toEqual('B2-Nevada-2017-07-13');
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.title
+    ).toEqual('B2 Nevada 2017-07-13');
+  });
+
+  it('triggers and conditions are set correctly for dynamic FI plans', async () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    const defaults = {
+      ...defaultInitialValues,
+      activities: planActivitiesMap[InterventionType.DynamicFI],
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm initialValues={defaults} />
+      </MemoryRouter>,
+      { attachTo: container }
+    );
+
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'Dynamic-FI' } });
+
+    wrapper.update();
+
+    // dynamic fi conditions
+    const conditions = wrapper.find('.conditions-fieldset');
+    expect(conditions.length).toEqual(6);
+    expect(conditions.at(0).text()).toMatchInlineSnapshot(
+      `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists().not())DescriptionStructure is residential or type does not existFamilyExpression$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')DescriptionApply to residential structures in Register_Structure questionnaires"`
+    );
+    expect(conditions.at(1).text()).toMatchInlineSnapshot(
+      `"ConditionsExpression($this.is(FHIR.Patient) and $this.birthDate <= today() - 5 'years') or ($this.contained.where(Patient.birthDate <= today() - 5 'years').exists())DescriptionPerson is older than 5 years or person associated with questionnaire response if older than 5 years"`
+    );
+    expect(conditions.at(2).text()).toMatchInlineSnapshot(
+      `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or (($this.type.where(id='locationType').exists().not() or $this.type.where(id='locationType').text = 'Residential Structure') and $this.contained.exists())DescriptionStructure is residential or type does not existFamily"`
+    );
+    expect(conditions.at(3).text()).toMatchInlineSnapshot(
+      `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').text = 'Larval Breeding Site'DescriptionStructure is a larval breeding siteExpression$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Larval Breeding Site')DescriptionApply to larval breeding sites in Register_Structure questionnaires"`
+    );
+    expect(conditions.at(4).text()).toMatchInlineSnapshot(
+      `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').text = 'Mosquito Collection Point'DescriptionStructure is a mosquito collection pointExpression$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Mosquito Collection Point')DescriptionApply to mosquito collection point in Register_Structure questionnaires"`
+    );
+    expect(conditions.at(5).text()).toMatchInlineSnapshot(
+      `"ConditionsExpressionLocation.physicalType.text = 'jdn'DescriptionJurisdiction type location"`
+    );
+
+    // dynamic fi trigers
+    const trigers = wrapper.find('.triggers-fieldset');
+    expect(trigers.length).toEqual(6);
+    expect(trigers.at(0).text()).toMatchInlineSnapshot(
+      `"TriggersNameNameExpressionquestionnaire = 'Register_Structure' or questionnaire = 'Archive_Family'DescriptionTrigger when a Register_Structure event is submitted"`
+    );
+    expect(trigers.at(1).text()).toMatchInlineSnapshot(
+      `"TriggersNameNameExpressionquestionnaire = 'Family_Member_Registration'DescriptionTrigger when a Family Member Registration event is submitted"`
+    );
+    expect(trigers.at(2).text()).toMatchInlineSnapshot(
+      `"TriggersNameNameExpressionquestionnaire = 'Family_Registration'DescriptionTrigger when a Family Registration event is submitted"`
+    );
+    expect(trigers.at(3).text()).toMatchInlineSnapshot(
+      `"TriggersNameNameExpressionquestionnaire = 'Register_Structure'DescriptionTrigger when a Register_Structure event is submitted"`
+    );
+    expect(trigers.at(4).text()).toMatchInlineSnapshot(
+      `"TriggersNameNameExpressionquestionnaire = 'Register_Structure'DescriptionTrigger when a Register_Structure event is submitted"`
+    );
+    expect(trigers.at(5).text()).toMatchInlineSnapshot(`"TriggersName"`);
   });
 });

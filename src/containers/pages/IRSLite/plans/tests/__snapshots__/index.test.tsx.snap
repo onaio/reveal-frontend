@@ -1,0 +1,232 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/IRS Lite Reports/IRSPlansList handles a case insensitive search: search results props 1`] = `Array []`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders empty table if no search matches: search results props 1`] = `Array []`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plan list view correctly: GenericPlansList props 1`] = `
+Object {
+  "fetchPlans": [Function],
+  "history": Object {
+    "action": "POP",
+    "block": [Function],
+    "createHref": [Function],
+    "go": [Function],
+    "goBack": [Function],
+    "goForward": [Function],
+    "length": 1,
+    "listen": [Function],
+    "location": Object {
+      "hash": "",
+      "pathname": "/",
+      "search": "",
+      "state": undefined,
+    },
+    "push": [Function],
+    "replace": [Function],
+  },
+  "location": Object {
+    "hash": "",
+    "pathname": "/intervention/irs-lite/report",
+    "search": "",
+    "state": undefined,
+  },
+  "match": Object {
+    "isExact": true,
+    "params": Object {},
+    "path": "/intervention/irs-lite/report/",
+    "url": "/intervention/irs-lite/report/",
+  },
+  "pageTitle": "IRS Lite Plans",
+  "pageUrl": "/intervention/irs-lite/report",
+  "plans": Array [
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "03557b7e-0ddf-41f7-93c8-155669757a16",
+      ],
+      "plan_date": "2020-10-13",
+      "plan_effective_period_end": "2020-12-06",
+      "plan_effective_period_start": "2020-10-13",
+      "plan_id": "17f89152-51a6-476c-9246-8fee6f9e6ebf",
+      "plan_intervention_type": "IRS-Lite",
+      "plan_name": "IRS-Lite-Test-1-2020-10-13",
+      "plan_status": "active",
+      "plan_title": "IRS-Lite Test 1 2020-10-13",
+      "plan_version": "1",
+    },
+  ],
+  "service": [Function],
+  "supersetReportingSlice": "13",
+}
+`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plan list view correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      to="/"
+    >
+      <LinkAnchor
+        href="/"
+        navigate={[Function]}
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    IRS Lite Plans
+  </li>,
+]
+`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plan list view correctly: page title 1`] = `
+<h3
+  className="mt-3 mb-3 page-title"
+>
+  IRS Lite Plans
+</h3>
+`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plan list view correctly: table header-1 1`] = `"Title"`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plan list view correctly: table header-2 1`] = `"Date Created"`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plan list view correctly: table header-3 1`] = `"Start Date"`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plan list view correctly: table header-4 1`] = `"End Date"`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plan list view correctly: table header-5 1`] = `"Status"`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plan list view correctly: the full rendered rows tr index 0 1`] = `"TitleDate CreatedStart DateEnd DateStatus"`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plan list view correctly: the full rendered rows tr index 1 1`] = `"IRS-Lite Test 1 2020-10-132020-10-132020-10-132020-12-06active"`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plan list view correctly: title column styling 1`] = `
+Object {
+  "boxSizing": "border-box",
+  "cursor": "pointer",
+  "flex": "200 0 auto",
+  "minWidth": "660px",
+  "position": "relative",
+  "width": "200px",
+}
+`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plans correctly when connected to store: GenericPlansList props: connected to store 1`] = `
+Object {
+  "fetchPlans": [Function],
+  "history": Object {
+    "action": "POP",
+    "block": [Function],
+    "createHref": [Function],
+    "go": [Function],
+    "goBack": [Function],
+    "goForward": [Function],
+    "length": 1,
+    "listen": [Function],
+    "location": Object {
+      "hash": "",
+      "pathname": "/",
+      "search": "",
+      "state": undefined,
+    },
+    "push": [Function],
+    "replace": [Function],
+  },
+  "location": Object {
+    "hash": "",
+    "pathname": "/intervention/irs-lite/report",
+    "search": "",
+    "state": undefined,
+  },
+  "match": Object {
+    "isExact": true,
+    "params": Object {},
+    "path": "/intervention/irs-lite/report",
+    "url": "/intervention/irs-lite/report",
+  },
+  "pageTitle": "IRS Lite Plans",
+  "pageUrl": "/intervention/irs-lite/report",
+  "plans": Array [
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "03557b7e-0ddf-41f7-93c8-155669757a16",
+      ],
+      "plan_date": "2020-10-13",
+      "plan_effective_period_end": "2020-12-06",
+      "plan_effective_period_start": "2020-10-13",
+      "plan_id": "17f89152-51a6-476c-9246-8fee6f9e6ebf",
+      "plan_intervention_type": "IRS-Lite",
+      "plan_name": "IRS-Lite-Test-1-2020-10-13",
+      "plan_status": "active",
+      "plan_title": "IRS-Lite Test 1 2020-10-13",
+      "plan_version": "1",
+    },
+  ],
+  "service": [MockFunction] {
+    "calls": Array [
+      Array [
+        "13",
+      ],
+    ],
+    "results": Array [
+      Object {
+        "type": "return",
+        "value": Promise {},
+      },
+    ],
+  },
+  "supersetReportingSlice": "13",
+}
+`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plans correctly when connected to store: breadcrumbs: connected to store 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      to="/"
+    >
+      <LinkAnchor
+        href="/"
+        navigate={[Function]}
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    IRS Lite Plans
+  </li>,
+]
+`;
+
+exports[`components/IRS Lite Reports/IRSPlansList renders plans correctly when connected to store: page title: connected to store 1`] = `
+<h3
+  className="mt-3 mb-3 page-title"
+>
+  IRS Lite Plans
+</h3>
+`;

@@ -131,6 +131,8 @@ import {
   FI_REASON_CODE,
   FI_STATUS_CODE,
   HIGH_PRIORITIY,
+  IGNORE,
+  INTERNAL,
   INTERVENTION_TYPE_CODE,
   INVESTIGATION,
   IRS_ACTIVITY_CODE,
@@ -152,6 +154,7 @@ import {
   RACD_REGISTER_FAMILY_CODE,
   ROUTINE,
   TASK_GENERATION_STATUS_CODE,
+  TEAM_ASSIGNMENT_STATUS_CODE,
   TRUE,
 } from '../constants';
 import {
@@ -309,6 +312,7 @@ export const useContextCodes = [
   OPENSRP_EVENT_ID_CODE,
   CASE_NUMBER_CODE,
   TASK_GENERATION_STATUS_CODE,
+  TEAM_ASSIGNMENT_STATUS_CODE,
 ] as const;
 
 /** Plan activity code values */
@@ -329,7 +333,13 @@ export const PlanActionCodes = [
 
 /** Allowed taskGenerationStatus values */
 /* tslint:disable-next-line no-useless-cast */
-export const taskGenerationStatuses = [TRUE, FALSE, DISABLED] as const;
+export const taskGenerationStatuses = {
+  [FALSE]: FALSE,
+  [TRUE]: TRUE,
+  [DISABLED]: DISABLED,
+  [IGNORE]: IGNORE,
+  [INTERNAL]: INTERNAL,
+} as const;
 
 /** Plan Action Timing Period */
 export interface PlanActionTimingPeriod {
@@ -337,9 +347,12 @@ export interface PlanActionTimingPeriod {
   start: string;
 }
 
+/** plan action subjectCodableConcept text type  */
+export type subjectCodableConceptType = 'Family' | 'Person' | 'Location' | 'Jurisdiction';
+
 /** Plan Action subjectCodableConcept */
 export interface PlanActionsubjectCodableConcept {
-  text: 'Family' | 'Person' | 'Location' | 'Jurisdiction';
+  text: subjectCodableConceptType;
 }
 
 /** Plan Expression */
@@ -694,14 +707,6 @@ export const planActivities: PlanActivities = {
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },
-        {
-          expression: {
-            description: 'Register structure event submitted for a residential structure',
-            expression:
-              "$this.is(FHIR.Location)  or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')",
-          },
-          kind: APPLICABILITY_CONDITION_KIND,
-        },
       ],
       definitionUri: 'bednet_distribution.json',
       description: BEDNET_ACTIVITY_DESCRIPTION,
@@ -787,10 +792,8 @@ export const planActivities: PlanActivities = {
         },
         {
           expression: {
-            description:
-              'Trigger when a Family Registration or Family Member Registration event is submitted',
-            expression:
-              "questionnaire = 'Family_Registration' or questionnaire = 'Family_Member_Registration'",
+            description: 'Trigger when a Family Member Registration event is submitted',
+            expression: "questionnaire = 'Family_Member_Registration'",
           },
           name: 'event-submission',
           type: NAMED_EVENT_TRIGGER_TYPE,
@@ -990,7 +993,7 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description: 'Trigger when a Register_Structure event is submitted',
-            expression: "questionnaire = 'Register_Structure'",
+            expression: "questionnaire = 'Register_Structure' or questionnaire = 'Archive_Family'",
           },
           name: 'event-submission',
           type: NAMED_EVENT_TRIGGER_TYPE,
@@ -1640,6 +1643,33 @@ export const indicatorThresholdsIRS: IndicatorThresholds = {
 };
 /** END IRS Reporting configs */
 
+/** IRS Reporting configs */
+export const indicatorThresholdsIRSLite: IndicatorThresholds = {
+  GREEN_THRESHOLD: {
+    color: '#2ECC40',
+    name: IRS_GREEN_THRESHOLD,
+    orEquals: true,
+    value: 1,
+  },
+  GREY_THRESHOLD: {
+    color: '#dddddd',
+    name: IRS_GREY_THRESHOLD,
+    value: 0.2,
+  },
+  RED_THRESHOLD: {
+    color: '#FF4136',
+    name: IRS_RED_THRESHOLD,
+    orEquals: true,
+    value: 0.75,
+  },
+  YELLOW_THRESHOLD: {
+    color: '#FFDC00',
+    name: IRS_YELLOW_THRESHOLD,
+    value: 0.9,
+  },
+};
+/** END IRS Reporting configs */
+
 /** Namibia IRS Reporting configs */
 export const indicatorThresholdsIRSNamibia: IndicatorThresholds = {
   GREEN_THRESHOLD: {
@@ -1720,6 +1750,26 @@ export const irsReportingCongif: {
 } = {
   // Namibia Structures Configs
   [process.env.REACT_APP_SUPERSET_IRS_REPORTING_STRUCTURES_DATA_SLICE_NA as string]: {
+    indicatorThresholds: indicatorThresholdsIRS,
+  } as IrsReportingConfig,
+};
+/* tslint:enable:object-literal-sort-keys */
+
+/** Thresholds lookup
+ * For custom indicator thresholds, define it and add it here,
+ * otherwise the default indicator thresholds will be used.
+ */
+export const indicatorThresholdsLookUpIRSLite: IndicatorThresholdsLookUp = {
+  irsLite2020: indicatorThresholdsIRSLite,
+};
+
+/* tslint:disable:object-literal-sort-keys */
+/** The actual configuration object controlling how IRS Reporting is handled for different clients */
+export const irsLiteReportingCongif: {
+  [key: string]: IrsReportingConfig;
+} = {
+  // Namibia Structures Configs
+  [process.env.REACT_APP_SUPERSET_IRS_LITE_REPORTING_STRUCTURES_DATA_SLICE_NA as string]: {
     indicatorThresholds: indicatorThresholdsIRS,
   } as IrsReportingConfig,
 };

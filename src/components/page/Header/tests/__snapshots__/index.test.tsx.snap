@@ -192,6 +192,117 @@ exports[`components/page/Header renders header correctly 6`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
+  to="/intervention/irs-lite/report"
+>
+  <Link
+    aria-current={null}
+    className="nav-link"
+    to={
+      Object {
+        "hash": "",
+        "pathname": "/intervention/irs-lite/report",
+        "search": "",
+        "state": null,
+      }
+    }
+  >
+    <LinkAnchor
+      aria-current={null}
+      className="nav-link"
+      href="/intervention/irs-lite/report"
+      navigate={[Function]}
+    >
+      <a
+        aria-current={null}
+        className="nav-link"
+        href="/intervention/irs-lite/report"
+        onClick={[Function]}
+      >
+        IRS Lite Reporting
+      </a>
+    </LinkAnchor>
+  </Link>
+</NavLink>
+`;
+
+exports[`components/page/Header renders header correctly 7`] = `
+<NavLink
+  activeClassName="active"
+  className="nav-link"
+  to="/intervention/irs/performance/report"
+>
+  <Link
+    aria-current={null}
+    className="nav-link"
+    to={
+      Object {
+        "hash": "",
+        "pathname": "/intervention/irs/performance/report",
+        "search": "",
+        "state": null,
+      }
+    }
+  >
+    <LinkAnchor
+      aria-current={null}
+      className="nav-link"
+      href="/intervention/irs/performance/report"
+      navigate={[Function]}
+    >
+      <a
+        aria-current={null}
+        className="nav-link"
+        href="/intervention/irs/performance/report"
+        onClick={[Function]}
+      >
+        IRS Performance Reporting
+      </a>
+    </LinkAnchor>
+  </Link>
+</NavLink>
+`;
+
+exports[`components/page/Header renders header correctly 8`] = `
+<NavLink
+  activeClassName="active"
+  className="nav-link"
+  to="/intervention/irs/mopup"
+>
+  <Link
+    aria-current={null}
+    className="nav-link"
+    to={
+      Object {
+        "hash": "",
+        "pathname": "/intervention/irs/mopup",
+        "search": "",
+        "state": null,
+      }
+    }
+  >
+    <LinkAnchor
+      aria-current={null}
+      className="nav-link"
+      href="/intervention/irs/mopup"
+      navigate={[Function]}
+    >
+      <a
+        aria-current={null}
+        className="nav-link"
+        href="/intervention/irs/mopup"
+        onClick={[Function]}
+      >
+        IRS Mop-up Reporting
+      </a>
+    </LinkAnchor>
+  </Link>
+</NavLink>
+`;
+
+exports[`components/page/Header renders header correctly 9`] = `
+<NavLink
+  activeClassName="active"
+  className="nav-link"
   to="/intervention/mda-point/report"
 >
   <Link
@@ -225,7 +336,7 @@ exports[`components/page/Header renders header correctly 6`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 7`] = `
+exports[`components/page/Header renders header correctly 10`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -262,7 +373,7 @@ exports[`components/page/Header renders header correctly 7`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 8`] = `
+exports[`components/page/Header renders header correctly 11`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -299,7 +410,7 @@ exports[`components/page/Header renders header correctly 8`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 9`] = `
+exports[`components/page/Header renders header correctly 12`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -336,44 +447,7 @@ exports[`components/page/Header renders header correctly 9`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 10`] = `
-<NavLink
-  activeClassName="active"
-  className="nav-link"
-  to="/404"
->
-  <Link
-    aria-current={null}
-    className="nav-link"
-    to={
-      Object {
-        "hash": "",
-        "pathname": "/404",
-        "search": "",
-        "state": null,
-      }
-    }
-  >
-    <LinkAnchor
-      aria-current={null}
-      className="nav-link"
-      href="/404"
-      navigate={[Function]}
-    >
-      <a
-        aria-current={null}
-        className="nav-link"
-        href="/404"
-        onClick={[Function]}
-      >
-        Users
-      </a>
-    </LinkAnchor>
-  </Link>
-</NavLink>
-`;
-
-exports[`components/page/Header renders header correctly 11`] = `
+exports[`components/page/Header renders header correctly 13`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -410,44 +484,7 @@ exports[`components/page/Header renders header correctly 11`] = `
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly 12`] = `
-<NavLink
-  activeClassName="active"
-  className="nav-link"
-  to="/404"
->
-  <Link
-    aria-current={null}
-    className="nav-link"
-    to={
-      Object {
-        "hash": "",
-        "pathname": "/404",
-        "search": "",
-        "state": null,
-      }
-    }
-  >
-    <LinkAnchor
-      aria-current={null}
-      className="nav-link"
-      href="/404"
-      navigate={[Function]}
-    >
-      <a
-        aria-current={null}
-        className="nav-link"
-        href="/404"
-        onClick={[Function]}
-      >
-        About
-      </a>
-    </LinkAnchor>
-  </Link>
-</NavLink>
-`;
-
-exports[`components/page/Header renders header correctly 13`] = `
+exports[`components/page/Header renders header correctly 14`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -676,6 +713,117 @@ exports[`components/page/Header renders header correctly when authenticated 6`] 
 <NavLink
   activeClassName="active"
   className="nav-link"
+  to="/intervention/irs-lite/report"
+>
+  <Link
+    aria-current={null}
+    className="nav-link"
+    to={
+      Object {
+        "hash": "",
+        "pathname": "/intervention/irs-lite/report",
+        "search": "",
+        "state": null,
+      }
+    }
+  >
+    <LinkAnchor
+      aria-current={null}
+      className="nav-link"
+      href="/intervention/irs-lite/report"
+      navigate={[Function]}
+    >
+      <a
+        aria-current={null}
+        className="nav-link"
+        href="/intervention/irs-lite/report"
+        onClick={[Function]}
+      >
+        IRS Lite Reporting
+      </a>
+    </LinkAnchor>
+  </Link>
+</NavLink>
+`;
+
+exports[`components/page/Header renders header correctly when authenticated 7`] = `
+<NavLink
+  activeClassName="active"
+  className="nav-link"
+  to="/intervention/irs/performance/report"
+>
+  <Link
+    aria-current={null}
+    className="nav-link"
+    to={
+      Object {
+        "hash": "",
+        "pathname": "/intervention/irs/performance/report",
+        "search": "",
+        "state": null,
+      }
+    }
+  >
+    <LinkAnchor
+      aria-current={null}
+      className="nav-link"
+      href="/intervention/irs/performance/report"
+      navigate={[Function]}
+    >
+      <a
+        aria-current={null}
+        className="nav-link"
+        href="/intervention/irs/performance/report"
+        onClick={[Function]}
+      >
+        IRS Performance Reporting
+      </a>
+    </LinkAnchor>
+  </Link>
+</NavLink>
+`;
+
+exports[`components/page/Header renders header correctly when authenticated 8`] = `
+<NavLink
+  activeClassName="active"
+  className="nav-link"
+  to="/intervention/irs/mopup"
+>
+  <Link
+    aria-current={null}
+    className="nav-link"
+    to={
+      Object {
+        "hash": "",
+        "pathname": "/intervention/irs/mopup",
+        "search": "",
+        "state": null,
+      }
+    }
+  >
+    <LinkAnchor
+      aria-current={null}
+      className="nav-link"
+      href="/intervention/irs/mopup"
+      navigate={[Function]}
+    >
+      <a
+        aria-current={null}
+        className="nav-link"
+        href="/intervention/irs/mopup"
+        onClick={[Function]}
+      >
+        IRS Mop-up Reporting
+      </a>
+    </LinkAnchor>
+  </Link>
+</NavLink>
+`;
+
+exports[`components/page/Header renders header correctly when authenticated 9`] = `
+<NavLink
+  activeClassName="active"
+  className="nav-link"
   to="/intervention/mda-point/report"
 >
   <Link
@@ -709,7 +857,7 @@ exports[`components/page/Header renders header correctly when authenticated 6`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 7`] = `
+exports[`components/page/Header renders header correctly when authenticated 10`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -746,7 +894,7 @@ exports[`components/page/Header renders header correctly when authenticated 7`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 8`] = `
+exports[`components/page/Header renders header correctly when authenticated 11`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -783,7 +931,7 @@ exports[`components/page/Header renders header correctly when authenticated 8`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 9`] = `
+exports[`components/page/Header renders header correctly when authenticated 12`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -820,44 +968,7 @@ exports[`components/page/Header renders header correctly when authenticated 9`] 
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 10`] = `
-<NavLink
-  activeClassName="active"
-  className="nav-link"
-  to="/404"
->
-  <Link
-    aria-current={null}
-    className="nav-link"
-    to={
-      Object {
-        "hash": "",
-        "pathname": "/404",
-        "search": "",
-        "state": null,
-      }
-    }
-  >
-    <LinkAnchor
-      aria-current={null}
-      className="nav-link"
-      href="/404"
-      navigate={[Function]}
-    >
-      <a
-        aria-current={null}
-        className="nav-link"
-        href="/404"
-        onClick={[Function]}
-      >
-        Users
-      </a>
-    </LinkAnchor>
-  </Link>
-</NavLink>
-`;
-
-exports[`components/page/Header renders header correctly when authenticated 11`] = `
+exports[`components/page/Header renders header correctly when authenticated 13`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"
@@ -894,44 +1005,7 @@ exports[`components/page/Header renders header correctly when authenticated 11`]
 </NavLink>
 `;
 
-exports[`components/page/Header renders header correctly when authenticated 12`] = `
-<NavLink
-  activeClassName="active"
-  className="nav-link"
-  to="/404"
->
-  <Link
-    aria-current={null}
-    className="nav-link"
-    to={
-      Object {
-        "hash": "",
-        "pathname": "/404",
-        "search": "",
-        "state": null,
-      }
-    }
-  >
-    <LinkAnchor
-      aria-current={null}
-      className="nav-link"
-      href="/404"
-      navigate={[Function]}
-    >
-      <a
-        aria-current={null}
-        className="nav-link"
-        href="/404"
-        onClick={[Function]}
-      >
-        About
-      </a>
-    </LinkAnchor>
-  </Link>
-</NavLink>
-`;
-
-exports[`components/page/Header renders header correctly when authenticated 13`] = `
+exports[`components/page/Header renders header correctly when authenticated 14`] = `
 <NavLink
   activeClassName="active"
   className="nav-link"

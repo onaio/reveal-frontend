@@ -1,0 +1,544 @@
+{
+  "cache_key": null,
+  "cached_dttm": null,
+  "cache_timeout": 60,
+  "errors": [],
+  "form_data": {
+    "adhoc_filters": [
+      {
+        "clause": "WHERE",
+        "expressionType": "SIMPLE",
+        "comparator": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "operator": "==",
+        "subject": "plan_id"
+      }
+    ],
+    "all_columns": ["task_identifier", "plan_id", "jurisdiction_id", "goal_id", "geojson"],
+    "color_pn": true,
+    "datasource": "6__table",
+    "groupby": [],
+    "metrics": ["count"],
+    "order_by_cols": [],
+    "order_desc": true,
+    "percent_metrics": [],
+    "queryFields": {
+      "groupby": "groupby",
+      "metrics": "metrics"
+    },
+    "query_mode": "raw",
+    "row_limit": 15000,
+    "show_cell_bars": true,
+    "table_timestamp_format": "smart_date",
+    "time_grain_sqla": "P1D",
+    "time_range": "No filter",
+    "time_range_endpoints": ["inclusive", "exclusive"],
+    "url_params": {},
+    "viz_type": "table",
+    "slice_id": 8,
+    "where": "",
+    "having": "",
+    "having_filters": [],
+    "filters": [
+      {
+        "col": "plan_id",
+        "op": "==",
+        "val": "90bf00c6-2ab6-5f67-9cad-4f942c87d082"
+      }
+    ]
+  },
+  "is_cached": false,
+  "query": "SELECT task_identifier AS task_identifier,\n       plan_id AS plan_id,\n       jurisdiction_id AS jurisdiction_id,\n       goal_id AS goal_id,\n       geojson AS geojson\nFROM thailand_prod.task_structures_geojson_slice\nWHERE plan_id = '90bf00c6-2ab6-5f67-9cad-4f942c87d082'\nLIMIT 15000",
+  "from_dttm": null,
+  "to_dttm": null,
+  "status": "success",
+  "stacktrace": null,
+  "rowcount": 69,
+  "data": {
+    "records": [
+      {
+        "task_identifier": "b75045f4-c23d-4d65-a042-ae738b67e2d7",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"b75045f4-c23d-4d65-a042-ae738b67e2d7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3640645077202, 11.3426456428011]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"94de4f8c-9879-48bd-91af-cc3d18911f3a\", \"task_task_for\": \"94de4f8c-9879-48bd-91af-cc3d18911f3a\", \"structure_code\": \"94de4f8c-9879-48bd-91af-cc3d18911f3a\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "db5086c3-745e-45dd-82b9-4a6746c64845",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"db5086c3-745e-45dd-82b9-4a6746c64845\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3623660921828, 11.343982643228]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"task_task_for\": \"f4f85092-d370-4d49-808d-505167fa4f30\", \"structure_code\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "5b19a186-21de-450a-8868-17a6ff9c2f3d",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"5b19a186-21de-450a-8868-17a6ff9c2f3d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3793616055056, 11.3303485282572]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"7b750f87-1e61-404e-b887-05dc9bd43a97\", \"task_task_for\": \"7b750f87-1e61-404e-b887-05dc9bd43a97\", \"structure_code\": \"7b750f87-1e61-404e-b887-05dc9bd43a97\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "3c705998-e4c7-4ce9-9958-4933f56e7313",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"3c705998-e4c7-4ce9-9958-4933f56e7313\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3793616055056, 11.3303485282572]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"7b750f87-1e61-404e-b887-05dc9bd43a97\", \"task_task_for\": \"4c190900-a64b-4135-aad3-d54d9005df54\", \"structure_code\": \"7b750f87-1e61-404e-b887-05dc9bd43a97\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "4b0e6949-8f77-4669-bce8-e4c548d7ce74",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "geojson": "{\"id\": \"4b0e6949-8f77-4669-bce8-e4c548d7ce74\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.365339696274, 11.3407853364648]}, \"properties\": {\"goal_id\": \"RACD_register_families\", \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"443be936-264f-5341-8c54-d5417ece0195\", \"action_code\": \"RACD Register Family\", \"task_status\": \"Completed\", \"structure_id\": \"81bf5e54-9ad1-4ffa-93f4-a9b685e5a69e\", \"task_task_for\": \"81bf5e54-9ad1-4ffa-93f4-a9b685e5a69e\", \"structure_code\": \"81bf5e54-9ad1-4ffa-93f4-a9b685e5a69e\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "15b5b73c-44aa-4e96-b8ac-e9b7c7f0aa16",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"15b5b73c-44aa-4e96-b8ac-e9b7c7f0aa16\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.365339696274, 11.3407853364648]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"81bf5e54-9ad1-4ffa-93f4-a9b685e5a69e\", \"task_task_for\": \"81bf5e54-9ad1-4ffa-93f4-a9b685e5a69e\", \"structure_code\": \"81bf5e54-9ad1-4ffa-93f4-a9b685e5a69e\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "c1d70fac-d086-452e-8b9b-5da05947c4ba",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"c1d70fac-d086-452e-8b9b-5da05947c4ba\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.37037968, 11.33732299]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"task_task_for\": \"0742c08c-ce26-4177-9bc5-05ede3d27e8c\", \"structure_code\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "0dac7e8e-cbb9-476c-87ae-482d4da4068b",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"0dac7e8e-cbb9-476c-87ae-482d4da4068b\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3640400767999, 11.34271837255]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"a521710f-7489-49b3-9940-f5a8c77dd12a\", \"task_task_for\": \"98b91cc3-fda7-45f9-a510-6a70c8080f3a\", \"structure_code\": \"a521710f-7489-49b3-9940-f5a8c77dd12a\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "6d17840b-9918-4410-b87b-e38c68bc32e6",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"6d17840b-9918-4410-b87b-e38c68bc32e6\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.37037968, 11.33732299]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"task_task_for\": \"b6276136-8d0b-44d3-90d8-782b5a5e4e45\", \"structure_code\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "039c25bf-4903-44ca-83d4-cc1e937e4c7d",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "geojson": "{\"id\": \"039c25bf-4903-44ca-83d4-cc1e937e4c7d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3623660921828, 11.343982643228]}, \"properties\": {\"goal_id\": \"RACD_register_families\", \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"443be936-264f-5341-8c54-d5417ece0195\", \"action_code\": \"RACD Register Family\", \"task_status\": \"Completed\", \"structure_id\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"task_task_for\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"structure_code\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "6922f8b5-041e-4e6f-afff-9bceb00b57ae",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"6922f8b5-041e-4e6f-afff-9bceb00b57ae\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3640400767999, 11.34271837255]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"a521710f-7489-49b3-9940-f5a8c77dd12a\", \"task_task_for\": \"a521710f-7489-49b3-9940-f5a8c77dd12a\", \"structure_code\": \"a521710f-7489-49b3-9940-f5a8c77dd12a\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "29ec854b-d3d6-4525-8d81-efd320b11c53",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "geojson": "{\"id\": \"29ec854b-d3d6-4525-8d81-efd320b11c53\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3704025429893, 11.3373177776309]}, \"properties\": {\"goal_id\": \"RACD_register_families\", \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"443be936-264f-5341-8c54-d5417ece0195\", \"action_code\": \"RACD Register Family\", \"task_status\": \"Completed\", \"structure_id\": \"5394daff-9dc6-49cd-aff1-44b81f75f9c1\", \"task_task_for\": \"5394daff-9dc6-49cd-aff1-44b81f75f9c1\", \"structure_code\": \"5394daff-9dc6-49cd-aff1-44b81f75f9c1\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "8f2edec3-c93b-4b7f-88f1-d66f7cc3e141",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"8f2edec3-c93b-4b7f-88f1-d66f7cc3e141\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3700824831093, 11.3377244490671]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"task_task_for\": \"bd69002f-b61c-4586-a7f9-c932f1f32fdf\", \"structure_code\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "19a0cc77-e799-4155-8946-36fed8297de6",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"19a0cc77-e799-4155-8946-36fed8297de6\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.370196043184, 11.3373724175343]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"task_task_for\": \"307415bc-9d34-4bf5-9744-bb8953767849\", \"structure_code\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "5e5f2010-2d01-4854-b3f7-372b89a8edac",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"5e5f2010-2d01-4854-b3f7-372b89a8edac\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3653357891433, 11.3413718191433]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"task_task_for\": \"f94ae136-c41a-4aa9-9276-8283682a48f7\", \"structure_code\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "f8e21fae-9b78-4605-973a-d2e3add9f550",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"f8e21fae-9b78-4605-973a-d2e3add9f550\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3672180571793, 11.3393967645973]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"cee25005-98bc-4a99-b3f1-d4bd98fd0a6f\", \"task_task_for\": \"01550189-0159-4356-80e6-53bbad2a7fa7\", \"structure_code\": \"cee25005-98bc-4a99-b3f1-d4bd98fd0a6f\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "dc5d501b-88ee-401e-81ab-eeba8de99535",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"dc5d501b-88ee-401e-81ab-eeba8de99535\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.370196043184, 11.3373724175343]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"task_task_for\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"structure_code\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "d597ef08-f6a6-4121-a6b2-922a2d4ab4d9",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "geojson": "{\"id\": \"d597ef08-f6a6-4121-a6b2-922a2d4ab4d9\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3640645077202, 11.3426456428011]}, \"properties\": {\"goal_id\": \"RACD_register_families\", \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"443be936-264f-5341-8c54-d5417ece0195\", \"action_code\": \"RACD Register Family\", \"task_status\": \"Completed\", \"structure_id\": \"94de4f8c-9879-48bd-91af-cc3d18911f3a\", \"task_task_for\": \"94de4f8c-9879-48bd-91af-cc3d18911f3a\", \"structure_code\": \"94de4f8c-9879-48bd-91af-cc3d18911f3a\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "6bd6a4d5-4921-4f6f-8f92-4c4a4235dce1",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"6bd6a4d5-4921-4f6f-8f92-4c4a4235dce1\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.37037968, 11.33732299]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"task_task_for\": \"818d348a-825b-43c5-8604-d5714f9d0348\", \"structure_code\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "3e2873fe-21ae-4140-a6ea-55bcd4fccdf8",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"3e2873fe-21ae-4140-a6ea-55bcd4fccdf8\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.37037968, 11.33732299]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"task_task_for\": \"fd770970-5220-4a33-84f8-5683293db2a0\", \"structure_code\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "9f910aaa-0dbb-40ab-b18e-51466256b5ef",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "geojson": "{\"id\": \"9f910aaa-0dbb-40ab-b18e-51466256b5ef\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3793616055056, 11.3303485282572]}, \"properties\": {\"goal_id\": \"RACD_register_families\", \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"443be936-264f-5341-8c54-d5417ece0195\", \"action_code\": \"RACD Register Family\", \"task_status\": \"Completed\", \"structure_id\": \"7b750f87-1e61-404e-b887-05dc9bd43a97\", \"task_task_for\": \"7b750f87-1e61-404e-b887-05dc9bd43a97\", \"structure_code\": \"7b750f87-1e61-404e-b887-05dc9bd43a97\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "6269b883-1740-4e31-bb95-4377690f0ff2",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"6269b883-1740-4e31-bb95-4377690f0ff2\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3613872552656, 11.3442277837186]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"676134b5-3975-4424-b1f2-a54da772286c\", \"task_task_for\": \"2b79d5d1-6144-4341-ad96-4a4b9f6eb672\", \"structure_code\": \"676134b5-3975-4424-b1f2-a54da772286c\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "713829a1-8c9a-40bb-af08-4484ed755081",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"713829a1-8c9a-40bb-af08-4484ed755081\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3623660921828, 11.343982643228]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"task_task_for\": \"39c8248c-b5d3-4b6f-a1bb-0068070ecd91\", \"structure_code\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "2ce653be-4ce3-491d-8fb6-c04a9475bcf0",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"2ce653be-4ce3-491d-8fb6-c04a9475bcf0\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3623660921828, 11.343982643228]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"task_task_for\": \"3046b2cf-f8a1-45ec-a58a-dd4dc6ddd786\", \"structure_code\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "10fc9495-2065-41c3-a2a5-fa3c9d07ceb3",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"10fc9495-2065-41c3-a2a5-fa3c9d07ceb3\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3623660921828, 11.343982643228]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"task_task_for\": \"aed22b13-b56e-43ab-bfa6-8e037fc8e7b3\", \"structure_code\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "9e37a417-3d33-4fda-9076-9f1c04b62c8c",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"9e37a417-3d33-4fda-9076-9f1c04b62c8c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3653357891433, 11.3413718191433]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"task_task_for\": \"cc5afac4-ae14-484e-a264-5b833de1f2c1\", \"structure_code\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "74de0d5f-9b83-49e5-816e-009aeec59b6e",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"74de0d5f-9b83-49e5-816e-009aeec59b6e\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.37037968, 11.33732299]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"task_task_for\": \"0e63dbca-6875-4462-8d1d-56826c81244c\", \"structure_code\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "a046f2a4-c210-474b-b4f8-321d2b46d834",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"a046f2a4-c210-474b-b4f8-321d2b46d834\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.370196043184, 11.3373724175343]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"task_task_for\": \"6d9982cd-50cf-4679-88b6-beef3a37e809\", \"structure_code\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "c865c49c-7db8-4ca8-99b8-f36ba0ddf290",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"c865c49c-7db8-4ca8-99b8-f36ba0ddf290\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3793616055056, 11.3303485282572]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"7b750f87-1e61-404e-b887-05dc9bd43a97\", \"task_task_for\": \"0f5ef793-3aa3-4760-b5f1-84262c9c79ba\", \"structure_code\": \"7b750f87-1e61-404e-b887-05dc9bd43a97\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "2e9cb6f3-4b28-4b19-b6c1-1271b37d5893",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"2e9cb6f3-4b28-4b19-b6c1-1271b37d5893\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.370196043184, 11.3373724175343]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"task_task_for\": \"95dd71c4-49a6-4726-bf7d-6665491206b3\", \"structure_code\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "b0526c45-a63a-46a3-b492-ff2137656896",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"b0526c45-a63a-46a3-b492-ff2137656896\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3704025429893, 11.3373177776309]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"5394daff-9dc6-49cd-aff1-44b81f75f9c1\", \"task_task_for\": \"0ff99e01-83ee-4dc9-a180-bfeae84ce71c\", \"structure_code\": \"5394daff-9dc6-49cd-aff1-44b81f75f9c1\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "f421ebf0-cec3-4ea5-b04a-f6fbc4d06272",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"f421ebf0-cec3-4ea5-b04a-f6fbc4d06272\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3793616055056, 11.3303485282572]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"7b750f87-1e61-404e-b887-05dc9bd43a97\", \"task_task_for\": \"a285a7ed-fdeb-41f3-9c09-2517f5c6ebdb\", \"structure_code\": \"7b750f87-1e61-404e-b887-05dc9bd43a97\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "b3978f75-6957-4110-ac8a-69446691d114",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"b3978f75-6957-4110-ac8a-69446691d114\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3640645077202, 11.3426456428011]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"94de4f8c-9879-48bd-91af-cc3d18911f3a\", \"task_task_for\": \"a1023873-4ead-4cb1-912a-47b11300588d\", \"structure_code\": \"94de4f8c-9879-48bd-91af-cc3d18911f3a\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "f1865490-7b79-4492-b7bc-aa5f29f283a6",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"f1865490-7b79-4492-b7bc-aa5f29f283a6\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3653357891433, 11.3413718191433]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"task_task_for\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"structure_code\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "b2d40119-ea78-4639-886b-84f7a03cd383",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "geojson": "{\"id\": \"b2d40119-ea78-4639-886b-84f7a03cd383\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3698199747026, 11.3377812033853]}, \"properties\": {\"goal_id\": \"RACD_register_families\", \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"443be936-264f-5341-8c54-d5417ece0195\", \"action_code\": \"RACD Register Family\", \"task_status\": \"Completed\", \"structure_id\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"task_task_for\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"structure_code\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "f3b71018-1baf-4f5d-9b55-486ea4deea8a",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"f3b71018-1baf-4f5d-9b55-486ea4deea8a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3698199747026, 11.3377812033853]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"task_task_for\": \"2c16da74-7fd5-4030-b1e1-b8f23d065d01\", \"structure_code\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "64bb49fd-83ae-4496-9f5f-3bfc29fc1373",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"64bb49fd-83ae-4496-9f5f-3bfc29fc1373\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3704025429893, 11.3373177776309]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"5394daff-9dc6-49cd-aff1-44b81f75f9c1\", \"task_task_for\": \"5394daff-9dc6-49cd-aff1-44b81f75f9c1\", \"structure_code\": \"5394daff-9dc6-49cd-aff1-44b81f75f9c1\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "331d57f6-4c95-4625-980c-26586b22cfd3",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"331d57f6-4c95-4625-980c-26586b22cfd3\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.365339696274, 11.3407853364648]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"81bf5e54-9ad1-4ffa-93f4-a9b685e5a69e\", \"task_task_for\": \"317db9b4-16cd-4927-8d5f-d0069e9675ae\", \"structure_code\": \"81bf5e54-9ad1-4ffa-93f4-a9b685e5a69e\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "605ab85c-d4a9-4093-bb7b-7716f008fadc",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"605ab85c-d4a9-4093-bb7b-7716f008fadc\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3623660921828, 11.343982643228]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"task_task_for\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"structure_code\": \"c258af41-b386-44a4-b912-3e312da29ea4\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "301b1c8a-4ef0-4355-abec-70a0f8900869",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "geojson": "{\"id\": \"301b1c8a-4ef0-4355-abec-70a0f8900869\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3672180571793, 11.3393967645973]}, \"properties\": {\"goal_id\": \"RACD_register_families\", \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"443be936-264f-5341-8c54-d5417ece0195\", \"action_code\": \"RACD Register Family\", \"task_status\": \"Completed\", \"structure_id\": \"cee25005-98bc-4a99-b3f1-d4bd98fd0a6f\", \"task_task_for\": \"cee25005-98bc-4a99-b3f1-d4bd98fd0a6f\", \"structure_code\": \"cee25005-98bc-4a99-b3f1-d4bd98fd0a6f\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "39e1fadf-100a-4da2-b71d-f2222f19e5b7",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"39e1fadf-100a-4da2-b71d-f2222f19e5b7\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3672180571793, 11.3393967645973]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"cee25005-98bc-4a99-b3f1-d4bd98fd0a6f\", \"task_task_for\": \"cee25005-98bc-4a99-b3f1-d4bd98fd0a6f\", \"structure_code\": \"cee25005-98bc-4a99-b3f1-d4bd98fd0a6f\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "1261fe84-b7b2-4777-b1c1-1d460a6c0eef",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"1261fe84-b7b2-4777-b1c1-1d460a6c0eef\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3653357891433, 11.3413718191433]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"task_task_for\": \"bb77de84-c7b7-491b-988b-a44ed0caa8c8\", \"structure_code\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "b268f26b-47ad-4595-a2fd-20ecabc4b653",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"b268f26b-47ad-4595-a2fd-20ecabc4b653\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.370196043184, 11.3373724175343]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"task_task_for\": \"a01b9060-4c45-4654-b9e9-4e1cb75c19f1\", \"structure_code\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "7f3c4a5c-df1b-4097-8c89-0641af2479a0",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"7f3c4a5c-df1b-4097-8c89-0641af2479a0\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3700824831093, 11.3377244490671]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"task_task_for\": \"71d9a592-c0c7-49cd-8e52-9741b75b395a\", \"structure_code\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "910332b3-8299-4cb0-bbe3-0327b25dcadf",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"910332b3-8299-4cb0-bbe3-0327b25dcadf\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3672180571793, 11.3393967645973]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"cee25005-98bc-4a99-b3f1-d4bd98fd0a6f\", \"task_task_for\": \"9a087879-48a9-40e0-b625-2ef98fa4325a\", \"structure_code\": \"cee25005-98bc-4a99-b3f1-d4bd98fd0a6f\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "d5d51f16-62bf-4ed0-8ba4-d2c40a8e5995",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"d5d51f16-62bf-4ed0-8ba4-d2c40a8e5995\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3704025429893, 11.3373177776309]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"5394daff-9dc6-49cd-aff1-44b81f75f9c1\", \"task_task_for\": \"be5c54a5-ab0b-42ef-bc67-e6a3705c2f3d\", \"structure_code\": \"5394daff-9dc6-49cd-aff1-44b81f75f9c1\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "ee219a5f-49b3-4797-ab9a-4198b318598d",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"ee219a5f-49b3-4797-ab9a-4198b318598d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3700824831093, 11.3377244490671]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"task_task_for\": \"215833ad-c3f6-4e88-8c48-99a9c0d8476e\", \"structure_code\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "28816ba0-9153-449b-864b-d7e9568e14ed",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"28816ba0-9153-449b-864b-d7e9568e14ed\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3653357891433, 11.3413718191433]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"task_task_for\": \"0eb075dd-1e5e-4419-956b-c4594d47940f\", \"structure_code\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "f6e959eb-f8f8-434e-b0ac-65c69c3f1c1c",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"f6e959eb-f8f8-434e-b0ac-65c69c3f1c1c\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3698199747026, 11.3377812033853]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"task_task_for\": \"f3b47af6-3c4f-466a-956b-78d08d7b77be\", \"structure_code\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "21ab93da-d2d9-4616-8d6d-25db294726b4",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"21ab93da-d2d9-4616-8d6d-25db294726b4\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3700824831093, 11.3377244490671]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"task_task_for\": \"25995d67-9b40-4e45-b3db-791a9577a426\", \"structure_code\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "e60e1f6f-8a04-4f59-a943-25e940657405",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"e60e1f6f-8a04-4f59-a943-25e940657405\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3653357891433, 11.3413718191433]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"task_task_for\": \"2b7b6365-408e-492c-89f1-5dafa19b3363\", \"structure_code\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "c8a10313-3d0b-46ea-b4c3-6a2859f86627",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"c8a10313-3d0b-46ea-b4c3-6a2859f86627\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.37037968, 11.33732299]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"task_task_for\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"structure_code\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "87e92f46-6ea0-4046-8b6e-8a9c0cdbbd60",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"87e92f46-6ea0-4046-8b6e-8a9c0cdbbd60\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3698199747026, 11.3377812033853]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"task_task_for\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"structure_code\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "42e70ac2-6052-4004-b361-33bae05d107a",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"42e70ac2-6052-4004-b361-33bae05d107a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3698199747026, 11.3377812033853]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"task_task_for\": \"5e66c1cd-32a0-4635-89d1-a43a85a2a179\", \"structure_code\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "5cb04224-e965-4224-adb8-fd896f9b61bb",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"5cb04224-e965-4224-adb8-fd896f9b61bb\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3653357891433, 11.3413718191433]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"task_task_for\": \"3449e0f9-3d33-4b4b-b67a-0b33dbcf3227\", \"structure_code\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "4da89425-6ee0-4e06-a199-c50d1258a47f",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"4da89425-6ee0-4e06-a199-c50d1258a47f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3613872552656, 11.3442277837186]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"676134b5-3975-4424-b1f2-a54da772286c\", \"task_task_for\": \"9ac41b00-a8c0-4f8c-acc9-ccb626283fb9\", \"structure_code\": \"676134b5-3975-4424-b1f2-a54da772286c\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "9a938458-fe31-4f37-b0c9-42ada151736a",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "geojson": "{\"id\": \"9a938458-fe31-4f37-b0c9-42ada151736a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3700824831093, 11.3377244490671]}, \"properties\": {\"goal_id\": \"RACD_register_families\", \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"443be936-264f-5341-8c54-d5417ece0195\", \"action_code\": \"RACD Register Family\", \"task_status\": \"Completed\", \"structure_id\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"task_task_for\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"structure_code\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "36074cb2-4e58-4922-9ee0-025cefc16817",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "geojson": "{\"id\": \"36074cb2-4e58-4922-9ee0-025cefc16817\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.37037968, 11.33732299]}, \"properties\": {\"goal_id\": \"RACD_register_families\", \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"443be936-264f-5341-8c54-d5417ece0195\", \"action_code\": \"RACD Register Family\", \"task_status\": \"Completed\", \"structure_id\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"task_task_for\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"structure_code\": \"6d8fb679-3f05-41fb-b239-78d4cbd5f55c\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "f856dcd9-dfca-4df3-b8b1-94b0ebe44071",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"f856dcd9-dfca-4df3-b8b1-94b0ebe44071\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3700824831093, 11.3377244490671]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"task_task_for\": \"950f9e4a-ceda-4201-9fd9-138b1020b349\", \"structure_code\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "1cbd8adc-2ca5-4303-b012-7b5c6251ea11",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"1cbd8adc-2ca5-4303-b012-7b5c6251ea11\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.365339696274, 11.3407853364648]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"81bf5e54-9ad1-4ffa-93f4-a9b685e5a69e\", \"task_task_for\": \"535baa79-ef36-4d81-af9d-852a3e3f3b91\", \"structure_code\": \"81bf5e54-9ad1-4ffa-93f4-a9b685e5a69e\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "ef533eed-b9c4-4b76-89ae-b4640b20c897",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"ef533eed-b9c4-4b76-89ae-b4640b20c897\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3698199747026, 11.3377812033853]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"task_task_for\": \"1d131688-cc14-4068-9bcf-c3c9d46ecd9c\", \"structure_code\": \"578f8c2a-02d9-4dbe-8f69-253ffad5b829\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "b7c29e60-63bd-4170-8f0e-48a10408671a",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"b7c29e60-63bd-4170-8f0e-48a10408671a\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.370196043184, 11.3373724175343]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"task_task_for\": \"27758d4f-8a87-48fa-98bb-6e9d27485eef\", \"structure_code\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "1448dae9-1dd4-493a-a518-b8140f3fae1d",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"1448dae9-1dd4-493a-a518-b8140f3fae1d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3704025429893, 11.3373177776309]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"5394daff-9dc6-49cd-aff1-44b81f75f9c1\", \"task_task_for\": \"f7c6f36e-7383-4fef-90fb-ae3a3b87250f\", \"structure_code\": \"5394daff-9dc6-49cd-aff1-44b81f75f9c1\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "a3e25c88-c893-4f18-b845-56a115996037",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"a3e25c88-c893-4f18-b845-56a115996037\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3700824831093, 11.3377244490671]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"task_task_for\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"structure_code\": \"901d097b-b34b-4a48-9fbd-2a9f3cc7d7e3\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "0a215d21-c1c0-4f36-bd70-11f9e7ac09ae",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "geojson": "{\"id\": \"0a215d21-c1c0-4f36-bd70-11f9e7ac09ae\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.370196043184, 11.3373724175343]}, \"properties\": {\"goal_id\": \"RACD_register_families\", \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"443be936-264f-5341-8c54-d5417ece0195\", \"action_code\": \"RACD Register Family\", \"task_status\": \"Completed\", \"structure_id\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"task_task_for\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"structure_code\": \"77ca8d74-88a6-4625-9721-a09d292e4920\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "e20a086f-a418-4348-ae01-cb0d914c5f05",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"e20a086f-a418-4348-ae01-cb0d914c5f05\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3613872552656, 11.3442277837186]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"676134b5-3975-4424-b1f2-a54da772286c\", \"task_task_for\": \"676134b5-3975-4424-b1f2-a54da772286c\", \"structure_code\": \"676134b5-3975-4424-b1f2-a54da772286c\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "fb1a4c85-9513-4ed0-a7ee-7e458fff8724",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "geojson": "{\"id\": \"fb1a4c85-9513-4ed0-a7ee-7e458fff8724\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3640400767999, 11.34271837255]}, \"properties\": {\"goal_id\": \"RACD_register_families\", \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"443be936-264f-5341-8c54-d5417ece0195\", \"action_code\": \"RACD Register Family\", \"task_status\": \"Completed\", \"structure_id\": \"a521710f-7489-49b3-9940-f5a8c77dd12a\", \"task_task_for\": \"a521710f-7489-49b3-9940-f5a8c77dd12a\", \"structure_code\": \"a521710f-7489-49b3-9940-f5a8c77dd12a\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "07bfee9e-812e-4834-8d42-51ecf1d4841d",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": null,
+        "geojson": "{\"id\": \"07bfee9e-812e-4834-8d42-51ecf1d4841d\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.365339696274, 11.3407853364648]}, \"properties\": {\"goal_id\": null, \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"\", \"action_code\": null, \"task_status\": \"Ready\", \"structure_id\": \"81bf5e54-9ad1-4ffa-93f4-a9b685e5a69e\", \"task_task_for\": \"672be8cf-681e-47d0-b8eb-2ec45ffaf0e5\", \"structure_code\": \"81bf5e54-9ad1-4ffa-93f4-a9b685e5a69e\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Not Visited\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      },
+      {
+        "task_identifier": "14cf1b78-b133-4680-8d90-8e65a661c65f",
+        "plan_id": "90bf00c6-2ab6-5f67-9cad-4f942c87d082",
+        "jurisdiction_id": "313056f2-2a21-454e-9f88-63207acb00d4",
+        "goal_id": "RACD_register_families",
+        "geojson": "{\"id\": \"14cf1b78-b133-4680-8d90-8e65a661c65f\", \"type\": \"Feature\", \"geometry\": {\"type\": \"Point\", \"coordinates\": [99.3653357891433, 11.3413718191433]}, \"properties\": {\"goal_id\": \"RACD_register_families\", \"plan_id\": \"90bf00c6-2ab6-5f67-9cad-4f942c87d082\", \"task_focus\": \"443be936-264f-5341-8c54-d5417ece0195\", \"action_code\": \"RACD Register Family\", \"task_status\": \"Completed\", \"structure_id\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"task_task_for\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"structure_code\": \"854a3eb0-b54c-475a-bdf3-1978d49e2f52\", \"structure_name\": \"\", \"structure_type\": \"Feature\", \"jurisdiction_id\": \"313056f2-2a21-454e-9f88-63207acb00d4\", \"jurisdiction_name\": \"\\u0e2b\\u0e38\\u0e1a\\u0e40\\u0e02\\u0e32\\u0e04\\u0e25\\u0e2d\\u0e07\\u0e40\\u0e1e\\u0e25\\u0e34\\u0e19 (7704030901)\", \"task_business_status\": \"Complete\", \"jurisdiction_parent_id\": \"a713ec5c-6f5f-4539-aeca-1998efa1d58d\", \"task_execution_end_date\": \"2020-11-05\", \"task_execution_start_date\": \"2020-11-04\"}}"
+      }
+    ],
+    "columns": ["task_identifier", "plan_id", "jurisdiction_id", "goal_id", "geojson"]
+  }
+}

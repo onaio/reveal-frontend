@@ -37,7 +37,8 @@
       "targstruct",
       "perctvisareaseffect",
       "spraycovtarg",
-      "roomcov"
+      "roomcov",
+      "is_leaf_node"
     ],
     "order_by_cols": ["[\"jurisdiction_depth\", true]"],
     "adhoc_filters": [
@@ -95,6 +96,7 @@
         "targstruct": 101,
         "perctvisareaseffect": 0.5555555555555556,
         "spraycovtarg": 0.7125,
+        "is_leaf_node": false,
         "roomcov": 0.9030544488711819,
         "spraysuccess": 0.74,
         "foundcoverage": 0.5,
@@ -121,6 +123,7 @@
         "targstruct": 10,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -147,6 +150,7 @@
         "targstruct": 0,
         "perctvisareaseffect": 0,
         "spraycovtarg": 0,
+        "is_leaf_node": false,
         "roomcov": 0
       },
       {
@@ -170,6 +174,7 @@
         "targstruct": 21,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -193,6 +198,7 @@
         "targstruct": 10,
         "perctvisareaseffect": 3.0,
         "spraycovtarg": 0.6111111111111112,
+        "is_leaf_node": false,
         "roomcov": 0.8787878787878788
       },
       {
@@ -216,6 +222,7 @@
         "targstruct": 25,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -239,6 +246,7 @@
         "targstruct": 30,
         "perctvisareaseffect": 0.4,
         "spraycovtarg": 0.740909090909091,
+        "is_leaf_node": false,
         "roomcov": 0.93646408839779
       },
       {
@@ -262,6 +270,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.6942148760330579,
+        "is_leaf_node": false,
         "roomcov": 0.8718291054739653
       },
       {
@@ -285,6 +294,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -308,6 +318,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -331,6 +342,7 @@
         "targstruct": 4,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -354,6 +366,7 @@
         "targstruct": 3,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -377,6 +390,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -400,6 +414,7 @@
         "targstruct": 15,
         "perctvisareaseffect": 0.5,
         "spraycovtarg": 0.782608695652174,
+        "is_leaf_node": false,
         "roomcov": 0.9451476793248945
       },
       {
@@ -423,6 +438,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -446,6 +462,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -469,6 +486,7 @@
         "targstruct": 4,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -492,6 +510,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.6942148760330579,
+        "is_leaf_node": false,
         "roomcov": 0.8718291054739653
       },
       {
@@ -515,6 +534,7 @@
         "targstruct": 3,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -538,6 +558,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -561,6 +582,7 @@
         "targstruct": 10,
         "perctvisareaseffect": 3.0,
         "spraycovtarg": 0.6111111111111112,
+        "is_leaf_node": false,
         "roomcov": 0.8787878787878788,
         "visitedareas": 12
       },
@@ -585,6 +607,7 @@
         "targstruct": 3,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -608,6 +631,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -631,6 +655,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 1.0,
         "spraycovtarg": 0.7105263157894737,
+        "is_leaf_node": false,
         "roomcov": 0.9764705882352941
       },
       {
@@ -654,6 +679,7 @@
         "targstruct": 9,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -677,6 +703,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.7333333333333333,
+        "is_leaf_node": false,
         "roomcov": 0.8836206896551724
       },
       {
@@ -700,6 +727,7 @@
         "targstruct": 7,
         "perctvisareaseffect": 2.0,
         "spraycovtarg": 0.5882352941176471,
+        "is_leaf_node": false,
         "roomcov": 0.8709677419354839,
         "visitedareas": 33,
         "foundcoverage": 0.8,
@@ -726,6 +754,7 @@
         "targstruct": 4,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 1.0,
+        "is_leaf_node": false,
         "roomcov": 1.0
       },
       {
@@ -749,6 +778,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -772,6 +802,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -795,6 +826,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.7333333333333333,
+        "is_leaf_node": false,
         "roomcov": 0.8836206896551724
       },
       {
@@ -818,6 +850,7 @@
         "targstruct": 1,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -841,6 +874,7 @@
         "targstruct": 2,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -864,6 +898,7 @@
         "targstruct": 1,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -887,6 +922,7 @@
         "targstruct": 3,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -910,6 +946,7 @@
         "targstruct": 4,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -933,6 +970,7 @@
         "targstruct": 3,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.6942148760330579,
+        "is_leaf_node": false,
         "roomcov": 0.8718291054739653
       },
       {
@@ -956,6 +994,7 @@
         "targstruct": 3,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -979,6 +1018,7 @@
         "targstruct": 3,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1002,6 +1042,7 @@
         "targstruct": 1,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.6811594202898551,
+        "is_leaf_node": false,
         "roomcov": 0.9744680851063829
       },
       {
@@ -1025,6 +1066,7 @@
         "targstruct": 1,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1048,6 +1090,7 @@
         "targstruct": 4,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1071,6 +1114,7 @@
         "targstruct": 3,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1094,6 +1138,7 @@
         "targstruct": 3,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 1.0,
+        "is_leaf_node": false,
         "roomcov": 1.0
       },
       {
@@ -1117,6 +1162,7 @@
         "targstruct": 3,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1140,6 +1186,7 @@
         "targstruct": 1,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1163,6 +1210,7 @@
         "targstruct": 2,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1186,6 +1234,7 @@
         "targstruct": 2,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1209,6 +1258,7 @@
         "targstruct": 1,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1232,6 +1282,7 @@
         "targstruct": 4,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1255,6 +1306,7 @@
         "targstruct": 1,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1278,6 +1330,7 @@
         "targstruct": 5,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1301,6 +1354,7 @@
         "targstruct": 9,
         "perctvisareaseffect": 0.0,
         "spraycovtarg": 0.0,
+        "is_leaf_node": false,
         "roomcov": 0.0
       },
       {
@@ -1324,6 +1378,7 @@
         "targstruct": 15,
         "perctvisareaseffect": 0.5,
         "spraycovtarg": 0.782608695652174,
+        "is_leaf_node": false,
         "roomcov": 0.9451476793248945
       }
     ],

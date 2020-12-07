@@ -8,6 +8,7 @@ import configureMockStore from 'redux-mock-store';
 import { defaultProps as defaultPlanFormProps } from '../../../../../../components/forms/PlanForm';
 import { generatePlanDefinition } from '../../../../../../components/forms/PlanForm/helpers';
 import HeaderBreadcrumb from '../../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { FOCUS_AREA_HEADER } from '../../../../../../configs/lang';
 import store from '../../../../../../store';
 import {
   addPlanDefinition,
@@ -21,6 +22,12 @@ const fetch = require('jest-fetch-mock');
 const history = createBrowserHistory();
 const middlewares: any = [];
 const mockStore = configureMockStore(middlewares);
+
+/** place to mount the application/component to the JSDOM document during testing.
+ * https://github.com/reactstrap/reactstrap/issues/773#issuecomment-373451256
+ */
+const div = document.createElement('div');
+document.body.appendChild(div);
 
 jest.mock('../../../../../../configs/env');
 
@@ -42,7 +49,8 @@ describe('containers/pages/NewPlan', () => {
         <Router history={history}>
           <ConnectedBaseNewPlan />
         </Router>
-      </Provider>
+      </Provider>,
+      { attachTo: div }
     );
 
     // check that page title is displayed
@@ -51,7 +59,10 @@ describe('containers/pages/NewPlan', () => {
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...defaultPlanFormProps,
       addPlan: expect.any(Function),
+      allowMoreJurisdictions: true,
+      cascadingSelect: true,
       formHandler: expect.any(Function),
+      jurisdictionLabel: FOCUS_AREA_HEADER,
     });
 
     // check that there's a Row that nests a Col that nests a PlanForm
@@ -91,6 +102,23 @@ describe('containers/pages/NewPlan', () => {
       .simulate('change', { target: { name: 'interventionType', value: 'IRS' } });
     wrapper.update();
     expect(wrapper.find('JurisdictionDetails').length).toEqual(0);
+
+    // change to Dynamic-FI
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'Dynamic-FI' } });
+    wrapper.update();
+
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+
+    expect(wrapper.find('JurisdictionDetails').length).toEqual(1);
 
     wrapper.unmount();
   });

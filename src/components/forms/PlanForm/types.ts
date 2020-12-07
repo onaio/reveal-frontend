@@ -6,6 +6,8 @@ import {
   PlanActionCodes,
   PlanActivity,
   PlanActivityTitles,
+  PlanDefinition,
+  subjectCodableConceptType,
   taskGenerationStatuses,
   useContextCodes,
 } from '../../../configs/settings';
@@ -30,7 +32,7 @@ export type UseContextCodesType = typeof useContextCodes[number];
 export type PlanActionCodesType = typeof PlanActionCodes[number];
 
 /** Task generation status type */
-export type taskGenerationStatusType = typeof taskGenerationStatuses[number];
+export type taskGenerationStatusType = keyof typeof taskGenerationStatuses;
 
 /** Plan activity title type */
 export type PlanActivityTitlesType = typeof PlanActivityTitles[number];
@@ -51,6 +53,7 @@ export enum GoalUnit {
 export interface PlanActivityExpression {
   description: string;
   expression: string;
+  subjectCodableConceptText: subjectCodableConceptType;
 }
 
 /** Interface for Plan activity trigger */
@@ -100,6 +103,10 @@ export interface PlanFormFields {
   start: Date;
   status: PlanStatus;
   taskGenerationStatus: taskGenerationStatusType;
+  teamAssignmentStatus?: string;
   title: string;
   version: string;
 }
+
+/** type of function to be called with payload before submission */
+export type BeforeSubmit = (payload: PlanDefinition) => boolean;

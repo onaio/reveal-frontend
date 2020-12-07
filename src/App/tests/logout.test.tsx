@@ -2,8 +2,10 @@ import * as sessionDux from '@onaio/session-reducer';
 import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
+import * as utils from '../../helpers/errors';
 import store from '../../store';
 import App from '../App';
 import { expressAPIResponse } from './fixtures';
@@ -25,11 +27,10 @@ describe('src/app.logout', () => {
       },
     };
 
-    const mockLogout = jest.fn(() => null);
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <App logoutComponent={mockLogout} />
+          <App />
         </Router>
       </Provider>
     );
@@ -42,13 +43,74 @@ describe('src/app.logout', () => {
 
     // simulate logout
     history.push('/logout');
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    expect(fetch.mock.calls).toEqual([
+      ['http://localhost:3000/oauth/state'],
+      [
+        'https://opensrp/logout',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer hunter2',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+    ]);
+
+    expect(hrefMock.mock.calls).toEqual([
+      ['https://keycloak/logout?redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Flogout'],
+    ]);
+  });
+
+  it('failed logout', async () => {
+    const err = new Error('Could not log out');
+    fetch.mockReject(err);
+
+    const errorSpy = jest.spyOn(utils, 'displayError');
+    delete window.location;
+    const hrefMock = jest.fn();
+    (window.location as any) = {
+      set href(url: string) {
+        hrefMock(url);
+      },
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
     wrapper.update();
 
-    // unfortunately we don't have a definitive way to test that the user session was invalidated;
-    // since the functionality that does this is in the express server and is thus out of the
-    // react-app's scope.
-    // ensure we are calling the logout component which handles opensrp logout and redirects to backend
-    // PS: only after redirecting to the express server and back is the user unauthenticated.
-    expect(mockLogout).toBeCalled();
+    // At this point we have an authenticated user
+    const loggedIn = sessionDux.isAuthenticated(store.getState());
+    expect(loggedIn).toBeTruthy();
+
+    // simulate logout
+    history.push('/logout');
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    // expect(fetch.mock.calls).toEqual();
+
+    // keycloack url was not set
+    expect(hrefMock).not.toHaveBeenCalled();
+
+    // TODO - determine why this are 3 calls instead of 1
+    expect(errorSpy.mock.calls).toEqual([[err], [err], [err]]);
+
+    // current url
+    expect(wrapper.find('Router').props().history.location.pathname).toEqual('/');
   });
 });

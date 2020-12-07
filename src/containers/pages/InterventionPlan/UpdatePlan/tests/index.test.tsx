@@ -1,24 +1,39 @@
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
+import { cloneDeep } from 'lodash';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedUpdatePlan, { UpdatePlan } from '..';
+import { PlanFormProps } from '../../../../../components/forms/PlanForm';
 import {
   generatePlanDefinition,
   getPlanFormValues,
 } from '../../../../../components/forms/PlanForm/helpers';
+import {
+  DynamicFIPlan,
+  fiReasonTestPlan,
+} from '../../../../../components/forms/PlanForm/tests/fixtures';
+import { COULD_NOT_LOAD_PLAN } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { PLAN_UPDATE_URL } from '../../../../../constants';
 import store from '../../../../../store';
+import planDefinitionReducer, {
+  reducerName as planDefinitionReducerName,
+} from '../../../../../store/ducks/opensrp/PlanDefinition';
 import { removePlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { planDefinition1, planDefinition2, updatePlanFormProps } from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
+
+/** register the plan definitions reducer */
+reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
 const history = createBrowserHistory();
 
@@ -76,8 +91,71 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...updatePlanFormProps,
       addPlan: expect.any(Function),
+      beforeSubmit: expect.any(Function),
       renderLocationNames: expect.any(Function),
     });
+    wrapper.unmount();
+  });
+
+  it('has the correct value of fiReason if plan is Reactive', () => {
+    let plan = cloneDeep(fixtures.plans[0]);
+    plan = {
+      ...plan,
+      useContext: [
+        { code: 'interventionType', valueCodableConcept: 'FI' },
+        { code: 'fiStatus', valueCodableConcept: 'A1' },
+        { code: 'fiReason', valueCodableConcept: 'Case Triggered' },
+        { code: 'taskGenerationStatus', valueCodableConcept: 'False' },
+      ],
+    };
+    const props = { ...getProps(), plan };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+    // see what fiReason initialValue is passed.
+    expect((wrapper.find('PlanForm').props() as PlanFormProps).initialValues.fiReason).toEqual(
+      'Case Triggered'
+    );
+  });
+
+  it('deduces the fiReason field value correctly', async () => {
+    fetch.mockResponseOnce(JSON.stringify(fiReasonTestPlan));
+    const mock: any = jest.fn();
+    const thisPlansId = fiReasonTestPlan.identifier;
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: thisPlansId },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${thisPlansId}`,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedUpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    // see what fiReason initialValue is passed. -> this means a plan without an Fi reason
+    // will be set to routine
+    expect((wrapper.find('PlanForm').props() as PlanFormProps).initialValues.fiReason).toEqual(
+      'Routine'
+    );
+    expect(toJson(wrapper.find('#fiReason select'))).toMatchSnapshot('fiReason field');
+
     wrapper.unmount();
   });
 
@@ -226,7 +304,8 @@ describe('components/InterventionPlan/UpdatePlan', () => {
       planDefinitionsById: {},
     });
 
-    wrapper.find('form').simulate('submit');
+    expect(wrapper.find('Form').length).toMatchInlineSnapshot(`1`);
+    wrapper.find('Form').simulate('submit');
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
@@ -245,6 +324,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
 
   it('Updated plan is NOT added to store if call to API is NOT 200', async () => {
     const plan = fixtures.plans[1];
+    fetch.once(JSON.stringify(plan));
     fetch.mockRejectOnce(() => Promise.reject('API is down'));
 
     const props = {
@@ -278,7 +358,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
       planDefinitionsById: {},
     });
 
-    wrapper.find('form').simulate('submit');
+    wrapper.find('Form').simulate('submit');
 
     await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
@@ -286,5 +366,117 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     expect(store.getState().PlanDefinition).toEqual({
       planDefinitionsById: {},
     });
+  });
+
+  it('shows error when plan was not found', async () => {
+    fetch.mockResponseOnce(JSON.stringify([]));
+    const mock: any = jest.fn();
+    const thisPlansId = fiReasonTestPlan.identifier;
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: thisPlansId },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${thisPlansId}`,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedUpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://reveal-stage.smartregister.org/opensrp/rest/plans/311d4728-8e88-575d-8189-e88d9a4ae3b6',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+    ]);
+    // shows error message
+    expect(wrapper.text().includes(COULD_NOT_LOAD_PLAN)).toBeTruthy();
+  });
+
+  it('edit plans created with old templates', async () => {
+    // create divs for condition and triggers toggles - should equal number of activities
+    [0, 1, 2, 3, 4, 5].forEach(id => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    // mock window confirmation dialogue and simulate true click
+    const confirmSpy = jest.spyOn(window, 'confirm');
+    confirmSpy.mockImplementation(jest.fn(() => true));
+
+    // create a mismatch of dynamicFI plan to edit and the default template plan
+    const planCopy = { ...DynamicFIPlan };
+    const newCondition = {
+      expression: {
+        description: 'Register structure event submitted for a residential structure',
+        expression:
+          "$this.is(FHIR.Location)  or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Residential Structure')",
+      },
+      kind: 'applicability',
+    };
+    planCopy.action[0].condition = [...planCopy.action[0].condition, newCondition];
+
+    // store.dispatch(addPlanDefinition(planCopy as PlanDefinition));
+    fetch.mockResponse(JSON.stringify(planCopy));
+
+    const mock: any = jest.fn();
+    const thisPlansId = planCopy.identifier;
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: thisPlansId },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${thisPlansId}`,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedUpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: 'retired' } });
+
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+
+    expect(confirmSpy).toBeCalledTimes(1);
+    expect(confirmSpy).toBeCalledWith('You are about to retire a plan, click ok to proceed');
+
+    expect(fetch.mock.calls[1][0]).toEqual(
+      'https://reveal-stage.smartregister.org/opensrp/rest/plans'
+    );
+    expect(fetch.mock.calls[1][1].method).toEqual('PUT');
   });
 });

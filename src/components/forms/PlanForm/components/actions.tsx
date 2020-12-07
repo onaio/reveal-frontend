@@ -18,13 +18,14 @@ export const getConditionAndTriggers = (
   const triggers: Dictionary = {};
   for (let index = 0; index < planActivities.length; index++) {
     const element = planActivities[index];
+
     if (element.condition) {
       conditions[element.actionCode] = element.condition.map((item, mapIndex) => {
         return (
           <FormGroup
             className="condition-group"
             row={true}
-            key={`${element.actionCode}-${index}-condition-${mapIndex}`}
+            key={`${element.actionCode}-condition-${index}-${mapIndex}`}
           >
             {item.expression && (
               <React.Fragment>
@@ -56,6 +57,19 @@ export const getConditionAndTriggers = (
                 />
               </React.Fragment>
             )}
+            {item.subjectCodableConceptText && (
+              <React.Fragment>
+                <Field
+                  className="form-control col-sm-10"
+                  required={false}
+                  component="textarea"
+                  name={`activities[${index}].condition[${mapIndex}].subjectCodableConceptText`}
+                  id={`activities[${index}].condition[${mapIndex}].subjectCodableConceptText`}
+                  disabled={true}
+                  hidden={true}
+                />
+              </React.Fragment>
+            )}
           </FormGroup>
         );
       });
@@ -66,7 +80,7 @@ export const getConditionAndTriggers = (
           <FormGroup
             className="trigger-group"
             row={true}
-            key={`${element.actionCode}-${index}-trigger-${mapIndex}`}
+            key={`${element.actionCode}-trigger-${index}-${mapIndex}`}
           >
             {item.name && (
               <React.Fragment>

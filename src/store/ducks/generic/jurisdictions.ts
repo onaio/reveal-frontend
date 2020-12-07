@@ -9,6 +9,7 @@ export const reducerName = 'GenericJurisdictions';
 /** GenericJurisdiction interface */
 export interface GenericJurisdiction {
   id: string;
+  is_leaf_node: boolean;
   is_virtual_jurisdiction?: boolean;
   jurisdiction_depth: number;
   jurisdiction_id: string;
@@ -117,31 +118,33 @@ export const fetchGenericJurisdictions = (
   objList: GenericJurisdiction[] = []
 ): FetchGenericJurisdictionsAction => ({
   objects: keyBy(
-    objList.map(
-      (obj: GenericJurisdiction): GenericJurisdiction => {
-        /** ensure geojson is parsed */
-        if ((obj as any).geojson && typeof (obj as any).geojson === 'string') {
-          (obj as any).geojson = JSON.parse((obj as any).geojson);
+    objList
+      .filter(jur => jur.jurisdiction_id && jur.jurisdiction_name_path && jur.jurisdiction_path)
+      .map(
+        (obj: GenericJurisdiction): GenericJurisdiction => {
+          /** ensure geojson is parsed */
+          if ((obj as any).geojson && typeof (obj as any).geojson === 'string') {
+            (obj as any).geojson = JSON.parse((obj as any).geojson);
+          }
+          /** ensure geometry is parsed */
+          if (
+            (obj as any).geojson &&
+            (obj as any).geojson.geometry &&
+            typeof (obj as any).geojson.geometry === 'string'
+          ) {
+            (obj as any).geojson.geometry = JSON.parse((obj as any).geojson.geometry);
+          }
+          /** ensure jurisdiction_name_path is parsed */
+          if (typeof obj.jurisdiction_name_path === 'string') {
+            obj.jurisdiction_name_path = JSON.parse(obj.jurisdiction_name_path);
+          }
+          /** ensure jurisdiction_path is parsed */
+          if (typeof obj.jurisdiction_path === 'string') {
+            obj.jurisdiction_path = JSON.parse(obj.jurisdiction_path);
+          }
+          return obj;
         }
-        /** ensure geometry is parsed */
-        if (
-          (obj as any).geojson &&
-          (obj as any).geojson.geometry &&
-          typeof (obj as any).geojson.geometry === 'string'
-        ) {
-          (obj as any).geojson.geometry = JSON.parse((obj as any).geojson.geometry);
-        }
-        /** ensure jurisdiction_name_path is parsed */
-        if (typeof obj.jurisdiction_name_path === 'string') {
-          obj.jurisdiction_name_path = JSON.parse(obj.jurisdiction_name_path);
-        }
-        /** ensure jurisdiction_path is parsed */
-        if (typeof obj.jurisdiction_path === 'string') {
-          obj.jurisdiction_path = JSON.parse(obj.jurisdiction_path);
-        }
-        return obj;
-      }
-    ),
+      ),
     'id'
   ),
   reducerKey,

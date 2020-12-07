@@ -9,9 +9,10 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import { AssignmentMapWrapper, ConnectedAssignmentMapWrapper } from '..';
 import { getJurisdictions } from '../../../../components/TreeWalker/helpers';
-import { MAP_LOAD_ERROR } from '../../../../configs/lang';
+import { JURISDICTION_NOT_FOUND, MAP_LOAD_ERROR } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { ASSIGN_PLAN_URL, MANUAL_ASSIGN_JURISDICTIONS_URL } from '../../../../constants';
+import * as errors from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 import hierachyReducer, {
@@ -79,6 +80,7 @@ describe('containers/pages/AssigmentMapWrapper', () => {
     );
   });
   it('works correctly with store', async () => {
+    const displayErrorSpy = jest.spyOn(errors, 'displayError');
     fetch.mockResponseOnce(JSON.stringify([fixtures.jurisdiction1]), { status: 200 });
     store.dispatch(fetchJurisdictions(fixtures.payload as any));
     const props = {
@@ -140,6 +142,9 @@ describe('containers/pages/AssigmentMapWrapper', () => {
       serviceClass: OpenSRPService,
     });
     expect(result).toEqual({ error: null, value: [fixtures.jurisdiction1] });
+
+    expect(displayErrorSpy).toHaveBeenCalledTimes(1);
+    expect(displayErrorSpy.mock.calls).toEqual([[new Error(JURISDICTION_NOT_FOUND)]]);
     wrapper.unmount();
   });
   it('test that jurisdictions are fetched correctly', async () => {

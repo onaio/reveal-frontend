@@ -22,6 +22,7 @@ reducerRegistry.register(SMCPlansReducerName, SMCPlansReducer);
 
 /** a list of plan statuses to be displayed */
 const allowedPlanStatusList = getPlanStatusToDisplay(HIDDEN_PLAN_STATUSES);
+// store.dispatch(fetchSMCPlans(testlans as any))
 
 /** Simple component that loads a preview list of SMC plans */
 const SMCPlansList = (props: GenericPlanListProps & RouteComponentProps) => {

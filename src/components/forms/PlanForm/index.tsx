@@ -7,6 +7,8 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import {
   Button,
+  Card,
+  CardBody,
   FormGroup,
   InputGroup,
   InputGroupAddon,
@@ -15,6 +17,7 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
+  UncontrolledCollapse,
 } from 'reactstrap';
 import { format } from 'util';
 import {
@@ -22,8 +25,9 @@ import {
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
   ENABLED_FI_REASONS,
-  ENABLED_PLAN_TYPES,
   MDA_POINT_FORM_INTERVENTION_TITLE,
+  PLAN_TYPES_ALLOWED_TO_CREATE,
+  PLAN_TYPES_WITH_MULTI_JURISDICTIONS,
 } from '../../../configs/env';
 import {
   ACTION,
@@ -32,6 +36,7 @@ import {
   ADD_ACTIVITY,
   ADD_CODED_ACTIVITY,
   AN_ERROR_OCCURRED,
+  AND,
   CASE_NUMBER,
   CONDITIONS_LABEL,
   DEFINITION_URI,
@@ -85,12 +90,13 @@ import DatePickerWrapper from '../../DatePickerWrapper';
 import JurisdictionSelect from '../JurisdictionSelect';
 import { getConditionAndTriggers } from './components/actions';
 import {
+  displayPlanTypeOnForm,
   doesFieldHaveErrors,
   generatePlanDefinition,
   getFormActivities,
   getGoalUnitFromActionCode,
   getNameTitle,
-  isPlanTypeEnabled,
+  isFIOrDynamicFI,
   onSubmitSuccess,
   planActivitiesMap,
   PlanSchema,
@@ -98,6 +104,7 @@ import {
 } from './helpers';
 import './style.css';
 import {
+  BeforeSubmit,
   FIReasonType,
   PlanActionCodesType,
   PlanActivityFormFields,
@@ -122,8 +129,8 @@ const initialJurisdictionValues: PlanJurisdictionFormFields = {
 };
 
 /** default intervention type displayed */
-const defaultInterventionType = ENABLED_PLAN_TYPES
-  ? (ENABLED_PLAN_TYPES[0] as InterventionType)
+const defaultInterventionType = PLAN_TYPES_ALLOWED_TO_CREATE
+  ? (PLAN_TYPES_ALLOWED_TO_CREATE[0] as InterventionType)
   : InterventionType.FI;
 
 /** initial values for plan Form */
@@ -134,7 +141,7 @@ export const defaultInitialValues: PlanFormFields = {
   end: moment()
     .add(DEFAULT_PLAN_DURATION_DAYS, 'days')
     .toDate(),
-  fiReason: undefined,
+  fiReason: FIReasons[0],
   fiStatus: undefined,
   identifier: '',
   interventionType: defaultInterventionType,
@@ -144,6 +151,7 @@ export const defaultInitialValues: PlanFormFields = {
   start: moment().toDate(),
   status: PlanStatus.DRAFT,
   taskGenerationStatus: 'False',
+  teamAssignmentStatus: '',
   title: '',
   version: DEFAULT_PLAN_VERSION,
 };
@@ -176,6 +184,7 @@ export interface PlanFormProps {
   ) => JSX.Element;
   /** a render prop that renders the plan's location names */
   addPlan?: typeof addPlanDefinition /** Add new/update plan to redux store */;
+  beforeSubmit: BeforeSubmit /** called before submission starts, return true to proceed with submission */;
 }
 
 /** Plan Form component */
@@ -210,7 +219,7 @@ const PlanForm = (props: PlanFormProps) => {
   const editMode: boolean = initialValues.identifier !== '';
 
   let filteredFIReasons: FIReasonType[] = [...FIReasons];
-  if (ENABLED_FI_REASONS.length) {
+  if (ENABLED_FI_REASONS.length && !editMode) {
     filteredFIReasons = FIReasons.filter((reason: FIReasonType) =>
       ENABLED_FI_REASONS.includes(reason)
     );
@@ -244,7 +253,6 @@ const PlanForm = (props: PlanFormProps) => {
     if (planActivitiesMap.hasOwnProperty(values.interventionType)) {
       return planActivitiesMap[values.interventionType];
     }
-
     return allFormActivities;
   }
 
@@ -272,8 +280,14 @@ const PlanForm = (props: PlanFormProps) => {
         initialValues={initialValues}
         /* tslint:disable-next-line jsx-no-lambda */
         onSubmit={(values, { setSubmitting }) => {
-          const payload = generatePlanDefinition(values);
+          const payload = generatePlanDefinition(values, null, editMode);
           const apiService = new OpenSRPService('plans');
+
+          const continueWithSubmit = props.beforeSubmit(payload);
+          if (!continueWithSubmit) {
+            setSubmitting(false);
+            return;
+          }
 
           if (editMode) {
             apiService
@@ -362,22 +376,22 @@ const PlanForm = (props: PlanFormProps) => {
                 }}
                 className={errors.interventionType ? 'form-control is-invalid' : 'form-control'}
               >
-                {isPlanTypeEnabled(InterventionType.FI) && (
+                {displayPlanTypeOnForm(InterventionType.FI, editMode) && (
                   <option value={InterventionType.FI}>{FOCUS_INVESTIGATION}</option>
                 )}
-                {isPlanTypeEnabled(InterventionType.IRS) && (
+                {displayPlanTypeOnForm(InterventionType.IRS, editMode) && (
                   <option value={InterventionType.IRS}>{IRS_TITLE}</option>
                 )}
-                {isPlanTypeEnabled(InterventionType.MDAPoint) && (
+                {displayPlanTypeOnForm(InterventionType.MDAPoint, editMode) && (
                   <option value={InterventionType.MDAPoint}>{MDAPointTitle}</option>
                 )}
-                {isPlanTypeEnabled(InterventionType.DynamicFI) && (
+                {displayPlanTypeOnForm(InterventionType.DynamicFI, editMode) && (
                   <option value={InterventionType.DynamicFI}>{DYNAMIC_FI_TITLE}</option>
                 )}
-                {isPlanTypeEnabled(InterventionType.DynamicIRS) && (
+                {displayPlanTypeOnForm(InterventionType.DynamicIRS, editMode) && (
                   <option value={InterventionType.DynamicIRS}>{DYNAMIC_IRS_TITLE}</option>
                 )}
-                {isPlanTypeEnabled(InterventionType.DynamicMDA) && (
+                {displayPlanTypeOnForm(InterventionType.DynamicMDA, editMode) && (
                   <option value={InterventionType.DynamicMDA}>{DYNAMIC_MDA_TITLE}</option>
                 )}
               </Field>
@@ -502,8 +516,7 @@ const PlanForm = (props: PlanFormProps) => {
                           </div>
                         </fieldset>
                       ))}
-                      {(values.interventionType === InterventionType.IRS ||
-                        values.interventionType === InterventionType.MDAPoint) &&
+                      {PLAN_TYPES_WITH_MULTI_JURISDICTIONS.includes(values.interventionType) &&
                         allowMoreJurisdictions === true && (
                           <button
                             type="button"
@@ -519,11 +532,11 @@ const PlanForm = (props: PlanFormProps) => {
               )}
             />
 
-            {values.interventionType === InterventionType.FI && (
+            {isFIOrDynamicFI(values.interventionType) && (
               <FormGroup>
                 <Label for="fiStatus">{FOCUS_CLASSIFICATION_LABEL}</Label>
                 <Field
-                  required={values.interventionType === InterventionType.FI}
+                  required={isFIOrDynamicFI(values.interventionType)}
                   component="select"
                   name="fiStatus"
                   id="fiStatus"
@@ -544,11 +557,11 @@ const PlanForm = (props: PlanFormProps) => {
                 />
               </FormGroup>
             )}
-            {values.interventionType === InterventionType.FI && (
+            {isFIOrDynamicFI(values.interventionType) && (
               <FormGroup>
                 <Label for="fiReason">{FOCUS_INVESTIGATION_STATUS_REASON}</Label>
                 <Field
-                  required={values.interventionType === InterventionType.FI}
+                  required={isFIOrDynamicFI(values.interventionType)}
                   component="select"
                   name="fiReason"
                   id="fiReason"
@@ -569,13 +582,12 @@ const PlanForm = (props: PlanFormProps) => {
                 />
               </FormGroup>
             )}
-            {values.interventionType === InterventionType.FI && values.fiReason === FIReasons[1] && (
+            {isFIOrDynamicFI(values.interventionType) && values.fiReason === FIReasons[1] && (
               <FormGroup>
                 <Label for="caseNum">{CASE_NUMBER}</Label>
                 <Field
                   required={
-                    values.interventionType === InterventionType.FI &&
-                    values.fiReason === FIReasons[1]
+                    isFIOrDynamicFI(values.interventionType) && values.fiReason === FIReasons[1]
                   }
                   type="text"
                   name="caseNum"
@@ -615,6 +627,12 @@ const PlanForm = (props: PlanFormProps) => {
                 type="hidden"
                 name="taskGenerationStatus"
                 id="taskGenerationStatus"
+                readOnly={true}
+              />
+              <Field
+                type="hidden"
+                name="teamAssignmentStatus"
+                id="teamAssignmentStatus"
                 readOnly={true}
               />
             </FormGroup>
@@ -687,8 +705,8 @@ const PlanForm = (props: PlanFormProps) => {
               /* tslint:disable-next-line jsx-no-lambda */
               render={arrayHelpers => (
                 <div>
-                  {values.activities.map((_, index) => (
-                    <div className="card mb-3" key={index}>
+                  {values.activities.map((arrItem, index) => (
+                    <div className="card mb-3" key={`div${arrItem.actionCode}-${index}`}>
                       <h5 className="card-header position-relative">
                         {values.activities[index].actionTitle}
                         {values.activities && values.activities.length > 1 && !editMode && (
@@ -696,14 +714,27 @@ const PlanForm = (props: PlanFormProps) => {
                             type="button"
                             className="close position-absolute removeArrItem removeActivity"
                             aria-label="Close"
-                            onClick={() => arrayHelpers.remove(index)}
+                            onClick={() => {
+                              /** when we remove an item, we want to also remove its value from
+                               * the values object otherwise the Formik state gets out of sync
+                               */
+                              arrayHelpers.remove(index);
+                              const newActivityValues = getConditionAndTriggers(
+                                values.activities.filter(
+                                  e => e.actionCode !== values.activities[index].actionCode
+                                ),
+                                disabledFields.includes('activities')
+                              );
+                              setActionConditions(newActivityValues.conditions);
+                              setActionTriggers(newActivityValues.triggers);
+                            }}
                           >
                             <span aria-hidden="true">&times;</span>
                           </button>
                         )}
                       </h5>
                       <div className="card-body">
-                        <fieldset key={index}>
+                        <fieldset key={`fieldset${arrItem.actionCode}-${index}`}>
                           {errors.activities && errors.activities[index] && (
                             <div
                               className={`alert alert-danger activities-${index}-errors`}
@@ -998,17 +1029,42 @@ const PlanForm = (props: PlanFormProps) => {
                               />
                             </FormGroup>
                           </fieldset>
-                          {actionTriggers.hasOwnProperty(values.activities[index].actionCode) && (
-                            <fieldset className="triggers-fieldset">
-                              <legend>{TRIGGERS_LABEL}</legend>
-                              {actionTriggers[values.activities[index].actionCode]}
-                            </fieldset>
-                          )}
-                          {actionConditions.hasOwnProperty(values.activities[index].actionCode) && (
-                            <fieldset className="conditions-fieldset">
-                              <legend>{CONDITIONS_LABEL}</legend>
-                              {actionConditions[values.activities[index].actionCode]}
-                            </fieldset>
+                          {(actionTriggers.hasOwnProperty(values.activities[index].actionCode) ||
+                            actionConditions.hasOwnProperty(
+                              values.activities[index].actionCode
+                            )) && (
+                            <div id={`plan-trigger-conditions-div-${index}`}>
+                              <Button
+                                className="btn-light btn-block"
+                                id={`plan-trigger-conditions-${index}`}
+                              >
+                                {`${TRIGGERS_LABEL} ${AND} ${CONDITIONS_LABEL}`}
+                              </Button>
+                              <UncontrolledCollapse toggler={`#plan-trigger-conditions-${index}`}>
+                                <Card>
+                                  <CardBody>
+                                    <React.Fragment>
+                                      {actionTriggers.hasOwnProperty(
+                                        values.activities[index].actionCode
+                                      ) && (
+                                        <fieldset className="triggers-fieldset">
+                                          <legend>{TRIGGERS_LABEL}</legend>
+                                          {actionTriggers[values.activities[index].actionCode]}
+                                        </fieldset>
+                                      )}
+                                      {actionConditions.hasOwnProperty(
+                                        values.activities[index].actionCode
+                                      ) && (
+                                        <fieldset className="conditions-fieldset">
+                                          <legend>{CONDITIONS_LABEL}</legend>
+                                          {actionConditions[values.activities[index].actionCode]}
+                                        </fieldset>
+                                      )}
+                                    </React.Fragment>
+                                  </CardBody>
+                                </Card>
+                              </UncontrolledCollapse>
+                            </div>
                           )}
                         </fieldset>
                       </div>
@@ -1053,14 +1109,22 @@ const PlanForm = (props: PlanFormProps) => {
                                   e =>
                                     !values.activities.map(f => f.actionCode).includes(e.actionCode)
                                 )
-                                .map(g => (
-                                  <li key={g.actionCode}>
+                                .map(thisActivity => (
+                                  <li key={thisActivity.actionCode}>
                                     <button
                                       type="button"
                                       className="btn btn-primary btn-sm mb-1 addActivity"
-                                      onClick={() => arrayHelpers.push(g)}
+                                      onClick={() => {
+                                        values.activities.push(thisActivity);
+                                        const newActivityValues = getConditionAndTriggers(
+                                          values.activities,
+                                          disabledFields.includes('activities')
+                                        );
+                                        setActionConditions(newActivityValues.conditions);
+                                        setActionTriggers(newActivityValues.triggers);
+                                      }}
                                     >
-                                      {format(ADD_CODED_ACTIVITY, g.actionCode)}
+                                      {format(ADD_CODED_ACTIVITY, thisActivity.actionCode)}
                                     </button>
                                   </li>
                                 ))}
@@ -1095,6 +1159,7 @@ const PlanForm = (props: PlanFormProps) => {
 export const defaultProps: PlanFormProps = {
   allFormActivities: getFormActivities(planActivities),
   allowMoreJurisdictions: true,
+  beforeSubmit: () => true,
   cascadingSelect: true,
   disabledActivityFields: [],
   disabledFields: [],
@@ -1128,6 +1193,7 @@ export const propsForUpdatingPlans = (
     'fiStatus',
     'start',
     'taskGenerationStatus',
+    'teamAssignmentStatus',
     'title',
     'version',
   ];

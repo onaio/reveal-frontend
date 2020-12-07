@@ -4,10 +4,10 @@ import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { getUser, SessionState } from '@onaio/session-reducer';
 import { Dictionary, percentage } from '@onaio/utils';
 import { Color } from 'csstype';
-import { GisidaMap } from 'gisida';
 import { Location } from 'history';
 import { findKey, trimStart, uniq } from 'lodash';
-import { FitBoundsOptions, Layer, LngLatBoundsLike, LngLatLike, Map, Style } from 'mapbox-gl';
+import { FitBoundsOptions, Layer, Style } from 'mapbox-gl';
+import moment from 'moment';
 import querystring from 'querystring';
 import { MouseEvent } from 'react';
 import React from 'react';
@@ -22,11 +22,17 @@ import DrillDownTableLinkedCell from '../components/DrillDownTableLinkedCell';
 import { FIReasonType, FIStatusType } from '../components/forms/PlanForm/types';
 import NewRecordBadge from '../components/NewRecordBadge';
 import { NoDataComponent } from '../components/Table/NoDataComponent';
-import { DIGITAL_GLOBE_CONNECT_ID, ONADATA_OAUTH_STATE, OPENSRP_OAUTH_STATE } from '../configs/env';
+import {
+  DIGITAL_GLOBE_CONNECT_ID,
+  ONADATA_OAUTH_STATE,
+  OPENSRP_OAUTH_STATE,
+  PLAN_UUID_NAMESPACE,
+} from '../configs/env';
 import {
   ACTION,
   FAILED_TO_EXTRACT_PLAN_RECORD,
   FOCUS_AREA_HEADER,
+  INVALID_DATE,
   JURISDICTION_ID,
   JURISDICTION_METADATA,
   JURISDICTION_NAME,
@@ -79,10 +85,12 @@ import { colorMaps, ColorMapsTypes } from './structureColorMaps';
 
 /** Route params interface */
 export interface RouteParams {
+  dataCollector?: string;
   goalId?: string;
   id?: string;
   jurisdictionId?: string;
   planId?: string;
+  sop?: string;
   type?: string;
 }
 
@@ -268,98 +276,6 @@ export const ConfigStore = (
   };
   return config;
 };
-/** utility method ror getting a Gisida Mapbox Map from the reference saved in window.maps
- * @param {string} mapId - The id string of the map to be returned
- * @return {Map|null} - The Mapbox-gl object of the Map or null if not found
- */
-export const getGisidaMapById = (mapId: string = MAP_ID): Map | null => {
-  if (!window.maps || !Array.isArray(window.maps)) {
-    return null;
-  }
-  return window.maps.find((e: Map) => (e as GisidaMap)._container.id === mapId) || null;
-};
-
-/** utility method for getting a rendered feature by matching property
- * @param {string} prop - The feature property name of the value to compair against
- * @param {string|number} val - The value to compair the feature property against
- * @param {string} layerType - The Mapbox layer type to query
- * @param {string} mapId - The id string of the map to query for features
- * @return {mapboxFeature|null} - The queried feature matching the prop/val or null if none found
- */
-export const getFeatureByProperty = (
-  prop: string,
-  val: string | number,
-  layerType: string = 'fill',
-  mapId: string = MAP_ID
-) => {
-  const map: Map | null = getGisidaMapById(mapId);
-  if (map) {
-    const features = map.queryRenderedFeatures().filter(f => f.layer.type === layerType);
-    for (const feature of features) {
-      if (feature && feature.properties && typeof feature.properties[prop] !== 'undefined') {
-        let propVal = feature.properties[prop];
-        // Make sure feature propVal and val are the same type before compairing
-        if (typeof val === 'string' && typeof propVal !== 'string') {
-          propVal = propVal.toString();
-        } else if (typeof val === 'number' && typeof propVal !== 'number') {
-          propVal = Number(propVal);
-        }
-        if (propVal === val) {
-          return feature;
-        }
-      }
-    }
-  }
-  return null;
-};
-
-/** interface for setGisidaMapPosition `position` parameter */
-export interface GisidaPositionType {
-  bounds?: LngLatBoundsLike;
-  boundsOptions?: FitBoundsOptions;
-  lat?: number;
-  lng?: number;
-  zoom?: number;
-}
-
-/** utility method to update the position of a Gisida Mapbox Map
- * @param {GisidaPositionType} position - The config object describing the new map position
- * @param {string} mapId - The id string of the map to query for features
- * @returns {boolean} - Indicates the success or failure of updating the map position
- */
-export const setGisidaMapPosition = (
-  position: GisidaPositionType,
-  mapId: string = MAP_ID
-): boolean => {
-  const map: Map | null = getGisidaMapById(mapId);
-
-  if (!map) {
-    return false;
-  }
-
-  if (position.bounds) {
-    // set position with fitBounds
-    try {
-      map.fitBounds(position.bounds, position.boundsOptions || { padding: 20 });
-    } catch {
-      return false;
-    }
-  } else {
-    // set position with l
-    const { lat, lng, zoom } = position;
-    const lngLat: LngLatLike | null = (lng && lat && [lng, lat]) || null;
-    if (lngLat && typeof zoom !== 'undefined') {
-      try {
-        map.setCenter(lngLat);
-        map.setZoom(zoom);
-      } catch {
-        return false;
-      }
-    }
-  }
-
-  return true;
-};
 
 /** utility method to extract plan from superset response object */
 export function extractPlan(plan: Plan) {
@@ -458,15 +374,15 @@ export function getColor(taskObject: InitialTask): Color {
   }
 }
 
-/** filters out plans whose jurisdiction id is null
+/** filters out plans whose jurisdiction id is null or has a value of 'null'
  * @param {Plan []} plansArray - a list of pre-filtered plans
  *
  * @return {Plan []} - A list of filtered plans
  */
 export const removeNullJurisdictionPlans = (plansArray: Plan[]): Plan[] => {
   return plansArray.filter((plan: Plan) => {
-    const jurisdictionID = plan.jurisdiction_id.toLowerCase().trim();
-    return !jurisdictionID.includes('null');
+    const jurisdictionId = plan.jurisdiction_id?.toLowerCase().trim();
+    return !!jurisdictionId && !jurisdictionId.includes('null');
   });
 };
 
@@ -722,6 +638,14 @@ export const successGrowl = (message: string) =>
     type: toast.TYPE.SUCCESS,
   });
 
+/** Send a growl info message
+ * @param message - the info message
+ */
+export const infoGrowl = (message: string) =>
+  growl(message, {
+    type: toast.TYPE.INFO,
+  });
+
 /**
  * Creates a key with an empty array if it didn't exist
  * @param {Dictionary} target - object to be
@@ -943,9 +867,11 @@ export interface Setting {
   label: string;
   value: string | unknown;
   key: string;
+  uuid: string;
 }
 
 export interface SettingConfiguration {
+  _id: string;
   type: string;
   identifier: string;
   providerId?: string;
@@ -956,12 +882,16 @@ export interface SettingConfiguration {
 
 /**
  * Create payload for sending settings to OpenSRP v1 Settings endpoint
+ * Rules applied on creating payload:
+ * 1. If only some values are missing, those rows are droped silently
+ * 2. If all values are missing an error is raised
+ * 3. If any key is missing an error is raised
  */
 export const creatSettingsPayloads = (
   result: PapaResult,
   addProvider: boolean = false
 ): SettingConfiguration[] => {
-  const payloads: SettingConfiguration[] = [];
+  let payloads: SettingConfiguration[] = [];
   const { data } = result;
   const username = getUser(store.getState()).username;
   // check if jurisdiction_id exists
@@ -969,34 +899,45 @@ export const creatSettingsPayloads = (
     // get the metadata items
     const headers = Object.keys(data[0]);
     const filteredHeaders = headers.filter(f => ![JURISDICTION_ID, JURISDICTION_NAME].includes(f));
-    for (const header of filteredHeaders) {
+    loop1: for (const header of filteredHeaders) {
       const settings: Setting[] = [];
+      const identifier = `jurisdiction_metadata-${header}`;
       // add the metadata values with jurisdiction as the key
       for (const item of data) {
         const entries = Object.entries(item);
         for (const [key, value] of entries) {
-          if (key === header) {
+          if (value && !item.jurisdiction_id) {
+            payloads = [];
+            break loop1;
+          }
+          if (key === header && value) {
+            const uuid = generateNameSpacedUUID(
+              `${identifier}-${item.jurisdiction_id}`,
+              PLAN_UUID_NAMESPACE
+            );
             const setting: Setting = {
               description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
               key: item.jurisdiction_id,
-              label: `${
-                item.jurisdiction_name ? item.jurisdiction_name : item.jurisdiction_id
-              } metadata`,
+              label: item.jurisdiction_name ? item.jurisdiction_name : item.jurisdiction_id,
+              uuid,
               value,
             };
             settings.push(setting);
           }
         }
       }
-      const payload: SettingConfiguration = {
-        identifier: `jurisdiction_metadata-${header}`,
-        settings,
-        type: SETTINGS_CONFIGURATION,
-      };
-      if (addProvider) {
-        payload.providerId = username;
+      if (settings.length) {
+        const payload: SettingConfiguration = {
+          _id: generateNameSpacedUUID(identifier, PLAN_UUID_NAMESPACE),
+          identifier,
+          settings,
+          type: SETTINGS_CONFIGURATION,
+        };
+        if (addProvider) {
+          payload.providerId = username;
+        }
+        payloads.push(payload);
       }
-      payloads.push(payload);
     }
   }
   return payloads;
@@ -1046,4 +987,19 @@ export type DefaultDrillDownPropsType = Pick<
  */
 export const getPlanStatusToDisplay = (planStatuses: string[]): string[] => {
   return Object.values(PlanStatus).filter(status => !planStatuses.includes(status));
+};
+
+/**
+ *
+ * @param {string | number} value - string date
+ * @param {string} dateFarmat - format of returned date
+ * @param {string} fallbackText fall back value when string date not valid
+ */
+export const formatDates = (
+  value: string | number,
+  dateFormat: string,
+  fallbackText: string = INVALID_DATE
+) => {
+  const date = moment(value);
+  return date.isValid() && typeof value === 'string' ? date.format(dateFormat) : fallbackText;
 };

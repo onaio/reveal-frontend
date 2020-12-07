@@ -31,12 +31,15 @@ export const HIGH_PRIORITIY = 'high-priority';
 export const TRUE = 'True';
 export const FALSE = 'False';
 export const DISABLED = 'Disabled';
+export const INTERNAL = 'internal';
+export const IGNORE = 'ignore';
 export const INTERVENTION_TYPE_CODE = 'interventionType';
 export const FI_STATUS_CODE = 'fiStatus';
 export const FI_REASON_CODE = 'fiReason';
 export const OPENSRP_EVENT_ID_CODE = 'opensrpEventId';
 export const CASE_NUMBER_CODE = 'caseNum';
 export const TASK_GENERATION_STATUS_CODE = 'taskGenerationStatus';
+export const TEAM_ASSIGNMENT_STATUS_CODE = 'teamAssignmentStatus';
 export const GA_ENV_TEST = 'test';
 export const PLAN_ID = 'plan_id';
 export const PLAN_INTERVENTION_TYPE = 'plan_intervention_type';
@@ -63,6 +66,8 @@ export const TIMELINE_SLIDER_STEP1 = '1';
 export const TIMELINE_SLIDER_STEP2 = '2';
 export const TIMELINE_SLIDER_STEP3 = '3';
 export const MODAL_BUTTON_CLASS = 'focus-investigation btn btn-primary float-right mt-0';
+export const BUSINESS_STATUS = 'business_status';
+export const IRS_REPORT_STRUCTURES = 'irs_report_structures';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
@@ -71,12 +76,16 @@ export const REACT_LOGIN_URL = '/login';
 export const LOGOUT_URL = '/logout';
 export const HOME_URL = '/';
 export const REPORT_IRS_PLAN_URL = `/intervention/irs/report`;
+export const PERFORMANCE_REPORT_IRS_PLAN_URL = `/intervention/irs/performance/report`;
+export const REPORT_IRS_LITE_PLAN_URL = `/intervention/irs-lite/report`;
+export const PERFORMANCE_REPORT_IRS_LITE_PLAN_URL = `/intervention/irs-lite/performance/report`;
 export const REPORT_MDA_POINT_PLAN_URL = `/intervention/mda-point/report`;
 export const REPORT_MDA_PLAN_URL = `/intervention/mda/report`;
 export const MDA_POINT_LOCATION_REPORT_URL = '/intervention/mda-point/location-report';
 export const MDA_POINT_CHILD_REPORT_URL = '/intervention/mda-point/child-report';
 export const REPORT_SMC_PLAN_URL = `/intervention/smc/report`;
 export const SMC_LOCATION_REPORT_URL = '/intervention/smc/location-report';
+export const IRS_MOP_UP_REPORT_URL = '/intervention/irs/mopup';
 export const ASSIGN_PLAN_URL = `/assign`;
 export const FI_URL = '/focus-investigation';
 export const FI_FILTER_URL = '/focus-investigation/filter';
@@ -202,6 +211,7 @@ export const MDA_POINT_DISPENSE_CODE = 'MDA Dispense';
 export const MDA_POINT_ADVERSE_EFFECTS_CODE = 'MDA Adverse Event(s)';
 export const MDA_ADHERENCE_CODE = 'MDA Adherence';
 export const GOAL_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
+export const GOAL_ID = 'goal_id';
 
 export const CREATE_TYPE = 'create';
 
@@ -221,6 +231,7 @@ export const QUERY_PARAM_TITLE = 'title';
 export const QUERY_PARAM_USER = 'user';
 export const REACTIVE_QUERY_PARAM = 'reactive_plans';
 export const ROUTINE_QUERY_PARAM = 'routine_plans';
+export const QUERY_PARAM_DATE = 'date';
 
 /** Settings Configuration */
 export const SETTINGS_CONFIGURATION = 'SettingConfiguration';
@@ -251,3 +262,4 @@ export const SUPERSET_ACCESS_DENIED_MESSAGE = 'Access is Denied';
 /** React Mapbox GL strings */
 export const REACT_MAPBOX_GL_ICON_IMAGE = 'icon-image';
 export const REACT_MAPBOX_GL_ICON_SIZE = 'icon-size';
+export const CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE = 'categorical';

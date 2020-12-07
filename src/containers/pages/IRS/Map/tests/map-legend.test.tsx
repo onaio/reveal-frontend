@@ -5,6 +5,7 @@ import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
 import { MAP, REPORT_IRS_PLAN_URL } from '../../../../../constants';
@@ -46,6 +47,13 @@ jest.mock('../../../../../configs/env', () => ({
   SUPERSET_JURISDICTIONS_SLICE: 1,
   SUPERSET_MAX_RECORDS: 2000,
 }));
+
+jest.mock('../../../../../components/GisidaLite', () => {
+  const MemoizedGisidaLiteMock = () => <div>Mock component</div>;
+  return {
+    MemoizedGisidaLite: MemoizedGisidaLiteMock,
+  };
+});
 
 /** register the reducers */
 reducerRegistry.register(IRSPlansReducerName, IRSPlansReducer);
@@ -120,7 +128,9 @@ describe('components/IRS Reports/IRSReportingMap', () => {
         <IRSReportingMap {...props} />
       </Router>
     );
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
     wrapper.update();
     expect(wrapper.find('.sidebar-legend-item').length).toEqual(3);
     expect(toJson(wrapper.find('.sidebar-legend-item'))).toMatchSnapshot('Legend items');

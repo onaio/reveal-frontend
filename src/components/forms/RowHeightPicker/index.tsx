@@ -42,6 +42,7 @@ const RowHeightFilter = (props: Props) => {
   };
   return (
     <DropDownRenderer
+      filterActive={!!rowHeight.trim()}
       renderToggle={rowHeightRenderToggle}
       // tslint:disable-next-line: jsx-no-lambda
       renderMenu={() => (

@@ -10,21 +10,30 @@ import {
   symbolLayerTemplate,
 } from '../../../../../../components/GisidaLite/helpers';
 import {
+  DATE_FORMAT,
   SUPERSET_GOALS_SLICE,
+  SUPERSET_JURISDICTION_EVENTS_SLICE,
   SUPERSET_JURISDICTIONS_SLICE,
   SUPERSET_MAX_RECORDS,
   SUPERSET_PLANS_SLICE,
   SUPERSET_STRUCTURES_SLICE,
   SUPERSET_TASKS_SLICE,
 } from '../../../../../../configs/env';
-import { AN_ERROR_OCCURRED } from '../../../../../../configs/lang';
-import { CASE_CLASSIFICATION_LABEL, END_DATE, START_DATE } from '../../../../../../configs/lang';
 import {
-  ACTION_CODE,
+  AN_ERROR_OCCURRED,
+  CASE_CLASSIFICATION_LABEL,
+  CASE_NUMBER,
+  DIAGNOSIS_DATE,
+  END_DATE,
+  START_DATE,
+} from '../../../../../../configs/lang';
+import {
   CASE_CONFIRMATION_CODE,
   CASE_CONFIRMATION_GOAL_ID,
   CURRENT_INDEX_CASES,
   FEATURE_COLLECTION,
+  GOAL_CONFIRMATION_GOAL_ID,
+  GOAL_ID,
   JURISDICTION_ID,
   LARVAL_DIPPING_ID,
   MAIN_PLAN,
@@ -48,10 +57,12 @@ import {
 } from '../../../../../../store/ducks/structures';
 import { fetchTasks, FetchTasksAction, TaskGeoJSON } from '../../../../../../store/ducks/tasks';
 
+import { BoundingBox, viewport } from '@mapbox/geo-viewport';
 import GeojsonExtent from '@mapbox/geojson-extent';
 import { Dictionary } from '@onaio/utils';
 import {
   Feature,
+  FeatureCollection as GeoJsonFeatureCollection,
   LineString,
   MultiLineString,
   MultiPoint,
@@ -59,8 +70,14 @@ import {
   Point,
   Polygon,
 } from 'geojson';
-import { EventData, LngLat, Map } from 'mapbox-gl';
+import mapboxgl, { EventData, LngLat, Map } from 'mapbox-gl';
+import moment from 'moment';
 import { FeatureCollection } from '../../../../../../helpers/utils';
+import store from '../../../../../../store';
+import {
+  fetchIndexCaseDetails,
+  makeIndexCasesArraySelector,
+} from '../../../../../../store/ducks/opensrp/indexCasesDetails';
 import './handlers.css';
 
 /** abstracts code that actually makes the superset Call since it is quite similar */
@@ -102,6 +119,7 @@ export const fetchData = async (
   fetchPlansActionCreator: typeof fetchPlans,
   fetchStructuresActionCreator: typeof setStructures,
   fetchTasksActionCreator: typeof fetchTasks,
+  fetchIndexCaseActionCreator: typeof fetchIndexCaseDetails,
   plan: Plan,
   supersetService: typeof supersetFetch
 ): Promise<void> => {
@@ -111,11 +129,6 @@ export const fetchData = async (
       { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
     ]);
 
-    /** define superset params for filtering by plan_id */
-    const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-      { comparator: plan.plan_id, operator: '==', subject: PLAN_ID },
-    ]);
-
     /** define superset params for goals */
     const goalsParams = superset.getFormData(
       SUPERSET_MAX_RECORDS,
@@ -123,53 +136,67 @@ export const fetchData = async (
       { action_prefix: true }
     );
 
-    /** filter caseConfirmation tasks by action code and jurisdiction_id */
-    const tasksParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
-      { comparator: plan.jurisdiction_id, operator: '==', subject: JURISDICTION_ID },
-      { comparator: CASE_CONFIRMATION_CODE, operator: '==', subject: ACTION_CODE },
+    /** filter caseConfirmation tasks by action code and jurisdiction_id or by plan_id */
+    const allTasksParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
+      {
+        sqlExpression: `(${PLAN_ID} = '${plan.plan_id}') OR 
+            (${JURISDICTION_ID} = '${plan.jurisdiction_id}' AND ${GOAL_ID} = '${GOAL_CONFIRMATION_GOAL_ID}')`,
+      },
     ]);
 
-    supersetCall(
-      SUPERSET_JURISDICTIONS_SLICE,
-      fetchJurisdictionsActionCreator,
-      supersetService,
-      jurisdictionsParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    if (SUPERSET_JURISDICTIONS_SLICE !== '0') {
+      supersetCall(
+        SUPERSET_JURISDICTIONS_SLICE,
+        fetchJurisdictionsActionCreator,
+        supersetService,
+        jurisdictionsParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    }
 
-    supersetCall<SetStructuresAction>(
-      SUPERSET_STRUCTURES_SLICE,
-      fetchStructuresActionCreator,
-      supersetService,
-      jurisdictionsParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    if (SUPERSET_STRUCTURES_SLICE !== '0') {
+      supersetCall<SetStructuresAction>(
+        SUPERSET_STRUCTURES_SLICE,
+        fetchStructuresActionCreator,
+        supersetService,
+        jurisdictionsParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    }
 
-    supersetCall<FetchPlansAction>(
-      SUPERSET_PLANS_SLICE,
-      fetchPlansActionCreator,
-      supersetService,
-      jurisdictionsParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    if (SUPERSET_PLANS_SLICE !== '0') {
+      supersetCall<FetchPlansAction>(
+        SUPERSET_PLANS_SLICE,
+        fetchPlansActionCreator,
+        supersetService,
+        jurisdictionsParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    }
 
-    supersetCall<FetchGoalsAction>(
-      SUPERSET_GOALS_SLICE,
-      fetchGoalsActionCreator,
-      supersetService,
-      goalsParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    if (SUPERSET_GOALS_SLICE !== '0') {
+      supersetCall<FetchGoalsAction>(
+        SUPERSET_GOALS_SLICE,
+        fetchGoalsActionCreator,
+        supersetService,
+        goalsParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    }
 
-    supersetCall<FetchTasksAction>(
-      SUPERSET_TASKS_SLICE,
-      fetchTasksActionCreator,
-      supersetService,
-      supersetParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    if (SUPERSET_TASKS_SLICE !== '0') {
+      supersetCall<FetchTasksAction>(
+        SUPERSET_TASKS_SLICE,
+        fetchTasksActionCreator,
+        supersetService,
+        allTasksParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    }
 
-    supersetCall<FetchTasksAction>(
-      SUPERSET_TASKS_SLICE,
-      fetchTasksActionCreator,
-      supersetService,
-      tasksParams
-    ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    if (SUPERSET_JURISDICTION_EVENTS_SLICE !== '0') {
+      supersetCall(
+        SUPERSET_JURISDICTION_EVENTS_SLICE,
+        fetchIndexCaseActionCreator,
+        supersetService,
+        jurisdictionsParams
+      ).catch(() => displayError(new Error(AN_ERROR_OCCURRED)));
+    }
   }
 };
 
@@ -275,7 +302,20 @@ export const buildStructureLayers = (
 };
 
 /** describes the last arg to buildGsLiteLayers */
+export interface CircleColor {
+  property: string;
+  stops: string[][];
+  type: string;
+}
+export interface PolygonColor {
+  property: string;
+  stops: string[][];
+  type: string;
+}
 interface ExtraVars {
+  circleColor?: CircleColor;
+  polygonColor?: PolygonColor;
+  polygonLineColor?: PolygonColor;
   useId?: string; // override the goalId to be used for the layer;
 }
 
@@ -318,7 +358,8 @@ export const buildGsLiteSymbolLayers = (
     symbolLayout: {
       ...symbolLayerTemplate.symbolLayout,
       ...{ [REACT_MAPBOX_GL_ICON_IMAGE]: iconGoal },
-      [REACT_MAPBOX_GL_ICON_SIZE]: currentGoal === CASE_CONFIRMATION_GOAL_ID ? 0.045 : 0.03,
+      'icon-allow-overlap': true,
+      [REACT_MAPBOX_GL_ICON_SIZE]: ['interpolate', ['linear'], ['zoom'], 1, 0.002, 22, 0.044],
     },
   };
 
@@ -355,39 +396,67 @@ export const buildGsLiteSymbolLayers = (
  */
 export const buildGsLiteLayers = (
   currentGoal: string | null,
-  pointFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
-  polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | null,
+  pointFeatureCollection: FeatureCollection<TaskGeoJSON> | GeoJsonFeatureCollection | null,
+  polygonFeatureCollection: FeatureCollection<TaskGeoJSON> | GeoJsonFeatureCollection | null,
   extraVars: ExtraVars
 ) => {
   const idToUse = extraVars.useId ? extraVars.useId : currentGoal;
   const gsLayers = [];
 
   if (pointFeatureCollection && pointFeatureCollection.features.length) {
+    const defaultCirclePaint = {
+      ...circleLayerTemplate.circlePaint,
+      'circle-color': ['get', 'color'],
+      'circle-stroke-color': ['get', 'color'],
+      'circle-stroke-opacity': 1,
+    };
+    // default circle color or data driven circle styling
+    const circlePaint = extraVars.circleColor
+      ? { 'circle-color': extraVars.circleColor }
+      : defaultCirclePaint;
+
     gsLayers.push(
       <GeoJSONLayer
         {...circleLayerTemplate}
-        circlePaint={{
-          ...circleLayerTemplate.circlePaint,
-          'circle-color': ['get', 'color'],
-          'circle-stroke-color': ['get', 'color'],
-          'circle-stroke-opacity': 1,
-        }}
+        circlePaint={circlePaint}
         id={`${idToUse}-point`}
         key={`${idToUse}-point`}
         data={pointFeatureCollection}
       />
     );
   }
-  if (polygonFeatureCollection && polygonFeatureCollection.features.length) {
+  if (
+    polygonFeatureCollection &&
+    polygonFeatureCollection.features &&
+    polygonFeatureCollection.features.length
+  ) {
+    const defaultFillPaint = {
+      ...fillLayerTemplate.fillPaint,
+      'fill-color': ['get', 'color'],
+      'fill-outline-color': ['get', 'color'],
+    };
+
+    const defaultLinePaint = {
+      ...lineLayerTemplate.linePaint,
+      'line-color': ['get', 'color'],
+      'line-opacity': 1,
+      'line-width': 2,
+    };
+
+    // default circle color or data driven circle styling
+    const fillPaint = extraVars.polygonColor
+      ? { 'fill-color': extraVars.polygonColor }
+      : defaultFillPaint;
+
+    // default circle color or data driven circle styling
+    const linePaint = extraVars.polygonLineColor
+      ? { 'line-color': extraVars.polygonLineColor }
+      : defaultLinePaint;
+
     gsLayers.push(
       <GeoJSONLayer
         {...lineLayerTemplate}
-        linePaint={{
-          ...lineLayerTemplate.linePaint,
-          'line-color': ['get', 'color'],
-          'line-opacity': 1,
-          'line-width': 2,
-        }}
+        linePaint={linePaint}
         data={polygonFeatureCollection}
         id={`${idToUse}-fill-line`}
         key={`${idToUse}-fill-line`}
@@ -396,11 +465,7 @@ export const buildGsLiteLayers = (
     gsLayers.push(
       <GeoJSONLayer
         {...fillLayerTemplate}
-        fillPaint={{
-          ...fillLayerTemplate.fillPaint,
-          'fill-color': ['get', 'color'],
-          'fill-outline-color': ['get', 'color'],
-        }}
+        fillPaint={fillPaint}
         data={polygonFeatureCollection}
         id={`${idToUse}-fill`}
         key={`${idToUse}-fill`}
@@ -432,6 +497,20 @@ export const getMapBounds = (jurisdiction: Jurisdiction | null) => {
   return mapBounds;
 };
 
+/** dynamically get the bounds and zoom for the maps viewport.
+ * ref: https://github.com/mapbox/mapbox-gl-js/issues/1970#issuecomment-297465871
+ */
+export const setMapViewPortZoomFactory = (mapBounds: BoundingBox) => (map: Map) => {
+  const zoomAnimationDuration = 1000;
+  const minZoom = 0;
+  const maxZoom = 20;
+  const mapBoxTileSize = 512;
+  const mapEl = map.getCanvas().getBoundingClientRect();
+  const mapDim: [number, number] = [mapEl.height, mapEl.width];
+  const newBounds = viewport(mapBounds, mapDim, minZoom, maxZoom, mapBoxTileSize);
+  map.zoomTo(newBounds.zoom, { duration: zoomAnimationDuration });
+};
+
 /**
  * Geometry type is a union of seven types.
  * For union type we can only access members that are common to all types in the union.
@@ -448,6 +527,7 @@ export interface FeatureWithLayer
  * Build mapbox component onclick event handler
  */
 export const buildOnClickHandler = (currentPlanId: string) => {
+  const indexCasesArraySelector = makeIndexCasesArraySelector();
   function clickHandler(map: Map, event: EventData) {
     /** differentiate between current index cases and historical index cases by use of plan_id
      * current_case will be index_case belonging to this plan
@@ -474,8 +554,18 @@ export const buildOnClickHandler = (currentPlanId: string) => {
           feature.properties.action_code === CASE_CONFIRMATION_CODE &&
           feature.properties.plan_id !== currentPlanId
         ) {
+          const details = indexCasesArraySelector(store.getState(), {
+            jurisdiction_id: feature.properties.jurisdiction_id,
+            task_id: feature.properties.task_id,
+          })[0];
+          const diagnosisDate = details?.date_of_diagnosis
+            ? moment(details.date_of_diagnosis).format(DATE_FORMAT.toUpperCase())
+            : '_';
           description += '<p class="heading">historical index cases </b></p>';
-          description += '<p></p><br/><br/>';
+          description += `<p>${CASE_NUMBER}: ${details?.case_number || '_'}</p>`;
+          description += `<p>${CASE_CLASSIFICATION_LABEL}: ${details?.case_classification ||
+            '_'}</p>`;
+          description += `<p>${DIAGNOSIS_DATE}: ${diagnosisDate}</p>`;
           return;
         }
         // Splitting into two lines to fix breaking tests

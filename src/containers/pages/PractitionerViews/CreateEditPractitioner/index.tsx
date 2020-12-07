@@ -34,6 +34,7 @@ import { loadPractitioner } from '../helpers/serviceHooks';
 
 /** props for create and editing an practitioner view */
 export interface Props {
+  allPractitioners: Practitioner[];
   fetchPractitionersCreator: typeof fetchPractitioners;
   practitioner: Practitioner | null;
   serviceClass: typeof OpenSRPService;
@@ -41,6 +42,7 @@ export interface Props {
 
 /** default props for createEditPractitioner component */
 export const defaultProps: Props = {
+  allPractitioners: [],
   fetchPractitionersCreator: fetchPractitioners,
   practitioner: null,
   serviceClass: OpenSRPService,
@@ -51,7 +53,7 @@ export type PropsTypes = Props & RouteComponentProps<RouteParams>;
 
 /** CreateEditTeamView component */
 const CreateEditPractitionerView = (props: PropsTypes) => {
-  const { practitioner, serviceClass, fetchPractitionersCreator } = props;
+  const { allPractitioners, practitioner, serviceClass, fetchPractitionersCreator } = props;
   // use route to know if we are editing practitioner or creating practitioner
   const editing = !!props.match.params.id;
 
@@ -77,6 +79,7 @@ const CreateEditPractitionerView = (props: PropsTypes) => {
 
   /** props for the practitioner form */
   const practitionerFormProps: PractitionerFormProps = {
+    allPractitioners,
     disabledFields: [],
     initialValues: editing ? (practitioner as PractitionerFormFields) : defaultInitialValues,
     redirectAfterAction: PRACTITIONERS_LIST_URL,
@@ -114,6 +117,7 @@ export { CreateEditPractitionerView };
 
 /** Interface for connected state to props */
 interface DispatchedProps {
+  allPractitioners: Practitioner[];
   practitioner: Practitioner | null;
 }
 
@@ -124,8 +128,12 @@ const mapStateToProps = (state: Partial<Store>, ownProps: PropsTypes): Dispatche
   const practitionersSelector = makePractitionersSelector();
 
   const practitioners = practitionersSelector(state, { identifiers: [practitionerId] });
+  const allPractitioners = practitionersSelector(state, {});
   const practitioner = practitioners.length === 1 ? practitioners[0] : null;
-  return { practitioner };
+  return {
+    allPractitioners,
+    practitioner,
+  };
 };
 
 /** map props to action creators */

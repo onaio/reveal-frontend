@@ -11,12 +11,7 @@ import {
   faTextHeight,
 } from '@fortawesome/free-solid-svg-icons';
 import ConnectedPrivateRoute from '@onaio/connected-private-route';
-import {
-  AuthorizationGrantType,
-  ConnectedLogout,
-  ConnectedOauthCallback,
-  OauthLogin,
-} from '@onaio/gatekeeper';
+import { AuthorizationGrantType, ConnectedOauthCallback, OauthLogin } from '@onaio/gatekeeper';
 import { initGoogleAnalytics, RouteTracker, setDimensions } from '@onaio/google-analytics';
 import { getUser } from '@onaio/session-reducer';
 import React, { useEffect } from 'react';
@@ -25,7 +20,6 @@ import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Col, Container, Row } from 'reactstrap';
-import { LogoutProps } from '../components/Logout';
 import CustomConnectedAPICallBack from '../components/page/CustomCallback';
 import Loading from '../components/page/Loading';
 import {
@@ -33,15 +27,16 @@ import {
   DISABLE_LOGIN_PROTECTION,
   GA_CODE,
   GA_ENV,
-  OPENSRP_LOGOUT_URL,
-  OPENSRP_OAUTH_STATE,
   TOAST_AUTO_CLOSE_DELAY,
   WEBSITE_NAME,
 } from '../configs/env';
 import { LOGIN_PROMPT } from '../configs/lang';
 import { providers } from '../configs/settings';
 
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import '@onaio/drill-down-table/dist/table.css';
+import { CustomLogout } from '../components/Logout';
 import { Footer } from '../components/page/Footer';
 import {
   ASSIGN_JURISDICTIONS_URL,
@@ -63,6 +58,7 @@ import {
   FI_URL,
   GA_ENV_TEST,
   HOME_URL,
+  IRS_MOP_UP_REPORT_URL,
   JSON_VALIDATORS_URL,
   JURISDICTION_METADATA_URL,
   LOGOUT_URL,
@@ -75,6 +71,7 @@ import {
   NEW_PLAN_URL,
   NEW_PLANNING_PLAN_URL,
   ORGANIZATIONS_LIST_URL,
+  PERFORMANCE_REPORT_IRS_PLAN_URL,
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
   PLAN_UPDATE_URL,
@@ -82,6 +79,7 @@ import {
   PRACTITIONERS_LIST_URL,
   REACT_CALLBACK_PATH,
   REACT_LOGIN_URL,
+  REPORT_IRS_LITE_PLAN_URL,
   REPORT_IRS_PLAN_URL,
   REPORT_MDA_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
@@ -111,7 +109,14 @@ import ConnectedUpdatePlan from '../containers/pages/InterventionPlan/UpdatePlan
 import { OpenSRPPlansList } from '../containers/pages/IRS/assignments';
 import ConnectedJurisdictionReport from '../containers/pages/IRS/JurisdictionsReport';
 import ConnectedIRSReportingMap from '../containers/pages/IRS/Map';
+import { IRSMopUpReporting } from '../containers/pages/IRS/Mopup/plans';
+import ConnectedMopup from '../containers/pages/IRS/Mopup/reports';
+import { IRSPlanPerfomenceReport } from '../containers/pages/IRS/performanceReport/plans';
+import ConnectedIRSPerfomenceReport from '../containers/pages/IRS/performanceReport/reports';
 import ConnectedIRSPlansList from '../containers/pages/IRS/plans';
+import ConnectedJurisdictionReportLite from '../containers/pages/IRSLite/JurisdictionsReportLite';
+import ConnectedIRSLiteReportingMap from '../containers/pages/IRSLite/MapLite';
+import ConnectedIRSLitePlansList from '../containers/pages/IRSLite/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
 import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
 import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/ManualSelectJurisdiction';
@@ -134,7 +139,6 @@ import ConnectedSMCReportingMap from '../containers/pages/SMC/Map';
 import ConnectedSMCPlansList from '../containers/pages/SMC/plans';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 import store from '../store';
-import { getOauthProviderState } from '../store/selectors';
 import './App.css';
 
 library.add(
@@ -146,7 +150,9 @@ library.add(
   faMap,
   faUser,
   faTextHeight,
-  faHome
+  faHome,
+  faTimes,
+  faCheck
 );
 
 toast.configure({
@@ -165,10 +171,6 @@ if (GA_CODE) {
 export interface AppState {
   username?: string;
 }
-/** Interface defining component props */
-interface AppProps {
-  logoutComponent: (props: LogoutProps) => null;
-}
 
 const APP_CALLBACK_URL = BACKEND_ACTIVE ? BACKEND_CALLBACK_URL : REACT_LOGIN_URL;
 const { IMPLICIT, AUTHORIZATION_CODE } = AuthorizationGrantType;
@@ -177,7 +179,7 @@ const APP_LOGIN_URL = BACKEND_ACTIVE ? BACKEND_LOGIN_URL : REACT_LOGIN_URL;
 const APP_CALLBACK_PATH = BACKEND_ACTIVE ? BACKEND_CALLBACK_PATH : REACT_CALLBACK_PATH;
 
 /** Main App component */
-const App = (props: AppProps) => {
+const App = () => {
   useEffect(() => {
     const username = (getUser(store.getState()) || {}).username || '';
     if (GA_CODE && username) {
@@ -299,6 +301,36 @@ const App = (props: AppProps) => {
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedJurisdictionReport}
                 />
+                {/* IRS Lite Reporting plan table view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={REPORT_IRS_LITE_PLAN_URL}
+                  component={ConnectedIRSLitePlansList}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_IRS_LITE_PLAN_URL}/:planId`}
+                  component={ConnectedJurisdictionReportLite}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedJurisdictionReportLite}
+                />
+                {/* IRS Reporting Map view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
+                  component={ConnectedIRSLiteReportingMap}
+                />
                 {/* IRS Reporting Map view */}
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
@@ -306,6 +338,42 @@ const App = (props: AppProps) => {
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedIRSReportingMap}
+                />
+                {/* IRS performance Reporting view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={PERFORMANCE_REPORT_IRS_PLAN_URL}
+                  component={IRSPlanPerfomenceReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId`}
+                  component={ConnectedIRSPerfomenceReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedIRSPerfomenceReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/:dataCollector`}
+                  component={ConnectedIRSPerfomenceReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/:dataCollector/:sop`}
+                  component={ConnectedIRSPerfomenceReport}
                 />
                 {/* MDA Reporting plan table view */}
                 <ConnectedPrivateRoute
@@ -611,6 +679,27 @@ const App = (props: AppProps) => {
                   path={`${ASSIGN_JURISDICTIONS_URL}/:planId`}
                   component={ConnectedEntryView}
                 />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={IRS_MOP_UP_REPORT_URL}
+                  component={IRSMopUpReporting}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${IRS_MOP_UP_REPORT_URL}/:planId`}
+                  component={ConnectedMopup}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${IRS_MOP_UP_REPORT_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedMopup}
+                />
                 {/* tslint:disable jsx-no-lambda */}
                 <Route
                   exact={true}
@@ -652,18 +741,7 @@ const App = (props: AppProps) => {
                   path={LOGOUT_URL}
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
-                    if (BACKEND_ACTIVE) {
-                      /** returns logout component responsible for opensrp logout and moving execution to express server */
-                      return <props.logoutComponent logoutURL={OPENSRP_LOGOUT_URL} />;
-                    }
-                    const state = getOauthProviderState(store.getState());
-                    return (
-                      <ConnectedLogout
-                        {...{
-                          logoutURL: state === OPENSRP_OAUTH_STATE ? OPENSRP_LOGOUT_URL : null,
-                        }}
-                      />
-                    );
+                    return <CustomLogout />;
                   }}
                 />
               </Switch>

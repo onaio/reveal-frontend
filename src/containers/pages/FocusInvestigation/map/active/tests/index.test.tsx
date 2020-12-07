@@ -1,4 +1,5 @@
 import superset from '@onaio/superset-connector';
+import { act } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
@@ -26,6 +27,12 @@ import * as fixtures from '../../../../../../store/ducks/tests/fixtures';
 import ConnectedMapSingleFI, { MapSingleFIProps, SingleActiveFIMap } from '../../active/';
 import * as utils from '../helpers/utils';
 import * as fixturesMap from './fixtures';
+import {
+  processedOneGoalGoals,
+  processedOneGoalJurisdiction,
+  processedOneGoalPlan,
+  processedOneGoalTasks,
+} from './fixtures';
 
 jest.mock('../../../../../../components/GisidaLite', () => {
   const GisidaLiteMock = () => <div>I love oov</div>;
@@ -86,7 +93,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     );
   });
 
-  it('renders SingleActiveFimap correctly & changes page title', () => {
+  it('renders SingleActiveFimap correctly & changes page title', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -112,6 +119,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     // what is passed as the document page title text
     const helmet = Helmet.peek();
@@ -128,6 +139,17 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       'MemoizedGisidaLiteMock div'
     );
 
+    const mapProps = wrapper.find('MemoizedGisidaLiteMock').props();
+    expect((mapProps as any).mapCenter).toEqual([101.178374290466, 15.067896479158]);
+    expect((mapProps as any).mapBounds).toEqual([
+      101.164855957031,
+      15.0577022766384,
+      101.191892623901,
+      15.0780906816776,
+    ]);
+    // Check Gisida component map layers
+    expect((mapProps as any).layers.map((e: any) => e.key)).toMatchSnapshot('GisidaLite layers');
+
     // how about the selectPlan component
     expect(wrapper.find('SelectPlan').length).toEqual(1);
 
@@ -136,7 +158,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
-  it('works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks)', () => {
+  it('works with redux store (gisidawrapper component that loads jurisdiction without structures and tasks)', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     store.dispatch(fetchGoals([fixtures.goal3 as goalDucks.Goal]));
@@ -164,7 +186,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
     // case confirmation activity link si not clickable
     expect(wrapper.find(CASE_CONFIRMATION_GOAL_ID)).toMatchSnapshot('Should not be clickable tag');
@@ -193,6 +218,46 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     // does not render the current plan under other plans select dropdown
     const otherPlansSelectProps = wrapper.find(SelectComponent).props();
     expect(otherPlansSelectProps.plansArray).toEqual([]);
+
+    wrapper.unmount();
+  });
+
+  it('works correctly with Redux store when there is just one goal', async () => {
+    const mock: any = jest.fn();
+    const supersetServiceMock: any = jest.fn(async () => []);
+    store.dispatch(fetchGoals(processedOneGoalGoals));
+    store.dispatch(fetchJurisdictions(processedOneGoalJurisdiction));
+    store.dispatch(fetchPlans(processedOneGoalPlan));
+    store.dispatch(fetchTasks(processedOneGoalTasks));
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: processedOneGoalPlan[0].id },
+        path: `${FI_SINGLE_URL}/:id`,
+        url: `${FI_SINGLE_URL}/13`,
+      },
+      pointFeatureCollection: wrapFeatureCollection(processedOneGoalTasks),
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    const mapProps = wrapper.find('MemoizedGisidaLiteMock').props();
+    expect((mapProps as any).mapCenter).toEqual([99.36859975, 11.33824805]);
+    expect((mapProps as any).mapBounds).toEqual([99.3564178, 11.3296907, 99.3807817, 11.3468054]);
+    // Check Gisida component map layers
+    expect((mapProps as any).layers.map((e: any) => e.key)).toMatchSnapshot('GisidaLite layers');
 
     wrapper.unmount();
   });
@@ -248,10 +313,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       adhoc_filters: [
         {
           clause: 'WHERE',
-          comparator: '10f9e9fa-ce34-4b27-a961-72fab5206ab6',
-          expressionType: 'SIMPLE',
-          operator: '==',
-          subject: 'plan_id',
+          expressionType: 'SQL',
+          sqlExpression: `(plan_id = '10f9e9fa-ce34-4b27-a961-72fab5206ab6') OR 
+            (jurisdiction_id = '450fc15b-5bd2-468a-927a-49cb10d3bcac' AND goal_id = 'Case_Confirmation')`,
         },
       ],
       row_limit: 3000,
@@ -280,7 +344,6 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
           },
         ],
       ],
-      [3000, [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }]],
       [
         3000,
         [{ comparator: fixtures.plan1.plan_id, operator: '==', subject: 'plan_id' }],
@@ -290,14 +353,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         3000,
         [
           {
-            comparator: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
-            operator: '==',
-            subject: 'jurisdiction_id',
-          },
-          {
-            comparator: 'Case Confirmation',
-            operator: '==',
-            subject: 'action_code',
+            sqlExpression: `(plan_id = '10f9e9fa-ce34-4b27-a961-72fab5206ab6') OR 
+            (jurisdiction_id = '450fc15b-5bd2-468a-927a-49cb10d3bcac' AND goal_id = 'Case_Confirmation')`,
           },
         ],
       ],
@@ -309,31 +366,12 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       [0, jurisdictionParams],
       [3, goalParams],
       [4, supersetParams],
-      [
-        4,
-        {
-          adhoc_filters: [
-            {
-              clause: 'WHERE',
-              comparator: '450fc15b-5bd2-468a-927a-49cb10d3bcac',
-              expressionType: 'SIMPLE',
-              operator: '==',
-              subject: 'jurisdiction_id',
-            },
-            {
-              clause: 'WHERE',
-              comparator: 'Case Confirmation',
-              expressionType: 'SIMPLE',
-              operator: '==',
-              subject: 'action_code',
-            },
-          ],
-          row_limit: 3000,
-        },
-      ],
+      ['123', jurisdictionParams],
     ];
 
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
     expect(supersetServiceMock.mock.calls).toEqual(callList);
     expect(supersetServiceMock).toHaveBeenCalledTimes(6);
     expect((superset.getFormData as any).mock.calls).toEqual(getformDataCallList);
@@ -357,7 +395,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
     expect(supersetServiceMock.mock.calls.length).toEqual(1);
     wrapper.unmount();
   });
@@ -382,12 +422,14 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
     expect(supersetServiceMock.mock.calls.length).toEqual(6);
     wrapper.unmount();
   });
 
-  it('displays the correct badge and mark complete when plan status is active', () => {
+  it('displays the correct badge and mark complete when plan status is active', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -413,12 +455,16 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(wrapper.find('Badge').prop('color')).toEqual('warning');
     expect(toJson(wrapper.find('MarkCompleteLink'))).toMatchSnapshot('mark complete link');
     wrapper.unmount();
   });
 
-  it('displays the correct badge and mark complete link when the plan status is draft', () => {
+  it('displays the correct badge and mark complete link when the plan status is draft', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -444,12 +490,16 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(wrapper.find('Badge').prop('color')).toEqual('warning');
     expect(wrapper.find('MarkCompleteLink').isEmptyRender()).toBe(true);
     wrapper.unmount();
   });
 
-  it('displays the correct badge and mark complete link when the plan status is complete', () => {
+  it('displays the correct badge and mark complete link when the plan status is complete', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -475,12 +525,16 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(wrapper.find('Badge').prop('color')).toEqual('success');
     expect(wrapper.find('MarkCompleteLink').isEmptyRender()).toBe(true);
     wrapper.unmount();
   });
 
-  it('renders correct detail view when plan focus investigation reason is routine', () => {
+  it('renders correct detail view when plan focus investigation reason is routine', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -506,6 +560,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(
       toJson(
         wrapper
@@ -517,7 +575,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     wrapper.unmount();
   });
 
-  it('renders correct detail view when plan focus investigation reason is case triggered', () => {
+  it('renders correct detail view when plan focus investigation reason is case triggered', async () => {
     const mock: any = jest.fn();
     const supersetServiceMock: any = jest.fn(async () => []);
     const props = {
@@ -543,6 +601,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         <SingleActiveFIMap {...props} />
       </Router>
     );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     expect(
       toJson(
         wrapper
@@ -561,6 +623,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const fetchPlansActionCreatorMock: any = jest.fn();
     const fetchStructuresActionCreatorMock: any = jest.fn();
     const fetchTasksActionCreatorMock: any = jest.fn();
+    const fetchIndexCasesDetailsActionCreator: any = jest.fn();
     const plan = fixtures.plan1;
     void utils.fetchData(
       fetchGoalsActionsCreatorMock,
@@ -568,6 +631,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       fetchPlansActionCreatorMock,
       fetchStructuresActionCreatorMock,
       fetchTasksActionCreatorMock,
+      fetchIndexCasesDetailsActionCreator,
       plan,
       supersetServiceMock
     );
@@ -582,12 +646,14 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const fetchPlansActionCreatorMock: any = jest.fn();
     const fetchStructuresActionCreatorMock: any = jest.fn();
     const fetchTasksActionCreatorMock: any = jest.fn();
+    const fetchIndexCasesDetailsActionCreator: any = jest.fn();
     void utils.fetchData(
       fetchGoalsActionsCreatorMock,
       fetchJurisdictionsActionCreatorMock,
       fetchPlansActionCreatorMock,
       fetchStructuresActionCreatorMock,
       fetchTasksActionCreatorMock,
+      fetchIndexCasesDetailsActionCreator,
       {} as planDucks.Plan,
       supersetServiceMock
     );
@@ -603,6 +669,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     const fetchPlansActionCreatorMock: any = jest.fn();
     const fetchStructuresActionCreatorMock: any = jest.fn();
     const fetchTasksActionCreatorMock: any = jest.fn();
+    const fetchIndexCasesDetailsActionCreator: any = jest.fn();
     const plan = fixtures.plan1;
     void utils.fetchData(
       fetchGoalsActionsCreatorMock,
@@ -610,6 +677,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       fetchPlansActionCreatorMock,
       fetchStructuresActionCreatorMock,
       fetchTasksActionCreatorMock,
+      fetchIndexCasesDetailsActionCreator,
       plan,
       supersetServiceMock
     );
@@ -638,9 +706,38 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
     expect(displayErrorMock).toHaveBeenCalledTimes(6);
     wrapper.unmount();
+  });
+
+  it("should skip fetching data for slices with id '0'", async () => {
+    const envModule = require('../../../../../../configs/env');
+    envModule.SUPERSET_JURISDICTIONS_SLICE = '0';
+    envModule.SUPERSET_JURISDICTION_EVENTS_SLICE = '0';
+    envModule.SUPERSET_PLANS_SLICE = '0';
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const fetchGoalsActionsCreatorMock: any = jest.fn();
+    const fetchJurisdictionsActionCreatorMock: any = jest.fn();
+    const fetchPlansActionCreatorMock: any = jest.fn();
+    const fetchStructuresActionCreatorMock: any = jest.fn();
+    const fetchTasksActionCreatorMock: any = jest.fn();
+    const fetchIndexCasesDetailsActionCreator: any = jest.fn();
+    const plan = fixtures.plan1;
+    void utils.fetchData(
+      fetchGoalsActionsCreatorMock,
+      fetchJurisdictionsActionCreatorMock,
+      fetchPlansActionCreatorMock,
+      fetchStructuresActionCreatorMock,
+      fetchTasksActionCreatorMock,
+      fetchIndexCasesDetailsActionCreator,
+      plan,
+      supersetServiceMock
+    );
+    await new Promise<unknown>(resolve => setImmediate(resolve));
+    expect(supersetServiceMock.mock.calls.length).toBe(3);
   });
 
   it('handles fetchData promise errors correctly', async () => {
@@ -665,9 +762,39 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
     expect(displayErrorMock).toHaveBeenCalledTimes(1);
     expect(displayErrorMock).toHaveBeenCalledWith(new Error(AN_ERROR_OCCURRED));
+    wrapper.unmount();
+  });
+
+  it('should show error page when no plans or jurisdictions', async () => {
+    const supersetServiceMock: any = jest.fn(async () => []);
+    const props = {
+      match: {
+        isExact: true,
+        params: { id: fixtures.plan1.id },
+      },
+      plan: null,
+      supersetService: supersetServiceMock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedMapSingleFI {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    expect(wrapper.find('ErrorPage').length).toBeTruthy();
+    expect(wrapper.find('ErrorPage').text()).toMatchInlineSnapshot(
+      `"An error ocurred. Please try and refresh the page.The specific error is: Plan or Jurisdiction not found"`
+    );
     wrapper.unmount();
   });
 
@@ -675,7 +802,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
    * @todo Investigate why this test case that contains jest.spyon is leading to failure of other tests
    * above. It is intentionally put at the end to eliminate this
    */
-  it('selectors get called with correct arguments', () => {
+  it('selectors get called with correct arguments', async () => {
     // spy on the selectors
     const planByIdMock = jest.spyOn(planDucks, 'getPlanById');
     const currentGoalMock = jest.spyOn(goalDucks, 'getCurrentGoal');
@@ -711,6 +838,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
         </Router>
       </Provider>
     );
+    await act(async () => {
+      await flushPromises();
+    });
 
     // define expected results
     const planByIdExpected = [fixturesMap.existingState, 'ed2b4b7c-3388-53d9-b9f6-6a19d1ffde1f'];
