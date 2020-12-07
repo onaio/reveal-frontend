@@ -5,7 +5,7 @@ import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { ConnectedJurisdictionSelectionsSlider } from '..';
 import store from '../../../../../../store';
-import { fetchTree } from '../../../../../../store/ducks/opensrp/hierarchies';
+import { deforest, fetchTree } from '../../../../../../store/ducks/opensrp/hierarchies';
 import { sampleHierarchy } from '../../../../../../store/ducks/opensrp/hierarchies/tests/fixtures';
 import { fetchJurisdictionsMetadata } from '../../../../../../store/ducks/opensrp/jurisdictionsMetadata';
 import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
@@ -17,6 +17,10 @@ import { jurisdictionsMetadataArray } from '../../../../../../store/ducks/tests/
  */
 
 describe('JurisdictionAssignment/Slider', () => {
+  beforeEach(() => {
+    deforest();
+  });
+
   it('slider works correctly', () => {
     store.dispatch(fetchTree(sampleHierarchy));
     // prepare fixtures jurisdiction metadata so that it  works with mock hierarchy
@@ -64,6 +68,33 @@ describe('JurisdictionAssignment/Slider', () => {
     // the structure count should now be zero
     expect(wrapper.find('div.info-section').text()).toMatchInlineSnapshot(
       `"NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS0"`
+    );
+  });
+
+  it('works when no value from API', () => {
+    store.dispatch(fetchTree(sampleHierarchy));
+    // set value to undefined
+    const metaData = cloneDeep(jurisdictionsMetadataArray);
+    metaData[0].key = '3951';
+    (metaData[0].value as any) = undefined;
+
+    store.dispatch(fetchJurisdictionsMetadata([metaData[0]]));
+
+    const props = {
+      plan: plans[1],
+      rootJurisdictionId: '2942',
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <ConnectedJurisdictionSelectionsSlider {...props} />
+      </Provider>
+    );
+
+    wrapper.update();
+
+    expect(wrapper.find('div.info-section').text()).toMatchInlineSnapshot(
+      `"NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS159"`
     );
   });
 });
