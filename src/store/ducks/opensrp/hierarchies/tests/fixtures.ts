@@ -55,24 +55,6 @@ export const sampleHierarchy: RawOpenSRPHierarchy = {
                 },
                 parent: '3019',
               },
-              '1337': {
-                id: '1337',
-                label: 'No structure count',
-                node: {
-                  locationId: '1337',
-                  name: 'No structure count',
-                  parentLocation: {
-                    locationId: '3019',
-                    voided: false,
-                  },
-                  attributes: {
-                    // missing structureCount
-                    geographicLevel: 2,
-                  },
-                  voided: false,
-                },
-                parent: '3019',
-              },
             },
             parent: '2942',
           },
