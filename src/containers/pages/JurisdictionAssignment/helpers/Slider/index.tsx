@@ -15,6 +15,7 @@ import { ActionCreator, Store } from 'redux';
 import {
   ADJUST_SLIDER_MESSAGE,
   CONTINUE_TO_NEXT_STEP,
+  JURISDICTIONS_SELECTED,
   NUMBER_OF_STRUCTURES_IN_JURISDICTIONS,
 } from '../../../../../configs/lang';
 import { PlanDefinition } from '../../../../../configs/settings';
@@ -136,8 +137,10 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
             </Col>
           </Row>
           <Row className="auto-target-row mb-3">
-            <Col xs="12" md="12" className="slider-section py-0 px-5">
-              <p className="text-center mt-3">{jurisdictionsCount} jurisdiction(s) selected</p>
+            <Col xs="12" md="12" className="info-section py-0 px-5">
+              <p className="text-center mt-3">
+                {jurisdictionsCount} {JURISDICTIONS_SELECTED}
+              </p>
             </Col>
           </Row>
         </Col>
