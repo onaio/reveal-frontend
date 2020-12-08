@@ -1556,6 +1556,10 @@
     "message": "NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS",
     "description": "(in caps) comes before a number that represents a structure count "
   },
+  "JURISDICTIONS_SELECTED": {
+    "message": "jurisdiction(s) selected",
+    "description": "comes after a number that represents a jurisdiction count "
+  },
   "ADJUST_SLIDER_MESSAGE": {
     "message": "Adjust slider to auto-target jurisdictions",
     "description": "Label of progress-bar form element"
