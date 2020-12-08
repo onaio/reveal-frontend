@@ -30,6 +30,7 @@ import {
 } from '../../../../../../configs/lang';
 import { displayError } from '../../../../../../helpers/errors';
 import plansByUserReducer, {
+  fetchPlansByUser,
   makePlansByUserNamesSelector,
   reducerName as plansByUserReducerName,
 } from '../../../../../../store/ducks/opensrp/planIdsByUser';
@@ -103,7 +104,13 @@ const OpenSRPPlansList = (props: OpenSRPPlanListViewProps & RouteComponentProps)
   useEffect(() => {
     if (props.userName) {
       setLoadingState(true);
-      loadPlansByUserFilter(props.userName)
+      loadPlansByUserFilter(
+        props.userName,
+        fetchPlansByUser,
+        serviceClass,
+        fetchPlanRecordsCreator,
+        true
+      )
         .finally(() => setLoadingState(false))
         .catch(err => displayError(err));
     }

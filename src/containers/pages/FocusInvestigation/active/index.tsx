@@ -2,8 +2,12 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DrillDownTable } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import superset from '@onaio/superset-connector';
+import superset, {
+  SupersetAdhocFilterOption,
+  SupersetSQLFilterOption,
+} from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
+import _ from 'lodash';
 import * as React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -105,6 +109,7 @@ export interface ActiveFIProps {
   searchedTitle: string | null;
   serviceClass: typeof OpenSRPService;
   userName: string | null;
+  userPlanIds: string[] | null;
   noDataMessage: string;
 }
 
@@ -119,6 +124,7 @@ export const defaultActiveFIProps: ActiveFIProps = {
   serviceClass: OpenSRPService,
   supersetService: supersetFetch,
   userName: null,
+  userPlanIds: null,
 };
 
 interface ActiveFIState {
@@ -148,9 +154,14 @@ class ActiveFocusInvestigation extends React.Component<
     };
   }
 
-  public componentDidMount() {
-    const { userName, fetchPlansActionCreator, supersetService } = this.props;
-    const supersetParams = superset.getFormData(SUPERSET_MAX_RECORDS, supersetFIPlansParamFilters);
+  public fetchSupersetPlans(
+    supersetFilters: Array<
+      SupersetSQLFilterOption | SupersetAdhocFilterOption
+    > = supersetFIPlansParamFilters,
+    numberOfRecords: number = SUPERSET_MAX_RECORDS
+  ) {
+    const { fetchPlansActionCreator, supersetService } = this.props;
+    const supersetParams = superset.getFormData(numberOfRecords, supersetFilters);
     supersetService(SUPERSET_PLANS_SLICE, supersetParams)
       .then((result: Plan[]) => {
         if (result) {
@@ -165,6 +176,23 @@ class ActiveFocusInvestigation extends React.Component<
       .catch(err => {
         displayError(err);
       });
+  }
+
+  public getFilterOptions(userPlanIdentifiers: string[]) {
+    const superseFilters = [
+      ...supersetFIPlansParamFilters,
+      {
+        comparator: [...userPlanIdentifiers],
+        operator: 'in',
+        subject: 'plan_id',
+      },
+    ] as SupersetAdhocFilterOption[];
+    return superseFilters;
+  }
+
+  public componentDidMount() {
+    const { userName, userPlanIds } = this.props;
+    this.fetchSupersetPlans();
 
     if (userName) {
       this.setState({
@@ -178,10 +206,20 @@ class ActiveFocusInvestigation extends React.Component<
         })
         .catch(err => displayError(err));
     }
+
+    if (userName && userPlanIds && userPlanIds.length) {
+      this.setState({
+        loading: true,
+      });
+      const superseFilters = this.getFilterOptions(userPlanIds);
+      this.fetchSupersetPlans(superseFilters, userPlanIds.length);
+    }
   }
 
   public componentDidUpdate(prevProps: ActiveFIProps) {
-    const { userName } = this.props;
+    const { userName, userPlanIds } = this.props;
+    const prevUserPlanIds =
+      prevProps.userPlanIds && prevProps.userPlanIds.length ? prevProps.userPlanIds : [];
     if (userName && prevProps.userName !== userName) {
       this.setState({
         loadingPlansByUser: true,
@@ -193,6 +231,19 @@ class ActiveFocusInvestigation extends React.Component<
           });
         })
         .catch(err => displayError(err));
+    }
+    if (
+      userName &&
+      userPlanIds &&
+      userPlanIds.length &&
+      prevUserPlanIds &&
+      !_.isEqual([...userPlanIds].sort(), [...prevUserPlanIds].sort())
+    ) {
+      this.setState({
+        loading: true,
+      });
+      const superseFilters = this.getFilterOptions(userPlanIds);
+      this.fetchSupersetPlans(superseFilters, userPlanIds.length);
     }
   }
 
@@ -395,6 +446,7 @@ export { ActiveFocusInvestigation };
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
   plan: Plan | null;
+  userPlanIds: string[] | null;
   caseTriggeredPlans: Plan[] | null;
   routinePlans: Plan[] | null;
   searchedTitle: string;
@@ -447,6 +499,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
     routinePlans,
     searchedTitle,
     userName,
+    userPlanIds: planIds,
   };
 };
 

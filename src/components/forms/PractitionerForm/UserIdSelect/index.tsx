@@ -140,7 +140,6 @@ export const UserIdSelect = (props: Props) => {
    */
   const loadData = async () => {
     const allUsers = await loadUsers();
-    // setState with all unfiltered users if component is mounted
     setUsers(allUsers);
     setSelectIsLoading(false);
     // cease execution irregardless of whether component is mounted
