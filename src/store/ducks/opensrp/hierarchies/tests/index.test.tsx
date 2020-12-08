@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { cloneDeep } from 'lodash';
 import { FlushThunks } from 'redux-testkit';
 import reducer, {
   autoSelectNodes,
@@ -15,6 +16,7 @@ import reducer, {
   getNodesInSelectedTree,
   getRootByNodeId,
   getSelectedHierarchy,
+  getStructuresCount,
   getTreeById,
   reducerName,
   selectNode,
@@ -271,6 +273,61 @@ describe('reducers/opensrp/hierarchies', () => {
     }
     const nodesNumOriginally = origTree.all(node => !!node).length;
     expect(nodesNumOriginally).toEqual(64);
+  });
+
+  it('getStructuresCount works', () => {
+    // should be able to select then deselect using deselect action
+    const structureCountSelector = getStructuresCount();
+    const rootJurisdictionId = '2942';
+    const filters = {
+      planId,
+      rootJurisdictionId,
+    };
+
+    const testHierarchy = cloneDeep(sampleHierarchy);
+
+    // Add a node that does not have the structureCount field
+    (testHierarchy as any).locationsHierarchy.map['2942'].children['3019'].children['1337'] = {
+      id: '1337',
+      label: 'No structure count',
+      node: {
+        attributes: {
+          // missing structureCount
+          geographicLevel: 2,
+        },
+        locationId: '1337',
+        name: 'No structure count',
+        parentLocation: {
+          locationId: '3019',
+          voided: false,
+        },
+        voided: false,
+      },
+      parent: '3019',
+    };
+
+    store.dispatch(fetchTree(testHierarchy));
+
+    /** This function generates the callback function  */
+    const getCallback = (ids: string[]) => {
+      return (node: TreeNode, jurisdictionsIds: string[] = ids) => {
+        const isLeafNodePastThreshHold =
+          !node.hasChildren() && jurisdictionsIds.includes(node.model.id);
+        return isLeafNodePastThreshHold;
+      };
+    };
+
+    // should just work nicely
+    store.dispatch(
+      autoSelectNodes(rootJurisdictionId, getCallback(['3951']), planId, 'Auto-Selection')
+    );
+    expect(structureCountSelector(store.getState(), filters)).toEqual(159);
+
+    // should still work even when the tree node does not have a structureCount property
+    store.dispatch(
+      autoSelectNodes(rootJurisdictionId, getCallback(['1337']), planId, 'Auto-Selection')
+    );
+    expect(structureCountSelector(store.getState(), filters)).toEqual(0);
   });
 
   it('deselects nodes correctly', () => {

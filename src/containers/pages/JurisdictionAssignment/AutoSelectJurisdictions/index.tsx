@@ -257,9 +257,9 @@ export const AutoSelectView = (props: JurisdictionAssignmentViewFullProps) => {
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <TimelineSlider {...timelineSliderProps} />
       <hr />
-      {/* each of this components is a step in the auto selection journey, we start
+      {/* each of these components is a step in the auto selection journey, we start
       at the slider and go through a few tables and we should ideally end at plan assignment
-      each of this components gets a callback that is called that modifies the state of this 
+      each of this components gets a callback that is called that modifies the state of this
       container to know what is the next component to be rendered in the below section */}
       {step !== TIMELINE_SLIDER_STEP1 && (
         <div className="map-resource-widget">
