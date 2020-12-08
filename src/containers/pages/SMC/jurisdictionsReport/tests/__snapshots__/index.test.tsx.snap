@@ -1,0 +1,153 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/SMC/JurisdictionReport renders correctly 1`] = `
+Object {
+  "LegendIndicatorComp": [Function],
+  "baseURL": "/intervention/smc/report",
+  "cellComponent": [Function],
+  "columnsGetter": [Function],
+  "fetchJurisdictions": [Function],
+  "fetchPlans": [Function],
+  "focusAreaColumn": "smcJurisdictionsColumns",
+  "focusAreaLevel": "2",
+  "hasChildren": [Function],
+  "history": Object {
+    "action": "POP",
+    "block": [Function],
+    "createHref": [Function],
+    "go": [Function],
+    "goBack": [Function],
+    "goForward": [Function],
+    "length": 1,
+    "listen": [Function],
+    "location": Object {
+      "hash": "",
+      "pathname": "/",
+      "search": "",
+      "state": undefined,
+    },
+    "push": [Function],
+    "replace": [Function],
+  },
+  "jurisdictionColumn": "smcJurisdictionsColumns",
+  "jurisdictions": Array [
+    Object {
+      "distribution_coverage": 0.4828711256117455,
+      "distribution_coverage_total": 0.08054421768707483,
+      "distribution_effectivness": 0.15384615384615385,
+      "eligible_children": 288,
+      "found_coverage": 0.16680272108843539,
+      "id": "ad1bb874-b449-547a-bbff-ec207830e5d9",
+      "is_virtual_jurisdiction": 1,
+      "jurisdiction_depth": 0,
+      "jurisdiction_id": "12eaba32-55bb-4a67-b554-a28d9ab8e02a",
+      "jurisdiction_name": "Nigeria",
+      "jurisdiction_name_path": Array [],
+      "jurisdiction_parent_id": "",
+      "jurisdiction_path": Array [],
+      "operational_areas_visited": "8/52",
+      "plan_id": "12a879d6-8ad8-4198-86c7-0e94f0dcc848",
+      "referral_treatment_rate": 0,
+      "referred_children": 0,
+      "total_found_structures": 613,
+      "total_structures": 3675,
+      "total_structures_recieved_spaq": 296,
+      "treated_children": 288,
+      "treatment_coverage": 1,
+    },
+  ],
+  "location": [MockFunction],
+  "match": Object {
+    "isExact": true,
+    "params": Object {
+      "planId": "12a879d6-8ad8-4198-86c7-0e94f0dcc848",
+    },
+    "path": "/intervention/mda-point/report/:planId",
+    "url": "/intervention/mda-point/report/12a879d6-8ad8-4198-86c7-0e94f0dcc848",
+  },
+  "pageTitle": "SMC Reporting",
+  "plan": Object {
+    "jurisdiction_root_parent_ids": Array [
+      "12eaba32-55bb-4a67-b554-a28d9ab8e02a",
+    ],
+    "plan_date": "2020-10-09",
+    "plan_effective_period_end": "2021-09-09",
+    "plan_effective_period_start": "2020-10-09",
+    "plan_id": "12a879d6-8ad8-4198-86c7-0e94f0dcc848",
+    "plan_intervention_type": "MDA",
+    "plan_name": "Nigeria-Cycle4-SMC-Implementation-Plan",
+    "plan_status": "active",
+    "plan_title": "Nigeria Cycle 4 - SMC Implementation Plan",
+    "plan_version": "2",
+  },
+  "reportingPlanSlice": "1",
+  "service": [MockFunction] {
+    "calls": Array [
+      Array [
+        "1",
+        Object {
+          "adhoc_filters": Array [
+            Object {
+              "clause": "WHERE",
+              "comparator": "12a879d6-8ad8-4198-86c7-0e94f0dcc848",
+              "expressionType": "SIMPLE",
+              "operator": "==",
+              "subject": "plan_id",
+            },
+          ],
+          "row_limit": 1,
+        },
+      ],
+      Array [
+        "5",
+        Object {
+          "adhoc_filters": Array [
+            Object {
+              "clause": "WHERE",
+              "comparator": "12a879d6-8ad8-4198-86c7-0e94f0dcc848",
+              "expressionType": "SIMPLE",
+              "operator": "==",
+              "subject": "plan_id",
+            },
+          ],
+          "order_by_cols": Array [
+            "[\\"jurisdiction_depth\\",+true]",
+            "[\\"jurisdiction_name\\",+true]",
+          ],
+          "row_limit": 3000,
+        },
+      ],
+    ],
+    "results": Array [
+      Object {
+        "type": "return",
+        "value": Promise {},
+      },
+      Object {
+        "type": "return",
+        "value": Promise {},
+      },
+    ],
+  },
+  "slices": Array [
+    "5",
+  ],
+}
+`;
+
+exports[`components/SMC/JurisdictionReport renders correctly 2`] = `
+Array [
+  <a
+    href="/"
+    onClick={[Function]}
+  >
+    Home
+  </a>,
+  <a
+    href="/intervention/smc/report"
+    onClick={[Function]}
+  >
+    SMC Reporting
+  </a>,
+]
+`;
