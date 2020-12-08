@@ -122,7 +122,7 @@ describe('JurisdictionAssignment/Slider', () => {
     });
     expect(wrapper.find('.risk-label').text()).toMatchInlineSnapshot(`"81%"`);
     (wrapper.find('InputRange').props() as any).onChangeComplete(81);
-    // we should now have two jurisdictions selected
+    // we should now have no jurisdictions selected
     expect(
       wrapper
         .find('div.info-section')
