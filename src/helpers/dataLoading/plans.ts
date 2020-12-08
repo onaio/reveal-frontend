@@ -30,18 +30,26 @@ export async function loadPlansByUserFilter<T>(
   userName: string,
   actionCreator: ActionCreator<FetchPlansByUserAction> = fetchPlansByUser,
   service: typeof OpenSRPService = OpenSRPService,
-  responseActionCreator?: ActionCreator<AnyAction>
+  responseActionCreator?: ActionCreator<AnyAction>,
+  extractPlans?: boolean
 ) {
   const serve = new service(`${OPENSRP_PLANS_BY_USER_FILTER}/${userName}`);
   return serve
     .list()
-    .then((response: T[] | null) => {
+    .then((response: T[] | PlanPayload[] | null) => {
       if (response === null) {
         return Promise.reject(new Error(USER_HAS_NO_PLAN_ASSIGNMENTS));
       }
       store.dispatch(actionCreator(response, userName));
       if (responseActionCreator) {
-        store.dispatch(responseActionCreator(response));
+        if (extractPlans) {
+          const extractedPlanRecords = (response as PlanPayload[])
+            .map(plan => extractPlanRecordResponseFromPlanPayload(plan))
+            .filter(plan => !!plan);
+          store.dispatch(responseActionCreator(extractedPlanRecords));
+        } else {
+          store.dispatch(responseActionCreator(response));
+        }
       }
     })
     .catch((err: Error) => {
