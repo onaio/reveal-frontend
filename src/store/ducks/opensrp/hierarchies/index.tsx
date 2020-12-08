@@ -183,7 +183,7 @@ export function deselectNode(
 /** sets nodes to selected based on calculation that you provide
  * @param rootJurisdictionId - to know what tree to target
  * @param callback - a function that dictates which nodes to be selected
- * * @param planId - the plan under which the node was selected
+ * @param planId - the plan under which the node was selected
  * @param actionBy - action by which this node was selected
  */
 export function autoSelectNodes(
