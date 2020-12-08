@@ -13,7 +13,6 @@ import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
 import { MemoizedGisidaLite } from '../../../../components/GisidaLite';
-// import GisidaWrapper from '../../../../components/GisidaWrapper';
 import NotFound from '../../../../components/NotFound';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -43,8 +42,8 @@ import {
   BUSINESS_STATUS,
   CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
   HOME_URL,
-  IRS_REPORT_STRUCTURES,
   REPORT_SMC_PLAN_URL,
+  SMC_REPORT_STRUCTURES,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
@@ -56,11 +55,11 @@ import GenericJurisdictionsReducer, {
   reducerName as GenericJurisdictionsReducerName,
 } from '../../../../store/ducks/generic/jurisdictions';
 import SMCPlansReducer, {
-  genericFetchPlans,
-  GenericPlan,
-  getPlanByIdSelector,
+  fetchSMCPlans,
+  getSMCPlanById,
   reducerName as SMCPlansReducerName,
-} from '../../../../store/ducks/generic/plans';
+  SMCPLANType,
+} from '../../../../store/ducks/generic/SMCPlans';
 import genericStructuresReducer, {
   fetchGenericStructures,
   GenericStructure,
@@ -103,11 +102,11 @@ const focusAreaSlice = slices.pop();
 interface SMCReportingMapProps {
   fetchFocusAreas: typeof fetchGenericJurisdictions;
   fetchJurisdictionsAction: typeof fetchJurisdictions;
-  fetchPlans: typeof genericFetchPlans;
+  fetchPlans: typeof fetchSMCPlans;
   fetchStructures: typeof fetchGenericStructures;
   focusArea: GenericJurisdiction | null;
   jurisdiction: Jurisdiction | null;
-  plan: GenericPlan | null;
+  plan: SMCPLANType | null;
   service: typeof supersetFetch;
   structures: StructureFeatureCollection | null;
 }
@@ -116,7 +115,7 @@ interface SMCReportingMapProps {
 const defaultProps: SMCReportingMapProps = {
   fetchFocusAreas: fetchGenericJurisdictions,
   fetchJurisdictionsAction: fetchJurisdictions,
-  fetchPlans: genericFetchPlans,
+  fetchPlans: fetchSMCPlans,
   fetchStructures: fetchGenericStructures,
   focusArea: null,
   jurisdiction: null,
@@ -152,11 +151,6 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
 
   /** async function to load the data */
   async function loadData() {
-    // console.log('test', focusAreaSlice)
-    // fetchFocusAreas(focusAreaSlice, testJurReport as any)
-    // fetchJurisdictionsAction(testJur as any)
-    // fetchPlans(testPlans as any)
-    // fetchStructures(SUPERSET_SMC_REPORTING_STRUCTURES_DATA_SLICE, testStructures as any)
     try {
       setLoading(!focusArea || !jurisdiction || !plan || !structures); // set loading when there is no data
 
@@ -214,7 +208,7 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
       await service(
         SUPERSET_SMC_REPORTING_PLANS_SLICE,
         fetchPlansParams
-      ).then((result: GenericPlan[]) => fetchPlans(result));
+      ).then((result: SMCPLANType[]) => fetchPlans(result));
     } catch (e) {
       displayError(e);
     } finally {
@@ -315,7 +309,7 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
 
   // map layers
   const jurisdictionLayers = buildJurisdictionLayers(jurisdiction);
-  const structuresLayers = buildGsLiteLayers(IRS_REPORT_STRUCTURES, null, structures as any, {
+  const structuresLayers = buildGsLiteLayers(SMC_REPORT_STRUCTURES, null, structures as any, {
     circleColor,
     polygonColor,
     polygonLineColor,
@@ -432,7 +426,7 @@ export { SMCReportingMap };
 /** interface to describe props from mapStateToProps */
 interface DispatchedStateProps {
   focusArea: GenericJurisdiction | null;
-  plan: GenericPlan | null;
+  plan: SMCPLANType | null;
   jurisdiction: Jurisdiction | null;
   structures: StructureFeatureCollection;
 }
@@ -441,7 +435,7 @@ interface DispatchedStateProps {
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planId = ownProps.match.params.planId || null;
   const jurisdictionId = ownProps.match.params.jurisdictionId || null;
-  const plan = getPlanByIdSelector(state, planId);
+  const plan = getSMCPlanById(state, planId);
   const jurisdiction = getJurisdictionById(state, jurisdictionId);
   const structures = getGenericStructures(
     state,
@@ -466,7 +460,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 const mapDispatchToProps = {
   fetchFocusAreas: fetchGenericJurisdictions,
   fetchJurisdictionsAction: fetchJurisdictions,
-  fetchPlans: genericFetchPlans,
+  fetchPlans: fetchSMCPlans,
   fetchStructures: fetchGenericStructures,
 };
 
