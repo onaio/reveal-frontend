@@ -80,7 +80,7 @@ Object {
     },
   ],
   "service": [Function],
-  "supersetReportingSlice": undefined,
+  "supersetReportingSlice": "1",
 }
 `;
 
