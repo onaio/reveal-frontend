@@ -22,6 +22,7 @@ import { RISK_LABEL } from '../../../../../constants';
 import hierarchyReducer, {
   autoSelectNodes,
   fetchTree,
+  getAllSelectedNodes,
   getStructuresCount,
   getTreeById,
   reducerName as hierarchyReducerName,
@@ -44,7 +45,8 @@ reducerRegistry.register(hierarchyReducerName, hierarchyReducer);
 interface Props {
   rootJurisdictionId: string;
   tree?: TreeNode;
-  structuresCount: number;
+  jurisdictionsCount: number /** number of selected jurisdictions */;
+  structuresCount: number /** number of selected structures */;
   fetchJurisdictionsMetadataCreator: ActionCreator<FetchJurisdictionsMetadataAction>;
   jurisdictionsMetadata: JurisdictionsMetadata[];
   autoSelectCreator: typeof autoSelectNodes;
@@ -57,6 +59,7 @@ const defaultProps = {
   autoSelectCreator: autoSelectNodes,
   fetchJurisdictionsMetadataCreator: fetchJurisdictionsMetadata,
   fetchTreeCreator: fetchTree,
+  jurisdictionsCount: 0,
   jurisdictionsMetadata: [],
   onClickNext: () => {
     return;
@@ -75,6 +78,7 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
     rootJurisdictionId,
     structuresCount,
     autoSelectCreator,
+    jurisdictionsCount,
     jurisdictionsMetadata,
     plan,
     tree,
@@ -110,7 +114,7 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
       <Row>
         <Col xs="12" md={{ size: 8, offset: 2 }} style={{ textAlign: 'center' }}>
           <h4 className="mb-5 font-weight-bold">{ADJUST_SLIDER_MESSAGE}</h4>
-          <Row className="auto-target-row mb-3">
+          <Row className="auto-target-row">
             <Col xs="12" md={6} className="slider-section py-3 px-5">
               <p>
                 {RISK_LABEL}&nbsp;&nbsp;<span className="risk-label">{`${value}%`}</span>
@@ -131,6 +135,11 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
               <p>{structuresCount}</p>
             </Col>
           </Row>
+          <Row className="auto-target-row mb-3">
+            <Col xs="12" md="12" className="slider-section py-0 px-5">
+              <p className="text-center mt-3">{jurisdictionsCount} jurisdiction(s) selected</p>
+            </Col>
+          </Row>
         </Col>
       </Row>
       <hr />
@@ -144,7 +153,10 @@ export const JurisdictionSelectionsSlider = (props: Props) => {
 JurisdictionSelectionsSlider.defaultProps = defaultProps;
 
 /** map state to props */
-export type MapStateToProps = Pick<Props, 'structuresCount' | 'tree' | 'jurisdictionsMetadata'>;
+export type MapStateToProps = Pick<
+  Props,
+  'structuresCount' | 'tree' | 'jurisdictionsCount' | 'jurisdictionsMetadata'
+>;
 /** map dispatch to action creators */
 export type MapDispatchToProps = Pick<
   Props,
@@ -152,6 +164,7 @@ export type MapDispatchToProps = Pick<
 >;
 
 const structureCountSelector = getStructuresCount();
+const selectedJurisdictionSelector = getAllSelectedNodes();
 const treeSelector = getTreeById();
 
 const mapStateToProps = (state: Partial<Store>, ownProps: Props): MapStateToProps => {
@@ -160,9 +173,18 @@ const mapStateToProps = (state: Partial<Store>, ownProps: Props): MapStateToProp
     rootJurisdictionId: ownProps.rootJurisdictionId,
   };
   const structuresCount = structureCountSelector(state, filters);
+  const selectedJurisdictions = selectedJurisdictionSelector(state, {
+    leafNodesOnly: true,
+    ...filters,
+  });
   const tree = treeSelector(state, filters);
   const jurisdictionsMetadata = getJurisdictionsMetadata(state);
-  return { structuresCount, tree, jurisdictionsMetadata };
+  return {
+    jurisdictionsCount: selectedJurisdictions.length,
+    jurisdictionsMetadata,
+    structuresCount,
+    tree,
+  };
 };
 
 const mapDispatchToProps: MapDispatchToProps = {
