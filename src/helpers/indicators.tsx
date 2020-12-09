@@ -235,7 +235,7 @@ export function renderPercentage(cell: Cell) {
   // determine if cell.value is a number
   const isNumber = !Number.isNaN(Number(cell.value));
 
-  return isNumber ? percentage(cell.value, 2).value : 'NaN';
+  return isNumber ? percentage(cell.value, 2).value : '';
 }
 
 /** default drillDown CellComponent for jurisdiction reporting

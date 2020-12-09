@@ -4,7 +4,12 @@ import { PERSONS, STRUCTURES } from '../../configs/lang';
 import { indicatorThresholdsIRS } from '../../configs/settings';
 import { Goal } from '../../store/ducks/goals';
 import * as fixtures from '../../store/ducks/tests/fixtures';
-import { getGoalReport, getIRSThresholdAdherenceIndicator, goalRatioAchieved } from '../indicators';
+import {
+  getGoalReport,
+  getIRSThresholdAdherenceIndicator,
+  goalRatioAchieved,
+  renderPercentage,
+} from '../indicators';
 
 describe('helpers/indicators', () => {
   it('goalPercentAchieved works', () => {
@@ -128,5 +133,12 @@ describe('helpers/indicators', () => {
     expect(
       getIRSThresholdAdherenceIndicator({ value: ':)' } as Cell, indicatorThresholdsIRS)
     ).toMatchSnapshot('invalid number');
+  });
+
+  it('renderPercentage works', () => {
+    expect(renderPercentage({ value: 0.91 } as Cell)).toEqual('91.00%');
+    expect(renderPercentage({ value: 0.176666666 } as Cell)).toEqual('17.67%');
+    expect(renderPercentage({ value: 1333.37 } as Cell)).toEqual('133337.00%');
+    expect(renderPercentage({ value: 'mosh' } as Cell)).toEqual('');
   });
 });
