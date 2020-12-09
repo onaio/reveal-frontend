@@ -16,7 +16,7 @@ import {
   ORANGE_THRESHOLD,
   YELLOW_THRESHOLD,
 } from '../configs/settings';
-import { BLOOD_SCREENING_CODE, CASE_CONFIRMATION_CODE } from '../constants';
+import { BLOOD_SCREENING_CODE, CASE_CONFIRMATION_CODE, INHERIT } from '../constants';
 import { IndicatorThresholdItemPercentage, roundToPrecision } from '../helpers/utils';
 import { Goal } from '../store/ducks/goals';
 
@@ -201,11 +201,11 @@ export function getIRSThresholdAdherenceIndicator(
   // determine if cell.value is a number
   const isNumber = !Number.isNaN(Number(cell.value));
   // determine cell background color
-  const cellColor = thresholds ? getThresholdColor(cell, thresholds) : WHITE;
+  const cellColor = isNumber ? (thresholds ? getThresholdColor(cell, thresholds) : WHITE) : INHERIT;
 
   return (
     <div className="irs-report-indicator-container" style={{ backgroundColor: cellColor }}>
-      {isNumber ? IndicatorThresholdItemPercentage(cell.value) : 'NaN'}
+      {isNumber ? IndicatorThresholdItemPercentage(cell.value) : ''}
     </div>
   );
 }
