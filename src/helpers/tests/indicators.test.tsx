@@ -1,8 +1,10 @@
 import { map } from 'lodash';
+import { Cell } from 'react-table';
 import { PERSONS, STRUCTURES } from '../../configs/lang';
+import { indicatorThresholdsIRS } from '../../configs/settings';
 import { Goal } from '../../store/ducks/goals';
 import * as fixtures from '../../store/ducks/tests/fixtures';
-import { getGoalReport, goalRatioAchieved } from '../indicators';
+import { getGoalReport, getIRSThresholdAdherenceIndicator, goalRatioAchieved } from '../indicators';
 
 describe('helpers/indicators', () => {
   it('goalPercentAchieved works', () => {
@@ -108,5 +110,23 @@ describe('helpers/indicators', () => {
       prettyPercentAchieved: '60%',
       targetValue: 5,
     });
+  });
+
+  it('getIRSThresholdAdherenceIndicator works', () => {
+    expect(
+      getIRSThresholdAdherenceIndicator({ value: 0.91 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.91');
+    expect(
+      getIRSThresholdAdherenceIndicator({ value: 0.81 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.81');
+    expect(
+      getIRSThresholdAdherenceIndicator({ value: 0.21 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.21');
+    expect(
+      getIRSThresholdAdherenceIndicator({ value: 0.11 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.11');
+    expect(
+      getIRSThresholdAdherenceIndicator({ value: ':)' } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('invalid number');
   });
 });
