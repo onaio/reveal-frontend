@@ -517,6 +517,7 @@ export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
   'Search active focus investigations'
 );
 export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
+export const MDA_TITLE = translate('MDA_TITLE', 'MDA');
 export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');
 export const DYNAMIC_FI_TITLE = translate('DYNAMIC_FI_TITLE', 'Dynamic FI');
 export const DYNAMIC_IRS_TITLE = translate('DYNAMIC_IRS_TITLE', 'Dynamic IRS');

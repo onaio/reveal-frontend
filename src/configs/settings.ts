@@ -140,7 +140,9 @@ import {
   LARVAL_DIPPING_ACTIVITY_CODE,
   LARVAL_DIPPING_CODE,
   LOW_PRIORITY,
+  MDA_ADHERENCE,
   MDA_ADHERENCE_CODE,
+  MDA_ADHERENCE_TITLE,
   MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
   MDA_POINT_ADVERSE_EFFECTS_CODE,
   MDA_POINT_DISPENSE_ACTIVITY_CODE,
@@ -397,7 +399,7 @@ export interface PlanAction {
 
 /** Plan Goal detailQuantity */
 export interface PlanGoaldetailQuantity {
-  comparator: '>=' | '<=';
+  comparator: '>=' | '<=' | '&amp;amp;gt;=';
   unit: GoalUnit;
   value: number;
 }
@@ -450,6 +452,7 @@ export const PlanActivityTitles = [
   DYNAMIC_IRS_ACTIVITY_CODE,
   DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
   DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
+  MDA_ADHERENCE,
 ] as const;
 
 /** default plan activities */
@@ -524,6 +527,46 @@ export const planActivities: PlanActivities = {
           },
           due: '',
           measure: IRS_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+
+  MDAAdherence: {
+    action: {
+      code: MDA_ADHERENCE_CODE,
+      description:
+        'Visit all residential structures (100%) and confirm adherence of each registered person',
+      goalId: 'MDA_Dispense',
+      identifier: '',
+      prefix: 3,
+      reason: ROUTINE,
+      subjectCodableConcept: {
+        text: 'Person',
+      },
+      taskTemplate: 'MDA_Adherence',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: MDA_ADHERENCE_TITLE,
+    },
+    goal: {
+      description:
+        'Visit all residential structures (100%) and confirm adherence of each registered person',
+      id: 'MDA_Adherence',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '&amp;amp;gt;=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: 'Percent of dispense recipients',
         },
       ],
     },

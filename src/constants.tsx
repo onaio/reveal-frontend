@@ -195,6 +195,7 @@ export const DYNAMIC_BCC_ACTIVITY_CODE = 'dynamicBCC';
 export const DYNAMIC_IRS_ACTIVITY_CODE = 'dynamicIRS';
 export const DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE = 'dynamicCommunityDispenseMDA';
 export const DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE = 'dynamicCommunityAdherenceMDA';
+export const MDA_ADHERENCE = 'MDAAdherence';
 
 // task action codes
 export const BCC_CODE = 'BCC';
@@ -212,6 +213,7 @@ export const GOAL_CONFIRMATION_GOAL_ID = 'Case_Confirmation';
 export const GOAL_ID = 'goal_id';
 
 export const CREATE_TYPE = 'create';
+export const MDA_ADHERENCE_TITLE = 'MDA Round 1 Adherence';
 
 // dynamic plan activities
 export const NAMED_EVENT_TRIGGER_TYPE = 'named-event';
