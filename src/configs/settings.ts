@@ -143,6 +143,8 @@ import {
   MDA_ADHERENCE,
   MDA_ADHERENCE_CODE,
   MDA_ADHERENCE_TITLE,
+  MDA_DISPENSE,
+  MDA_DISPENSE_TITLE,
   MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
   MDA_POINT_ADVERSE_EFFECTS_CODE,
   MDA_POINT_DISPENSE_ACTIVITY_CODE,
@@ -453,6 +455,7 @@ export const PlanActivityTitles = [
   DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
   DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
   MDA_ADHERENCE,
+  MDA_DISPENSE,
 ] as const;
 
 /** default plan activities */
@@ -531,7 +534,6 @@ export const planActivities: PlanActivities = {
       ],
     },
   },
-
   MDAAdherence: {
     action: {
       code: MDA_ADHERENCE_CODE,
@@ -567,6 +569,45 @@ export const planActivities: PlanActivities = {
           },
           due: '',
           measure: 'Percent of dispense recipients',
+        },
+      ],
+    },
+  },
+  MDADispense: {
+    action: {
+      code: MDA_POINT_DISPENSE_CODE,
+      description:
+        'Visit all residential structures (100%) and dispense prophylaxis to each registered person',
+      goalId: 'MDA_Dispense',
+      identifier: '',
+      prefix: 2,
+      reason: ROUTINE,
+      subjectCodableConcept: {
+        text: 'Person',
+      },
+      taskTemplate: 'MDA_Dispense',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: MDA_DISPENSE_TITLE,
+    },
+    goal: {
+      description:
+        'Visit all residential structures (100%) dispense prophylaxis to each registered person',
+      id: 'MDA_Dispense',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '&amp;amp;gt;=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: 'Percent of Registered person(s)',
         },
       ],
     },
