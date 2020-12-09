@@ -6,6 +6,7 @@ import { Goal } from '../../store/ducks/goals';
 import * as fixtures from '../../store/ducks/tests/fixtures';
 import {
   getGoalReport,
+  getIRSLiteThresholdAdherenceIndicator,
   getIRSThresholdAdherenceIndicator,
   goalRatioAchieved,
   renderPercentage,
@@ -132,6 +133,24 @@ describe('helpers/indicators', () => {
     ).toMatchSnapshot('0.11');
     expect(
       getIRSThresholdAdherenceIndicator({ value: ':)' } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('invalid number');
+  });
+
+  it('getIRSLiteThresholdAdherenceIndicator works', () => {
+    expect(
+      getIRSLiteThresholdAdherenceIndicator({ value: 0.91 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.91');
+    expect(
+      getIRSLiteThresholdAdherenceIndicator({ value: 0.81 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.81');
+    expect(
+      getIRSLiteThresholdAdherenceIndicator({ value: 0.21 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.21');
+    expect(
+      getIRSLiteThresholdAdherenceIndicator({ value: 0.11 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.11');
+    expect(
+      getIRSLiteThresholdAdherenceIndicator({ value: ':)' } as Cell, indicatorThresholdsIRS)
     ).toMatchSnapshot('invalid number');
   });
 
