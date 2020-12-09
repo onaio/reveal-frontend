@@ -12,7 +12,6 @@ import {
   IndicatorThresholds,
   indicatorThresholdsIRS,
   indicatorThresholdsIRSLite,
-  irsReportingCongif,
   ORANGE_THRESHOLD,
   YELLOW_THRESHOLD,
 } from '../configs/settings';
@@ -164,29 +163,6 @@ export function getThresholdColor(
 
   // fallback to white
   return WHITE;
-}
-
-/** Renders an indicator Cell based on cell.value and threshold configs
- * @param {Cell} cell - the ReactTable.Cell being rendered in an indicator drilldown table
- * @param {string} configId - the key vause used to get the custom reporting configs
- * @returns {React.ReactElement} - the ReactTable.Cell element to be rendered for the indicator
- */
-export function getThresholdAdherenceIndicator(cell: Cell, configId: string) {
-  // determine if cell.value is a number
-  const isNumber = !Number.isNaN(Number(cell.value));
-  // get thresholds config from settings
-  const thresholds: IndicatorThresholds | null =
-    isNumber && irsReportingCongif[configId]
-      ? irsReportingCongif[configId].indicatorThresholds
-      : null;
-  // determine cell background color
-  const cellColor = thresholds ? getThresholdColor(cell, thresholds) : WHITE;
-
-  return (
-    <div className="irs-report-indicator-container" style={{ backgroundColor: cellColor }}>
-      {isNumber ? IndicatorThresholdItemPercentage(cell.value) : 'NaN'}
-    </div>
-  );
 }
 
 /** Renders an indicator Cell based on cell.value and threshold configs
