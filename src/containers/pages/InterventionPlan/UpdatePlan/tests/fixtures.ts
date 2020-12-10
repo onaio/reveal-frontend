@@ -83,7 +83,7 @@ export const updatePlanFormProps = {
     opensrpEventId: undefined,
     start: parseISO('2019-07-10T00:00:00.000Z'),
     status: 'active',
-    taskGenerationStatus: 'False',
+    taskGenerationStatus: 'internal',
     teamAssignmentStatus: '',
     title: 'TwoTwoOne_01 IRS 2019-07-10',
     version: '1',

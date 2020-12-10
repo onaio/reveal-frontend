@@ -780,7 +780,7 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
       ? (taskGenerationStatusContext[0].valueCodableConcept as taskGenerationStatusType)
       : isDynamicPlan(planObject)
       ? taskGenerationStatuses.ignore
-      : taskGenerationStatuses.False;
+      : taskGenerationStatuses.internal;
 
   const teamAssignmentStatus: string =
     teamAssignmentStatusContext.length > 0
