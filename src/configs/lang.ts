@@ -432,6 +432,16 @@ export const MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL = translate(
   'MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL',
   'Percent of people who reported adverse events'
 );
+export const MDA_ADHERENCE_TITLE = translate('MDA_ADHERENCE_TITLE', 'MDA Round 1 Adherence');
+export const MDA_DISPENSE_TITLE = translate('MDA_ADHERENCE_TITLE', 'MDA Round 1 Dispense');
+export const MDA_DISPENSE_DESCRIPTION = translate(
+  'MDA_DISPENSE_DESCRIPTION',
+  'Visit all residential structures (100%) dispense prophylaxis to each registered person'
+);
+export const MDA_ADHERENCE_DESCRIPTION = translate(
+  'MDA_ADHERENCE_DESCRIPTION',
+  'Visit all residential structures (100%) and confirm adherence of each registered person'
+);
 
 export const A1_DESCRIPTION = translate(
   'A1_DESCRIPTION',

@@ -75,6 +75,10 @@ import {
   LARVAL_DIPPING_ACTIVITY_DESCRIPTION,
   LARVAL_DIPPING_GOAL_MEASURE,
   LOW_PRIORITY_LABEL,
+  MDA_ADHERENCE_DESCRIPTION,
+  MDA_ADHERENCE_TITLE,
+  MDA_DISPENSE_DESCRIPTION,
+  MDA_DISPENSE_TITLE,
   MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION,
   MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL,
   MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION,
@@ -142,9 +146,8 @@ import {
   LOW_PRIORITY,
   MDA_ADHERENCE,
   MDA_ADHERENCE_CODE,
-  MDA_ADHERENCE_TITLE,
   MDA_DISPENSE,
-  MDA_DISPENSE_TITLE,
+  MDA_FAMILY_REGISTRATION,
   MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
   MDA_POINT_ADVERSE_EFFECTS_CODE,
   MDA_POINT_DISPENSE_ACTIVITY_CODE,
@@ -352,7 +355,12 @@ export interface PlanActionTimingPeriod {
 }
 
 /** plan action subjectCodableConcept text type  */
-export type subjectCodableConceptType = 'Family' | 'Person' | 'Location' | 'Jurisdiction';
+export type subjectCodableConceptType =
+  | 'Family'
+  | 'Person'
+  | 'Location'
+  | 'Jurisdiction'
+  | 'Residential_Structure';
 
 /** Plan Action subjectCodableConcept */
 export interface PlanActionsubjectCodableConcept {
@@ -456,6 +464,7 @@ export const PlanActivityTitles = [
   DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
   MDA_ADHERENCE,
   MDA_DISPENSE,
+  MDA_FAMILY_REGISTRATION,
 ] as const;
 
 /** default plan activities */
@@ -537,8 +546,7 @@ export const planActivities: PlanActivities = {
   MDAAdherence: {
     action: {
       code: MDA_ADHERENCE_CODE,
-      description:
-        'Visit all residential structures (100%) and confirm adherence of each registered person',
+      description: MDA_ADHERENCE_DESCRIPTION,
       goalId: 'MDA_Dispense',
       identifier: '',
       prefix: 3,
@@ -552,17 +560,17 @@ export const planActivities: PlanActivities = {
         start: '',
       },
       title: MDA_ADHERENCE_TITLE,
+      type: CREATE_TYPE,
     },
     goal: {
-      description:
-        'Visit all residential structures (100%) and confirm adherence of each registered person',
+      description: MDA_ADHERENCE_DESCRIPTION,
       id: 'MDA_Adherence',
       priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
             detailQuantity: {
-              comparator: '&amp;amp;gt;=',
+              comparator: '>=',
               unit: GoalUnit.PERCENT,
               value: 100,
             },
@@ -576,8 +584,7 @@ export const planActivities: PlanActivities = {
   MDADispense: {
     action: {
       code: MDA_POINT_DISPENSE_CODE,
-      description:
-        'Visit all residential structures (100%) and dispense prophylaxis to each registered person',
+      description: MDA_DISPENSE_DESCRIPTION,
       goalId: 'MDA_Dispense',
       identifier: '',
       prefix: 2,
@@ -591,23 +598,61 @@ export const planActivities: PlanActivities = {
         start: '',
       },
       title: MDA_DISPENSE_TITLE,
+      type: CREATE_TYPE,
     },
     goal: {
-      description:
-        'Visit all residential structures (100%) dispense prophylaxis to each registered person',
+      description: MDA_DISPENSE_DESCRIPTION,
       id: 'MDA_Dispense',
       priority: MEDIUM_PRIORITY,
       target: [
         {
           detail: {
             detailQuantity: {
-              comparator: '&amp;amp;gt;=',
+              comparator: '>=',
               unit: GoalUnit.PERCENT,
               value: 100,
             },
           },
           due: '',
           measure: 'Percent of Registered person(s)',
+        },
+      ],
+    },
+  },
+  MDAFamilyRegistration: {
+    action: {
+      code: RACD_REGISTER_FAMILY_CODE,
+      description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
+      goalId: 'RACD_register_all_families',
+      identifier: '',
+      prefix: 2,
+      reason: INVESTIGATION,
+      subjectCodableConcept: {
+        text: 'Residential_Structure',
+      },
+      taskTemplate: 'RACD_register_families',
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: REGISTER_FAMILY_ACTIVITY,
+      type: CREATE_TYPE,
+    },
+    goal: {
+      description: REGISTER_FAMILY_ACTIVITY_DESCRIPTION,
+      id: 'RACD_register_all_families',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE,
         },
       ],
     },

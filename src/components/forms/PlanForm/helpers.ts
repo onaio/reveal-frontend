@@ -63,6 +63,7 @@ import {
   LARVAL_DIPPING_ACTIVITY_CODE,
   MDA_ADHERENCE,
   MDA_DISPENSE,
+  MDA_FAMILY_REGISTRATION,
   MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
   MDA_POINT_DISPENSE_ACTIVITY_CODE,
   MOSQUITO_COLLECTION_ACTIVITY_CODE,
@@ -149,7 +150,7 @@ export const PlanSchema = Yup.object().shape({
     .required(REQUIRED),
   jurisdictions: Yup.array().of(
     Yup.object().shape({
-      id: Yup.string(), // .required(REQUIRED),
+      id: Yup.string().required(REQUIRED),
       name: Yup.string(),
     })
   ),
@@ -250,7 +251,7 @@ export const FIActivities = pick(planActivities, [
 ]);
 export const IRSActivities = pick(planActivities, [IRS_ACTIVITY_CODE]);
 export const MDAActivities = pick(planActivities, [
-  FAMILY_REGISTRATION_ACTIVITY_CODE,
+  MDA_FAMILY_REGISTRATION,
   MDA_ADHERENCE,
   MDA_DISPENSE,
 ]);
