@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`helpers/indicators getIRSLiteThresholdAdherenceIndicator works: 0.11 1`] = `
+<div
+  className="irs-report-indicator-container"
+  style={
+    Object {
+      "backgroundColor": "#dddddd",
+    }
+  }
+>
+  11%
+</div>
+`;
+
+exports[`helpers/indicators getIRSLiteThresholdAdherenceIndicator works: 0.21 1`] = `
+<div
+  className="irs-report-indicator-container"
+  style={
+    Object {
+      "backgroundColor": "#FF4136",
+    }
+  }
+>
+  21%
+</div>
+`;
+
+exports[`helpers/indicators getIRSLiteThresholdAdherenceIndicator works: 0.81 1`] = `
+<div
+  className="irs-report-indicator-container"
+  style={
+    Object {
+      "backgroundColor": "#FFDC00",
+    }
+  }
+>
+  81%
+</div>
+`;
+
+exports[`helpers/indicators getIRSLiteThresholdAdherenceIndicator works: 0.91 1`] = `
+<div
+  className="irs-report-indicator-container"
+  style={
+    Object {
+      "backgroundColor": "#2ECC40",
+    }
+  }
+>
+  91%
+</div>
+`;
+
+exports[`helpers/indicators getIRSLiteThresholdAdherenceIndicator works: invalid number 1`] = `
+<div
+  className="irs-report-indicator-container"
+  style={
+    Object {
+      "backgroundColor": "inherit",
+    }
+  }
+>
+  
+</div>
+`;
+
+exports[`helpers/indicators getIRSThresholdAdherenceIndicator works: 0.11 1`] = `
+<div
+  className="irs-report-indicator-container"
+  style={
+    Object {
+      "backgroundColor": "#dddddd",
+    }
+  }
+>
+  11%
+</div>
+`;
+
+exports[`helpers/indicators getIRSThresholdAdherenceIndicator works: 0.21 1`] = `
+<div
+  className="irs-report-indicator-container"
+  style={
+    Object {
+      "backgroundColor": "#FF4136",
+    }
+  }
+>
+  21%
+</div>
+`;
+
+exports[`helpers/indicators getIRSThresholdAdherenceIndicator works: 0.81 1`] = `
+<div
+  className="irs-report-indicator-container"
+  style={
+    Object {
+      "backgroundColor": "#FFDC00",
+    }
+  }
+>
+  81%
+</div>
+`;
+
+exports[`helpers/indicators getIRSThresholdAdherenceIndicator works: 0.91 1`] = `
+<div
+  className="irs-report-indicator-container"
+  style={
+    Object {
+      "backgroundColor": "#2ECC40",
+    }
+  }
+>
+  91%
+</div>
+`;
+
+exports[`helpers/indicators getIRSThresholdAdherenceIndicator works: invalid number 1`] = `
+<div
+  className="irs-report-indicator-container"
+  style={
+    Object {
+      "backgroundColor": "inherit",
+    }
+  }
+>
+  
+</div>
+`;
