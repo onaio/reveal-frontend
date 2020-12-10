@@ -197,8 +197,6 @@ export const DYNAMIC_IRS_ACTIVITY_CODE = 'dynamicIRS';
 export const DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE = 'dynamicCommunityDispenseMDA';
 export const DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE = 'dynamicCommunityAdherenceMDA';
 export const MDA_ADHERENCE = 'MDAAdherence';
-export const MDA_DISPENSE = 'MDADispense';
-export const MDA_FAMILY_REGISTRATION = 'MDAFamilyRegistration';
 
 // task action codes
 export const BCC_CODE = 'BCC';
