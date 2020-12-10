@@ -23,6 +23,7 @@ import {
 import { OPENSRP_PRACTITIONER_ENDPOINT, PRACTITIONERS_LIST_URL } from '../../../constants';
 import { generateNameSpacedUUID, growl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
+import { Practitioner } from '../../../store/ducks/opensrp/practitioners';
 import UserIdSelect, { OptionTypes } from './UserIdSelect';
 
 export interface PractitionerFormFields {
@@ -53,6 +54,7 @@ export const PractitionerSchema = Yup.object().shape({
 
 /** interface for props to Practitioner form */
 export interface PractitionerFormProps {
+  allPractitioners: Practitioner[];
   initialValues: PractitionerFormFields;
   disabledFields: string[];
   redirectAfterAction: string;
@@ -60,6 +62,7 @@ export interface PractitionerFormProps {
 }
 /** default values for practitioner form props */
 const defaultPractitionerFormProps: PractitionerFormProps = {
+  allPractitioners: [],
   disabledFields: [],
   initialValues: defaultInitialValues,
   redirectAfterAction: PRACTITIONERS_LIST_URL,
@@ -75,6 +78,9 @@ const PractitionerForm = (props: PractitionerFormProps) => {
 
   /** edit mode set to true if we are updating a practitioner data. */
   const editMode: boolean = initialValues.identifier !== '';
+
+  // add list of practitioners
+  UserIdSelect.defaultProps.allPractitioners = props.allPractitioners;
 
   return (
     <div className="form-container">

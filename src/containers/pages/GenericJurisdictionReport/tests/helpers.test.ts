@@ -1,4 +1,5 @@
 import superset from '@onaio/superset-connector';
+import { cloneDeep } from 'lodash';
 import { MDAJurisdictionsJSON } from '../../DynamicMDA/JurisdictionsReport/tests/fixtures';
 import * as fixtures from '../../IRS/JurisdictionsReport/fixtures';
 import * as helpers from '../helpers';
@@ -104,6 +105,20 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
     expect(
       getColumnsToUse(
         jurisdictions.concat(focusAreas),
+        jurisdictionColumn,
+        focusAreaColumn,
+        '-1', // --> something that actually cant work if "is_focus_area" fails
+        '4bcbad9e-77cd-47df-8674-fdf0fdf2d831'
+      )
+    ).toEqual(helpers.ZambiaFocusAreasColumns);
+    // now lets make the first record a virtual jurisdiction
+    const randomJurisdiction = cloneDeep(jurisdictions[0]);
+    randomJurisdiction.id = '1337';
+    randomJurisdiction.is_virtual_jurisdiction = true;
+    randomJurisdiction.jurisdiction_parent_id = '4bcbad9e-77cd-47df-8674-fdf0fdf2d831';
+    expect(
+      getColumnsToUse(
+        [randomJurisdiction].concat(jurisdictions.concat(focusAreas)),
         jurisdictionColumn,
         focusAreaColumn,
         '-1', // --> something that actually cant work if "is_focus_area" fails

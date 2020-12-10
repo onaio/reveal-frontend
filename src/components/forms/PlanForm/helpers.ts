@@ -33,6 +33,7 @@ import {
   PlanGoalDetail,
   PlanGoaldetailQuantity,
   PlanGoalTarget,
+  subjectCodableConceptType,
   taskGenerationStatuses,
   UseContext,
 } from '../../../configs/settings';
@@ -177,6 +178,8 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
       condition.push({
         description: iterator.expression.description || '',
         expression: iterator.expression.expression || '',
+        subjectCodableConceptText: (iterator.expression.subjectCodableConcept?.text ||
+          '') as subjectCodableConceptType,
       });
     }
   }
@@ -350,21 +353,18 @@ export function getPlanActivityFromActionCode(
  * @param element - form field values for one plan activity
  */
 export const getConditionFromFormField = (
-  element: PlanActivityFormFields,
-  planActivity: PlanActivity | null
+  element: PlanActivityFormFields
 ): PlanActionCondition[] | undefined => {
   return (
     element.condition &&
-    element.condition.map((item, index) => {
-      const subjectCodableConcept =
-        (planActivity &&
-          planActivity.action.condition &&
-          planActivity.action.condition[index].expression.subjectCodableConcept) ||
-        null;
+    element.condition.map(item => {
+      const subjectCodableConcept = {
+        text: item.subjectCodableConceptText,
+      };
       return {
         expression: {
           ...(item.description && { description: item.description }),
-          ...(subjectCodableConcept && { subjectCodableConcept }),
+          ...(item.subjectCodableConceptText && { subjectCodableConcept }),
           expression: item.expression,
         },
         kind: APPLICABILITY_CONDITION_KIND,
@@ -442,7 +442,7 @@ export function extractActivitiesFromPlanForm(
         };
       }
 
-      const condition = getConditionFromFormField(element, planActivity);
+      const condition = getConditionFromFormField(element);
       const trigger = getTriggerFromFormField(element);
 
       const thisActionIdentifier =

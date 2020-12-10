@@ -101,9 +101,18 @@ describe('e2e test auto-selection flow', () => {
      */
     // CWY_25 (178 structures) is selected by default during mount since it has a threshold of 80 > 0
     expect(wrapper.find('div.slider-section').text()).toMatchInlineSnapshot(`"Risk  0%00100"`);
-    expect(wrapper.find('div.info-section').text()).toMatchInlineSnapshot(
-      `"NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS178"`
-    );
+    expect(
+      wrapper
+        .find('div.info-section')
+        .first()
+        .text()
+    ).toMatchInlineSnapshot(`"NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS178"`);
+    expect(
+      wrapper
+        .find('div.info-section')
+        .last()
+        .text()
+    ).toMatchInlineSnapshot(`"1 jurisdiction(s) selected"`);
 
     // click next to proceed to the structureSummary view
     wrapper.find('JurisdictionSelectionsSlider button.btn-success').simulate('click');
@@ -364,9 +373,18 @@ describe('e2e test auto-selection flow', () => {
      */
     // CWY_25 (178 structures) is selected by default during mount since it has a threshold of 80 > 0
     expect(wrapper.find('div.slider-section').text()).toMatchInlineSnapshot(`"Risk  0%00100"`);
-    expect(wrapper.find('div.info-section').text()).toMatchInlineSnapshot(
-      `"NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS0"`
-    );
+    expect(
+      wrapper
+        .find('div.info-section')
+        .first()
+        .text()
+    ).toMatchInlineSnapshot(`"NUMBER OF STRUCTURES IN SELECTED JURISDICTIONS0"`);
+    expect(
+      wrapper
+        .find('div.info-section')
+        .last()
+        .text()
+    ).toMatchInlineSnapshot(`"0 jurisdiction(s) selected"`);
 
     // click next to proceed to the structureSummary view
     wrapper.find('JurisdictionSelectionsSlider button.btn-success').simulate('click');

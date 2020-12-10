@@ -7,6 +7,7 @@ import {
   PlanActivity,
   PlanActivityTitles,
   PlanDefinition,
+  subjectCodableConceptType,
   taskGenerationStatuses,
   useContextCodes,
 } from '../../../configs/settings';
@@ -52,6 +53,7 @@ export enum GoalUnit {
 export interface PlanActivityExpression {
   description: string;
   expression: string;
+  subjectCodableConceptText: subjectCodableConceptType;
 }
 
 /** Interface for Plan activity trigger */

@@ -5,14 +5,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Select from 'react-select';
 import { ValueType } from 'react-select/src/types';
-import { USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
+import { PRACTITIONER_REQUEST_PAGE_SIZE, USERS_REQUEST_PAGE_SIZE } from '../../../../configs/env';
 import { SELECT, USERS_FETCH_ERROR } from '../../../../configs/lang';
 import {
   OPENSRP_KEYCLOAK_PARAM,
-  OPENSRP_PRACTITIONER_ENDPOINT,
   OPENSRP_USERS_COUNT_ENDPOINT,
   OPENSRP_USERS_ENDPOINT,
 } from '../../../../constants';
+import { getAllPractitioners } from '../../../../containers/pages/PractitionerViews/helpers/serviceHooks';
 import { displayError } from '../../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -20,6 +20,7 @@ import { Practitioner } from '../../../../store/ducks/opensrp/practitioners';
 
 // props interface to UserIdSelect component
 export interface Props {
+  allPractitioners: Practitioner[];
   onChangeHandler?: (value: OptionTypes) => void;
   serviceClass: typeof OpenSRPService;
   showPractitioners: boolean /** show users that are already mapped to a practitioner */;
@@ -34,6 +35,7 @@ export interface Props {
 /** default props for UserIdSelect component */
 export const defaultProps = {
   ReactSelectDefaultValue: { label: '', value: '' },
+  allPractitioners: [] as Practitioner[],
   className: '',
   serviceClass: OpenSRPService,
   showPractitioners: false,
@@ -138,25 +140,13 @@ export const UserIdSelect = (props: Props) => {
    */
   const loadData = async () => {
     const allUsers = await loadUsers();
-    if (props.showPractitioners && isMounted.current) {
-      // setState with all unfiltered users if component is mounted
-      setUsers(allUsers);
-      setSelectIsLoading(false);
-    }
+    setUsers(allUsers);
+    setSelectIsLoading(false);
     // cease execution irregardless of whether component is mounted
     if (props.showPractitioners) {
       return;
     }
-    const practitioners: Practitioner[] = await new props.serviceClass(
-      OPENSRP_PRACTITIONER_ENDPOINT
-    ).list();
-
-    const practitionerUserIds = practitioners.map(practitioner => practitioner.userId);
-    const unMatchedUsers = allUsers.filter(user => !practitionerUserIds.includes(user.id));
-    if (isMounted.current) {
-      setUsers(unMatchedUsers);
-      setSelectIsLoading(false);
-    }
+    await getAllPractitioners(props.serviceClass, PRACTITIONER_REQUEST_PAGE_SIZE, 1, true);
   };
 
   useEffect(() => {
@@ -169,6 +159,15 @@ export const UserIdSelect = (props: Props) => {
       isMounted.current = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!props.showPractitioners) {
+      const practitionerUserIds = props.allPractitioners.map(practitioner => practitioner.userId);
+      const unMatchedUsers = users.filter(user => !practitionerUserIds.includes(user.id));
+      setUsers(unMatchedUsers);
+      setSelectIsLoading(false);
+    }
+  }, [props.allPractitioners]);
 
   const options = React.useMemo(() => {
     return users

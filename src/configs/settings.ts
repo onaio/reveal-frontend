@@ -347,9 +347,12 @@ export interface PlanActionTimingPeriod {
   start: string;
 }
 
+/** plan action subjectCodableConcept text type  */
+export type subjectCodableConceptType = 'Family' | 'Person' | 'Location' | 'Jurisdiction';
+
 /** Plan Action subjectCodableConcept */
 export interface PlanActionsubjectCodableConcept {
-  text: 'Family' | 'Person' | 'Location' | 'Jurisdiction';
+  text: subjectCodableConceptType;
 }
 
 /** Plan Expression */
@@ -990,7 +993,7 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description: 'Trigger when a Register_Structure event is submitted',
-            expression: "questionnaire = 'Register_Structure'",
+            expression: "questionnaire = 'Register_Structure' or questionnaire = 'Archive_Family'",
           },
           name: 'event-submission',
           type: NAMED_EVENT_TRIGGER_TYPE,
