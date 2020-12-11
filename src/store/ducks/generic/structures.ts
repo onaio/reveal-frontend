@@ -29,6 +29,7 @@ export interface GenericStructureProperties {
 /** GenericStructure interface */
 export interface GenericStructure {
   geojson: Feature<Geometry, GenericStructureProperties>;
+  id?: string;
   jurisdiction_id: string;
   plan_id: string | null;
   structure_id: string;
@@ -82,6 +83,21 @@ export type GenericStructureActionTypes =
   | AnyAction;
 
 // action creators
+export const processStructures = (structures: GenericStructure[]) => {
+  return structures.map(
+    (structure: GenericStructure): GenericStructure => {
+      /** ensure geojson is parsed */
+      if (typeof structure.geojson === 'string') {
+        structure.geojson = JSON.parse(structure.geojson);
+      }
+      /** ensure geometry is parsed */
+      if (typeof structure.geojson.geometry === 'string') {
+        structure.geojson.geometry = JSON.parse(structure.geojson.geometry);
+      }
+      return structure;
+    }
+  );
+};
 
 /**
  * Fetch Generic Structures action creator
@@ -91,26 +107,17 @@ export type GenericStructureActionTypes =
 export const fetchGenericStructures = (
   reducerKey: string = 'GenericStructuresById',
   objList: GenericStructure[] = []
-): FetchGenericStructuresAction => ({
-  objects: keyBy(
-    objList.map(
-      (structure: GenericStructure): GenericStructure => {
-        /** ensure geojson is parsed */
-        if (typeof structure.geojson === 'string') {
-          structure.geojson = JSON.parse(structure.geojson);
-        }
-        /** ensure geometry is parsed */
-        if (typeof structure.geojson.geometry === 'string') {
-          structure.geojson.geometry = JSON.parse(structure.geojson.geometry);
-        }
-        return structure;
-      }
-    ),
-    'structure_id'
-  ),
-  reducerKey,
-  type: GENERIC_STRUCTURES_FETCHED,
-});
+): FetchGenericStructuresAction => {
+  const objects =
+    objList.length && objList[0].id
+      ? keyBy(processStructures(objList), 'id')
+      : keyBy(processStructures(objList), 'structure_id');
+  return {
+    objects,
+    reducerKey,
+    type: GENERIC_STRUCTURES_FETCHED,
+  };
+};
 
 /** Reset generic structures state action creator
  * @param {string} reducerKey - they reducer key
