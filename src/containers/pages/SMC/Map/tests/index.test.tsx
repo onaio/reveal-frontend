@@ -8,16 +8,24 @@ import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedSMCReportingMap, { SMCReportingMap } from '..';
+import {
+  SUPERSET_SMC_REPORTING_JURISDICTIONS_DATA_SLICES,
+  SUPERSET_SMC_REPORTING_STRUCTURES_DATA_SLICE,
+} from '../../../../../configs/env';
 import { MAP, REPORT_IRS_PLAN_URL } from '../../../../../constants';
+import * as errors from '../../../../../helpers/errors';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   reducerName as GenericJurisdictionsReducerName,
+  removeGenericJurisdictions,
 } from '../../../../../store/ducks/generic/jurisdictions';
 import SMCPlansReducer, {
   reducerName as SMCPlansReducerName,
+  removeSMCPlans,
 } from '../../../../../store/ducks/generic/SMCPlans';
 import genericStructuresReducer, {
   reducerName as genericStructuresReducerName,
+  removeGenericStructures,
 } from '../../../../../store/ducks/generic/structures';
 import { SMCPlans } from '../../../../../store/ducks/generic/tests/fixtures';
 import jurisdictionReducer, {
@@ -392,5 +400,55 @@ describe('components/SMC Reports/SMCReportingMap', () => {
         .at(1)
         .text()
     ).toMatchInlineSnapshot(`"The specific error is: An Error Ocurred"`);
+  });
+
+  it('Loads error page when api fails', async () => {
+    // clear store
+    const slices = SUPERSET_SMC_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
+    const focusAreaSlice = slices.pop();
+    store.dispatch(removeSMCPlans());
+    store.dispatch(removeGenericJurisdictions(focusAreaSlice));
+    store.dispatch(removeGenericStructures(SUPERSET_SMC_REPORTING_STRUCTURES_DATA_SLICE));
+    // mocks
+    const mock: any = jest.fn();
+    const errorText = 'Unknown error occured';
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementationOnce(() => Promise.reject(errorText));
+    const displayErrorSpy = jest.spyOn(errors, 'displayError');
+
+    const props = {
+      focusArea: null,
+      history,
+      jurisdiction: null,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: 'invalid-jur-id',
+          planId: SMCPlans[0].plan_id,
+        },
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/invali-plan-id/invalid-jur-id/${MAP}`,
+      },
+      plan: null,
+      service: supersetServiceMock,
+      structures: [] as any,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <SMCReportingMap {...props} />
+      </Router>
+    );
+    await act(async () => {
+      await flushPromises();
+    });
+    wrapper.update();
+    // flashes error
+    expect(displayErrorSpy).toHaveBeenCalledTimes(1);
+    expect(displayErrorSpy.mock.calls).toEqual([[errorText]]);
+    // displays error page
+    expect(wrapper.find('.global-error-container').text()).toMatchInlineSnapshot(
+      `"An error ocurred. Please try and refresh the page.The specific error is: An Error Ocurred"`
+    );
   });
 });
