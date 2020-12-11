@@ -83,6 +83,10 @@ export type GenericStructureActionTypes =
   | AnyAction;
 
 // action creators
+/**
+ * process structures - converts structure stringfied json to json
+ * @param {GenericStructure[]} structures - list of generic structure objects
+ */
 export const processStructures = (structures: GenericStructure[]) => {
   return structures.map(
     (structure: GenericStructure): GenericStructure => {
