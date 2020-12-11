@@ -1,8 +1,16 @@
 import { map } from 'lodash';
+import { Cell } from 'react-table';
 import { PERSONS, STRUCTURES } from '../../configs/lang';
+import { indicatorThresholdsIRS } from '../../configs/settings';
 import { Goal } from '../../store/ducks/goals';
 import * as fixtures from '../../store/ducks/tests/fixtures';
-import { getGoalReport, goalRatioAchieved } from '../indicators';
+import {
+  getGoalReport,
+  getIRSLiteThresholdAdherenceIndicator,
+  getIRSThresholdAdherenceIndicator,
+  goalRatioAchieved,
+  renderPercentage,
+} from '../indicators';
 
 describe('helpers/indicators', () => {
   it('goalPercentAchieved works', () => {
@@ -108,5 +116,48 @@ describe('helpers/indicators', () => {
       prettyPercentAchieved: '60%',
       targetValue: 5,
     });
+  });
+
+  it('getIRSThresholdAdherenceIndicator works', () => {
+    expect(
+      getIRSThresholdAdherenceIndicator({ value: 0.91 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.91');
+    expect(
+      getIRSThresholdAdherenceIndicator({ value: 0.81 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.81');
+    expect(
+      getIRSThresholdAdherenceIndicator({ value: 0.21 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.21');
+    expect(
+      getIRSThresholdAdherenceIndicator({ value: 0.11 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.11');
+    expect(
+      getIRSThresholdAdherenceIndicator({ value: ':)' } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('invalid number');
+  });
+
+  it('getIRSLiteThresholdAdherenceIndicator works', () => {
+    expect(
+      getIRSLiteThresholdAdherenceIndicator({ value: 0.91 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.91');
+    expect(
+      getIRSLiteThresholdAdherenceIndicator({ value: 0.81 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.81');
+    expect(
+      getIRSLiteThresholdAdherenceIndicator({ value: 0.21 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.21');
+    expect(
+      getIRSLiteThresholdAdherenceIndicator({ value: 0.11 } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('0.11');
+    expect(
+      getIRSLiteThresholdAdherenceIndicator({ value: ':)' } as Cell, indicatorThresholdsIRS)
+    ).toMatchSnapshot('invalid number');
+  });
+
+  it('renderPercentage works', () => {
+    expect(renderPercentage({ value: 0.91 } as Cell)).toEqual('91.00%');
+    expect(renderPercentage({ value: 0.176666666 } as Cell)).toEqual('17.67%');
+    expect(renderPercentage({ value: 1333.37 } as Cell)).toEqual('133337.00%');
+    expect(renderPercentage({ value: 'mosh' } as Cell)).toEqual('');
   });
 });

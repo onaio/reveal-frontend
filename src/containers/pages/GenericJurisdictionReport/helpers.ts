@@ -459,7 +459,16 @@ export const getColumnsToUse: GetColumnsToUse = (
   focusAreaLevel: string,
   jurisdictionId: string | null
 ) => {
-  const currLevelData = jurisdiction.filter(el => el.jurisdiction_parent_id === jurisdictionId);
+  // we are finding the array of children jurisdictions that are not virtual
+  const currLevelData = jurisdiction.filter(el => {
+    if (el.jurisdiction_parent_id !== jurisdictionId) {
+      return false;
+    }
+    if (el.hasOwnProperty('is_virtual_jurisdiction') && el.is_virtual_jurisdiction === true) {
+      return false;
+    }
+    return true;
+  });
 
   // Determine if this is a focus area level by checking if "is_leaf_node" exists and is true
   // Otherwise use the focusAreaLevel

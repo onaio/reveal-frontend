@@ -177,6 +177,7 @@ export const GREEN = 'Green';
 export const YELLOW = 'Yellow';
 export const ORANGE = 'Orange';
 export const RED = 'Red';
+export const INHERIT = 'inherit';
 
 // plan activity codes
 export const CASE_CONFIRMATION_ACTIVITY_CODE = 'caseConfirmation';
