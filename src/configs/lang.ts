@@ -92,7 +92,7 @@ export const SIGN_OUT = translate('SIGN_OUT', 'Sign Out');
 
 export const MAP_LOAD_ERROR = translate('MAP_LOAD_ERROR', 'Could not load the map');
 export const AN_ERROR_OCCURRED = translate('AN_ERROR_OCCURRED', 'An Error Ocurred');
-export const ERROR_LOADING_ITEMS = translate('ERROR_LOADING_ITEMS', 'Error loading points on map');
+export const ERROR_LOADING_ITEMS = translate('ERROR_LOADING_ITEMS', 'Could not load points on map');
 export const PLEASE_FIX_THESE_ERRORS = translate(
   'PLEASE_FIX_THESE_ERRORS',
   'Please fix these errors'

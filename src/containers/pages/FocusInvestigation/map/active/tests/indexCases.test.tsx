@@ -250,7 +250,7 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     });
 
     expect(wrapper.find('GisidaLite').text()).toEqual(
-      'An error ocurred. Please try and refresh the page.The specific error is: Error loading points on map'
+      'An error ocurred. Please try and refresh the page.The specific error is: Could not load points on map'
     );
   });
 
