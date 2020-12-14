@@ -99,10 +99,12 @@ export const gsLiteStyle: Style | string = DIGITAL_GLOBE_CONNECT_ID
  * gets map zoom, center and bounds form structures or jurisdictions
  * @param {StructureFeatureCollection | null} structures - structure points
  * @param {Jurisdiction | null} jurisdiction - jurisdiction
+ * @param {[number, number]} dimensions - map dimensions
  */
 export const getZoomCenterAndBounds = (
   structures: StructureFeatureCollection | null,
-  jurisdiction: Jurisdiction | null
+  jurisdiction: Jurisdiction | null,
+  dimensions: [number, number]
 ) => {
   let mapCenter;
   let mapBounds;
@@ -115,7 +117,7 @@ export const getZoomCenterAndBounds = (
   }
   // get map zoom and center values
   if (mapBounds) {
-    const centerAndZoom = viewport(mapBounds, [600, 400]);
+    const centerAndZoom = viewport(mapBounds, dimensions);
     mapCenter = centerAndZoom.center;
     zoom = centerAndZoom.zoom;
   }

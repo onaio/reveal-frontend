@@ -44,6 +44,7 @@ import { indicatorThresholdsIRS } from '../../../../configs/settings';
 import {
   BUSINESS_STATUS,
   CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  DefaultMapDimensions,
   HOME_URL,
   IRS_REPORT_STRUCTURES,
   MULTI_POLYGON,
@@ -311,7 +312,11 @@ const IRSReportingMap = (props: IRSReportingMapProps & RouteComponentProps<Route
   };
 
   // get map zoom, center and bounds
-  const { zoom, mapBounds, mapCenter } = getZoomCenterAndBounds(structures, jurisdiction);
+  const { zoom, mapBounds, mapCenter } = getZoomCenterAndBounds(
+    structures,
+    jurisdiction,
+    DefaultMapDimensions
+  );
 
   // define circle paint colors
   const circleColor: CircleColor = {

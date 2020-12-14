@@ -40,6 +40,7 @@ import { indicatorThresholdsIRSLite } from '../../../../configs/settings';
 import {
   BUSINESS_STATUS,
   CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  DefaultMapDimensions,
   HOME_URL,
   IRS_REPORT_STRUCTURES,
   REPORT_IRS_LITE_PLAN_URL,
@@ -292,7 +293,11 @@ const IRSLiteReportingMap = (
   };
 
   // get map zoom, center and bounds
-  const { zoom, mapBounds, mapCenter } = getZoomCenterAndBounds(structures, jurisdiction);
+  const { zoom, mapBounds, mapCenter } = getZoomCenterAndBounds(
+    structures,
+    jurisdiction,
+    DefaultMapDimensions
+  );
 
   // define polygon paint colors
   const polygonColor: PolygonColor = {
