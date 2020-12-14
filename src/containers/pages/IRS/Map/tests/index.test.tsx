@@ -10,6 +10,7 @@ import { act } from 'react-dom/test-utils';
 import { Helmet } from 'react-helmet';
 import { Router } from 'react-router';
 import { IRSReportingMap } from '../';
+import { GisidaLiteProps } from '../../../../../components/GisidaLite';
 import { JURISDICTION_NOT_FOUND, PLAN_NOT_FOUND } from '../../../../../configs/lang';
 import { MAP, MULTI_POLYGON, POINT, POLYGON, REPORT_IRS_PLAN_URL } from '../../../../../constants';
 import * as errors from '../../../../../helpers/errors';
@@ -586,6 +587,70 @@ describe('components/IRS Reports/IRSReportingMap', () => {
       [new Error(JURISDICTION_NOT_FOUND)],
       [new Error(JURISDICTION_NOT_FOUND)],
       [new Error(PLAN_NOT_FOUND)],
+    ]);
+  });
+
+  it('renders map without structures', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const mock: any = jest.fn();
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+
+    const focusArea = getGenericJurisdictionByJurisdictionId(
+      store.getState(),
+      'zm-focusAreas',
+      '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
+    );
+
+    const jurisdiction: any = getJurisdictionById(
+      store.getState(),
+      '0dc2d15b-be1d-45d3-93d8-043a3a916f30'
+    );
+
+    const props = {
+      focusArea,
+      history,
+      jurisdiction,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: '0dc2d15b-be1d-45d3-93d8-043a3a916f30',
+          planId: (plans[0] as GenericPlan).plan_id,
+        },
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/${
+          (plans[0] as GenericPlan).plan_id
+        }/0dc2d15b-be1d-45d3-93d8-043a3a916f30/${MAP}`,
+      },
+      plan: plans[0] as GenericPlan,
+      service: supersetServiceMock,
+      structures: null,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSReportingMap {...props} />
+      </Router>
+    );
+    await act(async () => {
+      await flushPromises();
+    });
+    wrapper.update();
+    const helmet = Helmet.peek();
+    expect(helmet.title).toEqual('IRS 2019-09-05 TEST: Akros_1');
+    // map zoom, mapCenter and Bounds are generated without structures
+    expect(wrapper.find('MemoizedGisidaLiteMock').length).toEqual(1);
+    expect((wrapper.find('MemoizedGisidaLiteMock').props() as GisidaLiteProps).zoom).toEqual(17);
+    expect((wrapper.find('MemoizedGisidaLiteMock').props() as GisidaLiteProps).mapCenter).toEqual([
+      28.3515494577913,
+      -15.418937262794401,
+    ]);
+    expect((wrapper.find('MemoizedGisidaLiteMock').props() as GisidaLiteProps).mapBounds).toEqual([
+      28.3506141678096,
+      -15.42025398943,
+      28.352484747773,
+      -15.4176205361588,
     ]);
   });
 });

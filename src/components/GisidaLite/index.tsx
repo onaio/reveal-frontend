@@ -5,9 +5,10 @@ import React, { Fragment, useEffect } from 'react';
 import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl';
 import { FitBounds, Props } from 'react-mapbox-gl/lib/map';
 import { Events } from 'react-mapbox-gl/lib/map-events';
-import Loading from '../../components/page/Loading';
 import { GISIDA_MAPBOX_TOKEN } from '../../configs/env';
+import { ERROR_LOADING_ITEMS } from '../../configs/lang';
 import { imgArr } from '../../configs/settings';
+import { ErrorPage } from '../page/ErrorPage';
 import { gsLiteStyle } from './helpers';
 
 /** single map icon description */
@@ -115,7 +116,7 @@ const GisidaLite = (props: GisidaLiteProps) => {
   }, [layers]);
 
   if (mapCenter === undefined) {
-    return <Loading />;
+    return <ErrorPage errorMessage={ERROR_LOADING_ITEMS} />;
   }
 
   /**
