@@ -955,7 +955,7 @@ export const planFormValues2 = {
   opensrpEventId: undefined,
   start: moment('2019-05-20T00:00:00.000Z').toDate(),
   status: 'active',
-  taskGenerationStatus: 'internal',
+  taskGenerationStatus: 'False',
   teamAssignmentStatus: '',
   title: 'A2-Lusaka Akros Test Focus 2',
   version: '1',

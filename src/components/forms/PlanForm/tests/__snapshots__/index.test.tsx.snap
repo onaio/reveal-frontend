@@ -400,7 +400,7 @@ exports[`containers/forms/PlanForm - Edit ACTIVE renders all fields correctly in
   onChange={[Function]}
   readOnly={true}
   type="hidden"
-  value="internal"
+  value="False"
 />
 `;
 
@@ -665,7 +665,7 @@ exports[`containers/forms/PlanForm - Edit COMPLETE renders all fields correctly 
   onChange={[Function]}
   readOnly={true}
   type="hidden"
-  value="internal"
+  value="False"
 />
 `;
 
@@ -936,7 +936,7 @@ exports[`containers/forms/PlanForm - Edit DRAFT renders all fields correctly in 
   onChange={[Function]}
   readOnly={true}
   type="hidden"
-  value="internal"
+  value="False"
 />
 `;
 
