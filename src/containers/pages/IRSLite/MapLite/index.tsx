@@ -1,5 +1,3 @@
-import { viewport } from '@mapbox/geo-viewport';
-import GeojsonExtent from '@mapbox/geojson-extent';
 import { ProgressBar } from '@onaio/progress-indicators';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
@@ -13,6 +11,7 @@ import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
 import { MemoizedGisidaLite } from '../../../../components/GisidaLite';
+import { getZoomCenterAndBounds } from '../../../../components/GisidaLite/helpers';
 import NotFound from '../../../../components/NotFound';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -41,6 +40,7 @@ import { indicatorThresholdsIRSLite } from '../../../../configs/settings';
 import {
   BUSINESS_STATUS,
   CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  DefaultMapDimensions,
   HOME_URL,
   IRS_REPORT_STRUCTURES,
   REPORT_IRS_LITE_PLAN_URL,
@@ -292,16 +292,12 @@ const IRSLiteReportingMap = (
     return typeof dict === 'string' ? createList(JSON.parse(dict)) : createList(dict);
   };
 
-  let mapCenter;
-  let mapBounds;
-  let zoom;
-  if (structures && structures.features && structures.features.length) {
-    mapBounds = GeojsonExtent(structures);
-    // get map zoom and center values
-    const centerAndZoom = viewport(mapBounds, [600, 400]);
-    mapCenter = centerAndZoom.center;
-    zoom = centerAndZoom.zoom;
-  }
+  // get map zoom, center and bounds
+  const { zoom, mapBounds, mapCenter } = getZoomCenterAndBounds(
+    structures,
+    jurisdiction,
+    DefaultMapDimensions
+  );
 
   // define polygon paint colors
   const polygonColor: PolygonColor = {

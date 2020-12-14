@@ -249,8 +249,9 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       wrapper.update();
     });
 
-    expect(wrapper.find('GisidaLite').find('Ripple').length).toEqual(1);
-    expect(wrapper.find('GisidaLite').text()).toEqual('');
+    expect(wrapper.find('GisidaLite').text()).toEqual(
+      'An error ocurred. Please try and refresh the page.The specific error is: Could not load points on map'
+    );
   });
 
   it('displays map if only plans and jurisdiction available', async () => {
