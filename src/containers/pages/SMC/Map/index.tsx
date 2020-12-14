@@ -1,5 +1,3 @@
-import { viewport } from '@mapbox/geo-viewport';
-import GeojsonExtent from '@mapbox/geojson-extent';
 import { ProgressBar } from '@onaio/progress-indicators';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetFormData } from '@onaio/superset-connector';
@@ -13,6 +11,7 @@ import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
 import { MemoizedGisidaLite } from '../../../../components/GisidaLite';
+import { getZoomCenterAndBounds } from '../../../../components/GisidaLite/helpers';
 import NotFound from '../../../../components/NotFound';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -41,6 +40,7 @@ import { indicatorThresholdsIRS } from '../../../../configs/settings';
 import {
   BUSINESS_STATUS,
   CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  DefaultMapDimensions,
   HOME_URL,
   REPORT_SMC_PLAN_URL,
   SMC_REPORT_STRUCTURES,
@@ -275,16 +275,12 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
     defaultIndicatorStop
   );
 
-  let mapCenter;
-  let mapBounds;
-  let zoom;
-  if (structures && structures.features.length) {
-    mapBounds = GeojsonExtent(structures);
-    // get map zoom and center values
-    const centerAndZoom = viewport(mapBounds, [500, 300]);
-    mapCenter = centerAndZoom.center;
-    zoom = centerAndZoom.zoom;
-  }
+  // get map zoom, center and bounds
+  const { zoom, mapBounds, mapCenter } = getZoomCenterAndBounds(
+    structures,
+    jurisdiction,
+    DefaultMapDimensions
+  );
 
   // define circle paint colors
   const circleColor: CircleColor = {

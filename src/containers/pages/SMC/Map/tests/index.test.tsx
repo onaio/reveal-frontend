@@ -8,6 +8,7 @@ import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedSMCReportingMap, { SMCReportingMap } from '..';
+import { GisidaLiteProps } from '../../../../../components/GisidaLite';
 import {
   SUPERSET_SMC_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_SMC_REPORTING_STRUCTURES_DATA_SLICE,
@@ -351,6 +352,60 @@ describe('components/SMC Reports/SMCReportingMap', () => {
     const mapProps = wrapper.find('MemoizedGisidaLiteMock').props();
     // Check Gisida component map layers
     expect((mapProps as any).layers.map((e: any) => e.key)).toMatchSnapshot('GisidaLite layers');
+    wrapper.unmount();
+  });
+
+  it('Loads map without structures structures', async () => {
+    // clear structures store incase there is data
+    store.dispatch(removeGenericStructures(SUPERSET_SMC_REPORTING_STRUCTURES_DATA_SLICE));
+    const mock: any = jest.fn();
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementationOnce(async () => SMCJurisdiction);
+    supersetServiceMock.mockImplementationOnce(async () => []);
+    supersetServiceMock.mockImplementationOnce(async () => SMCReportingJurisdictions);
+    supersetServiceMock.mockImplementationOnce(async () => SMCPlans);
+
+    const planId = SMCPlans[0].plan_id;
+    const jurisdictionId = 'e43190b0-c166-44eb-be1f-63fa5b453c29';
+
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId,
+          planId,
+        },
+        path: `${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_PLAN_URL}/${planId}/${jurisdictionId}/${MAP}`,
+      },
+      service: supersetServiceMock,
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedSMCReportingMap {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    const mapProps = wrapper.find('MemoizedGisidaLiteMock').props() as GisidaLiteProps;
+    expect(mapProps.zoom).toEqual(17);
+    expect(mapProps.mapCenter).toEqual([5.59886410019811, 13.4995634574876]);
+    expect(mapProps.mapBounds).toEqual([
+      5.59718892942561,
+      13.4978599976408,
+      5.60053927097061,
+      13.5012669173344,
+    ]);
     wrapper.unmount();
   });
 
