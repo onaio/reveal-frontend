@@ -265,3 +265,4 @@ export const SUPERSET_ACCESS_DENIED_MESSAGE = 'Access is Denied';
 export const REACT_MAPBOX_GL_ICON_IMAGE = 'icon-image';
 export const REACT_MAPBOX_GL_ICON_SIZE = 'icon-size';
 export const CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE = 'categorical';
+export const DefaultMapDimensions: [number, number] = [600, 400];
