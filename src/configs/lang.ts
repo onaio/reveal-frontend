@@ -162,6 +162,7 @@ export const IRS_PLANS = translate('IRS_PLANS', 'IRS Plans');
 export const IRS_LITE_PLANS = translate('IRS_LITE_PLANS', 'IRS Lite Plans');
 export const MDA_PLANS = translate('MDA_PLANS', 'MDA Plans');
 export const MDA_POINT_PLANS = translate('MDA_POINT_PLANS', 'MDA Point Plans');
+export const SMC_PLANS = translate('SMC_PLANS', 'SMC Plans');
 export const COUNTRY = translate('COUNTRY', 'Country');
 export const JURISDICTION_HIERARCHY_TEMPLATE = translate(
   'JURISDICTION_HIERARCHY_TEMPLATE',
@@ -528,6 +529,7 @@ export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');
 export const DYNAMIC_FI_TITLE = translate('DYNAMIC_FI_TITLE', 'Dynamic FI');
 export const DYNAMIC_IRS_TITLE = translate('DYNAMIC_IRS_TITLE', 'Dynamic IRS');
 export const DYNAMIC_MDA_TITLE = translate('DYNAMIC_MDA_TITLE', 'Dynamic MDA');
+export const SMC_TITLE = translate('SMC_TITLE', 'SMC');
 export const TEAM_ASSIGNMENT_SUCCESSFUL = translate(
   'TEAM_ASSIGNMENT_SUCCESSFUL',
   'Team(s) assignment updated successfully'
@@ -563,6 +565,7 @@ export const MDA_POINT_REPORTING_TITLE = translate(
   'MDA_POINT_REPORTING_TITLE',
   'MDA Point Reporting'
 );
+export const SMC_REPORTING_TITLE = translate('SMC_REPORTING_TITLE', 'SMC Reporting');
 
 export const FILTER = translate('FILTER', 'Filter');
 

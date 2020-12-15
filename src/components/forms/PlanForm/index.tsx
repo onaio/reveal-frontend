@@ -25,6 +25,7 @@ import {
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
   ENABLED_FI_REASONS,
+  MDA_POINT_FORM_INTERVENTION_TITLE,
   PLAN_TYPES_ALLOWED_TO_CREATE,
   PLAN_TYPES_WITH_MULTI_JURISDICTIONS,
 } from '../../../configs/env';
@@ -64,6 +65,7 @@ import {
   SAVE_PLAN,
   SAVING,
   SELECT_PLACHOLDER,
+  SMC_TITLE,
   START_DATE,
   STATUS_HEADER,
   TRIGGERS_LABEL,
@@ -110,6 +112,16 @@ import {
   PlanFormFields,
   PlanJurisdictionFormFields,
 } from './types';
+
+/** different titles for MDA point itrevention type */
+const MDAPonitInterventionTitles = {
+  MDA_POINT_TITLE,
+  SMC_TITLE,
+} as const;
+type MDAPonitInterventionTitles = keyof typeof MDAPonitInterventionTitles;
+const MDAPointTitle =
+  MDAPonitInterventionTitles[MDA_POINT_FORM_INTERVENTION_TITLE as MDAPonitInterventionTitles] ||
+  MDA_POINT_TITLE;
 
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {
@@ -375,7 +387,7 @@ const PlanForm = (props: PlanFormProps) => {
                   <option value={InterventionType.MDA}>{MDA_TITLE}</option>
                 )}
                 {displayPlanTypeOnForm(InterventionType.MDAPoint, editMode) && (
-                  <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>
+                  <option value={InterventionType.MDAPoint}>{MDAPointTitle}</option>
                 )}
                 {displayPlanTypeOnForm(InterventionType.DynamicFI, editMode) && (
                   <option value={InterventionType.DynamicFI}>{DYNAMIC_FI_TITLE}</option>

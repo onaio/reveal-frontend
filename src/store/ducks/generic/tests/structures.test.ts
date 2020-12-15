@@ -3,6 +3,7 @@ import superset from '@onaio/superset-connector';
 import { FlushThunks } from 'redux-testkit';
 import store from '../../..';
 import { ZambiaKMZ421StructuresJSON } from '../../../../containers/pages/IRS/JurisdictionsReport/fixtures';
+import { SMCStructures } from '../../../../containers/pages/SMC/Map/tests/fixtures';
 import reducer, {
   addGenericStructure,
   fetchGenericStructures,
@@ -171,6 +172,19 @@ describe('reducers/IRS/GenericStructure', () => {
     // we should now have a total of three generic structure objects in the store
     expect(getGenericStructures(store.getState(), 'zm-structures')).toEqual({
       features: [structureData[2].geojson, structureData[1].geojson],
+      type: 'FeatureCollection',
+    });
+  });
+
+  it('fetches structures with no id key', () => {
+    store.dispatch(
+      fetchGenericStructures('smc-structures', [
+        SMCStructures[0],
+        SMCStructures[1],
+      ] as GenericStructure[])
+    );
+    expect(getGenericStructures(store.getState(), 'smc-structures')).toEqual({
+      features: [SMCStructures[0].geojson, SMCStructures[1].geojson],
       type: 'FeatureCollection',
     });
   });
