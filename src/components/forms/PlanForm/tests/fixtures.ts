@@ -235,6 +235,21 @@ export const activities: PlanActivityFormFields[] = [
     timingPeriodEnd: parseISO('2019-08-16T08:39:42.778Z'),
     timingPeriodStart: parseISO('2019-08-09T08:39:42.778Z'),
   },
+  {
+    actionCode: 'MDA Adherence',
+    actionDescription:
+      'Visit all residential structures (100%) and confirm adherence of each registered person',
+    actionIdentifier: '',
+    actionReason: 'Routine',
+    actionTitle: 'MDA Adherence',
+    goalDescription:
+      'Visit all residential structures (100%) and confirm adherence of each registered person',
+    goalDue: parseISO('2019-08-16T08:39:42.778Z'),
+    goalPriority: 'medium-priority',
+    goalValue: 100,
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.778Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.778Z'),
+  },
 ];
 
 export const expectedExtractActivityFromPlanformResult = {
@@ -360,6 +375,25 @@ export const expectedExtractActivityFromPlanformResult = {
         start: '2019-08-09',
       },
       title: 'Behaviour Change Communication',
+    },
+    {
+      code: 'MDA Adherence',
+      description:
+        'Visit all residential structures (100%) and confirm adherence of each registered person',
+      goalId: 'MDA_Dispense',
+      identifier: 'f1edff2a-d93c-56fb-b832-3f87b595c8fb',
+      prefix: 8,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'Person',
+      },
+      taskTemplate: 'MDA_Adherence',
+      timingPeriod: {
+        end: '2019-08-16',
+        start: '2019-08-09',
+      },
+      title: 'MDA Adherence',
+      type: 'create',
     },
   ],
   goal: [
@@ -489,6 +523,25 @@ export const expectedExtractActivityFromPlanformResult = {
           },
           due: '2019-08-16',
           measure: 'BCC Activities Completed',
+        },
+      ],
+    },
+    {
+      description:
+        'Visit all residential structures (100%) and confirm adherence of each registered person',
+      id: 'MDA_Adherence',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 100,
+            },
+          },
+          due: '2019-08-16',
+          measure: 'Percent of dispense recipients',
         },
       ],
     },

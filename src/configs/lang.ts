@@ -435,6 +435,11 @@ export const MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL = translate(
   'Percent of people who reported adverse events'
 );
 
+export const MDA_ADHERENCE_DESCRIPTION = translate(
+  'MDA_ADHERENCE_DESCRIPTION',
+  'Visit all residential structures (100%) and confirm adherence of each registered person'
+);
+
 export const A1_DESCRIPTION = translate(
   'A1_DESCRIPTION',
   'Indigenous case recorded within the last year.'
@@ -519,6 +524,7 @@ export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
   'Search active focus investigations'
 );
 export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
+export const MDA_TITLE = translate('MDA_TITLE', 'MDA');
 export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');
 export const DYNAMIC_FI_TITLE = translate('DYNAMIC_FI_TITLE', 'Dynamic FI');
 export const DYNAMIC_IRS_TITLE = translate('DYNAMIC_IRS_TITLE', 'Dynamic IRS');
