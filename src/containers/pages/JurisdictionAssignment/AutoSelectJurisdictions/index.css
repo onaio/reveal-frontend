@@ -19,3 +19,7 @@
   height: inherit;
   margin-left: 5px;
 }
+
+.step-slider > li {
+  z-index: 0;
+}
