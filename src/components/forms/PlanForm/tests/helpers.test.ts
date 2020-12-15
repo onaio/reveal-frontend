@@ -273,7 +273,7 @@ describe('containers/forms/PlanForm/helpers', () => {
       GoalUnit.PERCENT, // Register family
       GoalUnit.ACTIVITY, // Larval dipping
       GoalUnit.ACTIVITY, // Mosquito collection
-      GoalUnit.UNKNOWN, // MDA Adherence  ==> TODO: figure out how to pass isDyanmic to getPlanActivityFromActionCode
+      GoalUnit.PERCENT, // MDA Adherence  ==> TODO: figure out how to pass isDyanmic to getPlanActivityFromActionCode
       GoalUnit.PERCENT, // MDA Dispense
       GoalUnit.PERCENT, // MDA Adverse events
     ];

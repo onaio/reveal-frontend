@@ -53,6 +53,7 @@ import {
   IRS_TITLE,
   LOCATIONS,
   MDA_POINT_TITLE,
+  MDA_TITLE,
   PLAN_END_DATE_LABEL,
   PLAN_START_DATE_LABEL,
   PLAN_TITLE_LABEL,
@@ -369,6 +370,9 @@ const PlanForm = (props: PlanFormProps) => {
                 )}
                 {displayPlanTypeOnForm(InterventionType.IRS, editMode) && (
                   <option value={InterventionType.IRS}>{IRS_TITLE}</option>
+                )}
+                {displayPlanTypeOnForm(InterventionType.MDA, editMode) && (
+                  <option value={InterventionType.MDA}>{MDA_TITLE}</option>
                 )}
                 {displayPlanTypeOnForm(InterventionType.MDAPoint, editMode) && (
                   <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>

@@ -61,6 +61,7 @@ import {
   INTERVENTION_TYPE_CODE,
   IRS_ACTIVITY_CODE,
   LARVAL_DIPPING_ACTIVITY_CODE,
+  MDA_ADHERENCE,
   MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
   MDA_POINT_DISPENSE_ACTIVITY_CODE,
   MOSQUITO_COLLECTION_ACTIVITY_CODE,
@@ -247,7 +248,11 @@ export const FIActivities = pick(planActivities, [
   MOSQUITO_COLLECTION_ACTIVITY_CODE,
 ]);
 export const IRSActivities = pick(planActivities, [IRS_ACTIVITY_CODE]);
-export const MDAActivities = pick(planActivities, [CASE_CONFIRMATION_ACTIVITY_CODE]);
+export const MDAActivities = pick(planActivities, [
+  FAMILY_REGISTRATION_ACTIVITY_CODE,
+  MDA_POINT_DISPENSE_ACTIVITY_CODE,
+  MDA_ADHERENCE,
+]);
 export const MDAPointActivities = pick(planActivities, [
   MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
   MDA_POINT_DISPENSE_ACTIVITY_CODE,
@@ -270,6 +275,7 @@ export const DynamicIRSActivities = pick(planActivities, [DYNAMIC_IRS_ACTIVITY_C
 export type FormActivity =
   | typeof FIActivities
   | typeof IRSActivities
+  | typeof MDAActivities
   | typeof MDAPointActivities
   | typeof DynamicFIActivities
   | typeof DynamicIRSActivities
@@ -288,6 +294,7 @@ export function getFormActivities(items: FormActivity) {
 const planActivitiesMap: Dictionary<PlanActivityFormFields[]> = {};
 planActivitiesMap[InterventionType.IRS] = getFormActivities(IRSActivities);
 planActivitiesMap[InterventionType.FI] = getFormActivities(FIActivities);
+planActivitiesMap[InterventionType.MDA] = getFormActivities(MDAActivities);
 planActivitiesMap[InterventionType.MDAPoint] = getFormActivities(MDAPointActivities);
 planActivitiesMap[InterventionType.DynamicFI] = getFormActivities(DynamicFIActivities);
 planActivitiesMap[InterventionType.DynamicIRS] = getFormActivities(DynamicIRSActivities);
