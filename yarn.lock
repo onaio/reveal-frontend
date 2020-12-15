@@ -2496,11 +2496,6 @@
   dependencies:
     redux "^4.0.1"
 
-"@onaio/session-reducer@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.10.tgz#ba245827b0d52355bf0b921ff139fc56f9e80e7f"
-  integrity sha512-xEwtJW9ouFBcQbaT49ihg+fApC8wFZ9KIycATMsTIXUWaMe4Dbp38Dc0w0hPwlSr+cTgCXBQMCP658GXyskDcg==
-
 "@onaio/session-reducer@^0.0.11":
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.11.tgz#4e8384ef3fc48d0bb697d698b115e8fc541100ed"

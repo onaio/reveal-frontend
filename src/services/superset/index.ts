@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import { getAccessToken, getOauthProviderState } from '@onaio/session-reducer';
 import superset, { SupersetConnectorConfig } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
 import { OPENSRP_OAUTH_STATE, SUPERSET_API_BASE, SUPERSET_API_ENDPOINT } from '../../configs/env';
@@ -11,7 +12,6 @@ import supersetReducer, {
   isAuthorized,
   reducerName as supersetReducerName,
 } from '../../store/ducks/superset';
-import { getAccessToken, getOauthProviderState } from '../../store/selectors';
 
 // /** register the superset reducer */
 reducerRegistry.register(supersetReducerName, supersetReducer);
