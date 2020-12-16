@@ -62,6 +62,8 @@ import {
   IRS_ACTIVITY_CODE,
   LARVAL_DIPPING_ACTIVITY_CODE,
   MDA_ADHERENCE,
+  MDA_DISPENSE_ACTIVITY_CODE,
+  MDA_FAMILY_REGISTRATION,
   MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
   MDA_POINT_DISPENSE_ACTIVITY_CODE,
   MOSQUITO_COLLECTION_ACTIVITY_CODE,
@@ -238,48 +240,50 @@ export function extractActivityForForm(activityObj: PlanActivity): PlanActivityF
 }
 
 /** group plan activities */
-export const FIActivities = pick(planActivities, [
-  BCC_ACTIVITY_CODE,
-  BEDNET_DISTRIBUTION_ACTIVITY_CODE,
-  BLOOD_SCREENING_ACTIVITY_CODE,
-  CASE_CONFIRMATION_ACTIVITY_CODE,
-  FAMILY_REGISTRATION_ACTIVITY_CODE,
-  LARVAL_DIPPING_ACTIVITY_CODE,
-  MOSQUITO_COLLECTION_ACTIVITY_CODE,
-]);
-export const IRSActivities = pick(planActivities, [IRS_ACTIVITY_CODE]);
-export const MDAActivities = pick(planActivities, [
-  FAMILY_REGISTRATION_ACTIVITY_CODE,
-  MDA_POINT_DISPENSE_ACTIVITY_CODE,
-  MDA_ADHERENCE,
-]);
-export const MDAPointActivities = pick(planActivities, [
-  MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
-  MDA_POINT_DISPENSE_ACTIVITY_CODE,
-]);
-export const DynamicFIActivities = pick(planActivities, [
-  DYNAMIC_BCC_ACTIVITY_CODE,
-  DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
-  DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
-  DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
-  DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
-  DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE,
-]);
-export const DynamicMDAActivities = pick(planActivities, [
-  DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
-  DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
-  DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
-]);
-export const DynamicIRSActivities = pick(planActivities, [DYNAMIC_IRS_ACTIVITY_CODE]);
-
+export const AllPlanActivities = {
+  [InterventionType.FI]: pick(planActivities, [
+    BCC_ACTIVITY_CODE,
+    BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+    BLOOD_SCREENING_ACTIVITY_CODE,
+    CASE_CONFIRMATION_ACTIVITY_CODE,
+    FAMILY_REGISTRATION_ACTIVITY_CODE,
+    LARVAL_DIPPING_ACTIVITY_CODE,
+    MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  ]),
+  [InterventionType.IRS]: pick(planActivities, [IRS_ACTIVITY_CODE]),
+  [InterventionType.MDA]: pick(planActivities, [
+    MDA_FAMILY_REGISTRATION,
+    MDA_DISPENSE_ACTIVITY_CODE,
+    MDA_ADHERENCE,
+  ]),
+  [InterventionType.MDAPoint]: pick(planActivities, [
+    MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
+    MDA_POINT_DISPENSE_ACTIVITY_CODE,
+  ]),
+  [InterventionType.DynamicFI]: pick(planActivities, [
+    DYNAMIC_BCC_ACTIVITY_CODE,
+    DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+    DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
+    DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
+    DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
+    DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  ]),
+  [InterventionType.DynamicMDA]: pick(planActivities, [
+    DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
+    DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
+    DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
+  ]),
+  [InterventionType.DynamicIRS]: pick(planActivities, [DYNAMIC_IRS_ACTIVITY_CODE]),
+  [InterventionType.IRSLite]: [],
+};
 export type FormActivity =
-  | typeof FIActivities
-  | typeof IRSActivities
-  | typeof MDAActivities
-  | typeof MDAPointActivities
-  | typeof DynamicFIActivities
-  | typeof DynamicIRSActivities
-  | typeof DynamicMDAActivities;
+  | typeof AllPlanActivities[InterventionType.FI]
+  | typeof AllPlanActivities[InterventionType.IRS]
+  | typeof AllPlanActivities[InterventionType.MDA]
+  | typeof AllPlanActivities[InterventionType.MDAPoint]
+  | typeof AllPlanActivities[InterventionType.DynamicFI]
+  | typeof AllPlanActivities[InterventionType.DynamicMDA]
+  | typeof AllPlanActivities[InterventionType.DynamicIRS];
 
 /**
  * Converts a plan activities objects to a list of activities for use on PlanForm
@@ -292,13 +296,25 @@ export function getFormActivities(items: FormActivity) {
 }
 
 const planActivitiesMap: Dictionary<PlanActivityFormFields[]> = {};
-planActivitiesMap[InterventionType.IRS] = getFormActivities(IRSActivities);
-planActivitiesMap[InterventionType.FI] = getFormActivities(FIActivities);
-planActivitiesMap[InterventionType.MDA] = getFormActivities(MDAActivities);
-planActivitiesMap[InterventionType.MDAPoint] = getFormActivities(MDAPointActivities);
-planActivitiesMap[InterventionType.DynamicFI] = getFormActivities(DynamicFIActivities);
-planActivitiesMap[InterventionType.DynamicIRS] = getFormActivities(DynamicIRSActivities);
-planActivitiesMap[InterventionType.DynamicMDA] = getFormActivities(DynamicMDAActivities);
+planActivitiesMap[InterventionType.IRS] = getFormActivities(
+  AllPlanActivities[InterventionType.IRS]
+);
+planActivitiesMap[InterventionType.FI] = getFormActivities(AllPlanActivities[InterventionType.FI]);
+planActivitiesMap[InterventionType.MDA] = getFormActivities(
+  AllPlanActivities[InterventionType.MDA]
+);
+planActivitiesMap[InterventionType.MDAPoint] = getFormActivities(
+  AllPlanActivities[InterventionType.MDAPoint]
+);
+planActivitiesMap[InterventionType.DynamicFI] = getFormActivities(
+  AllPlanActivities[InterventionType.DynamicFI]
+);
+planActivitiesMap[InterventionType.DynamicIRS] = getFormActivities(
+  AllPlanActivities[InterventionType.DynamicIRS]
+);
+planActivitiesMap[InterventionType.DynamicMDA] = getFormActivities(
+  AllPlanActivities[InterventionType.DynamicMDA]
+);
 export { planActivitiesMap };
 
 /**
@@ -332,27 +348,12 @@ export function getActivityFromPlan(
  */
 export function getPlanActivityFromActionCode(
   actionCode: PlanActionCodesType,
-  isDynamic: boolean = false
+  interventionType: InterventionType
 ): PlanActivity | null {
-  const search = Object.values(planActivities).filter(item => {
-    if (isDynamic) {
-      return (
-        item.action.code === actionCode &&
-        (Object.keys(item.action).includes(CONDITION) || Object.keys(item.action).includes(TRIGGER))
-      );
-    } else {
-      return (
-        item.action.code === actionCode &&
-        !Object.keys(item.action).includes(CONDITION) &&
-        !Object.keys(item.action).includes(TRIGGER)
-      );
-    }
-  });
-  if (search.length > 0) {
-    return search[0];
-  }
-
-  return null;
+  const search = Object.values(AllPlanActivities[interventionType]).filter(
+    item => item.action.code === actionCode
+  );
+  return search.length > 0 ? search[0] : null;
 }
 
 /**
@@ -411,6 +412,7 @@ const getTriggerFromFormField = (
  */
 export function extractActivitiesFromPlanForm(
   activities: PlanActivityFormFields[],
+  interventionType: InterventionType,
   planIdentifier: string = '',
   planObj: PlanDefinition | null = null
 ) {
@@ -430,12 +432,9 @@ export function extractActivitiesFromPlanForm(
       let thisAction: PlanAction = planActivities.BCC.action;
       let thisGoal: PlanGoal = planActivities.BCC.goal;
 
-      // lets figure out if this is a dynamic activity
-      const isDynamic =
-        Object.keys(element).includes(CONDITION) || Object.keys(element).includes(TRIGGER);
       const planActivity = getPlanActivityFromActionCode(
         element.actionCode as PlanActionCodesType,
-        isDynamic
+        interventionType
       );
 
       if (planActivity) {
@@ -636,6 +635,7 @@ export function generatePlanDefinition(
 
   const actionAndGoals = extractActivitiesFromPlanForm(
     formValue.activities,
+    formValue.interventionType,
     planObj ? planObj.identifier : '',
     planObj
   );
@@ -822,8 +822,11 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
  * Get goal unit from action code
  * @param {PlanActionCodesType} actionCode - the plan action code
  */
-export function getGoalUnitFromActionCode(actionCode: PlanActionCodesType): GoalUnit {
-  const planActivity = getPlanActivityFromActionCode(actionCode);
+export function getGoalUnitFromActionCode(
+  actionCode: PlanActionCodesType,
+  interventionType: InterventionType
+): GoalUnit {
+  const planActivity = getPlanActivityFromActionCode(actionCode, interventionType);
   if (planActivity) {
     return planActivity.goal.target[0].detail.detailQuantity.unit;
   }

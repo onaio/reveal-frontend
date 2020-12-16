@@ -422,6 +422,10 @@ export const MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION = translate(
   'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
   'Dispense medication to each eligible person'
 );
+export const MDA_DISPENSE_ACTIVITY_DESCRIPTION = translate(
+  'MDA_DISPENSE_ACTIVITY_DESCRIPTION',
+  'Visit all residential structures (100%) dispense prophylaxis to each registered person'
+);
 export const MDA_POINT_DISPENSE_COLLECTION_GOAL = translate(
   'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
   'Percent of eligible people'
