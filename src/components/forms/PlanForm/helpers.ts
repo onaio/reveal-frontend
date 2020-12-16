@@ -370,9 +370,12 @@ export function getPlanActivityFromActionCode(
   actionCode: PlanActionCodesType,
   interventionType: InterventionType
 ): PlanActivity | null {
-  const search = Object.values(AllPlanActivities[interventionType]).filter(
-    item => item.action.code === actionCode
-  );
+  const search =
+    (AllPlanActivities[interventionType] &&
+      Object.values(AllPlanActivities[interventionType]).filter(
+        item => item.action.code === actionCode
+      )) ||
+    [];
   return search.length > 0 ? search[0] : null;
 }
 
