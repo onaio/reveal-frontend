@@ -655,7 +655,7 @@ export function generatePlanDefinition(
     useContext.push({ code: FI_STATUS_CODE, valueCodableConcept: formValue.fiStatus });
   }
 
-  if (formValue.fiReason) {
+  if (formValue.fiReason && isFIOrDynamicFI(formValue.interventionType)) {
     useContext.push({ code: FI_REASON_CODE, valueCodableConcept: formValue.fiReason });
   }
 

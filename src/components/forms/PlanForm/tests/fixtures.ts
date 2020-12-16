@@ -380,8 +380,8 @@ export const expectedExtractActivityFromPlanformResult = {
       code: 'MDA Adherence',
       description:
         'Visit all residential structures (100%) and confirm adherence of each registered person',
-      goalId: 'MDA_Dispense',
-      identifier: 'f1edff2a-d93c-56fb-b832-3f87b595c8fb',
+      goalId: 'MDA_Adherence',
+      identifier: '3f7fdb4b-935b-57d8-a27b-8903be074080',
       prefix: 8,
       reason: 'Routine',
       subjectCodableConcept: {

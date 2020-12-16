@@ -535,7 +535,7 @@ export const planActivities: PlanActivities = {
     action: {
       code: MDA_ADHERENCE_CODE,
       description: MDA_ADHERENCE_DESCRIPTION,
-      goalId: 'MDA_Dispense',
+      goalId: 'MDA_Adherence',
       identifier: '',
       prefix: 3,
       reason: ROUTINE,
