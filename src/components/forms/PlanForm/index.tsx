@@ -923,7 +923,9 @@ const PlanForm = (props: PlanFormProps) => {
                                     {
                                       goalUnitDisplay[
                                         getGoalUnitFromActionCode(
-                                          values.activities[index].actionCode as PlanActionCodesType
+                                          values.activities[index]
+                                            .actionCode as PlanActionCodesType,
+                                          values.interventionType
                                         )
                                       ]
                                     }
