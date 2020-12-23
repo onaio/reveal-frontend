@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/components/SMCTableCell renders correctly when is_virtual_jurisdiction and has not children: has children 1`] = `
+<div>
+  <span
+    className="plan-jurisdiction-name name-label"
+  >
+    CellValue
+  </span>
+</div>
+`;
+
+exports[`src/components/SMCTableCell renders correctly: has children 1`] = `
+<div>
+  <Link
+    to=""
+  >
+    CellValue
+  </Link>
+</div>
+`;
+
+exports[`src/components/SMCTableCell renders correctly: has not children 1`] = `
+<div>
+  <span
+    className="plan-jurisdiction-name main-span"
+  >
+    <span
+      className="plan-jurisdiction-name btn-link"
+    >
+      <Link
+        to="undefined/jurisdiction_id/map"
+      >
+        <FontAwesomeIcon
+          icon={
+            Array [
+              "fas",
+              "map",
+            ]
+          }
+        />
+      </Link>
+    </span>
+      
+    <Link
+      to="undefined/jurisdiction_id/map"
+    >
+      CellValue
+    </Link>
+  </span>
+</div>
+`;

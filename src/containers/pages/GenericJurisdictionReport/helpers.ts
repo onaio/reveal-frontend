@@ -353,6 +353,55 @@ zambiaMDAUpperJurisdictions.splice(
     sortType: 'basic',
   }
 );
+/** columns for  smc point jurisdictions */
+export const smcJurisdictionsColumns = [
+  {
+    Header: 'Name',
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
+  },
+  {
+    Header: 'Operational Areas Visited',
+    accessor: 'operational_areas_visited',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Distribution Effectiveness (%)',
+    accessor: 'distribution_effectivness',
+  },
+  {
+    Header: 'Total Structures',
+    accessor: 'total_structures',
+  },
+  {
+    Header: 'Total Found Structures',
+    accessor: 'total_found_structures',
+  },
+  {
+    Header: 'Total structures received SPAQ',
+    accessor: 'total_structures_recieved_spaq',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Found Coverage %',
+    accessor: 'found_coverage',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Distribution Coverage %',
+    accessor: 'distribution_coverage',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Treatment Coverage %',
+    accessor: 'treatment_coverage',
+  },
+  {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Header: 'Referral Treatment Rate %',
+    accessor: 'referral_treatment_rate',
+  },
+];
 
 /** IRS Table Columns
  * These are all the table columns for IRS that we know about.
@@ -362,6 +411,7 @@ export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionar
   irsLiteZambiaJurisdictions2020: IRSLiteZambiaJurisdictionsColumns,
   mdaJurisdictionsColumns,
   namibia2019: NamibiaColumns,
+  smcJurisdictionsColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
   zambiaJurisdictions2019: ZambiaJurisdictionsColumns,
   zambiaMDALower2020: zambiaMDALowerJurisdictions,

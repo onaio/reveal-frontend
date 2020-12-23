@@ -9,8 +9,7 @@ import {
 } from '../../../../configs/env';
 import { MDA_POINT_PLANS } from '../../../../configs/lang';
 import { QUERY_PARAM_TITLE, REPORT_MDA_POINT_PLAN_URL } from '../../../../constants';
-import { getPlanStatusToDisplay, getQueryParams } from '../../../../helpers/utils';
-import { RouteParams } from '../../../../helpers/utils';
+import { getPlanStatusToDisplay, getQueryParams, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import GenericPlansReducer, {
   genericFetchPlans,

@@ -1,0 +1,143 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/SMC Reports/SMCReportingMap calls GisidaLite with the correct props: GisidaLite layers 1`] = `
+Array [
+  "main-plan-layer-e43190b0-c166-44eb-be1f-63fa5b453c29",
+]
+`;
+
+exports[`components/SMC Reports/SMCReportingMap renders correctly: Indicator item breakdown 1`] = `
+Array [
+  "Progress: 129 of 248 structure(s) (52%)",
+  "Progress: 55 of 248 structure(s) (22%)",
+  "Progress: 55 of 129 structure(s) (43%)",
+  "Progress: 54 of 54 structure(s) (100%)",
+  "Progress: 0 of 54 structure(s) (0%)",
+]
+`;
+
+exports[`components/SMC Reports/SMCReportingMap renders correctly: Legend items 1`] = `
+Array [
+  "Complete #68BB0C",
+  "SPAQ Complete #FF851B",
+  "SMC Complete #FF851B",
+  "No Tasks #666a6d",
+  "Not Visited #FFCA16",
+  "Not Eligible #666a6d",
+  "Ineligible #666a6d",
+  "Not Dispensed #ff5c33",
+]
+`;
+
+exports[`components/SMC Reports/SMCReportingMap renders correctly: Response item ProgressBar 1`] = `
+Array [
+  <div
+    aria-valuemax={100}
+    aria-valuemin={0}
+    aria-valuenow={52}
+    className="progress-bar 
+          "
+    role="progressbar"
+    style={
+      Object {
+        "backgroundColor": "#FF4136",
+        "width": "52%",
+      }
+    }
+  />,
+  <div
+    aria-valuemax={100}
+    aria-valuemin={0}
+    aria-valuenow={22}
+    className="progress-bar 
+          "
+    role="progressbar"
+    style={
+      Object {
+        "backgroundColor": "#FF4136",
+        "width": "22%",
+      }
+    }
+  />,
+  <div
+    aria-valuemax={100}
+    aria-valuemin={0}
+    aria-valuenow={43}
+    className="progress-bar 
+          "
+    role="progressbar"
+    style={
+      Object {
+        "backgroundColor": "#FF4136",
+        "width": "43%",
+      }
+    }
+  />,
+  <div
+    aria-valuemax={100}
+    aria-valuemin={0}
+    aria-valuenow={100}
+    className="progress-bar 
+          "
+    role="progressbar"
+    style={
+      Object {
+        "backgroundColor": "#2ECC40",
+        "width": "100%",
+      }
+    }
+  />,
+  <div
+    aria-valuemax={100}
+    aria-valuemin={0}
+    aria-valuenow={0}
+    className="progress-bar 
+          "
+    role="progressbar"
+    style={
+      Object {
+        "backgroundColor": "#dddddd",
+        "width": "0%",
+      }
+    }
+  />,
+]
+`;
+
+exports[`components/SMC Reports/SMCReportingMap renders correctly: Response item descriptions 1`] = `
+Array [
+  "Percentage of structures found over total",
+  "Percent of structures distributed over total",
+  "Percent of structures distributed over found",
+  "Percent of eligible children treated over total eligible",
+  "Percent of treated at HF of referrals by CDD over total",
+]
+`;
+
+exports[`components/SMC Reports/SMCReportingMap renders correctly: Response item titles 1`] = `
+Array [
+  "Visitation Coverage Percentage",
+  "Distribution Coverage Percentage",
+  "Structure Distribution Effectiveness",
+  "Individual Distribution Effectiveness",
+  "Percentage",
+]
+`;
+
+exports[`components/SMC Reports/SMCReportingMap renders correctly: breadcrumbs 1`] = `
+Array [
+  "Home - /",
+  "SMC Reporting - /intervention/smc/report",
+  "Dynamic-MDA 2020-12-04_2030 - /intervention/smc/report/82d7d7fe-7897-5c69-a473-286cd6a9e0fb",
+  "Nigeria - /intervention/smc/report/82d7d7fe-7897-5c69-a473-286cd6a9e0fb/12eaba32-55bb-4a67-b554-a28d9ab8e02a",
+  "Sokoto - /intervention/smc/report/82d7d7fe-7897-5c69-a473-286cd6a9e0fb/af180620-ef6e-4d20-84ec-57c16a456d51",
+  "Goronyo - /intervention/smc/report/82d7d7fe-7897-5c69-a473-286cd6a9e0fb/8f914a37-f832-46b9-8aec-d76e0cd62199",
+  "Darbabiya - /intervention/smc/report/82d7d7fe-7897-5c69-a473-286cd6a9e0fb/afafc708-499c-4b53-8b92-bdb5d55a420c",
+]
+`;
+
+exports[`components/SMC Reports/SMCReportingMap renders correctly: map renders correctly 1`] = `
+<div>
+  Mock component
+</div>
+`;

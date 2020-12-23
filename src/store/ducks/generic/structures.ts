@@ -3,7 +3,6 @@ import { keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
 import { FeatureCollection, wrapFeatureCollection } from '../../../helpers/utils';
-
 /** the reducer name */
 export const reducerName = 'GenericStructures';
 
@@ -21,11 +20,16 @@ export interface GenericStructureProperties {
   structure_sprayed: string;
   structure_type: string;
   task_id: string | null;
+  found_structures: number;
+  structures_recieved_spaq: number;
+  treated_children: number;
+  referred_children: number;
 }
 
 /** GenericStructure interface */
 export interface GenericStructure {
   geojson: Feature<Geometry, GenericStructureProperties>;
+  id?: string;
   jurisdiction_id: string;
   plan_id: string | null;
   structure_id: string;
@@ -79,6 +83,25 @@ export type GenericStructureActionTypes =
   | AnyAction;
 
 // action creators
+/**
+ * process structures - converts structure stringfied json to json
+ * @param {GenericStructure[]} structures - list of generic structure objects
+ */
+export const processStructures = (structures: GenericStructure[]) => {
+  return structures.map(
+    (structure: GenericStructure): GenericStructure => {
+      /** ensure geojson is parsed */
+      if (typeof structure.geojson === 'string') {
+        structure.geojson = JSON.parse(structure.geojson);
+      }
+      /** ensure geometry is parsed */
+      if (typeof structure.geojson.geometry === 'string') {
+        structure.geojson.geometry = JSON.parse(structure.geojson.geometry);
+      }
+      return structure;
+    }
+  );
+};
 
 /**
  * Fetch Generic Structures action creator
@@ -88,26 +111,17 @@ export type GenericStructureActionTypes =
 export const fetchGenericStructures = (
   reducerKey: string = 'GenericStructuresById',
   objList: GenericStructure[] = []
-): FetchGenericStructuresAction => ({
-  objects: keyBy(
-    objList.map(
-      (structure: GenericStructure): GenericStructure => {
-        /** ensure geojson is parsed */
-        if (typeof structure.geojson === 'string') {
-          structure.geojson = JSON.parse(structure.geojson);
-        }
-        /** ensure geometry is parsed */
-        if (typeof structure.geojson.geometry === 'string') {
-          structure.geojson.geometry = JSON.parse(structure.geojson.geometry);
-        }
-        return structure;
-      }
-    ),
-    'id'
-  ),
-  reducerKey,
-  type: GENERIC_STRUCTURES_FETCHED,
-});
+): FetchGenericStructuresAction => {
+  const objects =
+    objList.length && objList[0].id
+      ? keyBy(processStructures(objList), 'id')
+      : keyBy(processStructures(objList), 'structure_id');
+  return {
+    objects,
+    reducerKey,
+    type: GENERIC_STRUCTURES_FETCHED,
+  };
+};
 
 /** Reset generic structures state action creator
  * @param {string} reducerKey - they reducer key
