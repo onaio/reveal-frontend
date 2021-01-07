@@ -16,7 +16,7 @@
     "@onaio/drill-down-table": "^1.0.4",
     "@onaio/element-map": "^0.0.2",
     "@onaio/formik-effect": "^0.0.1",
-    "@onaio/gatekeeper": "^0.0.21",
+    "@onaio/gatekeeper": "^0.1.1",
     "@onaio/google-analytics": "^0.0.2",
     "@onaio/list-view": "^0.0.3",
     "@onaio/progress-indicators": "^0.0.5",
