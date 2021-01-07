@@ -21,7 +21,7 @@
     "@onaio/list-view": "^0.0.3",
     "@onaio/progress-indicators": "^0.0.5",
     "@onaio/redux-reducer-registry": "^0.0.9",
-    "@onaio/session-reducer": "^0.0.11",
+    "@onaio/session-reducer": "^0.0.12",
     "@onaio/superset-connector": "^0.0.13",
     "@onaio/utils": "^0.0.1",
     "@opensrp/form-config": "^0.0.5",

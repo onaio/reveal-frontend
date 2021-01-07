@@ -2501,6 +2501,11 @@
   resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.11.tgz#4e8384ef3fc48d0bb697d698b115e8fc541100ed"
   integrity sha512-vjesMXOggnFgJAwlUSFgGfU95TepDL/JwRo9mUPxqvlkQRT296xMbm62RZdvUMwzi4StdXXH/3Vyv3emMuWeqA==
 
+"@onaio/session-reducer@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.12.tgz#8a72bd80442a6f6c10138b3b3fac0455324042e1"
+  integrity sha512-BbsIuhMhPeM7BnbSiPUOKZFZeTQLjSqYBrWAJeA/gotH1c20csYDRfI1bhopOmVx0dbigm7saDFfOX963jpULA==
+
 "@onaio/superset-connector@^0.0.13":
   version "0.0.13"
   resolved "https://registry.yarnpkg.com/@onaio/superset-connector/-/superset-connector-0.0.13.tgz#5736a565bfd29d4a952398491627c4eda3301b69"
