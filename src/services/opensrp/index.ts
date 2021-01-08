@@ -1,8 +1,7 @@
-import { getAccessToken } from '@onaio/session-reducer';
 import { OpenSRPService as OpenSRPServiceWeb } from '@opensrp/server-service';
 import { IncomingHttpHeaders } from 'http';
 import { OPENSRP_API_BASE_URL } from '../../configs/env';
-import store from '../../store';
+import { getSessionStateOrToken } from '../../helpers/utils';
 
 /** allowed http methods */
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -15,7 +14,7 @@ export function getDefaultHeaders(
 ): IncomingHttpHeaders {
   return {
     accept,
-    authorization: `${authorizationType} ${getAccessToken(store.getState())}`,
+    authorization: `${authorizationType} ${getSessionStateOrToken()}`,
     'content-type': contentType,
   };
 }

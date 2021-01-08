@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
-import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
-import { getUser, SessionState } from '@onaio/session-reducer';
+import { getOnadataUserInfo, getOpenSRPUserInfo, refreshToken } from '@onaio/gatekeeper';
+import { getUser, SessionState, TokenStatus } from '@onaio/session-reducer';
+import { getAccessToken } from '@onaio/session-reducer';
 import { Dictionary, percentage } from '@onaio/utils';
 import { Color } from 'csstype';
 import { Location } from 'history';
@@ -24,6 +25,7 @@ import NewRecordBadge from '../components/NewRecordBadge';
 import { NoDataComponent } from '../components/Table/NoDataComponent';
 import {
   DIGITAL_GLOBE_CONNECT_ID,
+  DOMAIN_NAME,
   ONADATA_OAUTH_STATE,
   OPENSRP_OAUTH_STATE,
   PLAN_UUID_NAMESPACE,
@@ -57,6 +59,7 @@ import {
   BLOOD_SCREENING_CODE,
   CASE_CONFIRMATION_CODE,
   CASE_TRIGGERED,
+  EXPRESS_TOKEN_REFRESH,
   FEATURE_COLLECTION,
   FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
@@ -1002,4 +1005,23 @@ export const formatDates = (
 ) => {
   const date = moment(value);
   return date.isValid() && typeof value === 'string' ? date.format(dateFormat) : fallbackText;
+};
+
+export const getSessionStateOrToken = (isTokenRefreshed?: boolean): string | null => {
+  const sessionExpiredOrToken = getAccessToken(store.getState(), true);
+  if (sessionExpiredOrToken && sessionExpiredOrToken !== TokenStatus.expired) {
+    return sessionExpiredOrToken;
+  }
+  if (sessionExpiredOrToken === TokenStatus.expired && !isTokenRefreshed) {
+    try {
+      // tslint:disable-next-line:no-floating-promises
+      (async () =>
+        await refreshToken(`${DOMAIN_NAME}${EXPRESS_TOKEN_REFRESH}`, store.dispatch, {}))();
+      return getSessionStateOrToken(true);
+    } catch (e) {
+      displayError(e);
+      return null;
+    }
+  }
+  return null;
 };
