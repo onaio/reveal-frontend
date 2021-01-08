@@ -48,6 +48,7 @@ import DistrictReducer, {
 import SOPByDateReducer, {
   FetchIRSSOPByDate,
   makeIRSSODateArraySelector,
+  OrderOptions,
   reducerName as SOPByDateReducerName,
 } from '../../../../../store/ducks/opensrp/performanceReports/IRS/sopByDateReport';
 import SOPReducer, {
@@ -75,7 +76,7 @@ reducerRegistry.register(SOPByDateReducerName, SOPByDateReducer);
 const IRSDistrictsArraySelector = makeIRSDistrictArraySelector();
 const dataCollectorArraySelector = makeIRSCollectorArraySelector();
 const SOPArraySelector = makeIRSSOPArraySelector();
-const SOPByDateArraySelector = makeIRSSODateArraySelector(true);
+const SOPByDateArraySelector = makeIRSSODateArraySelector(OrderOptions.ascending);
 
 /** generic IRSPerfomenceReport props */
 export interface IRSPerfomenceReportProps {
