@@ -13,6 +13,7 @@ import reducer, {
   IRSSOPByDatePerformance,
   IRSSOPDatesBaseSelector,
   makeIRSSODateArraySelector,
+  OrderOptions,
   reducerName,
   removeIRSSOPByDate,
 } from '../sopByDateReport';
@@ -92,6 +93,14 @@ describe('reducers/opensrp/performanceReport/sopByDateReport', () => {
 
     // IRSSOPByDateArraySelector
     expect(IRSSOPByDateArraySelector(store.getState(), {})).toEqual(values(allDistricts));
+    expect(makeIRSSODateArraySelector(OrderOptions.ascending)(store.getState(), {})).toEqual(
+      values(allDistricts)
+    );
+    const allDistrictsCopy = values({ ...allDistricts });
+    expect(makeIRSSODateArraySelector(OrderOptions.descending)(store.getState(), {})).toEqual([
+      allDistrictsCopy[1],
+      allDistrictsCopy[0],
+    ]);
     expect(
       IRSSOPByDateArraySelector(store.getState(), {
         district_id: fixtures.sopByDateReport[0].district_id,
