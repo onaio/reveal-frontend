@@ -1612,5 +1612,13 @@
   "USER_FILTER_NOTIFICATION": {
     "message": "User filter on: Only plans assigned to %s are listed.",
     "description": "Info message to indicate plans are filtered by a specific user"
+  },
+  "SESSION_EXPIRED_TEXT": {
+    "message": "Your session has expired. Please click the link below to log in again.",
+    "description": "Info message to notify users their session is expired"
+  },
+  "RENEW_SESSION_LINK_TEXT": {
+    "message": "Renew session",
+    "description": "Info text for renew session link"
   }
 }

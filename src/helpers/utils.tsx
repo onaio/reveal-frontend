@@ -59,7 +59,7 @@ import {
   BLOOD_SCREENING_CODE,
   CASE_CONFIRMATION_CODE,
   CASE_TRIGGERED,
-  EXPRESS_TOKEN_REFRESH,
+  EXPRESS_TOKEN_REFRESH_URL,
   FEATURE_COLLECTION,
   FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
@@ -1016,7 +1016,7 @@ export const getSessionStateOrToken = (isTokenRefreshed?: boolean): string | nul
     try {
       // tslint:disable-next-line:no-floating-promises
       (async () =>
-        await refreshToken(`${DOMAIN_NAME}${EXPRESS_TOKEN_REFRESH}`, store.dispatch, {}))();
+        await refreshToken(`${DOMAIN_NAME}${EXPRESS_TOKEN_REFRESH_URL}`, store.dispatch, {}))();
       return getSessionStateOrToken(true);
     } catch (e) {
       displayError(e);

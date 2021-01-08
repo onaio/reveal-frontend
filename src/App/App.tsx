@@ -30,12 +30,13 @@ import {
   TOAST_AUTO_CLOSE_DELAY,
   WEBSITE_NAME,
 } from '../configs/env';
-import { LOGIN_PROMPT } from '../configs/lang';
+import { LOGIN_PROMPT, RENEW_SESSION_LINK_TEXT, SESSION_EXPIRED_TEXT } from '../configs/lang';
 import { providers } from '../configs/settings';
 
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import '@onaio/drill-down-table/dist/table.css';
+import { TokenExpired } from '@onaio/gatekeeper';
 import { CustomLogout } from '../components/Logout';
 import { Footer } from '../components/page/Footer';
 import {
@@ -84,6 +85,7 @@ import {
   REPORT_MDA_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
   REPORT_SMC_PLAN_URL,
+  SESSION_EXPIRED_URL,
   SINGLE_ORGANIZATION_URL,
   VIEW_DRAFT_FILES_URL,
 } from '../constants';
@@ -742,6 +744,22 @@ const App = () => {
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
                     return <CustomLogout />;
+                  }}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={SESSION_EXPIRED_URL}
+                  // tslint:disable-next-line: jsx-no-lambda
+                  component={() => {
+                    return (
+                      <TokenExpired
+                        logoutUrl={LOGOUT_URL}
+                        logoutLinkText={RENEW_SESSION_LINK_TEXT}
+                        sessionExpiryText={SESSION_EXPIRED_TEXT}
+                      />
+                    );
                   }}
                 />
               </Switch>

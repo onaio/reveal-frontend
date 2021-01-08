@@ -939,3 +939,9 @@ export const PLAN_OR_JURISDICTION_NOT_FOUND = translate(
   'PLAN_OR_JURISDICTION_NOT_FOUND',
   'Plan or Jurisdiction not found'
 );
+
+export const SESSION_EXPIRED_TEXT = translate(
+  'SESSION_EXPIRED_TEXT',
+  'Your session has expired. Please click the link below to log in again.'
+);
+export const RENEW_SESSION_LINK_TEXT = translate('RENEW_SESSION_LINK_TEXT', 'Renew session');
