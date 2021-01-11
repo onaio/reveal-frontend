@@ -53,12 +53,12 @@ import planDefinitionReducer, {
 } from '../../../store/ducks/opensrp/PlanDefinition';
 import { ConnectedAssignmentMapWrapper } from '../AssigmentMapWrapper';
 import { useHandleBrokenPage } from '../JurisdictionAssignment/helpers/utils';
+import { getAllAssignments } from './helpers/hooks/serviceHooks';
 import {
   JurisdictionTableListView,
   JurisdictionTableListViewPropTypes,
 } from './helpers/JurisdictionTableListView';
 import { JurisdictionTableView, JurisdictionTableViewProps } from './helpers/JurisdictionTableView';
-import { getAllAssignments } from './helpers/serviceHooks';
 
 // register reducers
 reducerRegistry.register(assignmentReducerName, assignmentReducer);

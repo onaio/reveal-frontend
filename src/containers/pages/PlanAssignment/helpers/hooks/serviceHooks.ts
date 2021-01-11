@@ -1,10 +1,10 @@
 import moment from 'moment';
-import { COULD_NOT_LOAD_ASSIGNMENTS } from '../../../../configs/lang';
-import { OPENSRP_GET_ASSIGNMENTS_ENDPOINT } from '../../../../constants';
-import { displayError } from '../../../../helpers/errors';
-import { OpenSRPService } from '../../../../services/opensrp';
-import { Assignment, fetchAssignments } from '../../../../store/ducks/opensrp/assignments';
-import { AssignmentResponse } from './types';
+import { COULD_NOT_LOAD_ASSIGNMENTS } from '../../../../../configs/lang';
+import { OPENSRP_GET_ASSIGNMENTS_ENDPOINT } from '../../../../../constants';
+import { displayError } from '../../../../../helpers/errors';
+import { OpenSRPService } from '../../../../../services/opensrp';
+import { Assignment, fetchAssignments } from '../../../../../store/ducks/opensrp/assignments';
+import { AssignmentResponse } from '../types';
 
 export interface GetAllAssignmentsOptions {
   getAll: boolean;
