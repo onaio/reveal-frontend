@@ -27,7 +27,7 @@ export const getAllAssignments = (
   serviceClass: typeof OpenSRPService,
   plan: string,
   fetchAssignmentsActionCreator: typeof fetchAssignments,
-  { getAll = false, pageSize = 1, pageNumber = 1 }: GetAllAssignmentsOptions
+  { getAll = false, pageSize = 1000, pageNumber = 1 }: GetAllAssignmentsOptions
 ) => {
   const service = new serviceClass(OPENSRP_GET_ASSIGNMENTS_ENDPOINT);
 
