@@ -1,5 +1,4 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import moment from 'moment';
 import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { ActionCreator, Store } from 'redux';
@@ -8,7 +7,6 @@ import { withTreeWalker } from '../../../components/TreeWalker';
 import { ASSIGNMENT_PAGE_SHOW_MAP, MAP_DISABLED_PLAN_TYPES } from '../../../configs/env';
 import {
   AN_ERROR_OCURRED,
-  COULD_NOT_LOAD_ASSIGNMENTS,
   COULD_NOT_LOAD_CHILDREN,
   COULD_NOT_LOAD_PARENTS,
   COULD_NOT_LOAD_PLAN,
@@ -20,12 +18,10 @@ import { PlanDefinition } from '../../../configs/settings';
 import {
   ASSIGN_PLAN_URL,
   INTERVENTION_TYPE_CODE,
-  OPENSRP_GET_ASSIGNMENTS_ENDPOINT,
   OPENSRP_ORGANIZATION_ENDPOINT,
   OPENSRP_PLAN_HIERARCHY_ENDPOINT,
   OPENSRP_PLANS,
 } from '../../../constants';
-import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import assignmentReducer, {
   Assignment,
@@ -58,7 +54,7 @@ import {
   JurisdictionTableListViewPropTypes,
 } from './helpers/JurisdictionTableListView';
 import { JurisdictionTableView, JurisdictionTableViewProps } from './helpers/JurisdictionTableView';
-import { AssignmentResponse } from './helpers/types';
+import { getAllAssignments } from './helpers/serviceHooks';
 
 // register reducers
 reducerRegistry.register(assignmentReducerName, assignmentReducer);
@@ -139,26 +135,12 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
       });
 
     // get all assignments
-    const OpenSRPAssignedService = new OpenSRPServiceClass(OPENSRP_GET_ASSIGNMENTS_ENDPOINT);
-    const assignmentsPromise = OpenSRPAssignedService.list({ plan: planId })
-      .then((response: AssignmentResponse[]) => {
-        if (response) {
-          const receivedAssignments: Assignment[] = response.map(assignment => {
-            return {
-              fromDate: moment(assignment.fromDate).format(),
-              jurisdiction: assignment.jurisdictionId,
-              organization: assignment.organizationId,
-              plan: assignment.planId,
-              toDate: moment(assignment.toDate).format(),
-            };
-          });
-          // save assignments to store
-          fetchAssignmentsActionCreator(receivedAssignments);
-        } else {
-          displayError(Error(COULD_NOT_LOAD_ASSIGNMENTS));
-        }
-      })
-      .catch(e => displayError(e));
+    const assignmentsPromise = getAllAssignments(
+      OpenSRPServiceClass,
+      planId,
+      fetchAssignmentsActionCreator,
+      { getAll: true }
+    );
 
     // fetch all organizations
     const OpenSRPOrganizationService = new OpenSRPServiceClass(OPENSRP_ORGANIZATION_ENDPOINT);
