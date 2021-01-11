@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import { ActionCreator, Store } from 'redux';
 import Loading from '../../../components/page/Loading';
 import { withTreeWalker } from '../../../components/TreeWalker';
-import { ASSIGNMENT_PAGE_SHOW_MAP, MAP_DISABLED_PLAN_TYPES } from '../../../configs/env';
+import {
+  ASSIGNED_TEAMS_REQUEST_PAGE_SIZE,
+  ASSIGNMENT_PAGE_SHOW_MAP,
+  MAP_DISABLED_PLAN_TYPES,
+} from '../../../configs/env';
 import {
   AN_ERROR_OCURRED,
   COULD_NOT_LOAD_CHILDREN,
@@ -139,7 +143,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
       OpenSRPServiceClass,
       planId,
       fetchAssignmentsActionCreator,
-      { getAll: true }
+      { getAll: true, pageSize: ASSIGNED_TEAMS_REQUEST_PAGE_SIZE }
     );
 
     // fetch all organizations
