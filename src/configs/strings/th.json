@@ -76,7 +76,7 @@
     "description": "page title: page for creating new plans"
   },
   "NAME": {
-    "message": "ชื่อแผน",
+    "message": "ชื่อกลุ่มบ้าน",
     "description": "label, column header: name, title, designation of an entity"
   },
   "START_DATE": {
@@ -668,7 +668,7 @@
     "description": ""
   },
   "BEDNET_ACTIVITY_DESCRIPTION": {
-    "message": "แจกมุ้งทุกหลังคาเรือนในพื้นที่ปฏิบัติงาน (100%)",
+    "message": "กิจกรรมสำรวจ/ชุบ/แจกมุ้งในแต่ละหลังคาเรือนของพื้นที่ปฏิบัติงาน",
     "description": ""
   },
   "BEDNET_GOAL_MEASURE": {
@@ -676,7 +676,7 @@
     "description": ""
   },
   "BLOOD_SCREENING_ACTIVITY_DESCRIPTION": {
-    "message": "เจาะเลือดรอบบ้านผู้ป่วยในรัศมี 1 กิโลเมตร (100%)",
+    "message": "ลงทะเบียนครัวเรือนและสมาชิกในครัวเรือนภายในพื้นที่ปฏิบัติงาน",
     "description": ""
   },
   "BLOOD_SCREENING_GOAL_MEASURE": {
@@ -692,7 +692,7 @@
     "description": ""
   },
   "REGISTER_FAMILY_ACTIVITY_DESCRIPTION": {
-    "message": "ลงทะเบียนครัวเรือนและสมาชิกในครัวเรือน (100%) ภายในพื้นที่ปฏิบัติงาน",
+    "message": "ลงทะเบียนครัวเรือนและสมาชิกในครัวเรือนภายในพื้นที่ปฏิบัติงาน",
     "description": ""
   },
   "REGISTER_FAMILY_ACTIVITY_GOAL_MEASURE": {
@@ -700,7 +700,7 @@
     "description": ""
   },
   "LARVAL_DIPPING_ACTIVITY_DESCRIPTION": {
-    "message": "ดำเนินกิจกรรมจับลูกน้ำอย่างน้อย 3 แห่งในพื้นที่ปฏิบัติงาน",
+    "message": "ดำเนินกิจกรรมจับลูกน้ำในพื้นที่ปฏิบัติงาน",
     "description": ""
   },
   "LARVAL_DIPPING_GOAL_MEASURE": {
@@ -708,7 +708,7 @@
     "description": ""
   },
   "MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION": {
-    "message": "กิจกรรมจับยุงกำหนดไว้อย่างน้อย 3 แห่ง",
+    "message": "ดำเนินกิจกรรมจับยุงในพื้นที่ปฏิบัติงาน",
     "description": ""
   },
   "MOSQUITO_COLLECTION_GOAL_MEASURE": {
@@ -776,7 +776,7 @@
     "description": "unit of meassurment for plan activity goals"
   },
   "GOAL_UNIT_PERCENT": {
-    "message": "%",
+    "message": "ครัวเรือน",
     "description": "unit of meassurment for plan activity goals"
   },
   "GOAL_UNIT_PERSON": {
@@ -944,7 +944,7 @@
     "description": "button text: create a new focus investigation plan"
   },
   "FOCUS_CLASSIFICATION_LABEL": {
-    "message": "การตัดสินแหล่งแพร่เชื้อ",
+    "message": "ระยะท้องที่",
     "description": "form label: for the status of a focus investigation plan"
   },
   "PLANNING_PAGE_TITLE": {
