@@ -6,12 +6,17 @@ import { OpenSRPService } from '../../../../../services/opensrp';
 import { Assignment, fetchAssignments } from '../../../../../store/ducks/opensrp/assignments';
 import { AssignmentResponse } from '../types';
 
+/** interface for getAllAssignments options */
 export interface GetAllAssignmentsOptions {
   getAll: boolean;
   pageSize?: number;
   pageNumber?: number;
 }
 
+/**
+ * Process data received from API
+ * @param {AssignmentResponse[]) data - API response
+ */
 export const ProcessReceivedAssignments = (data: AssignmentResponse[]): Assignment[] =>
   data.map(assignment => {
     return {
@@ -23,6 +28,13 @@ export const ProcessReceivedAssignments = (data: AssignmentResponse[]): Assignme
     };
   });
 
+/**
+ * Gets all team assignnments
+ * @param {typeof OpenSRPService} serviceClass - opensrp service class
+ * @param {string} plan - plan id
+ * @param {typeof fetchAssignments} fetchAssignmentsActionCreator - assignments action creator
+ * @param {GetAllAssignmentsOptions} options  - extra options
+ */
 export const getAllAssignments = (
   serviceClass: typeof OpenSRPService,
   plan: string,
