@@ -85,7 +85,7 @@ exports[`Thailand: containers/forms/PlanForm renders correctly: fiStatus field 1
   required={true}
 >
   <option>
-    ----
+    ระยะท้องที่
   </option>
   <option
     key="A1"

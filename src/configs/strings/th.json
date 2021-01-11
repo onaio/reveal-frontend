@@ -1355,5 +1355,9 @@
   "SET_TO_NO_LABEL": {
     "message": "ตั้งค่า 'ไม่ใช่'",
     "description": "set population characteristics settings to false"
+  },
+  "SELECT_OPTION": {
+    "message": "ระยะท้องที่",
+    "description": "Select one option on a dropdown"
   }
 }
