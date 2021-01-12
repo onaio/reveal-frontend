@@ -376,7 +376,7 @@
     "description": "indicator label: indicating the type of plan action being monitored"
   },
   "FI_STATUS": {
-    "message": "สถานะ",
+    "message": "ระยะท้องที่",
     "description": "column header: for the status of Focus Investigation plans"
   },
   "FI_REASON": {
@@ -508,11 +508,11 @@
     "description": "section header: sidebar section containing information about the intervention plan"
   },
   "COMPLETE_FOCUS_INVESTIGATION": {
-    "message": "แผนงานที่ดำเนินการเรียบร้อยแล้วs",
+    "message": "แผนงานที่ดำเนินการเรียบร้อยแล้ว",
     "description": "section header: containing list of completed focus investigation plans"
   },
   "CURRENT_FOCUS_INVESTIGATION": {
-    "message": "แผนงานที่ดำเนินการ",
+    "message": "แผนงานที่กำลังดำเนินการ",
     "description": "section header: containing list of active focus investigation plans"
   },
   "FOCUS_INVESTIGATION": {
@@ -1359,5 +1359,9 @@
   "SELECT_OPTION": {
     "message": "ระยะท้องที่",
     "description": "Select one option on a dropdown"
+  },
+  "PLANS_USER_FILTER_NOTIFICATION": {
+    "message": "มีการกำหนดตัวกรองอยู่ ผู้ใช้จะเห็นเฉพาะแผนปฏิบัติงานที่อยู่ภายใต้ username: %s เท่านั้",
+    "description": "Info message to indicate plans are filtered by a specific user"
   }
 }
