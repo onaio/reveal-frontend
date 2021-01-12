@@ -1,6 +1,6 @@
 import { OpenSRPService as OpenSRPServiceWeb } from '@opensrp/server-service';
 import { IncomingHttpHeaders } from 'http';
-import { OPENSRP_API_BASE_URL } from '../../configs/env';
+import { CHECK_SESSION_EXPIRY_STATUS, OPENSRP_API_BASE_URL } from '../../configs/env';
 import { SESSION_EXPIRED_ERROR } from '../../configs/lang';
 import { getAcessTokenOrRedirect } from '../../helpers/utils';
 
@@ -14,7 +14,7 @@ export function getDefaultHeaders(
   contentType: string = 'application/json;charset=UTF-8'
 ): IncomingHttpHeaders {
   const accessToken = getAcessTokenOrRedirect();
-  if (typeof accessToken !== 'string') {
+  if (typeof accessToken !== 'string' && CHECK_SESSION_EXPIRY_STATUS) {
     throw new Error(SESSION_EXPIRED_ERROR);
   }
   return {

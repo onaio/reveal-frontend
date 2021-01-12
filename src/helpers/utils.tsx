@@ -25,6 +25,7 @@ import { FIReasonType, FIStatusType } from '../components/forms/PlanForm/types';
 import NewRecordBadge from '../components/NewRecordBadge';
 import { NoDataComponent } from '../components/Table/NoDataComponent';
 import {
+  CHECK_SESSION_EXPIRY_STATUS,
   DIGITAL_GLOBE_CONNECT_ID,
   ONADATA_OAUTH_STATE,
   OPENSRP_OAUTH_STATE,
@@ -1009,12 +1010,12 @@ export const formatDates = (
 
 /** gets access token or redirects to session info page if session is expired */
 export const getAcessTokenOrRedirect = () => {
-  const sessionExpiredOrToken = getAccessToken(store.getState(), true);
+  const sessionExpiredOrToken = getAccessToken(store.getState(), CHECK_SESSION_EXPIRY_STATUS);
   if (sessionExpiredOrToken && sessionExpiredOrToken !== TokenStatus.expired) {
     return sessionExpiredOrToken;
   }
   if (sessionExpiredOrToken === TokenStatus.expired) {
     return history.push(SESSION_EXPIRED_URL);
   }
-  return history.push(SESSION_EXPIRED_URL);
+  return CHECK_SESSION_EXPIRY_STATUS ? history.push(SESSION_EXPIRED_URL) : sessionExpiredOrToken;
 };

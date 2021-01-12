@@ -2,7 +2,12 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { getOauthProviderState } from '@onaio/session-reducer';
 import superset, { SupersetConnectorConfig } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
-import { OPENSRP_OAUTH_STATE, SUPERSET_API_BASE, SUPERSET_API_ENDPOINT } from '../../configs/env';
+import {
+  CHECK_SESSION_EXPIRY_STATUS,
+  OPENSRP_OAUTH_STATE,
+  SUPERSET_API_BASE,
+  SUPERSET_API_ENDPOINT,
+} from '../../configs/env';
 import { ERROR_PERMISSION_DENIED, SESSION_EXPIRED_ERROR } from '../../configs/lang';
 import { SUPERSET_ACCESS_DENIED_MESSAGE } from '../../constants';
 import { displayError } from '../../helpers/errors';
@@ -65,7 +70,7 @@ const supersetFetch = async (
   };
 
   const accessToken = getAcessTokenOrRedirect();
-  if (typeof accessToken !== 'string') {
+  if (typeof accessToken !== 'string' && CHECK_SESSION_EXPIRY_STATUS) {
     throw new Error(SESSION_EXPIRED_ERROR);
   }
   if (accessToken) {
