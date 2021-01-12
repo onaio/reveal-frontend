@@ -43,6 +43,7 @@ import { isMapDisabled, PlanAssignment } from '../index';
 const fetch = require('jest-fetch-mock');
 
 jest.mock('../../../../configs/env', () => ({
+  ASSIGNED_TEAMS_REQUEST_PAGE_SIZE: 1000,
   ASSIGNMENT_PAGE_SHOW_MAP: false,
   MAP_DISABLED_PLAN_TYPES: ['FI'],
 }));
@@ -137,7 +138,7 @@ describe('PlanAssignment', () => {
       'https://test.smartregister.org/opensrp/rest/location/hierarchy/plan/356b6b84-fc36-4389-a44a-2b038ed2f38d?return_structure_count=false'
     );
     expect(fetch.mock.calls[1][0]).toEqual(
-      'https://test.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?plan=356b6b84-fc36-4389-a44a-2b038ed2f38d'
+      'https://test.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?pageNumber=1&pageSize=1000&plan=356b6b84-fc36-4389-a44a-2b038ed2f38d'
     );
     expect(fetch.mock.calls[2][0]).toEqual(
       'https://test.smartregister.org/opensrp/rest/organization'

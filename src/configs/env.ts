@@ -567,5 +567,9 @@ export const ASSIGN_TEAMS_PLAN_TYPES_DISPLAYED = (
   process.env.REACT_APP_DISPLAYED_PLAN_TYPES ||
   'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA,IRS-Lite'
 ).split(',');
-
 export type ASSIGN_TEAMS_PLAN_TYPES_DISPLAYED = typeof ASSIGN_TEAMS_PLAN_TYPES_DISPLAYED;
+
+/** The number of teams assignments to get from OpenSrp per call */
+export const ASSIGNED_TEAMS_REQUEST_PAGE_SIZE =
+  Number(process.env.REACT_APP_ASSIGNED_TEAMS_REQUEST_PAGE_SIZE) || 1000;
+export type ASSIGNED_TEAMS_REQUEST_PAGE_SIZE = typeof ASSIGNED_TEAMS_REQUEST_PAGE_SIZE;
