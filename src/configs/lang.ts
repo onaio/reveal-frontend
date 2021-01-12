@@ -939,3 +939,5 @@ export const PLAN_OR_JURISDICTION_NOT_FOUND = translate(
   'PLAN_OR_JURISDICTION_NOT_FOUND',
   'Plan or Jurisdiction not found'
 );
+
+export const SELECT_OPTION = translate('SELECT_OPTION', 'Select Option');
