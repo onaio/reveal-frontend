@@ -3,10 +3,10 @@ import { getOauthProviderState } from '@onaio/session-reducer';
 import superset, { SupersetConnectorConfig } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
 import { OPENSRP_OAUTH_STATE, SUPERSET_API_BASE, SUPERSET_API_ENDPOINT } from '../../configs/env';
-import { ERROR_PERMISSION_DENIED } from '../../configs/lang';
+import { ERROR_PERMISSION_DENIED, SESSION_EXPIRED_ERROR } from '../../configs/lang';
 import { SUPERSET_ACCESS_DENIED_MESSAGE } from '../../constants';
 import { displayError } from '../../helpers/errors';
-import { getSessionStateOrToken } from '../../helpers/utils';
+import { getAcessTokenOrRedirect } from '../../helpers/utils';
 import store from '../../store';
 import supersetReducer, {
   authorizeSuperset,
@@ -64,7 +64,10 @@ const supersetFetch = async (
     token: '',
   };
 
-  const accessToken = getSessionStateOrToken();
+  const accessToken = getAcessTokenOrRedirect();
+  if (typeof accessToken !== 'string') {
+    throw new Error(SESSION_EXPIRED_ERROR);
+  }
   if (accessToken) {
     config.token = accessToken;
   }

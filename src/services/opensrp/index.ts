@@ -1,7 +1,8 @@
 import { OpenSRPService as OpenSRPServiceWeb } from '@opensrp/server-service';
 import { IncomingHttpHeaders } from 'http';
 import { OPENSRP_API_BASE_URL } from '../../configs/env';
-import { getSessionStateOrToken } from '../../helpers/utils';
+import { SESSION_EXPIRED_ERROR } from '../../configs/lang';
+import { getAcessTokenOrRedirect } from '../../helpers/utils';
 
 /** allowed http methods */
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -12,9 +13,13 @@ export function getDefaultHeaders(
   authorizationType: string = 'Bearer',
   contentType: string = 'application/json;charset=UTF-8'
 ): IncomingHttpHeaders {
+  const accessToken = getAcessTokenOrRedirect();
+  if (typeof accessToken !== 'string') {
+    throw new Error(SESSION_EXPIRED_ERROR);
+  }
   return {
     accept,
-    authorization: `${authorizationType} ${getSessionStateOrToken()}`,
+    authorization: `${authorizationType} ${accessToken}`,
     'content-type': contentType,
   };
 }

@@ -1614,11 +1614,15 @@
     "description": "Info message to indicate plans are filtered by a specific user"
   },
   "SESSION_EXPIRED_TEXT": {
-    "message": "Your session has expired. Please click the link below to log in again.",
+    "message": "Your session has expired. Please click the link below to login again.",
     "description": "Info message to notify users their session is expired"
   },
   "RENEW_SESSION_LINK_TEXT": {
     "message": "Renew session",
     "description": "Info text for renew session link"
+  },
+  "SESSION_EXPIRED_ERROR": {
+    "message": "Error: Your session is expired. Please renew session",
+    "description": "Error text flashed when session is expired"
   }
 }

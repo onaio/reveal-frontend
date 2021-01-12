@@ -1,12 +1,12 @@
 import { Dictionary } from '@onaio/utils';
 import { toast } from 'react-toastify';
 import { OPENSRP_API_BASE_URL } from '../../../../../configs/env';
-import { FILE_UPLOADED_SUCCESSFULLY } from '../../../../../configs/lang';
+import { FILE_UPLOADED_SUCCESSFULLY, SESSION_EXPIRED_ERROR } from '../../../../../configs/lang';
 import {
   OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT,
   OPENSRP_UPLOAD_ENDPOINT,
 } from '../../../../../constants';
-import { getSessionStateOrToken, growl, successGrowl } from '../../../../../helpers/utils';
+import { getAcessTokenOrRedirect, growl, successGrowl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import store from '../../../../../store';
 import { fetchFiles, File } from '../../../../../store/ducks/opensrp/clientfiles';
@@ -48,7 +48,11 @@ export const postUploadedFile = async (
   setFormSubmitstate: () => void,
   params?: string
 ) => {
-  const bearer = `Bearer ${getSessionStateOrToken()}`;
+  const accessToken = getAcessTokenOrRedirect();
+  if (typeof accessToken !== 'string') {
+    throw new Error(SESSION_EXPIRED_ERROR);
+  }
+  const bearer = `Bearer ${accessToken}`;
   const response = await fetch(`${OPENSRP_API_BASE_URL}${OPENSRP_UPLOAD_ENDPOINT}/${params}`, {
     body: data,
     headers: {
