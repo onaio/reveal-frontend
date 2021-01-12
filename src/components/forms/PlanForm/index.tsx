@@ -64,6 +64,7 @@ import {
   REASON_HEADER,
   SAVE_PLAN,
   SAVING,
+  SELECT_OPTION,
   SELECT_PLACHOLDER,
   SMC_TITLE,
   START_DATE,
@@ -547,7 +548,7 @@ const PlanForm = (props: PlanFormProps) => {
                   disabled={disabledFields.includes('fiStatus')}
                   className={errors.fiStatus ? 'form-control is-invalid' : 'form-control'}
                 >
-                  <option>----</option>
+                  <option>{SELECT_OPTION}</option>
                   {Object.entries(FIClassifications).map(e => (
                     <option key={e[1].code} value={e[1].code}>
                       {e[1].code} - {e[1].name}
