@@ -1,6 +1,10 @@
+import { viewport } from '@mapbox/geo-viewport';
+import GeojsonExtent from '@mapbox/geojson-extent';
 import { center as turfCenter, FeatureCollection as TurfFeatureCollection } from '@turf/turf';
 import { Style } from 'mapbox-gl';
 import { DIGITAL_GLOBE_CONNECT_ID } from '../../configs/env';
+import { StructureFeatureCollection } from '../../store/ducks/generic/structures';
+import { Jurisdiction } from '../../store/ducks/jurisdictions';
 
 /** Get the centre coordinates from a feature collection */
 export const getCenter = (fc: TurfFeatureCollection): [number, number] | undefined => {
@@ -90,3 +94,36 @@ export const gsLiteStyle: Style | string = DIGITAL_GLOBE_CONNECT_ID
       version: 8,
     }
   : 'mapbox://styles/mapbox/satellite-v9';
+
+/**
+ * gets map zoom, center and bounds form structures or jurisdictions
+ * @param {StructureFeatureCollection | null} structures - structure points
+ * @param {Jurisdiction | null} jurisdiction - jurisdiction
+ * @param {[number, number]} dimensions - map dimensions
+ */
+export const getZoomCenterAndBounds = (
+  structures: StructureFeatureCollection | null,
+  jurisdiction: Jurisdiction | null,
+  dimensions: [number, number]
+) => {
+  let mapCenter;
+  let mapBounds;
+  let zoom;
+  if (structures?.features?.length) {
+    mapBounds = GeojsonExtent(structures);
+  }
+  if (!mapBounds && jurisdiction?.geojson) {
+    mapBounds = GeojsonExtent(jurisdiction.geojson);
+  }
+  // get map zoom and center values
+  if (mapBounds) {
+    const centerAndZoom = viewport(mapBounds, dimensions);
+    mapCenter = centerAndZoom.center;
+    zoom = centerAndZoom.zoom;
+  }
+  return {
+    mapBounds,
+    mapCenter,
+    zoom,
+  };
+};

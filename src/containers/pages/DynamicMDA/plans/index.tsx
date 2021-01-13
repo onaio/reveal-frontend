@@ -13,10 +13,10 @@ import { getPlanStatusToDisplay, getQueryParams, RouteParams } from '../../../..
 import supersetFetch from '../../../../services/superset';
 import GenericPLansReducer, {
   genericFetchPlans,
+  GenericPlan,
   makeGenericPlansArraySelector,
   reducerName as GenericPLansReducerName,
 } from '../../../../store/ducks/generic/plans';
-import { GenericPlan } from '../../../../store/ducks/generic/plans';
 import { InterventionType } from '../../../../store/ducks/plans';
 import { GenericPlanListProps, GenericPlansList } from '../../GenericPlansList';
 

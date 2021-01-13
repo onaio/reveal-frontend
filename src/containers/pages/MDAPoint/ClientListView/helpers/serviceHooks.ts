@@ -1,3 +1,4 @@
+import { getAccessToken } from '@onaio/session-reducer';
 import { Dictionary } from '@onaio/utils';
 import { toast } from 'react-toastify';
 import { OPENSRP_API_BASE_URL } from '../../../../../configs/env';
@@ -10,7 +11,6 @@ import { growl, successGrowl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import store from '../../../../../store';
 import { fetchFiles, File } from '../../../../../store/ducks/opensrp/clientfiles';
-import { getAccessToken } from '../../../../../store/selectors';
 
 /** useState function type for setting loader on and off */
 type SetIsLoading = React.Dispatch<React.SetStateAction<boolean>> | null;

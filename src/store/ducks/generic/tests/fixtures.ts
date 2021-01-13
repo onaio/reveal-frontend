@@ -517,3 +517,42 @@ export const MDAPointChildReportData = [
 ];
 /* tslint:disable-next-line no-var-requires */
 export const ZambiaStructures = require('../../../../containers/pages/IRS/JurisdictionsReport/fixtures/zambia_structures.json');
+
+export const SMCPlans = [
+  {
+    plan_id: '82d7d7fe-7897-5c69-a473-286cd6a9e0fb',
+    plan_title: 'Dynamic-MDA 2020-12-04_2030',
+    plan_name: 'Dynamic-MDA-2020-12-04',
+    plan_status: 'active',
+    plan_effective_period_start: '2020-12-04',
+    plan_effective_period_end: '2021-07-31',
+    plan_intervention_type: 'Dynamic-MDA',
+    plan_version: '1',
+    jurisdiction_root_parent_ids: ['12eaba32-55bb-4a67-b554-a28d9ab8e02a'],
+    plan_date: '2020-12-04',
+  },
+  {
+    plan_id: '12a879d6-8ad8-4198-86c7-0e94f0dcc848',
+    plan_title: 'Nigeria Cycle 4 - SMC Implementation Plan',
+    plan_name: 'Nigeria-Cycle4-SMC-Implementation-Plan',
+    plan_status: 'active',
+    plan_effective_period_start: '2020-10-09',
+    plan_effective_period_end: '2021-09-09',
+    plan_intervention_type: 'MDA',
+    plan_version: '2',
+    jurisdiction_root_parent_ids: ['12eaba32-55bb-4a67-b554-a28d9ab8e02a'],
+    plan_date: '2020-10-09',
+  },
+  {
+    plan_id: '262526a3-fe86-4cb5-a743-f26db7ff3ce0',
+    plan_title: 'Nigeria Cycle 3 - SMC Implementation Plan',
+    plan_name: 'Nigeria-Cycle3-SMC-Implementation-Plan',
+    plan_status: 'draft',
+    plan_effective_period_start: '2020-09-08',
+    plan_effective_period_end: '2021-09-09',
+    plan_intervention_type: 'MDA',
+    plan_version: '1',
+    jurisdiction_root_parent_ids: ['12eaba32-55bb-4a67-b554-a28d9ab8e02a'],
+    plan_date: '2020-09-08',
+  },
+];

@@ -7,6 +7,30 @@ import {
   planActivities as planActivitiesFromConfig,
   PlanActivity,
 } from '../../../../configs/settings';
+import {
+  BCC_ACTIVITY_CODE,
+  BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  BLOOD_SCREENING_ACTIVITY_CODE,
+  CASE_CONFIRMATION_ACTIVITY_CODE,
+  DYNAMIC_BCC_ACTIVITY_CODE,
+  DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+  DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
+  DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
+  DYNAMIC_IRS_ACTIVITY_CODE,
+  DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
+  DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
+  DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
+  DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE,
+  FAMILY_REGISTRATION_ACTIVITY_CODE,
+  IRS_ACTIVITY_CODE,
+  LARVAL_DIPPING_ACTIVITY_CODE,
+  MDA_ADHERENCE,
+  MDA_DISPENSE_ACTIVITY_CODE,
+  MDA_FAMILY_REGISTRATION,
+  MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE,
+  MDA_POINT_DISPENSE_ACTIVITY_CODE,
+  MOSQUITO_COLLECTION_ACTIVITY_CODE,
+} from '../../../../constants';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
 import { PlanActivityFormFields, PlanFormFields } from '../types';
 import { GoalUnit } from '../types';
@@ -232,6 +256,21 @@ export const activities: PlanActivityFormFields[] = [
     goalDue: parseISO('2019-08-16T08:39:42.778Z'),
     goalPriority: 'medium-priority',
     goalValue: 1,
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.778Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.778Z'),
+  },
+  {
+    actionCode: 'MDA Adherence',
+    actionDescription:
+      'Visit all residential structures (100%) and confirm adherence of each registered person',
+    actionIdentifier: '',
+    actionReason: 'Routine',
+    actionTitle: 'MDA Adherence',
+    goalDescription:
+      'Visit all residential structures (100%) and confirm adherence of each registered person',
+    goalDue: parseISO('2019-08-16T08:39:42.778Z'),
+    goalPriority: 'medium-priority',
+    goalValue: 100,
     timingPeriodEnd: parseISO('2019-08-16T08:39:42.778Z'),
     timingPeriodStart: parseISO('2019-08-09T08:39:42.778Z'),
   },
@@ -1520,4 +1559,226 @@ export const DynamicFIPlan = {
     },
   ],
   experimental: false,
+};
+
+export const planNamesAndInterventions = [
+  {
+    intervention: InterventionType.FI,
+    plans: [
+      BCC_ACTIVITY_CODE,
+      BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+      BLOOD_SCREENING_ACTIVITY_CODE,
+      CASE_CONFIRMATION_ACTIVITY_CODE,
+      FAMILY_REGISTRATION_ACTIVITY_CODE,
+      LARVAL_DIPPING_ACTIVITY_CODE,
+      MOSQUITO_COLLECTION_ACTIVITY_CODE,
+    ],
+  },
+  {
+    intervention: InterventionType.IRS,
+    plans: [IRS_ACTIVITY_CODE],
+  },
+  {
+    intervention: InterventionType.MDA,
+    plans: [MDA_FAMILY_REGISTRATION, MDA_DISPENSE_ACTIVITY_CODE, MDA_ADHERENCE],
+  },
+  {
+    intervention: InterventionType.MDAPoint,
+    plans: [MDA_POINT_ADVERSE_EFFECTS_ACTIVITY_CODE, MDA_POINT_DISPENSE_ACTIVITY_CODE],
+  },
+  {
+    intervention: InterventionType.DynamicFI,
+    plans: [
+      DYNAMIC_BCC_ACTIVITY_CODE,
+      DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
+      DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
+      DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
+      DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
+      DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE,
+    ],
+  },
+  {
+    intervention: InterventionType.DynamicMDA,
+    plans: [
+      DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
+      DYNAMIC_MDA_COMMUNITY_DISPENSE_ACTIVITY_CODE,
+      DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
+    ],
+  },
+  {
+    intervention: InterventionType.DynamicIRS,
+    plans: [DYNAMIC_IRS_ACTIVITY_CODE],
+  },
+];
+
+export const MDAPlanActivities: PlanActivityFormFields[] = [
+  {
+    actionCode: 'RACD Register Family',
+    actionDefinitionUri: '',
+    actionDescription:
+      'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+    actionIdentifier: '',
+    actionReason: 'Investigation',
+    actionTitle: 'Family Registration',
+    goalDescription:
+      'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+    goalDue: parseISO('2019-08-16T08:39:42.773Z'),
+    goalPriority: 'medium-priority',
+    goalValue: 100,
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.773Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.773Z'),
+  },
+  {
+    actionCode: 'MDA Dispense',
+    actionDefinitionUri: '',
+    actionDescription:
+      'Visit all residential structures (100%) dispense prophylaxis to each registered person',
+    actionIdentifier: '',
+    actionReason: 'Routine',
+    actionTitle: 'MDA Dispense',
+    goalDescription:
+      'Visit all residential structures (100%) dispense prophylaxis to each registered person',
+    goalDue: parseISO('2019-08-16T08:39:42.773Z'),
+    goalPriority: 'medium-priority',
+    goalValue: 100,
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.773Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.773Z'),
+  },
+  {
+    actionCode: 'MDA Adherence',
+    actionDefinitionUri: '',
+    actionDescription:
+      'Visit all residential structures (100%) and confirm adherence of each registered person',
+    actionIdentifier: '',
+    actionReason: 'Routine',
+    actionTitle: 'MDA Adherence',
+    goalDescription:
+      'Visit all residential structures (100%) and confirm adherence of each registered person',
+    goalDue: parseISO('2019-08-16T08:39:42.773Z'),
+    goalPriority: 'low-priority',
+    goalValue: 100,
+    timingPeriodEnd: parseISO('2019-08-16T08:39:42.773Z'),
+    timingPeriodStart: parseISO('2019-08-09T08:39:42.773Z'),
+  },
+];
+
+export const extractedMDAActivities = {
+  action: [
+    {
+      code: 'RACD Register Family',
+      description:
+        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+      goalId: 'RACD_register_families',
+      identifier: '541258e7-4bd0-5699-89ba-7e832e5452b3',
+      prefix: 1,
+      reason: 'Investigation',
+      subjectCodableConcept: {
+        text: 'Residential_Structure',
+      },
+      taskTemplate: 'RACD_register_families',
+      timingPeriod: {
+        end: '2019-08-16',
+        start: '2019-08-09',
+      },
+      title: 'Family Registration',
+      type: 'create',
+    },
+    {
+      code: 'MDA Dispense',
+      description:
+        'Visit all residential structures (100%) dispense prophylaxis to each registered person',
+      goalId: 'MDA_Dispense',
+      identifier: 'f1edff2a-d93c-56fb-b832-3f87b595c8fb',
+      prefix: 2,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'Person',
+      },
+      taskTemplate: 'MDA_Dispense',
+      timingPeriod: {
+        end: '2019-08-16',
+        start: '2019-08-09',
+      },
+      title: 'MDA Dispense',
+      type: 'create',
+    },
+    {
+      code: 'MDA Adherence',
+      description:
+        'Visit all residential structures (100%) and confirm adherence of each registered person',
+      goalId: 'MDA_Adherence',
+      identifier: '3f7fdb4b-935b-57d8-a27b-8903be074080',
+      prefix: 3,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'Person',
+      },
+      taskTemplate: 'MDA_Adherence',
+      timingPeriod: {
+        end: '2019-08-16',
+        start: '2019-08-09',
+      },
+      title: 'MDA Adherence',
+      type: 'create',
+    },
+  ],
+  goal: [
+    {
+      description:
+        'Register all families & family members in all residential structures enumerated (100%) within the operational area',
+      id: 'RACD_register_families',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 100,
+            },
+          },
+          due: '2019-08-16',
+          measure: 'Percent of residential structures with full family registration',
+        },
+      ],
+    },
+    {
+      description:
+        'Visit all residential structures (100%) dispense prophylaxis to each registered person',
+      id: 'MDA_Dispense',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 100,
+            },
+          },
+          due: '2019-08-16',
+          measure: 'Percent of Registered person(s)',
+        },
+      ],
+    },
+    {
+      description:
+        'Visit all residential structures (100%) and confirm adherence of each registered person',
+      id: 'MDA_Adherence',
+      priority: 'low-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 100,
+            },
+          },
+          due: '2019-08-16',
+          measure: 'Percent of dispense recipients',
+        },
+      ],
+    },
+  ],
 };

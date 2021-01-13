@@ -9,6 +9,7 @@ import { IGNORE, TRUE } from '../../../../constants';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType } from '../../../../store/ducks/plans';
 import {
+  AllPlanActivities,
   doesFieldHaveErrors,
   extractActivitiesFromPlanForm,
   extractActivityForForm,
@@ -34,13 +35,16 @@ import {
   expectedExtractActivityFromPlanformResult,
   expectedPlanDefinition,
   extractedActivitiesFromForms,
+  extractedMDAActivities,
   fiReasonTestPlan,
+  MDAPlanActivities,
   planActivities,
   planActivityWithEmptyfields,
   planActivityWithoutTargets,
   planFormValues,
   planFormValues2,
   planFormValues3,
+  planNamesAndInterventions,
   values,
   values2,
   valuesWithJurisdiction,
@@ -51,13 +55,25 @@ jest.mock('../../../../configs/env');
 describe('containers/forms/PlanForm/helpers', () => {
   it('extractActivityForForm works for all activities', () => {
     for (const [key, activityObj] of Object.entries(planActivitiesFromConfig)) {
-      expect(extractActivityForForm(activityObj)).toEqual((expectedActivity as any)[key]);
+      const intervention = planNamesAndInterventions.find(item => item.plans.includes(key))
+        ?.intervention;
+      expect(extractActivityForForm(activityObj, intervention as InterventionType)).toEqual(
+        (expectedActivity as any)[key]
+      );
     }
     for (const [key, activityObj] of Object.entries(planActivityWithEmptyfields)) {
-      expect(extractActivityForForm(activityObj)).toEqual((expectedActivityEmptyField as any)[key]);
+      const intervention = planNamesAndInterventions.find(item => item.plans.includes(key))
+        ?.intervention;
+      expect(extractActivityForForm(activityObj, intervention as InterventionType)).toEqual(
+        (expectedActivityEmptyField as any)[key]
+      );
     }
     for (const [key, obj] of Object.entries(planActivityWithoutTargets)) {
-      expect(extractActivityForForm(obj)).toEqual((expectedActivity as any)[key]);
+      const intervention = planNamesAndInterventions.find(item => item.plans.includes(key))
+        ?.intervention;
+      expect(extractActivityForForm(obj, intervention as InterventionType)).toEqual(
+        (expectedActivity as any)[key]
+      );
     }
   });
 
@@ -87,8 +103,11 @@ describe('containers/forms/PlanForm/helpers', () => {
     envModule.PLAN_UUID_NAMESPACE = '85f7dbbf-07d0-4c92-aa2d-d50d141dde00';
     envModule.ACTION_UUID_NAMESPACE = '35968df5-f335-44ae-8ae5-25804caa2d86';
     MockDate.set('1/30/2000', 0);
-    expect(extractActivitiesFromPlanForm(activities)).toEqual(
+    expect(extractActivitiesFromPlanForm(activities, InterventionType.FI)).toEqual(
       expectedExtractActivityFromPlanformResult
+    );
+    expect(extractActivitiesFromPlanForm(MDAPlanActivities, InterventionType.MDA)).toEqual(
+      extractedMDAActivities
     );
     MockDate.reset();
   });
@@ -273,14 +292,23 @@ describe('containers/forms/PlanForm/helpers', () => {
       GoalUnit.PERCENT, // Register family
       GoalUnit.ACTIVITY, // Larval dipping
       GoalUnit.ACTIVITY, // Mosquito collection
-      GoalUnit.UNKNOWN, // MDA Adherence  ==> TODO: figure out how to pass isDyanmic to getPlanActivityFromActionCode
+      GoalUnit.PERCENT, // MDA Adherence  ==> TODO: figure out how to pass isDyanmic to getPlanActivityFromActionCode
       GoalUnit.PERCENT, // MDA Dispense
       GoalUnit.PERCENT, // MDA Adverse events
     ];
     for (let index = 0; index < PlanActionCodes.length; index++) {
-      expect(getGoalUnitFromActionCode(PlanActionCodes[index])).toEqual(expectedUnits[index]);
+      const intervention = Object.values(InterventionType).find(inter =>
+        Object.values(AllPlanActivities[inter]).some(
+          item => item.action.code === PlanActionCodes[index]
+        )
+      );
+      expect(
+        getGoalUnitFromActionCode(PlanActionCodes[index], intervention as InterventionType)
+      ).toEqual(expectedUnits[index]);
     }
-    expect(getGoalUnitFromActionCode('mosh' as PlanActionCodesType)).toEqual(GoalUnit.UNKNOWN);
+    expect(getGoalUnitFromActionCode('mosh' as PlanActionCodesType, InterventionType.FI)).toEqual(
+      GoalUnit.UNKNOWN
+    );
   });
 
   it('onSubmitSuccess works if', () => {

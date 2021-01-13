@@ -1,0 +1,126 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/SMC/SMCPlansList renders plan definition list correctly: GenericPlansList props 1`] = `
+Object {
+  "fetchPlans": [Function],
+  "history": Object {
+    "action": "POP",
+    "block": [Function],
+    "createHref": [Function],
+    "go": [Function],
+    "goBack": [Function],
+    "goForward": [Function],
+    "length": 1,
+    "listen": [Function],
+    "location": Object {
+      "hash": "",
+      "pathname": "/",
+      "search": "",
+      "state": undefined,
+    },
+    "push": [Function],
+    "replace": [Function],
+  },
+  "location": Object {
+    "hash": "",
+    "pathname": "/intervention/smc/report",
+    "search": "",
+    "state": undefined,
+  },
+  "match": Object {
+    "isExact": true,
+    "params": Object {},
+    "path": "/intervention/smc/report/",
+    "url": "/intervention/smc/report/",
+  },
+  "pageTitle": "SMC Plans",
+  "pageUrl": "/intervention/smc/report",
+  "plans": Array [
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "12eaba32-55bb-4a67-b554-a28d9ab8e02a",
+      ],
+      "plan_date": "2020-12-04",
+      "plan_effective_period_end": "2021-07-31",
+      "plan_effective_period_start": "2020-12-04",
+      "plan_id": "82d7d7fe-7897-5c69-a473-286cd6a9e0fb",
+      "plan_intervention_type": "Dynamic-MDA",
+      "plan_name": "Dynamic-MDA-2020-12-04",
+      "plan_status": "active",
+      "plan_title": "Dynamic-MDA 2020-12-04_2030",
+      "plan_version": "1",
+    },
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "12eaba32-55bb-4a67-b554-a28d9ab8e02a",
+      ],
+      "plan_date": "2020-10-09",
+      "plan_effective_period_end": "2021-09-09",
+      "plan_effective_period_start": "2020-10-09",
+      "plan_id": "12a879d6-8ad8-4198-86c7-0e94f0dcc848",
+      "plan_intervention_type": "MDA",
+      "plan_name": "Nigeria-Cycle4-SMC-Implementation-Plan",
+      "plan_status": "active",
+      "plan_title": "Nigeria Cycle 4 - SMC Implementation Plan",
+      "plan_version": "2",
+    },
+    Object {
+      "jurisdiction_root_parent_ids": Array [
+        "12eaba32-55bb-4a67-b554-a28d9ab8e02a",
+      ],
+      "plan_date": "2020-09-08",
+      "plan_effective_period_end": "2021-09-09",
+      "plan_effective_period_start": "2020-09-08",
+      "plan_id": "262526a3-fe86-4cb5-a743-f26db7ff3ce0",
+      "plan_intervention_type": "MDA",
+      "plan_name": "Nigeria-Cycle3-SMC-Implementation-Plan",
+      "plan_status": "draft",
+      "plan_title": "Nigeria Cycle 3 - SMC Implementation Plan",
+      "plan_version": "1",
+    },
+  ],
+  "service": [Function],
+  "supersetReportingSlice": "1",
+}
+`;
+
+exports[`components/SMC/SMCPlansList renders plan definition list correctly: breadcrumbs 1`] = `
+Array [
+  <li
+    className="breadcrumb-item"
+  >
+    <Link
+      key="0"
+      to="/"
+    >
+      <LinkAnchor
+        href="/"
+        navigate={[Function]}
+      >
+        <a
+          href="/"
+          onClick={[Function]}
+        >
+          Home
+        </a>
+      </LinkAnchor>
+    </Link>
+  </li>,
+  <li
+    aria-current="page"
+    className="active breadcrumb-item"
+  >
+    SMC Plans
+  </li>,
+]
+`;
+
+exports[`components/SMC/SMCPlansList renders plan definition list correctly: table header-1 1`] = `"Title"`;
+
+exports[`components/SMC/SMCPlansList renders plan definition list correctly: table header-2 1`] = `"Date Created"`;
+
+exports[`components/SMC/SMCPlansList renders plan definition list correctly: table header-3 1`] = `"Start Date"`;
+
+exports[`components/SMC/SMCPlansList renders plan definition list correctly: table header-4 1`] = `"End Date"`;
+
+exports[`components/SMC/SMCPlansList renders plan definition list correctly: table header-5 1`] = `"Status"`;

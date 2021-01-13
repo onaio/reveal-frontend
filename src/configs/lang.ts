@@ -92,6 +92,7 @@ export const SIGN_OUT = translate('SIGN_OUT', 'Sign Out');
 
 export const MAP_LOAD_ERROR = translate('MAP_LOAD_ERROR', 'Could not load the map');
 export const AN_ERROR_OCCURRED = translate('AN_ERROR_OCCURRED', 'An Error Ocurred');
+export const ERROR_LOADING_ITEMS = translate('ERROR_LOADING_ITEMS', 'Could not load points on map');
 export const PLEASE_FIX_THESE_ERRORS = translate(
   'PLEASE_FIX_THESE_ERRORS',
   'Please fix these errors'
@@ -161,6 +162,7 @@ export const IRS_PLANS = translate('IRS_PLANS', 'IRS Plans');
 export const IRS_LITE_PLANS = translate('IRS_LITE_PLANS', 'IRS Lite Plans');
 export const MDA_PLANS = translate('MDA_PLANS', 'MDA Plans');
 export const MDA_POINT_PLANS = translate('MDA_POINT_PLANS', 'MDA Point Plans');
+export const SMC_PLANS = translate('SMC_PLANS', 'SMC Plans');
 export const COUNTRY = translate('COUNTRY', 'Country');
 export const JURISDICTION_HIERARCHY_TEMPLATE = translate(
   'JURISDICTION_HIERARCHY_TEMPLATE',
@@ -420,6 +422,10 @@ export const MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION = translate(
   'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
   'Dispense medication to each eligible person'
 );
+export const MDA_DISPENSE_ACTIVITY_DESCRIPTION = translate(
+  'MDA_DISPENSE_ACTIVITY_DESCRIPTION',
+  'Visit all residential structures (100%) dispense prophylaxis to each registered person'
+);
 export const MDA_POINT_DISPENSE_COLLECTION_GOAL = translate(
   'MDA_POINT_DISPENSE_ACTIVITY_DESCRIPTION',
   'Percent of eligible people'
@@ -431,6 +437,11 @@ export const MDA_POINT_ADVERSE_EFFECT_ACTIVITY_DESCRIPTION = translate(
 export const MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL = translate(
   'MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL',
   'Percent of people who reported adverse events'
+);
+
+export const MDA_ADHERENCE_DESCRIPTION = translate(
+  'MDA_ADHERENCE_DESCRIPTION',
+  'Visit all residential structures (100%) and confirm adherence of each registered person'
 );
 
 export const A1_DESCRIPTION = translate(
@@ -517,10 +528,12 @@ export const SEARCH_ACTIVE_FOCUS_INVESTIGATIONS = translate(
   'Search active focus investigations'
 );
 export const NO_OPTIONS = translate('NO_OPTIONS', 'No Options');
+export const MDA_TITLE = translate('MDA_TITLE', 'MDA');
 export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');
 export const DYNAMIC_FI_TITLE = translate('DYNAMIC_FI_TITLE', 'Dynamic FI');
 export const DYNAMIC_IRS_TITLE = translate('DYNAMIC_IRS_TITLE', 'Dynamic IRS');
 export const DYNAMIC_MDA_TITLE = translate('DYNAMIC_MDA_TITLE', 'Dynamic MDA');
+export const SMC_TITLE = translate('SMC_TITLE', 'SMC');
 export const TEAM_ASSIGNMENT_SUCCESSFUL = translate(
   'TEAM_ASSIGNMENT_SUCCESSFUL',
   'Team(s) assignment updated successfully'
@@ -556,6 +569,7 @@ export const MDA_POINT_REPORTING_TITLE = translate(
   'MDA_POINT_REPORTING_TITLE',
   'MDA Point Reporting'
 );
+export const SMC_REPORTING_TITLE = translate('SMC_REPORTING_TITLE', 'SMC Reporting');
 
 export const FILTER = translate('FILTER', 'Filter');
 
@@ -925,3 +939,5 @@ export const PLAN_OR_JURISDICTION_NOT_FOUND = translate(
   'PLAN_OR_JURISDICTION_NOT_FOUND',
   'Plan or Jurisdiction not found'
 );
+
+export const SELECT_OPTION = translate('SELECT_OPTION', 'Select Option');

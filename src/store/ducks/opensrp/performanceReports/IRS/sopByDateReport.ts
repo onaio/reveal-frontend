@@ -149,6 +149,12 @@ export const getIRSSOPDateArrayBySOP = () =>
     return sop ? sopByDates.filter(sopByDate => sopByDate.sop === sop) : sopByDates;
   });
 
+/** options for ordering date */
+export enum OrderOptions {
+  ascending = 'ascending',
+  descending = 'descending',
+}
+
 /** makeIRSSOByDatePArraySelector
  * Returns a selector that gets an array of SOP objects filtered by one or all
  * of the following:
@@ -166,7 +172,7 @@ export const getIRSSOPDateArrayBySOP = () =>
  * @param  state - the redux store
  * @param {SOPDateFilters} props - the data collector filters object
  */
-export const makeIRSSODateArraySelector = (orderByDate?: boolean) => {
+export const makeIRSSODateArraySelector = (orderByDate?: OrderOptions) => {
   return createSelector(
     [
       getIRSSOPDateArrayByPlanId(),
@@ -181,7 +187,11 @@ export const makeIRSSODateArraySelector = (orderByDate?: boolean) => {
         JSON.stringify
       );
       if (orderByDate) {
-        sopByDate.sort((a, b) => Date.parse(b.event_date) - Date.parse(a.event_date));
+        sopByDate.sort((a, b) => {
+          const dateA = Date.parse(a.event_date);
+          const dateB = Date.parse(b.event_date);
+          return orderByDate === OrderOptions.ascending ? dateA - dateB : dateB - dateA;
+        });
       }
       return sopByDate;
     }

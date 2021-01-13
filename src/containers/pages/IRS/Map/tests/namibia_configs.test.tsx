@@ -33,6 +33,12 @@ import * as fixtures from '../../JurisdictionsReport/fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
+jest.mock('../../../../../components/GisidaLite', () => {
+  const MemoizedGisidaLiteMock = () => <div>Mock component</div>;
+  return {
+    MemoizedGisidaLite: MemoizedGisidaLiteMock,
+  };
+});
 
 jest.mock('../../../../../configs/env', () => ({
   GISIDA_MAPBOX_TOKEN: 'hunter2',

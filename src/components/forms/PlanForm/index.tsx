@@ -25,6 +25,7 @@ import {
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
   ENABLED_FI_REASONS,
+  MDA_POINT_FORM_INTERVENTION_TITLE,
   PLAN_TYPES_ALLOWED_TO_CREATE,
   PLAN_TYPES_WITH_MULTI_JURISDICTIONS,
 } from '../../../configs/env';
@@ -53,6 +54,7 @@ import {
   IRS_TITLE,
   LOCATIONS,
   MDA_POINT_TITLE,
+  MDA_TITLE,
   PLAN_END_DATE_LABEL,
   PLAN_START_DATE_LABEL,
   PLAN_TITLE_LABEL,
@@ -62,7 +64,9 @@ import {
   REASON_HEADER,
   SAVE_PLAN,
   SAVING,
+  SELECT_OPTION,
   SELECT_PLACHOLDER,
+  SMC_TITLE,
   START_DATE,
   STATUS_HEADER,
   TRIGGERS_LABEL,
@@ -109,6 +113,16 @@ import {
   PlanFormFields,
   PlanJurisdictionFormFields,
 } from './types';
+
+/** different titles for MDA point itrevention type */
+const MDAPonitInterventionTitles = {
+  MDA_POINT_TITLE,
+  SMC_TITLE,
+} as const;
+type MDAPonitInterventionTitles = keyof typeof MDAPonitInterventionTitles;
+const MDAPointTitle =
+  MDAPonitInterventionTitles[MDA_POINT_FORM_INTERVENTION_TITLE as MDAPonitInterventionTitles] ||
+  MDA_POINT_TITLE;
 
 /** initial values for plan jurisdiction forms */
 const initialJurisdictionValues: PlanJurisdictionFormFields = {
@@ -370,8 +384,11 @@ const PlanForm = (props: PlanFormProps) => {
                 {displayPlanTypeOnForm(InterventionType.IRS, editMode) && (
                   <option value={InterventionType.IRS}>{IRS_TITLE}</option>
                 )}
+                {displayPlanTypeOnForm(InterventionType.MDA, editMode) && (
+                  <option value={InterventionType.MDA}>{MDA_TITLE}</option>
+                )}
                 {displayPlanTypeOnForm(InterventionType.MDAPoint, editMode) && (
-                  <option value={InterventionType.MDAPoint}>{MDA_POINT_TITLE}</option>
+                  <option value={InterventionType.MDAPoint}>{MDAPointTitle}</option>
                 )}
                 {displayPlanTypeOnForm(InterventionType.DynamicFI, editMode) && (
                   <option value={InterventionType.DynamicFI}>{DYNAMIC_FI_TITLE}</option>
@@ -531,7 +548,7 @@ const PlanForm = (props: PlanFormProps) => {
                   disabled={disabledFields.includes('fiStatus')}
                   className={errors.fiStatus ? 'form-control is-invalid' : 'form-control'}
                 >
-                  <option>----</option>
+                  <option>{SELECT_OPTION}</option>
                   {Object.entries(FIClassifications).map(e => (
                     <option key={e[1].code} value={e[1].code}>
                       {e[1].code} - {e[1].name}
@@ -907,7 +924,9 @@ const PlanForm = (props: PlanFormProps) => {
                                     {
                                       goalUnitDisplay[
                                         getGoalUnitFromActionCode(
-                                          values.activities[index].actionCode as PlanActionCodesType
+                                          values.activities[index]
+                                            .actionCode as PlanActionCodesType,
+                                          values.interventionType
                                         )
                                       ]
                                     }
