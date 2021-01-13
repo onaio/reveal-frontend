@@ -16,9 +16,12 @@ import * as fixtures from './fixtures';
 
 reducerRegistry.register(supersetReducerName, supersetReducer);
 
-// jest.mock('../../../configs/env', () => ({
-//   CHECK_SESSION_EXPIRY_STATUS: false
-// }));
+jest.mock('../../../configs/env', () => ({
+  CHECK_SESSION_EXPIRY_STATUS: false,
+  OPENSRP_OAUTH_STATE: 'opensrp',
+  SUPERSET_API_BASE: 'http://localhost',
+  SUPERSET_API_ENDPOINT: 'slice',
+}));
 
 describe('services/superset', () => {
   beforeEach(() => {
