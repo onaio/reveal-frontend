@@ -66,6 +66,7 @@ import {
   FI_SINGLE_URL,
   IRS_CODE,
   LARVAL_DIPPING_CODE,
+  LOGOUT_URL,
   MAP_ID,
   MOSQUITO_COLLECTION_CODE,
   RACD_REGISTER_FAMILY_CODE,
@@ -1010,12 +1011,18 @@ export const formatDates = (
 
 /** gets access token or redirects to session info page if session is expired */
 export const getAcessTokenOrRedirect = () => {
-  const sessionExpiredOrToken = getAccessToken(store.getState(), CHECK_SESSION_EXPIRY_STATUS);
+  // check if user is trying to logout
+  const isLogout = history.location.pathname === LOGOUT_URL;
+  // don't check session state if user is trying to logout
+  const checkSessionExpiry = !isLogout && CHECK_SESSION_EXPIRY_STATUS;
+
+  const sessionExpiredOrToken = getAccessToken(store.getState(), checkSessionExpiry);
+
   if (sessionExpiredOrToken && sessionExpiredOrToken !== TokenStatus.expired) {
     return sessionExpiredOrToken;
   }
   if (sessionExpiredOrToken === TokenStatus.expired) {
     return history.push(SESSION_EXPIRED_URL);
   }
-  return CHECK_SESSION_EXPIRY_STATUS ? history.push(SESSION_EXPIRED_URL) : sessionExpiredOrToken;
+  return checkSessionExpiry ? history.push(SESSION_EXPIRED_URL) : sessionExpiredOrToken;
 };

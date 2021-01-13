@@ -4,6 +4,7 @@ import { raKsh2, raKsh3, raLuapula, raNchelenge, raZambia } from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
+jest.mock('../../../configs/env');
 
 describe('TreeWalker/helpers', () => {
   beforeEach(() => {
@@ -40,11 +41,11 @@ describe('TreeWalker/helpers', () => {
     await flushPromises();
     expect(fetch.mock.calls).toEqual([
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/location/cec79f21-33c3-43f5-a8af-59a47aa61b84?is_jurisdiction=true&return_geometry=false',
+        'https://test.smartregister.org/opensrp/rest/location/cec79f21-33c3-43f5-a8af-59a47aa61b84?is_jurisdiction=true&return_geometry=false',
         partOfResult,
       ],
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/location/0ddd9ad1-452b-4825-a92a-49cb9fc82d18?is_jurisdiction=true&return_geometry=false',
+        'https://test.smartregister.org/opensrp/rest/location/0ddd9ad1-452b-4825-a92a-49cb9fc82d18?is_jurisdiction=true&return_geometry=false',
         partOfResult,
       ],
     ]);
@@ -74,7 +75,7 @@ describe('TreeWalker/helpers', () => {
     await flushPromises();
     expect(fetch.mock.calls).toEqual([
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive&return_geometry=false&jurisdiction_ids=0ddd9ad1-452b-4825-a92a-49cb9fc82d18%2Cfca0d71d-0410-45d3-8305-a9f092a150b8%2Cxyz0d71d-0410-45d3-8305-a9f092a150b8',
+        'https://test.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive&return_geometry=false&jurisdiction_ids=0ddd9ad1-452b-4825-a92a-49cb9fc82d18%2Cfca0d71d-0410-45d3-8305-a9f092a150b8%2Cxyz0d71d-0410-45d3-8305-a9f092a150b8',
         partOfResult,
       ],
     ]);
@@ -93,11 +94,11 @@ describe('TreeWalker/helpers', () => {
     await flushPromises();
     expect(fetch.mock.calls).toEqual([
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive&return_geometry=false&jurisdiction_ids=0ddd9ad1-452b-4825-a92a-49cb9fc82d18%2Cfca0d71d-0410-45d3-8305-a9f092a150b8',
+        'https://test.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive&return_geometry=false&jurisdiction_ids=0ddd9ad1-452b-4825-a92a-49cb9fc82d18%2Cfca0d71d-0410-45d3-8305-a9f092a150b8',
         partOfResult,
       ],
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive&return_geometry=false&jurisdiction_ids=xyz0d71d-0410-45d3-8305-a9f092a150b8',
+        'https://test.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&properties_filter=status%3AActive&return_geometry=false&jurisdiction_ids=xyz0d71d-0410-45d3-8305-a9f092a150b8',
         partOfResult,
       ],
     ]);

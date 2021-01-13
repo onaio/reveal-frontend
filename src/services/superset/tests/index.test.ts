@@ -16,6 +16,10 @@ import * as fixtures from './fixtures';
 
 reducerRegistry.register(supersetReducerName, supersetReducer);
 
+// jest.mock('../../../configs/env', () => ({
+//   CHECK_SESSION_EXPIRY_STATUS: false
+// }));
+
 describe('services/superset', () => {
   beforeEach(() => {
     jest.resetAllMocks();

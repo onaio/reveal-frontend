@@ -30,6 +30,7 @@ import { payload } from './fixtures';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
+jest.mock('../../../../../../configs/env');
 
 reducerRegistry.register(reducerName, reducer);
 const history = createBrowserHistory();
@@ -164,7 +165,7 @@ describe('@containers/pages/map/planCompletion/', () => {
     };
 
     const expectedCalledUrl =
-      'https://reveal-stage.smartregister.org/opensrp/rest/plans/10f9e9fa-ce34-4b27-a961-72fab5206ab6';
+      'https://test.smartregister.org/opensrp/rest/plans/10f9e9fa-ce34-4b27-a961-72fab5206ab6';
     fetch.once(JSON.stringify([plansListResponse[0]])).once(JSON.stringify(updateResponse));
 
     const discoWrapper = mount(
@@ -188,9 +189,7 @@ describe('@containers/pages/map/planCompletion/', () => {
 
     expect(fetch).toBeCalledTimes(2);
     expect(fetch.mock.calls[0][0]).toEqual(expectedCalledUrl);
-    expect(fetch.mock.calls[1][0]).toEqual(
-      'https://reveal-stage.smartregister.org/opensrp/rest/plans'
-    );
+    expect(fetch.mock.calls[1][0]).toEqual('https://test.smartregister.org/opensrp/rest/plans');
 
     expect(JSON.parse(fetch.mock.calls[1][1].body)).toEqual(payload.body);
 
