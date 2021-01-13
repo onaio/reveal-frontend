@@ -949,3 +949,4 @@ export const SESSION_EXPIRED_ERROR = translate(
   'SESSION_EXPIRED_ERROR',
   'Error: Your session is expired. Please renew session'
 );
+export const SELECT_OPTION = translate('SELECT_OPTION', 'Select Option');

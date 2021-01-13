@@ -1613,6 +1613,10 @@
     "message": "User filter on: Only plans assigned to %s are listed.",
     "description": "Info message to indicate plans are filtered by a specific user"
   },
+  "SELECT_OPTION": {
+    "message": "----",
+    "description": "Select one option on a dropdown"
+  },
   "SESSION_EXPIRED_TEXT": {
     "message": "Your session has expired. Please click the link below to login again.",
     "description": "Info message to notify users their session is expired"
