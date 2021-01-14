@@ -1,7 +1,7 @@
 import { Dictionary } from '@onaio/utils';
 import { toast } from 'react-toastify';
-import { CHECK_SESSION_EXPIRY_STATUS, OPENSRP_API_BASE_URL } from '../../../../../configs/env';
-import { FILE_UPLOADED_SUCCESSFULLY, SESSION_EXPIRED_ERROR } from '../../../../../configs/lang';
+import { OPENSRP_API_BASE_URL } from '../../../../../configs/env';
+import { FILE_UPLOADED_SUCCESSFULLY } from '../../../../../configs/lang';
 import {
   OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT,
   OPENSRP_UPLOAD_ENDPOINT,
@@ -48,10 +48,7 @@ export const postUploadedFile = async (
   setFormSubmitstate: () => void,
   params?: string
 ) => {
-  const accessToken = getAcessTokenOrRedirect();
-  if (typeof accessToken !== 'string' && CHECK_SESSION_EXPIRY_STATUS) {
-    throw new Error(SESSION_EXPIRED_ERROR);
-  }
+  const accessToken = await getAcessTokenOrRedirect();
   const bearer = `Bearer ${accessToken}`;
   const response = await fetch(`${OPENSRP_API_BASE_URL}${OPENSRP_UPLOAD_ENDPOINT}/${params}`, {
     body: data,

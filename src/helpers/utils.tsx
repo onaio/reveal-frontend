@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { history } from '@onaio/connected-reducer-registry';
 import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
-import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
+import { getOnadataUserInfo, getOpenSRPUserInfo, refreshToken } from '@onaio/gatekeeper';
 import { getUser, SessionState, TokenStatus } from '@onaio/session-reducer';
 import { getAccessToken } from '@onaio/session-reducer';
 import { Dictionary, percentage } from '@onaio/utils';
@@ -42,6 +42,7 @@ import {
   NAME,
   NO_INVESTIGATIONS_FOUND,
   NO_OPTIONS,
+  SESSION_EXPIRED_ERROR,
 } from '../configs/lang';
 import {
   FIReasons,
@@ -60,6 +61,7 @@ import {
   BLOOD_SCREENING_CODE,
   CASE_CONFIRMATION_CODE,
   CASE_TRIGGERED,
+  EXPRESS_TOKEN_REFRESH_URL,
   FEATURE_COLLECTION,
   FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
@@ -1010,7 +1012,7 @@ export const formatDates = (
 };
 
 /** gets access token or redirects to session info page if session is expired */
-export const getAcessTokenOrRedirect = () => {
+export const getAcessTokenOrRedirect = async () => {
   // check if user is trying to logout
   const isLogout = history.location.pathname === LOGOUT_URL;
   // don't check session state if user is trying to logout
@@ -1022,7 +1024,18 @@ export const getAcessTokenOrRedirect = () => {
     return sessionExpiredOrToken;
   }
   if (sessionExpiredOrToken === TokenStatus.expired) {
-    return history.push(SESSION_EXPIRED_URL);
+    try {
+      // refresh token
+      const newAccessToken = await refreshToken(EXPRESS_TOKEN_REFRESH_URL, store.dispatch, {});
+      return newAccessToken as string;
+    } catch (e) {
+      displayError(e);
+      history.push(SESSION_EXPIRED_URL);
+      throw new Error(SESSION_EXPIRED_ERROR);
+    }
   }
-  return checkSessionExpiry ? history.push(SESSION_EXPIRED_URL) : sessionExpiredOrToken;
+  if (!checkSessionExpiry) {
+    return sessionExpiredOrToken;
+  }
+  throw new Error(SESSION_EXPIRED_ERROR);
 };

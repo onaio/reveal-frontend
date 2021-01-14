@@ -1,7 +1,7 @@
+import { Dictionary } from '@onaio/utils';
 import { OpenSRPService as OpenSRPServiceWeb } from '@opensrp/server-service';
 import { IncomingHttpHeaders } from 'http';
-import { CHECK_SESSION_EXPIRY_STATUS, OPENSRP_API_BASE_URL } from '../../configs/env';
-import { SESSION_EXPIRED_ERROR } from '../../configs/lang';
+import { OPENSRP_API_BASE_URL } from '../../configs/env';
 import { getAcessTokenOrRedirect } from '../../helpers/utils';
 
 /** allowed http methods */
@@ -9,14 +9,11 @@ type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 /** get default HTTP headers for OpenSRP service */
 export function getDefaultHeaders(
+  accessToken: string,
   accept: string = 'application/json',
   authorizationType: string = 'Bearer',
   contentType: string = 'application/json;charset=UTF-8'
 ): IncomingHttpHeaders {
-  const accessToken = getAcessTokenOrRedirect();
-  if (typeof accessToken !== 'string' && CHECK_SESSION_EXPIRY_STATUS) {
-    throw new Error(SESSION_EXPIRED_ERROR);
-  }
   return {
     accept,
     authorization: `${authorizationType} ${accessToken}`,
@@ -45,10 +42,16 @@ export function getFilterParams(obj: URLParams | {}): string {
  * @returns the payload
  */
 
-export function getPayloadOptions(_: AbortSignal, method: HTTPMethod) {
+export function getPayloadOptions<T extends object = Dictionary>(
+  _: AbortSignal,
+  accessToken: string,
+  method: HTTPMethod,
+  data?: T
+) {
   return {
-    headers: getDefaultHeaders() as HeadersInit,
+    headers: getDefaultHeaders(accessToken) as HeadersInit,
     method,
+    ...(data ? { body: JSON.stringify(data) } : {}),
   };
 }
 
@@ -70,9 +73,10 @@ export class OpenSRPService extends OpenSRPServiceWeb {
   constructor(
     endpoint: string,
     baseURL: string = OPENSRP_API_BASE_URL,
+    accessTokenCallBack: typeof getAcessTokenOrRedirect = getAcessTokenOrRedirect,
     getPayload: typeof getPayloadOptions = getPayloadOptions
   ) {
-    super(baseURL, endpoint, getPayload);
+    super(accessTokenCallBack, baseURL, endpoint, getPayload);
   }
 
   public async readFile(
@@ -81,7 +85,8 @@ export class OpenSRPService extends OpenSRPServiceWeb {
     method: HTTPMethod = 'GET'
   ): Promise<{}> {
     const url = OpenSRPService.getURL(`${this.generalURL}/${id}`, params);
-    const response = await fetch(url, this.getOptions(this.signal, method));
+    const accessToken = await OpenSRPService.processAcessToken(this.accessTokenOrCallBack);
+    const response = await fetch(url, this.getOptions(this.signal, accessToken, method));
 
     if (!response.ok) {
       throw new Error(

@@ -1,3 +1,4 @@
+import { getAccessToken } from '@onaio/session-reducer';
 import { logout } from '@opensrp/server-logout';
 import React from 'react';
 import { useHistory } from 'react-router';
@@ -11,6 +12,7 @@ import {
 import { HOME_URL } from '../../constants';
 import { displayError } from '../../helpers/errors';
 import { getPayloadOptions } from '../../services/opensrp';
+import store from '../../store';
 import Ripple from '../page/Loading';
 
 /** HOC function that calls function that logs out the user from both opensrp
@@ -18,7 +20,8 @@ import Ripple from '../page/Loading';
  */
 export const CustomLogout = () => {
   const history = useHistory();
-  const payload = getPayloadOptions(new AbortController().signal, 'GET');
+  const accessToken = getAccessToken(store.getState()) as string;
+  const payload = getPayloadOptions(new AbortController().signal, accessToken, 'GET');
   const redirectUri = BACKEND_ACTIVE ? EXPRESS_OAUTH_LOGOUT_URL : DOMAIN_NAME;
   logout(payload, OPENSRP_LOGOUT_URL, KEYCLOAK_LOGOUT_URL, redirectUri).catch(error => {
     displayError(error);
