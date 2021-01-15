@@ -511,6 +511,8 @@ describe('helpers/utils', () => {
   it('getAcessTokenOrRedirect works correctly', async () => {
     MockDate.set('1-1-2021 19:31');
     const displayErrorSpy = jest.spyOn(helpers, 'displayError');
+    const envModule = require('../../configs/env');
+    envModule.CHECK_SESSION_EXPIRY_STATUS = true;
 
     // no session found
     await getAcessTokenOrRedirect().catch(e => {
