@@ -170,6 +170,7 @@ describe('src/containers/pages/OrganizationViews', () => {
     const practitioner4RemoveLink = wrapper.findWhere(node => node.key() === 'healer');
     expect(toJson(practitioner4RemoveLink)).toMatchSnapshot('Practitioner 4 removal link');
     practitioner4RemoveLink.simulate('click');
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     // now search & expect a delete request from fetch

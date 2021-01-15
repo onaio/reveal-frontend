@@ -55,6 +55,7 @@ jest.mock('../../../../components/GisidaLite', () => {
   };
 });
 jest.mock('../../../../configs/env', () => ({
+  OPENSRP_API_BASE_URL: 'https://test.smartregister.org/opensrp/rest/',
   PLAN_TYPES_WITH_MULTI_JURISDICTIONS: ['IRS'],
 }));
 

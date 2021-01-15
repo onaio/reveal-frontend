@@ -46,6 +46,7 @@ jest.mock('../../../../configs/env', () => ({
   ASSIGNED_TEAMS_REQUEST_PAGE_SIZE: 1000,
   ASSIGNMENT_PAGE_SHOW_MAP: false,
   MAP_DISABLED_PLAN_TYPES: ['FI'],
+  OPENSRP_API_BASE_URL: 'https://test.smartregister.org/opensrp/rest/',
 }));
 
 jest.mock('../../AssigmentMapWrapper', () => {

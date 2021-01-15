@@ -62,35 +62,13 @@ describe('src/components/PractitionerForm', () => {
     // looking for each fields
     const wrapper = mount(<PractitionerForm />);
     await act(async () => {
-      await flushPromises();
+      // await flushPromises();
     });
 
     wrapper.update();
     expect(fetch.mock.calls).toEqual([
       [
-        'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=1&pageSize=100',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
-      ],
-      [
         'https://test.smartregister.org/opensrp/rest/user/count',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer null',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
-      ],
-      [
-        'https://test.smartregister.org/opensrp/rest/user?page_size=51&source=Keycloak&start_index=0',
         {
           headers: {
             accept: 'application/json',
@@ -113,6 +91,39 @@ describe('src/components/PractitionerForm', () => {
       ],
       [
         'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=2&pageSize=100',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+      [
+        'https://test.smartregister.org/opensrp/rest/user?page_size=51&source=Keycloak&start_index=0',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+      [
+        'https://test.smartregister.org/opensrp/rest/practitioner?pageNumber=3&pageSize=100',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer null',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+      [
+        'https://test.smartregister.org/opensrp/rest/user?page_size=51&source=Keycloak&start_index=0',
         {
           headers: {
             accept: 'application/json',

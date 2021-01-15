@@ -290,7 +290,7 @@ describe('PlanAssignment/withTreeWalker', () => {
         partOfResult,
       ],
       [
-        'https://test.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&return_geometry=false&properties_filter=status%3AActive%2CparentId%3Adfb858b5-b3e5-4871-9d1c-ae2f3fa83b63',
+        'https://test.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&return_geometry=false&properties_filter=status:Active,parentId:dfb858b5-b3e5-4871-9d1c-ae2f3fa83b63',
         partOfResult,
       ],
       [
@@ -332,7 +332,7 @@ describe('PlanAssignment/withTreeWalker', () => {
     });
 
     expect(fetch.mock.calls[4]).toEqual([
-      'https://test.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&return_geometry=false&properties_filter=status%3AActive%2CparentId%3A8d44d54e-8b4c-465c-9e93-364a25739a6d',
+      'https://test.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&return_geometry=false&properties_filter=status:Active,parentId:8d44d54e-8b4c-465c-9e93-364a25739a6d',
       partOfResult,
     ]);
 

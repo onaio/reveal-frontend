@@ -2,7 +2,13 @@ import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
 import { authenticateUser } from '@onaio/session-reducer';
 import { EmptyObject } from '../../../configs/types';
 import store from '../../../store';
-import { getDefaultHeaders, getFilterParams, getPayloadOptions, OpenSRPService } from '../index';
+import {
+  getDefaultHeaders,
+  getFilterParams,
+  getPayloadOptions,
+  newGetPayloadOptions,
+  OpenSRPService,
+} from '../index';
 import { createPlan, plansListResponse } from './fixtures/plans';
 import { OpenSRPAPIResponse } from './fixtures/session';
 /* tslint:disable-next-line no-var-requires */
@@ -19,11 +25,24 @@ describe('services/OpenSRP', () => {
   it('getDefaultHeaders works', async () => {
     const { authenticated, user, extraData } = getOpenSRPUserInfo(OpenSRPAPIResponse);
     store.dispatch(authenticateUser(authenticated, user, extraData));
-    expect(getDefaultHeaders()).toEqual({
+    expect(getDefaultHeaders('hunter2')).toEqual({
       accept: 'application/json',
       authorization: 'Bearer hunter2',
       'content-type': 'application/json;charset=UTF-8',
     });
+  });
+
+  it('newGetPayloadOptions works', async () => {
+    const output = {
+      headers: {
+        accept: 'application/json',
+        authorization: 'Bearer hunter2',
+        'content-type': 'application/json;charset=UTF-8',
+      },
+      method: 'POST',
+    };
+    const signal = new AbortController().signal;
+    expect(newGetPayloadOptions(signal, 'hunter2', 'POST')).toEqual({ ...output });
   });
 
   it('getPayloadOptions works', async () => {

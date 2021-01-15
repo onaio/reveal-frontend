@@ -1,15 +1,17 @@
+import { getAccessToken } from '@onaio/session-reducer';
 import { Dictionary } from '@onaio/utils';
 import { OpenSRPService as OpenSRPServiceWeb } from '@opensrp/server-service';
 import { IncomingHttpHeaders } from 'http';
 import { OPENSRP_API_BASE_URL } from '../../configs/env';
 import { getAcessTokenOrRedirect } from '../../helpers/utils';
+import store from '../../store';
 
 /** allowed http methods */
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 /** get default HTTP headers for OpenSRP service */
 export function getDefaultHeaders(
-  accessToken: string,
+  accessToken: string | null = getAccessToken(store.getState()),
   accept: string = 'application/json',
   authorizationType: string = 'Bearer',
   contentType: string = 'application/json;charset=UTF-8'
@@ -38,11 +40,12 @@ export function getFilterParams(obj: URLParams | {}): string {
 
 /** get payload for fetch
  * @param {AbortSignal} signal - signal object that allows you to communicate with a DOM request
+ * @param {string} accessToken - the access token
  * @param {HTTPMethod} method - the HTTP method
  * @returns the payload
  */
 
-export function getPayloadOptions<T extends object = Dictionary>(
+export function newGetPayloadOptions<T extends object = Dictionary>(
   _: AbortSignal,
   accessToken: string,
   method: HTTPMethod,
@@ -52,6 +55,18 @@ export function getPayloadOptions<T extends object = Dictionary>(
     headers: getDefaultHeaders(accessToken) as HeadersInit,
     method,
     ...(data ? { body: JSON.stringify(data) } : {}),
+  };
+}
+
+/** get payload for fetch
+ * @param {AbortSignal} signal - signal object that allows you to communicate with a DOM request
+ * @param {HTTPMethod} method - the HTTP method
+ * @returns the payload
+ */
+export function getPayloadOptions(_: AbortSignal, method: HTTPMethod) {
+  return {
+    headers: getDefaultHeaders() as HeadersInit,
+    method,
   };
 }
 
@@ -74,7 +89,7 @@ export class OpenSRPService extends OpenSRPServiceWeb {
     endpoint: string,
     baseURL: string = OPENSRP_API_BASE_URL,
     accessTokenCallBack: typeof getAcessTokenOrRedirect = getAcessTokenOrRedirect,
-    getPayload: typeof getPayloadOptions = getPayloadOptions
+    getPayload: typeof newGetPayloadOptions = newGetPayloadOptions
   ) {
     super(accessTokenCallBack, baseURL, endpoint, getPayload);
   }

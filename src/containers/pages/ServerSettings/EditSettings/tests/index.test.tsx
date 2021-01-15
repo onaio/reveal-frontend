@@ -1,5 +1,7 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import {
+  fetchLocs,
+  fetchLocSettings,
   locationReducerName,
   locationsReducer,
   settingsReducer,
@@ -23,6 +25,8 @@ const history = createBrowserHistory();
 /** register the reducers */
 reducerRegistry.register(settingsReducerName, settingsReducer);
 reducerRegistry.register(locationReducerName, locationsReducer);
+store.dispatch(fetchLocSettings(allSettings, '75af7700-a6f2-448c-a17d-816261a7749a'));
+store.dispatch(fetchLocs(locHierarchy));
 
 describe('containers/pages/ConfigForm/manifest/draftFiles', () => {
   beforeEach(() => {
