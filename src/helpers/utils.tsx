@@ -1018,12 +1018,12 @@ export const getAcessTokenOrRedirect = async () => {
   // don't check session state if user is trying to logout
   const checkSessionExpiry = !isLogout && CHECK_SESSION_EXPIRY_STATUS;
 
-  const sessionExpiredOrToken = getAccessToken(store.getState(), checkSessionExpiry);
+  const sessionOrTokenExpired = getAccessToken(store.getState(), checkSessionExpiry);
 
-  if (sessionExpiredOrToken && sessionExpiredOrToken !== TokenStatus.expired) {
-    return sessionExpiredOrToken;
+  if (sessionOrTokenExpired && sessionOrTokenExpired !== TokenStatus.expired) {
+    return sessionOrTokenExpired;
   }
-  if (sessionExpiredOrToken === TokenStatus.expired) {
+  if (sessionOrTokenExpired === TokenStatus.expired) {
     try {
       // refresh token
       const newAccessToken = await refreshToken(EXPRESS_TOKEN_REFRESH_URL, store.dispatch, {});
@@ -1035,7 +1035,8 @@ export const getAcessTokenOrRedirect = async () => {
     }
   }
   if (!checkSessionExpiry) {
-    return sessionExpiredOrToken;
+    return sessionOrTokenExpired;
   }
+  history.push(SESSION_EXPIRED_URL);
   throw new Error(SESSION_EXPIRED_ERROR);
 };
