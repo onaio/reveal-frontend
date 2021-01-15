@@ -27,6 +27,7 @@ import { NoDataComponent } from '../components/Table/NoDataComponent';
 import {
   CHECK_SESSION_EXPIRY_STATUS,
   DIGITAL_GLOBE_CONNECT_ID,
+  DOMAIN_NAME,
   ONADATA_OAUTH_STATE,
   OPENSRP_OAUTH_STATE,
   PLAN_UUID_NAMESPACE,
@@ -1026,7 +1027,11 @@ export const getAcessTokenOrRedirect = async () => {
   if (sessionOrTokenExpired === TokenStatus.expired) {
     try {
       // refresh token
-      const newAccessToken = await refreshToken(EXPRESS_TOKEN_REFRESH_URL, store.dispatch, {});
+      const newAccessToken = await refreshToken(
+        `${DOMAIN_NAME}${EXPRESS_TOKEN_REFRESH_URL}`,
+        store.dispatch,
+        {}
+      );
       return newAccessToken as string;
     } catch (e) {
       displayError(e);
