@@ -1,6 +1,6 @@
 import flushPromises from 'flush-promises';
-import { getJurisdictions } from '../helpers';
-import { raKsh2, raKsh3, raZambia } from './fixtures';
+import { getAncestors, getJurisdictions } from '../helpers';
+import { raKsh2, raKsh3, raLuapula, raNchelenge, raZambia } from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -22,35 +22,35 @@ describe('TreeWalker/helpers', () => {
     method: 'GET',
   };
 
-  // it('getAncestors works for root jurisdictions', async () => {
-  //   fetch.mockResponseOnce(JSON.stringify(raZambia), { status: 200 });
+  it('getAncestors works for root jurisdictions', async () => {
+    fetch.mockResponseOnce(JSON.stringify(raZambia), { status: 200 });
 
-  //   const result = await getAncestors(raZambia);
-  //   await flushPromises();
-  //   expect(fetch.mock.calls).toEqual([]);
-  //   expect(result).toEqual({ error: null, value: [raZambia] });
-  // });
+    const result = await getAncestors(raZambia);
+    await flushPromises();
+    expect(fetch.mock.calls).toEqual([]);
+    expect(result).toEqual({ error: null, value: [raZambia] });
+  });
 
-  // it('getAncestors works for non-root jurisdictions', async () => {
-  //   fetch.mockResponses(
-  //     [JSON.stringify(raLuapula), { status: 200 }],
-  //     [JSON.stringify(raZambia), { status: 200 }]
-  //   );
+  it('getAncestors works for non-root jurisdictions', async () => {
+    fetch.mockResponses(
+      [JSON.stringify(raLuapula), { status: 200 }],
+      [JSON.stringify(raZambia), { status: 200 }]
+    );
 
-  //   const result = await getAncestors(raNchelenge);
-  //   await flushPromises();
-  //   expect(fetch.mock.calls).toEqual([
-  //     [
-  //       'https://test.smartregister.org/opensrp/rest/location/cec79f21-33c3-43f5-a8af-59a47aa61b84?is_jurisdiction=true&return_geometry=false',
-  //       partOfResult,
-  //     ],
-  //     [
-  //       'https://test.smartregister.org/opensrp/rest/location/0ddd9ad1-452b-4825-a92a-49cb9fc82d18?is_jurisdiction=true&return_geometry=false',
-  //       partOfResult,
-  //     ],
-  //   ]);
-  //   expect(result).toEqual({ error: null, value: [raZambia, raLuapula, raNchelenge] });
-  // });
+    const result = await getAncestors(raNchelenge);
+    await flushPromises();
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://test.smartregister.org/opensrp/rest/location/cec79f21-33c3-43f5-a8af-59a47aa61b84?is_jurisdiction=true&return_geometry=false',
+        partOfResult,
+      ],
+      [
+        'https://test.smartregister.org/opensrp/rest/location/0ddd9ad1-452b-4825-a92a-49cb9fc82d18?is_jurisdiction=true&return_geometry=false',
+        partOfResult,
+      ],
+    ]);
+    expect(result).toEqual({ error: null, value: [raZambia, raLuapula, raNchelenge] });
+  });
 
   it('getJurisdictions just works', async () => {
     const params = {
