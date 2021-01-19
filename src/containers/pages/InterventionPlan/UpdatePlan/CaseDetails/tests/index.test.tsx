@@ -13,6 +13,7 @@ import { extractEvent } from '../../../../../../store/ducks/opensrp/events/utils
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
+jest.mock('../../../../../../configs/env');
 
 const globalProps = {
   event: null,
@@ -118,7 +119,7 @@ describe('src/containers/pages/interventionPlan/updateplan/caseDetials', () => {
     await flushPromises();
 
     expect(fetch.mock.calls[0]).toEqual([
-      'https://reveal-stage.smartregister.org/opensrp/rest/event/findById?id=88684506-605d-41db-b904-efbaf9795d2a',
+      'https://test.smartregister.org/opensrp/rest/event/findById?id=88684506-605d-41db-b904-efbaf9795d2a',
       {
         headers: {
           accept: 'application/json',

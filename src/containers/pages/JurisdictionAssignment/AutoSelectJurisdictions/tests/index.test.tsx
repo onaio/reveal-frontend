@@ -21,6 +21,7 @@ reducerRegistry.register(hierarchiesReducerName, hierarchiesReducer);
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
+jest.mock('../../../../../configs/env');
 
 const history = createBrowserHistory();
 

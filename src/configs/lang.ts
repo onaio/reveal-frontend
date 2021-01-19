@@ -940,4 +940,13 @@ export const PLAN_OR_JURISDICTION_NOT_FOUND = translate(
   'Plan or Jurisdiction not found'
 );
 
+export const SESSION_EXPIRED_TEXT = translate(
+  'SESSION_EXPIRED_TEXT',
+  'Your session has expired. Please click the link below to login again.'
+);
+export const RENEW_SESSION_LINK_TEXT = translate('RENEW_SESSION_LINK_TEXT', 'Renew session');
+export const SESSION_EXPIRED_ERROR = translate(
+  'SESSION_EXPIRED_ERROR',
+  'Error: Your session is expired. Please renew session'
+);
 export const SELECT_OPTION = translate('SELECT_OPTION', 'Select Option');

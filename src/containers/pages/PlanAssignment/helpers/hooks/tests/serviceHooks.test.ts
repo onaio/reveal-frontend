@@ -5,6 +5,7 @@ import { getAllAssignments } from '../serviceHooks';
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
+jest.mock('../../../../../../configs/env');
 
 describe('src/containers/pages/PractitionerViews/helpers/serviceHooks', () => {
   beforeEach(() => {
@@ -21,7 +22,7 @@ describe('src/containers/pages/PractitionerViews/helpers/serviceHooks', () => {
     await flushPromises();
     expect(mockFn).toHaveBeenCalledTimes(1);
     expect(fetch.mock.calls[0][0]).toEqual(
-      'https://reveal-stage.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?pageNumber=1&pageSize=1000&plan=123-123-123'
+      'https://test.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?pageNumber=1&pageSize=1000&plan=123-123-123'
     );
   });
   it('getAllPractitioners works correctly with pagination', async () => {
@@ -34,13 +35,13 @@ describe('src/containers/pages/PractitionerViews/helpers/serviceHooks', () => {
     await flushPromises();
     expect(mockFn).toHaveBeenCalledTimes(3);
     expect(fetch.mock.calls[0][0]).toEqual(
-      'https://reveal-stage.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?pageNumber=1&pageSize=1000&plan=123-123-123'
+      'https://test.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?pageNumber=1&pageSize=1000&plan=123-123-123'
     );
     expect(fetch.mock.calls[1][0]).toEqual(
-      'https://reveal-stage.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?pageNumber=2&pageSize=1000&plan=123-123-123'
+      'https://test.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?pageNumber=2&pageSize=1000&plan=123-123-123'
     );
     expect(fetch.mock.calls[2][0]).toEqual(
-      'https://reveal-stage.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?pageNumber=3&pageSize=1000&plan=123-123-123'
+      'https://test.smartregister.org/opensrp/rest/organization/assignedLocationsAndPlans?pageNumber=3&pageSize=1000&plan=123-123-123'
     );
   });
 });

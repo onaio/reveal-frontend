@@ -5,6 +5,7 @@ import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
@@ -27,7 +28,6 @@ describe('containers/pages/ConfigForm/JSONValidator', () => {
   });
 
   it('renders validators list correctly', async () => {
-    store.dispatch(fetchManifestFiles(fixManifestFiles));
     const mockList = jest.fn();
     OpenSRPService.prototype.list = mockList;
     mockList.mockReturnValueOnce(Promise.resolve(fixManifestFiles));
@@ -39,8 +39,14 @@ describe('containers/pages/ConfigForm/JSONValidator', () => {
         </Router>
       </Provider>
     );
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    store.dispatch(fetchManifestFiles(fixManifestFiles));
     wrapper.update();
+
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual('JSON Validators');
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);

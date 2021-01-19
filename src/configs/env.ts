@@ -569,6 +569,10 @@ export const ASSIGN_TEAMS_PLAN_TYPES_DISPLAYED = (
 ).split(',');
 export type ASSIGN_TEAMS_PLAN_TYPES_DISPLAYED = typeof ASSIGN_TEAMS_PLAN_TYPES_DISPLAYED;
 
+export const CHECK_SESSION_EXPIRY_STATUS =
+  process.env.REACT_APP_CHECK_SESSION_EXPIRY_STATUS === 'true';
+export type CHECK_SESSION_EXPIRY_STATUS = typeof CHECK_SESSION_EXPIRY_STATUS;
+
 /** The number of teams assignments to get from OpenSrp per call */
 export const ASSIGNED_TEAMS_REQUEST_PAGE_SIZE =
   Number(process.env.REACT_APP_ASSIGNED_TEAMS_REQUEST_PAGE_SIZE) || 1000;
