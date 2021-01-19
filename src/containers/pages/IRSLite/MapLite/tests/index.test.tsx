@@ -7,8 +7,9 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Helmet } from 'react-helmet';
+import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { IRSLiteReportingMap } from '../';
+import ConnectedIRSLiteReportingMap, { IRSLiteReportingMap } from '../';
 import { GisidaLiteProps } from '../../../../../components/GisidaLite';
 import { MAP, REPORT_IRS_LITE_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
@@ -216,7 +217,9 @@ describe('components/IRS Reports/IRSLiteReportingMap', () => {
       </Router>
     );
     const helmet = Helmet.peek();
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
     expect(toJson(wrapper.find('BreadcrumbItem li'))).toMatchSnapshot('breadcrumbs');
     expect(toJson(wrapper.find('h3.page-title'))).toMatchSnapshot('page title');
     expect(helmet.title).toEqual(
@@ -315,7 +318,7 @@ describe('components/IRS Reports/IRSLiteReportingMap', () => {
     wrapper.unmount();
   });
 
-  it('renders not found', () => {
+  it('renders not found', async () => {
     const mock: any = jest.fn();
     const props = {
       focusArea: getGenericJurisdictionByJurisdictionId(
@@ -328,10 +331,7 @@ describe('components/IRS Reports/IRSLiteReportingMap', () => {
       location: mock,
       match: {
         isExact: true,
-        params: {
-          jurisdictionId: 'bad-id',
-          planId: (plans[0] as GenericPlan).plan_id,
-        },
+        params: {},
         path: `${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
         url: `${REPORT_IRS_LITE_PLAN_URL}/${
           (plans[0] as GenericPlan).plan_id
@@ -347,7 +347,11 @@ describe('components/IRS Reports/IRSLiteReportingMap', () => {
       </Router>
     );
 
-    expect(wrapper.find('NotFound')).not.toBe({});
+    await act(async () => {
+      await flushPromises();
+    });
+
+    expect(toJson(wrapper.find('NotFound'))).toMatchSnapshot('Not Found');
   });
 
   it('map props are generated without structures', async () => {
@@ -414,5 +418,92 @@ describe('components/IRS Reports/IRSLiteReportingMap', () => {
       27.7880299995849,
       -16.6447632305386,
     ]);
+  });
+
+  it('loads error page when data is invalid', async () => {
+    const mock = jest.fn();
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementationOnce(() => Promise.resolve([]));
+    supersetServiceMock.mockImplementationOnce(() => Promise.resolve([]));
+    supersetServiceMock.mockImplementationOnce(() => Promise.resolve([]));
+    supersetServiceMock.mockImplementationOnce(() => Promise.resolve(plans));
+
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: 'ce13e7f4-6926-4be0-9117-519bd1cc4bb2',
+          planId: (plans[0] as GenericPlan).plan_id,
+        },
+        path: `${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_LITE_PLAN_URL}/${
+          (plans[0] as GenericPlan).plan_id
+        }/ce13e7f4-6926-4be0-9117-519bd1cc4bb2/${MAP}`,
+      },
+      service: supersetServiceMock,
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIRSLiteReportingMap {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    expect(wrapper.find('ErrorPage').text()).toEqual(
+      'An error ocurred. Please try and refresh the page.The specific error is: An Error Ocurred'
+    );
+    wrapper.unmount();
+  });
+
+  it('works correctly with store', async () => {
+    const mock = jest.fn();
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementationOnce(() => Promise.resolve(jurisdictionData));
+    supersetServiceMock.mockImplementationOnce(() => Promise.resolve(structureData));
+    supersetServiceMock.mockImplementationOnce(() => Promise.resolve(focusAreaData));
+    supersetServiceMock.mockImplementationOnce(() => Promise.resolve(plans));
+
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: 'ce13e7f4-6926-4be0-9117-519bd1cc4bb2',
+          planId: (plans[0] as GenericPlan).plan_id,
+        },
+        path: `${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_LITE_PLAN_URL}/${
+          (plans[0] as GenericPlan).plan_id
+        }/ce13e7f4-6926-4be0-9117-519bd1cc4bb2/${MAP}`,
+      },
+      service: supersetServiceMock,
+    };
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedIRSLiteReportingMap {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    expect(wrapper.find('.page-title').text()).toEqual(
+      'IRS 2019-09-05 TEST: so_Sompani_Health_Post_MACEPA_IRS_Lite_2020'
+    );
+    expect(wrapper.find('MemoizedGisidaLiteMock').length).toEqual(1);
+    expect(supersetServiceMock).toHaveBeenCalledTimes(4);
+    wrapper.unmount();
   });
 });

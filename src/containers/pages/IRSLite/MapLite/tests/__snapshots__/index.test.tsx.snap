@@ -515,3 +515,11 @@ exports[`components/IRS Reports/IRSLiteReportingMap renders correctly: page titl
   IRS 2019-09-05 TEST: so_Sompani_Health_Post_MACEPA_IRS_Lite_2020
 </h3>
 `;
+
+exports[`components/IRS Reports/IRSLiteReportingMap renders not found: Not Found 1`] = `
+<NotFound>
+  <div>
+    404!
+  </div>
+</NotFound>
+`;
