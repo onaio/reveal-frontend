@@ -1,7 +1,7 @@
 import { DrillDownColumn } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { Cell } from 'react-table';
-import { getIRSLiteThresholdAdherenceIndicator } from '../../../../../helpers/indicators';
+import { getIRSLiteThresholdAdherenceIndicator } from '../../../../../../helpers/indicators';
 
 /* tslint:disable no-var-requires */
 export const ZambiaJurisdictionsJSON = require('./zambia_jurisdictions.json');

@@ -79,13 +79,11 @@ import {
   PolygonColor,
 } from '../../FocusInvestigation/map/active/helpers/utils';
 import {
-  defaultIndicatorStop,
   getIndicatorRows,
   getJurisdictionBreadcrumbs,
-  IRSIndicatorRows,
-  IRSLiteIndicatorStops,
   mapOnClickHandler,
-} from './helpers';
+} from '../../IRS/Map/helpers';
+import { defaultIndicatorStop, IRSIndicatorRows, IRSLiteIndicatorStops } from './helpers';
 import './style.css';
 
 /** register the reducers */

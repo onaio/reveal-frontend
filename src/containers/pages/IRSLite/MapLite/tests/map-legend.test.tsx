@@ -29,7 +29,7 @@ import jurisdictionReducer, {
   getJurisdictionById,
   reducerName as jurisdictionReducerName,
 } from '../../../../../store/ducks/jurisdictions';
-import * as fixtures from '../../JurisdictionsReportLite/fixtures';
+import * as fixtures from '../../JurisdictionsReportLite/tests/fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
