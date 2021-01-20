@@ -13,6 +13,7 @@ import { removePlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDe
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
+jest.mock('../../../../../configs/env');
 
 const div = document.createElement('div');
 document.body.appendChild(div);

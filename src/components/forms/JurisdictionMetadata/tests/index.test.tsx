@@ -10,6 +10,8 @@ import JurisdictionMetadataForm, { submitForm } from '..';
 import { INVALID_CSV, UPLOAD_FILE, UPLOADING_FILE } from '../../../../configs/lang';
 import { body } from './fixtures';
 
+jest.mock('../../../../configs/env');
+
 describe('components/forms/JurisdictionMetadata', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -164,7 +166,7 @@ describe('uploads form', () => {
 
     expect(fetch.mock.calls).toEqual([
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/settings/sync',
+        'https://test.smartregister.org/opensrp/rest/settings/sync',
         {
           'Cache-Control': 'no-cache',
           Pragma: 'no-cache',

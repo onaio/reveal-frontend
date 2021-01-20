@@ -20,6 +20,7 @@ reducerRegistry.register(organizationDucks.reducerName, organizationDucks.defaul
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
+jest.mock('../../../../../configs/env');
 
 const history = createBrowserHistory();
 
@@ -169,11 +170,12 @@ describe('src/containers/pages/OrganizationViews', () => {
     const practitioner4RemoveLink = wrapper.findWhere(node => node.key() === 'healer');
     expect(toJson(practitioner4RemoveLink)).toMatchSnapshot('Practitioner 4 removal link');
     practitioner4RemoveLink.simulate('click');
+    await new Promise<any>(resolve => setImmediate(resolve));
     wrapper.update();
 
     // now search & expect a delete request from fetch
     const expectedRequest = [
-      'https://reveal-stage.smartregister.org/opensrp/rest/practitionerRole/deleteByPractitioner?organization=d23f7350-d406-11e9-bb65-2a2ae2dbcce4&practitioner=healer',
+      'https://test.smartregister.org/opensrp/rest/practitionerRole/deleteByPractitioner?organization=d23f7350-d406-11e9-bb65-2a2ae2dbcce4&practitioner=healer',
       {
         headers: {
           accept: 'application/json',

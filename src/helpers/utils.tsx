@@ -1,7 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { history } from '@onaio/connected-reducer-registry';
 import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
-import { getOnadataUserInfo, getOpenSRPUserInfo } from '@onaio/gatekeeper';
-import { getUser, SessionState } from '@onaio/session-reducer';
+import { getOnadataUserInfo, getOpenSRPUserInfo, refreshToken } from '@onaio/gatekeeper';
+import { getUser, SessionState, TokenStatus } from '@onaio/session-reducer';
+import { getAccessToken } from '@onaio/session-reducer';
 import { Dictionary, percentage } from '@onaio/utils';
 import { Color } from 'csstype';
 import { Location } from 'history';
@@ -23,7 +25,9 @@ import { FIReasonType, FIStatusType } from '../components/forms/PlanForm/types';
 import NewRecordBadge from '../components/NewRecordBadge';
 import { NoDataComponent } from '../components/Table/NoDataComponent';
 import {
+  CHECK_SESSION_EXPIRY_STATUS,
   DIGITAL_GLOBE_CONNECT_ID,
+  DOMAIN_NAME,
   ONADATA_OAUTH_STATE,
   OPENSRP_OAUTH_STATE,
   PLAN_UUID_NAMESPACE,
@@ -39,6 +43,7 @@ import {
   NAME,
   NO_INVESTIGATIONS_FOUND,
   NO_OPTIONS,
+  SESSION_EXPIRED_ERROR,
 } from '../configs/lang';
 import {
   FIReasons,
@@ -57,15 +62,18 @@ import {
   BLOOD_SCREENING_CODE,
   CASE_CONFIRMATION_CODE,
   CASE_TRIGGERED,
+  EXPRESS_TOKEN_REFRESH_URL,
   FEATURE_COLLECTION,
   FI_FILTER_URL,
   FI_SINGLE_MAP_URL,
   FI_SINGLE_URL,
   IRS_CODE,
   LARVAL_DIPPING_CODE,
+  LOGOUT_URL,
   MAP_ID,
   MOSQUITO_COLLECTION_CODE,
   RACD_REGISTER_FAMILY_CODE,
+  SESSION_EXPIRED_URL,
   SETTINGS_CONFIGURATION,
 } from '../constants';
 import store from '../store';
@@ -1002,4 +1010,38 @@ export const formatDates = (
 ) => {
   const date = moment(value);
   return date.isValid() && typeof value === 'string' ? date.format(dateFormat) : fallbackText;
+};
+
+/** gets access token or redirects to session info page if session is expired */
+export const getAcessTokenOrRedirect = async () => {
+  // check if user is trying to logout
+  const isLogout = history.location.pathname === LOGOUT_URL;
+  // don't check session state if user is trying to logout
+  const checkSessionExpiry = !isLogout && CHECK_SESSION_EXPIRY_STATUS;
+
+  const sessionOrTokenExpired = getAccessToken(store.getState(), checkSessionExpiry);
+
+  if (sessionOrTokenExpired && sessionOrTokenExpired !== TokenStatus.expired) {
+    return sessionOrTokenExpired;
+  }
+  if (sessionOrTokenExpired === TokenStatus.expired) {
+    try {
+      // refresh token
+      const newAccessToken = await refreshToken(
+        `${DOMAIN_NAME}${EXPRESS_TOKEN_REFRESH_URL}`,
+        store.dispatch,
+        {}
+      );
+      return newAccessToken as string;
+    } catch (e) {
+      displayError(e);
+      history.push(SESSION_EXPIRED_URL);
+      throw new Error(SESSION_EXPIRED_ERROR);
+    }
+  }
+  if (!checkSessionExpiry) {
+    return sessionOrTokenExpired;
+  }
+  history.push(SESSION_EXPIRED_URL);
+  throw new Error(SESSION_EXPIRED_ERROR);
 };

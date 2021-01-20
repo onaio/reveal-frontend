@@ -32,6 +32,8 @@ import { planDefinition1, planDefinition2, updatePlanFormProps } from './fixture
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
+jest.mock('../../../../../configs/env');
+
 /** register the plan definitions reducer */
 reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
@@ -397,7 +399,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
 
     expect(fetch.mock.calls).toEqual([
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/plans/311d4728-8e88-575d-8189-e88d9a4ae3b6',
+        'https://test.smartregister.org/opensrp/rest/plans/311d4728-8e88-575d-8189-e88d9a4ae3b6',
         {
           headers: {
             accept: 'application/json',
@@ -474,9 +476,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     expect(confirmSpy).toBeCalledTimes(1);
     expect(confirmSpy).toBeCalledWith('You are about to retire a plan, click ok to proceed');
 
-    expect(fetch.mock.calls[1][0]).toEqual(
-      'https://reveal-stage.smartregister.org/opensrp/rest/plans'
-    );
+    expect(fetch.mock.calls[1][0]).toEqual('https://test.smartregister.org/opensrp/rest/plans');
     expect(fetch.mock.calls[1][1].method).toEqual('PUT');
   });
 });

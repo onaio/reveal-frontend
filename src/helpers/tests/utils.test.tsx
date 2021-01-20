@@ -1,5 +1,5 @@
 import * as gatekeeper from '@onaio/gatekeeper';
-import { authenticateUser } from '@onaio/session-reducer';
+import { authenticateUser, updateExtraData } from '@onaio/session-reducer';
 import { cloneDeep, map } from 'lodash';
 import MockDate from 'mockdate';
 import moment from 'moment';
@@ -36,6 +36,7 @@ import {
   extractPlanRecordResponseFromPlanPayload,
   formatDates,
   generateNameSpacedUUID,
+  getAcessTokenOrRedirect,
   getColor,
   getColorByValue,
   getLocationColumns,
@@ -49,6 +50,10 @@ import {
   roundToPrecision,
   SettingConfiguration,
 } from '../utils';
+import { refreshTokenResponse, userAuthData } from './fixtures';
+
+/* tslint:disable-next-line no-var-requires */
+const fetch = require('jest-fetch-mock');
 interface SampleColorMap {
   [key: string]: string;
 }
@@ -67,6 +72,7 @@ const getColorSharedTest = (task: InitialTask, obj: SampleColorMap) => {
 jest.mock('@onaio/gatekeeper', () => ({
   getOnadataUserInfo: jest.fn(),
   getOpenSRPUserInfo: jest.fn(),
+  refreshToken: jest.requireActual('@onaio/gatekeeper').refreshToken,
 }));
 
 describe('helpers/utils', () => {
@@ -322,6 +328,7 @@ describe('helpers/utils', () => {
     expect(generateNameSpacedUUID(moment().toString(), PLAN_UUID_NAMESPACE)).toEqual(
       `cd9a43dd-e408-5a4d-a360-ef59c6e7c2a6`
     );
+    MockDate.reset();
   });
 
   it('filters out plans with null jurisdictions', () => {
@@ -499,5 +506,46 @@ describe('helpers/utils', () => {
     expect(formatDates('test', 'YYYY-MM-HH')).toEqual('Invalid Date');
     const customInvalidMessage = 'Date provided is not valid';
     expect(formatDates('test', 'YYYY-MM-HH', customInvalidMessage)).toEqual(customInvalidMessage);
+  });
+
+  it('getAcessTokenOrRedirect works correctly', async () => {
+    MockDate.set('1-1-2021 19:31');
+    const displayErrorSpy = jest.spyOn(helpers, 'displayError');
+    const envModule = require('../../configs/env');
+    envModule.CHECK_SESSION_EXPIRY_STATUS = true;
+
+    // no session found
+    await getAcessTokenOrRedirect().catch(e => {
+      expect(e.message).toEqual('Error: Your session is expired. Please renew session');
+    });
+
+    // acess token availble and not expired
+    store.dispatch(updateExtraData(userAuthData));
+    const token = await getAcessTokenOrRedirect();
+    expect(token).toEqual(userAuthData.oAuth2Data.access_token);
+
+    // refresh token when expired
+    fetch.once(JSON.stringify(refreshTokenResponse));
+    const authDataCopy = {
+      ...userAuthData,
+      oAuth2Data: {
+        ...userAuthData.oAuth2Data,
+        token_expires_at: '2019-01-02T14:11:20.102Z', // set token to expired
+      },
+    };
+    store.dispatch(updateExtraData(authDataCopy));
+    const newToken = await getAcessTokenOrRedirect();
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(newToken).toEqual('refreshed-i-feel-new');
+
+    // refresh token throws an error
+    const errorMessage = 'API is down';
+    fetch.mockRejectOnce(() => Promise.reject(errorMessage));
+    store.dispatch(updateExtraData(authDataCopy));
+    await getAcessTokenOrRedirect().catch(e => {
+      expect(e.message).toEqual('Error: Your session is expired. Please renew session');
+    });
+    expect(displayErrorSpy).toHaveBeenCalledWith(new Error(errorMessage));
+    MockDate.reset();
   });
 });

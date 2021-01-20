@@ -1,4 +1,3 @@
-import { getAccessToken } from '@onaio/session-reducer';
 import { Dictionary } from '@onaio/utils';
 import { toast } from 'react-toastify';
 import { OPENSRP_API_BASE_URL } from '../../../../../configs/env';
@@ -7,7 +6,7 @@ import {
   OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT,
   OPENSRP_UPLOAD_ENDPOINT,
 } from '../../../../../constants';
-import { growl, successGrowl } from '../../../../../helpers/utils';
+import { getAcessTokenOrRedirect, growl, successGrowl } from '../../../../../helpers/utils';
 import { OpenSRPService } from '../../../../../services/opensrp';
 import store from '../../../../../store';
 import { fetchFiles, File } from '../../../../../store/ducks/opensrp/clientfiles';
@@ -49,7 +48,8 @@ export const postUploadedFile = async (
   setFormSubmitstate: () => void,
   params?: string
 ) => {
-  const bearer = `Bearer ${getAccessToken(store.getState())}`;
+  const accessToken = await getAcessTokenOrRedirect();
+  const bearer = `Bearer ${accessToken}`;
   const response = await fetch(`${OPENSRP_API_BASE_URL}${OPENSRP_UPLOAD_ENDPOINT}/${params}`, {
     body: data,
     headers: {

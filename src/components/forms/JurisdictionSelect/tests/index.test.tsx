@@ -311,7 +311,7 @@ describe('components/forms/JurisdictionSelect', () => {
     );
     await new Promise(resolve => setImmediate(resolve));
     expect(fetch.mock.calls[0][0]).toEqual(
-      'https://test.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=parentId%3A395X%2Cstatus%3AActive'
+      'https://test.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=parentId:395X,status:Active'
     );
   });
 });

@@ -24,6 +24,7 @@ const history = createBrowserHistory();
 
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
+jest.mock('../../../../../configs/env');
 
 jest.mock('../JurisdictionAssignmentReRouting', () => {
   const MockComponent = () => <div id="mock-wrapper">I love oov</div>;
@@ -80,7 +81,7 @@ describe('JurisdictionAssignment/JurisdictionEntry', () => {
     // we now check the fetch calls
     expect(fetch.mock.calls).toEqual([
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/plans/356b6b84-fc36-4389-a44a-2b038ed2f38d',
+        'https://test.smartregister.org/opensrp/rest/plans/356b6b84-fc36-4389-a44a-2b038ed2f38d',
         {
           headers: {
             accept: 'application/json',
@@ -91,7 +92,7 @@ describe('JurisdictionAssignment/JurisdictionEntry', () => {
         },
       ],
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=false&jurisdiction_ids=3952',
+        'https://test.smartregister.org/opensrp/rest/location/findByJurisdictionIds?is_jurisdiction=true&return_geometry=false&jurisdiction_ids=3952',
         {
           headers: {
             accept: 'application/json',
@@ -102,7 +103,7 @@ describe('JurisdictionAssignment/JurisdictionEntry', () => {
         },
       ],
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/location/3019?is_jurisdiction=true&return_geometry=false',
+        'https://test.smartregister.org/opensrp/rest/location/3019?is_jurisdiction=true&return_geometry=false',
         {
           headers: {
             accept: 'application/json',
@@ -113,7 +114,7 @@ describe('JurisdictionAssignment/JurisdictionEntry', () => {
         },
       ],
       [
-        'https://reveal-stage.smartregister.org/opensrp/rest/location/2942?is_jurisdiction=true&return_geometry=false',
+        'https://test.smartregister.org/opensrp/rest/location/2942?is_jurisdiction=true&return_geometry=false',
         {
           headers: {
             accept: 'application/json',
