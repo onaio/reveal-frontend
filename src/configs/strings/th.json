@@ -1361,7 +1361,7 @@
     "description": "Select one option on a dropdown"
   },
   "PLANS_USER_FILTER_NOTIFICATION": {
-    "message": "มีการกำหนดตัวกรองอยู่ ผู้ใช้จะเห็นเฉพาะแผนปฏิบัติงานที่อยู่ภายใต้ username: %s เท่านั้",
+    "message": "มีการกำหนดตัวกรองอยู่ ผู้ใช้จะเห็นเฉพาะแผนปฏิบัติงานที่อยู่ภายใต้ username: %s เท่านั้น",
     "description": "Info message to indicate plans are filtered by a specific user"
   }
 }
