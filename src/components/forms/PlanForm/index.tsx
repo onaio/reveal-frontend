@@ -1,5 +1,4 @@
 import FormikEffect from '@onaio/formik-effect';
-import { Dictionary } from '@onaio/utils';
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
 import { xor } from 'lodash';
 import moment from 'moment';
@@ -193,8 +192,11 @@ export interface PlanFormProps {
 const PlanForm = (props: PlanFormProps) => {
   const [areWeDoneHere, setAreWeDoneHere] = useState<boolean>(false);
   const [activityModal, setActivityModal] = useState<boolean>(false);
-  const [actionConditions, setActionConditions] = useState<Dictionary>({});
-  const [actionTriggers, setActionTriggers] = useState<Dictionary>({});
+  // const [actionConditions, setActionConditions] = useState<Dictionary>({});
+  // const [actionTriggers, setActionTriggers] = useState<Dictionary>({});
+  const [currentIntervention, setCurrentIntervention] = useState<InterventionType>(
+    props.initialValues.interventionType
+  );
 
   const {
     allFormActivities,
@@ -210,13 +212,23 @@ const PlanForm = (props: PlanFormProps) => {
   } = props;
 
   useEffect(() => {
-    const { conditions, triggers } = getConditionAndTriggers(
-      initialValues.activities,
-      disabledFields.includes('activities')
-    );
-    setActionConditions(conditions);
-    setActionTriggers(triggers);
+    // const { conditions, triggers } = planActivitiesMap.hasOwnProperty(target.value) ? getConditionAndTriggers(
+    //   initialValues.activities,
+    //   disabledFields.includes('activities')
+    // );
+    // setActionConditions(conditions);
+    // setActionTriggers(triggers);
   }, []);
+
+  const {
+    conditions: actionConditions,
+    triggers: actionTriggers,
+  } = planActivitiesMap.hasOwnProperty(currentIntervention)
+    ? getConditionAndTriggers(
+        planActivitiesMap[currentIntervention],
+        disabledFields.includes('activities')
+      )
+    : getConditionAndTriggers(initialValues.activities, disabledFields.includes('activities'));
 
   const editMode: boolean = initialValues.identifier !== '';
 
@@ -315,7 +327,7 @@ const PlanForm = (props: PlanFormProps) => {
         }}
         validationSchema={PlanSchema}
       >
-        {({ errors, handleChange, isSubmitting, setFieldValue, values, touched, isValid }) => (
+        {({ errors, isSubmitting, setFieldValue, values, touched, isValid }) => (
           <Form
             /* tslint:disable-next-line jsx-no-lambda */
             onChange={(e: FormEvent) => {
@@ -358,6 +370,7 @@ const PlanForm = (props: PlanFormProps) => {
                 component="select"
                 name="interventionType"
                 id="interventionType"
+                value={currentIntervention}
                 disabled={disabledFields.includes('interventionType')}
                 /* tslint:disable-next-line jsx-no-lambda */
                 onChange={(e: FormEvent) => {
@@ -365,16 +378,17 @@ const PlanForm = (props: PlanFormProps) => {
 
                   if (planActivitiesMap.hasOwnProperty(target.value)) {
                     setFieldValue('activities', planActivitiesMap[target.value]);
-                    const newStuff = getConditionAndTriggers(
-                      planActivitiesMap[target.value],
-                      disabledFields.includes('activities')
-                    );
-                    setActionConditions(newStuff.conditions);
-                    setActionTriggers(newStuff.triggers);
+                    // setActivities(planActivitiesMap[target.value]);
+                    // const newStuff = getConditionAndTriggers(
+                    //   planActivitiesMap[target.value],
+                    //   disabledFields.includes('activities')
+                    // );
+                    // setActionConditions(newStuff.conditions);
+                    // setActionTriggers(newStuff.triggers);
                   }
-
+                  setCurrentIntervention(target.value as InterventionType);
                   setFieldValue('jurisdictions', [initialJurisdictionValues]);
-                  handleChange(e);
+                  // handleChange(e);
                 }}
                 className={errors.interventionType ? 'form-control is-invalid' : 'form-control'}
               >
@@ -724,14 +738,19 @@ const PlanForm = (props: PlanFormProps) => {
                                * the values object otherwise the Formik state gets out of sync
                                */
                               arrayHelpers.remove(index);
-                              const newActivityValues = getConditionAndTriggers(
-                                values.activities.filter(
-                                  e => e.actionCode !== values.activities[index].actionCode
-                                ),
-                                disabledFields.includes('activities')
+                              const newActivities = values.activities.filter(
+                                e => e.actionCode !== values.activities[index].actionCode
                               );
-                              setActionConditions(newActivityValues.conditions);
-                              setActionTriggers(newActivityValues.triggers);
+                              setFieldValue('activities', newActivities);
+                              // setActivities(newActivities);
+                              // const newActivityValues = getConditionAndTriggers(
+                              //   activities.filter(
+                              //     e => e.actionCode !== activities[index].actionCode
+                              //   ),
+                              //   disabledFields.includes('activities')
+                              // );
+                              // setActionConditions(newActivityValues.conditions);
+                              // setActionTriggers(newActivityValues.triggers);
                             }}
                           >
                             <span aria-hidden="true">&times;</span>
@@ -1122,13 +1141,16 @@ const PlanForm = (props: PlanFormProps) => {
                                       type="button"
                                       className="btn btn-primary btn-sm mb-1 addActivity"
                                       onClick={() => {
-                                        values.activities.push(thisActivity);
-                                        const newActivityValues = getConditionAndTriggers(
-                                          values.activities,
-                                          disabledFields.includes('activities')
-                                        );
-                                        setActionConditions(newActivityValues.conditions);
-                                        setActionTriggers(newActivityValues.triggers);
+                                        setFieldValue('activities', [
+                                          ...values.activities,
+                                          thisActivity,
+                                        ]);
+                                        // const newActivityValues = getConditionAndTriggers(
+                                        //   activities,
+                                        //   disabledFields.includes('activities')
+                                        // );
+                                        // setActionConditions(newActivityValues.conditions);
+                                        // setActionTriggers(newActivityValues.triggers);
                                       }}
                                     >
                                       {format(ADD_CODED_ACTIVITY, thisActivity.actionCode)}
