@@ -7,6 +7,8 @@ import {
 import * as fixtures from '../../tests/fixtures';
 import { handleDownload, loadFiles, postUploadedFile } from '../serviceHooks';
 
+jest.mock('../../../../../../configs/env');
+
 describe('src/containers/pages/ClientListView/helpers/servicehooks', () => {
   it('loadOrganization works correctly', async () => {
     const mockSetLoader = jest.fn();

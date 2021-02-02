@@ -9,6 +9,7 @@ import ClientUpload, { defaultProps } from '..';
 import { csvCreate } from './fixtures';
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
+jest.mock('../../../../../configs/env');
 
 const history = createBrowserHistory();
 
@@ -49,7 +50,7 @@ describe('components/ClientUpload', () => {
     expect(fetch).toHaveBeenCalledTimes(2);
     // post data posted
     expect(fetch.mock.calls[0]).toEqual([
-      'https://reveal-stage.smartregister.org/opensrp/rest/upload/?event_name=Child Registration',
+      'https://test.smartregister.org/opensrp/rest/upload/?event_name=Child Registration',
       {
         body: expect.any(Object),
         headers: {
@@ -60,7 +61,7 @@ describe('components/ClientUpload', () => {
     ]);
     // client lists pulled
     expect(fetch.mock.calls[1]).toEqual([
-      'https://reveal-stage.smartregister.org/opensrp/rest/upload/history',
+      'https://test.smartregister.org/opensrp/rest/upload/history',
       {
         headers: {
           accept: 'application/json',

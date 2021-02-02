@@ -27,7 +27,7 @@ import IRSPlansReducer, {
 } from '../../../../../store/ducks/generic/plans';
 import { InterventionType } from '../../../../../store/ducks/plans';
 import { plansTableColumns } from '../../../GenericJurisdictionReport/helpers';
-import * as fixtures from '../../JurisdictionsReportLite/fixtures';
+import * as fixtures from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');

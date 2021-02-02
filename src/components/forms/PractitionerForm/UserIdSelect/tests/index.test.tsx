@@ -12,6 +12,7 @@ import { practitioners, sortedUsers, users } from './fixtures';
 // tslint:disable-next-line: no-var-requires
 const fetch = require('jest-fetch-mock');
 jest.mock('../../../../../configs/env.ts', () => ({
+  OPENSRP_API_BASE_URL: 'https://test.smartregister.org/opensrp/rest/',
   PRACTITIONER_REQUEST_PAGE_SIZE: 1000,
   USERS_REQUEST_PAGE_SIZE: 1000,
 }));

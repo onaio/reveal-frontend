@@ -5,6 +5,7 @@ import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
@@ -47,7 +48,6 @@ describe('containers/pages/ConfigForm/manifest/ManifestFiles', () => {
   });
 
   it('renders release file table correctly', async () => {
-    store.dispatch(fetchManifestFiles(FixManifestFiles));
     const mockList = jest.fn();
     OpenSRPService.prototype.list = mockList;
     mockList.mockReturnValueOnce(Promise.resolve(FixManifestFiles));
@@ -58,8 +58,14 @@ describe('containers/pages/ConfigForm/manifest/ManifestFiles', () => {
         </Router>
       </Provider>
     );
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    store.dispatch(fetchManifestFiles(FixManifestFiles));
     wrapper.update();
+
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual('Releases: 1.0.1');
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);

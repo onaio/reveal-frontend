@@ -101,3 +101,10 @@ Below is a list of currently supported environment variables:
   - Contains plan intervention types displayed on plan assign page
   - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
   - Variable is **not required** and if not provided interventions on `REACT_APP_DISPLAYED_PLAN_TYPES` are loaded.
+
+  - **REACT_APP_CHECK_SESSION_EXPIRY_STATUS**
+
+  - **not Required**; _(string)_
+  - to activate set the env to `true`, any other value will be interpreted as false.
+  - default value is false.
+  - enables check for session expiry
