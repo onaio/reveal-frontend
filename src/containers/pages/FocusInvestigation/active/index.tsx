@@ -349,7 +349,7 @@ class ActiveFocusInvestigation extends React.Component<
       {
         Header: STATUS_HEADER,
         accessor: 'status',
-        maxWidth: 60,
+        maxWidth: 100,
       },
     ];
 
