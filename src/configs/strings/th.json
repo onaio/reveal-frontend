@@ -376,6 +376,10 @@
     "description": "indicator label: indicating the type of plan action being monitored"
   },
   "FI_STATUS": {
+    "message": "ระยะท้องที่",
+    "description": "column header: for the status of Focus Investigation plans"
+  },
+  "FI_COLUMN_STATUS": {
     "message": "สถานะ",
     "description": "column header: for the status of Focus Investigation plans"
   },

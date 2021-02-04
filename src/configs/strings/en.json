@@ -403,6 +403,10 @@
     "message": "FI Status",
     "description": "column header: for the status of Focus Investigation plans"
   },
+  "FI_COLUMN_STATUS": {
+    "message": "FI Status",
+    "description": "column header: for the status of Focus Investigation plans"
+  },
   "FI_REASON": {
     "message": "FI Reason",
     "description": "column header: the reason for the plan (can be reactive or routine)"

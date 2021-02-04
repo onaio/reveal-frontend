@@ -218,6 +218,7 @@ export const CANTON = translate('CANTON', 'Canton');
 export const VILLAGE = translate('VILLAGE', 'Village');
 export const FI_REASON = translate('FI_REASON', 'FI Reason');
 export const FI_STATUS = translate('FI_STATUS', 'FI Status');
+export const FI_COLUMN_STATUS = translate('FI_COLUMN_STATUS', 'FI Status');
 export const MEASURE = translate('MEASURE', 'Measure');
 export const MARK_AS_COMPLETE = translate('MARK_AS_COMPLETE', 'Mark as complete');
 export const STRUCTURES = translate('STRUCTURES', 'structure(s)');
