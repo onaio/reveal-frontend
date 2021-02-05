@@ -445,6 +445,11 @@ export const MDA_ADHERENCE_DESCRIPTION = translate(
   'Visit all residential structures (100%) and confirm adherence of each registered person'
 );
 
+export const RACD_REGISTER_FAMILY_ACTIVITY = translate(
+  'RACD_REGISTER_FAMILY_ACTIVITY',
+  'RACD Register Family'
+);
+
 export const A1_DESCRIPTION = translate(
   'A1_DESCRIPTION',
   'Indigenous case recorded within the last year.'
@@ -910,6 +915,7 @@ export const TLA_DAYS_AREAS_TO_REACH_90 = translate(
 );
 
 export const NOT_VISITED = translate('NO_VISITED', 'Not visited');
+export const NOT_ELIGIBLE = translate('NOT_ELIGIBLE', 'Not Eligible');
 
 export const NO_DECISION_FORM = translate('NO_DECISION_FORM', 'No decision form');
 export const RETIRE_PLAN_MESSAGE = translate(

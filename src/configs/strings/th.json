@@ -1379,5 +1379,17 @@
   "SESSION_EXPIRED_ERROR": {
     "message": "ข้อผิดพลาด: ท่านไม่ได้ทำรายการในเวลาที่กำหนด โปรดเข้าสู่ระบบอีกครั้ง",
     "description": "Error text flashed when session is expired"
+  },
+  "NOT_ELIGIBLE": {
+    "message": "Not Eligible",
+    "description": "Task business status not eligible"
+  },
+  "NOT_VISITED": {
+    "message": "Not Visited",
+    "description": "Task business status not visited"
+  },
+  "RACD_REGISTER_FAMILY_ACTIVITY": {
+    "message": "RACD Register Family",
+    "description": "Action code RACD Register Family"
   }
 }

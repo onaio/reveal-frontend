@@ -1632,5 +1632,17 @@
   "SESSION_EXPIRED_ERROR": {
     "message": "Error: Your session is expired. Please renew session",
     "description": "Error text flashed when session is expired"
+  },
+  "NOT_ELIGIBLE": {
+    "message": "Not Eligible",
+    "description": "Task business status not eligible"
+  },
+  "NOT_VISITED": {
+    "message": "Not Visited",
+    "description": "Task business status not visited"
+  },
+  "RACD_REGISTER_FAMILY_ACTIVITY": {
+    "message": "RACD Register Family",
+    "description": "action code RACD Register Family"
   }
 }
