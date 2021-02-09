@@ -6,6 +6,7 @@ import { Button, Col, FormGroup, Label, Row } from 'reactstrap';
 import { ACTION_UUID_NAMESPACE } from '../../../../configs/env';
 import {
   ACTIVITY_DONE_BEFORE,
+  AN_ERROR_OCCURRED,
   ASSIGNED_WRONG_PLAN,
   CANCEL,
   CANCELED_PLAN,
@@ -18,7 +19,10 @@ import {
   SAME_SUB_VILLAGE,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
+import { OPENSRP_EVENT_ENDPOINT } from '../../../../constants';
+import { displayError } from '../../../../helpers/errors';
 import { generateNameSpacedUUID } from '../../../../helpers/utils';
+import { OpenSRPService } from '../../../../services/opensrp';
 import store from '../../../../store';
 
 interface RetirePlanFormProps {
@@ -43,10 +47,7 @@ export const RetireReasonOptions: { [key: string]: string } = {
   OTHER: OTHER_REASON,
 };
 
-const generatePayload = (values: FormInitialValues, planPayload?: PlanDefinition) => {
-  if (!planPayload) {
-    return values;
-  }
+const generatePayload = (values: FormInitialValues, planPayload: PlanDefinition) => {
   const retireReason =
     values.retireReason === other ? values.otherReason : RetireReasonOptions[values.retireReason];
   const eventDate = moment(new Date()).format('YYYY-MM-DD');
@@ -58,6 +59,7 @@ const generatePayload = (values: FormInitialValues, planPayload?: PlanDefinition
   const { jurisdiction } = planPayload;
   const locationId =
     jurisdiction.length === 0 || jurisdiction.length > 1 ? '' : jurisdiction[0].code;
+
   return {
     ...(locationId && { locationId }),
     baseEntityId: planPayload.identifier,
@@ -92,7 +94,8 @@ const initialValues: FormInitialValues = {
   retireReason: '',
 };
 
-const RetirePlanForm = (props?: RetirePlanFormProps) => {
+const RetirePlanForm = (props: RetirePlanFormProps) => {
+  const { payload, savePlan } = props;
   return (
     <Row>
       <Col md={6} id="retireform-col-container">
@@ -100,8 +103,18 @@ const RetirePlanForm = (props?: RetirePlanFormProps) => {
           initialValues={initialValues}
           /* tslint:disable-next-line jsx-no-lambda */
           onSubmit={(values, { setSubmitting }) => {
-            const formPayload = generatePayload(values, props?.payload);
-            setSubmitting(false);
+            const service = new OpenSRPService(OPENSRP_EVENT_ENDPOINT);
+            const formPayload = generatePayload(values, payload);
+            service
+              .create(formPayload)
+              .then(() => {
+                setSubmitting(false);
+                savePlan();
+              })
+              .catch((e: Error) => {
+                setSubmitting(false);
+                displayError(e, AN_ERROR_OCCURRED, false);
+              });
             return formPayload;
           }}
         >
