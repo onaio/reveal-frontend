@@ -1630,7 +1630,7 @@
     "description": "Error text flashed when session is expired"
   },
   "ASSIGNED_WRONG_PLAN": {
-    "message": "Wrong plan detailed were assigned",
+    "message": "Assigned wrong plan details",
     "description": "Reason for retiring a plan"
   },
   "DUPLICATED_PLAN": {
@@ -1646,15 +1646,27 @@
     "description": "Reason for retiring a plan"
   },
   "SAME_SUB_VILLAGE": {
-    "message": "Patient is in the same sub-village at the same week",
+    "message": "This is patient in the same sub-village and same week",
     "description": "Reason for retiring a plan"
   },
   "ACTIVITY_DONE_BEFORE": {
-    "message": "Activity was before the plan was created",
+    "message": "Activity was done before the plan was created",
     "description": "Reason for retiring a plan"
   },
   "OTHER_REASON": {
     "message": "Specify another reason",
     "description": "Reason for retiring a plan"
+  },
+  "RETIRE_PLAN_REASON": {
+    "message": "Retire Plan Reason",
+    "description": "Retire Plan Reason form label"
+  },
+  "OTHER_REASON_LABEL": {
+    "message": "Other reason",
+    "description": "Form Other reason label"
+  },
+  "PROCEED": {
+    "message": "Proceed",
+    "description": "Button text"
   }
 }

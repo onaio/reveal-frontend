@@ -1391,5 +1391,17 @@
   "OTHER_REASON": {
     "message": "อื่นๆ (ระบุ)",
     "description": "Reason for retiring a plan"
+  },
+  "RETIRE_PLAN_REASON": {
+    "message": "Retire Plan Reason",
+    "description": "Retire Plan Reason form label"
+  },
+  "OTHER_REASON_LABEL": {
+    "message": "Other reason",
+    "description": "Form Other reason label"
+  },
+  "PROCEED": {
+    "message": "Proceed",
+    "description": "Button text"
   }
 }

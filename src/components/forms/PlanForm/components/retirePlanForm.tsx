@@ -1,18 +1,25 @@
+import { getUser } from '@onaio/session-reducer';
 import { Field, Form, Formik } from 'formik';
+import moment from 'moment';
 import React from 'react';
 import { Button, Col, FormGroup, Label, Row } from 'reactstrap';
+import { ACTION_UUID_NAMESPACE } from '../../../../configs/env';
 import {
   ACTIVITY_DONE_BEFORE,
   ASSIGNED_WRONG_PLAN,
+  CANCEL,
   CANCELED_PLAN,
   DUPLICATED_PLAN,
   ENTERED_WRONG_ADDRESS,
   OTHER_REASON,
   OTHER_REASON_LABEL,
+  PROCEED,
   RETIRE_PLAN_REASON,
   SAME_SUB_VILLAGE,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
+import { generateNameSpacedUUID } from '../../../../helpers/utils';
+import store from '../../../../store';
 
 interface RetirePlanFormProps {
   payload: PlanDefinition;
@@ -42,16 +49,25 @@ const generatePayload = (values: FormInitialValues, planPayload?: PlanDefinition
   }
   const retireReason =
     values.retireReason === other ? values.otherReason : RetireReasonOptions[values.retireReason];
+  const eventDate = moment(new Date()).format('YYYY-MM-DD');
+  const providerId = (getUser(store.getState()) || {}).username || '';
+  const formSubmissionId = generateNameSpacedUUID(
+    `${moment().toString()}-${planPayload.identifier}-${retireReason}`,
+    ACTION_UUID_NAMESPACE
+  );
+  const { jurisdiction } = planPayload;
+  const locationId =
+    jurisdiction.length === 0 || jurisdiction.length > 1 ? '' : jurisdiction[0].code;
   return {
+    ...(locationId && { locationId }),
     baseEntityId: planPayload.identifier,
     details: {
       planIdentifier: planPayload.identifier,
     },
     entityType: 'PlanDefinition',
-    eventDate: '{{ current date}}',
+    eventDate,
     eventType: 'Retire_Plan',
-    formSubmissionId: '{{uuid}}',
-    locationId: '{{plan_location_identifier for plans with 1 location or empty otherwise}}',
+    formSubmissionId,
     obs: [
       {
         fieldCode: 'retire_reason',
@@ -65,9 +81,9 @@ const generatePayload = (values: FormInitialValues, planPayload?: PlanDefinition
         values: [retireReason],
       },
     ],
-    providerId: '{{logged in username}}',
+    providerId,
     type: 'Event',
-    version: '',
+    version: Date.now(),
   };
 };
 
@@ -79,7 +95,7 @@ const initialValues: FormInitialValues = {
 const RetirePlanForm = (props?: RetirePlanFormProps) => {
   return (
     <Row>
-      <Col md={6} id="planform-col-container">
+      <Col md={6} id="retireform-col-container">
         <Formik
           initialValues={initialValues}
           /* tslint:disable-next-line jsx-no-lambda */
@@ -121,16 +137,31 @@ const RetirePlanForm = (props?: RetirePlanFormProps) => {
                   />
                 </FormGroup>
               )}
-              <Button
-                type="submit"
-                id="planform-submit-button"
-                className="btn btn-block"
-                color="primary"
-                aria-label="Ok"
-                disabled={isSubmitting || Object.keys(errors).length > 0 || !isValid}
-              >
-                'OK'
-              </Button>
+              <Row>
+                <Col md={6} />
+                <Col md={3}>
+                  <Button
+                    id="retireform-cancel-button"
+                    className="btn btn-block"
+                    color="secondary"
+                    aria-label="Ok"
+                  >
+                    {CANCEL}
+                  </Button>
+                </Col>
+                <Col md={3}>
+                  <Button
+                    type="submit"
+                    id="retireform-submit-button"
+                    className="btn btn-block"
+                    color="primary"
+                    aria-label="Ok"
+                    disabled={isSubmitting || Object.keys(errors).length > 0 || !isValid}
+                  >
+                    {PROCEED}
+                  </Button>
+                </Col>
+              </Row>
             </Form>
           )}
         </Formik>
