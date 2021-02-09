@@ -1363,5 +1363,33 @@
   "PLANS_USER_FILTER_NOTIFICATION": {
     "message": "มีการกำหนดตัวกรองอยู่ ผู้ใช้จะเห็นเฉพาะแผนปฏิบัติงานที่อยู่ภายใต้ username: %s เท่านั้น",
     "description": "Info message to indicate plans are filtered by a specific user"
+  },
+  "ASSIGNED_WRONG_PLAN": {
+    "message": "กำหนดรายละเอียดแผนผิด",
+    "description": "Reason for retiring a plan"
+  },
+  "DUPLICATED_PLAN": {
+    "message": "สร้างแผนซ้ำซ้อนจากที่มีอยู่",
+    "description": "Reason for retiring a plan"
+  },
+  "CANCELED_PLAN": {
+    "message": "ยกเลิกไม่ออกไปปฏิบัติงานแล้ว",
+    "description": "Reason for retiring a plan"
+  },
+  "ENTERED_WRONG_ADDRESS": {
+    "message": "กรอกที่อยู่ผู้ป่วยหรือที่อยู่แหล่งแพร่เชื้อผิดกลุ่มบ้าน",
+    "description": "Reason for retiring a plan"
+  },
+  "SAME_SUB_VILLAGE": {
+    "message": "เป็นผู้ป่วยในกลุ่มบ้านเดียวกัน ณ สัปดาห์เดียวกัน",
+    "description": "Reason for retiring a plan"
+  },
+  "ACTIVITY_DONE_BEFORE": {
+    "message": "ออกไปดำเนินการก่อนแผนปฏิบัติงานจะถูกสร้างขึ้น",
+    "description": "Reason for retiring a plan"
+  },
+  "OTHER_REASON": {
+    "message": "อื่นๆ (ระบุ)",
+    "description": "Reason for retiring a plan"
   }
 }

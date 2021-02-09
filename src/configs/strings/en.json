@@ -1628,5 +1628,33 @@
   "SESSION_EXPIRED_ERROR": {
     "message": "Error: Your session is expired. Please renew session",
     "description": "Error text flashed when session is expired"
+  },
+  "ASSIGNED_WRONG_PLAN": {
+    "message": "Wrong plan detailed were assigned",
+    "description": "Reason for retiring a plan"
+  },
+  "DUPLICATED_PLAN": {
+    "message": "Plan is duplicated",
+    "description": "Reason for retiring a plan"
+  },
+  "CANCELED_PLAN": {
+    "message": "Canceled, no longer going to work",
+    "description": "Reason for retiring a plan"
+  },
+  "ENTERED_WRONG_ADDRESS": {
+    "message": "Plan has wrong address of patient or source of infection",
+    "description": "Reason for retiring a plan"
+  },
+  "SAME_SUB_VILLAGE": {
+    "message": "Patient is in the same sub-village at the same week",
+    "description": "Reason for retiring a plan"
+  },
+  "ACTIVITY_DONE_BEFORE": {
+    "message": "Activity was before the plan was created",
+    "description": "Reason for retiring a plan"
+  },
+  "OTHER_REASON": {
+    "message": "Specify another reason",
+    "description": "Reason for retiring a plan"
   }
 }
