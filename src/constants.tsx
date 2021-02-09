@@ -173,6 +173,7 @@ export const SETTINGS_ENDPOINT = 'settings/';
 export const LOCATIONS_ENDPOINT = 'location/location-tree';
 export const SECURITY_AUTHENTICATE_ENDPOINT = 'security/authenticate';
 export const OPENSRP_KEYCLOAK_PARAM = 'Keycloak';
+export const OPENSRP_EVENT_ENDPOINT = 'event';
 
 // colors
 export const GREEN = 'Green';
