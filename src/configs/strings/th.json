@@ -1403,5 +1403,9 @@
   "PROCEED": {
     "message": "Proceed",
     "description": "Button text"
+  },
+  "RETIRE_PLAN_MESSAGE": {
+    "message": "To retire this plan, select a reason and proceed",
+    "description": "Retire plan waring text"
   }
 }

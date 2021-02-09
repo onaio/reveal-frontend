@@ -62,6 +62,7 @@ import {
   PRIORITY_LABEL,
   QUANTITY_LABEL,
   REASON_HEADER,
+  RETIRE_PLAN_MESSAGE,
   SAVE_PLAN,
   SAVING,
   SELECT_OPTION,
@@ -81,6 +82,7 @@ import {
   goalPrioritiesDisplay,
   goalUnitDisplay,
   planActivities,
+  PlanDefinition,
   planStatusDisplay,
 } from '../../../configs/settings';
 import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constants';
@@ -91,6 +93,7 @@ import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
 import JurisdictionSelect from '../JurisdictionSelect';
 import { getConditionAndTriggers } from './components/actions';
+import { RetirePlanForm, SetSubmittingType } from './components/retirePlanForm';
 import {
   displayPlanTypeOnForm,
   doesFieldHaveErrors,
@@ -195,6 +198,8 @@ const PlanForm = (props: PlanFormProps) => {
   const [activityModal, setActivityModal] = useState<boolean>(false);
   const [actionConditions, setActionConditions] = useState<Dictionary>({});
   const [actionTriggers, setActionTriggers] = useState<Dictionary>({});
+  const [aboutToRetirePlan, setAboutToRetirePlan] = useState<boolean>(false);
+  const [formPayLoad, setFormPayLoad] = useState<PlanDefinition | null>(null);
 
   const {
     allFormActivities,
@@ -276,6 +281,33 @@ const PlanForm = (props: PlanFormProps) => {
     return <Redirect to={redirectAfterAction} />;
   }
 
+  const savePlan = (payload: PlanDefinition, setSubmitting: SetSubmittingType) => {
+    const apiService = new OpenSRPService('plans');
+    if (editMode) {
+      apiService
+        .update(payload)
+        .then(() => {
+          onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
+        })
+        .catch((e: Error) => {
+          setSubmitting(false);
+          displayError(e, AN_ERROR_OCCURRED, false);
+        });
+    } else {
+      apiService
+        .create(payload)
+        .then(() => {
+          onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
+        })
+        .catch((e: Error) => {
+          setSubmitting(false);
+          displayError(e, AN_ERROR_OCCURRED, false);
+        });
+    }
+  };
+
+  const cancelCallBack = () => setAboutToRetirePlan(false);
+
   return (
     <div className="form-container">
       <Formik
@@ -283,45 +315,30 @@ const PlanForm = (props: PlanFormProps) => {
         /* tslint:disable-next-line jsx-no-lambda */
         onSubmit={(values, { setSubmitting }) => {
           const payload = generatePlanDefinition(values, null, editMode);
-          const apiService = new OpenSRPService('plans');
-
           const continueWithSubmit = props.beforeSubmit(payload);
           if (!continueWithSubmit) {
             setSubmitting(false);
             return;
           }
-
-          const savePlan = () => {
-            if (editMode) {
-              apiService
-                .update(payload)
-                .then(() => {
-                  onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
-                })
-                .catch((e: Error) => {
-                  setSubmitting(false);
-                  displayError(e, AN_ERROR_OCCURRED, false);
-                });
-            } else {
-              apiService
-                .create(payload)
-                .then(() => {
-                  onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
-                })
-                .catch((e: Error) => {
-                  setSubmitting(false);
-                  displayError(e, AN_ERROR_OCCURRED, false);
-                });
-            }
-          };
           if (payload.status === PlanStatus.RETIRED) {
-            return savePlan();
+            setFormPayLoad(payload);
+            setAboutToRetirePlan(true);
+          } else {
+            savePlan(payload, setSubmitting);
           }
-          savePlan();
         }}
         validationSchema={PlanSchema}
       >
-        {({ errors, handleChange, isSubmitting, setFieldValue, values, touched, isValid }) => (
+        {({
+          errors,
+          handleChange,
+          isSubmitting,
+          setSubmitting,
+          setFieldValue,
+          values,
+          touched,
+          isValid,
+        }) => (
           <Form
             /* tslint:disable-next-line jsx-no-lambda */
             onChange={(e: FormEvent) => {
@@ -1151,6 +1168,21 @@ const PlanForm = (props: PlanFormProps) => {
                 </div>
               )}
             />
+            {aboutToRetirePlan && formPayLoad && (
+              <Modal backdrop={false} size="sm" isOpen={true} className="float-right">
+                <ModalHeader>{RETIRE_PLAN_MESSAGE}</ModalHeader>
+                <ModalBody>
+                  <RetirePlanForm
+                    {...{
+                      cancelCallBack,
+                      payload: formPayLoad,
+                      savePlan,
+                      setSubmittingCallBack: setSubmitting,
+                    }}
+                  />
+                </ModalBody>
+              </Modal>
+            )}
             <hr className="mb-2" />
             <Button
               type="submit"

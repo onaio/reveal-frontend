@@ -913,7 +913,7 @@ export const NOT_VISITED = translate('NO_VISITED', 'Not visited');
 export const NO_DECISION_FORM = translate('NO_DECISION_FORM', 'No decision form');
 export const RETIRE_PLAN_MESSAGE = translate(
   'RETIRE_PLAN_MESSAGE',
-  'You are about to retire a plan, click ok to proceed'
+  'To retire this plan, select a reason and proceed'
 );
 export const COMPLETE_PLAN_MESSAGE = translate(
   'COMPLETE_PLAN_MESSAGE',
