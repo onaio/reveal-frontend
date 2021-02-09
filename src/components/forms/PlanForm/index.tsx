@@ -1169,7 +1169,12 @@ const PlanForm = (props: PlanFormProps) => {
               )}
             />
             {aboutToRetirePlan && formPayLoad && (
-              <Modal backdrop={false} size="sm" isOpen={true} className="float-right">
+              <Modal
+                backdrop={false}
+                size="sm"
+                isOpen={true}
+                className="align-items-center retire-plans-modal"
+              >
                 <ModalHeader>{RETIRE_PLAN_MESSAGE}</ModalHeader>
                 <ModalBody>
                   <RetirePlanForm
