@@ -467,14 +467,14 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     });
     wrapper
       .find('select[name="status"]')
-      .simulate('change', { target: { name: 'status', value: 'retired' } });
+      .simulate('change', { target: { name: 'status', value: 'complete' } });
 
     await act(async () => {
       wrapper.find('form').simulate('submit');
     });
 
     expect(confirmSpy).toBeCalledTimes(1);
-    expect(confirmSpy).toBeCalledWith('You are about to retire a plan, click ok to proceed');
+    expect(confirmSpy).toBeCalledWith('You are about to complete a plan, click ok to proceed');
 
     expect(fetch.mock.calls[1][0]).toEqual('https://test.smartregister.org/opensrp/rest/plans');
     expect(fetch.mock.calls[1][1].method).toEqual('PUT');
