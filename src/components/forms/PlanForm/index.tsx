@@ -291,27 +291,33 @@ const PlanForm = (props: PlanFormProps) => {
             return;
           }
 
-          if (editMode) {
-            apiService
-              .update(payload)
-              .then(() => {
-                onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
-              })
-              .catch((e: Error) => {
-                setSubmitting(false);
-                displayError(e, AN_ERROR_OCCURRED, false);
-              });
-          } else {
-            apiService
-              .create(payload)
-              .then(() => {
-                onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
-              })
-              .catch((e: Error) => {
-                setSubmitting(false);
-                displayError(e, AN_ERROR_OCCURRED, false);
-              });
+          const savePlan = () => {
+            if (editMode) {
+              apiService
+                .update(payload)
+                .then(() => {
+                  onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
+                })
+                .catch((e: Error) => {
+                  setSubmitting(false);
+                  displayError(e, AN_ERROR_OCCURRED, false);
+                });
+            } else {
+              apiService
+                .create(payload)
+                .then(() => {
+                  onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
+                })
+                .catch((e: Error) => {
+                  setSubmitting(false);
+                  displayError(e, AN_ERROR_OCCURRED, false);
+                });
+            }
+          };
+          if (payload.status === PlanStatus.RETIRED) {
+            return savePlan();
           }
+          savePlan();
         }}
         validationSchema={PlanSchema}
       >
