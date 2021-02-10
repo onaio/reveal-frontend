@@ -27,7 +27,12 @@ import planDefinitionReducer, {
 } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import { removePlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
-import { planDefinition1, planDefinition2, updatePlanFormProps } from './fixtures';
+import {
+  planDefinition1,
+  planDefinition2,
+  retirePlan1Payload,
+  updatePlanFormProps,
+} from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -534,12 +539,45 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     });
 
     expect(fetch).toHaveBeenCalledTimes(3);
+    // get the plan to be edited
     expect(fetch.mock.calls[0][0]).toEqual(
       'https://test.smartregister.org/opensrp/rest/plans/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae'
     );
     // post retire reasons
-    expect(fetch.mock.calls[1][0]).toEqual('https://test.smartregister.org/opensrp/rest/event');
+    expect(fetch.mock.calls[1]).toEqual([
+      'https://test.smartregister.org/opensrp/rest/event',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        body: retirePlan1Payload,
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer null',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'POST',
+      },
+    ]);
     // update plans
-    expect(fetch.mock.calls[2][0]).toEqual('https://test.smartregister.org/opensrp/rest/plans');
+    const payload = {
+      ...generatePlanDefinition(getPlanFormValues(fixtures.plans[1])),
+      name: 'IRS-2019-07-10',
+      status: 'retired',
+      version: 2,
+    };
+    expect(fetch.mock.calls[2]).toEqual([
+      'https://test.smartregister.org/opensrp/rest/plans',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        body: JSON.stringify(payload),
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer null',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'PUT',
+      },
+    ]);
   });
 });
