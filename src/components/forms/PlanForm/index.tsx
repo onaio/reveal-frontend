@@ -85,7 +85,7 @@ import {
   PlanDefinition,
   planStatusDisplay,
 } from '../../../configs/settings';
-import { MDA_POINT_ADVERSE_EFFECTS_CODE, PLAN_LIST_URL } from '../../../constants';
+import { MDA_POINT_ADVERSE_EFFECTS_CODE, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
 import { OpenSRPService } from '../../../services/opensrp';
 import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
@@ -281,8 +281,13 @@ const PlanForm = (props: PlanFormProps) => {
     return <Redirect to={redirectAfterAction} />;
   }
 
+  /**
+   * create or update plan
+   * @param {PlanDefinition} payload - data to be submitted
+   * @param {SetSubmittingType} setSubmitting - formik set submitting
+   */
   const savePlan = (payload: PlanDefinition, setSubmitting: SetSubmittingType) => {
-    const apiService = new OpenSRPService('plans');
+    const apiService = new OpenSRPService(OPENSRP_PLANS);
     if (editMode) {
       apiService
         .update(payload)

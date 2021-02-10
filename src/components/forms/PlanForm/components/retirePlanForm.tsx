@@ -19,7 +19,14 @@ import {
   SAME_SUB_VILLAGE,
 } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
-import { OPENSRP_EVENT_ENDPOINT } from '../../../../constants';
+import {
+  EVENT_LABEL,
+  FORM_SUBMISSION_FIELD,
+  OPENSRP_EVENT_ENDPOINT,
+  PLAN_DEFINITION,
+  RETIRE_PLAN,
+  RETIRE_REASON,
+} from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { generateNameSpacedUUID } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -81,16 +88,16 @@ const generatePayload = (values: RetiringFormValues, planPayload: PlanDefinition
     details: {
       planIdentifier: planPayload.identifier,
     },
-    entityType: 'PlanDefinition',
+    entityType: PLAN_DEFINITION,
     eventDate,
-    eventType: 'Retire_Plan',
+    eventType: RETIRE_PLAN,
     formSubmissionId,
     obs: [
       {
-        fieldCode: 'retire_reason',
+        fieldCode: RETIRE_REASON,
         fieldDataType: 'text',
-        fieldType: 'formsubmissionField',
-        formSubmissionField: 'retire_reason',
+        fieldType: FORM_SUBMISSION_FIELD,
+        formSubmissionField: RETIRE_REASON,
         humanReadableValues: [],
         parentCode: '',
         saveObsAsArray: false,
@@ -99,7 +106,7 @@ const generatePayload = (values: RetiringFormValues, planPayload: PlanDefinition
       },
     ],
     providerId,
-    type: 'Event',
+    type: EVENT_LABEL,
     version: Date.now(),
   };
 };
