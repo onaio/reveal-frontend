@@ -177,7 +177,7 @@ const RetirePlanForm = (props: RetirePlanFormProps) => {
             </FormGroup>
           )}
           <Row>
-            <Col md={6} />
+            <Col md={3} />
             <Col md={3}>
               <Button
                 id="retireform-cancel-button"
@@ -205,6 +205,7 @@ const RetirePlanForm = (props: RetirePlanFormProps) => {
                 {PROCEED}
               </Button>
             </Col>
+            <Col md={3} />
           </Row>
         </Form>
       )}
