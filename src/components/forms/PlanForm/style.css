@@ -28,7 +28,7 @@
 }
 
 .retire-plans-modal {
-  width: 50% !important;
+  width: fit-content !important;
   margin-top: 0px !important;
   background: #ccc;
 }
