@@ -152,7 +152,7 @@ export const PlanSchema = Yup.object().shape({
     .required(REQUIRED),
   jurisdictions: Yup.array().of(
     Yup.object().shape({
-      id: Yup.string(), // .required(REQUIRED),
+      id: Yup.string().required(REQUIRED),
       name: Yup.string(),
     })
   ),
