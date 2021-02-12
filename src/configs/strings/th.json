@@ -379,6 +379,10 @@
     "message": "ระยะท้องที่",
     "description": "column header: for the status of Focus Investigation plans"
   },
+  "FI_COLUMN_STATUS": {
+    "message": "สถานะ",
+    "description": "column header: for the status of Focus Investigation plans"
+  },
   "FI_REASON": {
     "message": "ประเภทแผนงาน",
     "description": "column header: the reason for the plan (can be reactive or routine)"
@@ -424,7 +428,7 @@
     "description": "table header: (abbreviated) for the notification date of a plan"
   },
   "STATUS_HEADER": {
-    "message": "สถานะ",
+    "message": "ระยะท้องที่",
     "description": "column header: containing the status of plans"
   },
   "REASON_HEADER": {
@@ -1363,6 +1367,38 @@
   "PLANS_USER_FILTER_NOTIFICATION": {
     "message": "มีการกำหนดตัวกรองอยู่ ผู้ใช้จะเห็นเฉพาะแผนปฏิบัติงานที่อยู่ภายใต้ username: %s เท่านั้น",
     "description": "Info message to indicate plans are filtered by a specific user"
+  },
+  "SESSION_EXPIRED_TEXT": {
+    "message": "ท่านไม่ได้ทำรายการในเวลาที่กำหนด โปรดคลิกที่ลิงค์ด้านล่างนี้เพื่อเข้าสู่ระบบอีกครั้",
+    "description": "Info message to notify users their session is expired"
+  },
+  "RENEW_SESSION_LINK_TEXT": {
+    "message": "เข้าสู่ระบบ",
+    "description": "Info text for renew session link"
+  },
+  "SESSION_EXPIRED_ERROR": {
+    "message": "ข้อผิดพลาด: ท่านไม่ได้ทำรายการในเวลาที่กำหนด โปรดเข้าสู่ระบบอีกครั้ง",
+    "description": "Error text flashed when session is expired"
+  },
+  "NOT_ELIGIBLE": {
+    "message": "ไม่มีสิทธิ์",
+    "description": "Task business status not eligible"
+  },
+  "NOT_VISITED": {
+    "message": "ไม่ได้เข้าชม",
+    "description": "Task business status not visited"
+  },
+  "TASK_INCOMPLETE": {
+    "message": "ไม่สมบูรณ์",
+    "description": "Task business status Incomplete"
+  },
+  "IN_PROGRESS": {
+    "message": "กำลังดำเนินการ",
+    "description": "Task business status In Progress"
+  },
+  "RACD_REGISTER_FAMILY_ACTIVITY": {
+    "message": "RACD ลงทะเบียนครัวเรือน",
+    "description": "Action code RACD Register Family"
   },
   "ASSIGNED_WRONG_PLAN": {
     "message": "กำหนดรายละเอียดแผนผิด",

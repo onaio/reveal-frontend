@@ -218,6 +218,7 @@ export const CANTON = translate('CANTON', 'Canton');
 export const VILLAGE = translate('VILLAGE', 'Village');
 export const FI_REASON = translate('FI_REASON', 'FI Reason');
 export const FI_STATUS = translate('FI_STATUS', 'FI Status');
+export const FI_COLUMN_STATUS = translate('FI_COLUMN_STATUS', 'FI Status');
 export const MEASURE = translate('MEASURE', 'Measure');
 export const MARK_AS_COMPLETE = translate('MARK_AS_COMPLETE', 'Mark as complete');
 export const STRUCTURES = translate('STRUCTURES', 'structure(s)');
@@ -442,6 +443,11 @@ export const MDA_POINT_ADVERSE_EFFECT_COLLECTION_GOAL = translate(
 export const MDA_ADHERENCE_DESCRIPTION = translate(
   'MDA_ADHERENCE_DESCRIPTION',
   'Visit all residential structures (100%) and confirm adherence of each registered person'
+);
+
+export const RACD_REGISTER_FAMILY_ACTIVITY = translate(
+  'RACD_REGISTER_FAMILY_ACTIVITY',
+  'RACD Register Family'
 );
 
 export const A1_DESCRIPTION = translate(
@@ -908,7 +914,10 @@ export const TLA_DAYS_AREAS_TO_REACH_90 = translate(
   'TLA days needed for areas needed to reach 90%'
 );
 
-export const NOT_VISITED = translate('NO_VISITED', 'Not visited');
+export const NOT_VISITED = translate('NOT_VISITED', 'Not visited');
+export const NOT_ELIGIBLE = translate('NOT_ELIGIBLE', 'Not Eligible');
+export const TASK_INCOMPLETE = translate('TASK_INCOMPLETE', 'Incomplete');
+export const IN_PROGRESS = translate('IN_PROGRESS', 'In Progress');
 
 export const NO_DECISION_FORM = translate('NO_DECISION_FORM', 'No decision form');
 export const RETIRE_PLAN_MESSAGE = translate(

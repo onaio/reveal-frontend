@@ -21,13 +21,26 @@ import {
 } from '../../../../../../configs/env';
 import {
   AN_ERROR_OCCURRED,
+  BEDNET_ACTIVITY,
+  BLOOD_SCREENING_ACTIVITY,
   CASE_CLASSIFICATION_LABEL,
+  CASE_CONFIRMATION_ACTIVITY,
   CASE_NUMBER,
   DIAGNOSIS_DATE,
   END_DATE,
+  IN_PROGRESS,
+  LARVAL_DIPPING_ACTIVITY,
+  MOSQUITO_COLLECTION_ACTIVITY,
+  NOT_ELIGIBLE,
+  NOT_VISITED,
+  PLAN_STATUS_COMPLETE,
+  RACD_REGISTER_FAMILY_ACTIVITY,
   START_DATE,
+  TASK_INCOMPLETE,
 } from '../../../../../../configs/lang';
 import {
+  BEDNET_DISTRIBUTION_CODE,
+  BLOOD_SCREENING_CODE,
   CASE_CONFIRMATION_CODE,
   CASE_CONFIRMATION_GOAL_ID,
   CURRENT_INDEX_CASES,
@@ -35,10 +48,13 @@ import {
   GOAL_CONFIRMATION_GOAL_ID,
   GOAL_ID,
   JURISDICTION_ID,
+  LARVAL_DIPPING_CODE,
   LARVAL_DIPPING_ID,
   MAIN_PLAN,
+  MOSQUITO_COLLECTION_CODE,
   MOSQUITO_COLLECTION_ID,
   PLAN_ID,
+  RACD_REGISTER_FAMILY_CODE,
   REACT_MAPBOX_GL_ICON_IMAGE,
   REACT_MAPBOX_GL_ICON_SIZE,
   STRUCTURES_FILL,
@@ -79,6 +95,25 @@ import {
   makeIndexCasesArraySelector,
 } from '../../../../../../store/ducks/opensrp/indexCasesDetails';
 import './handlers.css';
+
+/** Action code translations */
+const actionCodeTranlations: Dictionary = {
+  [BEDNET_DISTRIBUTION_CODE]: BEDNET_ACTIVITY,
+  [BLOOD_SCREENING_CODE]: BLOOD_SCREENING_ACTIVITY,
+  [CASE_CONFIRMATION_CODE]: CASE_CONFIRMATION_ACTIVITY,
+  [RACD_REGISTER_FAMILY_CODE]: RACD_REGISTER_FAMILY_ACTIVITY,
+  [LARVAL_DIPPING_CODE]: LARVAL_DIPPING_ACTIVITY,
+  [MOSQUITO_COLLECTION_CODE]: MOSQUITO_COLLECTION_ACTIVITY,
+};
+
+/** Task business status translations */
+const taskStatusTranslations: Dictionary = {
+  Complete: PLAN_STATUS_COMPLETE,
+  'In Progress': IN_PROGRESS,
+  Incomplete: TASK_INCOMPLETE,
+  'Not Eligible': NOT_ELIGIBLE,
+  'Not Visited': NOT_VISITED,
+};
 
 /** abstracts code that actually makes the superset Call since it is quite similar */
 export async function supersetCall<TAction>(
@@ -568,9 +603,12 @@ export const buildOnClickHandler = (currentPlanId: string) => {
           description += `<p>${DIAGNOSIS_DATE}: ${diagnosisDate}</p>`;
           return;
         }
+        const actionCode = feature.properties.action_code;
+        const tastStatus = feature.properties.task_business_status;
         // Splitting into two lines to fix breaking tests
-        description += `<p class="heading">${feature.properties.action_code}</b></p>`;
-        description += `<p>${feature.properties.task_business_status}</p><br/><br/>`;
+        description += `<p class="heading">${actionCodeTranlations[actionCode] ||
+          actionCode}</b></p>`;
+        description += `<p>${taskStatusTranslations[tastStatus] || tastStatus}</p><br/><br/>`;
       }
     });
     if (description.length) {
