@@ -913,7 +913,7 @@ export const NOT_VISITED = translate('NO_VISITED', 'Not visited');
 export const NO_DECISION_FORM = translate('NO_DECISION_FORM', 'No decision form');
 export const RETIRE_PLAN_MESSAGE = translate(
   'RETIRE_PLAN_MESSAGE',
-  'You are about to retire a plan, click ok to proceed'
+  'To retire this plan, select a reason and proceed'
 );
 export const COMPLETE_PLAN_MESSAGE = translate(
   'COMPLETE_PLAN_MESSAGE',
@@ -950,3 +950,23 @@ export const SESSION_EXPIRED_ERROR = translate(
   'Error: Your session is expired. Please renew session'
 );
 export const SELECT_OPTION = translate('SELECT_OPTION', 'Select Option');
+
+export const ASSIGNED_WRONG_PLAN = translate('ASSIGNED_WRONG_PLAN', 'Assigned wrong plan details');
+export const DUPLICATED_PLAN = translate('DUPLICATED_PLAN', 'Plan is duplicated');
+export const CANCELED_PLAN = translate('CANCELED_PLAN', 'Canceled, no longer going to work');
+export const ENTERED_WRONG_ADDRESS = translate(
+  'ENTERED_WRONG_ADDRESS',
+  'Plan has wrong address of patient or source of infection'
+);
+export const SAME_SUB_VILLAGE = translate(
+  'SAME_SUB_VILLAGE',
+  'This is patient in the same sub-village and same week'
+);
+export const ACTIVITY_DONE_BEFORE = translate(
+  'ACTIVITY_DONE_BEFORE',
+  'Activity was done before the plan was created'
+);
+export const OTHER_REASON = translate('OTHER_REASON', 'Specify another reason');
+export const RETIRE_PLAN_REASON = translate('RETIRE_PLAN_REASON', 'Retire Plan Reason');
+export const OTHER_REASON_LABEL = translate('OTHER_REASON_LABEL', 'Other reason');
+export const PROCEED = translate('PROCEED', 'Proceed');

@@ -240,3 +240,6 @@ export const planDefinition2: PlanDefinition = {
     },
   ],
 };
+
+export const retirePlan1Payload =
+  '{"baseEntityId":"8fa7eb32-99d7-4b49-8332-9ecedd6d51ae","details":{"planIdentifier":"8fa7eb32-99d7-4b49-8332-9ecedd6d51ae"},"entityType":"PlanDefinition","eventDate":"2017-07-13","eventType":"Retire_Plan","formSubmissionId":"1e782ffa-d7ba-5d83-bf1d-47b8954564d7","obs":[{"fieldCode":"retire_reason","fieldDataType":"text","fieldType":"formsubmissionField","formSubmissionField":"retire_reason","humanReadableValues":[],"parentCode":"","saveObsAsArray":false,"set":[],"values":["Plan is duplicated"]}],"providerId":"","type":"Event","version":1499974260000}';
