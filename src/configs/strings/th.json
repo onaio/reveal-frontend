@@ -1381,15 +1381,23 @@
     "description": "Error text flashed when session is expired"
   },
   "NOT_ELIGIBLE": {
-    "message": "Not Eligible",
+    "message": "ไม่มีสิทธิ์",
     "description": "Task business status not eligible"
   },
   "NOT_VISITED": {
-    "message": "Not Visited",
+    "message": "ไม่ได้เข้าชม",
     "description": "Task business status not visited"
   },
+  "TASK_INCOMPLETE": {
+    "message": "ไม่สมบูรณ์",
+    "description": "Task business status Incomplete"
+  },
+  "IN_PROGRESS": {
+    "message": "กำลังดำเนินการ",
+    "description": "Task business status In Progress"
+  },
   "RACD_REGISTER_FAMILY_ACTIVITY": {
-    "message": "RACD Register Family",
+    "message": "RACD ลงทะเบียนครัวเรือน",
     "description": "Action code RACD Register Family"
   }
 }

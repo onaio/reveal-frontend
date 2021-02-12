@@ -914,8 +914,10 @@ export const TLA_DAYS_AREAS_TO_REACH_90 = translate(
   'TLA days needed for areas needed to reach 90%'
 );
 
-export const NOT_VISITED = translate('NO_VISITED', 'Not visited');
+export const NOT_VISITED = translate('NOT_VISITED', 'Not visited');
 export const NOT_ELIGIBLE = translate('NOT_ELIGIBLE', 'Not Eligible');
+export const TASK_INCOMPLETE = translate('TASK_INCOMPLETE', 'Incomplete');
+export const IN_PROGRESS = translate('IN_PROGRESS', 'In Progress');
 
 export const NO_DECISION_FORM = translate('NO_DECISION_FORM', 'No decision form');
 export const RETIRE_PLAN_MESSAGE = translate(

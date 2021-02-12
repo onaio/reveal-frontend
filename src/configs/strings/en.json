@@ -1641,6 +1641,14 @@
     "message": "Not Visited",
     "description": "Task business status not visited"
   },
+  "TASK_INCOMPLETE": {
+    "message": "Incomplete",
+    "description": "Task business status Incomplete"
+  },
+  "IN_PROGRESS": {
+    "message": "In Progress",
+    "description": "Task business status In Progress"
+  },
   "RACD_REGISTER_FAMILY_ACTIVITY": {
     "message": "RACD Register Family",
     "description": "action code RACD Register Family"

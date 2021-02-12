@@ -28,6 +28,7 @@ import {
   CASE_NUMBER,
   DIAGNOSIS_DATE,
   END_DATE,
+  IN_PROGRESS,
   LARVAL_DIPPING_ACTIVITY,
   MOSQUITO_COLLECTION_ACTIVITY,
   NOT_ELIGIBLE,
@@ -35,6 +36,7 @@ import {
   PLAN_STATUS_COMPLETE,
   RACD_REGISTER_FAMILY_ACTIVITY,
   START_DATE,
+  TASK_INCOMPLETE,
 } from '../../../../../../configs/lang';
 import {
   BEDNET_DISTRIBUTION_CODE,
@@ -107,6 +109,8 @@ const actionCodeTranlations: Dictionary = {
 /** Task business status translations */
 const taskStatusTranslations: Dictionary = {
   Complete: PLAN_STATUS_COMPLETE,
+  'In Progress': IN_PROGRESS,
+  Incomplete: TASK_INCOMPLETE,
   'Not Eligible': NOT_ELIGIBLE,
   'Not Visited': NOT_VISITED,
 };
