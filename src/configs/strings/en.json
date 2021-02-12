@@ -1652,5 +1652,45 @@
   "RACD_REGISTER_FAMILY_ACTIVITY": {
     "message": "RACD Register Family",
     "description": "action code RACD Register Family"
+  },
+  "ASSIGNED_WRONG_PLAN": {
+    "message": "Assigned wrong plan details",
+    "description": "Reason for retiring a plan"
+  },
+  "DUPLICATED_PLAN": {
+    "message": "Plan is duplicated",
+    "description": "Reason for retiring a plan"
+  },
+  "CANCELED_PLAN": {
+    "message": "Canceled, no longer going to work",
+    "description": "Reason for retiring a plan"
+  },
+  "ENTERED_WRONG_ADDRESS": {
+    "message": "Plan has wrong address of patient or source of infection",
+    "description": "Reason for retiring a plan"
+  },
+  "SAME_SUB_VILLAGE": {
+    "message": "This is patient in the same sub-village and same week",
+    "description": "Reason for retiring a plan"
+  },
+  "ACTIVITY_DONE_BEFORE": {
+    "message": "Activity was done before the plan was created",
+    "description": "Reason for retiring a plan"
+  },
+  "OTHER_REASON": {
+    "message": "Specify another reason",
+    "description": "Reason for retiring a plan"
+  },
+  "RETIRE_PLAN_REASON": {
+    "message": "Retire Plan Reason",
+    "description": "Retire Plan Reason form label"
+  },
+  "OTHER_REASON_LABEL": {
+    "message": "Other reason",
+    "description": "Form Other reason label"
+  },
+  "PROCEED": {
+    "message": "Proceed",
+    "description": "Button text"
   }
 }

@@ -1399,5 +1399,49 @@
   "RACD_REGISTER_FAMILY_ACTIVITY": {
     "message": "RACD ลงทะเบียนครัวเรือน",
     "description": "Action code RACD Register Family"
+  },
+  "ASSIGNED_WRONG_PLAN": {
+    "message": "กำหนดรายละเอียดแผนผิด",
+    "description": "Reason for retiring a plan"
+  },
+  "DUPLICATED_PLAN": {
+    "message": "สร้างแผนซ้ำซ้อนจากที่มีอยู่",
+    "description": "Reason for retiring a plan"
+  },
+  "CANCELED_PLAN": {
+    "message": "ยกเลิกไม่ออกไปปฏิบัติงานแล้ว",
+    "description": "Reason for retiring a plan"
+  },
+  "ENTERED_WRONG_ADDRESS": {
+    "message": "กรอกที่อยู่ผู้ป่วยหรือที่อยู่แหล่งแพร่เชื้อผิดกลุ่มบ้าน",
+    "description": "Reason for retiring a plan"
+  },
+  "SAME_SUB_VILLAGE": {
+    "message": "เป็นผู้ป่วยในกลุ่มบ้านเดียวกัน ณ สัปดาห์เดียวกัน",
+    "description": "Reason for retiring a plan"
+  },
+  "ACTIVITY_DONE_BEFORE": {
+    "message": "ออกไปดำเนินการก่อนแผนปฏิบัติงานจะถูกสร้างขึ้น",
+    "description": "Reason for retiring a plan"
+  },
+  "OTHER_REASON": {
+    "message": "อื่นๆ (ระบุ)",
+    "description": "Reason for retiring a plan"
+  },
+  "RETIRE_PLAN_REASON": {
+    "message": "Retire Plan Reason",
+    "description": "Retire Plan Reason form label"
+  },
+  "OTHER_REASON_LABEL": {
+    "message": "Other reason",
+    "description": "Form Other reason label"
+  },
+  "PROCEED": {
+    "message": "Proceed",
+    "description": "Button text"
+  },
+  "RETIRE_PLAN_MESSAGE": {
+    "message": "To retire this plan, select a reason and proceed",
+    "description": "Retire plan waring text"
   }
 }

@@ -27,7 +27,12 @@ import planDefinitionReducer, {
 } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import { removePlanDefinitions } from '../../../../../store/ducks/opensrp/PlanDefinition';
 import * as fixtures from '../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
-import { planDefinition1, planDefinition2, updatePlanFormProps } from './fixtures';
+import {
+  planDefinition1,
+  planDefinition2,
+  retirePlan1Payload,
+  updatePlanFormProps,
+} from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
@@ -174,7 +179,6 @@ describe('components/InterventionPlan/UpdatePlan', () => {
   });
 
   it('pass correct data to store: API responds with array', async () => {
-    // fetch with a array response
     fetch.mockResponseOnce(JSON.stringify([fixtures.plans[1]]));
     const wrapper = mount(
       <Provider store={store}>
@@ -307,9 +311,10 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     });
 
     expect(wrapper.find('Form').length).toMatchInlineSnapshot(`1`);
-    wrapper.find('Form').simulate('submit');
-
-    await new Promise<any>(resolve => setImmediate(resolve));
+    await act(async () => {
+      wrapper.find('Form').simulate('submit');
+      await new Promise<any>(resolve => setImmediate(resolve));
+    });
     wrapper.update();
 
     const payload = {
@@ -360,9 +365,10 @@ describe('components/InterventionPlan/UpdatePlan', () => {
       planDefinitionsById: {},
     });
 
-    wrapper.find('Form').simulate('submit');
-
-    await new Promise<any>(resolve => setImmediate(resolve));
+    await act(async () => {
+      wrapper.find('Form').simulate('submit');
+      await new Promise<any>(resolve => setImmediate(resolve));
+    });
     wrapper.update();
 
     expect(store.getState().PlanDefinition).toEqual({
@@ -467,16 +473,111 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     });
     wrapper
       .find('select[name="status"]')
-      .simulate('change', { target: { name: 'status', value: 'retired' } });
+      .simulate('change', { target: { name: 'status', value: 'complete' } });
 
     await act(async () => {
       wrapper.find('form').simulate('submit');
     });
 
     expect(confirmSpy).toBeCalledTimes(1);
-    expect(confirmSpy).toBeCalledWith('You are about to retire a plan, click ok to proceed');
+    expect(confirmSpy).toBeCalledWith('You are about to complete a plan, click ok to proceed');
 
     expect(fetch.mock.calls[1][0]).toEqual('https://test.smartregister.org/opensrp/rest/plans');
     expect(fetch.mock.calls[1][1].method).toEqual('PUT');
+  });
+
+  it('Test retiring plans', async () => {
+    fetch.mockResponseOnce(JSON.stringify([fixtures.plans[1]]));
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...getProps()} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+    });
+    wrapper.update();
+
+    // retire modal not available
+    expect(wrapper.find('.retire-plans-modal').length).toBeFalsy();
+    // update status to retired
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: 'retired' } });
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+
+    wrapper.update();
+
+    // retire plan modal is active
+    expect(wrapper.find('.retire-plans-modal').length).toBeTruthy();
+    expect(wrapper.find('RetirePlanForm').length).toBeTruthy();
+
+    // modal cancel button works
+    wrapper.find('#retireform-cancel-button button').simulate('click');
+    expect(wrapper.find('.retire-plans-modal').length).toBeFalsy();
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
+
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+    wrapper.update();
+
+    // retire plan modal is active again
+    expect(wrapper.find('.retire-plans-modal').length).toBeTruthy();
+    expect(wrapper.find('RetirePlanForm').length).toBeTruthy();
+    // Select retire reason
+    wrapper
+      .find('select[name="retireReason"]')
+      .simulate('change', { target: { name: 'retireReason', value: 'DUPLICATE' } });
+
+    await act(async () => {
+      wrapper.find('RetirePlanForm form').simulate('submit');
+    });
+
+    expect(fetch).toHaveBeenCalledTimes(3);
+    // get the plan to be edited
+    expect(fetch.mock.calls[0][0]).toEqual(
+      'https://test.smartregister.org/opensrp/rest/plans/8fa7eb32-99d7-4b49-8332-9ecedd6d51ae'
+    );
+    // post retire reasons
+    expect(fetch.mock.calls[1]).toEqual([
+      'https://test.smartregister.org/opensrp/rest/event',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        body: retirePlan1Payload,
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer null',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'POST',
+      },
+    ]);
+    // update plans
+    const payload = {
+      ...generatePlanDefinition(getPlanFormValues(fixtures.plans[1])),
+      name: 'IRS-2019-07-10',
+      status: 'retired',
+      version: 2,
+    };
+    expect(fetch.mock.calls[2]).toEqual([
+      'https://test.smartregister.org/opensrp/rest/plans',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        body: JSON.stringify(payload),
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer null',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'PUT',
+      },
+    ]);
   });
 });
