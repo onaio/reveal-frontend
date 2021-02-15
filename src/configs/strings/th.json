@@ -1397,7 +1397,7 @@
     "description": "Task business status In Progress"
   },
   "RACD_REGISTER_FAMILY_ACTIVITY": {
-    "message": "RACD ลงทะเบียนครัวเรือน",
+    "message": "การลงทะเบียนครัวเรือนของงาน RACD",
     "description": "Action code RACD Register Family"
   },
   "ASSIGNED_WRONG_PLAN": {
@@ -1429,19 +1429,19 @@
     "description": "Reason for retiring a plan"
   },
   "RETIRE_PLAN_REASON": {
-    "message": "Retire Plan Reason",
+    "message": "เหตุผลที่ยกเลิกแผน",
     "description": "Retire Plan Reason form label"
   },
   "OTHER_REASON_LABEL": {
-    "message": "Other reason",
+    "message": "เหตุผลอื่น",
     "description": "Form Other reason label"
   },
   "PROCEED": {
-    "message": "Proceed",
-    "description": "Button text"
+    "message": "ดำเนินการต่อ",
+    "description": "Proceed button text"
   },
   "RETIRE_PLAN_MESSAGE": {
-    "message": "To retire this plan, select a reason and proceed",
-    "description": "Retire plan waring text"
+    "message": "หากต้องการยกเลิกแผนนี้ โปรดระบุเหตุผลและดำเนินการต่อ",
+    "description": "Retire plan warning text"
   }
 }
