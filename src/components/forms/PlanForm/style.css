@@ -26,3 +26,9 @@
 .trigger-group .form-control {
   margin-bottom: 0.5rem;
 }
+
+.retire-plans-modal {
+  width: fit-content !important;
+  margin-top: 0px !important;
+  background: #ccc;
+}

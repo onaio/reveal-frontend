@@ -12,6 +12,7 @@ import {
   DEFAULT_PLAN_VERSION,
   DEFAULT_TIME,
   DISPLAYED_PLAN_TYPES,
+  OPENSRP_GENERATED_TASKS_INTERVENTIONS,
   PLAN_TYPES_ALLOWED_TO_CREATE,
   PLAN_UUID_NAMESPACE,
   TASK_GENERATION_STATUS,
@@ -58,6 +59,7 @@ import {
   FAMILY_REGISTRATION_ACTIVITY_CODE,
   FI_REASON_CODE,
   FI_STATUS_CODE,
+  INTERNAL,
   INTERVENTION_TYPE_CODE,
   IRS_ACTIVITY_CODE,
   LARVAL_DIPPING_ACTIVITY_CODE,
@@ -705,15 +707,22 @@ export function generatePlanDefinition(
   if (formValue.opensrpEventId) {
     useContext.push({ code: OPENSRP_EVENT_ID_CODE, valueCodableConcept: formValue.opensrpEventId });
   }
-
+  const generateTasksInOpensrp = OPENSRP_GENERATED_TASKS_INTERVENTIONS.includes(
+    formValue.interventionType
+  );
   if (
-    formValue.taskGenerationStatus &&
-    formValue.taskGenerationStatus !== taskGenerationStatuses.ignore &&
-    (taskGenerationStatusValue !== taskGenerationStatuses.ignore || isEditMode)
+    (formValue.taskGenerationStatus &&
+      formValue.taskGenerationStatus !== taskGenerationStatuses.ignore &&
+      (taskGenerationStatusValue !== taskGenerationStatuses.ignore || isEditMode)) ||
+    generateTasksInOpensrp
   ) {
+    let valueCodableConcept: taskGenerationStatusType = generateTasksInOpensrp
+      ? INTERNAL
+      : taskGenerationStatusValue;
+    valueCodableConcept = isEditMode ? formValue.taskGenerationStatus : valueCodableConcept;
     useContext.push({
       code: TASK_GENERATION_STATUS_CODE,
-      valueCodableConcept: isEditMode ? formValue.taskGenerationStatus : taskGenerationStatusValue,
+      valueCodableConcept,
     });
   }
 

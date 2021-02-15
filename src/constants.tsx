@@ -69,6 +69,11 @@ export const MODAL_BUTTON_CLASS = 'focus-investigation btn btn-primary float-rig
 export const BUSINESS_STATUS = 'business_status';
 export const IRS_REPORT_STRUCTURES = 'irs_report_structures';
 export const SMC_REPORT_STRUCTURES = 'SMC_report_structures';
+export const PLAN_DEFINITION = 'PlanDefinition';
+export const RETIRE_PLAN = 'Retire_Plan';
+export const RETIRE_REASON = 'retire_reason';
+export const EVENT_LABEL = 'Event';
+export const FORM_SUBMISSION_FIELD = 'formsubmissionField';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
@@ -174,6 +179,7 @@ export const SETTINGS_ENDPOINT = 'settings/';
 export const LOCATIONS_ENDPOINT = 'location/location-tree';
 export const SECURITY_AUTHENTICATE_ENDPOINT = 'security/authenticate';
 export const OPENSRP_KEYCLOAK_PARAM = 'Keycloak';
+export const OPENSRP_EVENT_ENDPOINT = 'event';
 
 // colors
 export const GREEN = 'Green';

@@ -108,3 +108,8 @@ Below is a list of currently supported environment variables:
   - to activate set the env to `true`, any other value will be interpreted as false.
   - default value is false.
   - enables check for session expiry
+
+  - **REACT_APP_OPENSRP_GENERATED_TASKS_INTERVENTIONS**
+
+  - Optional parameter of plan intervention types whose tasks should be generated on opensrp
+  - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
