@@ -90,6 +90,7 @@ describe('helpers/dataLoading', () => {
 
     // Uses the correct service method
     expect(mockList).toHaveBeenCalledTimes(1);
+    expect(mockList).toHaveBeenLastCalledWith({ limit: 2000, serverVersion: 0 });
 
     // setLoading
     expect(setLoadingMock).toHaveBeenCalledWith(false);
