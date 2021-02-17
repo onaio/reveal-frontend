@@ -254,6 +254,7 @@ export const JURISDICTION_METADATA_RISK = 'jurisdiction_metadata-risk';
 export const JURISDICTION_METADATA_COVERAGE = 'jurisdiction_metadata-coverage';
 export const JURISDICTION_METADATA_POPULATION = 'jurisdiction_metadata-population';
 export const JURISDICTION_METADATA_TARGET = 'jurisdiction_metadata-target';
+export const JURISDICTION_METADATA_STUCTURES = 'jurisdiction_metadata-structures';
 export const JURISDICTION_CSV_TEMPLATE = 'jurisdiction_id,jurisdiction_name,risk,coverage';
 export const JURISDICTION_CSV_FILE_NAME = 'jurisdiction-metadata.csv';
 export const GET_ALL = 'getAll';

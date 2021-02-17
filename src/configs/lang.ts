@@ -863,6 +863,7 @@ export const COVERAGE_LABEL = translate('COVERAGE_LABEL', 'Coverage');
 export const TARGET_LABEL = translate('TARGET_LABEL', 'Target');
 export const POPULATION_LABEL = translate('POPULATION_LABEL', 'Population');
 export const RISK_TEXT = translate('RISK_TEXT', 'Risk');
+export const STRUCTURE_LABEL = translate('STRUCTURE_LABEL', 'Structures');
 
 export const PLANS_USER_FILTER_NOTIFICATION = translate(
   'PLANS_USER_FILTER_NOTIFICATION',
