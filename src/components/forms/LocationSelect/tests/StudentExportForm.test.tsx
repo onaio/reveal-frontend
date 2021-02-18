@@ -3,6 +3,7 @@ import { authenticateUser } from '@onaio/session-reducer';
 import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
 import * as fixtures from '../../PlanForm/tests/fixtures';
@@ -66,6 +67,7 @@ describe('components/forms/ExportForm', () => {
     store.dispatch(authenticateUser(authenticated, user, extraData));
 
     fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+    // const spyHandleDownload = jest.spyOn(formDownLoad, 'handleDownload');
 
     const wrapper = mount(<StudentExportForm />);
 
@@ -80,7 +82,9 @@ describe('components/forms/ExportForm', () => {
       .simulate('change', { target: { name: 'name', value: 'Onyx' } });
 
     wrapper.find('form').simulate('submit');
-    await new Promise<any>(resolve => setImmediate(resolve));
+    await act(async () => {
+      await new Promise<any>(resolve => setImmediate(resolve));
+    });
     wrapper.update();
 
     // no errors are initially shown
@@ -90,5 +94,18 @@ describe('components/forms/ExportForm', () => {
         .first()
         .props() as any).formik.errors
     ).toEqual({});
+    expect(fetch.mock.calls).toEqual([
+      [
+        'https://test.smartregister.org/opensrp/rest/upload/template?event_name=Child Registration&location_id=1337',
+        {
+          headers: {
+            accept: 'application/json',
+            authorization: 'Bearer hunter2',
+            'content-type': 'application/json;charset=UTF-8',
+          },
+          method: 'GET',
+        },
+      ],
+    ]);
   });
 });
