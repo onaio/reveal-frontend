@@ -1,4 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import TreeMenu, { ItemComponent, TreeNode } from 'react-simple-tree-menu';
 import 'react-simple-tree-menu/dist/main.css';
@@ -13,6 +12,7 @@ import { FIND_BY_PROPERTIES } from '../../TreeWalker/constants';
 import { JurisdictionOption } from '../JurisdictionSelect';
 import { buildLocationTree, JurisdictionTreeById } from './helpers';
 import './index.css';
+import StudentExportFormDownload from './StudentExportFormDownload';
 
 interface LocationSelectProps {
   endpoint: string;
@@ -49,6 +49,7 @@ const LocationSelect = (props: LocationSelectProps) => {
       return_geometry: false,
     };
     const apiService = new service(endpoint);
+    // tslint:disable-next-line: no-floating-promises
     apiService
       .list({ ...params })
       .then((jurisdictionApiPayload: JurisdictionOption[]) => {
@@ -83,21 +84,21 @@ const LocationSelect = (props: LocationSelectProps) => {
       debounceTime={125}
       openNodes={openNodes}
       // tslint:disable-next-line: jsx-no-lambda
-      onClickItem={propsss => {
-        getJurisdiction(propsss.id, propsss.key, propsss.openNodes);
+      onClickItem={itemProps => {
+        getJurisdiction(itemProps.id, itemProps.key, itemProps.openNodes);
       }}
     >
       {({ items }) => (
         <React.Fragment>
-          {items.map(({ key, ...itemProp }) => (
-            <Row>
+          {items.map(({ key, StudentExportFormDownloadTest, ...itemProp }) => (
+            <Row key={`row-${key}`}>
               <Col>
                 <ItemComponent key={key} {...itemProp} />
               </Col>
               <Col className="download-list">
-                <button className="btn btn-link">
-                  Download <FontAwesomeIcon className="download-icon" icon="download" />
-                </button>
+                <StudentExportFormDownload
+                  {...{ initialValues: { id: itemProp.id, name: itemProp.label } }}
+                />
               </Col>
             </Row>
           ))}

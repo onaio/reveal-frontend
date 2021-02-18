@@ -3,7 +3,13 @@
 }
 
 .download-list {
-  padding-top: 20px;
+  max-height: 20px;
+}
+
+.submit-button {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  padding: 0px !important;
 }
 
 .rstm-tree-item--focused {
@@ -25,5 +31,4 @@
   box-shadow: none;
   z-index: unset;
   position: relative;
-  color: #007bff;
 }

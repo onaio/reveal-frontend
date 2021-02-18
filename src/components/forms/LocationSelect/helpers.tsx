@@ -1,5 +1,6 @@
 import _, { keyBy } from 'lodash';
 import { JurisdictionOption } from '../JurisdictionSelect';
+import './index.css';
 
 /** structure of jurisdiction tree */
 export interface JurisdictionTree {
