@@ -38,7 +38,7 @@ export interface ExportFormProps {
   uploadEndpoint: string;
 }
 
-export const StudentExportFormDownload = (props: ExportFormProps) => {
+export const StudentExportForm = (props: ExportFormProps) => {
   const { initialValues, downloadFile, eventValue, templateEndpoint, uploadEndpoint } = props;
   return (
     <Formik
@@ -83,5 +83,5 @@ const defaultProps: ExportFormProps = {
   templateEndpoint: OPENSRP_TEMPLATE_ENDPOINT,
   uploadEndpoint: OPENSRP_UPLOAD_ENDPOINT,
 };
-StudentExportFormDownload.defaultProps = defaultProps;
-export default StudentExportFormDownload;
+StudentExportForm.defaultProps = defaultProps;
+export default StudentExportForm;

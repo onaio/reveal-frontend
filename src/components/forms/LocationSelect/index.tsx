@@ -12,7 +12,7 @@ import { FIND_BY_PROPERTIES } from '../../TreeWalker/constants';
 import { JurisdictionOption } from '../JurisdictionSelect';
 import { buildLocationTree, JurisdictionTreeById } from './helpers';
 import './index.css';
-import StudentExportFormDownload from './StudentExportFormDownload';
+import StudentExportForm from './StudentExportForm';
 
 interface LocationSelectProps {
   endpoint: string;
@@ -96,7 +96,7 @@ const LocationSelect = (props: LocationSelectProps) => {
                 <ItemComponent key={key} {...itemProp} />
               </Col>
               <Col className="download-list">
-                <StudentExportFormDownload
+                <StudentExportForm
                   {...{ initialValues: { id: itemProp.id, name: itemProp.label } }}
                 />
               </Col>

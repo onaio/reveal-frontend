@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/forms/ExportForm renders jurisdictions fields correctly: jurisdictions.id field 1`] = `
+<input
+  id="jurisdictions-id"
+  name="id"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value=""
+  values=""
+/>
+`;
+
+
+exports[`components/forms/ExportForm renders jurisdictions fields correctly: jurisdictions.name field 1`] = `
+<input
+  id="jurisdictions-name"
+  name="name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  type="hidden"
+  value=""
+/>
+`;
