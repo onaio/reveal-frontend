@@ -5,3 +5,25 @@
 .download-list {
   padding-top: 20px;
 }
+
+.rstm-tree-item--focused {
+  box-shadow: none !important;
+  z-index: 999;
+}
+
+.rstm-tree-item--active {
+  color: #000000;
+  background: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.rstm-tree-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  background: none;
+  border-bottom: 1px solid #ccc;
+  box-shadow: none;
+  z-index: unset;
+  position: relative;
+  color: #007bff;
+}
