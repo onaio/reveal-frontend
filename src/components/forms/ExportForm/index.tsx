@@ -48,7 +48,6 @@ export const ExportForm = (_: ExportFormProps) => {
           <h3 className="mb-3 mt-5 page-title">
             {ENABLE_MDA_POINT ? EXPORT_STUDENT_LIST : EXPORT_CLIENT_LIST}
           </h3>
-          {/* Download Form goes here */}
           <Alert color="light">{EXPORT_BASED_ON_GEOGRAPHICAL_REGION}</Alert>
           <LocationSelect />
         </Col>
