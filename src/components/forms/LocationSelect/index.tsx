@@ -78,33 +78,35 @@ const LocationSelect = (props: LocationSelectProps) => {
     return <NoDataComponent />;
   }
   return (
-    <TreeMenu
-      data={treeData as TreeNode}
-      hasSearch={false}
-      debounceTime={125}
-      openNodes={openNodes}
-      // tslint:disable-next-line: jsx-no-lambda
-      onClickItem={itemProps => {
-        getJurisdiction(itemProps.id, itemProps.key, itemProps.openNodes);
-      }}
-    >
-      {({ items }) => (
-        <React.Fragment>
-          {items.map(({ key, StudentExportFormDownloadTest, ...itemProp }) => (
-            <Row key={`row-${key}`}>
-              <Col>
-                <ItemComponent key={key} {...itemProp} />
-              </Col>
-              <Col className="download-list">
-                <StudentExportForm
-                  {...{ initialValues: { id: itemProp.id, name: itemProp.label } }}
-                />
-              </Col>
-            </Row>
-          ))}
-        </React.Fragment>
-      )}
-    </TreeMenu>
+    <div className="tree-border">
+      <TreeMenu
+        data={treeData as TreeNode}
+        hasSearch={false}
+        debounceTime={125}
+        openNodes={openNodes}
+        // tslint:disable-next-line: jsx-no-lambda
+        onClickItem={itemProps => {
+          getJurisdiction(itemProps.id, itemProps.key, itemProps.openNodes);
+        }}
+      >
+        {({ items }) => (
+          <React.Fragment>
+            {items.map(({ key, StudentExportFormDownloadTest, ...itemProp }) => (
+              <Row key={`row-${key}`}>
+                <Col>
+                  <ItemComponent key={key} {...itemProp} />
+                </Col>
+                <Col className="download-list">
+                  <StudentExportForm
+                    {...{ initialValues: { id: itemProp.id, name: itemProp.label } }}
+                  />
+                </Col>
+              </Row>
+            ))}
+          </React.Fragment>
+        )}
+      </TreeMenu>
+    </div>
   );
 };
 
