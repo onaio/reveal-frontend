@@ -3,6 +3,7 @@ import flushPromises from 'flush-promises';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import LocationSelect from '..';
+import * as utils from '../../../../helpers/utils';
 import { jurisidtionsFixture } from './fixtures';
 
 /* tslint:disable-next-line no-var-requires */
@@ -35,6 +36,10 @@ describe('components/forms/LocationSelect', () => {
     fetch.mockResponseOnce(JSON.stringify([jurisidtionsFixture[0], jurisidtionsFixture[1]]));
     fetch.mockResponseOnce(JSON.stringify([jurisidtionsFixture[2]]));
     fetch.mockResponseOnce(JSON.stringify([jurisidtionsFixture[3]]));
+    fetch.mockResponseOnce(JSON.stringify([]));
+
+    const glowSpy = jest.spyOn(utils, 'growl');
+
     const wrapper = mount(<LocationSelect />);
     await act(async () => {
       await flushPromises();
@@ -55,16 +60,22 @@ describe('components/forms/LocationSelect', () => {
         .at(1)
         .text()
     ).toEqual('Eswatini');
+    // is loading text displayed
+    expect(wrapper.find('.loading-text').length).toEqual(0);
 
     // click eswatini
     wrapper
       .find('.rstm-tree-item')
       .at(1)
       .simulate('click');
+    // on clicking location we should see loading
+    expect(wrapper.find('.loading-text').length).toEqual(1);
+    expect(wrapper.find('.loading-text').text()).toEqual('loading......');
     await act(async () => {
       await flushPromises();
     });
     wrapper.update();
+    expect(wrapper.find('.loading-text').length).toEqual(0);
     expect(wrapper.find('.rstm-tree-item').length).toEqual(3);
     expect(
       wrapper
@@ -90,6 +101,17 @@ describe('components/forms/LocationSelect', () => {
         .text()
     ).toEqual('Lomahasha');
 
+    // click Lomahasha
+    wrapper
+      .find('.rstm-tree-item')
+      .at(3)
+      .simulate('click');
+    await act(async () => {
+      await flushPromises();
+    });
+    wrapper.update();
+    expect(glowSpy).toHaveBeenCalledTimes(1);
+    expect(glowSpy).toHaveBeenCalledWith('This is the lowest jurisdiction', { type: 'success' });
     expect(fetch.mock.calls).toMatchSnapshot('fetch calls');
     wrapper.unmount();
   });

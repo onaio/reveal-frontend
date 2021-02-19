@@ -62,5 +62,16 @@ Array [
       "method": "GET",
     },
   ],
+  Array [
+    "https://reveal-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status:Active,parentId:f0de23e0-1e42-49e1-a60f-58d920401718&return_geometry=false",
+    Object {
+      "headers": Object {
+        "accept": "application/json",
+        "authorization": "Bearer null",
+        "content-type": "application/json;charset=UTF-8",
+      },
+      "method": "GET",
+    },
+  ],
 ]
 `;

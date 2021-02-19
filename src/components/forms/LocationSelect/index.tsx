@@ -3,6 +3,7 @@ import TreeMenu, { ItemComponent, TreeNode } from 'react-simple-tree-menu';
 import 'react-simple-tree-menu/dist/main.css';
 import { toast } from 'react-toastify';
 import { Col, Row } from 'reactstrap';
+import { LOADING, LOWEST_JURISDICTION } from '../../../configs/lang';
 import { OPENSRP_ACTIVE } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
 import { growl } from '../../../helpers/utils';
@@ -22,7 +23,7 @@ interface LocationSelectProps {
 const LocationSelect = (props: LocationSelectProps) => {
   const { service, endpoint } = props;
   const [treeData, setTreeData] = useState<JurisdictionTreeById>({});
-  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [loadingId, setLoadingId] = useState<string | null>(null);
   const [openNodes, setOpenNodes] = useState<string[]>([]);
 
   const getJurisdiction = (
@@ -30,7 +31,7 @@ const LocationSelect = (props: LocationSelectProps) => {
     key: string = '',
     clickedNodes: string[] = []
   ) => {
-    if (isFetching) {
+    if (loadingId) {
       return;
     }
     if (clickedNodes.length && clickedNodes.includes(key)) {
@@ -38,7 +39,7 @@ const LocationSelect = (props: LocationSelectProps) => {
       setOpenNodes(newNodeitems);
       return;
     }
-    setIsFetching(true);
+    setLoadingId(parentId);
     const propertiesToFilter = {
       status: OPENSRP_ACTIVE,
       ...(parentId === '' ? { geographicLevel: 0 } : { parentId }),
@@ -54,7 +55,7 @@ const LocationSelect = (props: LocationSelectProps) => {
       .list({ ...params })
       .then((jurisdictionApiPayload: JurisdictionOption[]) => {
         if (!jurisdictionApiPayload.length) {
-          growl('Jurisdiction has no children', {
+          growl(LOWEST_JURISDICTION, {
             type: toast.TYPE.SUCCESS,
           });
         } else {
@@ -67,7 +68,7 @@ const LocationSelect = (props: LocationSelectProps) => {
       .catch((error: Error) => {
         displayError(error);
       })
-      .finally(() => setIsFetching(false));
+      .finally(() => setLoadingId(null));
   };
 
   useEffect(() => {
@@ -91,15 +92,19 @@ const LocationSelect = (props: LocationSelectProps) => {
       >
         {({ items }) => (
           <React.Fragment>
-            {items.map(({ key, StudentExportFormDownloadTest, ...itemProp }) => (
+            {items.map(({ key, ...itemProp }) => (
               <Row key={`row-${key}`}>
                 <Col>
                   <ItemComponent key={key} {...itemProp} />
                 </Col>
                 <Col className="download-list">
-                  <StudentExportForm
-                    {...{ initialValues: { id: itemProp.id, name: itemProp.label } }}
-                  />
+                  {loadingId === itemProp.id ? (
+                    <div className="loading-text">{LOADING}...</div>
+                  ) : (
+                    <StudentExportForm
+                      {...{ initialValues: { id: itemProp.id, name: itemProp.label } }}
+                    />
+                  )}
                 </Col>
               </Row>
             ))}
