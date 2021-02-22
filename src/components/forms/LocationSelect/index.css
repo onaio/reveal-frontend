@@ -33,12 +33,25 @@
   position: relative;
 }
 
-.tree-border {
-  border: 1px solid black !important;
-  padding-left: 14px;
-  padding-right: 14px;
-}
-
 .loading-text {
   padding-top: 15px;
+}
+
+.rstm-tree-item-level0 {
+  padding-left: 0px !important;
+}
+
+.rstm-toggle-icon-symbol {
+  padding-right: 10px;
+  height: 2rem;
+  text-align: center;
+  line-height: 2rem;
+}
+
+.sub-title {
+  padding-left: 0px !important;
+}
+
+div:focus {
+  outline: none !important;
 }
