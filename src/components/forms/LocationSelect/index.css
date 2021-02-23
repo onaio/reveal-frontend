@@ -1,0 +1,57 @@
+.col li {
+  list-style-type: none;
+}
+
+.download-list {
+  max-height: 20px;
+}
+
+.submit-button {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  padding: 0px !important;
+}
+
+.rstm-tree-item--focused {
+  box-shadow: none !important;
+  z-index: 999;
+}
+
+.rstm-tree-item--active {
+  color: #000000;
+  background: none;
+  border-bottom: 1px solid #ccc;
+}
+
+.rstm-tree-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  background: none;
+  border-bottom: 1px solid #ccc;
+  box-shadow: none;
+  z-index: unset;
+  position: relative;
+}
+
+.loading-text {
+  padding-top: 15px;
+}
+
+.rstm-tree-item-level0 {
+  padding-left: 0px !important;
+}
+
+.rstm-toggle-icon-symbol {
+  padding-right: 10px;
+  height: 2rem;
+  text-align: center;
+  line-height: 2rem;
+}
+
+.sub-title {
+  padding-left: 0px !important;
+}
+
+div:focus {
+  outline: none !important;
+}
