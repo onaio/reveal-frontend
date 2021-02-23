@@ -258,6 +258,7 @@ const PlanAssignment = (props: PlanAssignmentProps) => {
     hideBottomBreadCrumbCallback: setHideBottomBreadCrumb,
     isPlanAssignmentPage: true,
     jurisdictionsChunkSize: 30,
+    matchFeatures: true,
     plan: plan as PlanDefinition,
     rootJurisdictionId: props.match.params.planId,
     serviceClass: OpenSRPServiceClass,
