@@ -29,6 +29,7 @@ import {
   DIGITAL_GLOBE_CONNECT_ID,
   DOMAIN_NAME,
   ONADATA_OAUTH_STATE,
+  OPENSRP_MAX_PLANS_PER_REQUEST,
   OPENSRP_OAUTH_STATE,
   PLAN_UUID_NAMESPACE,
 } from '../configs/env';
@@ -995,6 +996,12 @@ export type DefaultDrillDownPropsType = Pick<
  */
 export const getPlanStatusToDisplay = (planStatuses: string[]): string[] => {
   return Object.values(PlanStatus).filter(status => !planStatuses.includes(status));
+};
+
+/** filter params to be used when getting all plans */
+export const PLANS_SERVICE_FILTER_PARAM = {
+  limit: OPENSRP_MAX_PLANS_PER_REQUEST,
+  serverVersion: 0,
 };
 
 /**

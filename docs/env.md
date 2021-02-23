@@ -45,6 +45,12 @@ Below is a list of currently supported environment variables:
   - IRS Performance Reporting districts Superset slice id
   - **Required**
 
+- **REACT_APP_OPENSRP_MAX_PLANS_PER_REQUEST**
+
+- **Optional**
+- limit of the number of plans to get using the `plans/getAll` endpoint in a single request
+- default: `2000`
+
 - **REACT_APP_SUPERSET_IRS_DATA_COLLECTORS_PERFORMANCE_REPORT_SLICE**
 
   - IRS Performance Reporting data collectors Superset slice id

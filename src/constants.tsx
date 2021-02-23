@@ -143,6 +143,7 @@ export const OPENSRP_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole';
 export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';
 export const OPENSRP_LOCATION = 'location';
 export const OPENSRP_PLANS = 'plans';
+export const OPENSRP_GET_ALL_PLANS = 'plans/getAll';
 export const OPENSRP_PARENT_ID = 'parent_id';
 export const OPENSRP_ORGANIZATION_ENDPOINT = 'organization';
 export const OPENSRP_GET_ASSIGNMENTS_ENDPOINT = `${OPENSRP_ORGANIZATION_ENDPOINT}/assignedLocationsAndPlans`;
