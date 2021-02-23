@@ -980,3 +980,7 @@ export const OTHER_REASON = translate('OTHER_REASON', 'Specify another reason');
 export const RETIRE_PLAN_REASON = translate('RETIRE_PLAN_REASON', 'Retire Plan Reason');
 export const OTHER_REASON_LABEL = translate('OTHER_REASON_LABEL', 'Other reason');
 export const PROCEED = translate('PROCEED', 'Proceed');
+export const LOWEST_JURISDICTION = translate(
+  'LOWEST_JURISDICTION',
+  'This is the lowest jurisdiction'
+);

@@ -1696,5 +1696,9 @@
   "PROCEED": {
     "message": "Proceed",
     "description": "Button text"
+  },
+  "LOWEST_JURISDICTION": {
+    "message": "This is the lowest jurisdiction",
+    "description": "text displayed when user reaches the lowest jurisdiction"
   }
 }
