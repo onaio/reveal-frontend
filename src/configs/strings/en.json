@@ -1227,6 +1227,10 @@
     "message": "Risk",
     "description": "Option displayed when selecting jurisdiction metadata type to download"
   },
+  "STRUCTURE_LABEL": {
+    "message": "Structures",
+    "description": "Option displayed when selecting jurisdiction metadata type to download"
+  },
   "PLANNING_PAGE_TITLE": {
     "message": "Planning tool",
     "description": "Title of page with the feature to help create plans"
