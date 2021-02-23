@@ -53,6 +53,7 @@ export interface AssignmentMapWrapperProps {
   currentParentNode?: TreeNode;
   baseAssignmentURL: string;
   hideBottomBreadCrumbCallback: (showBreadcrumb: boolean) => void;
+  matchFeatures?: boolean;
 }
 
 /** default value for feature Collection */
@@ -257,6 +258,7 @@ const mapStateToProps = (
     jurisdictionIdsArray: !ownProps.currentParentId
       ? [ownProps.rootJurisdictionId]
       : childJurisdictions.map((node: TreeNode) => node.model.id),
+    matchFeatures: ownProps.matchFeatures,
     newFeatureProps: true,
     parentId:
       ownProps.currentParentId === ownProps.rootJurisdictionId || !ownProps.currentParentId

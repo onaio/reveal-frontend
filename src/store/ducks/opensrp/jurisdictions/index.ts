@@ -48,6 +48,7 @@ export interface Filters {
   filterGeom?: boolean /** whether to filter jurisdictions that have geometry field */;
   jurisdictionId?: string /** jurisdiction id */;
   jurisdictionIdsArray?: string[] /** array of jurisdiction ids */;
+  matchFeatures?: boolean /** whether to match features with nodes */;
   newFeatureProps?: boolean /** whether to add new fields to feature properties */;
   parentId?: string /** parent id */;
   planId: string /** plan identifier */;
@@ -59,6 +60,12 @@ export interface Filters {
  * @param props -  the filterProps
  */
 export const getPlanId = (_: Partial<Store>, props: Filters) => props.planId;
+
+/** retrieve the matchFeatures value
+ * @param state - the store
+ * @param props -  the filterProps
+ */
+export const getMatchFeatures = (_: Partial<Store>, props: Filters) => props.matchFeatures;
 
 /** retrieve the jurisdictionId value
  * @param state - the store
@@ -173,15 +180,30 @@ export const getJurisdictionsArray = () =>
  */
 export const getJurisdictionsFC = () =>
   createSelector(
-    [getJurisdictionsArray(), getNewFeatureProps, getChildJurisdictions, getFilterGeom],
-    (jurisdictionsArray, newFeatureProps, currentChildren, filterGeom): FeatureCollection => {
+    [
+      getJurisdictionsArray(),
+      getNewFeatureProps,
+      getChildJurisdictions,
+      getFilterGeom,
+      getMatchFeatures,
+    ],
+    (
+      jurisdictionsArray,
+      newFeatureProps,
+      currentChildren,
+      filterGeom,
+      matchFeatures
+    ): FeatureCollection => {
       let activeJurisdictionsArray = jurisdictionsArray;
       if (filterGeom) {
         activeJurisdictionsArray = activeJurisdictionsArray.filter(item => 'geometry' in item);
       }
-      const validFeatures = activeJurisdictionsArray.filter(
-        item => 'geometry' in item
-      ) as Feature[];
+      let validFeatures = activeJurisdictionsArray.filter(item => 'geometry' in item) as Feature[];
+      // ensure node features are present
+      if (currentChildren && matchFeatures && validFeatures.length !== currentChildren.length) {
+        const childrenIds = currentChildren.map(node => node.model.id || node.parent.model.id);
+        validFeatures = validFeatures.filter(feature => childrenIds.includes(feature.id));
+      }
       return {
         features: validFeatures.map((feature: Feature) => {
           if (newFeatureProps) {

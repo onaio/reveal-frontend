@@ -129,5 +129,37 @@ describe('reducers/opensrp/hierarchies', () => {
       ],
       type: 'FeatureCollection',
     });
+    // we have a feature without a node
+    expect(
+      fcSelector(store.getState(), {
+        currentChildren: [
+          {
+            model: {
+              id: raKsh3.id,
+              meta: { selected: true },
+            },
+          },
+        ] as any,
+        jurisdictionIdsArray: [raKsh3.id, raKsh2.id],
+        matchFeatures: true, // remove this and the test fails
+        newFeatureProps: true,
+        planId: '2943',
+        rootJurisdictionId: '2942',
+      })
+    ).toEqual({
+      features: [
+        {
+          ...raKsh3,
+          properties: {
+            ...raKsh3.properties,
+            fillColor: '#ff5c33',
+            fillOutlineColor: '#22bcfb',
+            jurisdiction_id: 'xyz0d71d-0410-45d3-8305-a9f092a150b8',
+            lineColor: '#22bcfb',
+          },
+        },
+      ],
+      type: 'FeatureCollection',
+    });
   });
 });
