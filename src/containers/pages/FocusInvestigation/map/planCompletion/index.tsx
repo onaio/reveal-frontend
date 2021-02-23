@@ -66,7 +66,7 @@ export class PlanCompletion extends React.Component<
   public async confirmClickHandler() {
     const { plan, serviceClass, fetchPlansActionCreator } = this.props;
     const planToconfirm: Plan = { ...(plan as Plan), plan_status: PlanStatus.COMPLETE };
-    const service = new serviceClass(`${OPENSRP_PLANS}`);
+    const service = new serviceClass(OPENSRP_PLANS);
 
     // get the plan as it exists in the OpenSRP Server
     await service
