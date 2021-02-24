@@ -34,6 +34,32 @@ describe('components/forms/JurisdictionMetadata', () => {
     );
   });
 
+  it('passes right select options', () => {
+    const wrapper = mount(<JurisdictionMetadataDownloadForm />);
+    expect(wrapper.props().identifierOptions).toEqual([
+      {
+        label: 'Coverage',
+        value: 'jurisdiction_metadata-coverage',
+      },
+      {
+        label: 'Population',
+        value: 'jurisdiction_metadata-population',
+      },
+      {
+        label: 'Risk',
+        value: 'jurisdiction_metadata-risk',
+      },
+      {
+        label: 'Structures',
+        value: 'jurisdiction_metadata-structures',
+      },
+      {
+        label: 'Target',
+        value: 'jurisdiction_metadata-target',
+      },
+    ]);
+  });
+
   it('Download disabled', async () => {
     const { getByText, getByTestId } = render(<JurisdictionMetadataDownloadForm />);
     fireEvent.submit(getByTestId('form'));

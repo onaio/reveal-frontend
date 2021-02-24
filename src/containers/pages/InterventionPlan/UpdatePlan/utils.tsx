@@ -3,7 +3,6 @@ import {
   COMPLETE_PLAN_MESSAGE,
   FAILED_TO_GET_EVENT_ID,
   PLAN_CHANGES_HAVE_NOT_BEEN_SAVED,
-  RETIRE_PLAN_MESSAGE,
 } from '../../../../configs/lang';
 import { PlanDefinition, UseContext } from '../../../../configs/settings';
 import { displayError } from '../../../../helpers/errors';
@@ -54,11 +53,9 @@ export const planIsReactive = (aPlan: PlanDefinition | null): boolean => {
 export const beforeSubmitFactory = (originalPlan: PlanDefinition) => (payload: PlanDefinition) => {
   const planStatusChanged = originalPlan.status !== payload.status;
   const interestingStatusChange =
-    planStatusChanged &&
-    [PlanStatus.RETIRED, PlanStatus.COMPLETE].includes(payload.status as PlanStatus);
+    planStatusChanged && [PlanStatus.COMPLETE].includes(payload.status as PlanStatus);
   const messageLookup: Dictionary<string> = {
     [PlanStatus.COMPLETE]: COMPLETE_PLAN_MESSAGE,
-    [PlanStatus.RETIRED]: RETIRE_PLAN_MESSAGE,
   };
 
   if (interestingStatusChange) {

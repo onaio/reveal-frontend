@@ -7,7 +7,7 @@ Below is a list of currently supported environment variables:
 - **REACT_APP_ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS**
 
   - Controls the identifier options displayed when downloading jurisdiction metadata.
-  - Options: POPULATION, RISK, COVERAGE and TARGET
+  - Options: POPULATION, RISK, COVERAGE, STRUCTURE and TARGET
   - Variable is **not required** and if not provided all the options are loaded.
 
 - **REACT_APP_KEYCLOAK_LOGOUT_URL**
@@ -44,6 +44,12 @@ Below is a list of currently supported environment variables:
 
   - IRS Performance Reporting districts Superset slice id
   - **Required**
+
+- **REACT_APP_OPENSRP_MAX_PLANS_PER_REQUEST**
+
+- **Optional**
+- limit of the number of plans to get using the `plans/getAll` endpoint in a single request
+- default: `2000`
 
 - **REACT_APP_SUPERSET_IRS_DATA_COLLECTORS_PERFORMANCE_REPORT_SLICE**
 
@@ -102,3 +108,8 @@ Below is a list of currently supported environment variables:
   - to activate set the env to `true`, any other value will be interpreted as false.
   - default value is false.
   - enables check for session expiry
+
+  - **REACT_APP_OPENSRP_GENERATED_TASKS_INTERVENTIONS**
+
+  - Optional parameter of plan intervention types whose tasks should be generated on opensrp
+  - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA

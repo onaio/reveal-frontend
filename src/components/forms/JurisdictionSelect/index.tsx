@@ -12,7 +12,7 @@ import './style.css';
 /** interface for jurisdiction options
  * These are received from the OpenSRP API
  */
-interface JurisdictionOption {
+export interface JurisdictionOption {
   id: string;
   properties: {
     status: string;

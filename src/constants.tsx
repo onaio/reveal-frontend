@@ -69,6 +69,11 @@ export const MODAL_BUTTON_CLASS = 'focus-investigation btn btn-primary float-rig
 export const BUSINESS_STATUS = 'business_status';
 export const IRS_REPORT_STRUCTURES = 'irs_report_structures';
 export const SMC_REPORT_STRUCTURES = 'SMC_report_structures';
+export const PLAN_DEFINITION = 'PlanDefinition';
+export const RETIRE_PLAN = 'Retire_Plan';
+export const RETIRE_REASON = 'retire_reason';
+export const EVENT_LABEL = 'Event';
+export const FORM_SUBMISSION_FIELD = 'formsubmissionField';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
@@ -138,6 +143,7 @@ export const OPENSRP_PRACTITIONER_ROLE_ENDPOINT = 'practitionerRole';
 export const OPENSRP_FIND_BY_PROPERTIES = 'findByProperties';
 export const OPENSRP_LOCATION = 'location';
 export const OPENSRP_PLANS = 'plans';
+export const OPENSRP_GET_ALL_PLANS = 'plans/getAll';
 export const OPENSRP_PARENT_ID = 'parent_id';
 export const OPENSRP_ORGANIZATION_ENDPOINT = 'organization';
 export const OPENSRP_GET_ASSIGNMENTS_ENDPOINT = `${OPENSRP_ORGANIZATION_ENDPOINT}/assignedLocationsAndPlans`;
@@ -173,6 +179,7 @@ export const SETTINGS_ENDPOINT = 'settings/';
 export const LOCATIONS_ENDPOINT = 'location/location-tree';
 export const SECURITY_AUTHENTICATE_ENDPOINT = 'security/authenticate';
 export const OPENSRP_KEYCLOAK_PARAM = 'Keycloak';
+export const OPENSRP_EVENT_ENDPOINT = 'event';
 
 // colors
 export const GREEN = 'Green';
@@ -248,6 +255,7 @@ export const JURISDICTION_METADATA_RISK = 'jurisdiction_metadata-risk';
 export const JURISDICTION_METADATA_COVERAGE = 'jurisdiction_metadata-coverage';
 export const JURISDICTION_METADATA_POPULATION = 'jurisdiction_metadata-population';
 export const JURISDICTION_METADATA_TARGET = 'jurisdiction_metadata-target';
+export const JURISDICTION_METADATA_STUCTURES = 'jurisdiction_metadata-structures';
 export const JURISDICTION_CSV_TEMPLATE = 'jurisdiction_id,jurisdiction_name,risk,coverage';
 export const JURISDICTION_CSV_FILE_NAME = 'jurisdiction-metadata.csv';
 export const GET_ALL = 'getAll';

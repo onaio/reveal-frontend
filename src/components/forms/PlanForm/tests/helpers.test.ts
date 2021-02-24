@@ -156,12 +156,38 @@ describe('containers/forms/PlanForm/helpers', () => {
     MockDate.reset();
   });
 
+  it('check generatePlanDefinition returns correct taskGenerationStatus', () => {
+    MockDate.set('1/30/2000', 0);
+    const envModule = require('../../../../configs/env');
+    envModule.PLAN_UUID_NAMESPACE = '85f7dbbf-07d0-4c92-aa2d-d50d141dde00';
+    envModule.ACTION_UUID_NAMESPACE = '35968df5-f335-44ae-8ae5-25804caa2d86';
+    envModule.TASK_GENERATION_STATUS = TRUE;
+    envModule.OPENSRP_GENERATED_TASKS_INTERVENTIONS = ['IRS'];
+
+    const expectedPlanDefinitionCopy = {
+      ...expectedPlanDefinition,
+      useContext: [
+        expectedPlanDefinition.useContext[0],
+        {
+          code: 'taskGenerationStatus',
+          valueCodableConcept: 'internal',
+        },
+      ],
+    };
+    expect(generatePlanDefinition(values2)).toEqual(expectedPlanDefinitionCopy);
+    // on edit don't change
+    expect(generatePlanDefinition(values2, null, true)).toEqual(expectedPlanDefinition);
+
+    MockDate.reset();
+  });
+
   it('generatePlanDefinition should use value of TASK_GENERATION_STATUS defined on create if value not ignore', () => {
     MockDate.set('1/30/2000', 0);
     const envModule = require('../../../../configs/env');
     envModule.PLAN_UUID_NAMESPACE = '85f7dbbf-07d0-4c92-aa2d-d50d141dde00';
     envModule.ACTION_UUID_NAMESPACE = '35968df5-f335-44ae-8ae5-25804caa2d86';
     envModule.TASK_GENERATION_STATUS = TRUE;
+    envModule.OPENSRP_GENERATED_TASKS_INTERVENTIONS = [];
     const planCopy = {
       ...plans[5],
       version: 2,

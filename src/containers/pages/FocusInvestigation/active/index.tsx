@@ -31,8 +31,8 @@ import {
   CURRENT_FOCUS_INVESTIGATION,
   DEFINITIONS,
   END_DATE,
+  FI_COLUMN_STATUS,
   FI_IN_JURISDICTION,
-  FI_STATUS,
   FOCUS_AREA_HEADER,
   FOCUS_INVESTIGATIONS,
   HOME,
@@ -321,7 +321,7 @@ class ActiveFocusInvestigation extends React.Component<
         minWidth: 250,
       },
       {
-        Header: FI_STATUS,
+        Header: FI_COLUMN_STATUS,
         accessor: (d: Dictionary) => planStatusDisplay[d.plan_status] || d.plan_status,
         id: 'plan_status',
         minWidth: 80,
@@ -349,7 +349,7 @@ class ActiveFocusInvestigation extends React.Component<
       {
         Header: STATUS_HEADER,
         accessor: 'status',
-        maxWidth: 60,
+        maxWidth: 100,
       },
     ];
 

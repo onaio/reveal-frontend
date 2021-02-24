@@ -403,6 +403,10 @@
     "message": "FI Status",
     "description": "column header: for the status of Focus Investigation plans"
   },
+  "FI_COLUMN_STATUS": {
+    "message": "FI Status",
+    "description": "column header: for the status of Focus Investigation plans"
+  },
   "FI_REASON": {
     "message": "FI Reason",
     "description": "column header: the reason for the plan (can be reactive or routine)"
@@ -1223,6 +1227,10 @@
     "message": "Risk",
     "description": "Option displayed when selecting jurisdiction metadata type to download"
   },
+  "STRUCTURE_LABEL": {
+    "message": "Structures",
+    "description": "Option displayed when selecting jurisdiction metadata type to download"
+  },
   "PLANNING_PAGE_TITLE": {
     "message": "Planning tool",
     "description": "Title of page with the feature to help create plans"
@@ -1628,5 +1636,69 @@
   "SESSION_EXPIRED_ERROR": {
     "message": "Error: Your session is expired. Please renew session",
     "description": "Error text flashed when session is expired"
+  },
+  "NOT_ELIGIBLE": {
+    "message": "Not Eligible",
+    "description": "Task business status not eligible"
+  },
+  "NOT_VISITED": {
+    "message": "Not visited",
+    "description": "Task business status not visited"
+  },
+  "TASK_INCOMPLETE": {
+    "message": "Incomplete",
+    "description": "Task business status Incomplete"
+  },
+  "IN_PROGRESS": {
+    "message": "In Progress",
+    "description": "Task business status In Progress"
+  },
+  "RACD_REGISTER_FAMILY_ACTIVITY": {
+    "message": "RACD Register Family",
+    "description": "action code RACD Register Family"
+  },
+  "ASSIGNED_WRONG_PLAN": {
+    "message": "Assigned wrong plan details",
+    "description": "Reason for retiring a plan"
+  },
+  "DUPLICATED_PLAN": {
+    "message": "Plan is duplicated",
+    "description": "Reason for retiring a plan"
+  },
+  "CANCELED_PLAN": {
+    "message": "Canceled, no longer going to work",
+    "description": "Reason for retiring a plan"
+  },
+  "ENTERED_WRONG_ADDRESS": {
+    "message": "Plan has wrong address of patient or source of infection",
+    "description": "Reason for retiring a plan"
+  },
+  "SAME_SUB_VILLAGE": {
+    "message": "This is patient in the same sub-village and same week",
+    "description": "Reason for retiring a plan"
+  },
+  "ACTIVITY_DONE_BEFORE": {
+    "message": "Activity was done before the plan was created",
+    "description": "Reason for retiring a plan"
+  },
+  "OTHER_REASON": {
+    "message": "Specify another reason",
+    "description": "Reason for retiring a plan"
+  },
+  "RETIRE_PLAN_REASON": {
+    "message": "Retire Plan Reason",
+    "description": "Retire Plan Reason form label"
+  },
+  "OTHER_REASON_LABEL": {
+    "message": "Other reason",
+    "description": "Form Other reason label"
+  },
+  "PROCEED": {
+    "message": "Proceed",
+    "description": "Button text"
+  },
+  "LOWEST_JURISDICTION": {
+    "message": "This is the lowest jurisdiction",
+    "description": "text displayed when user reaches the lowest jurisdiction"
   }
 }
