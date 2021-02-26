@@ -16,6 +16,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/css/index.css';
 
+import reducerRegistry from '@onaio/redux-reducer-registry';
+import { configsSliceName, configsReducer } from '@opensrp/pkg-config';
+/** register catalogue reducer */
+reducerRegistry.register(configsSliceName, configsReducer);
+
 if (SENTRY_DSN !== '') {
   Sentry.init({ dsn: SENTRY_DSN });
 }

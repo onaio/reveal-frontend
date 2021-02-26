@@ -2574,10 +2574,8 @@
   resolved "https://registry.yarnpkg.com/@onaio/utils/-/utils-0.0.1.tgz#c4b6b0afb3b7ad6e2b6135a160d3d79e53e286af"
   integrity sha512-JybtApO1LqxidE+avNdu6Qq+EOvywn92/h++HIMvA5DIKMZ6e1OGdG2ZMbFkylmx8JpvVcFypSIomPzKUYvL7w==
 
-"@opensrp/form-config@^0.0.11":
+"@opensrp/form-config@file:../web/packages/form-config":
   version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@opensrp/form-config/-/form-config-0.0.11.tgz#22c50055b984d85cd2ab8f6e0d80411cc6886a69"
-  integrity sha512-Tk0NkKXZg7uWWliyUqHPFOngf6CXdaEmcxFGHxlyokxf5r/Z7JrYWiic7V1flWb8MqgNc6Naggylv1+RCNaF9g==
   dependencies:
     "@ant-design/icons" "^4.3.0"
     "@fortawesome/fontawesome-svg-core" "^1.2.20"
@@ -2592,7 +2590,6 @@
     "@opensrp/pkg-config" "^0.0.4"
     "@opensrp/reducer-factory" "^0.0.1"
     "@opensrp/server-service" "^0.0.16"
-    "@opensrp/store" "^0.0.9"
     antd "^4.6.3"
     date-fns "^2.17.0"
     formik "^2.1.4"
@@ -2667,6 +2664,11 @@
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/@opensrp/server-service/-/server-service-0.0.4.tgz#78e0301704d2b0a751402456fdf1aab36e263d71"
   integrity sha512-iI0iWjcBPA4yRhlwl6pfqL0Pr2dXFxtbAVSyi+wLkmZ8HuBgMxg95Q0iP5UOIjBvb0xSv1SE3bpJgxE9RWN4bw==
+
+"@opensrp/server-service@file:../web/packages/opensrp-server-service":
+  version "0.0.16"
+  dependencies:
+    "@onaio/utils" "^0.0.1"
 
 "@opensrp/store@^0.0.9":
   version "0.0.9"
