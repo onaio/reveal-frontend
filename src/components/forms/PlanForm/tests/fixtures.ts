@@ -1782,3 +1782,15 @@ export const extractedMDAActivities = {
     },
   ],
 };
+
+export const extractedMDAActivitiesCopy = {
+  ...extractedMDAActivities,
+  action: [
+    {
+      ...extractedMDAActivities.action[0],
+      definitionUri: 'family_reg_uri_test.json',
+    },
+    extractedMDAActivities.action[1],
+    extractedMDAActivities.action[2],
+  ],
+};
