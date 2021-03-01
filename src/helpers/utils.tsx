@@ -291,7 +291,7 @@ export function extractPlan(plan: Plan) {
   const result: { [key: string]: any } = {
     ...plan,
     canton: null,
-    caseClassification: null,
+    caseClassification: plan.case_classification || null,
     caseNotificationDate: plan.plan_fi_reason === CASE_TRIGGERED ? plan.plan_date : null,
     district: null,
     focusArea: plan.jurisdiction_name,

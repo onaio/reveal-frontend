@@ -272,6 +272,23 @@ describe('helpers/utils', () => {
       status: 'A1',
       village: 'Laem Klat Moo 8',
     });
+
+    // when case classification is available
+    const caseClassification = 'A';
+    const planCopy = { ...fixtures.plan99, case_classification: caseClassification };
+    expect(extractPlan(planCopy as Plan)).toEqual({
+      ...fixtures.plan99,
+      canton: 'Laem Klat Canton 2',
+      caseClassification,
+      caseNotificationDate: '2019-07-03',
+      case_classification: caseClassification,
+      district: 'Mueng Trat District 2',
+      focusArea: 'Tha Sen 8',
+      province: 'Trat 2',
+      reason: 'Case Triggered',
+      status: 'A1',
+      village: 'Laem Klat Moo 8',
+    });
   });
 
   it('extractPlan handles plans with null jurisdiction name path', () => {
