@@ -48,6 +48,7 @@ export interface PlanRecordResponse {
 
 /** PlanRecord - base Plan interface for plan objects,  keyed by `id` in state */
 export interface PlanRecord {
+  case_classification?: string;
   id: string;
   plan_date: string;
   plan_effective_period_end: string;
