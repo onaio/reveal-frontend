@@ -27,6 +27,7 @@ import {
   DISABLE_LOGIN_PROTECTION,
   GA_CODE,
   GA_ENV,
+  LANGUAGE,
   TOAST_AUTO_CLOSE_DELAY,
   WEBSITE_NAME,
 } from '../configs/env';
@@ -142,6 +143,19 @@ import ConnectedSMCPlansList from '../containers/pages/SMC/plans';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 import store from '../store';
 import './App.css';
+
+import reducerRegistry from '@onaio/redux-reducer-registry';
+import { Dictionary } from '@onaio/utils';
+import { addConfigs, configsReducer, configsSliceName, LanguageCode } from '@opensrp/pkg-config';
+import { OpenSRPConfigs } from '@opensrp/pkg-config';
+
+/** register reducer for configs */
+reducerRegistry.register(configsSliceName, configsReducer);
+const opensrpLanguageConfig: OpenSRPConfigs = {
+  languageCode: LANGUAGE as LanguageCode,
+};
+/** Dispatch language to use for opensrp packages */
+store.dispatch(addConfigs(opensrpLanguageConfig as Dictionary));
 
 library.add(
   faDownload,

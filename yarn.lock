@@ -2567,10 +2567,10 @@
   resolved "https://registry.yarnpkg.com/@onaio/utils/-/utils-0.0.1.tgz#c4b6b0afb3b7ad6e2b6135a160d3d79e53e286af"
   integrity sha512-JybtApO1LqxidE+avNdu6Qq+EOvywn92/h++HIMvA5DIKMZ6e1OGdG2ZMbFkylmx8JpvVcFypSIomPzKUYvL7w==
 
-"@opensrp/form-config@^0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@opensrp/form-config/-/form-config-0.0.12.tgz#b06c35e91371e192ecb884a3985695b98edcb670"
-  integrity sha512-kGDImVu03a6TRKImPbkh5CBRCEnQwThsZmP9IRDxmvk2c+lq3apeeBumSMIBQUdbEDLKYucCbcyxCyOsiPk6Nw==
+"@opensrp/form-config@^0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@opensrp/form-config/-/form-config-0.0.13.tgz#65578c45098b2d60421c407936806579fb7f8796"
+  integrity sha512-LhFYsma1LDxbkA4UZnLUkyjTfKMbB5o4QtkZacXmGDJOSg7CLbq4PTKSeMYpXgsDMyYafcew+LA2EMbMWty/ZQ==
   dependencies:
     "@ant-design/icons" "^4.3.0"
     "@fortawesome/fontawesome-svg-core" "^1.2.20"
@@ -2582,7 +2582,7 @@
     "@onaio/redux-reducer-registry" "^0.0.9"
     "@onaio/utils" "^0.0.1"
     "@opensrp/notifications" "^0.0.4"
-    "@opensrp/pkg-config" "^0.0.5"
+    "@opensrp/pkg-config" "^0.0.6"
     "@opensrp/reducer-factory" "^0.0.1"
     "@opensrp/server-service" "^0.0.17"
     antd "^4.6.3"
@@ -2601,10 +2601,10 @@
   dependencies:
     antd "^4.6.3"
 
-"@opensrp/pkg-config@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@opensrp/pkg-config/-/pkg-config-0.0.5.tgz#d6a035eaf67d9b64a76ffca1a8544ac2a4e2afcf"
-  integrity sha512-ztkbutej7Jdj2CERed7UlhTbd6vah2hSIGoulgOwFfpp96POugeIwnhgyjVKKCSMUeojd3KYdR81CG4ZoAFl7w==
+"@opensrp/pkg-config@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@opensrp/pkg-config/-/pkg-config-0.0.6.tgz#0f61f47756a666672ac6fe219ced939e803e95e7"
+  integrity sha512-Zao+DPMHUML4cRAp1uMAOHhNXxvg7hJkq7vWUb5uVOlcysgaZvWddrB2Hqx6r0iKMs9Rl58EebcD5HQhC6owpw==
   dependencies:
     "@reduxjs/toolkit" "^1.5.0"
     i18next "^19.8.4"

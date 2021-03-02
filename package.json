@@ -23,7 +23,7 @@
     "@onaio/session-reducer": "^0.0.12",
     "@onaio/superset-connector": "^0.0.13",
     "@onaio/utils": "^0.0.1",
-    "@opensrp/form-config": "^0.0.12",
+    "@opensrp/form-config": "^0.0.13",
     "@opensrp/population-characteristics": "^0.0.6",
     "@opensrp/server-logout": "^0.0.1",
     "@opensrp/server-service": "^0.0.17",
