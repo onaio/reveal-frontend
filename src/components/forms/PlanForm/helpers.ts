@@ -509,6 +509,7 @@ export function extractActivitiesFromPlanForm(
       const actionFields: Partial<PlanAction> = {
         ...(condition && { condition }),
         ...(trigger && { trigger }),
+        ...(element.actionDefinitionUri && { definitionUri: element.actionDefinitionUri }),
         description: element.actionDescription,
         identifier: thisActionIdentifier,
         prefix,

@@ -36,6 +36,7 @@ import {
   expectedPlanDefinition,
   extractedActivitiesFromForms,
   extractedMDAActivities,
+  extractedMDAActivitiesCopy,
   fiReasonTestPlan,
   MDAPlanActivities,
   planActivities,
@@ -108,6 +109,12 @@ describe('containers/forms/PlanForm/helpers', () => {
     );
     expect(extractActivitiesFromPlanForm(MDAPlanActivities, InterventionType.MDA)).toEqual(
       extractedMDAActivities
+    );
+    // definition uri default plan template value is replaced
+    const MDAPlanActivitiesCopy = [...MDAPlanActivities];
+    MDAPlanActivitiesCopy[0].actionDefinitionUri = 'family_reg_uri_test.json';
+    expect(extractActivitiesFromPlanForm(MDAPlanActivitiesCopy, InterventionType.MDA)).toEqual(
+      extractedMDAActivitiesCopy
     );
     MockDate.reset();
   });
