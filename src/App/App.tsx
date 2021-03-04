@@ -27,7 +27,6 @@ import {
   DISABLE_LOGIN_PROTECTION,
   GA_CODE,
   GA_ENV,
-  LANGUAGE,
   TOAST_AUTO_CLOSE_DELAY,
   WEBSITE_NAME,
 } from '../configs/env';
@@ -38,8 +37,6 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import '@onaio/drill-down-table/dist/table.css';
 import { TokenExpired } from '@onaio/gatekeeper';
-import reducerRegistry from '@onaio/redux-reducer-registry';
-import { addConfigs, configsReducer, configsSliceName, LanguageCode } from '@opensrp/pkg-config';
 import { CustomLogout } from '../components/Logout';
 import { Footer } from '../components/page/Footer';
 import {
@@ -145,14 +142,6 @@ import ConnectedSMCPlansList from '../containers/pages/SMC/plans';
 import { oAuthUserInfoGetter } from '../helpers/utils';
 import store from '../store';
 import './App.css';
-
-/** register reducer for configs */
-reducerRegistry.register(configsSliceName, configsReducer);
-const opensrpLanguageConfig = {
-  languageCode: LANGUAGE as LanguageCode,
-};
-/** Dispatch language to use for opensrp packages */
-store.dispatch(addConfigs(opensrpLanguageConfig));
 
 library.add(
   faDownload,
