@@ -2527,10 +2527,22 @@
   resolved "https://registry.yarnpkg.com/@onaio/utils/-/utils-0.0.1.tgz#c4b6b0afb3b7ad6e2b6135a160d3d79e53e286af"
   integrity sha512-JybtApO1LqxidE+avNdu6Qq+EOvywn92/h++HIMvA5DIKMZ6e1OGdG2ZMbFkylmx8JpvVcFypSIomPzKUYvL7w==
 
-"@opensrp/form-config@^0.0.16":
-  version "0.0.16"
-  resolved "https://registry.yarnpkg.com/@opensrp/form-config/-/form-config-0.0.16.tgz#3bd68c9b6a0ceadb99b62b37d2a9a18584406a75"
-  integrity sha512-Htf6h8HA6yuVSlhfEuT9CJ/h+w8B71xgEI2B7tIVKpPtHQD/rOo9dYu1JqFy1LMuDlu7IEno/9HnO1dmHVNIJw==
+"@opensrp/form-config-core@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@opensrp/form-config-core/-/form-config-core-0.0.1.tgz#b61ee1fbd5194c0e8c036a481c6adee5bfc732ed"
+  integrity sha512-6CWB+WaeP1I18hTeu1bNl9ZpbbIs/DfOxTo8B6VbdcyZ/3ZjDAfkimkOsCpt85HH2B6OKavrd2oPMEgcPicKiQ==
+  dependencies:
+    "@onaio/utils" "^0.0.1"
+    "@opensrp/pkg-config" "^0.0.6"
+    "@opensrp/reducer-factory" "^0.0.1"
+    "@opensrp/server-service" "^0.0.17"
+    date-fns "^2.17.0"
+    i18next "^19.8.4"
+
+"@opensrp/form-config@^0.0.17":
+  version "0.0.17"
+  resolved "https://registry.yarnpkg.com/@opensrp/form-config/-/form-config-0.0.17.tgz#2a87dff79b538bafe49df4e7873c6dcfc176dd46"
+  integrity sha512-6jv6qTC4zVx4erVYdyccXq/Is9zf2E3QLGlAhIQ56H41w5M+qvaNc6BrudhTknfKyfoP2rof2XG4LWLDUlIVtg==
   dependencies:
     "@fortawesome/fontawesome-svg-core" "^1.2.20"
     "@fortawesome/free-brands-svg-icons" "^5.10.0"
@@ -2540,22 +2552,15 @@
     "@onaio/drill-down-table" "^1.0.2"
     "@onaio/redux-reducer-registry" "^0.0.9"
     "@onaio/utils" "^0.0.1"
-    "@opensrp/notifications" "^0.0.5"
+    "@opensrp/form-config-core" "^0.0.1"
     "@opensrp/pkg-config" "^0.0.6"
-    "@opensrp/reducer-factory" "^0.0.1"
     "@opensrp/server-service" "^0.0.17"
-    date-fns "^2.17.0"
     formik "^2.1.4"
     i18next "^19.8.4"
     lodash "^4.17.15"
     react-toastify "^6.0.5"
     reactstrap "^8.0.1"
     yup "^0.29.1"
-
-"@opensrp/notifications@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@opensrp/notifications/-/notifications-0.0.5.tgz#b8047b9738c4e2d3d16d45c5bbc976dde8c2bd1e"
-  integrity sha512-N3Fi/0Kis7hN6EqbxTvS786+ZKOz6jEsSVq+t5Mtd1pPPHcqZjLvsa6aTSEcGzJDs2aY5NKSsDKY944EUfv/bg==
 
 "@opensrp/pkg-config@^0.0.6":
   version "0.0.6"
