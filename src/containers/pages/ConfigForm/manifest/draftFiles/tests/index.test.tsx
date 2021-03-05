@@ -1,10 +1,10 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import {
-  draftFilesReducer,
+  draftReducer,
   draftReducerName,
   fetchManifestDraftFiles,
   ManifestFilesTypes,
-} from '@opensrp/form-config';
+} from '@opensrp/form-config-core';
 import { OpenSRPService } from '@opensrp/server-service';
 import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
@@ -21,7 +21,7 @@ import { FixManifestDraftFiles } from './fixtures';
 const history = createBrowserHistory();
 
 /** register the reducers */
-reducerRegistry.register(draftReducerName, draftFilesReducer);
+reducerRegistry.register(draftReducerName, draftReducer);
 
 describe('containers/pages/ConfigForm/manifest/draftFiles', () => {
   beforeEach(() => {
