@@ -21,6 +21,7 @@ import {
 } from 'reactstrap';
 import { format } from 'util';
 import {
+  AUTO_SELECT_FI_CLASSIFICATION,
   DATE_FORMAT,
   DEFAULT_PLAN_DURATION_DAYS,
   DEFAULT_PLAN_VERSION,
@@ -573,7 +574,7 @@ const PlanForm = (props: PlanFormProps) => {
                   component="select"
                   name="fiStatus"
                   id="fiStatus"
-                  disabled={disabledFields.includes('fiStatus')}
+                  disabled={disabledFields.includes('fiStatus') || AUTO_SELECT_FI_CLASSIFICATION}
                   className={errors.fiStatus ? 'form-control is-invalid' : 'form-control'}
                 >
                   <option>{SELECT_OPTION}</option>

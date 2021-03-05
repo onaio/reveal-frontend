@@ -113,3 +113,9 @@ Below is a list of currently supported environment variables:
 
   - Optional parameter of plan intervention types whose tasks should be generated on opensrp
   - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
+
+- **REACT_APP_AUTO_SELECT_FI_CLASSIFICATION**
+
+  - **not Required**; _(string)_
+  - to activate set the env to `true`, any other value will be interpreted as false
+  - enable FI classification auto selection
