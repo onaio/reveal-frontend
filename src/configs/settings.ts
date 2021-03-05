@@ -23,6 +23,7 @@ import {
   PlanActivities,
   UseContextCodesType,
 } from '../components/forms/PlanForm/types';
+import { NOT_AVAILABLE } from '../components/TreeWalker/constants';
 import {
   A1_DESCRIPTION,
   A1_NAME,
@@ -86,6 +87,7 @@ import {
   MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
   MOSQUITO_COLLECTION_GOAL_MEASURE,
   NAME,
+  NOT_AVAILABLE_LABEL,
   PLAN_STATUS_ACTIVE,
   PLAN_STATUS_COMPLETE,
   PLAN_STATUS_DRAFT,
@@ -163,6 +165,7 @@ import {
   TRUE,
 } from '../constants';
 import {
+  AUTO_SELECT_FI_CLASSIFICATION,
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
   ENABLE_OPENSRP_OAUTH,
@@ -1574,6 +1577,13 @@ export interface PlanDefinition {
 
 /** Focus Investigation case classifications */
 export const FIClassifications: Classification[] = [
+  ...[
+    (AUTO_SELECT_FI_CLASSIFICATION && {
+      code: NOT_AVAILABLE,
+      description: '',
+      name: NOT_AVAILABLE_LABEL,
+    }) as Classification,
+  ],
   {
     code: A1,
     description: A1_DESCRIPTION,
@@ -1595,7 +1605,6 @@ export const FIClassifications: Classification[] = [
     name: B2_NAME,
   },
 ];
-
 /** Indicators configs */
 
 // thresholds

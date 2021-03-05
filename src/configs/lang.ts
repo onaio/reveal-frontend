@@ -984,3 +984,4 @@ export const LOWEST_JURISDICTION = translate(
   'LOWEST_JURISDICTION',
   'This is the lowest jurisdiction'
 );
+export const NOT_AVAILABLE_LABEL = translate('NOT_AVAILABLE_LABEL', 'Not Available');

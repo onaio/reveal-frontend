@@ -1700,5 +1700,9 @@
   "LOWEST_JURISDICTION": {
     "message": "This is the lowest jurisdiction",
     "description": "text displayed when user reaches the lowest jurisdiction"
+  },
+  "NOT_AVAILABLE_LABEL": {
+    "message": "Not Available",
+    "description": "Item not available"
   }
 }
