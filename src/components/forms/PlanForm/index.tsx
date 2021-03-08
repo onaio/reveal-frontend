@@ -53,6 +53,7 @@ import {
   INTERVENTION_TYPE_LABEL,
   IRS_TITLE,
   LOCATIONS,
+  MDA_LITE_TITLE,
   MDA_POINT_TITLE,
   MDA_TITLE,
   PLAN_END_DATE_LABEL,
@@ -417,6 +418,9 @@ const PlanForm = (props: PlanFormProps) => {
                 )}
                 {displayPlanTypeOnForm(InterventionType.MDAPoint, editMode) && (
                   <option value={InterventionType.MDAPoint}>{MDAPointTitle}</option>
+                )}
+                {displayPlanTypeOnForm(InterventionType.MDALite, editMode) && (
+                  <option value={InterventionType.MDALite}>{MDA_LITE_TITLE}</option>
                 )}
                 {displayPlanTypeOnForm(InterventionType.DynamicFI, editMode) && (
                   <option value={InterventionType.DynamicFI}>{DYNAMIC_FI_TITLE}</option>
