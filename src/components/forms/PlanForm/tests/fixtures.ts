@@ -1794,3 +1794,87 @@ export const extractedMDAActivitiesCopy = {
     extractedMDAActivities.action[2],
   ],
 };
+
+export const MDALitePlanPayload = {
+  action: [
+    {
+      code: 'CDD Supervision',
+      condition: [
+        {
+          expression: {
+            description: 'Structure type does not exist',
+            expression: '$this.is(FHIR.Location)',
+          },
+          kind: 'applicability',
+        },
+      ],
+      definitionUri: 'community_drug_distributor_supervisor_daily_summary_form.json',
+      description: 'Visit each operational area and submit one CDD Supervisor Daily Summary form',
+      goalId: 'CDD_Supervision',
+      identifier: '99db81ca-b5c9-5d03-9308-a81a8945032c',
+      prefix: 1,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      timingPeriod: {
+        end: '2017-07-20',
+        start: '2017-07-13',
+      },
+      title: 'Submit CDD Supervisor Daily Summary form',
+      trigger: [
+        {
+          name: 'plan-activation',
+          type: 'named-event',
+        },
+      ],
+      type: 'create',
+    },
+  ],
+  goal: [
+    {
+      description: 'Submit one CDD Supervisor Daily Summary form per operational area per day',
+      id: 'CDD_Supervision',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 100,
+            },
+          },
+          due: '2017-07-20',
+          measure: 'Percent of forms submitted',
+        },
+      ],
+    },
+  ],
+  date: '2017-07-13',
+  effectivePeriod: {
+    end: '2017-08-02',
+    start: '2017-07-13',
+  },
+  experimental: false,
+  identifier: 'edbffee3-e1ef-5464-b9ed-23b4cf3b1ae5',
+  jurisdiction: [
+    {
+      code: '1337',
+    },
+  ],
+  name: 'MDA-Lite-2017-07-13',
+  status: 'draft',
+  title: 'MDA-Lite 2017-07-13',
+  useContext: [
+    {
+      code: 'interventionType',
+      valueCodableConcept: 'MDA-Lite',
+    },
+    {
+      code: 'taskGenerationStatus',
+      valueCodableConcept: 'False',
+    },
+  ],
+  version: '2',
+};

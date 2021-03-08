@@ -190,6 +190,7 @@ export const PLAN_TYPES_WITH_MULTI_JURISDICTIONS = [
   'MDA-Point',
   'Dynamic-IRS',
   'Dynamic-MDA',
+  'MDA-Lite',
 ];
 
 export const SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY = false;
