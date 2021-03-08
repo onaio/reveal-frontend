@@ -1,10 +1,10 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import {
   fetchManifestReleases,
-  manifestReleasesReducer,
   ManifestReleasesTypes,
+  releasesReducer,
   releasesReducerName,
-} from '@opensrp/form-config';
+} from '@opensrp/form-config-core';
 import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
@@ -17,7 +17,7 @@ import store from '../../../../../../store';
 import { fixManifestReleases } from './fixtures';
 
 /** register the reducers */
-reducerRegistry.register(releasesReducerName, manifestReleasesReducer);
+reducerRegistry.register(releasesReducerName, releasesReducer);
 
 const history = createBrowserHistory();
 

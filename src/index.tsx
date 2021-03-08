@@ -16,6 +16,18 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/css/index.css';
 
+import reducerRegistry from '@onaio/redux-reducer-registry';
+import { addConfigs, configsReducer, configsSliceName, LanguageCode } from '@opensrp/pkg-config';
+import { LANGUAGE } from './configs/env';
+
+/** register reducer for configs */
+reducerRegistry.register(configsSliceName, configsReducer);
+const opensrpLanguageConfig = {
+  languageCode: LANGUAGE as LanguageCode,
+};
+/** Dispatch language to use for opensrp packages */
+store.dispatch(addConfigs(opensrpLanguageConfig));
+
 if (SENTRY_DSN !== '') {
   Sentry.init({ dsn: SENTRY_DSN });
 }
