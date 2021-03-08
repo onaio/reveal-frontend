@@ -653,7 +653,7 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     // interventionType should be as expected
     expect(wrapper.find('small.interventionType-error').text()).toEqual(
-      'interventionType must be one of the following values: Dynamic-FI, Dynamic-IRS, Dynamic-MDA, FI, IRS, IRS-Lite, MDA, MDA-Point'
+      'interventionType must be one of the following values: Dynamic-FI, Dynamic-IRS, Dynamic-MDA, FI, IRS, IRS-Lite, MDA, MDA-Lite, MDA-Point'
     );
 
     // Set FI for interventionType field value so that we can test the other fields
