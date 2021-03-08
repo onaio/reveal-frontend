@@ -1576,14 +1576,7 @@ export interface PlanDefinition {
 }
 
 /** Focus Investigation case classifications */
-export const FIClassifications: Classification[] = [
-  ...[
-    (AUTO_SELECT_FI_CLASSIFICATION && {
-      code: NOT_AVAILABLE,
-      description: '',
-      name: NOT_AVAILABLE_LABEL,
-    }) as Classification,
-  ],
+export const defaultFIClassifications: Classification[] = [
   {
     code: A1,
     description: A1_DESCRIPTION,
@@ -1605,6 +1598,16 @@ export const FIClassifications: Classification[] = [
     name: B2_NAME,
   },
 ];
+export const FIClassifications: Classification[] = AUTO_SELECT_FI_CLASSIFICATION
+  ? [
+      {
+        code: NOT_AVAILABLE,
+        description: '',
+        name: NOT_AVAILABLE_LABEL,
+      },
+      ...defaultFIClassifications,
+    ]
+  : defaultFIClassifications;
 /** Indicators configs */
 
 // thresholds
