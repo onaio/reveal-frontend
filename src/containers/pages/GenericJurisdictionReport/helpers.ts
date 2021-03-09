@@ -404,12 +404,7 @@ export const smcJurisdictionsColumns = [
 ];
 
 /** columns for mda Lite jurisdictions */
-export const mdaLiteJurisdictionsColumns = [
-  {
-    Header: 'Name',
-    accessor: 'jurisdiction_name',
-    minWidth: 180,
-  },
+export const genderReportColumns = [
   {
     Header: 'Male',
     columns: [
@@ -462,23 +457,8 @@ export const mdaLiteJurisdictionsColumns = [
     Header: 'Total Treated',
     accessor: '',
   },
-  {
-    Header: 'Census Pop Target (Official)',
-    accessor: '',
-  },
-  {
-    Header: 'Treatment Coverage (Census)',
-    accessor: '',
-  },
-  {
-    Header: 'Other Pop Target (Unofficial)',
-    accessor: '',
-  },
-  {
-    Header: 'Other Pop Coverage (Unofficial)',
-    accessor: '',
-  },
-  // drug distribution
+];
+export const drugDistributionColumns = [
   {
     Header: 'Supervisor Distributed',
     accessor: '',
@@ -507,6 +487,34 @@ export const mdaLiteJurisdictionsColumns = [
     Header: 'Adverse Reaction',
     accessor: '',
   },
+];
+export const censusPopColumns = [
+  {
+    Header: 'Census Pop Target (Official)',
+    accessor: '',
+  },
+  {
+    Header: 'Treatment Coverage (Census)',
+    accessor: '',
+  },
+  {
+    Header: 'Other Pop Target (Unofficial)',
+    accessor: '',
+  },
+  {
+    Header: 'Other Pop Coverage (Unofficial)',
+    accessor: '',
+  },
+];
+export const mdaLiteJurisdictionsColumns = [
+  {
+    Header: 'Name',
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
+  },
+  ...genderReportColumns,
+  ...censusPopColumns,
+  ...drugDistributionColumns,
 ];
 
 /** IRS Table Columns
