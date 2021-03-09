@@ -124,3 +124,23 @@ Below is a list of currently supported environment variables:
 
   - MDA-Lite plans Superset slice id
   - **Required**
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_DATA_SLICES**
+
+  - MDA-Lite jurisdictions report Superset slice id
+  - **Required**
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_COLUMNS**
+
+  - MDA-Lite jurisdictions report table columns
+  - **Required**
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_FOCUS_AREAS_COLUMNS**
+
+  - MDA-Lite Focus area report table columns
+  - **Required**
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL**
+
+  - MDA-Lite level were focus areas start
+  - **Required**

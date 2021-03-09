@@ -50,7 +50,7 @@ const MdaLiteJurisdictionReport = (
 };
 
 // change indicator rows component indicatorRows default prop
-IRSIndicatorLegend.defaultProps.indicatorRows = 'MDALite';
+IRSIndicatorLegend.defaultProps.indicatorRows = 'MDALiteIndicators';
 // Default props
 const defaultProps: GenericJurisdictionProps = {
   LegendIndicatorComp: IRSIndicatorLegend,

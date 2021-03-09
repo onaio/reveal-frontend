@@ -1885,7 +1885,7 @@ export interface IndicatorThresholdsLookUp {
  * otherwise the default indicator thresholds will be used.
  */
 export const indicatorThresholdsLookUpIRS: IndicatorThresholdsLookUp = {
-  MDALite: indicatorThresholdsMDALite,
+  MDALiteIndicators: indicatorThresholdsMDALite,
   namibia2019: indicatorThresholdsIRSNamibia,
 };
 
