@@ -124,6 +124,7 @@ import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/
 import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
 import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/ManualSelectJurisdiction';
 import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
+import ConnectedMdaLiteJurisdictionReport from '../containers/pages/MDALite/jurisdictionsReport';
 import ConnectedMDALitePlansList from '../containers/pages/MDALite/plans';
 import ConnectedChildReports from '../containers/pages/MDAPoint/ChildReports';
 import ConnectedClientListView from '../containers/pages/MDAPoint/ClientListView';
@@ -290,6 +291,20 @@ const App = () => {
                   exact={true}
                   path={REPORT_MDA_LITE_PLAN_URL}
                   component={ConnectedMDALitePlansList}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_LITE_PLAN_URL}/:planId`}
+                  component={ConnectedMdaLiteJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_LITE_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedMdaLiteJurisdictionReport}
                 />
                 {/* IRS Reporting plan table view */}
                 <ConnectedPrivateRoute

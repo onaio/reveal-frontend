@@ -403,6 +403,112 @@ export const smcJurisdictionsColumns = [
   },
 ];
 
+/** columns for mda Lite jurisdictions */
+export const mdaLiteJurisdictionsColumns = [
+  {
+    Header: 'Name',
+    accessor: 'jurisdiction_name',
+    minWidth: 180,
+  },
+  {
+    Header: 'Male',
+    columns: [
+      {
+        Header: '1-4',
+        accessor: '',
+        id: 'maleOneToFour',
+      },
+      {
+        Header: '5-14',
+        accessor: '',
+        id: 'maleOneToFourteen',
+      },
+      {
+        Header: '15+',
+        accessor: '',
+        id: 'maleGreaterThanFifteen',
+      },
+    ],
+  },
+  {
+    Header: 'Female',
+    columns: [
+      {
+        Header: '1-4',
+        accessor: '',
+        id: 'femaleOneToFour',
+      },
+      {
+        Header: '5-14',
+        accessor: '',
+        id: 'femaleOneToFourteen',
+      },
+      {
+        Header: '15+',
+        accessor: '',
+        id: 'femaleGreaterThanFifteen',
+      },
+    ],
+  },
+  {
+    Header: 'Total Male',
+    accessor: '',
+  },
+  {
+    Header: 'Total female',
+    accessor: '',
+  },
+  {
+    Header: 'Total Treated',
+    accessor: '',
+  },
+  {
+    Header: 'Census Pop Target (Official)',
+    accessor: '',
+  },
+  {
+    Header: 'Treatment Coverage (Census)',
+    accessor: '',
+  },
+  {
+    Header: 'Other Pop Target (Unofficial)',
+    accessor: '',
+  },
+  {
+    Header: 'Other Pop Coverage (Unofficial)',
+    accessor: '',
+  },
+  // drug distribution
+  {
+    Header: 'Supervisor Distributed',
+    accessor: '',
+  },
+  {
+    Header: 'Received by CDD',
+    accessor: '',
+  },
+  {
+    Header: 'Administered',
+    accessor: '',
+  },
+  {
+    Header: 'Damaged',
+    accessor: '',
+  },
+  {
+    Header: 'Remaining with CDD',
+    accessor: '',
+  },
+  {
+    Header: 'Returned to Supervisor',
+    accessor: '',
+  },
+  {
+    Header: 'Adverse Reaction',
+    accessor: '',
+  },
+];
+
 /** IRS Table Columns
  * These are all the table columns for IRS that we know about.
  */
@@ -410,6 +516,7 @@ export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionar
   irsLiteZambiaFocusArea2020: IRSLiteZambiaJurisdictionsColumns,
   irsLiteZambiaJurisdictions2020: IRSLiteZambiaJurisdictionsColumns,
   mdaJurisdictionsColumns,
+  mdaLiteJurisdictionsColumns,
   namibia2019: NamibiaColumns,
   smcJurisdictionsColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
