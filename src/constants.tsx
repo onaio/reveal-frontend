@@ -86,6 +86,7 @@ export const PERFORMANCE_REPORT_IRS_PLAN_URL = `/intervention/irs/performance/re
 export const REPORT_IRS_LITE_PLAN_URL = `/intervention/irs-lite/report`;
 export const PERFORMANCE_REPORT_IRS_LITE_PLAN_URL = `/intervention/irs-lite/performance/report`;
 export const REPORT_MDA_POINT_PLAN_URL = `/intervention/mda-point/report`;
+export const REPORT_MDA_LITE_PLAN_URL = `/intervention/mda-lite/report`;
 export const REPORT_MDA_PLAN_URL = `/intervention/mda/report`;
 export const MDA_POINT_LOCATION_REPORT_URL = '/intervention/mda-point/location-report';
 export const MDA_POINT_CHILD_REPORT_URL = '/intervention/mda-point/child-report';

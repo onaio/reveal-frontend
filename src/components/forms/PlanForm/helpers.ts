@@ -204,6 +204,7 @@ export const AllPlanActivities = {
   ]),
   [InterventionType.DynamicIRS]: pick(planActivities, [DYNAMIC_IRS_ACTIVITY_CODE]),
   [InterventionType.IRSLite]: [],
+  [InterventionType.MDALite]: [],
 };
 
 /**

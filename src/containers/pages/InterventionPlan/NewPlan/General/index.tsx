@@ -84,6 +84,7 @@ const planFormPropsLookUp = {
     ...managePlansLocationFieldProps,
   },
   [InterventionType.IRSLite]: {},
+  [InterventionType.MDALite]: {},
 };
 
 /** Simple component that loads the new plan form and allows you to create a new plan */

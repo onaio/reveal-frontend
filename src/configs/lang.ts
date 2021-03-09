@@ -162,6 +162,7 @@ export const IRS_PLANS = translate('IRS_PLANS', 'IRS Plans');
 export const IRS_LITE_PLANS = translate('IRS_LITE_PLANS', 'IRS Lite Plans');
 export const MDA_PLANS = translate('MDA_PLANS', 'MDA Plans');
 export const MDA_POINT_PLANS = translate('MDA_POINT_PLANS', 'MDA Point Plans');
+export const MDA_LITE_PLANS = translate('MDA_LITE_PLANS', 'MDA Lite Plans');
 export const SMC_PLANS = translate('SMC_PLANS', 'SMC Plans');
 export const COUNTRY = translate('COUNTRY', 'Country');
 export const JURISDICTION_HIERARCHY_TEMPLATE = translate(
@@ -575,6 +576,7 @@ export const MDA_POINT_REPORTING_TITLE = translate(
   'MDA_POINT_REPORTING_TITLE',
   'MDA Point Reporting'
 );
+export const MDA_LITE_REPORTING_TITLE = translate('MDA_LITE_REPORTING_TITLE', 'MDA Lite Reporting');
 export const SMC_REPORTING_TITLE = translate('SMC_REPORTING_TITLE', 'SMC Reporting');
 
 export const FILTER = translate('FILTER', 'Filter');
