@@ -102,20 +102,25 @@ Below is a list of currently supported environment variables:
   - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
   - Variable is **not required** and if not provided interventions on `REACT_APP_DISPLAYED_PLAN_TYPES` are loaded.
 
-  - **REACT_APP_CHECK_SESSION_EXPIRY_STATUS**
+- **REACT_APP_CHECK_SESSION_EXPIRY_STATUS**
 
   - **not Required**; _(string)_
   - to activate set the env to `true`, any other value will be interpreted as false.
   - default value is false.
   - enables check for session expiry
 
-  - **REACT_APP_OPENSRP_GENERATED_TASKS_INTERVENTIONS**
+- **REACT_APP_OPENSRP_GENERATED_TASKS_INTERVENTIONS**
 
   - Optional parameter of plan intervention types whose tasks should be generated on opensrp
   - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
 
-  - **REACT_APP_ENABLE_MDA_LITE**
+- **REACT_APP_ENABLE_MDA_LITE**
 
   - **not Required**; _(string)_
   - to activate set the env to `true`, any other value will be interpreted as false
   - enables the monitor MDA Lite reporting page
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_PLANS_SLICE**
+
+  - MDA-Lite plans Superset slice id
+  - **Required**
