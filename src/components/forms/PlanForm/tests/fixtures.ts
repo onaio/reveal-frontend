@@ -1862,6 +1862,9 @@ export const MDALitePlanPayload = {
     {
       code: '1337',
     },
+    {
+      code: '1234',
+    },
   ],
   name: 'MDA-Lite-2017-07-13',
   status: 'draft',
