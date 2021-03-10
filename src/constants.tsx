@@ -211,10 +211,12 @@ export const DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE = 'dynamicCommunityAd
 export const MDA_ADHERENCE = 'MDAAdherence';
 export const MDA_FAMILY_REGISTRATION = 'MDAFamilyRegistration';
 export const MDA_DISPENSE_ACTIVITY_CODE = 'MDADispenseCode';
+export const CDD_SUPERVISION_ACTIVITY_CODE = 'CDDSupervision';
 
 // task action codes
 export const BCC_CODE = 'BCC';
 export const IRS_CODE = 'IRS';
+export const CDD_SUPERVISION_CODE = 'CDD Supervision';
 export const BEDNET_DISTRIBUTION_CODE = 'Bednet Distribution';
 export const BLOOD_SCREENING_CODE = 'Blood Screening';
 export const CASE_CONFIRMATION_CODE = 'Case Confirmation';
