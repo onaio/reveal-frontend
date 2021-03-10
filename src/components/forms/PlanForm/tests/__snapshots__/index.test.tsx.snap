@@ -4506,6 +4506,11 @@ exports[`containers/forms/PlanForm renders correctly: interventionType field 1`]
   >
     MDA Point
   </option>
+  <option
+    value="MDA-Lite"
+  >
+    MDA-Lite
+  </option>
 </select>
 `;
 
