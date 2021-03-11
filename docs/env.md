@@ -135,7 +135,7 @@ Below is a list of currently supported environment variables:
   - MDA-Lite jurisdictions report table columns
   - **Required**
 
-- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_FOCUS_AREAS_COLUMNS**
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_WARD_COLUMNS**
 
   - MDA-Lite Focus area report table columns
   - **Required**
