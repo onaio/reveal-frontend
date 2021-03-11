@@ -425,14 +425,14 @@ export type REACT_APP_NAME = typeof REACT_APP_NAME;
 /** list of plan types displayed */
 export const DISPLAYED_PLAN_TYPES = String(
   process.env.REACT_APP_DISPLAYED_PLAN_TYPES ||
-    'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'
+    'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA,MDA-Lite'
 ).split(',');
 export type DISPLAYED_PLAN_TYPES = typeof DISPLAYED_PLAN_TYPES;
 
 /** list of plan types that can be created */
 export const PLAN_TYPES_ALLOWED_TO_CREATE = String(
   process.env.REACT_APP_PLAN_TYPES_ALLOWED_TO_CREATE ||
-    'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA'
+    'FI,IRS,MDA,MDA-Point,Dynamic-FI,Dynamic-IRS,Dynamic-MDA,MDA-Lite'
 ).split(',');
 export type PLAN_TYPES_ALLOWED_TO_CREATE = typeof PLAN_TYPES_ALLOWED_TO_CREATE;
 
@@ -496,7 +496,7 @@ export type ENABLE_JURISDICTION_AUTO_SELECTION_FOR_PLAN_TYPES = typeof ENABLE_JU
 
 export const PLAN_TYPES_WITH_MULTI_JURISDICTIONS =
   process.env.REACT_APP_PLAN_TYPES_WITH_MULTI_JURISDICTIONS ||
-  'IRS,Dynamic-IRS,MDA-Point,Dynamic-MDA';
+  'IRS,Dynamic-IRS,MDA-Point,Dynamic-MDA,MDA-Lite';
 export type PLAN_TYPES_WITH_MULTI_JURISDICTIONS = typeof PLAN_TYPES_WITH_MULTI_JURISDICTIONS;
 
 export const ASSIGNMENT_PAGE_SHOW_MAP = process.env.REACT_APP_ASSIGNMENT_PAGE_SHOW_MAP === 'true';

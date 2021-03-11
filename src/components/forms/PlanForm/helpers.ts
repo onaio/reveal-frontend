@@ -45,6 +45,7 @@ import {
   BLOOD_SCREENING_ACTIVITY_CODE,
   CASE_CONFIRMATION_ACTIVITY_CODE,
   CASE_NUMBER_CODE,
+  CDD_SUPERVISION_ACTIVITY_CODE,
   CONDITION,
   DAYS,
   DYNAMIC_BCC_ACTIVITY_CODE,
@@ -102,6 +103,7 @@ export const showDefinitionUriFor = [
   InterventionType.DynamicFI,
   InterventionType.DynamicIRS,
   InterventionType.DynamicMDA,
+  InterventionType.MDALite,
 ];
 
 /**
@@ -204,7 +206,7 @@ export const AllPlanActivities = {
   ]),
   [InterventionType.DynamicIRS]: pick(planActivities, [DYNAMIC_IRS_ACTIVITY_CODE]),
   [InterventionType.IRSLite]: [],
-  [InterventionType.MDALite]: [],
+  [InterventionType.MDALite]: pick(planActivities, [CDD_SUPERVISION_ACTIVITY_CODE]),
 };
 
 /**
@@ -294,7 +296,8 @@ export type FormActivity =
   | typeof AllPlanActivities[InterventionType.MDAPoint]
   | typeof AllPlanActivities[InterventionType.DynamicFI]
   | typeof AllPlanActivities[InterventionType.DynamicMDA]
-  | typeof AllPlanActivities[InterventionType.DynamicIRS];
+  | typeof AllPlanActivities[InterventionType.DynamicIRS]
+  | typeof AllPlanActivities[InterventionType.MDALite];
 
 /**
  * Converts a plan activities objects to a list of activities for use on PlanForm
@@ -337,6 +340,10 @@ planActivitiesMap[InterventionType.DynamicIRS] = getFormActivities(
 planActivitiesMap[InterventionType.DynamicMDA] = getFormActivities(
   AllPlanActivities[InterventionType.DynamicMDA],
   InterventionType.DynamicMDA
+);
+planActivitiesMap[InterventionType.MDALite] = getFormActivities(
+  AllPlanActivities[InterventionType.MDALite],
+  InterventionType.MDALite
 );
 export { planActivitiesMap };
 

@@ -653,7 +653,7 @@ describe('containers/forms/PlanForm - Submission', () => {
 
     // interventionType should be as expected
     expect(wrapper.find('small.interventionType-error').text()).toEqual(
-      'interventionType must be one of the following values: Dynamic-FI, Dynamic-IRS, Dynamic-MDA, FI, IRS, IRS-Lite, MDA, MDA-Point'
+      'interventionType must be one of the following values: Dynamic-FI, Dynamic-IRS, Dynamic-MDA, FI, IRS, IRS-Lite, MDA, MDA-Lite, MDA-Point'
     );
 
     // Set FI for interventionType field value so that we can test the other fields
@@ -1628,5 +1628,102 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
       `"TriggersNameNameExpressionquestionnaire = 'Register_Structure'DescriptionTrigger when a Register_Structure event is submitted"`
     );
     expect(trigers.at(5).text()).toMatchInlineSnapshot(`"TriggersName"`);
+  });
+
+  it('works with MDA-lite plan', async () => {
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
+    wrapper.update();
+    // select mda-lite plan
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'MDA-Lite' } });
+    // set the first jurisdiction details
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+    wrapper.update();
+
+    // has button for add jurisdiction but no remove focus area button
+    expect(wrapper.find(`.addJurisdiction`).length).toEqual(1);
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(0);
+    // before clicking add button
+    expect(wrapper.find('input[name="jurisdictions[1].name"]').length).toEqual(0);
+    // click add button
+    wrapper.find(`.addJurisdiction`).simulate('click');
+    wrapper.update();
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(2); // each focus area has a remove button
+    expect(wrapper.find('input[name="jurisdictions[1].name"]').length).toEqual(1); // possible to select another jurisdiction
+
+    // set the second jurisdiction details
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[1].id', '1234');
+    wrapper
+      .find('input[name="jurisdictions[1].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[1].name', value: 'Onyx two' } });
+    wrapper.update();
+
+    // add a third jurisdiction column
+    expect(wrapper.find('input[name="jurisdictions[2].name"]').length).toEqual(0);
+    // click add button
+    wrapper.find(`.addJurisdiction`).simulate('click');
+    wrapper.update();
+    expect(wrapper.find('input[name="jurisdictions[2].name"]').length).toEqual(1);
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(3);
+    // remove this jurisdiction
+    wrapper
+      .find(`.removeJurisdiction`)
+      .at(2)
+      .simulate('click');
+    expect(wrapper.find(`.removeJurisdiction`).length).toEqual(2);
+    expect(wrapper.find('input[name="jurisdictions[2].name"]').length).toEqual(0);
+
+    // submit form
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+    wrapper.update();
+    await new Promise<any>(resolve => setImmediate(resolve));
+
+    // jurisdictions calls
+    const jurisdictionCalls = [
+      'https://test.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&return_geometry=false&properties_filter=status:Active,geographicLevel:0',
+      {
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer hunter2',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'GET',
+      },
+    ];
+    expect(fetch.mock.calls[0]).toEqual(jurisdictionCalls);
+    expect(fetch.mock.calls[1]).toEqual(jurisdictionCalls);
+    expect(fetch.mock.calls[2]).toEqual(jurisdictionCalls);
+    // check what is submited
+    expect(fetch.mock.calls[3]).toEqual([
+      'https://test.smartregister.org/opensrp/rest/plans',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        // we have not changed anything on the plan template so incase the template is changed body should fail
+        body: JSON.stringify(fixtures.MDALitePlanPayload),
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer hunter2',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'POST',
+      },
+    ]);
   });
 });

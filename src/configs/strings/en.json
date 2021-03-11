@@ -1708,5 +1708,25 @@
   "LOWEST_JURISDICTION": {
     "message": "This is the lowest jurisdiction",
     "description": "text displayed when user reaches the lowest jurisdiction"
+  },
+  "CDD_SUPERVISION_ACTIVITY_DESCRIPTION": {
+    "message": "Visit each operational area and submit one CDD Supervisor Daily Summary form",
+    "description": "CDD supervisor activity description"
+  },
+  "CDD_SUPERVISION_ACTIVITY": {
+    "message": "Submit CDD Supervisor Daily Summary form",
+    "description": "CDD supervisor activity title"
+  },
+  "CDD_SUPERVISION_EXPRESSION_DESCRIPTION": {
+    "message": "Structure type does not exist",
+    "description": "CDD supervisor activity expression description"
+  },
+  "CDD_SUPERVISION_GOAL_DESCRIPTION": {
+    "message": "Submit one CDD Supervisor Daily Summary form per operational area per day",
+    "description": "CDD supervisor activity goal description"
+  },
+  "CDD_SUPERVISION_GOAL_MEASURE": {
+    "message": "Percent of forms submitted",
+    "description": "CDD supervisor activity goal measure"
   }
 }

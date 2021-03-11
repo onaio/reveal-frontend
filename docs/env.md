@@ -75,13 +75,13 @@ Below is a list of currently supported environment variables:
 - **REACT_APP_DISPLAYED_PLAN_TYPES**
 
   - Controls plans displayed on the site.
-  - Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
+  - Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS, MDA-Lite and Dynamic-MDA
   - Variable is **not required** and if not provided all the above options are loaded.
 
 - **REACT_APP_PLAN_TYPES_ALLOWED_TO_CREATE**
 
   - Controls plans which can be created from the create plans form.
-  - Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
+  - Options: FI, IRS, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS, MDA-Lite and Dynamic-MDA
   - Variable is **not required** and if not provided all the above options are loaded.
 
 - **REACT_APP_TASK_GENERATION_STATUS**
