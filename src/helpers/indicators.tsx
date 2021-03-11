@@ -238,12 +238,12 @@ const canBeNumber = (value: string | number) => !Number.isNaN(Number(value));
  */
 export const MDALiteGenderComparison = (cell: Cell, otherAccessor: string, color: string) => {
   const {
-    row: { id },
+    row: { original },
     value,
   } = cell;
-  let valueToCompare = (cell as any).data[id][otherAccessor];
+  const otherAccessorVal = (original as Dictionary)[otherAccessor];
   const cellValue = canBeNumber(value) ? Number(value) : 0;
-  valueToCompare = canBeNumber(valueToCompare) ? Number(valueToCompare) : 0;
+  const valueToCompare = canBeNumber(otherAccessorVal) ? Number(otherAccessorVal) : 0;
   const diffPer = cellValue > 0 ? (valueToCompare - cellValue) / valueToCompare : 1;
   const changeColor = valueToCompare === 0 && cellValue === 0 ? false : diffPer > 0.8;
   return (

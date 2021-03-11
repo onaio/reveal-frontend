@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Store } from 'redux';
 import IRSIndicatorLegend from '../../../../components/formatting/IRSIndicatorLegend';
-import MDAPointTableCell from '../../../../components/MDAPointCellTable';
+import MDALiteTableCell from '../../../../components/MDALiteCellTable';
 import {
   SUPERSET_MDA_LITE_REPORTING_FOCUS_AREAS_COLUMNS,
   SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_COLUMNS,
@@ -55,7 +55,7 @@ IRSIndicatorLegend.defaultProps.indicatorRows = 'MDALiteIndicators';
 const defaultProps: GenericJurisdictionProps = {
   LegendIndicatorComp: IRSIndicatorLegend,
   baseURL: REPORT_MDA_LITE_PLAN_URL,
-  cellComponent: MDAPointTableCell,
+  cellComponent: MDALiteTableCell,
   fetchJurisdictions: fetchGenericJurisdictions,
   fetchPlans: genericFetchPlans,
   focusAreaColumn: SUPERSET_MDA_LITE_REPORTING_FOCUS_AREAS_COLUMNS,

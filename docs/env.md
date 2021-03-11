@@ -144,3 +144,9 @@ Below is a list of currently supported environment variables:
 
   - MDA-Lite level were focus areas start
   - **Required**
+
+- **REACT_APP_SHOW_MAP_AT_JURISDICTION_LEVEL**
+
+  - Jurisdiction level on which to show map
+  - Default vaule: 99
+  - **Not Required**
