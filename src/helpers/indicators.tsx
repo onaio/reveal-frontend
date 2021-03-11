@@ -223,3 +223,35 @@ export function DefaultTableCell(props: DropDownCellProps) {
     <span className={`plan-jurisdiction-name ${hasChildren ? 'btn-link' : ''}`}>{cellValue}</span>
   );
 }
+
+/**
+ * check if value can be converted to number
+ * @param {string | number} value - value to check if can be used as number
+ */
+const canBeNumber = (value: string | number) => !Number.isNaN(Number(value));
+
+/**
+ * MDA-Lite compare gender values and change cell color
+ * @param {Cell} cell - the ReactTable.Cell being rendered in an indicator drilldown table
+ * @param otherAccessor - accessor name to compare with current value with
+ * @param color - color to turn cell to
+ */
+export const MDALiteGenderComparison = (cell: Cell, otherAccessor: string, color: string) => {
+  const {
+    row: { id },
+    value,
+  } = cell;
+  let valueToCompare = (cell as any).data[id][otherAccessor];
+  const cellValue = canBeNumber(value) ? Number(value) : 0;
+  valueToCompare = canBeNumber(valueToCompare) ? Number(valueToCompare) : 0;
+  const diffPer = cellValue > 0 ? (valueToCompare - cellValue) / valueToCompare : 1;
+  const changeColor = valueToCompare === 0 && cellValue === 0 ? false : diffPer > 0.8;
+  return (
+    <div
+      className="irs-report-indicator-container"
+      style={{ ...(changeColor && { backgroundColor: color }) }}
+    >
+      {value}
+    </div>
+  );
+};

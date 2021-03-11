@@ -2,9 +2,11 @@ import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
 import { Cell } from 'react-table';
+import { indicatorThresholdsMDALite } from '../../../configs/settings';
 import {
   getIRSLiteThresholdAdherenceIndicator,
   getIRSThresholdAdherenceIndicator,
+  MDALiteGenderComparison,
   renderPercentage,
 } from '../../../helpers/indicators';
 import { GenericJurisdiction } from '../../../store/ducks/generic/jurisdictions';
@@ -410,18 +412,21 @@ export const genderReportColumns = [
     columns: [
       {
         Header: '1-4',
-        accessor: '',
+        accessor: 'treated_male_1_4',
         id: 'maleOneToFour',
+        width: '100',
       },
       {
         Header: '5-14',
-        accessor: '',
+        accessor: 'treated_male_5_14',
         id: 'maleOneToFourteen',
+        width: '100',
       },
       {
         Header: '15+',
-        accessor: '',
+        accessor: 'treated_male_above_15',
         id: 'maleGreaterThanFifteen',
+        width: '100',
       },
     ],
   },
@@ -430,80 +435,87 @@ export const genderReportColumns = [
     columns: [
       {
         Header: '1-4',
-        accessor: '',
+        accessor: 'treated_female_1_4',
         id: 'femaleOneToFour',
+        width: '100',
       },
       {
         Header: '5-14',
-        accessor: '',
+        accessor: 'treated_female_5_14',
         id: 'femaleOneToFourteen',
+        width: '100',
       },
       {
         Header: '15+',
-        accessor: '',
+        accessor: 'treated_female_above_15',
         id: 'femaleGreaterThanFifteen',
+        width: '100',
       },
     ],
   },
   {
+    Cell: (cell: Cell) => MDALiteGenderComparison(cell, 'total_females', 'red'),
     Header: 'Total Male',
-    accessor: '',
+    accessor: 'total_males',
   },
   {
+    Cell: (cell: Cell) => MDALiteGenderComparison(cell, 'total_males', 'red'),
     Header: 'Total female',
-    accessor: '',
+    accessor: 'total_females',
   },
   {
     Header: 'Total Treated',
-    accessor: '',
+    accessor: 'total_all_genders',
   },
 ];
 export const drugDistributionColumns = [
   {
     Header: 'Supervisor Distributed',
-    accessor: '',
+    accessor: 'supervisor_distributed',
   },
   {
     Header: 'Received by CDD',
-    accessor: '',
+    accessor: 'received_number',
   },
   {
     Header: 'Administered',
-    accessor: '',
+    accessor: 'adminstered',
   },
   {
     Header: 'Damaged',
-    accessor: '',
+    accessor: 'damaged',
   },
   {
     Header: 'Remaining with CDD',
-    accessor: '',
+    accessor: 'remaining_with_cdd',
   },
   {
     Header: 'Returned to Supervisor',
-    accessor: '',
+    accessor: 'returned_to_supervisor',
   },
   {
     Header: 'Adverse Reaction',
-    accessor: '',
+    accessor: 'adverse',
   },
 ];
 export const censusPopColumns = [
   {
     Header: 'Census Pop Target (Official)',
-    accessor: '',
+    accessor: 'census_pop_target',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, indicatorThresholdsMDALite),
     Header: 'Treatment Coverage (Census)',
-    accessor: '',
+    accessor: 'treatment_coverage',
   },
   {
     Header: 'Other Pop Target (Unofficial)',
-    accessor: '',
+    accessor: 'other_pop_target',
   },
   {
+    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, indicatorThresholdsMDALite),
     Header: 'Other Pop Coverage (Unofficial)',
-    accessor: '',
+    accessor: 'other_pop_coverage',
   },
 ];
 export const mdaLiteJurisdictionsColumns = [
