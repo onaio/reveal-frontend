@@ -2,12 +2,14 @@ import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
 import { Cell } from 'react-table';
+import { IRS_RED_THRESHOLD } from '../../../configs/lang';
 import { indicatorThresholdsMDALite } from '../../../configs/settings';
 import {
   getIRSLiteThresholdAdherenceIndicator,
   getIRSThresholdAdherenceIndicator,
   MDALiteGenderComparison,
   renderPercentage,
+  returnedToSupervicerCol,
 } from '../../../helpers/indicators';
 import { GenericJurisdiction } from '../../../store/ducks/generic/jurisdictions';
 
@@ -454,12 +456,12 @@ export const genderReportColumns = [
     ],
   },
   {
-    Cell: (cell: Cell) => MDALiteGenderComparison(cell, 'total_females', 'red'),
+    Cell: (cell: Cell) => MDALiteGenderComparison(cell, 'total_females', IRS_RED_THRESHOLD),
     Header: 'Total Male',
     accessor: 'total_males',
   },
   {
-    Cell: (cell: Cell) => MDALiteGenderComparison(cell, 'total_males', 'red'),
+    Cell: (cell: Cell) => MDALiteGenderComparison(cell, 'total_males', IRS_RED_THRESHOLD),
     Header: 'Total female',
     accessor: 'total_females',
   },
@@ -490,6 +492,7 @@ export const drugDistributionColumns = [
     accessor: 'remaining_with_cdd',
   },
   {
+    Cell: (cell: Cell) => returnedToSupervicerCol(cell, 'remaining_with_cdd', IRS_RED_THRESHOLD),
     Header: 'Returned to Supervisor',
     accessor: 'returned_to_supervisor',
   },

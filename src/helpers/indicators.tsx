@@ -255,3 +255,28 @@ export const MDALiteGenderComparison = (cell: Cell, otherAccessor: string, color
     </div>
   );
 };
+
+/**
+ * MDA-Lite compare returned to supervisor values and change cell color
+ * @param {Cell} cell - the ReactTable.Cell being rendered in an indicator drilldown table
+ * @param otherAccessor - accessor name to compare with current value with
+ * @param color - color to turn cell to
+ */
+export const returnedToSupervicerCol = (cell: Cell, otherAccessor: string, color: string) => {
+  const {
+    row: { original },
+    value,
+  } = cell;
+  const otherAccessorVal = (original as Dictionary)[otherAccessor];
+  const cellValue = canBeNumber(value) ? Number(value) : 0;
+  const valueToCompare = canBeNumber(otherAccessorVal) ? Number(otherAccessorVal) : 0;
+  const changeColor = cellValue < valueToCompare;
+  return (
+    <div
+      className="irs-report-indicator-container"
+      style={{ ...(changeColor && { backgroundColor: color }) }}
+    >
+      {value}
+    </div>
+  );
+};
