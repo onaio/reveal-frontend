@@ -1,4 +1,5 @@
-import { DrillDownTable } from '@onaio/drill-down-table/dist/types';
+import { DrillDownTable } from '@onaio/drill-down-table';
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
@@ -20,24 +21,32 @@ import { HOME_URL, REPORT_MDA_LITE_CDD_REPORT_URL } from '../../../../constants'
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import {
+import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
   GenericJurisdiction,
   getGenericJurisdictionById,
+  reducerName as genericJurisdictionsReducerName,
 } from '../../../../store/ducks/generic/jurisdictions';
-import {
+import cddReducer, {
   fetchMDALiteCDDs,
   makeMDALiteCDDsArraySelector,
   MDALiteCDDData,
   MDALiteCDDFilters,
+  reducerName as cddReducerName,
 } from '../../../../store/ducks/superset/MDALite/cdd';
-import {
+import supervisorReducer, {
   fetchMDALiteSupervisors,
   makeMDALiteSupervisorsArraySelector,
   MDALiteSupervisor,
   MDALiteSupervisorFilters,
+  reducerName as supervisorReducerName,
 } from '../../../../store/ducks/superset/MDALite/supervisors';
 import { cddReportColumns, getCddTableProps } from './helpers';
+
+/** register the reducers */
+reducerRegistry.register(genericJurisdictionsReducerName, GenericJurisdictionsReducer);
+reducerRegistry.register(supervisorReducerName, supervisorReducer);
+reducerRegistry.register(cddReducerName, cddReducer);
 
 /** declear selectors */
 const CDDsArraySelector = makeMDALiteCDDsArraySelector();
@@ -72,7 +81,7 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
 
   const { params } = props.match;
   const { planId, jurisdictionId, supervisorId } = params;
-  const supervisorName = supervisorData[0].name || cddData[0].supervisor_name;
+  const supervisorName = supervisorData[0]?.name || cddData[0]?.supervisor_name;
 
   async function loadData() {
     setLoading(cddData.length < 1);
@@ -125,7 +134,7 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
         url: HOME_URL,
       },
       {
-        label: wardData[0].jurisdiction_name,
+        label: wardData[0]?.jurisdiction_name,
         url: `${REPORT_MDA_LITE_CDD_REPORT_URL}/${planId}/${jurisdictionId}`,
       },
     ],
@@ -135,7 +144,7 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
     : MDA_LITE_REPORTING_TITLE;
 
   // table props
-  const tableProps = getCddTableProps(cddReportColumns, cddData);
+  const tableProps = getCddTableProps(cddReportColumns, cddData, props);
 
   if (loading) {
     return <Loading />;

@@ -1,4 +1,6 @@
+import { Dictionary } from '@onaio/utils/dist/types/types';
 import React from 'react';
+import { RouteComponentProps } from 'react-router';
 import { Cell } from 'react-table';
 import {
   defaultOptions,
@@ -45,14 +47,18 @@ type ColumnsType = typeof supervisorColumns | typeof cddReportColumns;
 /**
  * gets MDA_lite cdd and supervisor drill down table props
  * @param {ColumnsType} columns - table columns
- * @param {any} data - table data
+ * @param {Dictionary[]} data - table data
  */
-export const getCddTableProps = (columns: ColumnsType, data: any) => {
+export const getCddTableProps = (
+  columns: ColumnsType,
+  data: Dictionary[],
+  props: RouteComponentProps<Dictionary>
+) => {
   return {
     columns,
     data: data || [],
     identifierField: 'id',
-    paginate: false,
+    paginate: true,
     renderInBottomFilterBar: renderInFilterFactory({
       showColumnHider: false,
       showFilters: false,
@@ -62,6 +68,7 @@ export const getCddTableProps = (columns: ColumnsType, data: any) => {
     }),
     renderInTopFilterBar: renderInFilterFactory({
       ...defaultOptions,
+      componentProps: props,
       queryParam: QUERY_PARAM_TITLE,
     }),
     renderNullDataComponent: () => <NoDataComponent />,

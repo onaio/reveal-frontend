@@ -1,4 +1,5 @@
-import { DrillDownTable } from '@onaio/drill-down-table/dist/types';
+import { DrillDownTable } from '@onaio/drill-down-table';
+import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
@@ -23,17 +24,24 @@ import {
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import {
+import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
   GenericJurisdiction,
   getGenericJurisdictionById,
+  reducerName as genericJurisdictionsReducerName,
 } from '../../../../store/ducks/generic/jurisdictions';
-import {
+import supervisorReducer, {
   fetchMDALiteSupervisors,
   makeMDALiteSupervisorsArraySelector,
+  MDALiteSupervisor,
   MDALiteSupervisorFilters,
+  reducerName as supervisorReducerName,
 } from '../../../../store/ducks/superset/MDALite/supervisors';
 import { getCddTableProps, supervisorColumns } from './helpers';
+
+/** register the reducers */
+reducerRegistry.register(genericJurisdictionsReducerName, GenericJurisdictionsReducer);
+reducerRegistry.register(supervisorReducerName, supervisorReducer);
 
 /** declear selectors */
 const supervisorsArraySelector = makeMDALiteSupervisorsArraySelector();
@@ -44,7 +52,7 @@ interface MDALiteSupervisorReportsProps {
   fetchSupervisors: typeof fetchMDALiteSupervisors;
   service: typeof supersetFetch;
   slices: string[];
-  supervisorData: any[];
+  supervisorData: MDALiteSupervisor[];
   wardData: GenericJurisdiction[];
 }
 
@@ -58,7 +66,7 @@ const MDALiteSupervisorReports = (
 
   const { params } = props.match;
   const { planId, jurisdictionId, supervisorId } = params;
-  const wardName = wardData[0].jurisdiction_name;
+  const wardName = wardData[0]?.jurisdiction_name;
 
   async function loadData() {
     setLoading(supervisorData.length < 1);
@@ -92,7 +100,7 @@ const MDALiteSupervisorReports = (
 
   const currentPage = {
     label: wardName,
-    url: `${REPORT_MDA_LITE_CDD_REPORT_URL}/${planId}/${wardData[0].jurisdiction_id}`,
+    url: `${REPORT_MDA_LITE_CDD_REPORT_URL}/${planId}/${wardData[0]?.jurisdiction_id}`,
   };
   const breadcrumbProps = {
     currentPage,
@@ -103,8 +111,8 @@ const MDALiteSupervisorReports = (
       },
       // change to subcounty name
       {
-        label: wardData[0].jurisdiction_name,
-        url: `${REPORT_MDA_LITE_PLAN_URL}/${planId}/${wardData[0].jurisdiction_parent_id}`,
+        label: wardData[0]?.jurisdiction_name,
+        url: `${REPORT_MDA_LITE_PLAN_URL}/${planId}/${wardData[0]?.jurisdiction_parent_id}`,
       },
     ],
   };
@@ -113,7 +121,7 @@ const MDALiteSupervisorReports = (
     : MDA_LITE_REPORTING_TITLE;
 
   // table props
-  const tableProps = getCddTableProps(supervisorColumns, supervisorData);
+  const tableProps = getCddTableProps(supervisorColumns, supervisorData, props);
 
   if (loading) {
     return <Loading />;
@@ -187,9 +195,9 @@ const mapStateToProps = (
 };
 
 /** Connected MDALiteCddReports component */
-const ConnectedMDALiteCddReports = connect(
+const ConnectedMDALiteSupervisorReports = connect(
   mapStateToProps,
   mapDispatchToProps
 )(MDALiteSupervisorReports);
 
-export default ConnectedMDALiteCddReports;
+export default ConnectedMDALiteSupervisorReports;
