@@ -150,3 +150,13 @@ Below is a list of currently supported environment variables:
   - Jurisdiction level on which to show map
   - Default vaule: 99
   - **Not Required**
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_CDD_DATA_SLICE**
+
+  - MDA-Lite CDD Superset slice id
+  - **Required**
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_SUPERVISORS_DATA_SLICE**
+
+  - MDA-Lite supervisors Superset slice id
+  - **Required**

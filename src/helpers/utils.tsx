@@ -100,6 +100,7 @@ export interface RouteParams {
   jurisdictionId?: string;
   planId?: string;
   sop?: string;
+  supervisorId?: string;
   type?: string;
 }
 
