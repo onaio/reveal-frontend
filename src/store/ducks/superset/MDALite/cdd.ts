@@ -39,11 +39,12 @@ export interface MDALiteDrugsReportInterface {
 
 /** MDALiteCdds interface */
 export interface MDALiteCDDInterface extends MDALiteGenderInterface, MDALiteDrugsReportInterface {
+  average_per_day: number;
   cdd_name: string;
+  days_worked: number;
   id: string;
   supervisor_id: string;
   supervisor_name: string;
-  received_number: number;
 }
 
 /** MDA-Lite CDD Reducer */
@@ -68,7 +69,7 @@ export const getMDALiteCDDsArray = getItemsByIdFactory<MDALiteCDDInterface>(redu
 /** This interface represents the structure of MDA Lite CDD filter options/params */
 export interface MDALiteCDDFilters {
   cdd_name?: string /** CDD name */;
-  supervisor_id?: string[] /** supervisor id */;
+  supervisor_id?: string /** supervisor id */;
 }
 
 /** MDALiteCDDsArrayBaseSelector select an array of all CDDs
@@ -108,9 +109,7 @@ export const getMDALiteCDDsArrayByTitle = () =>
  */
 export const getMDALiteCDDsArrayByStatus = () =>
   createSelector([MDALiteCDDsArrayBaseSelector, getSupervisorId], (cdds, supervisorId) =>
-    supervisorId
-      ? cdds.filter(cdd => (supervisorId.length ? supervisorId.includes(cdd.supervisor_id) : true))
-      : cdds
+    supervisorId ? cdds.filter(cdd => supervisorId === cdd.supervisor_id) : cdds
   );
 
 /**
