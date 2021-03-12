@@ -27,6 +27,7 @@ import { fetchSMCPlans, SMCPLANType } from '../../../store/ducks/generic/SMCPlan
 import { getJurisdictionBreadcrumbs } from '../IRS/Map/helpers';
 import { GetColumnsToUse, getColumnsToUse, TableProps } from './helpers';
 import './style.css';
+import jursData from './testData/jurs.json';
 /** register the reducers */
 reducerRegistry.register(GenericJurisdictionsReducerName, GenericJurisdictionsReducer);
 
@@ -106,6 +107,7 @@ const GenericJurisdictionReport = (
 
   /** async function to load the data */
   async function loadData() {
+    fetchJurisdictions('0', jursData as any);
     try {
       setLoading(!plan || !jurisdictions || jurisdictions.length < 1); // set loading when there is no data
       let fetchPlansParams: SupersetFormData | null = null;

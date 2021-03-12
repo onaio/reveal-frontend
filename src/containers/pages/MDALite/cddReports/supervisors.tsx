@@ -7,50 +7,43 @@ import IRSIndicatorLegend from '../../../../components/formatting/IRSIndicatorLe
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
-  SUPERSET_MDA_LITE_REPORTING_CDD_DATA_SLICE,
   SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_MDA_LITE_REPORTING_SUPERVISORS_DATA_SLICE,
 } from '../../../../configs/env';
 import { HOME, MDA_LITE_REPORTING_TITLE } from '../../../../configs/lang';
-import {
-  HOME_URL,
-  REPORT_MDA_LITE_CDD_REPORT_URL,
-  REPORT_MDA_LITE_PLAN_URL,
-} from '../../../../constants';
+import { HOME_URL, REPORT_MDA_LITE_PLAN_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import { GenericJurisdiction } from '../../../../store/ducks/generic/jurisdictions';
-import { cddReportColumns, getCddTableProps } from './helpers';
+import { getCddTableProps, supervisorColumns } from './helpers';
 
-interface MDALiteCddReportsProps {
-  cddData: any[];
+interface MDALiteSupervisorReportsProps {
   service: typeof supersetFetch;
   supervisorData: any[];
   wardData: GenericJurisdiction[];
 }
 
-const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<RouteParams>) => {
-  const { cddData, supervisorData, wardData, service } = props;
+const MDALiteSupervisorReports = (
+  props: MDALiteSupervisorReportsProps & RouteComponentProps<RouteParams>
+) => {
+  const { supervisorData, wardData, service } = props;
 
   const [loading, setLoading] = useState<boolean>(false);
 
   const { params } = props.match;
   const { planId, jurisdictionId, supervisorId } = params;
-  const supervisorName = supervisorData[0].name || cddData[0].supervisor_name;
+  const wardName = wardData[0].jurisdiction_name;
 
   async function loadData() {
-    setLoading(cddData.length < 1);
+    setLoading(supervisorData.length < 1);
     try {
-      if (planId && jurisdictionId && !supervisorData.length) {
+      if (planId && jurisdictionId) {
         await service(SUPERSET_MDA_LITE_REPORTING_SUPERVISORS_DATA_SLICE);
       }
       if (planId && jurisdictionId && wardData.length) {
         const slices = SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
         await service(slices[0]);
-      }
-      if (planId && jurisdictionId && supervisorId) {
-        await service(SUPERSET_MDA_LITE_REPORTING_CDD_DATA_SLICE);
       }
     } catch (e) {
       displayError(e);
@@ -64,8 +57,8 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
   }, [planId, jurisdictionId, supervisorId]);
 
   const currentPage = {
-    label: supervisorName,
-    url: `${REPORT_MDA_LITE_CDD_REPORT_URL}/${planId}/${jurisdictionId}/${supervisorId}`,
+    label: wardName,
+    url: `${REPORT_MDA_LITE_PLAN_URL}/${planId}/${wardData[0].jurisdiction_parent_id}`,
   };
   const breadcrumbProps = {
     currentPage,
@@ -74,18 +67,19 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
         label: HOME,
         url: HOME_URL,
       },
+      // change to subcounty name
       {
         label: wardData[0].jurisdiction_name,
         url: `${REPORT_MDA_LITE_PLAN_URL}/${planId}/${wardData[0].jurisdiction_parent_id}`,
       },
     ],
   };
-  const currentTitle = supervisorName
-    ? `${MDA_LITE_REPORTING_TITLE}: ${supervisorName}`
+  const currentTitle = wardName
+    ? `${MDA_LITE_REPORTING_TITLE}: ${wardName}`
     : MDA_LITE_REPORTING_TITLE;
 
   // table props
-  const tableProps = getCddTableProps(cddReportColumns, cddData);
+  const tableProps = getCddTableProps(supervisorColumns, supervisorData);
 
   if (loading) {
     return <Loading />;
@@ -110,13 +104,12 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
 };
 
 /** default props */
-const defaultProps: MDALiteCddReportsProps = {
-  cddData: [],
+const defaultProps: MDALiteSupervisorReportsProps = {
   service: supersetFetch,
   supervisorData: [],
   wardData: [],
 };
 
-MDALiteCddReports.defaultProps = defaultProps;
+MDALiteSupervisorReports.defaultProps = defaultProps;
 
-export { MDALiteCddReports };
+export { MDALiteSupervisorReports };
