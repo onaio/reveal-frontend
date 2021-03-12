@@ -16,11 +16,7 @@ import {
   SUPERSET_MDA_LITE_REPORTING_SUPERVISORS_DATA_SLICE,
 } from '../../../../configs/env';
 import { HOME, MDA_LITE_REPORTING_TITLE } from '../../../../configs/lang';
-import {
-  HOME_URL,
-  REPORT_MDA_LITE_CDD_REPORT_URL,
-  REPORT_MDA_LITE_PLAN_URL,
-} from '../../../../constants';
+import { HOME_URL, REPORT_MDA_LITE_CDD_REPORT_URL } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -46,6 +42,7 @@ import { cddReportColumns, getCddTableProps } from './helpers';
 /** declear selectors */
 const CDDsArraySelector = makeMDALiteCDDsArraySelector();
 const supervisorsArraySelector = makeMDALiteSupervisorsArraySelector();
+
 /** MDA Lite CDD report props */
 interface MDALiteCddReportsProps {
   cddData: MDALiteCDDData[];
@@ -129,7 +126,7 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
       },
       {
         label: wardData[0].jurisdiction_name,
-        url: `${REPORT_MDA_LITE_PLAN_URL}/${planId}/${wardData[0].jurisdiction_parent_id}`,
+        url: `${REPORT_MDA_LITE_CDD_REPORT_URL}/${planId}/${jurisdictionId}`,
       },
     ],
   };
