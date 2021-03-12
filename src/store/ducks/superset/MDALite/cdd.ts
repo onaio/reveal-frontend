@@ -38,31 +38,32 @@ export interface MDALiteDrugsReportInterface {
 }
 
 /** MDALiteCdds interface */
-export interface MDALiteCDDInterface extends MDALiteGenderInterface, MDALiteDrugsReportInterface {
+export interface MDALiteCDDData extends MDALiteGenderInterface, MDALiteDrugsReportInterface {
   average_per_day: number;
   cdd_name: string;
   days_worked: number;
   id: string;
   supervisor_id: string;
   supervisor_name: string;
+  ward_id: string;
 }
 
 /** MDA-Lite CDD Reducer */
-const reducer = reducerFactory<MDALiteCDDInterface>(reducerName);
+const reducer = reducerFactory<MDALiteCDDData>(reducerName);
 export default reducer;
 
 // actions
 /** actionCreator returns action to to add Item records to store */
-export const fetchMDALiteCDDs = fetchActionCreatorFactory<MDALiteCDDInterface>(reducerName, 'id');
+export const fetchMDALiteCDDs = fetchActionCreatorFactory<MDALiteCDDData>(reducerName, 'id');
 /** actionCreator returns action to to remove Item records to store */
 export const removeMDALiteCDDs = removeActionCreatorFactory(reducerName);
 
 // selectors
 /** get one CDD using their id */
-export const getMDALiteCDDById = getItemByIdFactory<MDALiteCDDInterface>(reducerName);
+export const getMDALiteCDDById = getItemByIdFactory<MDALiteCDDData>(reducerName);
 
 /** get all CDDS by ids */
-export const getMDALiteCDDsArray = getItemsByIdFactory<MDALiteCDDInterface>(reducerName);
+export const getMDALiteCDDsArray = getItemsByIdFactory<MDALiteCDDData>(reducerName);
 
 /** RESELECT USAGE STARTS HERE */
 
@@ -70,12 +71,13 @@ export const getMDALiteCDDsArray = getItemsByIdFactory<MDALiteCDDInterface>(redu
 export interface MDALiteCDDFilters {
   cdd_name?: string /** CDD name */;
   supervisor_id?: string /** supervisor id */;
+  ward_id?: string /** ward id */;
 }
 
 /** MDALiteCDDsArrayBaseSelector select an array of all CDDs
  * @param state - the redux store
  */
-export const MDALiteCDDsArrayBaseSelector = (state: Partial<Store>): MDALiteCDDInterface[] =>
+export const MDALiteCDDsArrayBaseSelector = (state: Partial<Store>): MDALiteCDDData[] =>
   values(getMDALiteCDDsArray(state) || {});
 
 /**
@@ -93,11 +95,18 @@ export const getName = (_: Partial<Store>, props: MDALiteCDDFilters) => props.cd
 export const getSupervisorId = (_: Partial<Store>, props: MDALiteCDDFilters) => props.supervisor_id;
 
 /**
+ * Gets ward id from filters
+ * @param state - the redux store
+ * @param props - the cdd filters object
+ */
+export const getWardId = (_: Partial<Store>, props: MDALiteCDDFilters) => props.ward_id;
+
+/**
  * Gets an array of CDDs filtered by name
  * @param {Partial<Store>} state - the redux store
  * @param {MDALiteCDDFilters} props - the  CDDs filters object
  */
-export const getMDALiteCDDsArrayByTitle = () =>
+export const getMDALiteCDDsArrayByName = () =>
   createSelector([MDALiteCDDsArrayBaseSelector, getName], (cdds, cddName) =>
     cddName ? cdds.filter(cdd => cdd.cdd_name.toLowerCase().includes(cddName.toLowerCase())) : cdds
   );
@@ -107,9 +116,19 @@ export const getMDALiteCDDsArrayByTitle = () =>
  * @param {Partial<Store>} state - the redux store
  * @param {MDALiteCDDFilters} props - the CDDs filters object
  */
-export const getMDALiteCDDsArrayByStatus = () =>
+export const getMDALiteCDDsArrayBySupervisorId = () =>
   createSelector([MDALiteCDDsArrayBaseSelector, getSupervisorId], (cdds, supervisorId) =>
     supervisorId ? cdds.filter(cdd => supervisorId === cdd.supervisor_id) : cdds
+  );
+
+/**
+ * Gets an array of CDDs objects filtered by ward id
+ * @param {Partial<Store>} state - the redux store
+ * @param {MDALiteCDDFilters} props - the CDDs filters object
+ */
+export const getMDALiteCDDsArrayByWardId = () =>
+  createSelector([MDALiteCDDsArrayBaseSelector, getWardId], (cdds, wardId) =>
+    wardId ? cdds.filter(cdd => wardId === cdd.ward_id) : cdds
   );
 
 /**
@@ -117,6 +136,7 @@ export const getMDALiteCDDsArrayByStatus = () =>
  * of the following:
  *    - cdd_name
  *    - supervisor_id
+ *    - ward_id
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *
@@ -130,7 +150,11 @@ export const getMDALiteCDDsArrayByStatus = () =>
  */
 export const makeMDALiteCDDsArraySelector = () => {
   return createSelector(
-    [getMDALiteCDDsArrayByTitle(), getMDALiteCDDsArrayByStatus()],
-    (cdd1, cdd2) => intersect([cdd1, cdd2], JSON.stringify)
+    [
+      getMDALiteCDDsArrayByName(),
+      getMDALiteCDDsArrayBySupervisorId(),
+      getMDALiteCDDsArrayByWardId(),
+    ],
+    (cdd1, cdd2, cdd3) => intersect([cdd1, cdd2, cdd3], JSON.stringify)
   );
 };

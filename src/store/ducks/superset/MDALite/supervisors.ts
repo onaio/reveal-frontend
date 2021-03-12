@@ -74,7 +74,7 @@ export const getWardId = (_: Partial<Store>, props: MDALiteSupervisorFilters) =>
  * @param {Partial<Store>} state - the redux store
  * @param {MDALiteSupervisorFilters} props - the  Supervisors filters object
  */
-export const getMDALiteSupervisorsArrayByTitle = () =>
+export const getMDALiteSupervisorsArrayByName = () =>
   createSelector([MDALiteSupervisorsArrayBaseSelector, getName], (Supervisors, supervisorName) =>
     supervisorName
       ? Supervisors.filter(supervisor =>
@@ -88,7 +88,7 @@ export const getMDALiteSupervisorsArrayByTitle = () =>
  * @param {Partial<Store>} state - the redux store
  * @param {MDALiteSupervisorFilters} props - the Supervisors filters object
  */
-export const getMDALiteSupervisorsArrayByStatus = () =>
+export const getMDALiteSupervisorsArrayByWardId = () =>
   createSelector([MDALiteSupervisorsArrayBaseSelector, getWardId], (Supervisors, wardId) =>
     wardId ? Supervisors.filter(supervisor => wardId === supervisor.ward_id) : Supervisors
   );
@@ -111,7 +111,7 @@ export const getMDALiteSupervisorsArrayByStatus = () =>
  */
 export const makeMDALiteSupervisorsArraySelector = () => {
   return createSelector(
-    [getMDALiteSupervisorsArrayByTitle(), getMDALiteSupervisorsArrayByStatus()],
+    [getMDALiteSupervisorsArrayByName(), getMDALiteSupervisorsArrayByWardId()],
     (supervisor1, supervisor2) => intersect([supervisor1, supervisor2], JSON.stringify)
   );
 };

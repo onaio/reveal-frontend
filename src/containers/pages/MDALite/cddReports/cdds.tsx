@@ -1,12 +1,16 @@
 import { DrillDownTable } from '@onaio/drill-down-table/dist/types';
+import superset from '@onaio/superset-connector';
 import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
+import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
+import { Store } from 'redux';
 import IRSIndicatorLegend from '../../../../components/formatting/IRSIndicatorLegend';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  SUPERSET_MAX_RECORDS,
   SUPERSET_MDA_LITE_REPORTING_CDD_DATA_SLICE,
   SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_MDA_LITE_REPORTING_SUPERVISORS_DATA_SLICE,
@@ -20,18 +24,52 @@ import {
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
-import { GenericJurisdiction } from '../../../../store/ducks/generic/jurisdictions';
+import {
+  fetchGenericJurisdictions,
+  GenericJurisdiction,
+  getGenericJurisdictionById,
+} from '../../../../store/ducks/generic/jurisdictions';
+import {
+  fetchMDALiteCDDs,
+  makeMDALiteCDDsArraySelector,
+  MDALiteCDDData,
+  MDALiteCDDFilters,
+} from '../../../../store/ducks/superset/MDALite/cdd';
+import {
+  fetchMDALiteSupervisors,
+  makeMDALiteSupervisorsArraySelector,
+  MDALiteSupervisor,
+  MDALiteSupervisorFilters,
+} from '../../../../store/ducks/superset/MDALite/supervisors';
 import { cddReportColumns, getCddTableProps } from './helpers';
 
+/** declear selectors */
+const CDDsArraySelector = makeMDALiteCDDsArraySelector();
+const supervisorsArraySelector = makeMDALiteSupervisorsArraySelector();
+/** MDA Lite CDD report props */
 interface MDALiteCddReportsProps {
-  cddData: any[];
+  cddData: MDALiteCDDData[];
+  fetchCDDs: typeof fetchMDALiteCDDs;
+  fetchJurisdictions: typeof fetchGenericJurisdictions;
+  fetchSupervisors: typeof fetchMDALiteSupervisors;
   service: typeof supersetFetch;
-  supervisorData: any[];
+  slices: string[];
+  supervisorData: MDALiteSupervisor[];
   wardData: GenericJurisdiction[];
 }
 
+/** Component for displaying MDA Lite CDD Reports */
 const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<RouteParams>) => {
-  const { cddData, supervisorData, wardData, service } = props;
+  const {
+    cddData,
+    supervisorData,
+    wardData,
+    service,
+    slices,
+    fetchCDDs,
+    fetchJurisdictions,
+    fetchSupervisors,
+  } = props;
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -42,15 +80,30 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
   async function loadData() {
     setLoading(cddData.length < 1);
     try {
-      if (planId && jurisdictionId && !supervisorData.length) {
-        await service(SUPERSET_MDA_LITE_REPORTING_SUPERVISORS_DATA_SLICE);
+      if (jurisdictionId && !supervisorData.length) {
+        const fetchSupervisorParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
+          { comparator: jurisdictionId, operator: '==', subject: 'ward_id' },
+        ]);
+        await service(
+          SUPERSET_MDA_LITE_REPORTING_SUPERVISORS_DATA_SLICE,
+          fetchSupervisorParams
+        ).then(res => fetchSupervisors(res));
       }
       if (planId && jurisdictionId && wardData.length) {
-        const slices = SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_DATA_SLICES.split(',');
-        await service(slices[0]);
+        const fetchWardParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
+          { comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' },
+          { comparator: planId, operator: '==', subject: 'plan_id' },
+        ]);
+        await service(slices[0], fetchWardParams).then(res => fetchJurisdictions(slices[0], res));
       }
-      if (planId && jurisdictionId && supervisorId) {
-        await service(SUPERSET_MDA_LITE_REPORTING_CDD_DATA_SLICE);
+      if (jurisdictionId && supervisorId) {
+        const fetchCDDParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
+          { comparator: jurisdictionId, operator: '==', subject: 'ward_id' },
+          { comparator: supervisorId, operator: '==', subject: 'supervisor_id' },
+        ]);
+        await service(SUPERSET_MDA_LITE_REPORTING_CDD_DATA_SLICE, fetchCDDParams).then(res =>
+          fetchCDDs(res)
+        );
       }
     } catch (e) {
       displayError(e);
@@ -112,7 +165,11 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
 /** default props */
 const defaultProps: MDALiteCddReportsProps = {
   cddData: [],
+  fetchCDDs: fetchMDALiteCDDs,
+  fetchJurisdictions: fetchGenericJurisdictions,
+  fetchSupervisors: fetchMDALiteSupervisors,
   service: supersetFetch,
+  slices: SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_DATA_SLICES.split(','),
   supervisorData: [],
   wardData: [],
 };
@@ -120,3 +177,50 @@ const defaultProps: MDALiteCddReportsProps = {
 MDALiteCddReports.defaultProps = defaultProps;
 
 export { MDALiteCddReports };
+
+/** map dispatch to props */
+const mapDispatchToProps = {
+  fetchCDDs: fetchMDALiteCDDs,
+  fetchJurisdictions: fetchGenericJurisdictions,
+  fetchSupervisors: fetchMDALiteSupervisors,
+};
+
+/** Dispatched State Props  */
+type DispatchedStateProps = Pick<MDALiteCddReportsProps, 'cddData' | 'supervisorData' | 'wardData'>;
+
+/** map state to props */
+const mapStateToProps = (
+  state: Partial<Store>,
+  ownProps: RouteComponentProps<RouteParams>
+): DispatchedStateProps => {
+  const { params } = ownProps.match;
+  const { planId, jurisdictionId, supervisorId } = params;
+  const cddFilters: MDALiteCDDFilters = {
+    supervisor_id: supervisorId,
+    ward_id: jurisdictionId,
+  };
+  const supervisorFilters: MDALiteSupervisorFilters = {
+    ward_id: jurisdictionId,
+  };
+  const cddData = CDDsArraySelector(state, cddFilters);
+  const supervisorData = supervisorsArraySelector(state, supervisorFilters);
+  const wardData: GenericJurisdiction[] = [];
+  if (jurisdictionId) {
+    defaultProps.slices.forEach((slice: string) => {
+      const jur = getGenericJurisdictionById(state, slice, jurisdictionId);
+      if (jur && jur.plan_id === planId) {
+        wardData.push(jur);
+      }
+    });
+  }
+  return {
+    cddData,
+    supervisorData,
+    wardData,
+  };
+};
+
+/** Connected MDALiteCddReports component */
+const ConnectedMDALiteCddReports = connect(mapStateToProps, mapDispatchToProps)(MDALiteCddReports);
+
+export default ConnectedMDALiteCddReports;
