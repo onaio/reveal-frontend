@@ -1,0 +1,36 @@
+// tslint:disable: object-literal-sort-keys
+export const MDALitePlans = [
+  {
+    plan_id: '5e396185-6094-4817-9dd4-24bcbbc698b0',
+    jurisdiction_root_parent_ids: '["bac41d87-b09d-4e76-be3b-3b6d07399891"]',
+    plan_title: 'MDA-Lite 2021-03-02',
+    plan_name: 'MDA-Lite-2021-03-02',
+    plan_status: 'active',
+    plan_date: 1614643200000,
+    plan_effective_period_start: 1614643200000,
+    plan_effective_period_end: 1616371200000,
+    plan_intervention_type: 'MDA-Lite',
+  },
+  {
+    plan_id: '6b485d4b-1043-40ed-ab8a-c64d24045ada',
+    jurisdiction_root_parent_ids: '["bac41d87-b09d-4e76-be3b-3b6d07399891"]',
+    plan_title: 'MDA-Lite kenya 2021-01-08',
+    plan_name: 'MDA-Lite-2021-01-08',
+    plan_status: 'active',
+    plan_date: 1610064000000,
+    plan_effective_period_start: 1610064000000,
+    plan_effective_period_end: 1640822400000,
+    plan_intervention_type: 'MDA-Lite',
+  },
+  {
+    plan_id: 'bbaf9674-e381-45f1-94d1-23bd373bc88e',
+    jurisdiction_root_parent_ids: '["bac41d87-b09d-4e76-be3b-3b6d07399891"]',
+    plan_title: 'MDA-Lite Em test3 2021-02-17',
+    plan_name: 'MDA-Lite-2021-02-17',
+    plan_status: 'active',
+    plan_date: 1613520000000,
+    plan_effective_period_start: 1613520000000,
+    plan_effective_period_end: 1615248000000,
+    plan_intervention_type: 'MDA-Lite',
+  },
+];
