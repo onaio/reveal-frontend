@@ -3,6 +3,7 @@ import { DropDownCellProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Col, Row } from 'reactstrap';
 import { SHOW_MAP_AT_JURISDICTION_LEVEL } from '../../configs/env';
 import { MAP } from '../../constants';
 
@@ -17,18 +18,20 @@ export interface LinkedCellProps extends DropDownCellProps {
 const MDALiteTableCell: React.ElementType<LinkedCellProps> = (props: LinkedCellProps) => {
   const { cell, cellValue, hasChildren, urlPath } = props;
   const original: Dictionary = cell.row.original;
-  const { jurisdiction_id, plan_id, jurisdiction_depth } = original;
-  const url = `${urlPath}/${plan_id}/${jurisdiction_id}`;
+  const { jurisdiction_id, jurisdiction_depth } = original;
+  const url = `${urlPath}/${jurisdiction_id}`;
   const jurLink = <Link to={url}>{cellValue}</Link>;
   if (SHOW_MAP_AT_JURISDICTION_LEVEL === +jurisdiction_depth) {
     return (
       <div style={{ minWidth: '100%' }}>
-        {jurLink}
-        <span>
-          <Link style={{ paddingLeft: '20px' }} to={`${url}/${MAP}`}>
-            <FontAwesomeIcon icon={['fas', MAP]} />
-          </Link>
-        </span>
+        <Row>
+          <Col sm={8}>{jurLink}</Col>
+          <Col sm={4}>
+            <Link style={{ paddingLeft: '20px' }} to={`${url}/${MAP}`}>
+              <FontAwesomeIcon icon={['fas', MAP]} />
+            </Link>
+          </Col>
+        </Row>
       </div>
     );
   }

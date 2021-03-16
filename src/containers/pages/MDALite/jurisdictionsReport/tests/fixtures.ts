@@ -33,12 +33,12 @@ export const MDALiteJurReports = [
   {
     id: '89bb4010-38ee-5eac-b92a-4deafa62765a',
     plan_id: '5e396185-6094-4817-9dd4-24bcbbc698b0',
-    jurisdiction_id: 'f2482d8c-e6ed-433b-860f-96c9cd09b4a3',
-    jurisdiction_parent_id: '38482d8c-e6ed-433b-860f-96c9cd09b4a3',
+    jurisdiction_id: '38482d8c-e6ed-433b-860f-96c9cd09b4a3',
+    jurisdiction_parent_id: '3c63f48e-bb86-42e5-b3ff-bc539fbf5295',
     jurisdiction_name: 'emuhaya',
     jurisdiction_depth: 2,
     jurisdiction_path:
-      '["25e8a10b-737c-44e7-bfff-3b6344b1126f", "f2482d8c-e6ed-433b-860f-96c9cd09b4a3"]',
+      '["25e8a10b-737c-44e7-bfff-3b6344b1126f", "3c63f48e-bb86-42e5-b3ff-bc539fbf5295"]',
     jurisdiction_name_path: '["Kenya", "Vihiga"]',
     treated_male_1_4: 0,
     treated_male_5_14: 0,
@@ -95,7 +95,7 @@ export const MDALiteJurReports = [
     jurisdiction_name: 'hamisi',
     jurisdiction_depth: 2,
     jurisdiction_path:
-      '["25e8a10b-737c-44e7-bfff-3b6344b1126f", "f2482d8c-e6ed-433b-860f-96c9cd09b4a3"]',
+      '["25e8a10b-737c-44e7-bfff-3b6344b1126f", "3c63f48e-bb86-42e5-b3ff-bc539fbf5295"]',
     jurisdiction_name_path: '["Kenya", "Vihiga"]',
     treated_male_1_4: 0,
     treated_male_5_14: 0,
