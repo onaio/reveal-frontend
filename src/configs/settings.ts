@@ -50,6 +50,11 @@ import {
   CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE,
   CASE_NOTIF_DATE_HEADER,
   CASE_TRIGGERED_TITLE,
+  CDD_SUPERVISION_ACTIVITY,
+  CDD_SUPERVISION_ACTIVITY_DESCRIPTION,
+  CDD_SUPERVISION_EXPRESSION_DESCRIPTION,
+  CDD_SUPERVISION_GOAL_DESCRIPTION,
+  CDD_SUPERVISION_GOAL_MEASURE,
   DATE_COMPLETED,
   DEFAULT,
   DISTRICT,
@@ -119,6 +124,8 @@ import {
   CASE_CONFIRMATION_CODE,
   CASE_NUMBER_CODE,
   CASE_TRIGGERED,
+  CDD_SUPERVISION_ACTIVITY_CODE,
+  CDD_SUPERVISION_CODE,
   CREATE_TYPE,
   DISABLED,
   DYNAMIC_BCC_ACTIVITY_CODE,
@@ -337,6 +344,7 @@ export const PlanActionCodes = [
   MDA_ADHERENCE_CODE,
   MDA_POINT_DISPENSE_CODE,
   MDA_POINT_ADVERSE_EFFECTS_CODE,
+  CDD_SUPERVISION_CODE,
 ] as const;
 
 /** Allowed taskGenerationStatus values */
@@ -466,6 +474,7 @@ export const PlanActivityTitles = [
   MDA_ADHERENCE,
   MDA_FAMILY_REGISTRATION,
   MDA_DISPENSE_ACTIVITY_CODE,
+  CDD_SUPERVISION_ACTIVITY_CODE,
 ] as const;
 
 /** default plan activities */
@@ -503,6 +512,59 @@ export const planActivities: PlanActivities = {
           },
           due: '',
           measure: BCC_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  CDDSupervision: {
+    action: {
+      code: CDD_SUPERVISION_CODE,
+      condition: [
+        {
+          expression: {
+            description: CDD_SUPERVISION_EXPRESSION_DESCRIPTION,
+            expression: '$this.is(FHIR.Location)',
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+      ],
+      definitionUri: 'community_drug_distributor_supervisor_daily_summary_form.json',
+      description: CDD_SUPERVISION_ACTIVITY_DESCRIPTION,
+      goalId: 'CDD_Supervision',
+      identifier: '',
+      prefix: 1,
+      reason: ROUTINE,
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: CDD_SUPERVISION_ACTIVITY,
+      trigger: [
+        {
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+      ],
+      type: CREATE_TYPE,
+    },
+    goal: {
+      description: CDD_SUPERVISION_GOAL_DESCRIPTION,
+      id: 'CDD_Supervision',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.PERCENT,
+              value: 100,
+            },
+          },
+          due: '',
+          measure: CDD_SUPERVISION_GOAL_MEASURE,
         },
       ],
     },

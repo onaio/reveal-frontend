@@ -19,6 +19,7 @@ export enum InterventionType {
   IRS = 'IRS',
   IRSLite = 'IRS-Lite',
   MDA = 'MDA',
+  MDALite = 'MDA-Lite',
   MDAPoint = 'MDA-Point',
 }
 /** interface for plan Objects */

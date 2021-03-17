@@ -328,6 +328,7 @@ describe('containers/forms/PlanForm/helpers', () => {
       GoalUnit.PERCENT, // MDA Adherence  ==> TODO: figure out how to pass isDyanmic to getPlanActivityFromActionCode
       GoalUnit.PERCENT, // MDA Dispense
       GoalUnit.PERCENT, // MDA Adverse events
+      GoalUnit.PERCENT, // CDD Supervision
     ];
     for (let index = 0; index < PlanActionCodes.length; index++) {
       const intervention = Object.values(InterventionType).find(inter =>

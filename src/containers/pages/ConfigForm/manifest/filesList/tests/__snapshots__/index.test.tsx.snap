@@ -10,6 +10,7 @@ Object {
     minHeight="80vh"
     width="64px"
   />,
+  "accessToken": [Function],
   "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
   "createdAt": "Created at",
   "customAlert": [Function],

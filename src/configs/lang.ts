@@ -464,6 +464,28 @@ export const B1_DESCRIPTION = translate(
   'B1_DESCRIPTION',
   'Receptive area but no indigenous cases within the last 3 years.'
 );
+
+export const CDD_SUPERVISION_ACTIVITY_DESCRIPTION = translate(
+  'CDD_SUPERVISION_ACTIVITY_DESCRIPTION',
+  'Visit each operational area and submit one CDD Supervisor Daily Summary form'
+);
+export const CDD_SUPERVISION_ACTIVITY = translate(
+  'CDD_SUPERVISION_ACTIVITY',
+  'Submit CDD Supervisor Daily Summary form'
+);
+export const CDD_SUPERVISION_EXPRESSION_DESCRIPTION = translate(
+  'CDD_SUPERVISION_EXPRESSION_DESCRIPTION',
+  'Structure type does not exist'
+);
+export const CDD_SUPERVISION_GOAL_DESCRIPTION = translate(
+  'CDD_SUPERVISION_GOAL_DESCRIPTION',
+  'Submit one CDD Supervisor Daily Summary form per operational area per day'
+);
+export const CDD_SUPERVISION_GOAL_MEASURE = translate(
+  'CDD_SUPERVISION_GOAL_MEASURE',
+  'Percent of forms submitted'
+);
+
 export const B1_NAME = translate('B1_NAME', 'Cleared Receptive');
 export const B2_DESCRIPTION = translate('B2_DESCRIPTION', 'Non-receptive area.');
 export const B2_NAME = translate('B2_NAME', 'Cleared Non-Receptive');
@@ -539,6 +561,7 @@ export const MDA_POINT_TITLE = translate('MDA_POINT_TITLE', 'MDA Point');
 export const DYNAMIC_FI_TITLE = translate('DYNAMIC_FI_TITLE', 'Dynamic FI');
 export const DYNAMIC_IRS_TITLE = translate('DYNAMIC_IRS_TITLE', 'Dynamic IRS');
 export const DYNAMIC_MDA_TITLE = translate('DYNAMIC_MDA_TITLE', 'Dynamic MDA');
+export const MDA_LITE_TITLE = translate('MDA_LITE_TITLE', 'MDA-Lite');
 export const SMC_TITLE = translate('SMC_TITLE', 'SMC');
 export const TEAM_ASSIGNMENT_SUCCESSFUL = translate(
   'TEAM_ASSIGNMENT_SUCCESSFUL',

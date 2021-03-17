@@ -197,6 +197,11 @@ exports[`containers/forms/PlanForm - Edit ACTIVE renders all fields correctly in
     MDA Point
   </option>
   <option
+    value="MDA-Lite"
+  >
+    MDA-Lite
+  </option>
+  <option
     value="Dynamic-FI"
   >
     Dynamic FI
@@ -462,6 +467,11 @@ exports[`containers/forms/PlanForm - Edit COMPLETE renders all fields correctly 
     MDA Point
   </option>
   <option
+    value="MDA-Lite"
+  >
+    MDA-Lite
+  </option>
+  <option
     value="Dynamic-FI"
   >
     Dynamic FI
@@ -725,6 +735,11 @@ exports[`containers/forms/PlanForm - Edit DRAFT renders all fields correctly in 
     value="MDA-Point"
   >
     MDA Point
+  </option>
+  <option
+    value="MDA-Lite"
+  >
+    MDA-Lite
   </option>
   <option
     value="Dynamic-FI"
@@ -1404,7 +1419,7 @@ exports[`containers/forms/PlanForm - Submission Form validation works for activi
       actionCode
     </strong>
     : 
-    activities[0].actionCode must be one of the following values: BCC, IRS, Bednet Distribution, Blood Screening, Case Confirmation, RACD Register Family, Larval Dipping, Mosquito Collection, MDA Adherence, MDA Dispense, MDA Adverse Event(s)
+    activities[0].actionCode must be one of the following values: BCC, IRS, Bednet Distribution, Blood Screening, Case Confirmation, RACD Register Family, Larval Dipping, Mosquito Collection, MDA Adherence, MDA Dispense, MDA Adverse Event(s), CDD Supervision
   </li>
   <li
     id="actionDescription-0-error"
@@ -4490,6 +4505,11 @@ exports[`containers/forms/PlanForm renders correctly: interventionType field 1`]
     value="MDA-Point"
   >
     MDA Point
+  </option>
+  <option
+    value="MDA-Lite"
+  >
+    MDA-Lite
   </option>
 </select>
 `;

@@ -140,7 +140,7 @@ export const REACT_APP_VERSION = 'v0.4.2';
 export const DISPLAYED_PLAN_TYPES = ['FI', 'IRS', 'MDA', 'MDA-Point'];
 export type DISPLAYED_PLAN_TYPES = typeof DISPLAYED_PLAN_TYPES;
 
-export const PLAN_TYPES_ALLOWED_TO_CREATE = ['FI', 'IRS', 'MDA', 'MDA-Point'];
+export const PLAN_TYPES_ALLOWED_TO_CREATE = ['FI', 'IRS', 'MDA', 'MDA-Point', 'MDA-Lite'];
 export type PLAN_TYPES_ALLOWED_TO_CREATE = typeof PLAN_TYPES_ALLOWED_TO_CREATE;
 
 export const ENABLED_FI_REASONS = ['Case Triggered', 'Routine'];
@@ -190,6 +190,7 @@ export const PLAN_TYPES_WITH_MULTI_JURISDICTIONS = [
   'MDA-Point',
   'Dynamic-IRS',
   'Dynamic-MDA',
+  'MDA-Lite',
 ];
 
 export const SHOW_TEAM_ASSIGN_ON_OPERATIONAL_AREAS_ONLY = false;

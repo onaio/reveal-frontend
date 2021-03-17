@@ -2,11 +2,13 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import configureMockStore from 'redux-mock-store';
 import { defaultProps as defaultPlanFormProps } from '../../../../../../components/forms/PlanForm';
 import { generatePlanDefinition } from '../../../../../../components/forms/PlanForm/helpers';
+import { MDALitePlanPayload } from '../../../../../../components/forms/PlanForm/tests/fixtures';
 import HeaderBreadcrumb from '../../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { FOCUS_AREA_HEADER } from '../../../../../../configs/lang';
 import store from '../../../../../../store';
@@ -188,7 +190,9 @@ describe('containers/pages/NewPlan', () => {
       .find('select[name="fiStatus"]')
       .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
 
@@ -247,7 +251,9 @@ describe('containers/pages/NewPlan', () => {
       .find('select[name="fiStatus"]')
       .simulate('change', { target: { name: 'fiStatus', value: 'A2' } });
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
 
@@ -290,7 +296,9 @@ describe('containers/pages/NewPlan', () => {
       .find('input[name="jurisdictions[0].name"]')
       .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
 
@@ -341,7 +349,9 @@ describe('containers/pages/NewPlan', () => {
       .find('input[name="jurisdictions[0].name"]')
       .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
 
-    wrapper.find('form').simulate('submit');
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
 
     await new Promise<any>(resolve => setImmediate(resolve));
 
@@ -354,5 +364,63 @@ describe('containers/pages/NewPlan', () => {
     ).toEqual({});
 
     expect(mockedStore.dispatch).not.toHaveBeenCalled();
+  });
+
+  it('New plan in planning tool works with MDA-Lite plans', async () => {
+    div.setAttribute('id', 'plan-trigger-conditions-0');
+    document.body.appendChild(div);
+    const wrapper = mount(
+      <Provider store={mockStore({})}>
+        <Router history={history}>
+          <NewPlanForPlanning />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await new Promise<any>(resolve => setImmediate(resolve));
+    });
+    wrapper.update();
+    // Set MDA-Lite for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'MDA-Lite' } });
+    // set jurisdiction details - id and name
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+    await new Promise<any>(resolve => setImmediate(resolve));
+
+    // check what is submited
+    const payload = {
+      ...MDALitePlanPayload,
+      jurisdiction: [
+        {
+          code: '1337',
+        },
+      ],
+    };
+    expect(fetch.mock.calls[2]).toEqual([
+      'https://test.smartregister.org/opensrp/rest/plans',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        // we have not changed anything on the plan template so incase the template is changed body should fail
+        body: JSON.stringify(payload),
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer null',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'POST',
+      },
+    ]);
   });
 });
