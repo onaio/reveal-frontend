@@ -8,7 +8,10 @@ import { Router } from 'react-router';
 import configureMockStore from 'redux-mock-store';
 import { defaultProps as defaultPlanFormProps } from '../../../../../../components/forms/PlanForm';
 import { generatePlanDefinition } from '../../../../../../components/forms/PlanForm/helpers';
-import { MDALitePlanPayload } from '../../../../../../components/forms/PlanForm/tests/fixtures';
+import {
+  jurisdictionLevel0JSON,
+  MDALitePlanPayload,
+} from '../../../../../../components/forms/PlanForm/tests/fixtures';
 import HeaderBreadcrumb from '../../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { FOCUS_AREA_HEADER } from '../../../../../../configs/lang';
 import store from '../../../../../../store';
@@ -110,6 +113,8 @@ describe('containers/pages/NewPlan', () => {
       .find('select[name="interventionType"]')
       .simulate('change', { target: { name: 'interventionType', value: 'Dynamic-FI' } });
     wrapper.update();
+    // fi is enabled
+    expect(wrapper.find('select[name="fiStatus"]').prop('disabled')).toBeFalsy();
 
     (wrapper
       .find('FieldInner')
@@ -422,5 +427,39 @@ describe('containers/pages/NewPlan', () => {
         method: 'POST',
       },
     ]);
+  });
+
+  it('Focus Classification', async () => {
+    fetch.mockResponseOnce(jurisdictionLevel0JSON);
+    fetch.mockResponseOnce(JSON.stringify([]));
+
+    const envModule = require('../../../../../../configs/env');
+    envModule.AUTO_SELECT_FI_CLASSIFICATION = true;
+    // create divs for condition and triggers toggles - should equal number of activities
+    [0, 1, 2, 3, 4, 5].forEach(id => {
+      const div1 = document.createElement('div');
+      div1.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div1);
+    });
+    document.body.appendChild(div);
+    const wrapper = mount(
+      <Provider store={mockStore({})}>
+        <Router history={history}>
+          <ConnectedBaseNewPlan />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await new Promise<any>(resolve => setImmediate(resolve));
+    });
+    wrapper.update();
+
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'Dynamic-FI' } });
+
+    expect(wrapper.find('select[name="fiStatus"]').prop('disabled')).toBeTruthy();
+    expect(wrapper.find('select[name="fiStatus"]').props().value).toEqual(undefined);
+    // can not find a way of programatically selecting async select
   });
 });
