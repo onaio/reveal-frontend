@@ -102,14 +102,19 @@ Below is a list of currently supported environment variables:
   - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
   - Variable is **not required** and if not provided interventions on `REACT_APP_DISPLAYED_PLAN_TYPES` are loaded.
 
-  - **REACT_APP_CHECK_SESSION_EXPIRY_STATUS**
+- **REACT_APP_CHECK_SESSION_EXPIRY_STATUS**
 
   - **not Required**; _(string)_
   - to activate set the env to `true`, any other value will be interpreted as false.
   - default value is false.
   - enables check for session expiry
 
-  - **REACT_APP_OPENSRP_GENERATED_TASKS_INTERVENTIONS**
+- **REACT_APP_OPENSRP_GENERATED_TASKS_INTERVENTIONS**
 
   - Optional parameter of plan intervention types whose tasks should be generated on opensrp
+  - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
+
+- **REACT_APP_HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS**
+
+  - Optional parameter of plan intervention types whose some fields will be hidden when the plan status is draft, active or completed.
   - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
