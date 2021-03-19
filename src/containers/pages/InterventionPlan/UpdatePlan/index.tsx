@@ -14,6 +14,7 @@ import { getPlanFormValues } from '../../../../components/forms/PlanForm/helpers
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
+import { HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS } from '../../../../configs/env';
 import { COULD_NOT_LOAD_PLAN, HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import { HOME_URL, NEW_PLAN_URL, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../../constants';
@@ -25,6 +26,7 @@ import planDefinitionReducer, {
   getPlanDefinitionById,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
+import { PlanStatus } from '../../../../store/ducks/plans';
 import ConnectedCaseDetails, { CaseDetailsProps } from './CaseDetails';
 import ConnectedPlanLocationNames from './PlanLocationNames';
 import { beforeSubmitFactory, getEventId, planIsReactive } from './utils';
@@ -43,6 +45,24 @@ export interface UpdatePlanProps {
 export interface RouteParams {
   id: string;
 }
+
+/** plan statuses to hide field */
+const hideFieldsOnPlanStatuses = [PlanStatus.ACTIVE, PlanStatus.COMPLETE, PlanStatus.DRAFT];
+
+/** fields to hide */
+const activityHiddenFields = [
+  'activityActionTitle',
+  'activityActionReason',
+  'activityTimingPeriodStart',
+  'activityTimingPeriodEnd',
+  'activityGoalPriority',
+];
+const hideFields = [
+  ...activityHiddenFields,
+  'interventionType',
+  'fiReason',
+  'triggersAndConditions',
+];
 
 /** Component used to update Plan Definition objects */
 const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) => {
@@ -103,10 +123,16 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   const initialValues = getPlanFormValues(plan);
   const beforeSubmit = beforeSubmitFactory(plan);
 
+  const hiddenFields =
+    HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS.includes(initialValues.interventionType) &&
+    hideFieldsOnPlanStatuses.includes(initialValues.status)
+      ? hideFields
+      : [];
   const planStatus = (plan && plan.status) || '';
   const planFormProps: Partial<PlanFormProps> = {
     ...propsForUpdatingPlans(planStatus),
     beforeSubmit,
+    hiddenFields,
     initialValues,
     /** a renderProp prop. this tells the planForm; I will give you a component that knows of the plan you are displaying,
      * the component will get jurisdictions associated with that plan and render them as links, what you(planForm)

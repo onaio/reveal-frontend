@@ -148,7 +148,7 @@ const JurisdictionMetadataImportView = () => {
       <Row>
         <Col md={6}>
           <Card>
-            <CardBody>
+            <CardBody className="meta-card-body">
               <h5 className="mb-3 mt-5 page-title">{HOW_TO_UPDATE_JURISDICTION_METADATA}</h5>
               <ol>
                 <li>{JURISDICTION_UPLOAD_STEP_1}</li>
@@ -163,7 +163,7 @@ const JurisdictionMetadataImportView = () => {
         </Col>
         <Col md={6}>
           <Card>
-            <CardBody>
+            <CardBody className="meta-card-body">
               <h5 className="mb-3 mt-5 page-title">{UPLOAD_JURISDICTION_METADATA}</h5>
               <JurisdictionMetadata {...jurisdictionMetadataFormProps} />
             </CardBody>
@@ -174,7 +174,7 @@ const JurisdictionMetadataImportView = () => {
       <Row>
         <Col md={6}>
           <Card>
-            <CardBody>
+            <CardBody className="meta-card-body">
               <h5 className="mb-3 mt-5 page-title">{DOWNLOAD_JURISDICTION_METADATA}</h5>
               <JurisdictionMetadataDownload {...jurisdictionMetadataDownloadFormProps} />
             </CardBody>

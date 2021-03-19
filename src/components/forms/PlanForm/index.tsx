@@ -182,6 +182,7 @@ export interface PlanFormProps {
     curr: any,
     next: any
   ) => void /** callback to handle form values, used to pass them to parent components */;
+  hiddenFields: string[] /** field that are hidden */;
   initialValues: PlanFormFields /** initial values for fields on the form */;
   jurisdictionLabel: string /** the label used for the jurisdiction selection */;
   redirectAfterAction: string /** the url to redirect to after form submission */;
@@ -213,6 +214,7 @@ const PlanForm = (props: PlanFormProps) => {
     jurisdictionLabel,
     redirectAfterAction,
     addPlan,
+    hiddenFields,
   } = props;
 
   useEffect(() => {
@@ -380,7 +382,7 @@ const PlanForm = (props: PlanFormProps) => {
                 className="form-text text-danger date-error"
               />
             </FormGroup>
-            <FormGroup>
+            <FormGroup hidden={hiddenFields.includes('interventionType')}>
               <Label for="interventionType">{INTERVENTION_TYPE_LABEL}</Label>
               <Field
                 required={true}
@@ -595,7 +597,7 @@ const PlanForm = (props: PlanFormProps) => {
               </FormGroup>
             )}
             {isFIOrDynamicFI(values.interventionType) && (
-              <FormGroup>
+              <FormGroup hidden={hiddenFields.includes('fiReason')}>
                 <Label for="fiReason">{FOCUS_INVESTIGATION_STATUS_REASON}</Label>
                 <Field
                   required={isFIOrDynamicFI(values.interventionType)}
@@ -789,7 +791,7 @@ const PlanForm = (props: PlanFormProps) => {
                               </ul>
                             </div>
                           )}
-                          <FormGroup>
+                          <FormGroup hidden={hiddenFields.includes('activityActionTitle')}>
                             <Label for={`activities-${index}-actionTitle`}>{ACTION}</Label>
                             <Field
                               type="text"
@@ -860,7 +862,7 @@ const PlanForm = (props: PlanFormProps) => {
                               value={values.activities[index].actionDescription}
                             />
                           </FormGroup>
-                          <FormGroup>
+                          <FormGroup hidden={hiddenFields.includes('activityActionTitle')}>
                             <Label for={`activities-${index}-actionReason`}>{REASON_HEADER}</Label>
                             <Field
                               component="select"
@@ -971,7 +973,7 @@ const PlanForm = (props: PlanFormProps) => {
                                 className="form-text text-danger"
                               />
                             </FormGroup>
-                            <FormGroup>
+                            <FormGroup hidden={hiddenFields.includes('activityTimingPeriodStart')}>
                               <Label for={`activities-${index}-timingPeriodStart`}>
                                 {START_DATE}
                               </Label>
@@ -1001,7 +1003,7 @@ const PlanForm = (props: PlanFormProps) => {
                                 className="form-text text-danger"
                               />
                             </FormGroup>
-                            <FormGroup>
+                            <FormGroup hidden={hiddenFields.includes('activityTimingPeriodEnd')}>
                               <Label for={`activities-${index}-timingPeriodEnd`}>{END_DATE}</Label>
                               <Field
                                 type="date"
@@ -1035,7 +1037,7 @@ const PlanForm = (props: PlanFormProps) => {
                                 value={values.activities[index].timingPeriodEnd || ''}
                               />
                             </FormGroup>
-                            <FormGroup>
+                            <FormGroup hidden={hiddenFields.includes('activityGoalPriority')}>
                               <Label for={`activities-${index}-goalPriority`}>
                                 {PRIORITY_LABEL}
                               </Label>
@@ -1076,6 +1078,7 @@ const PlanForm = (props: PlanFormProps) => {
                               <Button
                                 className="btn-light btn-block"
                                 id={`plan-trigger-conditions-${index}`}
+                                hidden={hiddenFields.includes('triggersAndConditions')}
                               >
                                 {`${TRIGGERS_LABEL} ${AND} ${CONDITIONS_LABEL}`}
                               </Button>
@@ -1223,6 +1226,7 @@ export const defaultProps: PlanFormProps = {
   disabledActivityFields: [],
   disabledFields: [],
   formHandler: (_, __) => void 0,
+  hiddenFields: [],
   initialValues: defaultInitialValues,
   jurisdictionLabel: FOCUS_AREA_HEADER,
   redirectAfterAction: PLAN_LIST_URL,
