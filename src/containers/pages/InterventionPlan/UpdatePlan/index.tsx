@@ -10,14 +10,20 @@ import PlanForm, {
   PlanFormProps,
   propsForUpdatingPlans,
 } from '../../../../components/forms/PlanForm';
-import { getPlanFormValues } from '../../../../components/forms/PlanForm/helpers';
+import { getPlanFormValues, isFIOrDynamicFI } from '../../../../components/forms/PlanForm/helpers';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import { HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS } from '../../../../configs/env';
 import { COULD_NOT_LOAD_PLAN, HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
-import { HOME_URL, NEW_PLAN_URL, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../../constants';
+import {
+  CASE_TRIGGERED,
+  HOME_URL,
+  NEW_PLAN_URL,
+  OPENSRP_PLANS,
+  PLAN_LIST_URL,
+} from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
 import { fetchEvents } from '../../../../store/ducks/opensrp/events';
@@ -123,9 +129,12 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   const initialValues = getPlanFormValues(plan);
   const beforeSubmit = beforeSubmitFactory(plan);
 
+  const isCaseTriggered =
+    isFIOrDynamicFI(initialValues.interventionType) && initialValues.fiReason === CASE_TRIGGERED;
   const hiddenFields =
     HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS.includes(initialValues.interventionType) &&
-    hideFieldsOnPlanStatuses.includes(initialValues.status)
+    hideFieldsOnPlanStatuses.includes(initialValues.status) &&
+    !isCaseTriggered
       ? hideFields
       : [];
   const planStatus = (plan && plan.status) || '';
