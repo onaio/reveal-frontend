@@ -173,6 +173,7 @@ export type LocationChildRenderProp = (
 
 /** interface for plan form props */
 export interface PlanFormProps {
+  addAndRemoveActivities: boolean /** activate adding and removing activities buttons */;
   allFormActivities: PlanActivityFormFields[] /** the list of all allowed activities */;
   allowMoreJurisdictions: boolean /** should we allow one to add more jurisdictions */;
   cascadingSelect: boolean /** should we use cascading selects for jurisdiction selection */;
@@ -215,6 +216,7 @@ const PlanForm = (props: PlanFormProps) => {
     redirectAfterAction,
     addPlan,
     hiddenFields,
+    addAndRemoveActivities,
   } = props;
 
   useEffect(() => {
@@ -748,29 +750,31 @@ const PlanForm = (props: PlanFormProps) => {
                     <div className="card mb-3" key={`div${arrItem.actionCode}-${index}`}>
                       <h5 className="card-header position-relative">
                         {values.activities[index].actionTitle}
-                        {values.activities && values.activities.length > 1 && !editMode && (
-                          <button
-                            type="button"
-                            className="close position-absolute removeArrItem removeActivity"
-                            aria-label="Close"
-                            onClick={() => {
-                              /** when we remove an item, we want to also remove its value from
-                               * the values object otherwise the Formik state gets out of sync
-                               */
-                              arrayHelpers.remove(index);
-                              const newActivityValues = getConditionAndTriggers(
-                                values.activities.filter(
-                                  e => e.actionCode !== values.activities[index].actionCode
-                                ),
-                                disabledFields.includes('activities')
-                              );
-                              setActionConditions(newActivityValues.conditions);
-                              setActionTriggers(newActivityValues.triggers);
-                            }}
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        )}
+                        {values.activities &&
+                          values.activities.length > 1 &&
+                          (!editMode || addAndRemoveActivities) && (
+                            <button
+                              type="button"
+                              className="close position-absolute removeArrItem removeActivity"
+                              aria-label="Close"
+                              onClick={() => {
+                                /** when we remove an item, we want to also remove its value from
+                                 * the values object otherwise the Formik state gets out of sync
+                                 */
+                                arrayHelpers.remove(index);
+                                const newActivityValues = getConditionAndTriggers(
+                                  values.activities.filter(
+                                    e => e.actionCode !== values.activities[index].actionCode
+                                  ),
+                                  disabledFields.includes('activities')
+                                );
+                                setActionConditions(newActivityValues.conditions);
+                                setActionTriggers(newActivityValues.triggers);
+                              }}
+                            >
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          )}
                       </h5>
                       <div className="card-body">
                         <fieldset key={`fieldset${arrItem.actionCode}-${index}`}>
@@ -1115,7 +1119,7 @@ const PlanForm = (props: PlanFormProps) => {
                   {values.activities &&
                     values.activities.length >= 1 &&
                     !checkIfAllActivitiesSelected(values) &&
-                    !editMode && (
+                    (!editMode || addAndRemoveActivities) && (
                       <div>
                         <Button
                           color="danger"
@@ -1219,6 +1223,7 @@ const PlanForm = (props: PlanFormProps) => {
 };
 
 export const defaultProps: PlanFormProps = {
+  addAndRemoveActivities: false,
   allFormActivities: getFormActivities(planActivities),
   allowMoreJurisdictions: true,
   beforeSubmit: () => true,

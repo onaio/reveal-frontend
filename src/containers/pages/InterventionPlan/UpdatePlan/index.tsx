@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import _ from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -126,7 +127,16 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     ],
   };
 
-  const initialValues = getPlanFormValues(plan);
+  /** Create a copy of mutable activities to allow splicing on PlanForm component
+   *  when adding and removing activities
+   */
+  const { activities, ...theRest } = getPlanFormValues(plan);
+  const activitiesCopy = _.cloneDeep(activities);
+  const initialValues = {
+    ...theRest,
+    activities: activitiesCopy,
+  };
+
   const beforeSubmit = beforeSubmitFactory(plan);
 
   const isCaseTriggered =
@@ -140,6 +150,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   const planStatus = (plan && plan.status) || '';
   const planFormProps: Partial<PlanFormProps> = {
     ...propsForUpdatingPlans(planStatus),
+    addAndRemoveActivities: isCaseTriggered,
     beforeSubmit,
     hiddenFields,
     initialValues,
