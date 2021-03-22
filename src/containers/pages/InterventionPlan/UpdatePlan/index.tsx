@@ -106,6 +106,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   const planStatus = (plan && plan.status) || '';
   const planFormProps: Partial<PlanFormProps> = {
     ...propsForUpdatingPlans(planStatus),
+    autoSelectFIStatus: false,
     beforeSubmit,
     initialValues,
     /** a renderProp prop. this tells the planForm; I will give you a component that knows of the plan you are displaying,
