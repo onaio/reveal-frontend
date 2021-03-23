@@ -260,10 +260,22 @@ const PlanForm = (props: PlanFormProps) => {
   /** get the source list of activities
    * This is used to filter out activities selected but not in the "source"
    * @param {PlanFormFields} values - current form values
+   * @param {PlanActivityFormFields[]} initialActivities - activities on initial values
    */
-  function getSourceActivities(values: PlanFormFields) {
+  function getSourceActivities(
+    values: PlanFormFields,
+    initialActivities?: PlanActivityFormFields[]
+  ) {
     if (planActivitiesMap.hasOwnProperty(values.interventionType)) {
-      return planActivitiesMap[values.interventionType];
+      const interventionActivities = planActivitiesMap[values.interventionType];
+      if (initialActivities && initialActivities.length) {
+        const initialActivitiesCodes = initialActivities.map(e => e.actionCode);
+        const missingActivities = interventionActivities.filter(
+          e => !initialActivitiesCodes.includes(e.actionCode)
+        );
+        return [...initialActivities, ...missingActivities];
+      }
+      return interventionActivities;
     }
     return allFormActivities;
   }
@@ -1150,7 +1162,7 @@ const PlanForm = (props: PlanFormProps) => {
                           <ModalBody>
                             {/** we want to allow the user to only add activities that are not already selected */}
                             <ul className="list-unstyled">
-                              {getSourceActivities(values)
+                              {getSourceActivities(values, initialValues.activities)
                                 .filter(
                                   e =>
                                     !values.activities.map(f => f.actionCode).includes(e.actionCode)
