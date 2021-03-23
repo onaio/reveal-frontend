@@ -280,17 +280,30 @@ const PlanForm = (props: PlanFormProps) => {
     return allFormActivities;
   }
 
+  /** get activity codes which does not exist on the plan template
+   *  @param {PlanFormFields} initialFormValues - current form values
+   */
+  const getAddedActivities = (initialFormValues: PlanFormFields) => {
+    const defaultActivityCodes = getSourceActivities(initialFormValues).map(e => e.actionCode);
+    return initialFormValues.activities
+      .map(e => e.actionCode)
+      .filter(e => !defaultActivityCodes.includes(e));
+  };
+
   /**
    * Check if all the source activities have been selected
    * @param {PlanFormFields} values - current form values
+   * @param {string[]} extraCodes - activity codes not on plans template activities
    */
-  function checkIfAllActivitiesSelected(values: PlanFormFields) {
-    return (
-      xor(
-        getSourceActivities(values).map(e => e.actionCode),
-        values.activities.map(e => e.actionCode)
-      ).length === 0
+  function checkIfAllActivitiesSelected(values: PlanFormFields, extraCodes: string[]) {
+    const activeActivityCodes = values.activities.map(e => e.actionCode);
+    const AllMissingActivities = xor(
+      getSourceActivities(values).map(e => e.actionCode),
+      activeActivityCodes
     );
+    return extraCodes.length > 0
+      ? xor(AllMissingActivities, extraCodes).length === 0
+      : AllMissingActivities.length === 0;
   }
 
   /** if plan is updated or saved redirect to plans page */
@@ -1130,7 +1143,7 @@ const PlanForm = (props: PlanFormProps) => {
                   ))}
                   {values.activities &&
                     values.activities.length >= 1 &&
-                    !checkIfAllActivitiesSelected(values) &&
+                    !checkIfAllActivitiesSelected(values, getAddedActivities(initialValues)) &&
                     (!editMode || addAndRemoveActivities) && (
                       <div>
                         <Button
@@ -1192,7 +1205,8 @@ const PlanForm = (props: PlanFormProps) => {
                       </div>
                     )}
                   {/** Turn off modal if all activities selected */}
-                  {checkIfAllActivitiesSelected(values) && setActivityModal(false)}
+                  {checkIfAllActivitiesSelected(values, getAddedActivities(initialValues)) &&
+                    setActivityModal(false)}
                 </div>
               )}
             />
