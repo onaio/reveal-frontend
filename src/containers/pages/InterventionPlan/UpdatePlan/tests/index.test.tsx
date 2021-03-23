@@ -580,4 +580,103 @@ describe('components/InterventionPlan/UpdatePlan', () => {
       },
     ]);
   });
+
+  it('hides expected columns', async () => {
+    // create divs for condition and triggers - should equal number of activities
+    [0, 1, 2, 3, 4, 5].forEach(id => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    const envModule = require('../../../../../configs/env');
+    envModule.HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS = ['Dynamic-FI'];
+
+    const DynamicFIPlanCopy = {
+      ...DynamicFIPlan,
+      status: 'draft',
+    };
+
+    const mock = jest.fn();
+    const props = {
+      fetchPlan: mock,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: DynamicFIPlanCopy.identifier },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${DynamicFIPlanCopy.identifier}`,
+      },
+      plan: DynamicFIPlanCopy as PlanDefinition,
+    };
+    fetch.mockResponseOnce(JSON.stringify([DynamicFIPlanCopy]));
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+    });
+    wrapper.update();
+    // intervention type hidded
+    expect(
+      wrapper
+        .find('select[name="interventionType"]')
+        .closest('div')
+        .prop('hidden')
+    ).toBeTruthy();
+    // Fi reason hidded
+    expect(
+      wrapper
+        .find('select[name="fiReason"]')
+        .closest('div')
+        .prop('hidden')
+    ).toBeTruthy();
+    // hidden fields on activities
+    DynamicFIPlanCopy.action.forEach((_, i) => {
+      // actionReason hidded
+      expect(
+        wrapper
+          .find(`select[name="activities[${i}].actionReason"]`)
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // actionTitle hidded
+      expect(
+        wrapper
+          .find(`input[name="activities[${i}].actionTitle"]`)
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // goalPriority hidden
+      expect(
+        wrapper
+          .find(`select[name="activities[${i}].goalPriority"]`)
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // timingPeriodStart hidded
+      expect(
+        wrapper
+          .find({ for: `activities-${0}-timingPeriodStart` })
+          .closest('div')
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // timingPeriodEnd hiden
+      expect(
+        wrapper
+          .find({ for: `activities-${0}-timingPeriodEnd` })
+          .closest('div')
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // triggers and conditions toggle buttons hidden
+      expect(wrapper.find(`#plan-trigger-conditions-div-${i} button`).prop('hidden')).toBeTruthy();
+    });
+  });
 });

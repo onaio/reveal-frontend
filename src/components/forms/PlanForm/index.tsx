@@ -891,7 +891,7 @@ const PlanForm = (props: PlanFormProps) => {
                               value={values.activities[index].actionDescription}
                             />
                           </FormGroup>
-                          <FormGroup hidden={hiddenFields.includes('activityActionTitle')}>
+                          <FormGroup hidden={hiddenFields.includes('activityActionReason')}>
                             <Label for={`activities-${index}-actionReason`}>{REASON_HEADER}</Label>
                             <Field
                               component="select"
