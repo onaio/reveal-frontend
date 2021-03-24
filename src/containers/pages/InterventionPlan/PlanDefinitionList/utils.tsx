@@ -6,72 +6,89 @@ import { Cell, Row } from 'react-table';
 import { isFIOrDynamicFI } from '../../../../components/forms/PlanForm/helpers';
 import { DISPLAYED_PLAN_TYPES } from '../../../../configs/env';
 import {
+  CASE_TRIGGERED_TITLE,
   FOCUS_INVESTIGATION_STATUS_REASON,
   INTERVENTION_TYPE_LABEL,
   LAST_MODIFIED,
+  ROUTINE_TITLE,
   STATUS_HEADER,
   TITLE,
 } from '../../../../configs/lang';
 import { planStatusDisplay, UseContext } from '../../../../configs/settings';
-import { PLAN_UPDATE_URL } from '../../../../constants';
+import {
+  CASE_TRIGGERED,
+  FI_REASON_CODE,
+  INTERVENTION_TYPE_CODE,
+  PLAN_UPDATE_URL,
+  ROUTINE,
+} from '../../../../constants';
 import { InterventionType, PlanRecord } from '../../../../store/ducks/plans';
 
+/**
+ * sort plan UseContext values
+ * @param {Row<PlanRecord>} rowA - table props
+ * @param {Row<PlanRecord>} rowB - table props
+ * @param {string} code - Plan use context code
+ */
+const sortUseContext = (rowA: Row<PlanRecord>, rowB: Row<PlanRecord>, code: string) => {
+  /** custom sort function based useContext */
+  const getIntervention = (row: Row<PlanRecord>) => {
+    const interventionPlanContext = (row.original as Dictionary).plan_useContext.filter(
+      (context: UseContext) => context.code === code
+    );
+    return interventionPlanContext.length > 0 ? interventionPlanContext[0].valueCodableConcept : '';
+  };
+  return getIntervention(rowA) > getIntervention(rowB) ? 1 : -1;
+};
+
+/**
+ *
+ * @param {UseContext[]} value - List of plan use contexts
+ * @param {string} code - Plan use context code
+ */
+const getUseContext = (value: UseContext[], code: string) => {
+  const typeUseContext = value.filter((e: any) => e.code === code);
+  if (typeUseContext[0]?.valueCodableConcept === CASE_TRIGGERED) {
+    return CASE_TRIGGERED_TITLE;
+  }
+  if (typeUseContext[0]?.valueCodableConcept === ROUTINE) {
+    return ROUTINE_TITLE;
+  }
+  return typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : null;
+};
+
+// plan intervention type column
 const interventionTypeColumn = {
-  Cell: ({ value }: Cell<PlanRecord>) => {
-    const typeUseContext = value.filter((e: any) => e.code === 'interventionType');
-    return typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : null;
-  },
+  Cell: ({ value }: Cell<PlanRecord>) => getUseContext(value, INTERVENTION_TYPE_CODE),
   Header: INTERVENTION_TYPE_LABEL,
   accessor: 'plan_useContext',
   id: 'plan_use_context_intervention_type',
   maxWidth: 40,
   minWidth: 10,
-  sortType: (rowA: Row<PlanRecord>, rowB: Row<PlanRecord>) => {
-    /** custom sort function based useContext */
-    const getIntervention = (row: Row<PlanRecord>) => {
-      const interventionPlanContext = (row.original as Dictionary).plan_useContext.filter(
-        (context: UseContext) => context.code === 'interventionType'
-      );
-      return interventionPlanContext.length > 0
-        ? interventionPlanContext[0].valueCodableConcept
-        : '';
-    };
-    return getIntervention(rowA) > getIntervention(rowB) ? 1 : -1;
-  },
-};
+  sortType: (rowA: Row<PlanRecord>, rowB: Row<PlanRecord>) =>
+    sortUseContext(rowA, rowB, INTERVENTION_TYPE_CODE),
+} as DrillDownColumn<PlanRecord>;
 
+// plan FI reason column
 const fiReasonColumns = {
-  Cell: ({ value }: Cell<PlanRecord>) => {
-    const typeUseContext = value.filter((e: any) => e.code === 'fiReason');
-    return typeUseContext.length > 0 ? typeUseContext[0].valueCodableConcept : null;
-  },
+  Cell: ({ value }: Cell<PlanRecord>) => getUseContext(value, FI_REASON_CODE),
   Header: FOCUS_INVESTIGATION_STATUS_REASON,
   accessor: 'plan_useContext',
   id: 'plan_use_context_fi_reason',
   maxWidth: 40,
   minWidth: 10,
-  sortType: (rowA: Row<PlanRecord>, rowB: Row<PlanRecord>) => {
-    /** custom sort function based useContext */
-    const getIntervention = (row: Row<PlanRecord>) => {
-      const interventionPlanContext = (row.original as Dictionary).plan_useContext.filter(
-        (context: UseContext) => context.code === 'fiReason'
-      );
-      return interventionPlanContext.length > 0
-        ? interventionPlanContext[0].valueCodableConcept
-        : '';
-    };
-    return getIntervention(rowA) > getIntervention(rowB) ? 1 : -1;
-  },
-};
+  sortType: (rowA: Row<PlanRecord>, rowB: Row<PlanRecord>) =>
+    sortUseContext(rowA, rowB, FI_REASON_CODE),
+} as DrillDownColumn<PlanRecord>;
 
 const displayedPlans = [...DISPLAYED_PLAN_TYPES] as InterventionType[];
 const showFiReasonColumns =
   displayedPlans.length === 2 &&
   isFIOrDynamicFI(displayedPlans[0]) &&
   isFIOrDynamicFI(displayedPlans[1]);
-const columnToDisplay = (showFiReasonColumns
-  ? fiReasonColumns
-  : interventionTypeColumn) as DrillDownColumn<PlanRecord>;
+
+const interventionOrFiReasonColumn = showFiReasonColumns ? fiReasonColumns : interventionTypeColumn;
+
 export const TableColumns: Array<DrillDownColumn<PlanRecord>> = [
   {
     Cell: (cell: Cell<PlanRecord>) => {
@@ -86,7 +103,7 @@ export const TableColumns: Array<DrillDownColumn<PlanRecord>> = [
     accessor: 'plan_title',
     minWidth: 200,
   },
-  columnToDisplay,
+  interventionOrFiReasonColumn,
   {
     Cell: (cell: Cell<PlanRecord>) => {
       return planStatusDisplay[cell.value] || null;
