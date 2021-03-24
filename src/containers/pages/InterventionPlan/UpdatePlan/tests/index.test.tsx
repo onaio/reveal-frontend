@@ -681,6 +681,9 @@ describe('components/InterventionPlan/UpdatePlan', () => {
   });
 
   it('on case triggered activities can be added', async () => {
+    const envModule2 = require('../../../../../configs/env');
+    envModule2.HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS = ['Dynamic-FI'];
+    envModule2.CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES = true;
     // create divs for condition and triggers - should equal number of activities
     [0, 1, 2, 3, 4, 5].forEach(id => {
       const div = document.createElement('div');

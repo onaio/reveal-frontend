@@ -15,7 +15,10 @@ import { getPlanFormValues, isFIOrDynamicFI } from '../../../../components/forms
 import { ErrorPage } from '../../../../components/page/ErrorPage';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import { HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS } from '../../../../configs/env';
+import {
+  CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES,
+  HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS,
+} from '../../../../configs/env';
 import { COULD_NOT_LOAD_PLAN, HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
 import {
@@ -141,6 +144,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   const planStatus = (plan && plan.status) || '';
 
   const isCaseTriggeredAndDraft =
+    CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES &&
     planStatus === PlanStatus.DRAFT &&
     isFIOrDynamicFI(initialValues.interventionType) &&
     initialValues.fiReason === CASE_TRIGGERED;

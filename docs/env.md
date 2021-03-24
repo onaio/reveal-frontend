@@ -118,3 +118,9 @@ Below is a list of currently supported environment variables:
 
   - Optional parameter of plan intervention types whose some fields will be hidden when the plan status is draft, active or completed.
   - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
+
+- **React_APP_CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES**
+
+  - **not Required**; _(string)_
+  - to activate set the env to `true`, any other value will be interpreted as false
+  - enable editing of activities on FI case triggered draft plans.
