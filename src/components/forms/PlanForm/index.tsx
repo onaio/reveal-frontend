@@ -176,6 +176,7 @@ export interface PlanFormProps {
   addAndRemoveActivities: boolean /** activate adding and removing activities buttons */;
   allFormActivities: PlanActivityFormFields[] /** the list of all allowed activities */;
   allowMoreJurisdictions: boolean /** should we allow one to add more jurisdictions */;
+  autoSelectFIStatus: boolean /** should fi classification be auto selected */;
   cascadingSelect: boolean /** should we use cascading selects for jurisdiction selection */;
   disabledActivityFields: string[] /** activity fields that are disabled */;
   disabledFields: string[] /** fields that are disabled */;
@@ -217,6 +218,7 @@ const PlanForm = (props: PlanFormProps) => {
     addPlan,
     hiddenFields,
     addAndRemoveActivities,
+    autoSelectFIStatus,
   } = props;
 
   useEffect(() => {
@@ -557,6 +559,7 @@ const PlanForm = (props: PlanFormProps) => {
                                     : 'async-select'
                                 }
                                 labelFieldName={`jurisdictions[${index}].name`}
+                                fiStatusFieldName="fiStatus"
                               />
                               <Field
                                 type="hidden"
@@ -606,7 +609,7 @@ const PlanForm = (props: PlanFormProps) => {
                   component="select"
                   name="fiStatus"
                   id="fiStatus"
-                  disabled={disabledFields.includes('fiStatus')}
+                  disabled={disabledFields.includes('fiStatus') || autoSelectFIStatus}
                   className={errors.fiStatus ? 'form-control is-invalid' : 'form-control'}
                 >
                   <option>{SELECT_OPTION}</option>
@@ -1254,6 +1257,7 @@ export const defaultProps: PlanFormProps = {
   addAndRemoveActivities: false,
   allFormActivities: getFormActivities(planActivities),
   allowMoreJurisdictions: true,
+  autoSelectFIStatus: false,
   beforeSubmit: () => true,
   cascadingSelect: true,
   disabledActivityFields: [],

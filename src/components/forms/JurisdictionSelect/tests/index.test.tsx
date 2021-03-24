@@ -304,6 +304,7 @@ describe('components/forms/JurisdictionSelect', () => {
       mock,
       mock,
       '',
+      '',
       mock as any,
       mock,
       handleChangeWithOptionsHandler,

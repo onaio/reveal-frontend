@@ -124,3 +124,9 @@ Below is a list of currently supported environment variables:
   - **not Required**; _(string)_
   - to activate set the env to `true`, any other value will be interpreted as false
   - enable editing of activities on FI case triggered draft plans.
+
+- **REACT_APP_AUTO_SELECT_FI_CLASSIFICATION**
+
+  - **not Required**; _(string)_
+  - to activate set the env to `true`, any other value will be interpreted as false
+  - enable FI classification auto selection

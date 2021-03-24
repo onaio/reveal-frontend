@@ -158,6 +158,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   const planFormProps: Partial<PlanFormProps> = {
     ...propsForUpdatingPlans(planStatus),
     addAndRemoveActivities: isCaseTriggeredAndDraft,
+    autoSelectFIStatus: false,
     beforeSubmit,
     hiddenFields,
     initialValues,
