@@ -117,7 +117,7 @@ Below is a list of currently supported environment variables:
 - **REACT_APP_HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS**
 
   - Optional parameter of plan intervention types whose some fields will be hidden when the plan status is draft, active or completed.
-  - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
+  - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, MDA-Lite, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
 
 - **React_APP_CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES**
 
