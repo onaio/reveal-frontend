@@ -899,8 +899,9 @@ const PlanForm = (props: PlanFormProps) => {
                               id={`activities-${index}-actionReason`}
                               required={true}
                               disabled={
-                                disabledFields.includes('activities') ||
-                                disabledActivityFields.includes('actionReason')
+                                (disabledFields.includes('activities') ||
+                                  disabledActivityFields.includes('actionReason')) &&
+                                !addAndRemoveActivities
                               }
                               className={
                                 errors.activities &&
@@ -1076,8 +1077,9 @@ const PlanForm = (props: PlanFormProps) => {
                                 id={`activities-${index}-goalPriority`}
                                 required={true}
                                 disabled={
-                                  disabledFields.includes('activities') ||
-                                  disabledActivityFields.includes('goalPriority')
+                                  (disabledFields.includes('activities') ||
+                                    disabledActivityFields.includes('goalPriority')) &&
+                                  !addAndRemoveActivities
                                 }
                                 className={
                                   errors.activities &&

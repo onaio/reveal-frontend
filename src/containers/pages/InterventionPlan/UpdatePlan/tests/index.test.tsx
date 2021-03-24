@@ -679,4 +679,83 @@ describe('components/InterventionPlan/UpdatePlan', () => {
       expect(wrapper.find(`#plan-trigger-conditions-div-${i} button`).prop('hidden')).toBeTruthy();
     });
   });
+
+  it('on case triggered activities can be added', async () => {
+    // create divs for condition and triggers - should equal number of activities
+    [0, 1, 2, 3, 4, 5].forEach(id => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    //  change
+    const useContext = DynamicFIPlan.useContext.map(context => {
+      return context.code === 'fiReason'
+        ? { ...context, valueCodableConcept: 'Case Triggered' }
+        : context;
+    });
+
+    const envModule = require('../../../../../configs/env');
+    envModule.HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS = ['Dynamic-FI'];
+
+    const DynamicFIPlanCopy = {
+      ...DynamicFIPlan,
+      status: 'draft',
+      useContext,
+    };
+    const mock = jest.fn();
+    const props = {
+      fetchPlan: mock,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: DynamicFIPlanCopy.identifier },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${DynamicFIPlanCopy.identifier}`,
+      },
+      plan: DynamicFIPlanCopy as PlanDefinition,
+    };
+    fetch.mockResponseOnce(JSON.stringify([DynamicFIPlanCopy]));
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+    });
+    wrapper.update();
+    // have buttons for removing activities
+    expect(wrapper.find('.removeActivity').length).toEqual(DynamicFIPlanCopy.action.length);
+    expect(wrapper.find('.add-more-activities').length).toEqual(0);
+    // remove last activity
+    wrapper
+      .find('.removeActivity')
+      .at(5)
+      .simulate('click');
+    expect(wrapper.find('.removeActivity').length).toEqual(DynamicFIPlanCopy.action.length - 1);
+    expect(wrapper.find('Button .add-more-activities').length).toEqual(1);
+    // add removed activity
+    wrapper.find('Button .add-more-activities').simulate('click');
+    expect(wrapper.find('.addActivity').length).toEqual(1);
+    expect(wrapper.find('.addActivity').text()).toEqual('Add BCC Activity');
+    wrapper.find('.addActivity').simulate('click');
+    expect(wrapper.find('.removeActivity').length).toEqual(DynamicFIPlanCopy.action.length);
+    expect(wrapper.find('.add-more-activities').length).toEqual(0);
+
+    // default disabled activity (Action reason and goal priority) fields are not disabled
+    DynamicFIPlanCopy.action.forEach((_, i) => {
+      // actionReason not disabled
+      expect(
+        wrapper.find(`select[name="activities[${i}].actionReason"]`).prop('disabled')
+      ).toBeFalsy();
+      // goalPriority not diabled
+      expect(
+        wrapper.find(`select[name="activities[${i}].goalPriority"]`).prop('disabled')
+      ).toBeFalsy();
+    });
+  });
 });

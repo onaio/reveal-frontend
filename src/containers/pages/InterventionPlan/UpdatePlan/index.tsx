@@ -138,19 +138,22 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   };
 
   const beforeSubmit = beforeSubmitFactory(plan);
+  const planStatus = (plan && plan.status) || '';
 
-  const isCaseTriggered =
-    isFIOrDynamicFI(initialValues.interventionType) && initialValues.fiReason === CASE_TRIGGERED;
+  const isCaseTriggeredAndDraft =
+    planStatus === PlanStatus.DRAFT &&
+    isFIOrDynamicFI(initialValues.interventionType) &&
+    initialValues.fiReason === CASE_TRIGGERED;
   const hiddenFields =
     HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS.includes(initialValues.interventionType) &&
     hideFieldsOnPlanStatuses.includes(initialValues.status) &&
-    !isCaseTriggered
+    !isCaseTriggeredAndDraft
       ? hideFields
       : [];
-  const planStatus = (plan && plan.status) || '';
+
   const planFormProps: Partial<PlanFormProps> = {
     ...propsForUpdatingPlans(planStatus),
-    addAndRemoveActivities: isCaseTriggered,
+    addAndRemoveActivities: isCaseTriggeredAndDraft,
     beforeSubmit,
     hiddenFields,
     initialValues,
