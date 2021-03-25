@@ -229,3 +229,5 @@ export const CHECK_SESSION_EXPIRY_STATUS = false;
 
 export const OPENSRP_GENERATED_TASKS_INTERVENTIONS = [];
 export const AUTO_SELECT_FI_CLASSIFICATION = false;
+
+export const PLAN_LIST_SHOW_FI_REASON_COLUMN = false;
