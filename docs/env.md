@@ -114,10 +114,10 @@ Below is a list of currently supported environment variables:
   - Optional parameter of plan intervention types whose tasks should be generated on opensrp
   - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
 
-- **REACT_APP_HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS**
+- **REACT_APP_HIDE_PLAN_FORM_FIELDS_ON_EDIT**
 
   - Optional parameter of plan intervention types whose some fields will be hidden when the plan status is draft, active or completed.
-  - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, MDA-Lite, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
+  - Options: caseNum, interventionType, jurisdictions, fiReason, fiStatus, title, triggersAndConditions activityActionDefinitionUri, activityActionDescription, activityActionTitle, activityActionReason activityTimingPeriodStart, activityTimingPeriodEnd, activityGoalPriority, activityGoalValue
 
 - **React_APP_CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES**
 

@@ -17,7 +17,7 @@ import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/Heade
 import Loading from '../../../../components/page/Loading';
 import {
   CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES,
-  HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS,
+  HIDE_PLAN_FORM_FIELDS_ON_EDIT,
 } from '../../../../configs/env';
 import { COULD_NOT_LOAD_PLAN, HOME, PLANS, UPDATE_PLAN } from '../../../../configs/lang';
 import { PlanDefinition } from '../../../../configs/settings';
@@ -58,21 +58,6 @@ export interface RouteParams {
 
 /** plan statuses to hide field */
 const hideFieldsOnPlanStatuses = [PlanStatus.ACTIVE, PlanStatus.COMPLETE, PlanStatus.DRAFT];
-
-/** fields to hide */
-const activityHiddenFields = [
-  'activityActionTitle',
-  'activityActionReason',
-  'activityTimingPeriodStart',
-  'activityTimingPeriodEnd',
-  'activityGoalPriority',
-];
-const hideFields = [
-  ...activityHiddenFields,
-  'interventionType',
-  'fiReason',
-  'triggersAndConditions',
-];
 
 /** Component used to update Plan Definition objects */
 const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) => {
@@ -149,10 +134,10 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     isFIOrDynamicFI(initialValues.interventionType) &&
     initialValues.fiReason === CASE_TRIGGERED;
   const hiddenFields =
-    HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS.includes(initialValues.interventionType) &&
+    HIDE_PLAN_FORM_FIELDS_ON_EDIT.length > 0 &&
     hideFieldsOnPlanStatuses.includes(initialValues.status) &&
     !isCaseTriggeredAndDraft
-      ? hideFields
+      ? HIDE_PLAN_FORM_FIELDS_ON_EDIT
       : [];
 
   const planFormProps: Partial<PlanFormProps> = {

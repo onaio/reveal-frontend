@@ -470,7 +470,9 @@ const PlanForm = (props: PlanFormProps) => {
               />
             </FormGroup>
 
-            <h5 className="mt-5">{LOCATIONS}</h5>
+            <h5 className="mt-5" hidden={hiddenFields.includes('jurisdictions')}>
+              {LOCATIONS}
+            </h5>
 
             <FieldArray
               name="jurisdictions"
@@ -478,7 +480,11 @@ const PlanForm = (props: PlanFormProps) => {
               render={arrayHelpers => (
                 <div>
                   {editMode ? (
-                    <div id="jurisdictions-display-container" className="mb-5">
+                    <div
+                      id="jurisdictions-display-container"
+                      className="mb-5"
+                      hidden={hiddenFields.includes('jurisdictions')}
+                    >
                       {props.renderLocationNames &&
                         props.renderLocationNames(
                           (locationName: string, locationId: string, index: number) => (
@@ -602,7 +608,7 @@ const PlanForm = (props: PlanFormProps) => {
             />
 
             {isFIOrDynamicFI(values.interventionType) && (
-              <FormGroup>
+              <FormGroup hidden={hiddenFields.includes('fiStatus')}>
                 <Label for="fiStatus">{FOCUS_CLASSIFICATION_LABEL}</Label>
                 <Field
                   required={isFIOrDynamicFI(values.interventionType)}
@@ -652,7 +658,7 @@ const PlanForm = (props: PlanFormProps) => {
               </FormGroup>
             )}
             {isFIOrDynamicFI(values.interventionType) && values.fiReason === FIReasons[1] && (
-              <FormGroup>
+              <FormGroup hidden={hiddenFields.includes('caseNum')}>
                 <Label for="caseNum">{CASE_NUMBER}</Label>
                 <Field
                   required={
@@ -669,7 +675,7 @@ const PlanForm = (props: PlanFormProps) => {
                 <Field type="hidden" name="opensrpEventId" id="opensrpEventId" readOnly={true} />
               </FormGroup>
             )}
-            <FormGroup>
+            <FormGroup hidden={hiddenFields.includes('title')}>
               <Label for="title">{PLAN_TITLE_LABEL}</Label>
               <Field
                 required={true}
@@ -862,7 +868,7 @@ const PlanForm = (props: PlanFormProps) => {
                               readOnly={true}
                             />
                           </FormGroup>
-                          <FormGroup>
+                          <FormGroup hidden={hiddenFields.includes('activityActionDescription')}>
                             <Label for={`activities-${index}-actionDescription`}>
                               {DESCRIPTION_LABEL}
                             </Label>
@@ -926,7 +932,9 @@ const PlanForm = (props: PlanFormProps) => {
                             />
                           </FormGroup>
                           {showDefinitionUriFor.includes(values.interventionType) && (
-                            <FormGroup>
+                            <FormGroup
+                              hidden={hiddenFields.includes('activityActionDefinitionUri')}
+                            >
                               <Label for={`activities-${index}-actionDefinitionUri`}>
                                 {DEFINITION_URI}
                               </Label>
@@ -965,7 +973,7 @@ const PlanForm = (props: PlanFormProps) => {
                           )}
                           <fieldset>
                             <legend>{GOAL_LABEL}</legend>
-                            <FormGroup>
+                            <FormGroup hidden={hiddenFields.includes('activityGoalValue')}>
                               <Label for={`activities-${index}-goalValue`}>{QUANTITY_LABEL}</Label>
                               <InputGroup id={`activities-${index}-goalValue-input-group`}>
                                 <Field

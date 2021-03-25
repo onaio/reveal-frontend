@@ -50,6 +50,23 @@ jest.mock('../PlanLocationNames', () => {
   return PlanLocationNamesMock;
 });
 
+const hiddenFields = [
+  'interventionType',
+  'fiReason',
+  'activityActionTitle',
+  'ainterventionType',
+  'fiReason',
+  'activityActionTitle',
+  'activityActionReason',
+  'activityTimingPeriodStart',
+  'activityTimingPeriodEnd',
+  'activityGoalPriority',
+  'triggersAndConditionsctivityActionReason',
+  'activityTimingPeriodStart',
+  'activityTimingPeriodEnd',
+  'activityGoalPriority',
+  'triggersAndConditions',
+];
 describe('components/InterventionPlan/UpdatePlan', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -590,7 +607,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     });
 
     const envModule = require('../../../../../configs/env');
-    envModule.HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS = ['Dynamic-FI'];
+    envModule.HIDE_PLAN_FORM_FIELDS_ON_EDIT = hiddenFields;
 
     const DynamicFIPlanCopy = {
       ...DynamicFIPlan,
@@ -681,9 +698,9 @@ describe('components/InterventionPlan/UpdatePlan', () => {
   });
 
   it('on case triggered activities can be added', async () => {
-    const envModule2 = require('../../../../../configs/env');
-    envModule2.HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS = ['Dynamic-FI'];
-    envModule2.CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES = true;
+    const envModule = require('../../../../../configs/env');
+    envModule.HIDE_PLAN_FORM_FIELDS_ON_EDIT = hiddenFields;
+    envModule.CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES = true;
     // create divs for condition and triggers - should equal number of activities
     [0, 1, 2, 3, 4, 5].forEach(id => {
       const div = document.createElement('div');
@@ -697,9 +714,6 @@ describe('components/InterventionPlan/UpdatePlan', () => {
         ? { ...context, valueCodableConcept: 'Case Triggered' }
         : context;
     });
-
-    const envModule = require('../../../../../configs/env');
-    envModule.HIDE_PLAN_FORM_FIELDS_ON_INTERVENTIONS = ['Dynamic-FI'];
 
     const DynamicFIPlanCopy = {
       ...DynamicFIPlan,
