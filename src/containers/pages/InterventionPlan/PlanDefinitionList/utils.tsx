@@ -3,8 +3,7 @@ import { Dictionary } from '@onaio/utils/dist/types/types';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Cell, Row } from 'react-table';
-import { isFIOrDynamicFI } from '../../../../components/forms/PlanForm/helpers';
-import { DISPLAYED_PLAN_TYPES } from '../../../../configs/env';
+import { PLAN_LIST_SHOW_FI_REASON_COLUMN } from '../../../../configs/env';
 import {
   CASE_TRIGGERED_TITLE,
   FOCUS_INVESTIGATION_STATUS_REASON,
@@ -22,7 +21,7 @@ import {
   PLAN_UPDATE_URL,
   ROUTINE,
 } from '../../../../constants';
-import { InterventionType, PlanRecord } from '../../../../store/ducks/plans';
+import { PlanRecord } from '../../../../store/ducks/plans';
 
 /**
  * sort plan UseContext values
@@ -81,13 +80,9 @@ const fiReasonColumns = {
     sortUseContext(rowA, rowB, FI_REASON_CODE),
 } as DrillDownColumn<PlanRecord>;
 
-const displayedPlans = [...DISPLAYED_PLAN_TYPES] as InterventionType[];
-const showFiReasonColumns =
-  displayedPlans.length === 2 &&
-  isFIOrDynamicFI(displayedPlans[0]) &&
-  isFIOrDynamicFI(displayedPlans[1]);
-
-const interventionOrFiReasonColumn = showFiReasonColumns ? fiReasonColumns : interventionTypeColumn;
+const interventionOrFiReasonColumn = PLAN_LIST_SHOW_FI_REASON_COLUMN
+  ? fiReasonColumns
+  : interventionTypeColumn;
 
 export const TableColumns: Array<DrillDownColumn<PlanRecord>> = [
   {
