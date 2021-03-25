@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 import { Cell, Row } from 'react-table';
 import { PLAN_LIST_SHOW_FI_REASON_COLUMN } from '../../../../configs/env';
 import {
-  CASE_TRIGGERED_TITLE,
   FOCUS_INVESTIGATION_STATUS_REASON,
   INTERVENTION_TYPE_LABEL,
   LAST_MODIFIED,
+  REACTIVE,
   ROUTINE_TITLE,
   STATUS_HEADER,
   TITLE,
@@ -48,7 +48,7 @@ const sortUseContext = (rowA: Row<PlanRecord>, rowB: Row<PlanRecord>, code: stri
 const getUseContext = (value: UseContext[], code: string) => {
   const typeUseContext = value.filter((e: any) => e.code === code);
   if (typeUseContext[0]?.valueCodableConcept === CASE_TRIGGERED) {
-    return CASE_TRIGGERED_TITLE;
+    return REACTIVE;
   }
   if (typeUseContext[0]?.valueCodableConcept === ROUTINE) {
     return ROUTINE_TITLE;
