@@ -485,6 +485,10 @@ export const CDD_SUPERVISION_GOAL_MEASURE = translate(
   'CDD_SUPERVISION_GOAL_MEASURE',
   'Percent of forms submitted'
 );
+export const DYNAMIC_CASE_CONFIRMATION_EXPRESSION_DESC = translate(
+  'DYNAMIC_CASE_CONFIRMATION_EXPRESSION_DESC',
+  'Event is case details event'
+);
 
 export const B1_NAME = translate('B1_NAME', 'Cleared Receptive');
 export const B2_DESCRIPTION = translate('B2_DESCRIPTION', 'Non-receptive area.');
