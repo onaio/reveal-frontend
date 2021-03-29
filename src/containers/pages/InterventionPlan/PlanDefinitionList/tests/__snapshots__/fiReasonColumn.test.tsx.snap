@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/InterventionPlan/PlanDefinitionList: FI reason column show right columns when set to show FI reason columns: plan-0 1`] = `"A2-Lusaka Akros Test Focus 2Routineactive2019-05-19"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList: FI reason column show right columns when set to show FI reason columns: plan-1 1`] = `"A1 - TwoTwoTwo_03 - 2019-07-18Reactiveactive2019-07-18"`;
+
+exports[`components/InterventionPlan/PlanDefinitionList: FI reason column show right columns when set to show FI reason columns: plan-2 1`] = `"A Test By MoshRoutinedraft2019-05-19"`;
