@@ -199,7 +199,6 @@ export const AllPlanActivities = {
     DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
     DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
     DYNAMIC_MOSQUITO_COLLECTION_ACTIVITY_CODE,
-    DYNAMIC_CASE_CONFIRMATION_ACTIVITY_CODE,
   ]),
   [InterventionType.DynamicMDA]: pick(planActivities, [
     DYNAMIC_MDA_COMMUNITY_ADHERENCE_ACTIVITY_CODE,
@@ -209,6 +208,11 @@ export const AllPlanActivities = {
   [InterventionType.DynamicIRS]: pick(planActivities, [DYNAMIC_IRS_ACTIVITY_CODE]),
   [InterventionType.IRSLite]: [],
   [InterventionType.MDALite]: pick(planActivities, [CDD_SUPERVISION_ACTIVITY_CODE]),
+};
+
+/** group plan activities that should only be considered when editing plan */
+const editOnlyPlanActivities: Dictionary = {
+  [InterventionType.DynamicFI]: pick(planActivities, [DYNAMIC_CASE_CONFIRMATION_ACTIVITY_CODE]),
 };
 
 /**
@@ -374,6 +378,18 @@ export function getActivityFromPlan(
 }
 
 /**
+ * Get all plan activities for a plan intervention type
+ * @param {InterventionType} interventionType - plan intervention type
+ */
+const getInterventionPlanActivities = (interventionType: InterventionType) => {
+  const editOnlyActivities: PlanActivity[] = Object.values(
+    editOnlyPlanActivities[interventionType] || {}
+  );
+  const createOnlyActivities = Object.values(AllPlanActivities[interventionType] || {});
+  return [...editOnlyActivities, ...createOnlyActivities];
+};
+
+/**
  * Get plan activity object using an action code
  * @param {PlanActionCodesType} actionCode - the action code
  * @param {boolean} isDynamic - whether we are looking for dynamic activities
@@ -383,11 +399,9 @@ export function getPlanActivityFromActionCode(
   interventionType: InterventionType
 ): PlanActivity | null {
   const search =
-    (AllPlanActivities[interventionType] &&
-      Object.values(AllPlanActivities[interventionType]).filter(
-        item => item.action.code === actionCode
-      )) ||
-    [];
+    getInterventionPlanActivities(interventionType).filter(
+      item => item.action.code === actionCode
+    ) || [];
   return search.length > 0 ? search[0] : null;
 }
 
@@ -449,7 +463,7 @@ const interventionHasActionCode = (
   interventionType: InterventionType,
   actionCode: PlanActionCodesType
 ) => {
-  return Object.values(AllPlanActivities[interventionType]).some(
+  return getInterventionPlanActivities(interventionType).some(
     item => item.action.code === actionCode
   );
 };
