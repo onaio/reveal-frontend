@@ -233,3 +233,5 @@ export const HIDE_PLAN_FORM_FIELDS_ON_EDIT = [];
 export const CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES = false;
 
 export const AUTO_SELECT_FI_CLASSIFICATION = false;
+
+export const PLAN_LIST_SHOW_FI_REASON_COLUMN = false;

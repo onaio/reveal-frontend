@@ -15,6 +15,7 @@ import {
   getPlanFormValues,
 } from '../../../../../components/forms/PlanForm/helpers';
 import {
+  CaseTriggeredDynamicFIPlan,
   DynamicFIPlan,
   fiReasonTestPlan,
 } from '../../../../../components/forms/PlanForm/tests/fixtures';
@@ -596,6 +597,81 @@ describe('components/InterventionPlan/UpdatePlan', () => {
         method: 'PUT',
       },
     ]);
+  });
+
+  it('edit Dynamic FI plans with case confirmation action', async () => {
+    // create divs for condition and triggers toggles
+    CaseTriggeredDynamicFIPlan.action.forEach((_, id) => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    fetch.mockResponse(JSON.stringify(CaseTriggeredDynamicFIPlan));
+
+    const mock: any = jest.fn();
+    const thisPlansId = CaseTriggeredDynamicFIPlan.identifier;
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: thisPlansId },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${thisPlansId}`,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedUpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    // submit button is disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeTruthy();
+
+    // activate the plan and save
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: 'active' } });
+    // submit button is disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
+
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+
+    // check the data submitted - should include case confirmation
+    const submitedData: PlanDefinition = JSON.parse(fetch.mock.calls[3][1].body);
+    const submitedActionCodes = submitedData.action.map(e => e.code);
+    const submitedGoals = submitedData.goal.map(e => e.id);
+    expect(submitedActionCodes).toEqual([
+      'Case Confirmation',
+      'RACD Register Family',
+      'Blood Screening',
+      'Bednet Distribution',
+      'Larval Dipping',
+      'Mosquito Collection',
+      'BCC',
+    ]);
+    expect(submitedGoals).toEqual([
+      'Case_Confirmation',
+      'RACD_register_families',
+      'RACD_Blood_Screening',
+      'RACD_bednet_distribution',
+      'Larval_Dipping',
+      'Mosquito_Collection',
+      'BCC_Focus',
+    ]);
+    expect(fetch.mock.calls[3][0]).toEqual('https://test.smartregister.org/opensrp/rest/plans');
+    expect(fetch.mock.calls[3][1].method).toEqual('PUT');
   });
 
   it('hides expected columns', async () => {

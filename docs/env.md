@@ -130,3 +130,9 @@ Below is a list of currently supported environment variables:
   - **not Required**; _(string)_
   - to activate set the env to `true`, any other value will be interpreted as false
   - enable FI classification auto selection
+
+- **REACT_APP_PLAN_LIST_SHOW_FI_REASON_COLUMN**
+
+  - **not Required**; _(string)_
+  - to activate set the env to `true`, any other value will be interpreted as false
+  - show FI reason column on the plans list view instead of intervention type column
