@@ -1724,5 +1724,9 @@
   "CDD_SUPERVISION_GOAL_MEASURE": {
     "message": "Percent of forms submitted",
     "description": "CDD supervisor activity goal measure"
+  },
+  "DYNAMIC_CASE_CONFIRMATION_EXPRESSION_DESC": {
+    "message": "Event is case details event",
+    "description": "Dynamic case confirmation expression description"
   }
 }

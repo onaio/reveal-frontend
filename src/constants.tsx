@@ -212,6 +212,7 @@ export const MDA_ADHERENCE = 'MDAAdherence';
 export const MDA_FAMILY_REGISTRATION = 'MDAFamilyRegistration';
 export const MDA_DISPENSE_ACTIVITY_CODE = 'MDADispenseCode';
 export const CDD_SUPERVISION_ACTIVITY_CODE = 'CDDSupervision';
+export const DYNAMIC_CASE_CONFIRMATION_ACTIVITY_CODE = 'dynamicCaseConfirmation';
 
 // task action codes
 export const BCC_CODE = 'BCC';

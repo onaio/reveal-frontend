@@ -58,6 +58,7 @@ import {
   DATE_COMPLETED,
   DEFAULT,
   DISTRICT,
+  DYNAMIC_CASE_CONFIRMATION_EXPRESSION_DESC,
   END_DATE,
   FI_STATUS,
   FOCUS_AREA_HEADER,
@@ -131,6 +132,7 @@ import {
   DYNAMIC_BCC_ACTIVITY_CODE,
   DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
   DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
+  DYNAMIC_CASE_CONFIRMATION_ACTIVITY_CODE,
   DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
   DYNAMIC_IRS_ACTIVITY_CODE,
   DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
@@ -369,7 +371,8 @@ export type subjectCodableConceptType =
   | 'Person'
   | 'Location'
   | 'Jurisdiction'
-  | 'Residential_Structure';
+  | 'Residential_Structure'
+  | 'QuestionnaireResponse';
 
 /** Plan Action subjectCodableConcept */
 export interface PlanActionsubjectCodableConcept {
@@ -475,6 +478,7 @@ export const PlanActivityTitles = [
   MDA_FAMILY_REGISTRATION,
   MDA_DISPENSE_ACTIVITY_CODE,
   CDD_SUPERVISION_ACTIVITY_CODE,
+  DYNAMIC_CASE_CONFIRMATION_ACTIVITY_CODE,
 ] as const;
 
 /** default plan activities */
@@ -1008,6 +1012,59 @@ export const planActivities: PlanActivities = {
           },
           due: '',
           measure: BLOOD_SCREENING_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicCaseConfirmation: {
+    action: {
+      code: CASE_CONFIRMATION_CODE,
+      condition: [
+        {
+          expression: {
+            description: DYNAMIC_CASE_CONFIRMATION_EXPRESSION_DESC,
+            expression: "questionnaire = 'Case_Details'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+      ],
+      definitionUri: 'case_confirmation.json',
+      description: CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
+      goalId: 'Case_Confirmation',
+      identifier: '',
+      prefix: 1,
+      reason: INVESTIGATION,
+      subjectCodableConcept: {
+        text: 'QuestionnaireResponse',
+      },
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: CASE_CONFIRMATION_ACTIVITY,
+      trigger: [
+        {
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+      ],
+      type: CREATE_TYPE,
+    },
+    goal: {
+      description: CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
+      id: 'Case_Confirmation',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.CASE,
+              value: 1,
+            },
+          },
+          due: '',
+          measure: CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE,
         },
       ],
     },
