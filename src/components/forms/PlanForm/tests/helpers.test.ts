@@ -11,12 +11,14 @@ import { InterventionType } from '../../../../store/ducks/plans';
 import {
   AllPlanActivities,
   doesFieldHaveErrors,
+  editOnlyPlanActivities,
   extractActivitiesFromPlanForm,
   extractActivityForForm,
   generatePlanDefinition,
   getConditionFromFormField,
   getFormActivities,
   getGoalUnitFromActionCode,
+  getInterventionPlanActivities,
   getNameTitle,
   getPlanFormValues,
   getTaskGenerationValue,
@@ -435,5 +437,16 @@ describe('containers/forms/PlanForm/helpers', () => {
     sampleDynamicPlan = cloneDeep((fiReasonTestPlan as unknown) as PlanDefinition);
     res = getPlanFormValues(sampleDynamicPlan);
     expect(res.taskGenerationStatus).toEqual('False');
+  });
+
+  it('InterventionType works correctly', () => {
+    expect(getInterventionPlanActivities(InterventionType.DynamicFI)).toEqual([
+      ...Object.values(editOnlyPlanActivities[InterventionType.DynamicFI]),
+      ...Object.values(AllPlanActivities[InterventionType.DynamicFI]),
+    ]);
+
+    expect(getInterventionPlanActivities(InterventionType.IRS)).toEqual([
+      ...Object.values(AllPlanActivities[InterventionType.IRS]),
+    ]);
   });
 });

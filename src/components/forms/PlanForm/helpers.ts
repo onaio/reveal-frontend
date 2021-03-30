@@ -211,7 +211,7 @@ export const AllPlanActivities = {
 };
 
 /** group plan activities that should only be considered when editing plan */
-const editOnlyPlanActivities: Dictionary = {
+export const editOnlyPlanActivities: Dictionary = {
   [InterventionType.DynamicFI]: pick(planActivities, [DYNAMIC_CASE_CONFIRMATION_ACTIVITY_CODE]),
 };
 
@@ -381,7 +381,7 @@ export function getActivityFromPlan(
  * Get all plan activities for a plan intervention type
  * @param {InterventionType} interventionType - plan intervention type
  */
-const getInterventionPlanActivities = (interventionType: InterventionType) => {
+export const getInterventionPlanActivities = (interventionType: InterventionType) => {
   const editOnlyActivities: PlanActivity[] = Object.values(
     editOnlyPlanActivities[interventionType] || {}
   );

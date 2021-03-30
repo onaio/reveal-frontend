@@ -1561,6 +1561,77 @@ export const DynamicFIPlan = {
   experimental: false,
 };
 
+export const CaseTriggeredDynamicFIPlan = {
+  ...DynamicFIPlan,
+  action: [
+    {
+      identifier: '71f48e2e-032a-458a-8b80-f1a09188fe63',
+      prefix: 1,
+      title: 'Case confirmation',
+      description: 'ยืนยันบ้านผู้ป่วย',
+      code: 'Case Confirmation',
+      timingPeriod: {
+        start: '2021-02-11',
+        end: '2021-02-21',
+      },
+      reason: 'Investigation',
+      goalId: 'Case_Confirmation',
+      subjectCodableConcept: {
+        text: 'QuestionnaireResponse',
+      },
+      trigger: [
+        {
+          type: 'named-event',
+          name: 'plan-activation',
+        },
+      ],
+      condition: [
+        {
+          kind: 'applicability',
+          expression: {
+            description: 'Event is case details event',
+            expression: "questionnaire = 'Case_Details'",
+          },
+        },
+      ],
+      definitionUri: 'case_confirmation.json',
+      type: 'create',
+    },
+    ...DynamicFIPlan.action,
+  ],
+  goal: [
+    {
+      id: 'Case_Confirmation',
+      description: 'ยืนยันบ้านผู้ป่วย',
+      priority: 'medium-priority',
+      target: [
+        {
+          measure: 'จำนวนผู้ป่วยที่ได้รับการยืนยัน',
+          detail: {
+            detailQuantity: {
+              value: 1,
+              comparator: '&amp;gt;=',
+              unit: 'ราย',
+            },
+          },
+          due: '2021-02-21',
+        },
+      ],
+    },
+    ...DynamicFIPlan.goal,
+  ],
+  status: 'draft',
+  useContext: [
+    { code: 'interventionType', valueCodableConcept: 'Dynamic-FI' },
+    { code: 'fiStatus', valueCodableConcept: 'A1' },
+    { code: 'fiReason', valueCodableConcept: 'Case Triggered' },
+    { code: 'opensrpEventId', valueCodableConcept: 'ff7aa780-2280-43fb-b66b-271d2e0c59c1' },
+    { code: 'caseNum', valueCodableConcept: '13198271299' },
+    { code: 'taskGenerationStatus', valueCodableConcept: 'internal' },
+    { code: 'teamAssignmentStatus', valueCodableConcept: 'True' },
+  ],
+};
+
 export const planNamesAndInterventions = [
   {
     intervention: InterventionType.FI,
