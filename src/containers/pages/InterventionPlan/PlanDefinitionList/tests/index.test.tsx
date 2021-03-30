@@ -116,6 +116,9 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
     expect(wrapper.find('HeaderBreadcrumb').props()).toMatchSnapshot('bread crumb props');
     expect(toJson(wrapper.find('Row').at(0))).toMatchSnapshot('row heading');
     expect(toJson(wrapper.find('HelmetWrapper'))).toMatchSnapshot('helmet');
+    expect(wrapper.find('.thead .tr').text()).toMatchInlineSnapshot(
+      `"TitleIntervention TypeStatusLast Modified"`
+    );
     wrapper.unmount();
   });
 
