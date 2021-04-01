@@ -46,6 +46,8 @@ const jurisdictionData = superset.processData(MDAPointJurisdictionsJSON) || [];
 store.dispatch(fetchGenericJurisdictions('esw-jurisdictions', jurisdictionData));
 store.dispatch(genericFetchPlans(fixtures.MDAPointPlans as GenericPlan[]));
 
+const jurisdictionId = '3951';
+const planId = '40357eff-81b6-4e32-bd3d-484019689f7c';
 const props = {
   history,
   location: {
@@ -57,8 +59,8 @@ const props = {
   match: {
     isExact: true,
     params: {
-      jurisdictionId: '3951',
-      planId: '40357eff-81b6-4e32-bd3d-484019689f7c',
+      jurisdictionId,
+      planId,
     },
     path: `${MDA_POINT_LOCATION_REPORT_URL}`,
     url: `${MDA_POINT_LOCATION_REPORT_URL}`,
@@ -79,7 +81,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
     );
   });
 
-  it('should render school reports correctly', async () => {
+  it('should render school reports correctly', () => {
     store.dispatch(FetchMDAPointLocationReportAction(fixtures.MDAPointSchoolReportData));
 
     const tableData = [
@@ -113,14 +115,14 @@ describe('components/MDA Reports/MDAPlansList', () => {
       adhoc_filters: [
         {
           clause: 'WHERE',
-          comparator: '3951',
+          comparator: jurisdictionId,
           expressionType: 'SIMPLE',
           operator: '==',
           subject: 'jurisdiction_id',
         },
         {
           clause: 'WHERE',
-          comparator: '40357eff-81b6-4e32-bd3d-484019689f7c',
+          comparator: planId,
           expressionType: 'SIMPLE',
           operator: '==',
           subject: 'plan_id',
