@@ -120,7 +120,7 @@ Below is a list of currently supported environment variables:
   - Plan form fields to be hidden when the plan status is draft, active or completed.
   - Options: caseNum, interventionType, jurisdictions, fiReason, fiStatus, title, triggersAndConditions activityActionDefinitionUri, activityActionDescription, activityActionTitle, activityActionReason activityTimingPeriodStart, activityTimingPeriodEnd, activityGoalPriority, activityGoalValue
 
-- **React_APP_CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES**
+- **REACT_APP_CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES**
 
   - **not Required**; _(string)_
   - to activate set the env to `true`, any other value will be interpreted as false
