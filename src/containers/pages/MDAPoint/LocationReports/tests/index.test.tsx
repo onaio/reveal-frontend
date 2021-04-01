@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedLocationReports, { LocationReportsList } from '..';
 import { MDA_POINT_LOCATION_REPORT_URL } from '../../../../../constants';
+import supersetFetch from '../../../../../services/superset';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -26,6 +27,7 @@ import GenericPlanreducer, {
 import * as fixtures from '../../../../../store/ducks/generic/tests/fixtures';
 import { MDAPointJurisdictionsJSON } from '../../jurisdictionsReport/tests/fixtures';
 
+jest.mock('../../../../../services/superset');
 jest.mock('../../../../../configs/env', () => ({
   SHOW_MDA_SCHOOL_REPORT_LABEL: false,
   SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE: '01',
@@ -66,6 +68,7 @@ const props = {
 describe('components/MDA Reports/MDAPlansList', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    fetch.resetMocks();
   });
 
   it('renders without crashing', () => {
@@ -76,7 +79,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
     );
   });
 
-  it('should render school reports correctly', () => {
+  it('should render school reports correctly', async () => {
     store.dispatch(FetchMDAPointLocationReportAction(fixtures.MDAPointSchoolReportData));
 
     const tableData = [
@@ -104,6 +107,27 @@ describe('components/MDA Reports/MDAPlansList', () => {
     expect(toJson(wrapper.find('ListView table'))).toMatchSnapshot('table');
     // two reports rendered
     expect(wrapper.find('.listview-tbody tr').length).toEqual(2);
+    // check if supersetFetch was called with filters
+    expect(supersetFetch).toHaveBeenCalledTimes(1);
+    expect(supersetFetch).toHaveBeenLastCalledWith('01', {
+      adhoc_filters: [
+        {
+          clause: 'WHERE',
+          comparator: '3951',
+          expressionType: 'SIMPLE',
+          operator: '==',
+          subject: 'jurisdiction_id',
+        },
+        {
+          clause: 'WHERE',
+          comparator: '40357eff-81b6-4e32-bd3d-484019689f7c',
+          expressionType: 'SIMPLE',
+          operator: '==',
+          subject: 'plan_id',
+        },
+      ],
+      row_limit: 1000,
+    });
 
     // clear store
     store.dispatch(removeMDAPointLocationReports());

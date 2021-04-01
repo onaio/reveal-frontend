@@ -41,7 +41,7 @@ export const GenericSupersetDataTable = (props: GenericSupersetDataTableProps) =
         fetchItems(result);
       });
     } catch (e) {
-      // do something with the error?
+      displayError(e);
     } finally {
       setLoading(false);
     }
