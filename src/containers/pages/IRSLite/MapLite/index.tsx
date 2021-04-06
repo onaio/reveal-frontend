@@ -375,6 +375,7 @@ const IRSLiteReportingMap = (
                   {!row.listDisplay && <p className="indicator-description">{row.description}</p>}
                   {!row.listDisplay && (
                     <ProgressBar
+                      lineColor={indicatorThresholdsIRSLite.GREEN_THRESHOLD.color}
                       lineColorThresholds={indicatorThresholdsIRSLite || null}
                       value={row.value}
                     />
