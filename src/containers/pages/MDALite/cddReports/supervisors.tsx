@@ -176,7 +176,8 @@ const mapStateToProps = (
   const { params } = ownProps.match;
   const { planId, jurisdictionId } = params;
   const supervisorFilters: MDALiteSupervisorFilters = {
-    ward_id: jurisdictionId,
+    base_entity_id: jurisdictionId,
+    plan_id: planId,
   };
   const supervisorData = supervisorsArraySelector(state, supervisorFilters);
   const wardData: GenericJurisdiction[] = [];

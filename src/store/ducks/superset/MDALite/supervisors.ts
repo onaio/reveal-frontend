@@ -17,8 +17,9 @@ export const reducerName = 'MDALiteSupervisors';
 /** MDALiteSupervisors interface */
 export interface MDALiteSupervisor extends MDALiteDrugsReportInterface {
   id: string;
-  name: string;
-  ward_id: string;
+  supervisor_name: string;
+  base_entity_id: string;
+  plan_id: string;
 }
 
 /** MDA-Lite supervisor Reducer */
@@ -45,8 +46,9 @@ export const getMDALiteSupervisorsArray = getItemsByIdFactory<MDALiteSupervisor>
 
 /** This interface represents the structure of MDA Lite Supervisors filter options/params */
 export interface MDALiteSupervisorFilters {
-  name?: string /** Supervisor name */;
-  ward_id?: string /** ward id */;
+  supervisor_name?: string /** Supervisor name */;
+  base_entity_id?: string /** ward id */;
+  plan_id?: string /** plan id */;
 }
 
 /** MDALiteSupervisorsArrayBaseSelector select an array of all Supervisors
@@ -60,14 +62,23 @@ export const MDALiteSupervisorsArrayBaseSelector = (state: Partial<Store>): MDAL
  * @param state - the redux store
  * @param props - the supervisor filters object
  */
-export const getName = (_: Partial<Store>, props: MDALiteSupervisorFilters) => props.name;
+export const getName = (_: Partial<Store>, props: MDALiteSupervisorFilters) =>
+  props.supervisor_name;
 
 /**
  * Gets ward id from filters
  * @param state - the redux store
  * @param props - the supervisor filters object
  */
-export const getWardId = (_: Partial<Store>, props: MDALiteSupervisorFilters) => props.ward_id;
+export const getWardId = (_: Partial<Store>, props: MDALiteSupervisorFilters) =>
+  props.base_entity_id;
+
+/**
+ * Gets plan id from filters
+ * @param state - the redux store
+ * @param props - the supervisor filters object
+ */
+export const getPlanId = (_: Partial<Store>, props: MDALiteSupervisorFilters) => props.plan_id;
 
 /**
  * Gets an array of Supervisors filtered by name
@@ -78,7 +89,7 @@ export const getMDALiteSupervisorsArrayByName = () =>
   createSelector([MDALiteSupervisorsArrayBaseSelector, getName], (Supervisors, supervisorName) =>
     supervisorName
       ? Supervisors.filter(supervisor =>
-          supervisor.name.toLowerCase().includes(supervisorName.toLowerCase())
+          supervisor.supervisor_name.toLowerCase().includes(supervisorName.toLowerCase())
         )
       : Supervisors
   );
@@ -90,14 +101,25 @@ export const getMDALiteSupervisorsArrayByName = () =>
  */
 export const getMDALiteSupervisorsArrayByWardId = () =>
   createSelector([MDALiteSupervisorsArrayBaseSelector, getWardId], (Supervisors, wardId) =>
-    wardId ? Supervisors.filter(supervisor => wardId === supervisor.ward_id) : Supervisors
+    wardId ? Supervisors.filter(supervisor => wardId === supervisor.base_entity_id) : Supervisors
+  );
+
+/**
+ * Gets an array of Supervisors objects filtered by ward id
+ * @param {Partial<Store>} state - the redux store
+ * @param {MDALiteSupervisorFilters} props - the Supervisors filters object
+ */
+export const getMDALiteSupervisorsArrayByPlanId = () =>
+  createSelector([MDALiteSupervisorsArrayBaseSelector, getPlanId], (Supervisors, planId) =>
+    planId ? Supervisors.filter(supervisor => planId === supervisor.plan_id) : Supervisors
   );
 
 /**
  * Returns a selector that gets an array of Supervisors objects filtered by one or all
  * of the following:
  *    - name
- *    - ward_id
+ *    - base_entity_id
+ *    - plan_id
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *
@@ -111,7 +133,12 @@ export const getMDALiteSupervisorsArrayByWardId = () =>
  */
 export const makeMDALiteSupervisorsArraySelector = () => {
   return createSelector(
-    [getMDALiteSupervisorsArrayByName(), getMDALiteSupervisorsArrayByWardId()],
-    (supervisor1, supervisor2) => intersect([supervisor1, supervisor2], JSON.stringify)
+    [
+      getMDALiteSupervisorsArrayByName(),
+      getMDALiteSupervisorsArrayByWardId(),
+      getMDALiteSupervisorsArrayByPlanId(),
+    ],
+    (supervisor1, supervisor2, supervisor3) =>
+      intersect([supervisor1, supervisor2, supervisor3], JSON.stringify)
   );
 };

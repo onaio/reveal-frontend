@@ -81,7 +81,7 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
 
   const { params } = props.match;
   const { planId, jurisdictionId, supervisorId } = params;
-  const supervisorName = supervisorData[0]?.name || cddData[0]?.supervisor_name;
+  const supervisorName = supervisorData[0]?.supervisor_name || cddData[0]?.supervisor_name;
 
   async function loadData() {
     setLoading(cddData.length < 1);
@@ -202,11 +202,13 @@ const mapStateToProps = (
   const { params } = ownProps.match;
   const { planId, jurisdictionId, supervisorId } = params;
   const cddFilters: MDALiteCDDFilters = {
+    base_entity_id: jurisdictionId,
+    plan_id: planId,
     supervisor_id: supervisorId,
-    ward_id: jurisdictionId,
   };
   const supervisorFilters: MDALiteSupervisorFilters = {
-    ward_id: jurisdictionId,
+    base_entity_id: jurisdictionId,
+    plan_id: planId,
   };
   const cddData = CDDsArraySelector(state, cddFilters);
   const supervisorData = supervisorsArraySelector(state, supervisorFilters);

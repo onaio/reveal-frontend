@@ -40,12 +40,13 @@ export interface MDALiteDrugsReportInterface {
 /** MDALiteCdds interface */
 export interface MDALiteCDDData extends MDALiteGenderInterface, MDALiteDrugsReportInterface {
   average_per_day: number;
+  base_entity_id: string;
   cdd_name: string;
   days_worked: number;
   id: string;
+  plan_id: string;
   supervisor_id: string;
   supervisor_name: string;
-  ward_id: string;
 }
 
 /** MDA-Lite CDD Reducer */
@@ -71,7 +72,8 @@ export const getMDALiteCDDsArray = getItemsByIdFactory<MDALiteCDDData>(reducerNa
 export interface MDALiteCDDFilters {
   cdd_name?: string /** CDD name */;
   supervisor_id?: string /** supervisor id */;
-  ward_id?: string /** ward id */;
+  base_entity_id?: string /** ward id */;
+  plan_id?: string /** plan id */;
 }
 
 /** MDALiteCDDsArrayBaseSelector select an array of all CDDs
@@ -95,11 +97,18 @@ export const getName = (_: Partial<Store>, props: MDALiteCDDFilters) => props.cd
 export const getSupervisorId = (_: Partial<Store>, props: MDALiteCDDFilters) => props.supervisor_id;
 
 /**
+ * Gets plan id from filters
+ * @param state - the redux store
+ * @param props - the cdd filters object
+ */
+export const getPlanId = (_: Partial<Store>, props: MDALiteCDDFilters) => props.plan_id;
+
+/**
  * Gets ward id from filters
  * @param state - the redux store
  * @param props - the cdd filters object
  */
-export const getWardId = (_: Partial<Store>, props: MDALiteCDDFilters) => props.ward_id;
+export const getWardId = (_: Partial<Store>, props: MDALiteCDDFilters) => props.base_entity_id;
 
 /**
  * Gets an array of CDDs filtered by name
@@ -122,13 +131,23 @@ export const getMDALiteCDDsArrayBySupervisorId = () =>
   );
 
 /**
+ * Gets an array of CDDs objects filtered by supervisor id
+ * @param {Partial<Store>} state - the redux store
+ * @param {MDALiteCDDFilters} props - the CDDs filters object
+ */
+export const getMDALiteCDDsArrayByPlanId = () =>
+  createSelector([MDALiteCDDsArrayBaseSelector, getPlanId], (cdds, planId) =>
+    planId ? cdds.filter(cdd => planId === cdd.plan_id) : cdds
+  );
+
+/**
  * Gets an array of CDDs objects filtered by ward id
  * @param {Partial<Store>} state - the redux store
  * @param {MDALiteCDDFilters} props - the CDDs filters object
  */
 export const getMDALiteCDDsArrayByWardId = () =>
   createSelector([MDALiteCDDsArrayBaseSelector, getWardId], (cdds, wardId) =>
-    wardId ? cdds.filter(cdd => wardId === cdd.ward_id) : cdds
+    wardId ? cdds.filter(cdd => wardId === cdd.base_entity_id) : cdds
   );
 
 /**
@@ -136,7 +155,8 @@ export const getMDALiteCDDsArrayByWardId = () =>
  * of the following:
  *    - cdd_name
  *    - supervisor_id
- *    - ward_id
+ *    - base_entity_id
+ *    - plan_id
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *
@@ -154,7 +174,8 @@ export const makeMDALiteCDDsArraySelector = () => {
       getMDALiteCDDsArrayByName(),
       getMDALiteCDDsArrayBySupervisorId(),
       getMDALiteCDDsArrayByWardId(),
+      getMDALiteCDDsArrayByPlanId(),
     ],
-    (cdd1, cdd2, cdd3) => intersect([cdd1, cdd2, cdd3], JSON.stringify)
+    (cdd1, cdd2, cdd3, cdd4) => intersect([cdd1, cdd2, cdd3, cdd4], JSON.stringify)
   );
 };
