@@ -11,7 +11,6 @@ import {
   SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
   SUPERSET_MDA_LITE_REPORTING_PLANS_SLICE,
-  SUPERSET_MDA_LITE_REPORTING_WARD_COLUMNS,
 } from '../../../../configs/env';
 import { MDA_LITE_REPORTING_TITLE } from '../../../../configs/lang';
 import { REPORT_MDA_LITE_PLAN_URL } from '../../../../constants';
@@ -58,7 +57,7 @@ const defaultProps: GenericJurisdictionProps = {
   cellComponent: MDALiteTableCell,
   fetchJurisdictions: fetchGenericJurisdictions,
   fetchPlans: genericFetchPlans,
-  focusAreaColumn: SUPERSET_MDA_LITE_REPORTING_WARD_COLUMNS,
+  focusAreaColumn: SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_COLUMNS,
   focusAreaLevel: SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL,
   hasChildren: hasChildrenFunc,
   jurisdictionColumn: SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_COLUMNS,

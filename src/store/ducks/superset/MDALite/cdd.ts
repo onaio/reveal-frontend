@@ -74,6 +74,7 @@ export interface MDALiteCDDFilters {
   supervisor_id?: string /** supervisor id */;
   base_entity_id?: string /** ward id */;
   plan_id?: string /** plan id */;
+  supervisor_name?: string /** supervisor name */;
 }
 
 /** MDALiteCDDsArrayBaseSelector select an array of all CDDs
@@ -97,6 +98,14 @@ export const getName = (_: Partial<Store>, props: MDALiteCDDFilters) => props.cd
 export const getSupervisorId = (_: Partial<Store>, props: MDALiteCDDFilters) => props.supervisor_id;
 
 /**
+ * Gets supervisor name from filters
+ * @param state - the redux store
+ * @param props - the cdd filters object
+ */
+export const getSupervisorName = (_: Partial<Store>, props: MDALiteCDDFilters) =>
+  props.supervisor_name;
+
+/**
  * Gets plan id from filters
  * @param state - the redux store
  * @param props - the cdd filters object
@@ -118,6 +127,18 @@ export const getWardId = (_: Partial<Store>, props: MDALiteCDDFilters) => props.
 export const getMDALiteCDDsArrayByName = () =>
   createSelector([MDALiteCDDsArrayBaseSelector, getName], (cdds, cddName) =>
     cddName ? cdds.filter(cdd => cdd.cdd_name.toLowerCase().includes(cddName.toLowerCase())) : cdds
+  );
+
+/**
+ * Gets an array of CDDs filtered by supervisor name
+ * @param {Partial<Store>} state - the redux store
+ * @param {MDALiteCDDFilters} props - the  CDDs filters object
+ */
+export const getMDALiteCDDsArrayBySupervisorName = () =>
+  createSelector([MDALiteCDDsArrayBaseSelector, getSupervisorName], (cdds, supervisorName) =>
+    supervisorName
+      ? cdds.filter(cdd => cdd.supervisor_name.toLowerCase().includes(supervisorName.toLowerCase()))
+      : cdds
   );
 
 /**
@@ -157,6 +178,7 @@ export const getMDALiteCDDsArrayByWardId = () =>
  *    - supervisor_id
  *    - base_entity_id
  *    - plan_id
+ *    - suprevisor_name
  *
  * These filter params are all optional and are supplied via the prop parameter.
  *
@@ -175,7 +197,8 @@ export const makeMDALiteCDDsArraySelector = () => {
       getMDALiteCDDsArrayBySupervisorId(),
       getMDALiteCDDsArrayByWardId(),
       getMDALiteCDDsArrayByPlanId(),
+      getMDALiteCDDsArrayBySupervisorName(),
     ],
-    (cdd1, cdd2, cdd3, cdd4) => intersect([cdd1, cdd2, cdd3, cdd4], JSON.stringify)
+    (cdd1, cdd2, cdd3, cdd4, cdd5) => intersect([cdd1, cdd2, cdd3, cdd4, cdd5], JSON.stringify)
   );
 };

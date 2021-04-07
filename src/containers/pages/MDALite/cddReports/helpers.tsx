@@ -1,6 +1,7 @@
 import { Dictionary } from '@onaio/utils/dist/types/types';
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 import { Cell } from 'react-table';
 import {
   defaultOptions,
@@ -8,7 +9,7 @@ import {
 } from '../../../../components/Table/DrillDownFilters/utils';
 import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
 import { indicatorThresholdsMDALite } from '../../../../configs/settings';
-import { QUERY_PARAM_TITLE } from '../../../../constants';
+import { REPORT_MDA_LITE_CDD_REPORT_URL } from '../../../../constants';
 import { getIRSThresholdAdherenceIndicator } from '../../../../helpers/indicators';
 import {
   drugDistributionColumns,
@@ -18,6 +19,11 @@ import {
 /** supervisor columns */
 export const supervisorColumns = [
   {
+    Cell: (cell: Cell) => {
+      const original: Dictionary = cell.row.original;
+      const url = `${REPORT_MDA_LITE_CDD_REPORT_URL}/${original.plan_id}/${original.base_entity_id}/${original.supervisor_name}`;
+      return <Link to={url}>{cell.value}</Link>;
+    },
     Header: 'Name',
     accessor: 'supervisor_name',
   },
@@ -69,7 +75,9 @@ export const getCddTableProps = (
     renderInTopFilterBar: renderInFilterFactory({
       ...defaultOptions,
       componentProps: props,
-      queryParam: QUERY_PARAM_TITLE,
+      showColumnHider: false,
+      showRowHeightPicker: false,
+      showSearch: false,
     }),
     renderNullDataComponent: () => <NoDataComponent />,
     resize: true,

@@ -532,16 +532,6 @@ export const mdaLiteJurisdictionsColumns = [
   ...drugDistributionColumns,
 ];
 
-export const mdaLitewardColumns = [
-  {
-    Header: 'Name',
-    accessor: 'jurisdiction_name',
-    minWidth: 180,
-  },
-  ...genderReportColumns,
-  ...censusPopColumns,
-];
-
 /** IRS Table Columns
  * These are all the table columns for IRS that we know about.
  */
@@ -550,7 +540,6 @@ export const plansTableColumns: { [key: string]: Array<DrillDownColumn<Dictionar
   irsLiteZambiaJurisdictions2020: IRSLiteZambiaJurisdictionsColumns,
   mdaJurisdictionsColumns,
   mdaLiteJurisdictionsColumns,
-  mdaLitewardColumns,
   namibia2019: NamibiaColumns,
   smcJurisdictionsColumns,
   zambiaFocusArea2019: ZambiaFocusAreasColumns,
