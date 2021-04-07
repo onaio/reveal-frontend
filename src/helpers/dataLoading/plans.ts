@@ -68,6 +68,7 @@ export const loadOpenSRPPlans = (
   actionCreator: ActionCreator<FetchPlanRecordsAction>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
+  setLoading(true);
   const OpenSrpPlanService = new service(OPENSRP_GET_ALL_PLANS);
   OpenSrpPlanService.list(PLANS_SERVICE_FILTER_PARAM)
     .then((plans: PlanPayload[]) => {
