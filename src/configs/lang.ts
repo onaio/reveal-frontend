@@ -1009,3 +1009,5 @@ export const LOWEST_JURISDICTION = translate(
   'LOWEST_JURISDICTION',
   'This is the lowest jurisdiction'
 );
+
+export const SUBCOUNTY_LABEL = translate('SUBCOUNTY_LABEL', 'Subcounty');

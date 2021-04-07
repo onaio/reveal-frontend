@@ -121,7 +121,7 @@ export const getMDALiteWardsArrayByPlanId = () =>
  * @param {MDALiteWardsFilters} props - the wards filters object
  */
 export const getMDALiteWardsArrayByWardId = () =>
-  createSelector([MDALiteWardsArrayBaseSelector, getPlanId], (wards, wardId) =>
+  createSelector([MDALiteWardsArrayBaseSelector, getWardId], (wards, wardId) =>
     wardId ? wards.filter(ward => wardId === ward.base_entity_id) : wards
   );
 
@@ -135,7 +135,7 @@ export const getMDALiteWardsArrayByWardId = () =>
  * These filter params are all optional and are supplied via the prop parameter.
  *
  * To use this selector, do something like:
- *    const makeMDALiteWardsArraySelector = makeMDALiteWardsArraySelector();
+ *    const makeMDALiteWardsSelector = makeMDALiteWardsArraySelector();
  *
  * @param {Partial<Store>} state - the redux store
  * @param {MDALiteWardsFilters} props - the wards filters object

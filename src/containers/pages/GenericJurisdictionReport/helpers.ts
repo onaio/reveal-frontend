@@ -504,7 +504,7 @@ export const drugDistributionColumns = [
 export const censusPopColumns = [
   {
     Header: 'Census Pop Target (Official)',
-    accessor: 'census_pop_target',
+    accessor: 'official_population',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, indicatorThresholdsMDALite),
