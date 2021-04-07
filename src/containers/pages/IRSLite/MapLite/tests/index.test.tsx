@@ -506,4 +506,170 @@ describe('components/IRS Reports/IRSLiteReportingMap', () => {
     expect(supersetServiceMock).toHaveBeenCalledTimes(4);
     wrapper.unmount();
   });
+  it('bar should have gray background when < 100', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const mock: any = jest.fn();
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+
+    const focusArea = {
+      found: 34,
+      foundcoverage: 0,
+      id: '0f973eb6-7204-55f6-9f54-299d10647a9c',
+      jurisdiction_depth: 3,
+      jurisdiction_id: 'ce13e7f4-6926-4be0-9117-519bd1cc4bb2',
+      jurisdiction_name: 'so_Sompani_Health_Post_MACEPA_IRS_Lite_2020',
+      jurisdiction_name_path: [
+        'Zambia MACEPA IRS Lite 2020',
+        'Southern MACEPA IRS Lite 2020',
+        'Gwembe MACEPA IRS Lite 2020',
+      ],
+      jurisdiction_parent_id: '032a9542-dab7-4a76-9e2e-bc7eb99a259c',
+      jurisdiction_path: [
+        '03557b7e-0ddf-41f7-93c8-155669757a16',
+        '48a04a67-ac6f-4d5e-bbc6-09b77ba1253d',
+        '032a9542-dab7-4a76-9e2e-bc7eb99a259c',
+      ],
+      plan_id: '17f89152-51a6-476c-9246-8fee6f9e6ebf',
+      spraycov: 0,
+      spraycovtarg: 0,
+      sprayed: 24,
+      spraysuccess: 0.7058823529411765,
+      targareas: 93,
+      targstruct: 0,
+      totareas: 93,
+      totstruct: 0,
+      visitedareas: 16,
+    };
+
+    const structures = getGenericStructures(
+      store.getState(),
+      'zm-structures',
+      'ce13e7f4-6926-4be0-9117-519bd1cc4bb2'
+    );
+
+    const jurisdiction = getJurisdictionById(
+      store.getState(),
+      'ce13e7f4-6926-4be0-9117-519bd1cc4bb2'
+    );
+    const props = {
+      focusArea,
+      history,
+      jurisdiction,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: 'ce13e7f4-6926-4be0-9117-519bd1cc4bb2',
+          planId: (plans[0] as GenericPlan).plan_id,
+        },
+        path: `${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_LITE_PLAN_URL}/${
+          (plans[0] as GenericPlan).plan_id
+        }/ce13e7f4-6926-4be0-9117-519bd1cc4bb2/${MAP}`,
+      },
+      plan: plans[0] as GenericPlan,
+      service: supersetServiceMock,
+      structures,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSLiteReportingMap {...props} />
+      </Router>
+    );
+    const wrapperStyle = wrapper
+      .find('.progress-bar')
+      .first()
+      .props().style;
+
+    expect(wrapperStyle).toMatchObject({
+      backgroundColor: '#dddddd', // gray
+      width: '0%',
+    });
+  });
+
+  it('bar should have gray background when > 100', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}));
+    const mock: any = jest.fn();
+
+    const supersetServiceMock: any = jest.fn();
+    supersetServiceMock.mockImplementation(async () => []);
+
+    const focusArea = {
+      found: 34,
+      foundcoverage: 0,
+      id: '0f973eb6-7204-55f6-9f54-299d10647a9c',
+      jurisdiction_depth: 3,
+      jurisdiction_id: 'ce13e7f4-6926-4be0-9117-519bd1cc4bb2',
+
+      jurisdiction_name: 'so_Sompani_Health_Post_MACEPA_IRS_Lite_2020',
+      jurisdiction_name_path: [
+        'Zambia MACEPA IRS Lite 2020',
+        'Southern MACEPA IRS Lite 2020',
+        'Gwembe MACEPA IRS Lite 2020',
+      ],
+      jurisdiction_parent_id: '032a9542-dab7-4a76-9e2e-bc7eb99a259c',
+      jurisdiction_path: [
+        '03557b7e-0ddf-41f7-93c8-155669757a16',
+        '48a04a67-ac6f-4d5e-bbc6-09b77ba1253d',
+        '032a9542-dab7-4a76-9e2e-bc7eb99a259c',
+      ],
+      plan_id: '17f89152-51a6-476c-9246-8fee6f9e6ebf',
+      spraycov: 1.5,
+      spraycovtarg: 0,
+      sprayed: 24,
+      spraysuccess: 0.7058823529411765,
+      targareas: 93,
+      targstruct: 0,
+      totareas: 93,
+      totstruct: 0,
+      visitedareas: 16,
+    };
+    const structures = getGenericStructures(
+      store.getState(),
+      'zm-structures',
+      'ce13e7f4-6926-4be0-9117-519bd1cc4bb2'
+    );
+
+    const jurisdiction = getJurisdictionById(
+      store.getState(),
+      'ce13e7f4-6926-4be0-9117-519bd1cc4bb2'
+    );
+
+    const props = {
+      focusArea,
+      history,
+      jurisdiction,
+      location: mock,
+      match: {
+        isExact: true,
+        params: {
+          jurisdictionId: 'ce13e7f4-6926-4be0-9117-519bd1cc4bb2',
+          planId: (plans[0] as GenericPlan).plan_id,
+        },
+        path: `${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`,
+        url: `${REPORT_IRS_LITE_PLAN_URL}/${
+          (plans[0] as GenericPlan).plan_id
+        }/ce13e7f4-6926-4be0-9117-519bd1cc4bb2/${MAP}`,
+      },
+      plan: plans[0] as GenericPlan,
+      service: supersetServiceMock,
+      structures,
+    };
+    const wrapper = mount(
+      <Router history={history}>
+        <IRSLiteReportingMap {...props} />
+      </Router>
+    );
+    const wrapperStyle = wrapper
+      .find('.progress-bar')
+      .first()
+      .props().style;
+
+    expect(wrapperStyle).toMatchObject({
+      backgroundColor: '#2ECC40', // green
+      width: '150%',
+    });
+  });
 });
