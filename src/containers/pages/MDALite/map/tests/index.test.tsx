@@ -8,8 +8,9 @@ import { act } from 'react-dom/test-utils';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import ConnectedMDALiteWardsReport, { MDALiteWardsReport } from '../';
-import { REPORT_MDA_LITE_WARD_URL } from '../../../../../constants';
+import ConnectedMDALiteMapReport, { MDALiteMapReport } from '../';
+import { GisidaLiteProps } from '../../../../../components/GisidaLite';
+import { REPORT_MDA_LITE_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
   reducerName as genericJurisdictionsReducerName,
@@ -17,27 +18,34 @@ import GenericJurisdictionsReducer, {
 import GenericPlansReducer, {
   reducerName as genericPlanReducerName,
 } from '../../../../../store/ducks/generic/plans';
+import genericStructuresReducer, {
+  reducerName as genericStructuresReducerName,
+} from '../../../../../store/ducks/generic/structures';
 import {
   MDALitePlans,
-  MDALiteWardsData,
+  MDALiteWardGeojsonData,
   MDALteJurisidtionsData,
 } from '../../../../../store/ducks/superset/MDALite/tests/fixtures';
-import wardsReducer, {
-  reducerName as wardsReducerName,
-} from '../../../../../store/ducks/superset/MDALite/wards';
 
 /** register the reducers */
 reducerRegistry.register(genericJurisdictionsReducerName, GenericJurisdictionsReducer);
 reducerRegistry.register(genericPlanReducerName, GenericPlansReducer);
-reducerRegistry.register(wardsReducerName, wardsReducer);
+reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer);
 
 jest.mock('../../../../../configs/env');
+
+jest.mock('../../../../../components/GisidaLite', () => {
+  const MemoizedGisidaLiteMock = () => <div>Mock component</div>;
+  return {
+    MemoizedGisidaLite: MemoizedGisidaLiteMock,
+  };
+});
 
 const history = createBrowserHistory();
 
 const mock: any = jest.fn();
-const planId = MDALiteWardsData[0].plan_id;
-const jurisdictionId = MDALiteWardsData[0].parent_id;
+const planId = MDALiteWardGeojsonData[0].plan_id;
+const jurisdictionId = MDALiteWardGeojsonData[0].jurisdiction_id;
 const props = {
   history,
   location: mock,
@@ -47,27 +55,28 @@ const props = {
       jurisdictionId,
       planId,
     },
-    path: `${REPORT_MDA_LITE_WARD_URL}/:planId/:jurisdictionId`,
-    url: `${REPORT_MDA_LITE_WARD_URL}/${planId}/${jurisdictionId}`,
+    path: `${REPORT_MDA_LITE_PLAN_URL}/:planId/:jurisdictionId/map`,
+    url: `${REPORT_MDA_LITE_PLAN_URL}/${planId}/${jurisdictionId}/map`,
   },
 };
 
 describe('components/MDA/Lite/Reports/wards', () => {
   beforeEach(() => {
     jest.resetAllMocks();
+    jest.restoreAllMocks();
   });
 
   it('renders without crashing', async () => {
     shallow(
       <Router history={history}>
-        <MDALiteWardsReport {...props} />
+        <MDALiteMapReport {...props} />
       </Router>
     );
   });
 
   it('renders correctly', async () => {
     const supersetServiceMock: any = jest.fn();
-    supersetServiceMock.mockImplementationOnce(async () => MDALiteWardsData);
+    supersetServiceMock.mockImplementationOnce(async () => MDALiteWardGeojsonData);
     supersetServiceMock.mockImplementationOnce(async () => MDALitePlans);
     supersetServiceMock.mockImplementationOnce(async () => MDALteJurisidtionsData);
     supersetServiceMock.mockImplementationOnce(async () => []);
@@ -78,7 +87,7 @@ describe('components/MDA/Lite/Reports/wards', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedMDALiteWardsReport {...allProps} />
+          <ConnectedMDALiteMapReport {...allProps} />
         </Router>
       </Provider>
     );
@@ -95,44 +104,18 @@ describe('components/MDA/Lite/Reports/wards', () => {
       expect(toJson(item.find('a'))).toMatchSnapshot(`breadcrumb item href-${i + 1}`);
     });
     expect(wrapper.find('.page-title').text()).toEqual('MDA Lite Reporting: vihiga');
-    // table tests
-    expect(wrapper.find('DrillDownTable .thead .tr').length).toEqual(2);
-    wrapper
-      .find('.thead .tr .th')
-      .forEach((th, i) => expect(th.text()).toMatchSnapshot(`table headers-${i + 1}`));
-    expect(wrapper.find('.no-data-cls').length).toMatchInlineSnapshot(`0`);
-    // check data rendered
-    expect(wrapper.find('.tbody .tr').length).toEqual(2);
-    const row1 = wrapper.find('.tbody .tr').at(0);
-    const row2 = wrapper.find('.tbody .tr').at(1);
-    expect(
-      row1
-        .find('.td')
-        .at(0)
-        .text()
-    ).toEqual('lugaga');
-    expect(
-      row2
-        .find('.td')
-        .at(0)
-        .text()
-    ).toEqual('mungoma');
-    // do we have correct links to cdds supervisors
-    expect(
-      row1
-        .find('.td a')
-        .at(0)
-        .prop('href')
-    ).toEqual(
-      '/intervention/mda-lite/cdd/report/5e396185-6094-4817-9dd4-24bcbbc698b0/28713d21-d4f9-49b7-aab7-b07838fb086f'
-    );
-    expect(
-      row2
-        .find('.td a')
-        .at(0)
-        .prop('href')
-    ).toEqual(
-      '/intervention/mda-lite/cdd/report/5e396185-6094-4817-9dd4-24bcbbc698b0/9ec52632-7bfb-40f5-9ef7-8804627a65cb'
-    );
+
+    const mapProps = wrapper.find('MemoizedGisidaLiteMock').props() as GisidaLiteProps;
+    // Check Gisida component map layers
+    expect((mapProps as any).layers.map((e: any) => e.key)).toMatchSnapshot('GisidaLite layers');
+    expect(mapProps.zoom).toEqual(12);
+    expect(mapProps.mapCenter).toEqual([34.6768368460001, 0.0131305400000485]);
+    expect(mapProps.mapBounds).toEqual([
+      34.6264335430001,
+      -0.026151141999947,
+      34.7272401490001,
+      0.052412222000044,
+    ]);
+    wrapper.unmount();
   });
 });

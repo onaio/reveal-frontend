@@ -1,6 +1,6 @@
 // tslint:disable: object-literal-sort-keys
 import wardGeojsonDataJson from './wardsGeojson.json';
-export const wardGeojsonData = wardGeojsonDataJson;
+export const MDALiteWardGeojsonData = wardGeojsonDataJson;
 export const MDALitePlans = [
   {
     plan_id: '5e396185-6094-4817-9dd4-24bcbbc698b0',
@@ -121,7 +121,7 @@ export const MDALteJurisidtionsData = [
   },
 ];
 
-export const wardsData = [
+export const MDALiteWardsData = [
   {
     ward_name: 'lugaga',
     parent_id: '3c63f48e-bb86-42e5-b3ff-bc539fbf5295',

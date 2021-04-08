@@ -14,8 +14,8 @@ import supervisorReducer, {
   reducerName as supervisorReducerName,
 } from '../../../../../store/ducks/superset/MDALite/supervisors';
 import {
+  MDALiteWardsData,
   supervisorData,
-  wardsData,
 } from '../../../../../store/ducks/superset/MDALite/tests/fixtures';
 import wardsReducer, {
   reducerName as wardsReducerName,
@@ -63,7 +63,7 @@ describe('components/MDA/Lite/Reports/cddReport/supervisor', () => {
   it('renders correctly', async () => {
     const supersetServiceMock: any = jest.fn();
     supersetServiceMock.mockImplementationOnce(async () => supervisorData);
-    supersetServiceMock.mockImplementationOnce(async () => wardsData);
+    supersetServiceMock.mockImplementationOnce(async () => MDALiteWardsData);
     const allProps = {
       ...props,
       service: supersetServiceMock,

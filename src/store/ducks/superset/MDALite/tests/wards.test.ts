@@ -13,7 +13,7 @@ import reducer, {
   reducerName,
   removeMDALiteWards,
 } from '../wards';
-import { wardsData } from './fixtures';
+import { MDALiteWardsData } from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
 
@@ -35,37 +35,37 @@ describe('reducers/MDA-Lite/wards', () => {
 
   it('Fetches wards data correctly', () => {
     // action creators dispatch
-    store.dispatch(fetchMDALiteWards(wardsData as MDALiteWards[]));
+    store.dispatch(fetchMDALiteWards(MDALiteWardsData as MDALiteWards[]));
 
     expect(getMDALiteWardById(store.getState(), 'a4c3973d-5076-59ea-b2bd-08abbb71894a')).toEqual(
-      wardsData[0]
+      MDALiteWardsData[0]
     );
 
     // RESELECT TESTS
     expect(getMDALiteWardsArrayByName()(store.getState(), { ward_name: 'mungoma' })).toEqual([
-      wardsData[2],
+      MDALiteWardsData[2],
     ]);
     expect(
       getMDALiteWardsArrayByParentId()(store.getState(), {
         parent_id: '3c63f48e-bb86-42e5-b3ff-bc539fbf5295',
       })
-    ).toEqual(wardsData);
+    ).toEqual(MDALiteWardsData);
     expect(
       getMDALiteWardsArrayByPlanId()(store.getState(), {
         plan_id: '6b485d4b-1043-40ed-ab8a-c64d24045ada',
       })
-    ).toEqual([wardsData[1]]);
+    ).toEqual([MDALiteWardsData[1]]);
     expect(
       getMDALiteWardsArrayByWardId()(store.getState(), {
         base_entity_id: '9ec52632-7bfb-40f5-9ef7-8804627a65cb',
       })
-    ).toEqual([wardsData[2]]);
+    ).toEqual([MDALiteWardsData[2]]);
 
     expect(
       makeMDALiteWardsSelector(store.getState(), {
         parent_id: '3c63f48e-bb86-42e5-b3ff-bc539fbf5295',
       })
-    ).toEqual(wardsData);
+    ).toEqual(MDALiteWardsData);
     expect(
       makeMDALiteWardsSelector(store.getState(), {
         ward_name: 'onyx',
@@ -76,7 +76,7 @@ describe('reducers/MDA-Lite/wards', () => {
         base_entity_id: '9ec52632-7bfb-40f5-9ef7-8804627a65cb',
         parent_id: '3c63f48e-bb86-42e5-b3ff-bc539fbf5295',
       })
-    ).toEqual([wardsData[2]]);
+    ).toEqual([MDALiteWardsData[2]]);
 
     // reset
     store.dispatch(removeMDALiteWards());

@@ -40,7 +40,7 @@ import supersetFetch from '../../../../services/superset';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
   GenericJurisdiction,
-  getGenericJurisdictionByJurisdictionId,
+  getAllGenericJurisdictionByJurisdictionId,
   reducerName as genericJurisdictionsReducerName,
 } from '../../../../store/ducks/generic/jurisdictions';
 import GenericPlansReducer, {
@@ -280,7 +280,7 @@ const defaultProps: MDALiteMapProps = {
 };
 
 MDALiteMapReport.defaultProps = defaultProps;
-export { MDALiteMapReport as MDALiteWardsReport };
+export { MDALiteMapReport };
 
 /** map dispatch to props */
 const mapDispatchToProps = {
@@ -305,12 +305,13 @@ const mapStateToProps = (
     jurisdictionId,
     planId
   );
-  const subcountyData: GenericJurisdiction[] = [];
+  let subcountyData: GenericJurisdiction[] = [];
   if (jurisdictionId) {
     defaultProps.slices.forEach((slice: string) => {
-      const jur = getGenericJurisdictionByJurisdictionId(state, slice, jurisdictionId);
-      if (jur && jur.plan_id === planId) {
-        subcountyData.push(jur);
+      const jurs = getAllGenericJurisdictionByJurisdictionId(state, slice, jurisdictionId);
+      if (jurs.length) {
+        const jursOfInterest = jurs.filter(jur => jur.plan_id === planId);
+        subcountyData = [...subcountyData, ...jursOfInterest];
       }
     });
   }
