@@ -37,7 +37,7 @@ export const MDALitePlans = [
   },
 ];
 
-export const wardsJurisidtions = [
+export const MDALteJurisidtionsData = [
   {
     id: '541e7ed0-2dc6-586e-b563-4c988c5ac585',
     plan_id: '5e396185-6094-4817-9dd4-24bcbbc698b0',
