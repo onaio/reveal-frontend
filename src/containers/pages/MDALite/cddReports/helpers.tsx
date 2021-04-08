@@ -21,7 +21,7 @@ export const supervisorColumns = [
   {
     Cell: (cell: Cell) => {
       const original: Dictionary = cell.row.original;
-      const url = `${REPORT_MDA_LITE_CDD_REPORT_URL}/${original.plan_id}/${original.base_entity_id}/${original.supervisor_name}`;
+      const url = `${REPORT_MDA_LITE_CDD_REPORT_URL}/${original.plan_id}/${original.base_entity_id}/${original.id}`;
       return <Link to={url}>{cell.value}</Link>;
     },
     Header: 'Name',
@@ -38,12 +38,12 @@ export const cddReportColumns = [
   },
   ...genderReportColumns,
   {
-    Header: 'Name',
+    Header: 'Days worked',
     accessor: 'days_worked',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, indicatorThresholdsMDALite),
-    Header: 'Name',
+    Header: 'Avarange per day',
     accessor: 'avarage_per_day',
   },
   ...drugDistributionColumns,

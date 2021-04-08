@@ -79,7 +79,7 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
         supervisorFilter.push({
           comparator: supervisorId,
           operator: '==',
-          subject: 'supervisor_name',
+          subject: 'supervisor_id',
         });
         // get cdd data
         const fetchCDDParams = superset.getFormData(SUPERSET_MAX_RECORDS, [
@@ -190,7 +190,7 @@ const mapStateToProps = (
   const cddFilters: MDALiteCDDFilters = {
     base_entity_id: jurisdictionId,
     plan_id: planId,
-    supervisor_name: supervisorId,
+    supervisor_id: supervisorId,
   };
   const cddData = CDDsArraySelector(state, cddFilters);
   const wardData = makeMDALiteWardsSelector(state, {

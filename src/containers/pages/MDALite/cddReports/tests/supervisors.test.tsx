@@ -13,10 +13,6 @@ import store from '../../../../../store';
 import supervisorReducer, {
   reducerName as supervisorReducerName,
 } from '../../../../../store/ducks/superset/MDALite/supervisors';
-import {
-  MDALiteWardsData,
-  supervisorData,
-} from '../../../../../store/ducks/superset/MDALite/tests/fixtures';
 import wardsReducer, {
   reducerName as wardsReducerName,
 } from '../../../../../store/ducks/superset/MDALite/wards';
@@ -31,8 +27,8 @@ jest.mock('../../../../../configs/env');
 const history = createBrowserHistory();
 
 const mock: any = jest.fn();
-const planId = supervisorData[0].plan_id;
-const jurisdictionId = supervisorData[0].base_entity_id;
+const planId = MDALiteSupervisorData[0].plan_id;
+const jurisdictionId = MDALiteSupervisorData[0].base_entity_id;
 const props = {
   history,
   location: mock,
@@ -62,7 +58,7 @@ describe('components/MDA/Lite/Reports/cddReport/supervisor', () => {
 
   it('renders correctly', async () => {
     const supersetServiceMock: any = jest.fn();
-    supersetServiceMock.mockImplementationOnce(async () => supervisorData);
+    supersetServiceMock.mockImplementationOnce(async () => MDALiteSupervisorData);
     supersetServiceMock.mockImplementationOnce(async () => MDALiteWardsData);
     const allProps = {
       ...props,
