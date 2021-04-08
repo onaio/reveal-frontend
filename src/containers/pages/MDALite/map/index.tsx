@@ -1,28 +1,39 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { useEffect, useState } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
-
-import { DrillDownTable } from '@onaio/drill-down-table';
 import superset, { SupersetAdhocFilterOption } from '@onaio/superset-connector';
+import { Dictionary } from '@onaio/utils';
+import { centroid, featureCollection, polygon as turfPolygon } from '@turf/turf';
+import geojson from 'geojson';
+import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
+import { GeoJSONLayer } from 'react-mapbox-gl';
 import { connect } from 'react-redux';
+import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { MemoizedGisidaLite } from '../../../../components/GisidaLite';
+import { getZoomCenterAndBounds } from '../../../../components/GisidaLite/helpers';
+import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
-import {
-  defaultOptions,
-  renderInFilterFactory,
-} from '../../../../components/Table/DrillDownFilters/utils';
-import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
 import {
   SUPERSET_MAX_RECORDS,
   SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_MDA_LITE_REPORTING_PLANS_SLICE,
-  SUPERSET_MDA_LITE_REPORTING_WARD_SLICE,
+  SUPERSET_MDA_LITE_REPORTING_WARD_GEOJSON_SLICE,
 } from '../../../../configs/env';
-import { HOME, MDA_LITE_REPORTING_TITLE, SUBCOUNTY_LABEL } from '../../../../configs/lang';
-import { HOME_URL, REPORT_MDA_LITE_PLAN_URL } from '../../../../constants';
+import {
+  HOME,
+  MAP_LOAD_ERROR,
+  MDA_LITE_REPORTING_TITLE,
+  SUBCOUNTY_LABEL,
+} from '../../../../configs/lang';
+import {
+  DefaultMapDimensions,
+  HOME_URL,
+  MDA_LITE_STRUCTURES,
+  POLYGON,
+  REPORT_MDA_LITE_PLAN_URL,
+} from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -38,37 +49,34 @@ import GenericPlansReducer, {
   getPlanByIdSelector,
   reducerName as genericPlanReducerName,
 } from '../../../../store/ducks/generic/plans';
-import wardReducer, {
-  fetchMDALiteWards,
-  makeMDALiteWardsArraySelector,
-  MDALiteWards,
-  reducerName as wardReducerName,
-} from '../../../../store/ducks/superset/MDALite/wards';
-import { wardColumns } from './helpers';
+import genericStructuresReducer, {
+  fetchGenericStructures,
+  getGenericStructures,
+  reducerName as genericStructuresReducerName,
+  StructureFeatureCollection,
+} from '../../../../store/ducks/generic/structures';
+import { buildGsLiteLayers } from '../../FocusInvestigation/map/active/helpers/utils';
 
 /** register the reducers */
 reducerRegistry.register(genericJurisdictionsReducerName, GenericJurisdictionsReducer);
 reducerRegistry.register(genericPlanReducerName, GenericPlansReducer);
-reducerRegistry.register(wardReducerName, wardReducer);
+reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer);
 
 /** selectors */
-const makeMDALiteWardsSelector = makeMDALiteWardsArraySelector();
 
-interface MDALiteWardsrReportsProps {
+interface MDALiteMapProps {
   baseUrl: string;
   fetchJurisdictions: typeof fetchGenericJurisdictions;
   fetchPlans: typeof genericFetchPlans;
-  fetchWards: typeof fetchMDALiteWards;
+  fetchWards: typeof fetchGenericStructures;
   planData: GenericPlan | null;
   service: typeof supersetFetch;
   slices: string[];
   subcountyData: GenericJurisdiction[];
-  wardData: MDALiteWards[];
+  wardData: StructureFeatureCollection | null;
 }
 
-const MDALiteWardsReport = (
-  props: MDALiteWardsrReportsProps & RouteComponentProps<RouteParams>
-) => {
+const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RouteParams>) => {
   const {
     wardData,
     service,
@@ -87,45 +95,38 @@ const MDALiteWardsReport = (
 
   // load data
   async function loadData() {
-    setLoading(!wardData || (wardData && wardData.length < 1));
+    setLoading(!wardData);
     try {
-      const parentJurFilter: SupersetAdhocFilterOption[] = [];
       const planIdFilter: SupersetAdhocFilterOption[] = [];
       const jurisdictionFilter: SupersetAdhocFilterOption[] = [];
-      if (jurisdictionId) {
+      if (jurisdictionId && planId) {
         jurisdictionFilter.push({
           comparator: jurisdictionId,
           operator: '==',
           subject: 'jurisdiction_id',
         });
-        parentJurFilter.push({ comparator: jurisdictionId, operator: '==', subject: 'parent_id' });
-      }
-      if (planId) {
         planIdFilter.push({ comparator: planId, operator: '==', subject: 'plan_id' });
-      }
-      // get ward data
-      const wardDataFilters = superset.getFormData(SUPERSET_MAX_RECORDS, [
-        ...planIdFilter,
-        ...parentJurFilter,
-      ]);
-      await service(SUPERSET_MDA_LITE_REPORTING_WARD_SLICE, wardDataFilters).then(res =>
-        fetchWards(res)
-      );
-      // get plan data
-      if (!planData) {
-        const planDataFilter = superset.getFormData(SUPERSET_MAX_RECORDS, [...planIdFilter]);
-        await service(SUPERSET_MDA_LITE_REPORTING_PLANS_SLICE, planDataFilter).then(res =>
-          fetchPlans(res)
-        );
-      }
-      if (!subcountyData.length) {
-        const subCountyFilters = superset.getFormData(SUPERSET_MAX_RECORDS, [
+        // get ward data
+        const supersetFilters = superset.getFormData(SUPERSET_MAX_RECORDS, [
           ...planIdFilter,
           ...jurisdictionFilter,
         ]);
-        slices.forEach(async slice => {
-          await service(slice, subCountyFilters).then(res => fetchJurisdictions(slice, res));
-        });
+        await service(SUPERSET_MDA_LITE_REPORTING_WARD_GEOJSON_SLICE, supersetFilters).then(res =>
+          fetchWards(SUPERSET_MDA_LITE_REPORTING_WARD_GEOJSON_SLICE, res)
+        );
+        // get plan data
+        if (!planData) {
+          const planDataFilter = superset.getFormData(SUPERSET_MAX_RECORDS, [...planIdFilter]);
+          await service(SUPERSET_MDA_LITE_REPORTING_PLANS_SLICE, planDataFilter).then(res =>
+            fetchPlans(res)
+          );
+        }
+        // get subcounty data
+        if (!subcountyData.length) {
+          slices.forEach(async slice => {
+            await service(slice, supersetFilters).then(res => fetchJurisdictions(slice, res));
+          });
+        }
       }
     } catch (e) {
       displayError(e);
@@ -140,6 +141,10 @@ const MDALiteWardsReport = (
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (!jurisdictionId || !planId) {
+    return <NotFound />;
   }
 
   const jurBreadcrumb = [];
@@ -181,27 +186,59 @@ const MDALiteWardsReport = (
     ],
   };
 
-  const tableProps = {
-    columns: wardColumns,
-    data: wardData || [],
-    // identifierField: 'id',
-    paginate: true,
-    renderInBottomFilterBar: renderInFilterFactory({
-      showColumnHider: false,
-      showFilters: false,
-      showPagination: true,
-      showRowHeightPicker: false,
-      showSearch: false,
-    }),
-    renderInTopFilterBar: renderInFilterFactory({
-      ...defaultOptions,
-      showColumnHider: false,
-      showRowHeightPicker: false,
-    }),
-    renderNullDataComponent: () => <NoDataComponent />,
-    resize: true,
-    useDrillDown: false,
-  };
+  // get map zoom, center and bounds
+  const { zoom, mapBounds, mapCenter } = getZoomCenterAndBounds(
+    wardData,
+    null,
+    DefaultMapDimensions
+  );
+
+  const polygons = wardData?.features.filter((feature: any) =>
+    [POLYGON].includes(feature.geometry.type)
+  );
+
+  // get each polygon centroid
+  const centroidPoints = polygons?.map(polygon => {
+    const genPolygon = turfPolygon((polygon as Dictionary).geometry?.coordinates);
+    const genCentroids = centroid(genPolygon);
+    return {
+      ...genCentroids,
+      properties: polygon.properties,
+    };
+  });
+
+  const polygonsFC = polygons ? featureCollection(polygons) : null;
+  const pointsFC = centroidPoints ? featureCollection(centroidPoints) : null;
+
+  const preferedColor = '#FFDC00';
+  const wardLayers = buildGsLiteLayers(
+    MDA_LITE_STRUCTURES,
+    null,
+    polygonsFC as geojson.FeatureCollection,
+    {
+      polygonLinePaintColor: preferedColor,
+    }
+  );
+
+  // layer for drawing displaying text on map
+  if (pointsFC) {
+    wardLayers.push(
+      <GeoJSONLayer
+        symbolLayout={{
+          'text-anchor': 'top',
+          'text-field': '{name}\n{total_males} M / {total_females} F',
+          'text-offset': [0, 0.6],
+          'text-size': 16,
+        }}
+        symbolPaint={{
+          'text-color': preferedColor,
+        }}
+        id={`${MDA_LITE_STRUCTURES}-symbol`}
+        key={`${MDA_LITE_STRUCTURES}-symbol`}
+        data={pointsFC}
+      />
+    );
+  }
 
   return (
     <div>
@@ -213,7 +250,16 @@ const MDALiteWardsReport = (
         <Col>
           <h3 className="mb-3 page-title">{pageTitle}</h3>
           <div className="generic-report-table">
-            <DrillDownTable {...tableProps} />
+            {wardLayers.length ? (
+              <MemoizedGisidaLite
+                layers={[...wardLayers]}
+                zoom={zoom}
+                mapCenter={mapCenter}
+                mapBounds={mapBounds}
+              />
+            ) : (
+              <div>{MAP_LOAD_ERROR}</div>
+            )}
           </div>
         </Col>
       </Row>
@@ -221,32 +267,29 @@ const MDALiteWardsReport = (
   );
 };
 
-const defaultProps: MDALiteWardsrReportsProps = {
+const defaultProps: MDALiteMapProps = {
   baseUrl: REPORT_MDA_LITE_PLAN_URL,
   fetchJurisdictions: fetchGenericJurisdictions,
   fetchPlans: genericFetchPlans,
-  fetchWards: fetchMDALiteWards,
+  fetchWards: fetchGenericStructures,
   planData: null,
   service: supersetFetch,
   slices: SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_DATA_SLICES.split(','),
   subcountyData: [],
-  wardData: [],
+  wardData: null,
 };
 
-MDALiteWardsReport.defaultProps = defaultProps;
-export { MDALiteWardsReport };
+MDALiteMapReport.defaultProps = defaultProps;
+export { MDALiteMapReport as MDALiteWardsReport };
 
 /** map dispatch to props */
 const mapDispatchToProps = {
   fetchJurisdictions: fetchGenericJurisdictions,
   fetchPlans: genericFetchPlans,
-  fetchWards: fetchMDALiteWards,
+  fetchWards: fetchGenericStructures,
 };
 
-type DispatchedStateProps = Pick<
-  MDALiteWardsrReportsProps,
-  'planData' | 'wardData' | 'subcountyData'
->;
+type DispatchedStateProps = Pick<MDALiteMapProps, 'planData' | 'wardData' | 'subcountyData'>;
 
 /** map state to props */
 const mapStateToProps = (
@@ -256,10 +299,12 @@ const mapStateToProps = (
   const { params } = ownProps.match;
   const { planId, jurisdictionId } = params;
   const planData = planId ? getPlanByIdSelector(state, planId) : null;
-  const wardData = makeMDALiteWardsSelector(state, {
-    parent_id: jurisdictionId,
-    plan_id: planId,
-  });
+  const wardData = getGenericStructures(
+    state,
+    SUPERSET_MDA_LITE_REPORTING_WARD_GEOJSON_SLICE,
+    jurisdictionId,
+    planId
+  );
   const subcountyData: GenericJurisdiction[] = [];
   if (jurisdictionId) {
     defaultProps.slices.forEach((slice: string) => {
@@ -276,10 +321,7 @@ const mapStateToProps = (
   };
 };
 
-/** Connected MDALiteWardsReport component */
-const ConnectedMDALiteWardsReport = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MDALiteWardsReport);
+/** Connected MDALiteMapReport component */
+const ConnectedMDALiteMapReport = connect(mapStateToProps, mapDispatchToProps)(MDALiteMapReport);
 
-export default ConnectedMDALiteWardsReport;
+export default ConnectedMDALiteMapReport;

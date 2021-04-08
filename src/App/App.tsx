@@ -129,6 +129,7 @@ import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
 import ConnectedMDALiteCddReports from '../containers/pages/MDALite/cddReports/cdds';
 import ConnectedMDALiteSupervisorReports from '../containers/pages/MDALite/cddReports/supervisors';
 import ConnectedMdaLiteJurisdictionReport from '../containers/pages/MDALite/jurisdictionsReport';
+import ConnectedMDALiteMapReport from '../containers/pages/MDALite/map';
 import ConnectedMDALitePlansList from '../containers/pages/MDALite/plans';
 import ConnectedMDALiteWardsReport from '../containers/pages/MDALite/wardReports';
 import ConnectedChildReports from '../containers/pages/MDAPoint/ChildReports';
@@ -310,6 +311,13 @@ const App = () => {
                   exact={true}
                   path={`${REPORT_MDA_LITE_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMdaLiteJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
+                  component={ConnectedMDALiteMapReport}
                 />
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
