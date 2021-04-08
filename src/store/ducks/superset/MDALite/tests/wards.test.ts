@@ -20,7 +20,7 @@ reducerRegistry.register(reducerName, reducer);
 const makeMDALiteWardsSelector = makeMDALiteWardsArraySelector();
 const defaultProps = {};
 
-describe('reducers/MDA/Dynami-MDAPlan', () => {
+describe('reducers/MDA-Lite/wards', () => {
   let flushThunks;
 
   beforeEach(() => {
