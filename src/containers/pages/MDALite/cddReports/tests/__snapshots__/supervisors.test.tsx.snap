@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: breadcrumb item href-1 1`] = `
+<a
+  href="/intervention/mda-lite/ward/report/5e396185-6094-4817-9dd4-24bcbbc698b0/3c63f48e-bb86-42e5-b3ff-bc539fbf5295"
+  onClick={[Function]}
+>
+  ...
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: breadcrumb item href-2 1`] = `null`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: breadcrumb item-1 1`] = `"..."`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: breadcrumb item-2 1`] = `"mungoma"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-1 1`] = `"Name"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-2 1`] = `"Supervisor Distributed"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-3 1`] = `"Received by CDD"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-4 1`] = `"Administered"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-5 1`] = `"Damaged"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-6 1`] = `"Remaining with CDD"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-7 1`] = `"Returned to Supervisor"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-8 1`] = `"Adverse Reaction"`;
