@@ -33,7 +33,6 @@ import wardsReducer, {
   MDALiteWards,
   reducerName as wardsReducerName,
 } from '../../../../store/ducks/superset/MDALite/wards';
-
 import { cddReportColumns, getCddTableProps } from './helpers';
 
 /** register the reducers */
