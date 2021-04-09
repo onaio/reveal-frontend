@@ -1935,7 +1935,7 @@ export const indicatorThresholdsMDALite: IndicatorThresholds = {
     value: 0.8,
   },
 };
-/** END Focus Investigation Reporting Configs */
+/** END MDA Lite Reporting Configs */
 
 /** Interface describing thresholds look up */
 export interface IndicatorThresholdsLookUp {

@@ -76,6 +76,7 @@ interface MDALiteMapProps {
   wardData: StructureFeatureCollection | null;
 }
 
+/** Component for displaying MDA lite ward map */
 const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RouteParams>) => {
   const {
     wardData,
@@ -210,7 +211,7 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
   const polygonsFC = polygons ? featureCollection(polygons) : null;
   const pointsFC = centroidPoints ? featureCollection(centroidPoints) : null;
 
-  const preferedColor = '#FFDC00';
+  const preferedColor = '#FFDC00'; // color for map lite and map text
   const wardLayers = buildGsLiteLayers(
     MDA_LITE_STRUCTURES,
     null,

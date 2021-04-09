@@ -71,7 +71,7 @@ export type ENABLE_DYNAMIC_MDA = typeof ENABLE_DYNAMIC_MDA;
 export const ENABLE_SMC = process.env.REACT_APP_ENABLE_SMC === 'true';
 export type ENABLE_SMC = typeof ENABLE_SMC;
 
-/** Do you want to enable the SMC Point plan features? */
+/** Do you want to enable the MDA Lite plan features? */
 export const ENABLE_MDA_LITE = process.env.REACT_APP_ENABLE_MDA_LITE === 'true';
 export type ENABLE_MDA_LITE = typeof ENABLE_MDA_LITE;
 

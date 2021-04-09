@@ -37,7 +37,7 @@ import '../../IRS/JurisdictionsReport/style.css';
 /** register the reducers */
 reducerRegistry.register(genericPlansReducerName, GenericPlansReducer);
 
-/** Renders IRS Jurisdictions reports */
+/** Renders MDA Lite Jurisdictions reports */
 const MdaLiteJurisdictionReport = (
   props: GenericJurisdictionProps & RouteComponentProps<RouteParams>
 ) => {

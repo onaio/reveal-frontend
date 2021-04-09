@@ -66,6 +66,7 @@ interface MDALiteWardsrReportsProps {
   wardData: MDALiteWards[];
 }
 
+/** Component for showing MDA Lite ward reports */
 const MDALiteWardsReport = (
   props: MDALiteWardsrReportsProps & RouteComponentProps<RouteParams>
 ) => {

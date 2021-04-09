@@ -143,7 +143,7 @@ Below is a list of currently supported environment variables:
 - **REACT_APP_SHOW_MAP_AT_JURISDICTION_LEVEL**
 
   - Jurisdiction level on which to show map
-  - Default vaule: 99
+  - Default value: 99
   - **Not Required**
 
 - **REACT_APP_SUPERSET_MDA_LITE_REPORTING_CDD_DATA_SLICE**
