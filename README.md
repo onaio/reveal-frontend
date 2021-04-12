@@ -48,3 +48,11 @@ a coverage report.
 ```sh
 yarn test:coverage
 ```
+
+### Generating technical documentation
+
+To auto generate technical documentation of all components and functions run
+
+```sh
+  yarn docs
+```
