@@ -222,8 +222,8 @@ const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateP
 
 /** map dispatch to props */
 const mapDispatchToProps = {
-  fetchPlanRecordsCreator: fetchPlanRecords,
   fetchPlan: addPlanDefinition,
+  fetchPlanRecordsCreator: fetchPlanRecords,
 };
 
 /** Connected ActiveFI component */

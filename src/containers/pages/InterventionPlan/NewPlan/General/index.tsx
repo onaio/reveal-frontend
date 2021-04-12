@@ -60,13 +60,13 @@ interface BaseNewPlanProps {
 
 /** the default props */
 export const defaultBasePlanProps = {
-  plansArray: [],
   addPlan: addPlanDefinition,
   breadCrumbParentPage: {
     label: PLANS,
     url: PLAN_LIST_URL,
   },
   extraPlanFormProps: { redirectAfterAction: PLAN_LIST_URL },
+  plansArray: [],
   showJurisdictionDetails: true,
 };
 
@@ -140,10 +140,10 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
 
   const planFormProps = {
     ...{ ...lookedUpPlanFormProps, initialValues: formValues, ...props.extraPlanFormProps },
+    actionCreator: fetchPlanRecordsCreator,
     autoSelectFIStatus: AUTO_SELECT_FI_CLASSIFICATION,
     formHandler: formValuesHandler,
     plansArray,
-    actionCreator: fetchPlanRecordsCreator,
   };
 
   return (
@@ -200,8 +200,8 @@ const mapStateToProps = (
 };
 /** map dispatch to props */
 const mapDispatchToProps = {
-  fetchPlanRecordsCreator: fetchPlanRecords,
   addPlan: addPlanDefinition,
+  fetchPlanRecordsCreator: fetchPlanRecords,
 };
 
 /** form used in the planning tool */
@@ -227,4 +227,4 @@ export const NewPlanForPlanning = connect(mapStateToProps, mapDispatchToProps)(N
 
 const ConnectedBaseNewPlan = connect(mapStateToProps, mapDispatchToProps)(BaseNewPlan);
 
-export default ConnectedBaseNewPlan; //= connect(mapStateToProps, mapDispatchToProps)(BaseNewPlan);
+export default ConnectedBaseNewPlan;

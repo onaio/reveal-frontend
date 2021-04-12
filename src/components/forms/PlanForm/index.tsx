@@ -347,28 +347,10 @@ const PlanForm = (props: PlanFormProps) => {
         .then(() => {
           onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
           const record = extractPlanRecordResponseFromPlanPayload(payload);
-
           if (!record) {
             return;
           }
-
-          const recordcasted: PlanRecord = {
-            id: record.identifier,
-            plan_date: record.date,
-            plan_effective_period_end: record.effective_period_end,
-            plan_effective_period_start: record.effective_period_start,
-            plan_fi_reason: record.fi_reason,
-            plan_fi_status: record.fi_status,
-            plan_id: record.identifier,
-            plan_intervention_type: record.intervention_type,
-            plan_jurisdictions_ids: record.jurisdictions,
-            plan_status: record.status as PlanStatus,
-            plan_title: record.title,
-            plan_useContext: record.useContext,
-            plan_version: record.version,
-          };
-
-          const extractedPlanRecords = [...props.plansArray, recordcasted].filter(plan => !!plan);
+          const extractedPlanRecords = [record, ...props.plansArray].filter(plan => !!plan);
           actionCreator((extractedPlanRecords as unknown) as PlanRecordResponse[]);
         })
         .catch((e: Error) => {
@@ -1297,7 +1279,6 @@ const PlanForm = (props: PlanFormProps) => {
 };
 
 export const defaultProps: Omit<PlanFormProps, 'actionCreator'> = {
-  plansArray: [],
   addAndRemoveActivities: false,
   allFormActivities: getFormActivities(planActivities),
   allowMoreJurisdictions: true,
@@ -1310,6 +1291,7 @@ export const defaultProps: Omit<PlanFormProps, 'actionCreator'> = {
   hiddenFields: [],
   initialValues: defaultInitialValues,
   jurisdictionLabel: FOCUS_AREA_HEADER,
+  plansArray: [],
   redirectAfterAction: PLAN_LIST_URL,
 };
 
