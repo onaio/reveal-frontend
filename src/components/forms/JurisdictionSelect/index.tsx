@@ -7,6 +7,7 @@ import { OPENSRP_ACTIVE, OPENSRP_FIND_BY_PROPERTIES, OPENSRP_LOCATION } from '..
 import { displayError } from '../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../helpers/utils';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
+import { NOT_AVAILABLE } from '../../TreeWalker/constants';
 import './style.css';
 
 /** interface for jurisdiction options
@@ -19,6 +20,7 @@ export interface JurisdictionOption {
     name: string;
     geographicLevel: number;
     version: string | number;
+    fi_classification: string;
   };
   serverVersion: number;
   type: 'Feature';
@@ -26,6 +28,7 @@ export interface JurisdictionOption {
 
 /** react-select Option */
 export interface SelectOption {
+  fiStatus: string;
   label: string;
   value: string;
 }
@@ -68,6 +71,7 @@ export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectPr
     setSelectIsJurisdiction: (value: boolean) => void,
     setSelectLowestLocation: (value: boolean) => void,
     labelFieldName: string,
+    fiStatusFieldName: string,
     form: FormikProps<any>,
     field: FieldConfig,
     handleChangeWithOptions: (
@@ -84,6 +88,7 @@ export interface JurisdictionSelectProps<T = SelectOption> extends AsyncSelectPr
       setSelectCloseMenuOnSelect: (value: boolean) => void,
       setSelectIsJurisdiction: (value: boolean) => void,
       labelFieldName: string,
+      fiStatusFieldName: string,
       form: FormikProps<any>,
       field: FieldConfig
     ) => void, // Handles select changes with options selected
@@ -124,6 +129,7 @@ export const handleLoadOptionsPayload = (
     if (jurisdictionSelectApiPayload.length >= 1 && !jurisdictionStatus) {
       const locationOptions = jurisdictionSelectApiPayload.map(item => {
         return {
+          fiStatus: item.properties.fi_classification,
           label: item.properties.name ? item.properties.name : item.id,
           value: item.id,
         };
@@ -144,7 +150,11 @@ export const handleLoadOptionsPayload = (
     }
   }
   const options = jurisdictionSelectApiPayload.map(item => {
-    return { label: item.properties.name, value: item.id };
+    return {
+      fiStatus: item.properties.fi_classification,
+      label: item.properties.name,
+      value: item.id,
+    };
   });
   if (hierarchy.length > 0) {
     const labels = hierarchy.map(j => j.label).join(' > ');
@@ -230,6 +240,7 @@ export const handleChangeWithOptions = (
   setSelectCloseMenuOnSelect: (value: boolean) => void,
   setSelectIsJurisdiction: (value: boolean) => void,
   labelFieldName: string,
+  fiStatusFieldName: string,
   form: FormikProps<any>,
   field: FieldConfig
 ) => {
@@ -255,6 +266,10 @@ export const handleChangeWithOptions = (
         if (form && field) {
           form.setFieldValue(field.name, optionVal.value);
           form.setFieldTouched(field.name, true);
+          if (fiStatusFieldName) {
+            const val = optionVal.fiStatus || NOT_AVAILABLE;
+            form.setFieldValue(fiStatusFieldName, val);
+          }
           if (labelFieldName) {
             form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
             form.setFieldTouched(labelFieldName, true); /** dirty hack */
@@ -286,7 +301,8 @@ export const handleChangeWithoutOptions = (
   setSelectIsJurisdiction: (value: boolean) => void,
   setSelectLowestLocation: (value: boolean) => void,
   form: FormikProps<any>,
-  field: FieldConfig
+  field: FieldConfig,
+  fiStatusFieldName: string
 ) => {
   // most probably the select element was reset, so we reset the state vars
   setSelectParentId('');
@@ -298,6 +314,9 @@ export const handleChangeWithoutOptions = (
   // set the Formik field value
   if (form && field) {
     form.setFieldValue(field.name, '');
+    if (fiStatusFieldName) {
+      form.setFieldValue(fiStatusFieldName, '');
+    }
   }
 };
 /**
@@ -320,6 +339,7 @@ export const handleChange = (
   setSelectIsJurisdiction: (value: boolean) => void,
   setSelectLowestLocation: (value: boolean) => void,
   labelFieldName: string,
+  fiStatusFieldName: string,
   form: FormikProps<any>,
   field: FieldConfig,
   handleSelectChangeWithOptions: (
@@ -336,6 +356,7 @@ export const handleChange = (
     setSelectCloseMenuOnSelect: (value: boolean) => void,
     setSelectIsJurisdiction: (value: boolean) => void,
     labelFieldName: string,
+    fiStatusFieldName: string,
     form: FormikProps<any>,
     field: FieldConfig
   ) => void,
@@ -347,10 +368,11 @@ export const handleChange = (
     setSelectIsJurisdiction: (value: boolean) => void,
     setSelectLowestLocation: (value: boolean) => void,
     form: FormikProps<any>,
-    field: FieldConfig
+    field: FieldConfig,
+    fiStatusFieldName: string
   ) => void
 ) => {
-  const optionVal = option as { label: string; value: string };
+  const optionVal = option;
 
   if (optionVal && optionVal.value) {
     // we are going to check if the current option has children
@@ -376,6 +398,7 @@ export const handleChange = (
       setSelectCloseMenuOnSelect,
       setSelectIsJurisdiction,
       labelFieldName,
+      fiStatusFieldName,
       form,
       field
     );
@@ -389,7 +412,8 @@ export const handleChange = (
       setSelectIsJurisdiction,
       setSelectLowestLocation,
       form,
-      field
+      field,
+      fiStatusFieldName
     );
   }
 };
@@ -422,6 +446,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
     field,
     form,
     labelFieldName,
+    fiStatusFieldName,
     params,
     serviceClass,
   } = props;
@@ -477,6 +502,7 @@ const JurisdictionSelect = (props: JurisdictionSelectProps & FieldProps) => {
       setIsJurisdiction,
       setLowestLocation,
       labelFieldName,
+      fiStatusFieldName,
       form,
       field,
       props.handleChangeWithOptions,

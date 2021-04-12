@@ -155,3 +155,27 @@ Below is a list of currently supported environment variables:
 
   - MDA-Lite supervisors Superset slice id
   - **Required**
+
+- **REACT_APP_HIDE_PLAN_FORM_FIELDS_ON_EDIT**
+
+  - **not Required**; _(string)_
+  - Plan form fields to be hidden when the plan status is draft, active or completed.
+  - Options: caseNum, interventionType, jurisdictions, fiReason, fiStatus, title, triggersAndConditions activityActionDefinitionUri, activityActionDescription, activityActionTitle, activityActionReason activityTimingPeriodStart, activityTimingPeriodEnd, activityGoalPriority, activityGoalValue
+
+- **REACT_APP_CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES**
+
+  - **not Required**; _(string)_
+  - to activate set the env to `true`, any other value will be interpreted as false
+  - enable editing of activities on FI case triggered draft plans.
+
+- **REACT_APP_AUTO_SELECT_FI_CLASSIFICATION**
+
+  - **not Required**; _(string)_
+  - to activate set the env to `true`, any other value will be interpreted as false
+  - enable FI classification auto selection
+
+- **REACT_APP_PLAN_LIST_SHOW_FI_REASON_COLUMN**
+
+  - **not Required**; _(string)_
+  - to activate set the env to `true`, any other value will be interpreted as false
+  - show FI reason column on the plans list view instead of intervention type column

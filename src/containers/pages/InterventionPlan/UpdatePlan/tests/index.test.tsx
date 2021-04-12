@@ -15,6 +15,7 @@ import {
   getPlanFormValues,
 } from '../../../../../components/forms/PlanForm/helpers';
 import {
+  CaseTriggeredDynamicFIPlan,
   DynamicFIPlan,
   fiReasonTestPlan,
 } from '../../../../../components/forms/PlanForm/tests/fixtures';
@@ -50,6 +51,23 @@ jest.mock('../PlanLocationNames', () => {
   return PlanLocationNamesMock;
 });
 
+const hiddenFields = [
+  'interventionType',
+  'fiReason',
+  'activityActionTitle',
+  'ainterventionType',
+  'fiReason',
+  'activityActionTitle',
+  'activityActionReason',
+  'activityTimingPeriodStart',
+  'activityTimingPeriodEnd',
+  'activityGoalPriority',
+  'triggersAndConditionsctivityActionReason',
+  'activityTimingPeriodStart',
+  'activityTimingPeriodEnd',
+  'activityGoalPriority',
+  'triggersAndConditions',
+];
 describe('components/InterventionPlan/UpdatePlan', () => {
   beforeEach(() => {
     jest.resetAllMocks();
@@ -579,5 +597,258 @@ describe('components/InterventionPlan/UpdatePlan', () => {
         method: 'PUT',
       },
     ]);
+  });
+
+  it('edit Dynamic FI plans with case confirmation action', async () => {
+    // create divs for condition and triggers toggles
+    CaseTriggeredDynamicFIPlan.action.forEach((_, id) => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    fetch.mockResponse(JSON.stringify(CaseTriggeredDynamicFIPlan));
+
+    const mock: any = jest.fn();
+    const thisPlansId = CaseTriggeredDynamicFIPlan.identifier;
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: thisPlansId },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${thisPlansId}`,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedUpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    // submit button is disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeTruthy();
+
+    // activate the plan and save
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: 'active' } });
+    // submit button is disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
+
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+
+    // check the data submitted - should include case confirmation
+    const submitedData: PlanDefinition = JSON.parse(fetch.mock.calls[3][1].body);
+    const submitedActionCodes = submitedData.action.map(e => e.code);
+    const submitedGoals = submitedData.goal.map(e => e.id);
+    expect(submitedActionCodes).toEqual([
+      'Case Confirmation',
+      'RACD Register Family',
+      'Blood Screening',
+      'Bednet Distribution',
+      'Larval Dipping',
+      'Mosquito Collection',
+      'BCC',
+    ]);
+    expect(submitedGoals).toEqual([
+      'Case_Confirmation',
+      'RACD_register_families',
+      'RACD_Blood_Screening',
+      'RACD_bednet_distribution',
+      'Larval_Dipping',
+      'Mosquito_Collection',
+      'BCC_Focus',
+    ]);
+    expect(fetch.mock.calls[3][0]).toEqual('https://test.smartregister.org/opensrp/rest/plans');
+    expect(fetch.mock.calls[3][1].method).toEqual('PUT');
+  });
+
+  it('hides expected columns', async () => {
+    // create divs for condition and triggers - should equal number of activities
+    [0, 1, 2, 3, 4, 5].forEach(id => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    const envModule = require('../../../../../configs/env');
+    envModule.HIDE_PLAN_FORM_FIELDS_ON_EDIT = hiddenFields;
+
+    const DynamicFIPlanCopy = {
+      ...DynamicFIPlan,
+      status: 'draft',
+    };
+
+    const mock = jest.fn();
+    const props = {
+      fetchPlan: mock,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: DynamicFIPlanCopy.identifier },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${DynamicFIPlanCopy.identifier}`,
+      },
+      plan: DynamicFIPlanCopy as PlanDefinition,
+    };
+    fetch.mockResponseOnce(JSON.stringify([DynamicFIPlanCopy]));
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+    });
+    wrapper.update();
+    // intervention type hidded
+    expect(
+      wrapper
+        .find('select[name="interventionType"]')
+        .closest('div')
+        .prop('hidden')
+    ).toBeTruthy();
+    // Fi reason hidded
+    expect(
+      wrapper
+        .find('select[name="fiReason"]')
+        .closest('div')
+        .prop('hidden')
+    ).toBeTruthy();
+    // hidden fields on activities
+    DynamicFIPlanCopy.action.forEach((_, i) => {
+      // actionReason hidded
+      expect(
+        wrapper
+          .find(`select[name="activities[${i}].actionReason"]`)
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // actionTitle hidded
+      expect(
+        wrapper
+          .find(`input[name="activities[${i}].actionTitle"]`)
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // goalPriority hidden
+      expect(
+        wrapper
+          .find(`select[name="activities[${i}].goalPriority"]`)
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // timingPeriodStart hidded
+      expect(
+        wrapper
+          .find({ for: `activities-${0}-timingPeriodStart` })
+          .closest('div')
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // timingPeriodEnd hiden
+      expect(
+        wrapper
+          .find({ for: `activities-${0}-timingPeriodEnd` })
+          .closest('div')
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // triggers and conditions toggle buttons hidden
+      expect(wrapper.find(`#plan-trigger-conditions-div-${i} button`).prop('hidden')).toBeTruthy();
+    });
+  });
+
+  it('on case triggered activities can be added', async () => {
+    const envModule = require('../../../../../configs/env');
+    envModule.HIDE_PLAN_FORM_FIELDS_ON_EDIT = hiddenFields;
+    envModule.CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES = true;
+    // create divs for condition and triggers - should equal number of activities
+    [0, 1, 2, 3, 4, 5].forEach(id => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    //  change
+    const useContext = DynamicFIPlan.useContext.map(context => {
+      return context.code === 'fiReason'
+        ? { ...context, valueCodableConcept: 'Case Triggered' }
+        : context;
+    });
+
+    const DynamicFIPlanCopy = {
+      ...DynamicFIPlan,
+      status: 'draft',
+      useContext,
+    };
+    const mock = jest.fn();
+    const props = {
+      fetchPlan: mock,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: DynamicFIPlanCopy.identifier },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${DynamicFIPlanCopy.identifier}`,
+      },
+      plan: DynamicFIPlanCopy as PlanDefinition,
+    };
+    fetch.mockResponseOnce(JSON.stringify([DynamicFIPlanCopy]));
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+    });
+    wrapper.update();
+    // have buttons for removing activities
+    expect(wrapper.find('.removeActivity').length).toEqual(DynamicFIPlanCopy.action.length);
+    expect(wrapper.find('.add-more-activities').length).toEqual(0);
+    // remove last activity
+    wrapper
+      .find('.removeActivity')
+      .at(5)
+      .simulate('click');
+    expect(wrapper.find('.removeActivity').length).toEqual(DynamicFIPlanCopy.action.length - 1);
+    expect(wrapper.find('Button .add-more-activities').length).toEqual(1);
+    // add removed activity
+    wrapper.find('Button .add-more-activities').simulate('click');
+    expect(wrapper.find('.addActivity').length).toEqual(1);
+    expect(wrapper.find('.addActivity').text()).toEqual('Add BCC Activity');
+    wrapper.find('.addActivity').simulate('click');
+    expect(wrapper.find('.removeActivity').length).toEqual(DynamicFIPlanCopy.action.length);
+    expect(wrapper.find('.add-more-activities').length).toEqual(0);
+
+    // default disabled activity (Action reason and goal priority) fields are not disabled
+    DynamicFIPlanCopy.action.forEach((_, i) => {
+      // actionReason not disabled
+      expect(
+        wrapper.find(`select[name="activities[${i}].actionReason"]`).prop('disabled')
+      ).toBeFalsy();
+      // goalPriority not diabled
+      expect(
+        wrapper.find(`select[name="activities[${i}].goalPriority"]`).prop('disabled')
+      ).toBeFalsy();
+    });
   });
 });

@@ -13,6 +13,7 @@ import {
 import HeaderBreadcrumb, {
   Page,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+import { AUTO_SELECT_FI_CLASSIFICATION } from '../../../../../configs/env';
 import {
   COUNTRY,
   CREATE_NEW_PLAN,
@@ -114,6 +115,7 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
 
   const planFormProps = {
     ...{ ...lookedUpPlanFormProps, initialValues: formValues, ...props.extraPlanFormProps },
+    autoSelectFIStatus: AUTO_SELECT_FI_CLASSIFICATION,
     formHandler: formValuesHandler,
   };
   const { addPlan } = props;

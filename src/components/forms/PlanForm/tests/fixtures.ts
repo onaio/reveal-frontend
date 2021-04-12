@@ -1561,6 +1561,77 @@ export const DynamicFIPlan = {
   experimental: false,
 };
 
+export const CaseTriggeredDynamicFIPlan = {
+  ...DynamicFIPlan,
+  action: [
+    {
+      identifier: '71f48e2e-032a-458a-8b80-f1a09188fe63',
+      prefix: 1,
+      title: 'Case confirmation',
+      description: 'ยืนยันบ้านผู้ป่วย',
+      code: 'Case Confirmation',
+      timingPeriod: {
+        start: '2021-02-11',
+        end: '2021-02-21',
+      },
+      reason: 'Investigation',
+      goalId: 'Case_Confirmation',
+      subjectCodableConcept: {
+        text: 'QuestionnaireResponse',
+      },
+      trigger: [
+        {
+          type: 'named-event',
+          name: 'plan-activation',
+        },
+      ],
+      condition: [
+        {
+          kind: 'applicability',
+          expression: {
+            description: 'Event is case details event',
+            expression: "questionnaire = 'Case_Details'",
+          },
+        },
+      ],
+      definitionUri: 'case_confirmation.json',
+      type: 'create',
+    },
+    ...DynamicFIPlan.action,
+  ],
+  goal: [
+    {
+      id: 'Case_Confirmation',
+      description: 'ยืนยันบ้านผู้ป่วย',
+      priority: 'medium-priority',
+      target: [
+        {
+          measure: 'จำนวนผู้ป่วยที่ได้รับการยืนยัน',
+          detail: {
+            detailQuantity: {
+              value: 1,
+              comparator: '&amp;gt;=',
+              unit: 'ราย',
+            },
+          },
+          due: '2021-02-21',
+        },
+      ],
+    },
+    ...DynamicFIPlan.goal,
+  ],
+  status: 'draft',
+  useContext: [
+    { code: 'interventionType', valueCodableConcept: 'Dynamic-FI' },
+    { code: 'fiStatus', valueCodableConcept: 'A1' },
+    { code: 'fiReason', valueCodableConcept: 'Case Triggered' },
+    { code: 'opensrpEventId', valueCodableConcept: 'ff7aa780-2280-43fb-b66b-271d2e0c59c1' },
+    { code: 'caseNum', valueCodableConcept: '13198271299' },
+    { code: 'taskGenerationStatus', valueCodableConcept: 'internal' },
+    { code: 'teamAssignmentStatus', valueCodableConcept: 'True' },
+  ],
+};
+
 export const planNamesAndInterventions = [
   {
     intervention: InterventionType.FI,
@@ -1873,6 +1944,109 @@ export const MDALitePlanPayload = {
     {
       code: 'interventionType',
       valueCodableConcept: 'MDA-Lite',
+    },
+    {
+      code: 'taskGenerationStatus',
+      valueCodableConcept: 'False',
+    },
+  ],
+  version: '2',
+};
+
+export const MDAPointPayload = {
+  action: [
+    {
+      code: 'MDA Dispense',
+      description: 'Percent of eligible people',
+      goalId: 'Point_dispense_MDA',
+      identifier: 'f95efc9d-0fa3-5c24-a611-aa116072b837',
+      prefix: 1,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      taskTemplate: 'MDA_Point_Dispense',
+      timingPeriod: {
+        end: '2017-07-20',
+        start: '2017-07-13',
+      },
+      title: 'MDA Dispense',
+    },
+    {
+      code: 'MDA Adverse Event(s)',
+      description: 'Report any adverse events from medication',
+      goalId: 'Point_adverse_effect_MDA',
+      identifier: '6d6371a1-346f-5d37-97bd-81b285036849',
+      prefix: 2,
+      reason: 'Routine',
+      subjectCodableConcept: {
+        text: 'Location',
+      },
+      taskTemplate: 'MDA_Point_Adverse_Event',
+      timingPeriod: {
+        end: '2017-07-20',
+        start: '2017-07-13',
+      },
+      title: 'MDA Adverse Event(s)',
+    },
+  ],
+  goal: [
+    {
+      description: 'Percent of eligible people',
+      id: 'Point_dispense_MDA',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: 'Percent',
+              value: 75,
+            },
+          },
+          due: '2017-07-20',
+          measure: 'Percent of eligible people',
+        },
+      ],
+    },
+    {
+      description: 'Report any adverse events from medication',
+      id: 'Point_adverse_effect_MDA',
+      priority: 'medium-priority',
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '<=',
+              unit: 'Percent',
+              value: 2,
+            },
+          },
+          due: '2017-07-20',
+          measure: 'Percent of people who reported adverse events',
+        },
+      ],
+    },
+  ],
+  date: '2017-07-13',
+  effectivePeriod: {
+    end: '2017-08-02',
+    start: '2017-07-13',
+  },
+  experimental: false,
+  identifier: 'edbffee3-e1ef-5464-b9ed-23b4cf3b1ae5',
+  jurisdiction: [
+    {
+      code: '1337',
+    },
+  ],
+  name: 'MDA-Point-2017-07-13',
+  status: 'draft',
+  title: 'MDA-Point 2017-07-13',
+  useContext: [
+    {
+      code: 'interventionType',
+      valueCodableConcept: 'MDA-Point',
     },
     {
       code: 'taskGenerationStatus',

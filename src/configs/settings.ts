@@ -23,6 +23,7 @@ import {
   PlanActivities,
   UseContextCodesType,
 } from '../components/forms/PlanForm/types';
+import { NOT_AVAILABLE } from '../components/TreeWalker/constants';
 import {
   A1_DESCRIPTION,
   A1_NAME,
@@ -57,6 +58,7 @@ import {
   DATE_COMPLETED,
   DEFAULT,
   DISTRICT,
+  DYNAMIC_CASE_CONFIRMATION_EXPRESSION_DESC,
   END_DATE,
   FI_STATUS,
   FOCUS_AREA_HEADER,
@@ -91,6 +93,7 @@ import {
   MOSQUITO_COLLECTION_ACTIVITY_DESCRIPTION,
   MOSQUITO_COLLECTION_GOAL_MEASURE,
   NAME,
+  NOT_AVAILABLE_LABEL,
   PLAN_STATUS_ACTIVE,
   PLAN_STATUS_COMPLETE,
   PLAN_STATUS_DRAFT,
@@ -129,6 +132,7 @@ import {
   DYNAMIC_BCC_ACTIVITY_CODE,
   DYNAMIC_BEDNET_DISTRIBUTION_ACTIVITY_CODE,
   DYNAMIC_BLOOD_SCREENING_ACTIVITY_CODE,
+  DYNAMIC_CASE_CONFIRMATION_ACTIVITY_CODE,
   DYNAMIC_FAMILY_REGISTRATION_ACTIVITY_CODE,
   DYNAMIC_IRS_ACTIVITY_CODE,
   DYNAMIC_LARVAL_DIPPING_ACTIVITY_CODE,
@@ -170,6 +174,7 @@ import {
   TRUE,
 } from '../constants';
 import {
+  AUTO_SELECT_FI_CLASSIFICATION,
   DOMAIN_NAME,
   ENABLE_ONADATA_OAUTH,
   ENABLE_OPENSRP_OAUTH,
@@ -366,7 +371,8 @@ export type subjectCodableConceptType =
   | 'Person'
   | 'Location'
   | 'Jurisdiction'
-  | 'Residential_Structure';
+  | 'Residential_Structure'
+  | 'QuestionnaireResponse';
 
 /** Plan Action subjectCodableConcept */
 export interface PlanActionsubjectCodableConcept {
@@ -472,6 +478,7 @@ export const PlanActivityTitles = [
   MDA_FAMILY_REGISTRATION,
   MDA_DISPENSE_ACTIVITY_CODE,
   CDD_SUPERVISION_ACTIVITY_CODE,
+  DYNAMIC_CASE_CONFIRMATION_ACTIVITY_CODE,
 ] as const;
 
 /** default plan activities */
@@ -1005,6 +1012,59 @@ export const planActivities: PlanActivities = {
           },
           due: '',
           measure: BLOOD_SCREENING_GOAL_MEASURE,
+        },
+      ],
+    },
+  },
+  dynamicCaseConfirmation: {
+    action: {
+      code: CASE_CONFIRMATION_CODE,
+      condition: [
+        {
+          expression: {
+            description: DYNAMIC_CASE_CONFIRMATION_EXPRESSION_DESC,
+            expression: "questionnaire = 'Case_Details'",
+          },
+          kind: APPLICABILITY_CONDITION_KIND,
+        },
+      ],
+      definitionUri: 'case_confirmation.json',
+      description: CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
+      goalId: 'Case_Confirmation',
+      identifier: '',
+      prefix: 1,
+      reason: INVESTIGATION,
+      subjectCodableConcept: {
+        text: 'QuestionnaireResponse',
+      },
+      timingPeriod: {
+        end: '',
+        start: '',
+      },
+      title: CASE_CONFIRMATION_ACTIVITY,
+      trigger: [
+        {
+          name: PLAN_ACTIVATION_TRIGGER_NAME,
+          type: NAMED_EVENT_TRIGGER_TYPE,
+        },
+      ],
+      type: CREATE_TYPE,
+    },
+    goal: {
+      description: CASE_CONFIRMATION_ACTIVITY_DESCRIPTION,
+      id: 'Case_Confirmation',
+      priority: MEDIUM_PRIORITY,
+      target: [
+        {
+          detail: {
+            detailQuantity: {
+              comparator: '>=',
+              unit: GoalUnit.CASE,
+              value: 1,
+            },
+          },
+          due: '',
+          measure: CASE_CONFIRMATION_ACTIVITY_GOAL_MEASURE,
         },
       ],
     },
@@ -1635,7 +1695,7 @@ export interface PlanDefinition {
 }
 
 /** Focus Investigation case classifications */
-export const FIClassifications: Classification[] = [
+export const defaultFIClassifications: Classification[] = [
   {
     code: A1,
     description: A1_DESCRIPTION,
@@ -1657,7 +1717,16 @@ export const FIClassifications: Classification[] = [
     name: B2_NAME,
   },
 ];
-
+export const FIClassifications: Classification[] = AUTO_SELECT_FI_CLASSIFICATION
+  ? [
+      {
+        code: NOT_AVAILABLE,
+        description: '',
+        name: NOT_AVAILABLE_LABEL,
+      },
+      ...defaultFIClassifications,
+    ]
+  : defaultFIClassifications;
 /** Indicators configs */
 
 // thresholds

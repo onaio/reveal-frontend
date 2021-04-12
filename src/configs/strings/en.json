@@ -1709,6 +1709,10 @@
     "message": "This is the lowest jurisdiction",
     "description": "text displayed when user reaches the lowest jurisdiction"
   },
+  "NOT_AVAILABLE_LABEL": {
+    "message": "Not Available",
+    "description": "Item not available"
+  },
   "CDD_SUPERVISION_ACTIVITY_DESCRIPTION": {
     "message": "Visit each operational area and submit one CDD Supervisor Daily Summary form",
     "description": "CDD supervisor activity description"
@@ -1728,5 +1732,9 @@
   "CDD_SUPERVISION_GOAL_MEASURE": {
     "message": "Percent of forms submitted",
     "description": "CDD supervisor activity goal measure"
+  },
+  "DYNAMIC_CASE_CONFIRMATION_EXPRESSION_DESC": {
+    "message": "Event is case details event",
+    "description": "Dynamic case confirmation expression description"
   }
 }

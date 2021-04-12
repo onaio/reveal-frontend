@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset, { SupersetAdhocFilterOption } from '@onaio/superset-connector';
 import { percentage } from '@onaio/utils';
 import React from 'react';
 import { Helmet } from 'react-helmet';
@@ -17,6 +18,7 @@ import HeaderBreadcrumb, {
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
   SHOW_MDA_SCHOOL_REPORT_LABEL,
+  SUPERSET_MAX_RECORDS,
   SUPERSET_MDA_POINT_LOCATION_REPORT_DATA_SLICE,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES,
 } from '../../../../configs/env';
@@ -61,6 +63,8 @@ interface LocationReportsProps extends GenericSupersetDataTableProps {
   pageTitle: string | null;
   pageUrl: string;
   prevPage: Page[] | null;
+  planId?: string;
+  jurisdictionId?: string;
 }
 
 const tableHeaders = [
@@ -91,6 +95,8 @@ const LocationReportsList = (props: LocationReportsProps) => {
     headerItems,
     tableClass,
     prevPage,
+    jurisdictionId,
+    planId,
   } = props;
 
   const homePage = [
@@ -116,11 +122,21 @@ const LocationReportsList = (props: LocationReportsProps) => {
     pages,
   };
 
+  const filters: SupersetAdhocFilterOption[] = [];
+  if (jurisdictionId) {
+    filters.push({ comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' });
+  }
+  if (planId) {
+    filters.push({ comparator: planId, operator: '==', subject: 'plan_id' });
+  }
+  const supersetFetchParams = superset.getFormData(SUPERSET_MAX_RECORDS, filters);
+
   const listViewProps: GenericSupersetDataTableProps = {
     data,
     fetchItems,
     headerItems,
     service,
+    supersetFetchParams,
     supersetSliceId,
     tableClass,
   };
@@ -171,6 +187,8 @@ interface DispatchedStateProps {
   pageUrl: string;
   pageTitle: string | null;
   prevPage: Page[];
+  planId?: string;
+  jurisdictionId?: string;
 }
 
 /** map state to props */
@@ -226,8 +244,10 @@ const mapStateToProps = (
   return {
     childUrl,
     data,
+    jurisdictionId,
     pageTitle,
     pageUrl,
+    planId,
     prevPage,
   };
 };

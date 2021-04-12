@@ -559,6 +559,11 @@ describe('containers/forms/PlanForm - Edit', () => {
 });
 
 describe('containers/forms/PlanForm - Submission', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    fetch.resetMocks();
+  });
+
   it('Form validation works', async () => {
     const wrapper = mount(
       <MemoryRouter>
@@ -1350,6 +1355,56 @@ describe('containers/forms/PlanForm - Submission', () => {
     wrapper.update();
     expect(wrapper.find('#planform-submit-button button').prop('disabled')).toEqual(false);
     expect(wrapper.find('#planform-submit-button button').text()).toEqual('Save Plan');
+  });
+
+  it('MDA-Point payload', async () => {
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm />
+      </MemoryRouter>
+    );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    // set to MDA-Point
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'MDA-Point' } });
+    // set jurisdiction id
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+    wrapper.update();
+    // submit button is enabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
+
+    // submit form
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+    wrapper.update();
+    await new Promise<any>(resolve => setImmediate(resolve));
+    // ignore jurisdiction call. Check only call to submit data
+    expect(fetch.mock.calls[1]).toEqual([
+      'https://test.smartregister.org/opensrp/rest/plans',
+      {
+        'Cache-Control': 'no-cache',
+        Pragma: 'no-cache',
+        body: JSON.stringify(fixtures.MDAPointPayload),
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer hunter2',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'POST',
+      },
+    ]);
   });
 });
 

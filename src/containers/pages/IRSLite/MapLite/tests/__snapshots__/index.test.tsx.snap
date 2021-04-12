@@ -103,7 +103,7 @@ Array [
     cssClass="progress-bar-striped"
     decimalPoints={0}
     height="10px"
-    lineColor="#0000FF"
+    lineColor="#2ECC40"
     lineColorThresholds={
       Object {
         "GREEN_THRESHOLD": Object {
@@ -160,7 +160,7 @@ Array [
     cssClass="progress-bar-striped"
     decimalPoints={0}
     height="10px"
-    lineColor="#0000FF"
+    lineColor="#2ECC40"
     lineColorThresholds={
       Object {
         "GREEN_THRESHOLD": Object {
@@ -217,7 +217,7 @@ Array [
     cssClass="progress-bar-striped"
     decimalPoints={0}
     height="10px"
-    lineColor="#0000FF"
+    lineColor="#2ECC40"
     lineColorThresholds={
       Object {
         "GREEN_THRESHOLD": Object {
@@ -274,7 +274,7 @@ Array [
     cssClass="progress-bar-striped"
     decimalPoints={0}
     height="10px"
-    lineColor="#0000FF"
+    lineColor="#2ECC40"
     lineColorThresholds={
       Object {
         "GREEN_THRESHOLD": Object {
