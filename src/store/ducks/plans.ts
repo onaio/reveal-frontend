@@ -5,6 +5,7 @@ import { AnyAction, Store } from 'redux';
 import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 import { FIReasonType, FIStatusType } from '../../components/forms/PlanForm/types';
+import { PlanAction, PlanGoal, UseContext } from '../../configs/settings';
 import { descendingOrderSort, removeNullJurisdictionPlans } from '../../helpers/utils';
 
 /** the reducer name */
@@ -76,21 +77,15 @@ export interface Plan extends PlanRecord {
   jurisdiction_path: string[];
 }
 
-/** UseContext - interface for PlanPayload.useContext[] items */
-export interface UseContext {
-  code: string;
-  valueCodableConcept: string;
-}
-
 /** PlanPayload - interface for the payload used when creating/updating a plan via OpenSRP plans Endpoint */
 export interface PlanPayload {
-  action: any[];
+  action: PlanAction[];
   date: string;
   effectivePeriod: {
     start: string;
     end: string;
   };
-  goal: any[];
+  goal: PlanGoal[];
   identifier: string;
   jurisdiction: Array<{
     code: string;

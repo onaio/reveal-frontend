@@ -19,6 +19,7 @@ import {
   ModalHeader,
   UncontrolledCollapse,
 } from 'reactstrap';
+import { ActionCreator } from 'redux';
 import { format } from 'util';
 import {
   DATE_FORMAT,
@@ -88,9 +89,16 @@ import {
 } from '../../../configs/settings';
 import { MDA_POINT_ADVERSE_EFFECTS_CODE, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
+import { extractPlanRecordResponseFromPlanPayload } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
-import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
+import {
+  FetchPlanRecordsAction,
+  InterventionType,
+  PlanRecord,
+  PlanRecordResponse,
+  PlanStatus,
+} from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
 import JurisdictionSelect from '../JurisdictionSelect';
 import { getConditionAndTriggers } from './components/actions';
@@ -173,6 +181,8 @@ export type LocationChildRenderProp = (
 
 /** interface for plan form props */
 export interface PlanFormProps {
+  actionCreator: ActionCreator<FetchPlanRecordsAction>;
+  plansArray: PlanRecord[];
   addAndRemoveActivities: boolean /** activate adding and removing activities buttons */;
   allFormActivities: PlanActivityFormFields[] /** the list of all allowed activities */;
   allowMoreJurisdictions: boolean /** should we allow one to add more jurisdictions */;
@@ -217,6 +227,7 @@ const PlanForm = (props: PlanFormProps) => {
     redirectAfterAction,
     addPlan,
     hiddenFields,
+    actionCreator,
     addAndRemoveActivities,
     autoSelectFIStatus,
   } = props;
@@ -335,6 +346,30 @@ const PlanForm = (props: PlanFormProps) => {
         .create(payload)
         .then(() => {
           onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
+          const record = extractPlanRecordResponseFromPlanPayload(payload);
+
+          if (!record) {
+            return;
+          }
+
+          const recordcasted: PlanRecord = {
+            id: record.identifier,
+            plan_date: record.date,
+            plan_effective_period_end: record.effective_period_end,
+            plan_effective_period_start: record.effective_period_start,
+            plan_fi_reason: record.fi_reason,
+            plan_fi_status: record.fi_status,
+            plan_id: record.identifier,
+            plan_intervention_type: record.intervention_type,
+            plan_jurisdictions_ids: record.jurisdictions,
+            plan_status: record.status as PlanStatus,
+            plan_title: record.title,
+            plan_useContext: record.useContext,
+            plan_version: record.version,
+          };
+
+          const extractedPlanRecords = [...props.plansArray, recordcasted].filter(plan => !!plan);
+          actionCreator((extractedPlanRecords as unknown) as PlanRecordResponse[]);
         })
         .catch((e: Error) => {
           setSubmitting(false);
@@ -1261,7 +1296,8 @@ const PlanForm = (props: PlanFormProps) => {
   );
 };
 
-export const defaultProps: PlanFormProps = {
+export const defaultProps: Omit<PlanFormProps, 'actionCreator'> = {
+  plansArray: [],
   addAndRemoveActivities: false,
   allFormActivities: getFormActivities(planActivities),
   allowMoreJurisdictions: true,

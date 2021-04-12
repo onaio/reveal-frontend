@@ -173,6 +173,7 @@ import {
   TEAM_ASSIGNMENT_STATUS_CODE,
   TRUE,
 } from '../constants';
+import { PlanPayload } from '../store/ducks/plans';
 import {
   AUTO_SELECT_FI_CLASSIFICATION,
   DOMAIN_NAME,
@@ -1673,25 +1674,9 @@ export interface UseContext {
 }
 
 /** interface that describes plan definition objects from OpenSRP */
-export interface PlanDefinition {
-  action: PlanAction[];
-  date: string;
-  effectivePeriod: {
-    end: string;
-    start: string;
-  };
+export interface PlanDefinition extends Omit<PlanPayload, 'serverVersion'> {
   experimental?: Readonly<false>;
-  goal: PlanGoal[];
-  identifier: string;
-  jurisdiction: Array<{
-    code: string;
-  }>;
-  name: string;
   serverVersion?: number;
-  status: string;
-  title: string;
-  useContext: UseContext[];
-  version: string;
 }
 
 /** Focus Investigation case classifications */
