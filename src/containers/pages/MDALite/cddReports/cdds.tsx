@@ -1,7 +1,7 @@
 import { DrillDownTable } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetAdhocFilterOption } from '@onaio/superset-connector';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
@@ -111,6 +111,10 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
     loadData().catch(err => displayError(err));
   }, [planId, jurisdictionId, supervisorId]);
 
+  if (loading) {
+    return <Loading />;
+  }
+
   const currentPage = {
     label: supervisorName,
     url: `${REPORT_MDA_LITE_CDD_REPORT_URL}/${planId}/${jurisdictionId}/${supervisorId}`,
@@ -135,11 +139,8 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
   // table props
   const tableProps = getCddTableProps(cddReportColumns, cddData, props);
 
-  if (loading) {
-    return <Loading />;
-  }
   return (
-    <div>
+    <Fragment>
       <Helmet>
         <title>{currentTitle}</title>
       </Helmet>
@@ -153,7 +154,7 @@ const MDALiteCddReports = (props: MDALiteCddReportsProps & RouteComponentProps<R
           <IRSIndicatorLegend indicatorRows="MDALiteIndicators" />
         </Col>
       </Row>
-    </div>
+    </Fragment>
   );
 };
 

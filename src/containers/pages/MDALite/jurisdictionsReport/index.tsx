@@ -41,11 +41,7 @@ reducerRegistry.register(genericPlansReducerName, GenericPlansReducer);
 const MdaLiteJurisdictionReport = (
   props: GenericJurisdictionProps & RouteComponentProps<RouteParams>
 ) => {
-  return (
-    <div>
-      <GenericJurisdictionReport {...props} />
-    </div>
-  );
+  return <GenericJurisdictionReport {...props} />;
 };
 
 // change indicator rows component indicatorRows default prop

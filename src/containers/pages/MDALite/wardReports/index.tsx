@@ -1,5 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 import { DrillDownTable } from '@onaio/drill-down-table';
@@ -185,7 +185,6 @@ const MDALiteWardsReport = (
   const tableProps = {
     columns: wardColumns,
     data: wardData || [],
-    // identifierField: 'id',
     paginate: true,
     renderInBottomFilterBar: renderInFilterFactory({
       showColumnHider: false,
@@ -205,7 +204,7 @@ const MDALiteWardsReport = (
   };
 
   return (
-    <div>
+    <Fragment>
       <Helmet>
         <title>{pageTitle}</title>
       </Helmet>
@@ -218,7 +217,7 @@ const MDALiteWardsReport = (
           </div>
         </Col>
       </Row>
-    </div>
+    </Fragment>
   );
 };
 

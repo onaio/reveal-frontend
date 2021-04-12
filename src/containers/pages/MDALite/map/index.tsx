@@ -62,8 +62,7 @@ reducerRegistry.register(genericJurisdictionsReducerName, GenericJurisdictionsRe
 reducerRegistry.register(genericPlanReducerName, GenericPlansReducer);
 reducerRegistry.register(genericStructuresReducerName, genericStructuresReducer);
 
-/** selectors */
-
+/** MDA Lite map props */
 interface MDALiteMapProps {
   baseUrl: string;
   fetchJurisdictions: typeof fetchGenericJurisdictions;
@@ -194,9 +193,7 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
     DefaultMapDimensions
   );
 
-  const polygons = wardData?.features.filter((feature: any) =>
-    [POLYGON].includes(feature.geometry.type)
-  );
+  const polygons = wardData?.features.filter(feature => [POLYGON].includes(feature.geometry.type));
 
   // get each polygon centroid
   const centroidPoints = polygons?.map(polygon => {

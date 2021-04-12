@@ -31,11 +31,7 @@ const makeMDALitePlansArraySelector = makeGenericPlansArraySelector();
 
 /** Simple component that loads a preview list of MDA plans */
 const MDALitePlansList = (props: GenericPlanListProps & RouteComponentProps) => {
-  return (
-    <div>
-      <GenericPlansList {...props} />
-    </div>
-  );
+  return <GenericPlansList {...props} />;
 };
 
 /** Declare default props for MDALitePlansList */
