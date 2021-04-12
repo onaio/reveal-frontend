@@ -95,7 +95,7 @@ exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-17 1
 
 exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-18 1`] = `"Total Male"`;
 
-exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-19 1`] = `"Total female"`;
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-19 1`] = `"Total Female"`;
 
 exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-20 1`] = `"Total Treated"`;
 

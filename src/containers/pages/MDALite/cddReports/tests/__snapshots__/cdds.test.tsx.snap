@@ -72,13 +72,13 @@ exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: tab
 
 exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-23 1`] = `"Total Male"`;
 
-exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-24 1`] = `"Total female"`;
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-24 1`] = `"Total Female"`;
 
 exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-25 1`] = `"Total Treated"`;
 
 exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-26 1`] = `"Days worked"`;
 
-exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-27 1`] = `"Avarange per day"`;
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-27 1`] = `"Average per day"`;
 
 exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-28 1`] = `"Supervisor Distributed"`;
 

@@ -8,6 +8,7 @@ import {
   renderInFilterFactory,
 } from '../../../../components/Table/DrillDownFilters/utils';
 import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
+import { AVERAGE_PER_DAY, DAYS_WORKED, NAME } from '../../../../configs/lang';
 import { indicatorThresholdsMDALite } from '../../../../configs/settings';
 import { REPORT_MDA_LITE_CDD_REPORT_URL } from '../../../../constants';
 import { getIRSThresholdAdherenceIndicator } from '../../../../helpers/indicators';
@@ -24,7 +25,7 @@ export const supervisorColumns = [
       const url = `${REPORT_MDA_LITE_CDD_REPORT_URL}/${original.plan_id}/${original.base_entity_id}/${original.id}`;
       return <Link to={url}>{cell.value}</Link>;
     },
-    Header: 'Name',
+    Header: NAME,
     accessor: 'supervisor_name',
   },
   ...drugDistributionColumns,
@@ -33,17 +34,17 @@ export const supervisorColumns = [
 /** CDD columns */
 export const cddReportColumns = [
   {
-    Header: 'Name',
+    Header: NAME,
     accessor: 'cdd_name',
   },
   ...genderReportColumns,
   {
-    Header: 'Days worked',
+    Header: DAYS_WORKED,
     accessor: 'days_worked',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, indicatorThresholdsMDALite),
-    Header: 'Avarange per day',
+    Header: AVERAGE_PER_DAY,
     accessor: 'avarage_per_day',
   },
   ...drugDistributionColumns,

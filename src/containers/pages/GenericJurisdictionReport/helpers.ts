@@ -2,7 +2,29 @@ import { DrillDownColumn, DrillDownTableProps } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { get } from 'lodash';
 import { Cell } from 'react-table';
-import { IRS_RED_THRESHOLD } from '../../../configs/lang';
+import {
+  ADMINISTERED_LABEL,
+  ADVERSE_REACTION,
+  DAMAGED_LABEL,
+  FEMALE_LABEL,
+  FIFTEEN_YEARS_AND_ABOVE,
+  FIVE_TO_FOURTEEN_YEARS,
+  IRS_RED_THRESHOLD,
+  MALE_LABEL,
+  NAME,
+  OFFICIAL_CENSUS_POP_TARGET,
+  ONE_TO_FOUR_YEARS,
+  OTHER_POP_COVERAGE,
+  OTHER_POP_TARGET,
+  RECEIVED_BY_CDD,
+  REMAINING_WITH_CDD,
+  RETURNED_TO_SUPERVISOR,
+  SUPERVISOR_DISTRIBUTED,
+  TOTAL_FEMALE,
+  TOTAL_MALE,
+  TOTAL_TREATED,
+  TREATMENT_COVERAGE_CENSUS,
+} from '../../../configs/lang';
 import { indicatorThresholdsMDALite } from '../../../configs/settings';
 import {
   getIRSLiteThresholdAdherenceIndicator,
@@ -410,22 +432,22 @@ export const smcJurisdictionsColumns = [
 /** columns for mda Lite jurisdictions */
 export const genderReportColumns = [
   {
-    Header: 'Male',
+    Header: MALE_LABEL,
     columns: [
       {
-        Header: '1-4',
+        Header: ONE_TO_FOUR_YEARS,
         accessor: 'treated_male_1_4',
         id: 'maleOneToFour',
         width: '100',
       },
       {
-        Header: '5-14',
+        Header: FIVE_TO_FOURTEEN_YEARS,
         accessor: 'treated_male_5_14',
         id: 'maleOneToFourteen',
         width: '100',
       },
       {
-        Header: '15+',
+        Header: FIFTEEN_YEARS_AND_ABOVE,
         accessor: 'treated_male_above_15',
         id: 'maleGreaterThanFifteen',
         width: '100',
@@ -433,22 +455,22 @@ export const genderReportColumns = [
     ],
   },
   {
-    Header: 'Female',
+    Header: FEMALE_LABEL,
     columns: [
       {
-        Header: '1-4',
+        Header: ONE_TO_FOUR_YEARS,
         accessor: 'treated_female_1_4',
         id: 'femaleOneToFour',
         width: '100',
       },
       {
-        Header: '5-14',
+        Header: FIVE_TO_FOURTEEN_YEARS,
         accessor: 'treated_female_5_14',
         id: 'femaleOneToFourteen',
         width: '100',
       },
       {
-        Header: '15+',
+        Header: FIFTEEN_YEARS_AND_ABOVE,
         accessor: 'treated_female_above_15',
         id: 'femaleGreaterThanFifteen',
         width: '100',
@@ -457,73 +479,73 @@ export const genderReportColumns = [
   },
   {
     Cell: (cell: Cell) => MDALiteGenderComparison(cell, 'total_females', IRS_RED_THRESHOLD),
-    Header: 'Total Male',
+    Header: TOTAL_MALE,
     accessor: 'total_males',
   },
   {
     Cell: (cell: Cell) => MDALiteGenderComparison(cell, 'total_males', IRS_RED_THRESHOLD),
-    Header: 'Total female',
+    Header: TOTAL_FEMALE,
     accessor: 'total_females',
   },
   {
-    Header: 'Total Treated',
+    Header: TOTAL_TREATED,
     accessor: 'total_all_genders',
   },
 ];
 export const drugDistributionColumns = [
   {
-    Header: 'Supervisor Distributed',
+    Header: SUPERVISOR_DISTRIBUTED,
     accessor: 'supervisor_distributed',
   },
   {
-    Header: 'Received by CDD',
+    Header: RECEIVED_BY_CDD,
     accessor: 'received_number',
   },
   {
-    Header: 'Administered',
+    Header: ADMINISTERED_LABEL,
     accessor: 'adminstered',
   },
   {
-    Header: 'Damaged',
+    Header: DAMAGED_LABEL,
     accessor: 'damaged',
   },
   {
-    Header: 'Remaining with CDD',
+    Header: REMAINING_WITH_CDD,
     accessor: 'remaining_with_cdd',
   },
   {
     Cell: (cell: Cell) => returnedToSupervicerCol(cell, 'remaining_with_cdd', IRS_RED_THRESHOLD),
-    Header: 'Returned to Supervisor',
+    Header: RETURNED_TO_SUPERVISOR,
     accessor: 'returned_to_supervisor',
   },
   {
-    Header: 'Adverse Reaction',
+    Header: ADVERSE_REACTION,
     accessor: 'adverse',
   },
 ];
 export const censusPopColumns = [
   {
-    Header: 'Census Pop Target (Official)',
+    Header: OFFICIAL_CENSUS_POP_TARGET,
     accessor: 'official_population',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, indicatorThresholdsMDALite),
-    Header: 'Treatment Coverage (Census)',
+    Header: TREATMENT_COVERAGE_CENSUS,
     accessor: 'treatment_coverage',
   },
   {
-    Header: 'Other Pop Target (Unofficial)',
+    Header: OTHER_POP_TARGET,
     accessor: 'other_pop_target',
   },
   {
     Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell, indicatorThresholdsMDALite),
-    Header: 'Other Pop Coverage (Unofficial)',
+    Header: OTHER_POP_COVERAGE,
     accessor: 'other_pop_coverage',
   },
 ];
 export const mdaLiteJurisdictionsColumns = [
   {
-    Header: 'Name',
+    Header: NAME,
     accessor: 'jurisdiction_name',
     minWidth: 180,
   },
