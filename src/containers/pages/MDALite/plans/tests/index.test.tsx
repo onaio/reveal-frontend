@@ -84,7 +84,11 @@ describe('components/MDALiteReports/MDALitePlansList', () => {
     ).toEqual('Customize Columns');
 
     expect(wrapper.find('GenericPlansList').length).toBe(1);
-    expect(wrapper.find('GenericPlansList').props()).toMatchSnapshot('GenericPlansList props');
+    const GenericPlansListProps = wrapper.find('GenericPlansList').props() as any;
+    expect(GenericPlansListProps.plans).toEqual(MDALitePlans);
+    expect(GenericPlansListProps.pageTitle).toEqual('MDA Lite Plans');
+    expect(GenericPlansListProps.pageUrl).toEqual('/intervention/mda-lite/report');
+    expect(GenericPlansListProps.supersetReportingSlice).toEqual('1');
 
     expect(wrapper.find('.page-title').text()).toEqual('MDA Lite Plans');
 
@@ -109,8 +113,6 @@ describe('components/MDALiteReports/MDALitePlansList', () => {
     expect(wrapper.find('.tbody .tr').length).toEqual(1);
     expect(wrapper.find('.tbody .tr .td a').text()).toEqual('MDA-Lite kenya 2021-01-08');
 
-    expect((wrapper.find('GenericPlansList').props() as any).plans).toMatchSnapshot(
-      'search results props'
-    );
+    expect((wrapper.find('GenericPlansList').props() as any).plans).toEqual([MDALitePlans[1]]);
   });
 });
