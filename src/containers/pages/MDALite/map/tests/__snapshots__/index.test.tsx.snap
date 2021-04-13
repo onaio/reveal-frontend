@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: GisidaLite layers 1`] = `
+Array [
+  "mda_lite_structures-fill-line",
+  "mda_lite_structures-fill",
+  "mda_lite_structures-symbol",
+]
+`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item href-1 1`] = `
+<a
+  href="/"
+  onClick={[Function]}
+>
+  Home
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item href-2 1`] = `
+<a
+  href="/intervention/mda-lite/report"
+  onClick={[Function]}
+>
+  MDA Lite Reporting
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item href-3 1`] = `
+<a
+  href="/intervention/mda-lite/report/6b485d4b-1043-40ed-ab8a-c64d24045ada"
+  onClick={[Function]}
+>
+  MDA-Lite kenya 2021-01-08
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item href-4 1`] = `
+<a
+  href="/intervention/mda-lite/report/6b485d4b-1043-40ed-ab8a-c64d24045ada/25e8a10b-737c-44e7-bfff-3b6344b1126f"
+  onClick={[Function]}
+>
+  Kenya
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item href-5 1`] = `
+<a
+  href="/intervention/mda-lite/report/6b485d4b-1043-40ed-ab8a-c64d24045ada/f2482d8c-e6ed-433b-860f-96c9cd09b4a3"
+  onClick={[Function]}
+>
+  Vihiga
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item href-6 1`] = `null`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item-1 1`] = `"Home"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item-2 1`] = `"MDA Lite Reporting"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item-3 1`] = `"MDA-Lite kenya 2021-01-08"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item-4 1`] = `"Kenya"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item-5 1`] = `"Vihiga"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item-6 1`] = `"vihiga"`;

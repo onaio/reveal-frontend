@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: breadcrumb item href-1 1`] = `
+<a
+  href="/intervention/mda-lite/ward/report/5e396185-6094-4817-9dd4-24bcbbc698b0/3c63f48e-bb86-42e5-b3ff-bc539fbf5295"
+  onClick={[Function]}
+>
+  ...
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: breadcrumb item href-2 1`] = `
+<a
+  href="/intervention/mda-lite/cdd/report/5e396185-6094-4817-9dd4-24bcbbc698b0/9ec52632-7bfb-40f5-9ef7-8804627a65cb"
+  onClick={[Function]}
+>
+  mungoma
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: breadcrumb item href-3 1`] = `null`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: breadcrumb item-1 1`] = `"..."`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: breadcrumb item-2 1`] = `"mungoma"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: breadcrumb item-3 1`] = `"UHS3:UpperHillWard Supervisor 3"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-1 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-2 1`] = `"Male"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-3 1`] = `"Female"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-4 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-5 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-6 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-7 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-8 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-9 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-10 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-11 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-12 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-13 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-14 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-15 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-16 1`] = `"Name"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-17 1`] = `"1-4"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-18 1`] = `"5-14"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-19 1`] = `"15+"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-20 1`] = `"1-4"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-21 1`] = `"5-14"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-22 1`] = `"15+"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-23 1`] = `"Total Male"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-24 1`] = `"Total Female"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-25 1`] = `"Total Treated"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-26 1`] = `"Days worked"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-27 1`] = `"Average per day"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-28 1`] = `"Supervisor Distributed"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-29 1`] = `"Received by CDD"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-30 1`] = `"Administered"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-31 1`] = `"Damaged"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-32 1`] = `"Remaining with CDD"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-33 1`] = `"Returned to Supervisor"`;
+
+exports[`components/MDA/Lite/Reports/cddReport/supervisor renders correctly: table headers-34 1`] = `"Adverse Reaction"`;

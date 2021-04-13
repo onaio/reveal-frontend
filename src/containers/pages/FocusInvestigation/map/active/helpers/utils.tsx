@@ -351,6 +351,7 @@ interface ExtraVars {
   circleColor?: CircleColor;
   polygonColor?: PolygonColor;
   polygonLineColor?: PolygonColor;
+  polygonLinePaintColor?: string; // specify the color of polygon lines
   useId?: string; // override the goalId to be used for the layer;
 }
 
@@ -483,11 +484,15 @@ export const buildGsLiteLayers = (
       ? { 'fill-color': extraVars.polygonColor }
       : defaultFillPaint;
 
-    // default circle color or data driven circle styling
-    const linePaint = extraVars.polygonLineColor
+    // default line or data driven circle styling
+    const linePaintWithStops = extraVars.polygonLineColor
       ? { 'line-color': extraVars.polygonLineColor }
       : defaultLinePaint;
 
+    const linePaint = {
+      ...linePaintWithStops,
+      'line-color': extraVars.polygonLinePaintColor || linePaintWithStops['line-color'],
+    };
     gsLayers.push(
       <GeoJSONLayer
         {...lineLayerTemplate}

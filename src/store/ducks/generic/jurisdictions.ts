@@ -259,6 +259,22 @@ export function getGenericJurisdictionById(
   return get((state as any)[reducerName][reducerKey], id) || null;
 }
 
+/** get all GenericJurisdiction with certain jurisdiction_id
+ * @param {Partial<Store>} state - the redux store
+ * @param {string} reducerKey - they reducer key
+ * @param {string} jurisdictionId - the GenericJurisdiction id
+ * @returns {GenericJurisdiction|null} a GenericJurisdiction object or null
+ */
+export function getAllGenericJurisdictionByJurisdictionId(
+  state: Partial<Store>,
+  reducerKey: string = 'GenericJurisdictionsById',
+  jurisdictionId: string
+): GenericJurisdiction[] {
+  return values((state as any)[reducerName][reducerKey]).filter(
+    (e: GenericJurisdiction) => e.jurisdiction_id === jurisdictionId
+  );
+}
+
 /** get one GenericJurisdiction using its jurisdiction_id
  * @param {Partial<Store>} state - the redux store
  * @param {string} reducerKey - they reducer key
@@ -270,9 +286,8 @@ export function getGenericJurisdictionByJurisdictionId(
   reducerKey: string = 'GenericJurisdictionsById',
   jurisdictionId: string
 ): GenericJurisdiction | null {
-  return values((state as any)[reducerName][reducerKey]).filter(
-    (e: GenericJurisdiction) => e.jurisdiction_id === jurisdictionId
-  )[0];
+  const allJurs = getAllGenericJurisdictionByJurisdictionId(state, reducerKey, jurisdictionId);
+  return allJurs.length ? allJurs[0] : null;
 }
 
 /** get an array of GenericJurisdiction objects

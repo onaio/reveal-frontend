@@ -27,6 +27,7 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
       'irsLiteZambiaFocusArea2020',
       'irsLiteZambiaJurisdictions2020',
       'mdaJurisdictionsColumns',
+      'mdaLiteJurisdictionsColumns',
       'namibia2019',
       'smcJurisdictionsColumns',
       'zambiaFocusArea2019',

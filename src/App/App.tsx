@@ -82,6 +82,9 @@ import {
   REACT_LOGIN_URL,
   REPORT_IRS_LITE_PLAN_URL,
   REPORT_IRS_PLAN_URL,
+  REPORT_MDA_LITE_CDD_REPORT_URL,
+  REPORT_MDA_LITE_PLAN_URL,
+  REPORT_MDA_LITE_WARD_URL,
   REPORT_MDA_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
   REPORT_SMC_PLAN_URL,
@@ -123,6 +126,12 @@ import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/
 import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
 import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/ManualSelectJurisdiction';
 import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
+import ConnectedMDALiteCddReports from '../containers/pages/MDALite/cddReports/cdds';
+import ConnectedMDALiteSupervisorReports from '../containers/pages/MDALite/cddReports/supervisors';
+import ConnectedMdaLiteJurisdictionReport from '../containers/pages/MDALite/jurisdictionsReport';
+import ConnectedMDALiteMapReport from '../containers/pages/MDALite/map';
+import ConnectedMDALitePlansList from '../containers/pages/MDALite/plans';
+import ConnectedMDALiteWardsReport from '../containers/pages/MDALite/wardReports';
 import ConnectedChildReports from '../containers/pages/MDAPoint/ChildReports';
 import ConnectedClientListView from '../containers/pages/MDAPoint/ClientListView';
 import ConnectedMdaPointJurisdictionReport from '../containers/pages/MDAPoint/jurisdictionsReport';
@@ -280,6 +289,56 @@ const App = () => {
                   exact={true}
                   path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedSMCReportingMap}
+                />
+                {/* MDA Lite Reporting plan table view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={REPORT_MDA_LITE_PLAN_URL}
+                  component={ConnectedMDALitePlansList}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_LITE_PLAN_URL}/:planId`}
+                  component={ConnectedMdaLiteJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_LITE_PLAN_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedMdaLiteJurisdictionReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
+                  component={ConnectedMDALiteMapReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_LITE_WARD_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedMDALiteWardsReport}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_LITE_CDD_REPORT_URL}/:planId/:jurisdictionId`}
+                  component={ConnectedMDALiteSupervisorReports}
+                />
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={`${REPORT_MDA_LITE_CDD_REPORT_URL}/:planId/:jurisdictionId/:supervisorId`}
+                  component={ConnectedMDALiteCddReports}
                 />
                 {/* IRS Reporting plan table view */}
                 <ConnectedPrivateRoute

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/MDALiteReports/MDALitePlansList renders plan definition list correctly: breadcrumb item-1 1`] = `"Home"`;
+
+exports[`components/MDALiteReports/MDALitePlansList renders plan definition list correctly: breadcrumb item-2 1`] = `"MDA Lite Plans"`;
+
+exports[`components/MDALiteReports/MDALitePlansList renders plan definition list correctly: table header-1 1`] = `"Title"`;
+
+exports[`components/MDALiteReports/MDALitePlansList renders plan definition list correctly: table header-2 1`] = `"Date Created"`;
+
+exports[`components/MDALiteReports/MDALitePlansList renders plan definition list correctly: table header-3 1`] = `"Start Date"`;
+
+exports[`components/MDALiteReports/MDALitePlansList renders plan definition list correctly: table header-4 1`] = `"End Date"`;
+
+exports[`components/MDALiteReports/MDALitePlansList renders plan definition list correctly: table header-5 1`] = `"Status"`;
