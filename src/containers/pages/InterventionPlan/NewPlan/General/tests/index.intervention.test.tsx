@@ -3,15 +3,22 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Route, Router } from 'react-router';
+import configureMockStore from 'redux-mock-store';
 import { defaultProps as defaultPlanFormProps } from '../../../../../../components/forms/PlanForm';
 import store from '../../../../../../store';
 import { removePlanDefinitions } from '../../../../../../store/ducks/opensrp/PlanDefinition';
+import { existingState } from '../../../../FocusInvestigation/map/active/tests/fixtures';
 import ConnectedBaseNewPlan from '../index';
 
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
 const history = createBrowserHistory();
+
+const middlewares: any = [];
+const mockStore = configureMockStore(middlewares);
+const mockedStore = mockStore(existingState);
+mockedStore.dispatch = jest.fn();
 
 jest.mock('../../../../../../configs/env', () => ({
   ENABLED_FI_REASONS: ['Case Triggered', 'Routine'],
@@ -29,7 +36,7 @@ describe('containers/pages/NewPlan: single enabled intervention type', () => {
 
   it('renders without crashing', () => {
     shallow(
-      <Provider store={store}>
+      <Provider store={mockedStore}>
         <Router history={history}>
           <Route component={ConnectedBaseNewPlan} />
         </Router>
@@ -39,7 +46,7 @@ describe('containers/pages/NewPlan: single enabled intervention type', () => {
 
   it('renders correctly', () => {
     const wrapper = mount(
-      <Provider store={store}>
+      <Provider store={mockedStore}>
         <Router history={history}>
           <Route component={ConnectedBaseNewPlan} />
         </Router>
@@ -51,6 +58,7 @@ describe('containers/pages/NewPlan: single enabled intervention type', () => {
     // jurisdictionLabel is contry for IRS
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...defaultPlanFormProps,
+      actionCreator: expect.any(Function),
       addPlan: expect.any(Function),
       allowMoreJurisdictions: true,
       formHandler: expect.any(Function),

@@ -14,11 +14,14 @@ import {
 } from '../../../../../../components/forms/PlanForm/tests/fixtures';
 import HeaderBreadcrumb from '../../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { FOCUS_AREA_HEADER } from '../../../../../../configs/lang';
+import { extractPlanRecordResponseFromPlanPayload } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';
 import {
   addPlanDefinition,
   removePlanDefinitions,
 } from '../../../../../../store/ducks/opensrp/PlanDefinition';
+import { fetchPlanRecords } from '../../../../../../store/ducks/plans';
+import { existingState } from '../../../../FocusInvestigation/map/active/tests/fixtures';
 import ConnectedBaseNewPlan, { NewPlanForPlanning } from '../index';
 
 /* tslint:disable-next-line no-var-requires */
@@ -55,8 +58,12 @@ describe('containers/pages/NewPlan', () => {
   });
 
   it('renders correctly', () => {
+    const initialState = existingState;
+    const mockedStore = mockStore(initialState);
+    mockedStore.dispatch = jest.fn();
+
     const wrapper = mount(
-      <Provider store={store}>
+      <Provider store={mockedStore}>
         <Router history={history}>
           <Route component={ConnectedBaseNewPlan} />
         </Router>
@@ -69,6 +76,7 @@ describe('containers/pages/NewPlan', () => {
 
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...defaultPlanFormProps,
+      actionCreator: expect.any(Function),
       addPlan: expect.any(Function),
       allowMoreJurisdictions: true,
       cascadingSelect: true,
@@ -138,7 +146,7 @@ describe('containers/pages/NewPlan', () => {
 
   it('renders text correctly for New Plan in planning tool ', () => {
     const wrapper = mount(
-      <Provider store={store}>
+      <Provider store={mockStore(existingState)}>
         <Router history={history}>
           <Route component={NewPlanForPlanning} />
         </Router>
@@ -147,6 +155,7 @@ describe('containers/pages/NewPlan', () => {
 
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...defaultPlanFormProps,
+      actionCreator: expect.any(Function),
       addPlan: expect.any(Function),
       allowMoreJurisdictions: false,
       cascadingSelect: false,
@@ -168,7 +177,7 @@ describe('containers/pages/NewPlan', () => {
   it('New plan is added to store if API status is 200', async () => {
     fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
 
-    const initialState = {};
+    const initialState = existingState;
     const mockedStore = mockStore(initialState);
     mockedStore.dispatch = jest.fn();
 
@@ -223,13 +232,13 @@ describe('containers/pages/NewPlan', () => {
         .props() as any).formik.values
     );
 
-    expect(mockedStore.dispatch).toHaveBeenLastCalledWith(addPlanDefinition(payload));
+    expect(mockedStore.dispatch).toHaveBeenCalledWith(addPlanDefinition(payload));
   });
 
   it('New plan is NOT added to store if API status is NOT 200', async () => {
     fetch.mockReject(() => Promise.reject('API is down'));
 
-    const initialState = {};
+    const initialState = existingState;
     const mockedStore = mockStore(initialState);
     mockedStore.dispatch = jest.fn();
 
@@ -282,7 +291,7 @@ describe('containers/pages/NewPlan', () => {
   it('New plan in planning tool is added to store if API status is 200', async () => {
     fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
 
-    const initialState = {};
+    const initialState = existingState;
     const mockedStore = mockStore(initialState);
     mockedStore.dispatch = jest.fn();
 
@@ -328,14 +337,14 @@ describe('containers/pages/NewPlan', () => {
         .first()
         .props() as any).formik.values
     );
-
-    expect(mockedStore.dispatch).toHaveBeenLastCalledWith(addPlanDefinition(payload));
+    const payloadOfInterest = extractPlanRecordResponseFromPlanPayload(payload);
+    expect(mockedStore.dispatch).toHaveBeenLastCalledWith(fetchPlanRecords([payloadOfInterest]));
   });
 
   it('New plan in planning tool is NOT added to store if API status is NOT 200', async () => {
     fetch.mockReject(() => Promise.reject('API is down'));
 
-    const initialState = {};
+    const initialState = existingState;
     const mockedStore = mockStore(initialState);
     mockedStore.dispatch = jest.fn();
 
@@ -381,7 +390,7 @@ describe('containers/pages/NewPlan', () => {
     div.setAttribute('id', 'plan-trigger-conditions-0');
     document.body.appendChild(div);
     const wrapper = mount(
-      <Provider store={mockStore({})}>
+      <Provider store={mockStore(existingState)}>
         <Router history={history}>
           <Route component={NewPlanForPlanning} />
         </Router>
@@ -449,7 +458,7 @@ describe('containers/pages/NewPlan', () => {
     });
     document.body.appendChild(div);
     const wrapper = mount(
-      <Provider store={mockStore({})}>
+      <Provider store={mockStore(existingState)}>
         <Router history={history}>
           <Route component={ConnectedBaseNewPlan} />
         </Router>
