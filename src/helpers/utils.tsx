@@ -100,6 +100,7 @@ export interface RouteParams {
   jurisdictionId?: string;
   planId?: string;
   sop?: string;
+  supervisorId?: string;
   type?: string;
 }
 
@@ -232,6 +233,7 @@ export const ConfigStore = (
       mapConfigStyle ||
       (DIGITAL_GLOBE_CONNECT_ID
         ? {
+            glyphs: 'mapbox://fonts/mapbox/{fontstack}/{range}.pbf',
             layers: [
               {
                 id: 'earthwatch-basemap',

@@ -1968,6 +1968,29 @@ export const indicatorThresholdsFI: IndicatorThresholds = {
 };
 /** END Focus Investigation Reporting Configs */
 
+/** MDA Lite Reporting Configs */
+export const indicatorThresholdsMDALite: IndicatorThresholds = {
+  GREEN_THRESHOLD: {
+    color: '#33ad33',
+    name: IRS_GREEN_THRESHOLD,
+    orEquals: false,
+    value: 1,
+  },
+  RED_THRESHOLD: {
+    color: '#ff5c33',
+    name: IRS_RED_THRESHOLD,
+    orEquals: false,
+    value: 0.65,
+  },
+  YELLOW_THRESHOLD: {
+    color: '#ff3',
+    name: IRS_YELLOW_THRESHOLD,
+    orEquals: false,
+    value: 0.8,
+  },
+};
+/** END MDA Lite Reporting Configs */
+
 /** Interface describing thresholds look up */
 export interface IndicatorThresholdsLookUp {
   [key: string]: IndicatorThresholds;
@@ -1978,6 +2001,7 @@ export interface IndicatorThresholdsLookUp {
  * otherwise the default indicator thresholds will be used.
  */
 export const indicatorThresholdsLookUpIRS: IndicatorThresholdsLookUp = {
+  MDALiteIndicators: indicatorThresholdsMDALite,
   namibia2019: indicatorThresholdsIRSNamibia,
 };
 

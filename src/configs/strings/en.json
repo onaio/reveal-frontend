@@ -1244,6 +1244,10 @@
     "message": "MDA Point Plans",
     "description": "Title of page that lists MDA point plans"
   },
+  "MDA_LITE_PLANS": {
+    "message": "MDA Lite Plans",
+    "description": "Title of page that lists MDA Lite plans"
+  },
   "JURISDICTION_HIERARCHY_TEMPLATE": {
     "message": "JurisdictionHierachyTemplate",
     "description": "Name given to a file downloaded as a template for risk upload"
@@ -1357,6 +1361,10 @@
   "MDA_POINT_REPORTING_TITLE": {
     "message": "MDA Point Reporting",
     "description": "Title of page that lists MDA point plans for reporting"
+  },
+  "MDA_LITE_REPORTING_TITLE": {
+    "message": "MDA Lite Reporting",
+    "description": "Title of page that lists MDA Lite plans for reporting"
   },
   "FILTER": { "message": "Filter", "description": "Filter" },
   "USER": { "message": "user", "description": "user" },

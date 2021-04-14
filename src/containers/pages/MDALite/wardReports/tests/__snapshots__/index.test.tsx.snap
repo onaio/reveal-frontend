@@ -1,0 +1,108 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item href-1 1`] = `
+<a
+  href="/"
+  onClick={[Function]}
+>
+  Home
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item href-2 1`] = `
+<a
+  href="/intervention/mda-lite/report"
+  onClick={[Function]}
+>
+  MDA Lite Reporting
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item href-3 1`] = `
+<a
+  href="/intervention/mda-lite/report/5e396185-6094-4817-9dd4-24bcbbc698b0"
+  onClick={[Function]}
+>
+  MDA-Lite 2021-03-02
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item href-4 1`] = `
+<a
+  href="/intervention/mda-lite/report/5e396185-6094-4817-9dd4-24bcbbc698b0/25e8a10b-737c-44e7-bfff-3b6344b1126f"
+  onClick={[Function]}
+>
+  Kenya
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item href-5 1`] = `
+<a
+  href="/intervention/mda-lite/report/5e396185-6094-4817-9dd4-24bcbbc698b0/f2482d8c-e6ed-433b-860f-96c9cd09b4a3"
+  onClick={[Function]}
+>
+  Vihiga
+</a>
+`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item href-6 1`] = `null`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item-1 1`] = `"Home"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item-2 1`] = `"MDA Lite Reporting"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item-3 1`] = `"MDA-Lite 2021-03-02"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item-4 1`] = `"Kenya"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item-5 1`] = `"Vihiga"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: breadcrumb item-6 1`] = `"vihiga"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-1 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-2 1`] = `"Male"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-3 1`] = `"Female"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-4 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-5 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-6 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-7 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-8 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-9 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-10 1`] = `" "`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-11 1`] = `"Name"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-12 1`] = `"1-4"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-13 1`] = `"5-14"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-14 1`] = `"15+"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-15 1`] = `"1-4"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-16 1`] = `"5-14"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-17 1`] = `"15+"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-18 1`] = `"Total Male"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-19 1`] = `"Total Female"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-20 1`] = `"Total Treated"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-21 1`] = `"Census Pop Target (Official)"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-22 1`] = `"Treatment Coverage (Census)"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-23 1`] = `"Other Pop Target (Unofficial)"`;
+
+exports[`components/MDA/Lite/Reports/wards renders correctly: table headers-24 1`] = `"Other Pop Coverage (Unofficial)"`;

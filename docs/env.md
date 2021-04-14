@@ -114,6 +114,48 @@ Below is a list of currently supported environment variables:
   - Optional parameter of plan intervention types whose tasks should be generated on opensrp
   - Options: FI, IRS, IRS_Lite, MDA, MDA-Point, Dynamic-FI, Dynamic-IRS and Dynamic-MDA
 
+- **REACT_APP_ENABLE_MDA_LITE**
+
+  - **not Required**; _(string)_
+  - to activate set the env to `true`, any other value will be interpreted as false
+  - enables the monitor MDA Lite reporting page
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_PLANS_SLICE**
+
+  - MDA-Lite plans Superset slice id
+  - **Required**
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_DATA_SLICES**
+
+  - MDA-Lite jurisdictions report Superset slice id
+  - **Required**
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_COLUMNS**
+
+  - MDA-Lite jurisdictions report table columns
+  - **Required**
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_FOCUS_AREA_LEVEL**
+
+  - MDA-Lite level were focus areas start
+  - **Required**
+
+- **REACT_APP_SHOW_MAP_AT_JURISDICTION_LEVEL**
+
+  - Jurisdiction level on which to show map
+  - Default value: 99
+  - **Not Required**
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_CDD_DATA_SLICE**
+
+  - MDA-Lite CDD Superset slice id
+  - **Required**
+
+- **REACT_APP_SUPERSET_MDA_LITE_REPORTING_SUPERVISORS_DATA_SLICE**
+
+  - MDA-Lite supervisors Superset slice id
+  - **Required**
+
 - **REACT_APP_HIDE_PLAN_FORM_FIELDS_ON_EDIT**
 
   - **not Required**; _(string)_

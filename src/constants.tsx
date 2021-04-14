@@ -74,6 +74,7 @@ export const RETIRE_PLAN = 'Retire_Plan';
 export const RETIRE_REASON = 'retire_reason';
 export const EVENT_LABEL = 'Event';
 export const FORM_SUBMISSION_FIELD = 'formsubmissionField';
+export const MDA_LITE_STRUCTURES = 'mda_lite_structures';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';
@@ -86,6 +87,9 @@ export const PERFORMANCE_REPORT_IRS_PLAN_URL = `/intervention/irs/performance/re
 export const REPORT_IRS_LITE_PLAN_URL = `/intervention/irs-lite/report`;
 export const PERFORMANCE_REPORT_IRS_LITE_PLAN_URL = `/intervention/irs-lite/performance/report`;
 export const REPORT_MDA_POINT_PLAN_URL = `/intervention/mda-point/report`;
+export const REPORT_MDA_LITE_PLAN_URL = `/intervention/mda-lite/report`;
+export const REPORT_MDA_LITE_WARD_URL = `/intervention/mda-lite/ward/report`;
+export const REPORT_MDA_LITE_CDD_REPORT_URL = `/intervention/mda-lite/cdd/report`;
 export const REPORT_MDA_PLAN_URL = `/intervention/mda/report`;
 export const MDA_POINT_LOCATION_REPORT_URL = '/intervention/mda-point/location-report';
 export const MDA_POINT_CHILD_REPORT_URL = '/intervention/mda-point/child-report';
