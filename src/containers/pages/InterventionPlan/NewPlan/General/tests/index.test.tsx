@@ -4,7 +4,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
+import { Route, Router } from 'react-router';
 import configureMockStore from 'redux-mock-store';
 import { defaultProps as defaultPlanFormProps } from '../../../../../../components/forms/PlanForm';
 import { generatePlanDefinition } from '../../../../../../components/forms/PlanForm/helpers';
@@ -45,14 +45,20 @@ describe('containers/pages/NewPlan', () => {
   });
 
   it('renders without crashing', () => {
-    shallow(<ConnectedBaseNewPlan />);
+    shallow(
+      <Provider store={store}>
+        <Router history={history}>
+          <Route component={ConnectedBaseNewPlan} />
+        </Router>
+      </Provider>
+    );
   });
 
   it('renders correctly', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedBaseNewPlan />
+          <Route component={ConnectedBaseNewPlan} />
         </Router>
       </Provider>,
       { attachTo: div }
@@ -134,7 +140,7 @@ describe('containers/pages/NewPlan', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <NewPlanForPlanning />
+          <Route component={NewPlanForPlanning} />
         </Router>
       </Provider>
     );
@@ -169,7 +175,7 @@ describe('containers/pages/NewPlan', () => {
     const wrapper = mount(
       <Provider store={mockedStore}>
         <Router history={history}>
-          <ConnectedBaseNewPlan />
+          <Route component={ConnectedBaseNewPlan} />
         </Router>
       </Provider>
     );
@@ -230,7 +236,7 @@ describe('containers/pages/NewPlan', () => {
     const wrapper = mount(
       <Provider store={mockedStore}>
         <Router history={history}>
-          <ConnectedBaseNewPlan />
+          <Route component={ConnectedBaseNewPlan} />
         </Router>
       </Provider>
     );
@@ -283,7 +289,7 @@ describe('containers/pages/NewPlan', () => {
     const wrapper = mount(
       <Provider store={mockedStore}>
         <Router history={history}>
-          <NewPlanForPlanning />
+          <Route component={NewPlanForPlanning} />
         </Router>
       </Provider>
     );
@@ -336,7 +342,7 @@ describe('containers/pages/NewPlan', () => {
     const wrapper = mount(
       <Provider store={mockedStore}>
         <Router history={history}>
-          <NewPlanForPlanning />
+          <Route component={NewPlanForPlanning} />
         </Router>
       </Provider>
     );
@@ -377,7 +383,7 @@ describe('containers/pages/NewPlan', () => {
     const wrapper = mount(
       <Provider store={mockStore({})}>
         <Router history={history}>
-          <NewPlanForPlanning />
+          <Route component={NewPlanForPlanning} />
         </Router>
       </Provider>
     );
@@ -445,7 +451,7 @@ describe('containers/pages/NewPlan', () => {
     const wrapper = mount(
       <Provider store={mockStore({})}>
         <Router history={history}>
-          <ConnectedBaseNewPlan />
+          <Route component={ConnectedBaseNewPlan} />
         </Router>
       </Provider>
     );

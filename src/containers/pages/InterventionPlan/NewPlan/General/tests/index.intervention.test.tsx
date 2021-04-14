@@ -2,7 +2,7 @@ import { mount, shallow } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
+import { Route, Router } from 'react-router';
 import { defaultProps as defaultPlanFormProps } from '../../../../../../components/forms/PlanForm';
 import store from '../../../../../../store';
 import { removePlanDefinitions } from '../../../../../../store/ducks/opensrp/PlanDefinition';
@@ -28,14 +28,20 @@ describe('containers/pages/NewPlan: single enabled intervention type', () => {
   });
 
   it('renders without crashing', () => {
-    shallow(<ConnectedBaseNewPlan />);
+    shallow(
+      <Provider store={store}>
+        <Router history={history}>
+          <Route component={ConnectedBaseNewPlan} />
+        </Router>
+      </Provider>
+    );
   });
 
   it('renders correctly', () => {
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <ConnectedBaseNewPlan />
+          <Route component={ConnectedBaseNewPlan} />
         </Router>
       </Provider>
     );
