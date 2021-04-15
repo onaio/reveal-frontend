@@ -195,8 +195,9 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
   );
 };
 
-const defaultProps: Omit<UpdatePlanProps, 'fetchPlanRecordsCreator'> = {
+const defaultProps: UpdatePlanProps = {
   fetchPlan: addPlanDefinition,
+  fetchPlanRecordsCreator: fetchPlanRecords,
   plan: null,
   service: OpenSRPService,
 };

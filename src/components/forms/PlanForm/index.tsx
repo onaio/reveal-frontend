@@ -93,6 +93,7 @@ import { extractPlanRecordResponseFromPlanPayload } from '../../../helpers/utils
 import { OpenSRPService } from '../../../services/opensrp';
 import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
 import {
+  fetchPlanRecords,
   FetchPlanRecordsAction,
   InterventionType,
   PlanRecord,
@@ -347,11 +348,10 @@ const PlanForm = (props: PlanFormProps) => {
         .then(() => {
           onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
           const record = extractPlanRecordResponseFromPlanPayload(payload);
-          if (!record) {
-            return;
+          if (record) {
+            const extractedPlanRecords = [record, ...props.plansArray].filter(plan => !!plan);
+            actionCreator((extractedPlanRecords as unknown) as PlanRecordResponse[]);
           }
-          const extractedPlanRecords = [record, ...props.plansArray].filter(plan => !!plan);
-          actionCreator((extractedPlanRecords as unknown) as PlanRecordResponse[]);
         })
         .catch((e: Error) => {
           setSubmitting(false);
@@ -1278,7 +1278,8 @@ const PlanForm = (props: PlanFormProps) => {
   );
 };
 
-export const defaultProps: Omit<PlanFormProps, 'actionCreator'> = {
+export const defaultProps: PlanFormProps = {
+  actionCreator: fetchPlanRecords,
   addAndRemoveActivities: false,
   allFormActivities: getFormActivities(planActivities),
   allowMoreJurisdictions: true,
