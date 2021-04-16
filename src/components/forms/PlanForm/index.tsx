@@ -96,8 +96,6 @@ import {
   fetchPlanRecords,
   FetchPlanRecordsAction,
   InterventionType,
-  PlanRecord,
-  PlanRecordResponse,
   PlanStatus,
 } from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
@@ -183,7 +181,6 @@ export type LocationChildRenderProp = (
 /** interface for plan form props */
 export interface PlanFormProps {
   actionCreator: ActionCreator<FetchPlanRecordsAction>;
-  plansArray: PlanRecord[];
   addAndRemoveActivities: boolean /** activate adding and removing activities buttons */;
   allFormActivities: PlanActivityFormFields[] /** the list of all allowed activities */;
   allowMoreJurisdictions: boolean /** should we allow one to add more jurisdictions */;
@@ -349,8 +346,8 @@ const PlanForm = (props: PlanFormProps) => {
           onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
           const record = extractPlanRecordResponseFromPlanPayload(payload);
           if (record) {
-            const extractedPlanRecords = [record, ...props.plansArray].filter(plan => !!plan);
-            actionCreator((extractedPlanRecords as unknown) as PlanRecordResponse[]);
+            const extractedPlanRecords = [record].filter(plan => !!plan);
+            actionCreator(extractedPlanRecords);
           }
         })
         .catch((e: Error) => {
@@ -1292,7 +1289,6 @@ export const defaultProps: PlanFormProps = {
   hiddenFields: [],
   initialValues: defaultInitialValues,
   jurisdictionLabel: FOCUS_AREA_HEADER,
-  plansArray: [],
   redirectAfterAction: PLAN_LIST_URL,
 };
 
