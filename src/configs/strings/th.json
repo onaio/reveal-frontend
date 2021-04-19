@@ -419,6 +419,10 @@
     "message": "การตัดสินชนิดการติดเชื้อ",
     "description": "label: for the classification of a plan"
   },
+  "HISTORICAL_INDEX_CASES": {
+    "message": "ประวัติผู้ป่วยตั้งต้น",
+    "description": "label: for map popup header"
+  },
   "CASE_CLASSIFICATION_HEADER": {
     "message": "การตัดสินชนิดการติดเชื้อ",
     "description": "table header: (abbreviated) for the classification of a plan"
