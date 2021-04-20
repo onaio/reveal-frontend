@@ -122,12 +122,12 @@ describe('components/MDA Reports/MDAPlansList', () => {
         mmanodrugadminreason: null,
         mmapzqdosagegiven: 'test',
         plan_id: '40357eff-81b6-4e32-bd3d-484019689f7c',
-        sactacurrenroll: 0,
+        sactacurrenroll: 1,
         sactanationalid: '2345',
         school_location_id: '154153',
       },
     ];
-    const tableData = [['test user', '2345', 'No', 'No', 'No', 'No', 'No', 'test', 0]];
+    const tableData = [['test user', '2345', 'Yes', 'No', 'No', 'No', 'No', 'test', 0]];
     expect(extractChildData(childData)).toEqual(tableData);
   });
 });
