@@ -69,6 +69,27 @@ const tableHeaders = [
 ];
 
 /*
+ * returns list of childrens
+ * @param {ChildReport[]} props
+ * @return - extracted list of child data
+ */
+export const extractChildData = (data: ChildReport[]) => {
+  return data.map((sch: ChildReport) => {
+    return [
+      `${sch.client_first_name} ${sch.client_last_name}`,
+      sch.sactanationalid ? sch.sactanationalid : '',
+      sch.sactacurrenroll ? YES : NO,
+      sch.mmadrugadmin ? YES : NO,
+      sch.mmanodrugadminreason ? YES : NO,
+      sch.mmanodrugadminreason ? YES : NO,
+      sch.mmaadr ? YES : NO,
+      sch.mmapzqdosagegiven,
+      sch.mmaalbgiven,
+    ];
+  });
+};
+
+/*
  * Renders a table list of child report
  * @param {ChildReportsProps} props
  */
@@ -191,19 +212,7 @@ const mapStateToProps = (
     });
   }
 
-  const data = childData.map(sch => {
-    return [
-      `${sch.client_first_name} ${sch.client_last_name}`,
-      sch.sactanationalid ? sch.sactanationalid : '',
-      sch.sactacurrenroll ? YES : NO,
-      sch.mmadrugadmin ? YES : NO,
-      sch.mmanodrugadminreason ? YES : NO,
-      sch.mmanodrugadminreason ? YES : NO,
-      sch.mmaadr ? YES : NO,
-      sch.mmapzqdosagegiven,
-      sch.mmaalbgiven,
-    ];
-  });
+  const data = extractChildData(childData);
 
   return {
     data,
