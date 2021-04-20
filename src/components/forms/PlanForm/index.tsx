@@ -346,8 +346,7 @@ const PlanForm = (props: PlanFormProps) => {
           onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
           const record = extractPlanRecordResponseFromPlanPayload(payload);
           if (record) {
-            const extractedPlanRecords = [record].filter(plan => !!plan);
-            actionCreator(extractedPlanRecords);
+            actionCreator([record]);
           }
         })
         .catch((e: Error) => {
