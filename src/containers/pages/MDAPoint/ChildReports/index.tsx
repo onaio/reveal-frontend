@@ -194,12 +194,12 @@ const mapStateToProps = (
   const data = childData.map(sch => {
     return [
       `${sch.client_first_name} ${sch.client_last_name}`,
-      sch.sactanationalid === 0 ? '' : sch.sactanationalid,
-      sch.sactacurrenroll === 0 ? NO : YES,
-      sch.mmadrugadmin === 0 ? NO : YES,
-      sch.mmanodrugadminreason === 0 ? NO : YES,
-      sch.mmanodrugadminreason === 0 ? NO : YES,
-      sch.mmaadr === 0 ? NO : YES,
+      sch.sactanationalid ? sch.sactanationalid : '',
+      sch.sactacurrenroll ? YES : NO,
+      sch.mmadrugadmin ? YES : NO,
+      sch.mmanodrugadminreason ? YES : NO,
+      sch.mmanodrugadminreason ? YES : NO,
+      sch.mmaadr ? YES : NO,
       sch.mmapzqdosagegiven,
       sch.mmaalbgiven,
     ];
