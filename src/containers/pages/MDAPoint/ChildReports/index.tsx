@@ -24,6 +24,7 @@ import {
   MMA_DRUGS_ADMINISTRED,
   NATIONAL_ID,
   NO,
+  NO_DATA,
   PZQ_DISTRIBUTED,
   SACS_REFUSED,
   SACS_SICK,
@@ -74,15 +75,27 @@ const tableHeaders = [
  * @return - extracted list of child data
  */
 export const extractChildData = (data: ChildReport[]) => {
+  const returnRowValue = (value: any) => {
+    let valueOfInterest;
+    if (value === null || value === undefined) {
+      valueOfInterest = NO_DATA;
+    } else if (value === 0) {
+      valueOfInterest = NO;
+    } else {
+      valueOfInterest = YES;
+    }
+    return valueOfInterest;
+  };
+
   return data.map((sch: ChildReport) => {
     return [
       `${sch.client_first_name} ${sch.client_last_name}`,
       sch.sactanationalid ? sch.sactanationalid : '',
-      sch.sactacurrenroll ? YES : NO,
-      sch.mmadrugadmin ? YES : NO,
-      sch.mmanodrugadminreason ? YES : NO,
-      sch.mmanodrugadminreason ? YES : NO,
-      sch.mmaadr ? YES : NO,
+      returnRowValue(sch.sactacurrenroll),
+      returnRowValue(sch.mmadrugadmin),
+      returnRowValue(sch.mmanodrugadminreason),
+      returnRowValue(sch.mmanodrugadminreason),
+      returnRowValue(sch.mmaadr),
       sch.mmapzqdosagegiven,
       sch.mmaalbgiven,
     ];
