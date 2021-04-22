@@ -894,6 +894,10 @@ export const TARGET_LABEL = translate('TARGET_LABEL', 'Target');
 export const POPULATION_LABEL = translate('POPULATION_LABEL', 'Population');
 export const RISK_TEXT = translate('RISK_TEXT', 'Risk');
 export const STRUCTURE_LABEL = translate('STRUCTURE_LABEL', 'Structures');
+export const OTHER_POPULATION_LABEL = translate(
+  'OTHER_POPULATION_LABEL',
+  'Other population (unofficial)'
+);
 
 export const PLANS_USER_FILTER_NOTIFICATION = translate(
   'PLANS_USER_FILTER_NOTIFICATION',
@@ -1048,3 +1052,4 @@ export const AVERAGE_PER_DAY = translate('AVERAGE_PER_DAYE', 'Average per day');
 export const ONE_TO_FOUR_YEARS = translate('ONE_TO_FOUR_YEARS', '1-4');
 export const FIVE_TO_FOURTEEN_YEARS = translate('FOUR_TO_FOURTEEN_YEARS', '5-14');
 export const FIFTEEN_YEARS_AND_ABOVE = translate('FIFTEEN_YEARS_AND_ABOVE', '15+');
+export const HISTORICAL_INDEX_CASES = translate('HISTORICAL_INDEX_CASES', 'historical index cases');

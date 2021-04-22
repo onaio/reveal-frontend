@@ -447,6 +447,10 @@
     "message": "Case Classification",
     "description": "label: for the classification of a plan"
   },
+  "HISTORICAL_INDEX_CASES": {
+    "message": "historical index cases",
+    "description": "label: for map popup header"
+  },
   "CASE_CLASSIFICATION_HEADER": {
     "message": "Case Class.",
     "description": "table header: (abbreviated) for the classification of a plan"
@@ -1233,6 +1237,10 @@
   },
   "STRUCTURE_LABEL": {
     "message": "Structures",
+    "description": "Option displayed when selecting jurisdiction metadata type to download"
+  },
+  "OTHER_POPULATION_LABEL": {
+    "message": "Other Population (Unofficial)",
     "description": "Option displayed when selecting jurisdiction metadata type to download"
   },
   "PLANNING_PAGE_TITLE": {
