@@ -28,6 +28,7 @@ import {
   CASE_NUMBER,
   DIAGNOSIS_DATE,
   END_DATE,
+  HISTORICAL_INDEX_CASES,
   IN_PROGRESS,
   LARVAL_DIPPING_ACTIVITY,
   MOSQUITO_COLLECTION_ACTIVITY,
@@ -601,7 +602,7 @@ export const buildOnClickHandler = (currentPlanId: string) => {
           const diagnosisDate = details?.date_of_diagnosis
             ? moment(details.date_of_diagnosis).format(DATE_FORMAT.toUpperCase())
             : '_';
-          description += '<p class="heading">historical index cases </b></p>';
+          description += `<p class="heading">${HISTORICAL_INDEX_CASES} </b></p>`;
           description += `<p>${CASE_NUMBER}: ${details?.case_number || '_'}</p>`;
           description += `<p>${CASE_CLASSIFICATION_LABEL}: ${details?.case_classification ||
             '_'}</p>`;
