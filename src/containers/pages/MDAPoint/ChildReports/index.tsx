@@ -24,6 +24,7 @@ import {
   MMA_DRUGS_ADMINISTRED,
   NATIONAL_ID,
   NO,
+  NO_DATA,
   PZQ_DISTRIBUTED,
   SACS_REFUSED,
   SACS_SICK,
@@ -67,6 +68,39 @@ const tableHeaders = [
   PZQ_DISTRIBUTED,
   ALB_TABLETS_DISTRIBUTED,
 ];
+
+/*
+ * returns list of childrens
+ * @param {ChildReport[]} props
+ * @return - extracted list of child data
+ */
+export const extractChildData = (data: ChildReport[]) => {
+  const returnRowValue = (value: any) => {
+    let valueOfInterest;
+    if (value === null || value === undefined) {
+      valueOfInterest = NO_DATA;
+    } else if (value === 0) {
+      valueOfInterest = NO;
+    } else {
+      valueOfInterest = YES;
+    }
+    return valueOfInterest;
+  };
+
+  return data.map((sch: ChildReport) => {
+    return [
+      `${sch.client_first_name} ${sch.client_last_name}`,
+      sch.sactanationalid ? sch.sactanationalid : '',
+      returnRowValue(sch.sactacurrenroll),
+      returnRowValue(sch.mmadrugadmin),
+      returnRowValue(sch.mmanodrugadminreason),
+      returnRowValue(sch.mmanodrugadminreason),
+      returnRowValue(sch.mmaadr),
+      sch.mmapzqdosagegiven,
+      sch.mmaalbgiven,
+    ];
+  });
+};
 
 /*
  * Renders a table list of child report
@@ -191,19 +225,7 @@ const mapStateToProps = (
     });
   }
 
-  const data = childData.map(sch => {
-    return [
-      `${sch.client_first_name} ${sch.client_last_name}`,
-      sch.sactanationalid === 0 ? '' : sch.sactanationalid,
-      sch.sactacurrenroll === 0 ? NO : YES,
-      sch.mmadrugadmin === 0 ? NO : YES,
-      sch.mmanodrugadminreason === 0 ? NO : YES,
-      sch.mmanodrugadminreason === 0 ? NO : YES,
-      sch.mmaadr === 0 ? NO : YES,
-      sch.mmapzqdosagegiven,
-      sch.mmaalbgiven,
-    ];
-  });
+  const data = extractChildData(childData);
 
   return {
     data,

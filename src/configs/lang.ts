@@ -153,6 +153,7 @@ export const ASSIGN_TEAMS = translate('ASSIGN_TEAMS', 'Assign Teams');
 export const TEAMS_ASSIGNED = translate('TEAMS_ASSIGNED', 'Teams Assigned');
 export const YES = translate('YES', 'Yes');
 export const NO = translate('NO', 'No');
+export const NO_DATA = translate('NO_DATA', 'No Data');
 export const EDIT = translate('EDIT', 'Edit');
 export const ADD = translate('ADD', 'Add');
 export const REMOVE = translate('REMOVE', 'Remove');
