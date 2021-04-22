@@ -231,6 +231,10 @@
     "message": "No",
     "description": "form label: to select no in a form"
   },
+  "NO_DATA": {
+    "message": "No Data",
+    "description": "column data: to show value in table column"
+  },
   "TEAMS_ASSIGNED": {
     "message": "Teams Assigned",
     "description": "button text: to set team assignment for a plan-jurisdiction"
@@ -442,6 +446,10 @@
   "CASE_CLASSIFICATION_LABEL": {
     "message": "Case Classification",
     "description": "label: for the classification of a plan"
+  },
+  "HISTORICAL_INDEX_CASES": {
+    "message": "historical index cases",
+    "description": "label: for map popup header"
   },
   "CASE_CLASSIFICATION_HEADER": {
     "message": "Case Class.",
@@ -1229,6 +1237,10 @@
   },
   "STRUCTURE_LABEL": {
     "message": "Structures",
+    "description": "Option displayed when selecting jurisdiction metadata type to download"
+  },
+  "OTHER_POPULATION_LABEL": {
+    "message": "Other Population (Unofficial)",
     "description": "Option displayed when selecting jurisdiction metadata type to download"
   },
   "PLANNING_PAGE_TITLE": {

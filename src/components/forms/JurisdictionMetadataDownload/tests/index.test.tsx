@@ -42,6 +42,10 @@ describe('components/forms/JurisdictionMetadata', () => {
         value: 'jurisdiction_metadata-coverage',
       },
       {
+        label: 'Other Population (Unofficial)',
+        value: 'jurisdiction_metadata-other-population',
+      },
+      {
         label: 'Population',
         value: 'jurisdiction_metadata-population',
       },
