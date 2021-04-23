@@ -24,7 +24,6 @@ import {
   MMA_DRUGS_ADMINISTRED,
   NATIONAL_ID,
   NO,
-  NO_DATA,
   PZQ_DISTRIBUTED,
   SACS_REFUSED,
   SACS_SICK,
@@ -78,7 +77,7 @@ export const extractChildData = (data: ChildReport[]) => {
   const returnRowValue = (value: any) => {
     let valueOfInterest;
     if (value === null || value === undefined) {
-      valueOfInterest = NO_DATA;
+      valueOfInterest = '';
     } else if (value === 0) {
       valueOfInterest = NO;
     } else {
