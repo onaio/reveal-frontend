@@ -45,3 +45,7 @@ code {
 .grey-bg {
   background: #f5f6fa;
 }
+
+.break-text {
+  overflow-wrap: break-word;
+}
