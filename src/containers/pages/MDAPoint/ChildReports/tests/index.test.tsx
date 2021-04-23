@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import ConnectedChildReports, { ChildReportList } from '..';
+import ConnectedChildReports, { ChildReportList, extractChildData } from '..';
 import { MDA_POINT_CHILD_REPORT_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
@@ -105,5 +105,29 @@ describe('components/MDA Reports/MDAPlansList', () => {
     store.dispatch(removeMDAPointChildReports());
     wrapper.update();
     expect(wrapper.find('ChildSupersetDataTable div div').text()).toEqual('No rows found');
+  });
+
+  it('should render correct data when child list is passed', () => {
+    const childData = [
+      {
+        client_age_category: '11 - 15',
+        client_first_name: 'test',
+        client_last_name: 'user',
+        jurisdiction_depth: 2,
+        jurisdiction_id: '3951',
+        jurisdiction_id_path: ['2942', '3019', '3951'],
+        jurisdiction_name_path: ['Lusaka', 'Mtendere', 'Akros_1'],
+        mmaadr: 0,
+        mmaalbgiven: 0,
+        mmanodrugadminreason: null,
+        mmapzqdosagegiven: 'test',
+        plan_id: '40357eff-81b6-4e32-bd3d-484019689f7c',
+        sactacurrenroll: 1,
+        sactanationalid: '2345',
+        school_location_id: '154153',
+      },
+    ];
+    const tableData = [['test user', '2345', 'Yes', '', '', '', 'No', 'test', 0]];
+    expect(extractChildData(childData)).toEqual(tableData);
   });
 });

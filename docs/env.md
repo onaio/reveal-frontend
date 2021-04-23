@@ -7,7 +7,7 @@ Below is a list of currently supported environment variables:
 - **REACT_APP_ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS**
 
   - Controls the identifier options displayed when downloading jurisdiction metadata.
-  - Options: POPULATION, RISK, COVERAGE, STRUCTURE and TARGET
+  - Options: POPULATION, RISK, COVERAGE, STRUCTURE, OTHER_POPULATION and TARGET
   - Variable is **not required** and if not provided all the options are loaded.
 
 - **REACT_APP_KEYCLOAK_LOGOUT_URL**

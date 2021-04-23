@@ -1235,6 +1235,10 @@
     "message": "Structures",
     "description": "Option displayed when selecting jurisdiction metadata type to download"
   },
+  "OTHER_POPULATION_LABEL": {
+    "message": "Other Population (Unofficial)",
+    "description": "Option displayed when selecting jurisdiction metadata type to download"
+  },
   "PLANNING_PAGE_TITLE": {
     "message": "Planning tool",
     "description": "Title of page with the feature to help create plans"
