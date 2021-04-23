@@ -127,5 +127,13 @@ describe('components/MDA/Lite/Reports/cddReport/supervisor', () => {
     ).toEqual(
       '/intervention/mda-lite/cdd/report/5e396185-6094-4817-9dd4-24bcbbc698b0/9ec52632-7bfb-40f5-9ef7-8804627a65cb/b26bbce2-75b0-5d5f-8e3d-4eec512f24d3'
     );
+    // check if text breaking class is loaded
+    expect(
+      row1
+        .find('.td')
+        .at(0)
+        .find('a')
+        .hasClass('break-text')
+    ).toBeTruthy();
   });
 });

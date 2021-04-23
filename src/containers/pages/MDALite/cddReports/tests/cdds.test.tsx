@@ -114,5 +114,13 @@ describe('components/MDA/Lite/Reports/cddReport/supervisor', () => {
         .at(0)
         .text()
     ).toEqual('UH4CDD4:UpperHillWard CDD 4');
+    // check if text breaking class is loaded
+    expect(
+      row1
+        .find('.td')
+        .at(0)
+        .find('div div')
+        .hasClass('break-text')
+    ).toBeTruthy();
   });
 });

@@ -23,7 +23,11 @@ export const supervisorColumns = [
     Cell: (cell: Cell) => {
       const original: Dictionary = cell.row.original;
       const url = `${REPORT_MDA_LITE_CDD_REPORT_URL}/${original.plan_id}/${original.base_entity_id}/${original.id}`;
-      return <Link to={url}>{cell.value}</Link>;
+      return (
+        <Link className="break-text" to={url}>
+          {cell.value}
+        </Link>
+      );
     },
     Header: NAME,
     accessor: 'supervisor_name',
@@ -34,6 +38,9 @@ export const supervisorColumns = [
 /** CDD columns */
 export const cddReportColumns = [
   {
+    Cell: (cell: Cell) => {
+      return <div className="break-text">{cell.value}</div>;
+    },
     Header: NAME,
     accessor: 'cdd_name',
   },
