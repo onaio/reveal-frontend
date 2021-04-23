@@ -231,10 +231,6 @@
     "message": "No",
     "description": "form label: to select no in a form"
   },
-  "NO_DATA": {
-    "message": "No Data",
-    "description": "column data: to show value in table column"
-  },
   "TEAMS_ASSIGNED": {
     "message": "Teams Assigned",
     "description": "button text: to set team assignment for a plan-jurisdiction"

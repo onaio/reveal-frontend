@@ -127,9 +127,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
         school_location_id: '154153',
       },
     ];
-    const tableData = [
-      ['test user', '2345', 'Yes', 'No Data', 'No Data', 'No Data', 'No', 'test', 0],
-    ];
+    const tableData = [['test user', '2345', 'Yes', '', '', '', 'No', 'test', 0]];
     expect(extractChildData(childData)).toEqual(tableData);
   });
 });
