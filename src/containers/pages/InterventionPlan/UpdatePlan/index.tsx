@@ -147,7 +147,9 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
 
   const planFormProps: Partial<PlanFormProps> = {
     ...propsForUpdatingPlans(planStatus),
+    actionCreator: fetchPlanRecordsCreator,
     addAndRemoveActivities: isCaseTriggeredAndDraft,
+    addPlan: fetchPlan,
     autoSelectFIStatus: false,
     beforeSubmit,
     hiddenFields,
@@ -178,11 +180,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <Row>
         <Col md={8}>
-          <PlanForm
-            actionCreator={fetchPlanRecordsCreator}
-            {...planFormProps}
-            addPlan={fetchPlan}
-          />
+          <PlanForm {...planFormProps} />
         </Col>
         <Col md={4}>
           {/* Only show case details if plan is reactive */}
