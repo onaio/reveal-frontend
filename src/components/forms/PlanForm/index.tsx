@@ -344,6 +344,7 @@ const PlanForm = (props: PlanFormProps) => {
         .create(payload)
         .then(() => {
           onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
+          // extracted planRecord from the payload which is the object received from the opensrp service
           const record = extractPlanRecordResponseFromPlanPayload(payload);
           if (record) {
             actionCreator([record]);
