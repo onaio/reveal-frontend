@@ -48,24 +48,14 @@ describe('containers/pages/NewPlan', () => {
   });
 
   it('renders without crashing', () => {
-    shallow(
-      <Provider store={store}>
-        <Router history={history}>
-          <Route component={ConnectedBaseNewPlan} />
-        </Router>
-      </Provider>
-    );
+    shallow(<ConnectedBaseNewPlan />);
   });
 
   it('renders correctly', () => {
-    const initialState = existingState;
-    const mockedStore = mockStore(initialState);
-    mockedStore.dispatch = jest.fn();
-
     const wrapper = mount(
-      <Provider store={mockedStore}>
+      <Provider store={store}>
         <Router history={history}>
-          <Route component={ConnectedBaseNewPlan} />
+          <ConnectedBaseNewPlan />
         </Router>
       </Provider>,
       { attachTo: div }
@@ -148,7 +138,7 @@ describe('containers/pages/NewPlan', () => {
     const wrapper = mount(
       <Provider store={mockStore(existingState)}>
         <Router history={history}>
-          <Route component={NewPlanForPlanning} />
+          <NewPlanForPlanning />
         </Router>
       </Provider>
     );
@@ -177,14 +167,14 @@ describe('containers/pages/NewPlan', () => {
   it('New plan is added to store if API status is 200', async () => {
     fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
 
-    const initialState = existingState;
+    const initialState = {};
     const mockedStore = mockStore(initialState);
     mockedStore.dispatch = jest.fn();
 
     const wrapper = mount(
       <Provider store={mockedStore}>
         <Router history={history}>
-          <Route component={ConnectedBaseNewPlan} />
+          <ConnectedBaseNewPlan />
         </Router>
       </Provider>
     );
@@ -238,14 +228,14 @@ describe('containers/pages/NewPlan', () => {
   it('New plan is NOT added to store if API status is NOT 200', async () => {
     fetch.mockReject(() => Promise.reject('API is down'));
 
-    const initialState = existingState;
+    const initialState = {};
     const mockedStore = mockStore(initialState);
     mockedStore.dispatch = jest.fn();
 
     const wrapper = mount(
       <Provider store={mockedStore}>
         <Router history={history}>
-          <Route component={ConnectedBaseNewPlan} />
+          <ConnectedBaseNewPlan />
         </Router>
       </Provider>
     );
@@ -291,14 +281,14 @@ describe('containers/pages/NewPlan', () => {
   it('New plan in planning tool is added to store if API status is 200', async () => {
     fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
 
-    const initialState = existingState;
+    const initialState = {};
     const mockedStore = mockStore(initialState);
     mockedStore.dispatch = jest.fn();
 
     const wrapper = mount(
       <Provider store={mockedStore}>
         <Router history={history}>
-          <Route component={NewPlanForPlanning} />
+          <NewPlanForPlanning />
         </Router>
       </Provider>
     );
@@ -337,21 +327,21 @@ describe('containers/pages/NewPlan', () => {
         .first()
         .props() as any).formik.values
     );
-    const payloadOfInterest = extractPlanRecordResponseFromPlanPayload(payload);
-    expect(mockedStore.dispatch).toHaveBeenLastCalledWith(fetchPlanRecords([payloadOfInterest]));
+
+    expect(mockedStore.dispatch).toHaveBeenCalledWith(addPlanDefinition(payload));
   });
 
   it('New plan in planning tool is NOT added to store if API status is NOT 200', async () => {
     fetch.mockReject(() => Promise.reject('API is down'));
 
-    const initialState = existingState;
+    const initialState = {};
     const mockedStore = mockStore(initialState);
     mockedStore.dispatch = jest.fn();
 
     const wrapper = mount(
       <Provider store={mockedStore}>
         <Router history={history}>
-          <Route component={NewPlanForPlanning} />
+          <NewPlanForPlanning />
         </Router>
       </Provider>
     );
@@ -390,9 +380,9 @@ describe('containers/pages/NewPlan', () => {
     div.setAttribute('id', 'plan-trigger-conditions-0');
     document.body.appendChild(div);
     const wrapper = mount(
-      <Provider store={mockStore(existingState)}>
+      <Provider store={mockStore({})}>
         <Router history={history}>
-          <Route component={NewPlanForPlanning} />
+          <NewPlanForPlanning />
         </Router>
       </Provider>
     );
@@ -458,9 +448,9 @@ describe('containers/pages/NewPlan', () => {
     });
     document.body.appendChild(div);
     const wrapper = mount(
-      <Provider store={mockStore(existingState)}>
+      <Provider store={mockStore({})}>
         <Router history={history}>
-          <Route component={ConnectedBaseNewPlan} />
+          <ConnectedBaseNewPlan />
         </Router>
       </Provider>
     );
@@ -476,5 +466,57 @@ describe('containers/pages/NewPlan', () => {
     expect(wrapper.find('select[name="fiStatus"]').prop('disabled')).toBeTruthy();
     expect(wrapper.find('select[name="fiStatus"]').props().value).toEqual(undefined);
     // can not find a way of programatically selecting async select
+  });
+  it('should add newly created plan to store', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+
+    const initialState = existingState;
+    const mockedStore = mockStore(initialState);
+    mockedStore.dispatch = jest.fn();
+
+    const wrapper = mount(
+      <Provider store={mockedStore}>
+        <Router history={history}>
+          <Route component={NewPlanForPlanning} />
+        </Router>
+      </Provider>
+    );
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'IRS' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    // the expected payload
+    const payload = generatePlanDefinition(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values
+    );
+    const payloadOfInterest = extractPlanRecordResponseFromPlanPayload(payload);
+    expect(mockedStore.dispatch).toHaveBeenLastCalledWith(fetchPlanRecords([payloadOfInterest]));
   });
 });
