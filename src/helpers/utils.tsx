@@ -759,7 +759,7 @@ export const extractPlanPayloadFromPlanRecord = (planRecord: PlanRecord): PlanPa
  * @return {PlanRecordResponse | null} the extracted plan details or null if the plan wasn't valid
  */
 export const extractPlanRecordResponseFromPlanPayload = (
-  planPayload: PlanPayload
+  planPayload: PlanDefinition
 ): PlanRecordResponse | null => {
   const {
     date,

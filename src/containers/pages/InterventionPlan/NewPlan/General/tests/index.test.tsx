@@ -4,7 +4,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
+import { Route, Router } from 'react-router';
 import configureMockStore from 'redux-mock-store';
 import { defaultProps as defaultPlanFormProps } from '../../../../../../components/forms/PlanForm';
 import { generatePlanDefinition } from '../../../../../../components/forms/PlanForm/helpers';
@@ -14,11 +14,14 @@ import {
 } from '../../../../../../components/forms/PlanForm/tests/fixtures';
 import HeaderBreadcrumb from '../../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { FOCUS_AREA_HEADER } from '../../../../../../configs/lang';
+import { extractPlanRecordResponseFromPlanPayload } from '../../../../../../helpers/utils';
 import store from '../../../../../../store';
 import {
   addPlanDefinition,
   removePlanDefinitions,
 } from '../../../../../../store/ducks/opensrp/PlanDefinition';
+import { fetchPlanRecords } from '../../../../../../store/ducks/plans';
+import { existingState } from '../../../../FocusInvestigation/map/active/tests/fixtures';
 import ConnectedBaseNewPlan, { NewPlanForPlanning } from '../index';
 
 /* tslint:disable-next-line no-var-requires */
@@ -63,6 +66,7 @@ describe('containers/pages/NewPlan', () => {
 
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...defaultPlanFormProps,
+      actionCreator: expect.any(Function),
       addPlan: expect.any(Function),
       allowMoreJurisdictions: true,
       cascadingSelect: true,
@@ -132,7 +136,7 @@ describe('containers/pages/NewPlan', () => {
 
   it('renders text correctly for New Plan in planning tool ', () => {
     const wrapper = mount(
-      <Provider store={store}>
+      <Provider store={mockStore(existingState)}>
         <Router history={history}>
           <NewPlanForPlanning />
         </Router>
@@ -141,6 +145,7 @@ describe('containers/pages/NewPlan', () => {
 
     expect(wrapper.find('PlanForm').props()).toEqual({
       ...defaultPlanFormProps,
+      actionCreator: expect.any(Function),
       addPlan: expect.any(Function),
       allowMoreJurisdictions: false,
       cascadingSelect: false,
@@ -217,7 +222,7 @@ describe('containers/pages/NewPlan', () => {
         .props() as any).formik.values
     );
 
-    expect(mockedStore.dispatch).toHaveBeenLastCalledWith(addPlanDefinition(payload));
+    expect(mockedStore.dispatch).toHaveBeenCalledWith(addPlanDefinition(payload));
   });
 
   it('New plan is NOT added to store if API status is NOT 200', async () => {
@@ -323,7 +328,7 @@ describe('containers/pages/NewPlan', () => {
         .props() as any).formik.values
     );
 
-    expect(mockedStore.dispatch).toHaveBeenLastCalledWith(addPlanDefinition(payload));
+    expect(mockedStore.dispatch).toHaveBeenCalledWith(addPlanDefinition(payload));
   });
 
   it('New plan in planning tool is NOT added to store if API status is NOT 200', async () => {
@@ -461,5 +466,57 @@ describe('containers/pages/NewPlan', () => {
     expect(wrapper.find('select[name="fiStatus"]').prop('disabled')).toBeTruthy();
     expect(wrapper.find('select[name="fiStatus"]').props().value).toEqual(undefined);
     // can not find a way of programatically selecting async select
+  });
+  it('should add newly created plan to store', async () => {
+    fetch.mockResponseOnce(JSON.stringify({}), { status: 201 });
+
+    const initialState = existingState;
+    const mockedStore = mockStore(initialState);
+    mockedStore.dispatch = jest.fn();
+
+    const wrapper = mount(
+      <Provider store={mockedStore}>
+        <Router history={history}>
+          <Route component={NewPlanForPlanning} />
+        </Router>
+      </Provider>
+    );
+    // Set FI for interventionType
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'IRS' } });
+    // set jurisdiction id ==> we use Formik coz React-Select is acting weird
+    (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik.setFieldValue('jurisdictions[0].id', '1337');
+    // set jurisdiction name
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'Onyx' } });
+
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+
+    await new Promise<any>(resolve => setImmediate(resolve));
+
+    // no errors are initially shown
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.errors
+    ).toEqual({});
+
+    // the expected payload
+    const payload = generatePlanDefinition(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values
+    );
+    const payloadOfInterest = extractPlanRecordResponseFromPlanPayload(payload);
+    expect(mockedStore.dispatch).toHaveBeenLastCalledWith(fetchPlanRecords([payloadOfInterest]));
   });
 });

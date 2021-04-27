@@ -181,7 +181,7 @@ interface UserName {
 }
 
 /** data selector interface */
-interface DataSelectors {
+export interface DataSelectors {
   interventionType: InterventionType[];
   planIds?: string[] | null;
   statusList: string[];
@@ -218,7 +218,7 @@ const mapStateToProps = (
     }
   }
 
-  const plansRecordsArray = plansArraySelector(state as Registry, dataSelectors);
+  const plansRecordsArray = plansArraySelector(state as Registry, dataSelectors) as PlanRecord[];
   // sort by date
   if (ownProps.sortByDate) {
     plansRecordsArray.sort(

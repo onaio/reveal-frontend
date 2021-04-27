@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Col, Row } from 'reactstrap';
+import { ActionCreator } from 'redux';
 import PlanForm, {
   defaultInitialValues,
   PlanFormProps,
@@ -24,11 +25,16 @@ import {
 } from '../../../../../configs/lang';
 import { HOME_URL, NEW_PLAN_URL, PLAN_LIST_URL, PLANNING_VIEW_URL } from '../../../../../constants';
 import { addPlanDefinition } from '../../../../../store/ducks/opensrp/PlanDefinition';
-import { InterventionType } from '../../../../../store/ducks/plans';
+import {
+  fetchPlanRecords,
+  FetchPlanRecordsAction,
+  InterventionType,
+} from '../../../../../store/ducks/plans';
 import { JurisdictionDetails } from './JurisdictionDetails';
 
 /** expose props that would enable one to customize the underlying planForm props */
 interface BaseNewPlanProps {
+  fetchPlanRecordsCreator: ActionCreator<FetchPlanRecordsAction>;
   addPlan: typeof addPlanDefinition;
   extraPlanFormProps: Partial<PlanFormProps>;
   breadCrumbParentPage: Page;
@@ -90,6 +96,7 @@ const planFormPropsLookUp = {
 
 /** Simple component that loads the new plan form and allows you to create a new plan */
 const BaseNewPlan = (props: BaseNewPlanProps) => {
+  const { addPlan, fetchPlanRecordsCreator } = props;
   const [formValues, setFormValues] = useState(defaultInitialValues);
   const formValuesHandler = (_: any, next: any) => {
     setFormValues(next.values);
@@ -115,10 +122,10 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
 
   const planFormProps = {
     ...{ ...lookedUpPlanFormProps, initialValues: formValues, ...props.extraPlanFormProps },
+    actionCreator: fetchPlanRecordsCreator,
     autoSelectFIStatus: AUTO_SELECT_FI_CLASSIFICATION,
     formHandler: formValuesHandler,
   };
-  const { addPlan } = props;
 
   return (
     <div>
@@ -147,7 +154,10 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
 BaseNewPlan.defaultProps = defaultBasePlanProps;
 
 /** map dispatch to props */
-const mapDispatchToProps = { addPlan: addPlanDefinition };
+const mapDispatchToProps = {
+  addPlan: addPlanDefinition,
+  fetchPlanRecordsCreator: fetchPlanRecords,
+};
 
 /** Connected component */
 const ConnectedBaseNewPlan = connect(null, mapDispatchToProps)(BaseNewPlan);
@@ -155,6 +165,7 @@ const ConnectedBaseNewPlan = connect(null, mapDispatchToProps)(BaseNewPlan);
 /** form used in the planning tool */
 export const NewPlanForPlanning = () => {
   const baseNewPlanProps = {
+    addPlan: addPlanDefinition,
     breadCrumbParentPage: {
       label: DRAFT_PLANS,
       url: PLANNING_VIEW_URL,

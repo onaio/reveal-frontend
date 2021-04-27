@@ -2,6 +2,7 @@ import { SupersetAdhocFilterOption } from '@onaio/superset-connector';
 import { ActionCreator, AnyAction } from 'redux';
 import { isPlanTypeEnabled } from '../../components/forms/PlanForm/helpers';
 import { USER_HAS_NO_PLAN_ASSIGNMENTS } from '../../configs/lang';
+import { PlanDefinition } from '../../configs/settings';
 import {
   OPENSRP_GET_ALL_PLANS,
   OPENSRP_PLANS,
@@ -70,7 +71,7 @@ export const loadOpenSRPPlans = (
 ) => {
   const OpenSrpPlanService = new service(OPENSRP_GET_ALL_PLANS);
   OpenSrpPlanService.list(PLANS_SERVICE_FILTER_PARAM)
-    .then((plans: PlanPayload[]) => {
+    .then((plans: PlanDefinition[]) => {
       const extractedPlanRecords = plans
         .map(plan => extractPlanRecordResponseFromPlanPayload(plan))
         .filter(plan => !!plan);

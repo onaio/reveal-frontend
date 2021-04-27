@@ -19,6 +19,7 @@ import {
   ModalHeader,
   UncontrolledCollapse,
 } from 'reactstrap';
+import { ActionCreator } from 'redux';
 import { format } from 'util';
 import {
   DATE_FORMAT,
@@ -88,9 +89,15 @@ import {
 } from '../../../configs/settings';
 import { MDA_POINT_ADVERSE_EFFECTS_CODE, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
+import { extractPlanRecordResponseFromPlanPayload } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import { addPlanDefinition } from '../../../store/ducks/opensrp/PlanDefinition';
-import { InterventionType, PlanStatus } from '../../../store/ducks/plans';
+import {
+  fetchPlanRecords,
+  FetchPlanRecordsAction,
+  InterventionType,
+  PlanStatus,
+} from '../../../store/ducks/plans';
 import DatePickerWrapper from '../../DatePickerWrapper';
 import JurisdictionSelect from '../JurisdictionSelect';
 import { getConditionAndTriggers } from './components/actions';
@@ -173,6 +180,7 @@ export type LocationChildRenderProp = (
 
 /** interface for plan form props */
 export interface PlanFormProps {
+  actionCreator: ActionCreator<FetchPlanRecordsAction>;
   addAndRemoveActivities: boolean /** activate adding and removing activities buttons */;
   allFormActivities: PlanActivityFormFields[] /** the list of all allowed activities */;
   allowMoreJurisdictions: boolean /** should we allow one to add more jurisdictions */;
@@ -217,6 +225,7 @@ const PlanForm = (props: PlanFormProps) => {
     redirectAfterAction,
     addPlan,
     hiddenFields,
+    actionCreator,
     addAndRemoveActivities,
     autoSelectFIStatus,
   } = props;
@@ -335,6 +344,11 @@ const PlanForm = (props: PlanFormProps) => {
         .create(payload)
         .then(() => {
           onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
+          // extracted planRecord from the payload which is the object received from the opensrp service
+          const record = extractPlanRecordResponseFromPlanPayload(payload);
+          if (record) {
+            actionCreator([record]);
+          }
         })
         .catch((e: Error) => {
           setSubmitting(false);
@@ -1262,6 +1276,7 @@ const PlanForm = (props: PlanFormProps) => {
 };
 
 export const defaultProps: PlanFormProps = {
+  actionCreator: fetchPlanRecords,
   addAndRemoveActivities: false,
   allFormActivities: getFormActivities(planActivities),
   allowMoreJurisdictions: true,

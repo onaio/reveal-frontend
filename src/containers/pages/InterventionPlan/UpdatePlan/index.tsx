@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
-import { Store } from 'redux';
+import { ActionCreator, Store } from 'redux';
 import PlanForm, {
   LocationChildRenderProp,
   PlanFormProps,
@@ -36,7 +36,11 @@ import planDefinitionReducer, {
   getPlanDefinitionById,
   reducerName as planDefinitionReducerName,
 } from '../../../../store/ducks/opensrp/PlanDefinition';
-import { PlanStatus } from '../../../../store/ducks/plans';
+import {
+  fetchPlanRecords,
+  FetchPlanRecordsAction,
+  PlanStatus,
+} from '../../../../store/ducks/plans';
 import ConnectedCaseDetails, { CaseDetailsProps } from './CaseDetails';
 import ConnectedPlanLocationNames from './PlanLocationNames';
 import { beforeSubmitFactory, getEventId, planIsReactive } from './utils';
@@ -46,6 +50,7 @@ reducerRegistry.register(planDefinitionReducerName, planDefinitionReducer);
 
 /** UpdatePlanProps interface */
 export interface UpdatePlanProps {
+  fetchPlanRecordsCreator: ActionCreator<FetchPlanRecordsAction>;
   fetchPlan: typeof addPlanDefinition;
   plan: PlanDefinition | null;
   service: typeof OpenSRPService;
@@ -61,7 +66,7 @@ const hideFieldsOnPlanStatuses = [PlanStatus.ACTIVE, PlanStatus.COMPLETE, PlanSt
 
 /** Component used to update Plan Definition objects */
 const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) => {
-  const { fetchPlan, plan, service } = props;
+  const { fetchPlan, plan, service, fetchPlanRecordsCreator } = props;
   const planIdentifier = props.match.params.id;
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -142,7 +147,9 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
 
   const planFormProps: Partial<PlanFormProps> = {
     ...propsForUpdatingPlans(planStatus),
+    actionCreator: fetchPlanRecordsCreator,
     addAndRemoveActivities: isCaseTriggeredAndDraft,
+    addPlan: fetchPlan,
     autoSelectFIStatus: false,
     beforeSubmit,
     hiddenFields,
@@ -173,7 +180,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
       <h3 className="mb-3 page-title">{pageTitle}</h3>
       <Row>
         <Col md={8}>
-          <PlanForm {...planFormProps} addPlan={fetchPlan} />
+          <PlanForm {...planFormProps} />
         </Col>
         <Col md={4}>
           {/* Only show case details if plan is reactive */}
@@ -188,6 +195,7 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
 
 const defaultProps: UpdatePlanProps = {
   fetchPlan: addPlanDefinition,
+  fetchPlanRecordsCreator: fetchPlanRecords,
   plan: null,
   service: OpenSRPService,
 };
@@ -206,14 +214,16 @@ interface DispatchedStateProps {
 // /** map state to props */
 const mapStateToProps = (state: Partial<Store>, ownProps: any): DispatchedStateProps => {
   const planObj = getPlanDefinitionById(state, ownProps.match.params.id);
-
   return {
     plan: planObj,
   };
 };
 
 /** map dispatch to props */
-const mapDispatchToProps = { fetchPlan: addPlanDefinition };
+const mapDispatchToProps = {
+  fetchPlan: addPlanDefinition,
+  fetchPlanRecordsCreator: fetchPlanRecords,
+};
 
 /** Connected ActiveFI component */
 const ConnectedUpdatePlan = connect(mapStateToProps, mapDispatchToProps)(UpdatePlan);
