@@ -1,8 +1,10 @@
+import { ProgressBar } from '@onaio/progress-indicators';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetAdhocFilterOption } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
 import { centroid, featureCollection, polygon as turfPolygon } from '@turf/turf';
 import geojson from 'geojson';
+import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { GeoJSONLayer } from 'react-mapbox-gl';
@@ -16,17 +18,24 @@ import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  HIDDEN_MAP_LEGEND_ITEMS,
   SUPERSET_MAX_RECORDS,
+  SUPERSET_MDA_LITE_REPORTING_INDICATOR_ROWS,
+  SUPERSET_MDA_LITE_REPORTING_INDICATOR_STOPS,
   SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_MDA_LITE_REPORTING_PLANS_SLICE,
   SUPERSET_MDA_LITE_REPORTING_WARD_GEOJSON_SLICE,
 } from '../../../../configs/env';
 import {
   HOME,
+  LEGEND_LABEL,
   MAP_LOAD_ERROR,
   MDA_LITE_REPORTING_TITLE,
+  PROGRESS,
+  STRUCTURES,
   SUBCOUNTY_LABEL,
 } from '../../../../configs/lang';
+import { indicatorThresholdsMDALite } from '../../../../configs/settings';
 import {
   DefaultMapDimensions,
   HOME_URL,
@@ -56,6 +65,12 @@ import genericStructuresReducer, {
   StructureFeatureCollection,
 } from '../../../../store/ducks/generic/structures';
 import { buildGsLiteLayers } from '../../FocusInvestigation/map/active/helpers/utils';
+import {
+  defaultIndicatorStop,
+  getMDAIndicatorRows,
+  MDAIndicatorRows,
+  MDALiteIndicatorStops,
+} from './helpers';
 
 /** register the reducers */
 reducerRegistry.register(genericJurisdictionsReducerName, GenericJurisdictionsReducer);
@@ -170,6 +185,18 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
     url: '',
   };
 
+  const indicatorRows = get(MDAIndicatorRows, SUPERSET_MDA_LITE_REPORTING_INDICATOR_ROWS, null);
+  let sidebarIndicatorRows = null;
+  if (indicatorRows !== null) {
+    sidebarIndicatorRows = getMDAIndicatorRows(indicatorRows, subcountyData);
+  }
+
+  const indicatorStops = get(
+    MDALiteIndicatorStops,
+    SUPERSET_MDA_LITE_REPORTING_INDICATOR_STOPS,
+    defaultIndicatorStop
+  );
+
   const pageTitle = `${MDA_LITE_REPORTING_TITLE}: ${currentPage.label}`;
   const breadcrumbProps = {
     currentPage,
@@ -192,6 +219,20 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
     null,
     DefaultMapDimensions
   );
+
+  /**
+   * Create list elements from dictionary
+   * @param {Dictionary} dict
+   */
+  const processListDisplay = (dict: Dictionary | string) => {
+    const createList = (obj: Dictionary) =>
+      Object.entries(obj).map(([key, val]) => (
+        <li key={key} className="indicator-breakdown">
+          {key} - {val} {STRUCTURES}
+        </li>
+      ));
+    return typeof dict === 'string' ? createList(JSON.parse(dict)) : createList(dict);
+  };
 
   const polygons = wardData?.features.filter(feature => [POLYGON].includes(feature.geometry.type));
 
@@ -247,6 +288,10 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
       <Row>
         <Col>
           <h3 className="mb-3 page-title">{pageTitle}</h3>
+        </Col>
+      </Row>
+      <Row noGutters={true}>
+        <Col xs={9}>
           <div className="generic-report-table">
             {wardLayers.length ? (
               <MemoizedGisidaLite
@@ -258,6 +303,59 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
             ) : (
               <div>{MAP_LOAD_ERROR}</div>
             )}
+          </div>
+        </Col>
+        <Col xs={3}>
+          <div className="mapSidebar">
+            <h5>{currentPage && currentPage.label}</h5>
+            <hr />
+            {indicatorStops && (
+              <div className="mapLegend">
+                <h6>{LEGEND_LABEL}</h6>
+                {indicatorStops.map(
+                  (stop, i) =>
+                    !HIDDEN_MAP_LEGEND_ITEMS.includes(stop[0]) && (
+                      <div className="sidebar-legend-item" key={i}>
+                        <span
+                          className="sidebar-legend-color"
+                          style={{ backgroundColor: stop[1] }}
+                        />
+                        <span className="sidebar-legend-label">{stop[0]}</span>
+                      </div>
+                    )
+                )}
+                <hr />
+              </div>
+            )}
+            {sidebarIndicatorRows &&
+              sidebarIndicatorRows.map((row, i) => (
+                <div className="responseItem" key={i}>
+                  <h6>{row.title}</h6>
+                  {!row.listDisplay && <p className="indicator-description">{row.description}</p>}
+                  {!row.listDisplay && !row.hideBar && (
+                    <ProgressBar
+                      lineColor={indicatorThresholdsMDALite.GREEN_THRESHOLD.color}
+                      lineColorThresholds={indicatorThresholdsMDALite || null}
+                      value={row.percentage}
+                    />
+                  )}
+                  <p className="indicator-breakdown">
+                    {!row.listDisplay && `${PROGRESS}: `}
+                    {/* {format(
+                      NUMERATOR_OF_DENOMINATOR_UNITS,
+                      row.listDisplay
+                        ? Number(row.denominator) - Number(row.numerator)
+                        : row.numerator,
+                      row.denominator,
+                      row.unit || STRUCTURES
+                    )}{' '} */}
+                    {!row.hideBar ? !row.listDisplay && `(${row.percentage}%)` : row.value}
+                  </p>
+                  {row.listDisplay && (
+                    <ul className="list-unstyled">{processListDisplay(row.listDisplay)}</ul>
+                  )}
+                </div>
+              ))}
           </div>
         </Col>
       </Row>
