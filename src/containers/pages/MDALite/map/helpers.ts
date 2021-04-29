@@ -37,14 +37,14 @@ export const MDAIndicatorRows: { [key: string]: IndicatorRows } = {
   zambia2020: [
     {
       accessor: 'treatment_coverage',
-      denominator: 'totstruct',
+      denominator: 'official_population',
       description: '',
       numerator: 'total_all_genders',
       title: 'Treatment Coverage (Census)',
     },
     {
       accessor: 'other_pop_coverage',
-      denominator: 'targstruct',
+      denominator: 'other_pop_target',
       description: '',
       numerator: 'total_all_genders',
       title: 'Other Pop Coverage (Unofficial)',
@@ -52,19 +52,16 @@ export const MDAIndicatorRows: { [key: string]: IndicatorRows } = {
     {
       accessor: 'total_all_genders',
       listDisplay: true,
-      numerator: 'total_all_genders',
       title: 'Total Treated',
     },
     {
       accessor: 'adminstered',
       listDisplay: true,
-      numerator: 'total_all_genders',
       title: 'Drugs Administered',
     },
     {
       accessor: 'damaged',
       listDisplay: true,
-      numerator: 'total_all_genders',
       title: 'Drugs Damaged',
     },
   ],
