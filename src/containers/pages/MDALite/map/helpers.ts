@@ -20,7 +20,7 @@ export interface MDAIndicatorRowItem {
   accessor: string;
   denominator?: string | number;
   description?: string;
-  hideBar?: boolean;
+  listDisplay?: boolean;
   numerator?: string | number;
   percentage?: string;
   title: string;
@@ -39,29 +39,32 @@ export const MDAIndicatorRows: { [key: string]: IndicatorRows } = {
       accessor: 'treatment_coverage',
       denominator: 'totstruct',
       description: '',
-      numerator: 'sprayed',
+      numerator: 'total_all_genders',
       title: 'Treatment Coverage (Census)',
     },
     {
       accessor: 'other_pop_coverage',
       denominator: 'targstruct',
       description: '',
-      numerator: 'sprayed',
+      numerator: 'total_all_genders',
       title: 'Other Pop Coverage (Unofficial)',
     },
     {
       accessor: 'total_all_genders',
-      hideBar: true,
+      listDisplay: true,
+      numerator: 'total_all_genders',
       title: 'Total Treated',
     },
     {
       accessor: 'adminstered',
-      hideBar: true,
+      listDisplay: true,
+      numerator: 'total_all_genders',
       title: 'Drugs Administered',
     },
     {
       accessor: 'damaged',
-      hideBar: true,
+      listDisplay: true,
+      numerator: 'total_all_genders',
       title: 'Drugs Damaged',
     },
   ],
@@ -69,17 +72,17 @@ export const MDAIndicatorRows: { [key: string]: IndicatorRows } = {
 
 export const getMDAIndicatorRows = (indicatorRows: any, subcountyData: any) => {
   const rowOfInterest = [...indicatorRows];
+  const data = subcountyData[0] || {};
   indicatorRows.forEach((item: any, idx: number) => {
-    const rowValue = subcountyData.length ? subcountyData[0][item.accessor] : 0;
+    const rowValue = data[item.accessor] || 0;
     let percentage = '0%';
-    if (!indicatorRows.hideBar) {
-      percentage =
-        IndicatorThresholdItemPercentage(
-          subcountyData.length ? subcountyData[0][item.accessor] : 0
-        ) || '0%';
+    if (!indicatorRows.listDisplay) {
+      percentage = IndicatorThresholdItemPercentage(data[item.accessor] || 0) || '0%';
     }
     rowOfInterest[idx] = {
       ...item,
+      denominator: data[item.denominator] || '0',
+      numerator: data[item.numerator] || '0',
       percentage: percentage.replace('%', ''),
       value: rowValue,
     };

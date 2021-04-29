@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import { MemoizedGisidaLite } from '../../../../components/GisidaLite';
 import { getZoomCenterAndBounds } from '../../../../components/GisidaLite/helpers';
 import NotFound from '../../../../components/NotFound';
@@ -31,6 +32,7 @@ import {
   LEGEND_LABEL,
   MAP_LOAD_ERROR,
   MDA_LITE_REPORTING_TITLE,
+  NUMERATOR_OF_DENOMINATOR_UNITS,
   PROGRESS,
   STRUCTURES,
   SUBCOUNTY_LABEL,
@@ -328,11 +330,11 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
               </div>
             )}
             {sidebarIndicatorRows &&
-              sidebarIndicatorRows.map((row, i) => (
+              sidebarIndicatorRows.map((row: any, i: number) => (
                 <div className="responseItem" key={i}>
                   <h6>{row.title}</h6>
                   {!row.listDisplay && <p className="indicator-description">{row.description}</p>}
-                  {!row.listDisplay && !row.hideBar && (
+                  {!row.listDisplay && (
                     <ProgressBar
                       lineColor={indicatorThresholdsMDALite.GREEN_THRESHOLD.color}
                       lineColorThresholds={indicatorThresholdsMDALite || null}
@@ -340,16 +342,17 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
                     />
                   )}
                   <p className="indicator-breakdown">
-                    {!row.listDisplay && `${PROGRESS}: `}
-                    {/* {format(
-                      NUMERATOR_OF_DENOMINATOR_UNITS,
-                      row.listDisplay
-                        ? Number(row.denominator) - Number(row.numerator)
-                        : row.numerator,
-                      row.denominator,
-                      row.unit || STRUCTURES
-                    )}{' '} */}
-                    {!row.hideBar ? !row.listDisplay && `(${row.percentage}%)` : row.value}
+                    {`${PROGRESS}: `}
+                    {!row.listDisplay &&
+                      format(
+                        NUMERATOR_OF_DENOMINATOR_UNITS,
+                        row.listDisplay
+                          ? Number(row.denominator) - Number(row.numerator)
+                          : row.numerator,
+                        row.denominator,
+                        row.unit || STRUCTURES
+                      )}{' '}
+                    {!row.listDisplay ? `(${row.percentage}%)` : row.value}
                   </p>
                   {row.listDisplay && (
                     <ul className="list-unstyled">{processListDisplay(row.listDisplay)}</ul>
