@@ -26,6 +26,8 @@ import {
   MDALiteWardGeojsonData,
   MDALteJurisidtionsData,
 } from '../../../../../store/ducks/superset/MDALite/tests/fixtures';
+import { getMDAIndicatorRows } from '../helpers';
+import { indicatorRows, subcountyData } from './fixtures';
 
 /** register the reducers */
 reducerRegistry.register(genericJurisdictionsReducerName, GenericJurisdictionsReducer);
@@ -117,5 +119,56 @@ describe('components/MDA/Lite/Reports/wards', () => {
       0.052412222000044,
     ]);
     wrapper.unmount();
+  });
+
+  it('should return correct row indicator data', async () => {
+    const rowOfInterest = [
+      {
+        accessor: 'treatment_coverage',
+        denominator: 8000,
+        description: '',
+        numerator: 6989,
+        percentage: '87',
+        title: 'Treatment Coverage (Census)',
+        value: 0.873625,
+      },
+      {
+        accessor: 'other_pop_coverage',
+        denominator: 11000,
+        description: '',
+        numerator: 6989,
+        percentage: '64',
+        title: 'Other Pop Coverage (Unofficial)',
+        value: 0.6353636363636364,
+      },
+      {
+        accessor: 'total_all_genders',
+        denominator: '0',
+        listDisplay: true,
+        numerator: '0',
+        percentage: '698900',
+        title: 'Total Treated',
+        value: 6989,
+      },
+      {
+        accessor: 'adminstered',
+        denominator: '0',
+        listDisplay: true,
+        numerator: '0',
+        percentage: '1244100',
+        title: 'Drugs Administered',
+        value: 12441,
+      },
+      {
+        accessor: 'damaged',
+        denominator: '0',
+        listDisplay: true,
+        numerator: '0',
+        percentage: '31400',
+        title: 'Drugs Damaged',
+        value: 314,
+      },
+    ];
+    expect(getMDAIndicatorRows(indicatorRows, subcountyData)).toEqual(rowOfInterest);
   });
 });
