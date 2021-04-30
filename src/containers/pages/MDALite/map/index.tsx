@@ -222,20 +222,6 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
     DefaultMapDimensions
   );
 
-  /**
-   * Create list elements from dictionary
-   * @param {Dictionary} dict
-   */
-  const processListDisplay = (dict: Dictionary | string) => {
-    const createList = (obj: Dictionary) =>
-      Object.entries(obj).map(([key, val]) => (
-        <li key={key} className="indicator-breakdown">
-          {key} - {val} {STRUCTURES}
-        </li>
-      ));
-    return typeof dict === 'string' ? createList(JSON.parse(dict)) : createList(dict);
-  };
-
   const polygons = wardData?.features.filter(feature => [POLYGON].includes(feature.geometry.type));
 
   // get each polygon centroid
@@ -354,9 +340,6 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
                       )}{' '}
                     {!row.listDisplay ? `(${row.percentage}%)` : row.value}
                   </p>
-                  {row.listDisplay && (
-                    <ul className="list-unstyled">{processListDisplay(row.listDisplay)}</ul>
-                  )}
                 </div>
               ))}
           </div>
