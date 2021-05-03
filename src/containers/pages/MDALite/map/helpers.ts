@@ -25,6 +25,7 @@ export interface MDAIndicatorRowItem {
   percentage?: string;
   title: string;
   value?: any;
+  unit?: string;
 }
 
 /** the indicator row type */
@@ -41,6 +42,7 @@ export const MDAIndicatorRows: { [key: string]: IndicatorRows } = {
       description: '',
       numerator: 'total_all_genders',
       title: 'Treatment Coverage (Census)',
+      unit: 'People',
     },
     {
       accessor: 'other_pop_coverage',
@@ -48,21 +50,25 @@ export const MDAIndicatorRows: { [key: string]: IndicatorRows } = {
       description: '',
       numerator: 'total_all_genders',
       title: 'Other Pop Coverage (Unofficial)',
+      unit: 'People',
     },
     {
       accessor: 'total_all_genders',
       listDisplay: true,
       title: 'Total Treated',
+      unit: 'People',
     },
     {
       accessor: 'adminstered',
       listDisplay: true,
       title: 'Drugs Administered',
+      unit: 'Tablets',
     },
     {
       accessor: 'damaged',
       listDisplay: true,
       title: 'Drugs Damaged',
+      unit: 'Tablets',
     },
   ],
 };

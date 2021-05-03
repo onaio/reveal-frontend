@@ -27,7 +27,7 @@ import {
   MDALteJurisidtionsData,
 } from '../../../../../store/ducks/superset/MDALite/tests/fixtures';
 import { getMDAIndicatorRows } from '../helpers';
-import { indicatorRows, subcountyData } from './fixtures';
+import { indicatorRows } from './fixtures';
 
 /** register the reducers */
 reducerRegistry.register(genericJurisdictionsReducerName, GenericJurisdictionsReducer);
@@ -125,50 +125,55 @@ describe('components/MDA/Lite/Reports/wards', () => {
     const rowOfInterest = [
       {
         accessor: 'treatment_coverage',
-        denominator: 8000,
+        denominator: '0',
         description: '',
-        numerator: 6989,
-        percentage: '87',
+        numerator: 222,
+        percentage: '0',
         title: 'Treatment Coverage (Census)',
-        value: 0.873625,
+        unit: 'People',
+        value: 0,
       },
       {
         accessor: 'other_pop_coverage',
-        denominator: 11000,
+        denominator: '0',
         description: '',
-        numerator: 6989,
-        percentage: '64',
+        numerator: 222,
+        percentage: '0',
         title: 'Other Pop Coverage (Unofficial)',
-        value: 0.6353636363636364,
+        unit: 'People',
+        value: 0,
       },
       {
         accessor: 'total_all_genders',
         denominator: '0',
         listDisplay: true,
         numerator: '0',
-        percentage: '698900',
+        percentage: '22200',
         title: 'Total Treated',
-        value: 6989,
+        unit: 'People',
+        value: 222,
       },
       {
         accessor: 'adminstered',
         denominator: '0',
         listDisplay: true,
         numerator: '0',
-        percentage: '1244100',
+        percentage: '120000',
         title: 'Drugs Administered',
-        value: 12441,
+        unit: 'Tablets',
+        value: 1200,
       },
       {
         accessor: 'damaged',
         denominator: '0',
         listDisplay: true,
         numerator: '0',
-        percentage: '31400',
+        percentage: '300',
         title: 'Drugs Damaged',
-        value: 314,
+        unit: 'Tablets',
+        value: 3,
       },
     ];
-    expect(getMDAIndicatorRows(indicatorRows, subcountyData)).toEqual(rowOfInterest);
+    expect(getMDAIndicatorRows(indicatorRows, [MDALteJurisidtionsData[1]])).toEqual(rowOfInterest);
   });
 });

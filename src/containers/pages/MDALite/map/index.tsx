@@ -338,7 +338,7 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
                         row.denominator,
                         row.unit || STRUCTURES
                       )}{' '}
-                    {!row.listDisplay ? `(${row.percentage}%)` : row.value}
+                    {!row.listDisplay ? `(${row.percentage}%)` : `${row.value} ${row.unit}`}
                   </p>
                 </div>
               ))}
