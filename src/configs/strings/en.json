@@ -519,6 +519,14 @@
     "message": "Intervention Type",
     "description": "form label: for the type of intervention plan"
   },
+  "PEOPLE": {
+    "message": "people",
+    "description": "lable: mda lite indicator unit"
+  },
+  "TABLET": {
+    "message": "tablet(s)",
+    "description": "lable: mda lite indicator unit"
+  },
   "SPRAY_AREA_HEADER": {
     "message": "Spray Area",
     "description": "table lable: inidcating a jurisdiction is a Spray Area"

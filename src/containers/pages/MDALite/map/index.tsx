@@ -33,8 +33,8 @@ import {
   MAP_LOAD_ERROR,
   MDA_LITE_REPORTING_TITLE,
   NUMERATOR_OF_DENOMINATOR_UNITS,
+  PEOPLE,
   PROGRESS,
-  STRUCTURES,
   SUBCOUNTY_LABEL,
 } from '../../../../configs/lang';
 import { indicatorThresholdsMDALite } from '../../../../configs/settings';
@@ -336,7 +336,7 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
                           ? Number(row.denominator) - Number(row.numerator)
                           : row.numerator,
                         row.denominator,
-                        row.unit || STRUCTURES
+                        row.unit || PEOPLE
                       )}{' '}
                     {!row.listDisplay ? `(${row.percentage}%)` : `${row.value} ${row.unit}`}
                   </p>

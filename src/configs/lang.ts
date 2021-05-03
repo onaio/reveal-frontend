@@ -224,6 +224,8 @@ export const MEASURE = translate('MEASURE', 'Measure');
 export const MARK_AS_COMPLETE = translate('MARK_AS_COMPLETE', 'Mark as complete');
 export const STRUCTURES = translate('STRUCTURES', 'structure(s)');
 export const PERSONS = translate('PERSONS', 'person(s)');
+export const PEOPLE = translate('PEOPLE', 'people');
+export const TABLET = translate('TABLET', 'tablet(s)');
 
 export const FOCUS_AREA_HEADER = translate('FOCUS_AREA_HEADER', 'Focus Area');
 export const SPRAY_AREA_HEADER = translate('SPRAY_AREA_HEADER', 'Spray Area');

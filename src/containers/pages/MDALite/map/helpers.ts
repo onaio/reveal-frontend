@@ -1,4 +1,5 @@
 import { TASK_GREEN, TASK_ORANGE, TASK_YELLOW } from '../../../../colors';
+import { PEOPLE, TABLET } from '../../../../configs/lang';
 import { IndicatorThresholdItemPercentage } from '../../../../helpers/utils';
 
 /** The default indicator stop */
@@ -42,7 +43,7 @@ export const MDAIndicatorRows: { [key: string]: IndicatorRows } = {
       description: '',
       numerator: 'total_all_genders',
       title: 'Treatment Coverage (Census)',
-      unit: 'People',
+      unit: PEOPLE,
     },
     {
       accessor: 'other_pop_coverage',
@@ -50,25 +51,25 @@ export const MDAIndicatorRows: { [key: string]: IndicatorRows } = {
       description: '',
       numerator: 'total_all_genders',
       title: 'Other Pop Coverage (Unofficial)',
-      unit: 'People',
+      unit: PEOPLE,
     },
     {
       accessor: 'total_all_genders',
       listDisplay: true,
       title: 'Total Treated',
-      unit: 'People',
+      unit: PEOPLE,
     },
     {
       accessor: 'adminstered',
       listDisplay: true,
       title: 'Drugs Administered',
-      unit: 'Tablets',
+      unit: TABLET,
     },
     {
       accessor: 'damaged',
       listDisplay: true,
       title: 'Drugs Damaged',
-      unit: 'Tablets',
+      unit: TABLET,
     },
   ],
 };
