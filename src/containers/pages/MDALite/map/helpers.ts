@@ -12,7 +12,7 @@ export const defaultIndicatorStop = [
  * These are all the indicator stops for IRS Lite that we know about.
  */
 export const MDALiteIndicatorStops: { [key: string]: string[][] } = {
-  zambia2020: defaultIndicatorStop,
+  kenya2021: defaultIndicatorStop,
 };
 
 /** interface to describe and indicator row item */
@@ -34,7 +34,7 @@ export type IndicatorRows = MDAIndicatorRowItem[];
  * These are all the indicator rows for IRS that we know about.
  */
 export const MDAIndicatorRows: { [key: string]: IndicatorRows } = {
-  zambia2020: [
+  kenya2021: [
     {
       accessor: 'treatment_coverage',
       denominator: 'official_population',
