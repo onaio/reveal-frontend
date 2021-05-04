@@ -197,6 +197,19 @@ export const HOW_TO_UPDATE_JURISDICTION_METADATA = translate(
   'HOW_TO_UPDATE_JURISDICTION_METADATA',
   'How To Update The Jurisdiction Metadata'
 );
+export const STRUCTURE_METADATA = translate('STRUCTURE_METADATA', 'Structure Metadata');
+export const DOWNLOAD_STRUCTURE_METADATA = translate(
+  'DOWNLOAD_STRUCTURE_METADATA',
+  'Download Structure Metadata'
+);
+export const UPLOAD_STRUCTURE_METADATA = translate(
+  'UPLOAD_STRUCTURE_METADATA',
+  'Upload Structure Metadata'
+);
+export const HOW_TO_UPDATE_STRUCTURE_METADATA = translate(
+  'HOW_TO_UPDATE_STRUCTURE_METADATA',
+  'How To Update The Structure Metadata'
+);
 
 export const REACTIVE = translate('REACTIVE', 'Reactive');
 export const REACTIVE_INVESTIGATION = translate('REACTIVE_INVESTIGATION', 'Reactive Investigation');

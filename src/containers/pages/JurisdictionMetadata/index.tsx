@@ -47,7 +47,7 @@ import {
   OPENSRP_V2_SETTINGS,
   TEXT_CSV,
 } from '../../../constants';
-import { downloadFile, growl, RouteParams } from '../../../helpers/utils';
+import { downloadFile, growl, MetadataOptions, RouteParams } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
 import './index.css';
 
@@ -115,10 +115,13 @@ const JurisdictionMetadataImportView = () => {
   };
   breadcrumbProps.pages = [homePage];
 
+  const metadataOption = MetadataOptions.StructureMetadata;
+
   /** props for the Jurisdiction Metadata form */
   const jurisdictionMetadataFormProps: JurisdictionMetadataFormProps = {
     disabledFields: [],
     initialValues: defaultInitialValues,
+    metadataOption,
     redirectAfterAction: HOME_URL,
     serviceClass: new OpenSRPService(OPENSRP_V1_SETTINGS_ENDPOINT),
     submitForm,
@@ -128,6 +131,7 @@ const JurisdictionMetadataImportView = () => {
   const jurisdictionMetadataDownloadFormProps: JurisdictionMetadataDownloadFormProps = {
     disabledFields: [],
     initialValues,
+    metadataOption,
     serviceClass: new OpenSRPService(OPENSRP_V2_SETTINGS),
     submitForm: formSubmit,
   };

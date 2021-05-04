@@ -268,6 +268,10 @@ export const JURISDICTION_CSV_TEMPLATE = 'jurisdiction_id,jurisdiction_name,risk
 export const JURISDICTION_CSV_FILE_NAME = 'jurisdiction-metadata.csv';
 export const GET_ALL = 'getAll';
 
+/** structure metadata */
+export const STRUCTURE_METADATA_POPULATION = 'structure_metadata-population';
+export const STRUCTURE_METADATA_OTHER_POPULATION = 'structure_metadata-other-population';
+
 /** CSV File MIME Types */
 export const TEXT_CSV = 'text/csv';
 export const APPLICATION_CSV = 'application/csv';
