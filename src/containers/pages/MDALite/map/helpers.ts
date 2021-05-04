@@ -4,8 +4,8 @@ import { IndicatorThresholdItemPercentage } from '../../../../helpers/utils';
 
 /** The default indicator stop */
 export const defaultIndicatorStop = [
-  ['Completed', TASK_GREEN],
-  ['Visited but not completed', TASK_ORANGE],
+  ['Complete', TASK_GREEN],
+  ['In Progress', TASK_ORANGE],
   ['Not Visited', TASK_YELLOW],
 ];
 

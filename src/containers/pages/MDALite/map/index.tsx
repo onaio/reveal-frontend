@@ -39,6 +39,8 @@ import {
 } from '../../../../configs/lang';
 import { indicatorThresholdsMDALite } from '../../../../configs/settings';
 import {
+  BUSINESS_STATUS,
+  CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
   DefaultMapDimensions,
   HOME_URL,
   MDA_LITE_STRUCTURES,
@@ -66,7 +68,7 @@ import genericStructuresReducer, {
   reducerName as genericStructuresReducerName,
   StructureFeatureCollection,
 } from '../../../../store/ducks/generic/structures';
-import { buildGsLiteLayers } from '../../FocusInvestigation/map/active/helpers/utils';
+import { buildGsLiteLayers, PolygonColor } from '../../FocusInvestigation/map/active/helpers/utils';
 import {
   defaultIndicatorStop,
   getMDAIndicatorRows,
@@ -238,12 +240,19 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
   const pointsFC = centroidPoints ? featureCollection(centroidPoints) : null;
 
   const preferedColor = '#FFDC00'; // color for map lite and map text
+
+  const polygonLineColor: PolygonColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+
   const wardLayers = buildGsLiteLayers(
     MDA_LITE_STRUCTURES,
     null,
     polygonsFC as geojson.FeatureCollection,
     {
-      polygonLinePaintColor: preferedColor,
+      polygonLineColor,
     }
   );
 
