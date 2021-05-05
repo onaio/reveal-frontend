@@ -1,15 +1,13 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import ConnectedMDALiteMapReport, { MDALiteMapReport } from '../';
-import { GisidaLiteProps } from '../../../../../components/GisidaLite';
+import ConnectedMDALiteMapReport from '..';
 import { REPORT_MDA_LITE_PLAN_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
@@ -26,8 +24,6 @@ import {
   MDALiteWardGeojsonData,
   MDALteJurisidtionsData,
 } from '../../../../../store/ducks/superset/MDALite/tests/fixtures';
-import { getMDAIndicatorRows } from '../helpers';
-import { indicatorRows } from './fixtures';
 
 /** register the reducers */
 reducerRegistry.register(genericJurisdictionsReducerName, GenericJurisdictionsReducer);
@@ -67,15 +63,6 @@ describe('components/MDA/Lite/Reports/wards', () => {
     jest.resetAllMocks();
     jest.restoreAllMocks();
   });
-
-  it('renders without crashing', async () => {
-    shallow(
-      <Router history={history}>
-        <MDALiteMapReport {...props} />
-      </Router>
-    );
-  });
-
   it('renders correctly', async () => {
     const supersetServiceMock: any = jest.fn();
     supersetServiceMock.mockImplementationOnce(async () => MDALiteWardGeojsonData);
@@ -85,6 +72,7 @@ describe('components/MDA/Lite/Reports/wards', () => {
     const allProps = {
       ...props,
       service: supersetServiceMock,
+      subcountyData: [MDALteJurisidtionsData[1]],
     };
     const wrapper = mount(
       <Provider store={store}>
@@ -98,82 +86,22 @@ describe('components/MDA/Lite/Reports/wards', () => {
     });
     wrapper.update();
 
-    const helmet = Helmet.peek();
-    expect(helmet.title).toEqual('MDA Lite Reporting: vihiga');
-    expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
-    wrapper.find('BreadcrumbItem li').forEach((item, i) => {
-      expect(item.text()).toMatchSnapshot(`breadcrumb item-${i + 1}`);
-      expect(toJson(item.find('a'))).toMatchSnapshot(`breadcrumb item href-${i + 1}`);
-    });
-    expect(wrapper.find('.page-title').text()).toEqual('MDA Lite Reporting: vihiga');
+    expect(wrapper.find('.mapSidebar h5').text()).toEqual('vihiga');
+    // snapshot for map legends
+    expect(toJson(wrapper.find('.mapSidebar .mapLegend'))).toMatchSnapshot();
+    expect(
+      wrapper
+        .find('.indicator-breakdown')
+        .first()
+        .text()
+    ).toEqual('Progress: 222 of 222 people (100%)');
+    expect(
+      wrapper
+        .find('.indicator-breakdown')
+        .last()
+        .text()
+    ).toEqual('Progress:  3 tablet(s)');
 
-    const mapProps = wrapper.find('MemoizedGisidaLiteMock').props() as GisidaLiteProps;
-    // Check Gisida component map layers
-    expect((mapProps as any).layers.map((e: any) => e.key)).toMatchSnapshot('GisidaLite layers');
-    expect(mapProps.zoom).toEqual(12);
-    expect(mapProps.mapCenter).toEqual([34.6768368460001, 0.0131305400000485]);
-    expect(mapProps.mapBounds).toEqual([
-      34.6264335430001,
-      -0.026151141999947,
-      34.7272401490001,
-      0.052412222000044,
-    ]);
     wrapper.unmount();
-  });
-
-  it('should return correct row indicator data', async () => {
-    const rowOfInterest = [
-      {
-        accessor: 'treatment_coverage',
-        denominator: 222,
-        description: '',
-        numerator: 222,
-        percentage: '100',
-        title: 'Treatment Coverage (Census)',
-        unit: 'People',
-        value: 1,
-      },
-      {
-        accessor: 'other_pop_coverage',
-        denominator: 133,
-        description: '',
-        numerator: 222,
-        percentage: '60',
-        title: 'Other Pop Coverage (Unofficial)',
-        unit: 'People',
-        value: 0.6,
-      },
-      {
-        accessor: 'total_all_genders',
-        denominator: '0',
-        listDisplay: true,
-        numerator: '0',
-        percentage: '0',
-        title: 'Total Treated',
-        unit: 'People',
-        value: 222,
-      },
-      {
-        accessor: 'adminstered',
-        denominator: '0',
-        listDisplay: true,
-        numerator: '0',
-        percentage: '0',
-        title: 'Drugs Administered',
-        unit: 'Tablets',
-        value: 1200,
-      },
-      {
-        accessor: 'damaged',
-        denominator: '0',
-        listDisplay: true,
-        numerator: '0',
-        percentage: '0',
-        title: 'Drugs Damaged',
-        unit: 'Tablets',
-        value: 3,
-      },
-    ];
-    expect(getMDAIndicatorRows(indicatorRows, [MDALteJurisidtionsData[1]])).toEqual(rowOfInterest);
   });
 });
