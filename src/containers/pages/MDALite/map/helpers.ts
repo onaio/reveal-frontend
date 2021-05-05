@@ -1,3 +1,4 @@
+import { Dictionary } from '@onaio/utils';
 import { TASK_GREEN, TASK_ORANGE, TASK_YELLOW } from '../../../../colors';
 import {
   DRUGS_ADMINISTERED,
@@ -82,10 +83,10 @@ export const MDAIndicatorRows: { [key: string]: IndicatorRows } = {
   ],
 };
 
-export const getMDAIndicatorRows = (indicatorRows: IndicatorRows, subcountyData: any) => {
+export const getMDAIndicatorRows = (indicatorRows: IndicatorRows, subcountyData: Dictionary) => {
   const rowOfInterest = [...indicatorRows];
   const data = subcountyData[0] || {};
-  indicatorRows.forEach((item: any, idx: number) => {
+  indicatorRows.forEach((item: MDAIndicatorRowItem, idx: number) => {
     const rowValue = data[item.accessor] || 0;
     let percentage = '0%';
     if (!item.listDisplay) {
@@ -93,8 +94,8 @@ export const getMDAIndicatorRows = (indicatorRows: IndicatorRows, subcountyData:
     }
     rowOfInterest[idx] = {
       ...item,
-      denominator: data[item.denominator] || '0',
-      numerator: data[item.numerator] || '0',
+      denominator: item.denominator ? data[item.denominator] : '0',
+      numerator: item.numerator ? data[item.numerator] : '0',
       percentage: percentage.replace('%', ''),
       value: rowValue,
     };
