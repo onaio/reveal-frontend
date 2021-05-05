@@ -83,7 +83,7 @@ export const MDAIndicatorRows: { [key: string]: IndicatorRows } = {
   ],
 };
 
-export const getMDAIndicatorRows = (indicatorRows: IndicatorRows, subcountyData: Dictionary) => {
+export const getMDAIndicatorRows = (indicatorRows: IndicatorRows, subcountyData: Dictionary[]) => {
   const rowOfInterest = [...indicatorRows];
   const data = subcountyData[0] || {};
   indicatorRows.forEach((item: MDAIndicatorRowItem, idx: number) => {
