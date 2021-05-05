@@ -82,13 +82,13 @@ export const MDAIndicatorRows: { [key: string]: IndicatorRows } = {
   ],
 };
 
-export const getMDAIndicatorRows = (indicatorRows: any, subcountyData: any) => {
+export const getMDAIndicatorRows = (indicatorRows: IndicatorRows, subcountyData: any) => {
   const rowOfInterest = [...indicatorRows];
   const data = subcountyData[0] || {};
   indicatorRows.forEach((item: any, idx: number) => {
     const rowValue = data[item.accessor] || 0;
     let percentage = '0%';
-    if (!indicatorRows.listDisplay) {
+    if (!item.listDisplay) {
       percentage = IndicatorThresholdItemPercentage(data[item.accessor] || 0) || '0%';
     }
     rowOfInterest[idx] = {
