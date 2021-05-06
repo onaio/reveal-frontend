@@ -9,20 +9,20 @@ import { Card, CardBody, Col, Row } from 'reactstrap';
 import JurisdictionHierachyDownload, {
   defaultInitialValues as defaultHierachyValues,
   JurisdictionHierachyDownloadFormProps,
-} from '../../../components/forms/JurisdictionHierachyDownload';
+} from '../../../../components/forms/JurisdictionHierachyDownload';
 import JurisdictionMetadata, {
   defaultInitialValues,
   JurisdictionMetadataFormProps,
   submitForm,
-} from '../../../components/forms/JurisdictionMetadata';
+} from '../../../../components/forms/JurisdictionMetadata';
 import JurisdictionMetadataDownload, {
   defaultInitialValues as initialValues,
   JurisdictionMetadataDownloadFormProps,
   submitForm as formSubmit,
-} from '../../../components/forms/JurisdictionMetadataDownload';
+} from '../../../../components/forms/JurisdictionMetadataDownload';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
-} from '../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
+} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
   DOWNLOAD_JURISDICTION_METADATA,
   HOME,
@@ -34,7 +34,7 @@ import {
   JURISDICTION_UPLOAD_STEP_4,
   JURISDICTION_UPLOAD_STEP_5,
   UPLOAD_JURISDICTION_METADATA,
-} from '../../../configs/lang';
+} from '../../../../configs/lang';
 import {
   GET_ALL,
   HOME_URL,
@@ -46,9 +46,9 @@ import {
   OPENSRP_V1_SETTINGS_ENDPOINT,
   OPENSRP_V2_SETTINGS,
   TEXT_CSV,
-} from '../../../constants';
-import { downloadFile, growl, MetadataOptions, RouteParams } from '../../../helpers/utils';
-import { OpenSRPService } from '../../../services/opensrp';
+} from '../../../../constants';
+import { downloadFile, growl, MetadataOptions, RouteParams } from '../../../../helpers/utils';
+import { OpenSRPService } from '../../../../services/opensrp';
 import './index.css';
 
 /** type intersection for all types that pertain to the props */
@@ -115,7 +115,7 @@ const JurisdictionMetadataImportView = () => {
   };
   breadcrumbProps.pages = [homePage];
 
-  const metadataOption = MetadataOptions.StructureMetadata;
+  const metadataOption = MetadataOptions.JurisdictionMetadata;
 
   /** props for the Jurisdiction Metadata form */
   const jurisdictionMetadataFormProps: JurisdictionMetadataFormProps = {

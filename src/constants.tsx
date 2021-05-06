@@ -122,6 +122,7 @@ export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
 export const CLIENTS_LIST_URL = '/clients';
 export const UPLOAD_CLIENT_CSV_URL = '/clients/upload';
 export const JURISDICTION_METADATA_URL = '/jurisdiction-metadata';
+export const STRUCTURE_METADATA_URL = '/structure-metadata';
 export const GO_BACK_TEXT = 'Go Back';
 export const MANIFEST_RELEASE_URL = '/manifest/releases';
 export const VIEW_DRAFT_FILES_URL = '/files/draft';

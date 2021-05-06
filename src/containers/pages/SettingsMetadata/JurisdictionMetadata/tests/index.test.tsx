@@ -6,12 +6,12 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { JURISDICTION_METADATA } from '../../../../configs/lang';
-import { JURISDICTION_METADATA_URL } from '../../../../constants';
-import * as helperUtils from '../../../../helpers/utils';
-import store from '../../../../store';
-import * as orgDucks from '../../../../store/ducks/opensrp/organizations';
-import * as fixtures from '../../../../store/ducks/tests/fixtures';
+import { JURISDICTION_METADATA } from '../../../../../configs/lang';
+import { JURISDICTION_METADATA_URL } from '../../../../../constants';
+import * as helperUtils from '../../../../../helpers/utils';
+import store from '../../../../../store';
+import * as orgDucks from '../../../../../store/ducks/opensrp/organizations';
+import * as fixtures from '../../../../../store/ducks/tests/fixtures';
 import JurisdictionMetadataImportView, { downloadCsvTemplate } from '../index';
 
 reducerRegistry.register(orgDucks.reducerName, orgDucks.default);
