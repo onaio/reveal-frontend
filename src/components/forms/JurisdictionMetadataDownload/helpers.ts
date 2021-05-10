@@ -36,7 +36,6 @@ export const JurisdictionsMetaDataIdentifierParams = {
   STRUCTURE: { value: JURISDICTION_METADATA_STUCTURES, label: STRUCTURE_LABEL },
   TARGET: { value: JURISDICTION_METADATA_TARGET, label: TARGET_LABEL },
 } as const;
-
 export type JurisdictionsMetaDataIdentifierParams = keyof typeof JurisdictionsMetaDataIdentifierParams;
 
 /** assign all jurisdiction metadata identifiers to a constant */
@@ -47,8 +46,13 @@ export const StructuresMetaDataIdentifierParams = {
   },
   POPULATION: { value: STRUCTURE_METADATA_POPULATION, label: POPULATION_LABEL },
 } as const;
-
 export type StructuresMetaDataIdentifierParams = keyof typeof StructuresMetaDataIdentifierParams;
+
+/** group all metadata options */
+export const allSettingsMetadata = {
+  [MetadataOptions.JurisdictionMetadata]: JurisdictionsMetaDataIdentifierParams,
+  [MetadataOptions.StructureMetadata]: StructuresMetaDataIdentifierParams,
+};
 
 /**
  * filter allowed identifier options
@@ -56,15 +60,17 @@ export type StructuresMetaDataIdentifierParams = keyof typeof StructuresMetaData
  */
 export const getAllowedMetaDataIdentifiers = (
   allowedIdentifiers: JurisdictionsMetaDataIdentifierParams[],
-  metadataOption: MetadataOptions = MetadataOptions.JurisdictionMetadata
+  metadataOption: MetadataOptions = MetadataOptions.JurisdictionMetadata,
+  allMetadataObj: typeof allSettingsMetadata = allSettingsMetadata
 ) => {
-  const metadataIdentifierParams =
-    metadataOption === MetadataOptions.JurisdictionMetadata
-      ? JurisdictionsMetaDataIdentifierParams
-      : StructuresMetaDataIdentifierParams;
+  const metadataIdentifierParams = allMetadataObj[metadataOption];
   const allowedOptions: SelectOption[] = [];
   Object.entries(metadataIdentifierParams).forEach(([key, value]) => {
-    if (allowedIdentifiers.includes(key as any)) {
+    if (
+      allowedIdentifiers.includes(
+        key as JurisdictionsMetaDataIdentifierParams | StructuresMetaDataIdentifierParams
+      )
+    ) {
       allowedOptions.push(value);
     }
   });

@@ -1,4 +1,9 @@
-import { getAllowedMetaDataIdentifiers, JurisdictionsMetaDataIdentifierParams } from '../helpers';
+import { MetadataOptions } from '../../../../helpers/utils';
+import {
+  getAllowedMetaDataIdentifiers,
+  JurisdictionsMetaDataIdentifierParams,
+  StructuresMetaDataIdentifierParams,
+} from '../helpers';
 
 describe('helperes', () => {
   it('getAllowedMetaDataIdentifiers works correctly', () => {
@@ -9,5 +14,12 @@ describe('helperes', () => {
       JurisdictionsMetaDataIdentifierParams.POPULATION,
       JurisdictionsMetaDataIdentifierParams.RISK,
     ]);
+
+    expect(
+      getAllowedMetaDataIdentifiers(
+        ['COVERAGE', 'POPULATION', 'RISK'],
+        MetadataOptions.StructureMetadata
+      )
+    ).toEqual([StructuresMetaDataIdentifierParams.POPULATION]);
   });
 });

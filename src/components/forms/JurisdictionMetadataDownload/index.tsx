@@ -93,12 +93,8 @@ export const download = (
   }
 
   const entries: JurisdictionMetadataFile[] = [];
-  const metaDataPrefix =
-    metadataOption === MetadataOptions.JurisdictionMetadata
-      ? MetadataOptions.JurisdictionMetadata
-      : MetadataOptions.StructureMetadata;
   response.forEach(item => {
-    const metaType = item.settingIdentifier.replace(`${metaDataPrefix}-`, '');
+    const metaType = item.settingIdentifier.replace(`${metadataOption}-`, '');
     const entry: JurisdictionMetadataFile = {
       jurisdiction_id: item.key,
       jurisdiction_name: item.label,
