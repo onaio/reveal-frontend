@@ -652,3 +652,7 @@ export type AUTO_SELECT_FI_CLASSIFICATION = typeof AUTO_SELECT_FI_CLASSIFICATION
 export const PLAN_LIST_SHOW_FI_REASON_COLUMN =
   process.env.REACT_APP_PLAN_LIST_SHOW_FI_REASON_COLUMN === 'true';
 export type PLAN_LIST_SHOW_FI_REASON_COLUMN = typeof PLAN_LIST_SHOW_FI_REASON_COLUMN;
+
+/** The max number of client records to get from OpenSRP API endpoint */
+export const CLIENTS_LIST_BATCH_SIZE = Number(process.env.REACT_APP_CLIENTS_LIST_BATCH_SIZE) || 200;
+export type CLIENTS_LIST_BATCH_SIZE = typeof CLIENTS_LIST_BATCH_SIZE;
