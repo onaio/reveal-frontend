@@ -4672,7 +4672,7 @@ exports[`containers/forms/PlanForm renders correctly: title field 1`] = `
   onChange={[Function]}
   required={true}
   type="text"
-  value=""
+  value="2017-07-13"
 />
 `;
 

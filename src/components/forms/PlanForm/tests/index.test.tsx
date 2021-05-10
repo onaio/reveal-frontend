@@ -597,13 +597,10 @@ describe('containers/forms/PlanForm - Submission', () => {
         },
       ],
       name: 'Name is Required',
-      title: 'Required',
     });
 
     // name is required
     expect(wrapper.find('.non-field-errors p.name-error').text()).toEqual('Name is Required');
-    // title is required
-    expect(wrapper.find('small.title-error').text()).toEqual('Required');
     // jurisdiction is required
     expect(wrapper.find('small.jurisdictions-error').text()).toEqual('An Error Ocurred');
 

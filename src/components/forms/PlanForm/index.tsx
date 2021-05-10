@@ -165,7 +165,7 @@ export const defaultInitialValues: PlanFormFields = {
   status: PlanStatus.DRAFT,
   taskGenerationStatus: 'False',
   teamAssignmentStatus: '',
-  title: '',
+  title: moment().format(DATE_FORMAT.toUpperCase()),
   version: DEFAULT_PLAN_VERSION,
 };
 
