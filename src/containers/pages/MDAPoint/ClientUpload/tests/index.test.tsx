@@ -61,7 +61,7 @@ describe('components/ClientUpload', () => {
     ]);
     // client lists pulled
     expect(fetch.mock.calls[1]).toEqual([
-      'https://test.smartregister.org/opensrp/rest/upload/history',
+      'https://test.smartregister.org/opensrp/rest/upload/history?batch_size=100',
       {
         headers: {
           accept: 'application/json',
