@@ -26,7 +26,6 @@ import {
   DOWNLOAD_STRUCTURE_METADATA,
   HOME,
   HOW_TO_UPDATE_STRUCTURE_METADATA,
-  JURISDICTION_METADATA,
   JURISDICTION_UPLOAD_STEP_1,
   JURISDICTION_UPLOAD_STEP_2,
   JURISDICTION_UPLOAD_STEP_3,
@@ -37,9 +36,9 @@ import {
 } from '../../../../configs/lang';
 import {
   HOME_URL,
-  JURISDICTION_METADATA_URL,
   OPENSRP_V1_SETTINGS_ENDPOINT,
   OPENSRP_V2_SETTINGS,
+  STRUCTURE_METADATA_URL,
 } from '../../../../constants';
 import { MetadataOptions } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -56,8 +55,8 @@ const StructureMetadataImportView = () => {
   //  props for breadcrumbs
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
-      label: JURISDICTION_METADATA,
-      url: JURISDICTION_METADATA_URL,
+      label: STRUCTURE_METADATA,
+      url: STRUCTURE_METADATA_URL,
     },
     pages: [],
   };
