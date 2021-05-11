@@ -5,6 +5,7 @@ import reducer, {
   fetchFiles,
   getFilesArray,
   getFilesById,
+  makeFilesArraySelector,
   reducerName,
   removeFilesAction,
 } from '..';
@@ -13,6 +14,7 @@ import store from '../../../..';
 import { uploadedStudentsLists, uploadedStudentsLists1 } from './fixtures';
 
 reducerRegistry.register(reducerName, reducer);
+const filesArraySelector = makeFilesArraySelector();
 
 describe('reducers/files.reducer.FetchFilesAction', () => {
   let flushThunks;
@@ -26,6 +28,7 @@ describe('reducers/files.reducer.FetchFilesAction', () => {
   it('selectors work for empty initialState', () => {
     expect(getFilesById(store.getState())).toEqual({});
     expect(getFilesArray(store.getState())).toEqual([]);
+    expect(filesArraySelector(store.getState(), {})).toEqual([]);
   });
 
   it('fetches files correctly', () => {
@@ -72,7 +75,7 @@ describe('reducers/files.reducer.FetchFilesAction', () => {
 
     store.dispatch(fetchFiles(uploadedStudentsLists1));
     clients = getFilesById(store.getState());
-    expect(clients).toEqual({
+    const dispachedFiles = {
       '1234': {
         fileLength: 45,
         fileName: 'Gicandi_school.csv',
@@ -93,6 +96,11 @@ describe('reducers/files.reducer.FetchFilesAction', () => {
         url:
           'https://user-images.githubusercontent.com/12836913/81139056-3be46680-8f19-11ea-92f8-fb1ab7877626.png',
       },
-    });
+    };
+    expect(clients).toEqual(dispachedFiles);
+    expect(filesArraySelector(store.getState(), {})).toEqual(Object.values(dispachedFiles));
+    expect(filesArraySelector(store.getState(), { fileName: 'view' })).toEqual([
+      dispachedFiles[123456],
+    ]);
   });
 });
