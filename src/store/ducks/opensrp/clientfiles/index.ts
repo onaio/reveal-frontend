@@ -1,5 +1,6 @@
 import { keyBy, values } from 'lodash';
 import { AnyAction, Store } from 'redux';
+import { createSelector } from 'reselect';
 import SeamlessImmutable from 'seamless-immutable';
 
 /** The reducer name */
@@ -118,5 +119,46 @@ export const getFilesById = (state: Partial<Store>): { [key: string]: File } => 
  * @returns {File[]} - an array of File objects
  */
 export const getFilesArray = (state: Partial<Store>): File[] => {
-  return values(getFilesById(state));
+  return values(getFilesById(state) || {});
+};
+
+/** This interface represents the structure of files filter options/params */
+export interface FileFilters {
+  fileName?: string /** file name */;
+}
+
+/**
+ * Gets file name from Filters
+ * @param state - the redux store
+ * @param props - the file filters object
+ */
+export const getFileName = (_: Partial<Store>, props: FileFilters) => props.fileName;
+
+/**
+ * Gets an array of files filtered by name
+ * @param {Partial<Store>} state - the redux store
+ * @param {FileFilters} props - the  files filters object
+ */
+export const getFilesArrayByName = () =>
+  createSelector([getFilesArray, getFileName], (files, name) =>
+    name ? files.filter(file => file.fileName?.toLowerCase().includes(name.toLowerCase())) : files
+  );
+
+/**
+ * Returns a selector that gets an array of file objects filtered by one or all
+ * of the following:
+ *    - file_name
+ *
+ * These filter params are all optional and are supplied via the prop parameter.
+ *
+ * This selector is meant to be a memoized replacement for getFilesById.
+ *
+ * To use this selector, do something like:
+ *    const filesArraySelector = makeFilesArraySelector();
+ *
+ * @param {Partial<Store>} state - the redux store
+ * @param {FileFilters} props - the files filters object
+ */
+export const makeFilesArraySelector = () => {
+  return createSelector([getFilesArrayByName()], file1 => file1);
 };
