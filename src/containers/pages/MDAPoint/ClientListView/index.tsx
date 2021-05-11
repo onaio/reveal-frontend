@@ -143,6 +143,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
     renderInTopFilterBar: renderInFilterFactory({
       ...defaultOptions,
       componentProps: props,
+      queryParam: QUERY_PARAM_TITLE,
       showColumnHider: false,
       showRowHeightPicker: false,
     }),
