@@ -101,7 +101,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
       Cell: (fileObj: Cell<File>) => {
         const original = fileObj.row.original;
         return (
-          <p key={original.identifier}>
+          <span key={original.identifier}>
             {fileObj.value} &nbsp;
             <button
               className="btn btn-link"
@@ -112,7 +112,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
             >
               {`(${DOWNLOAD})`}
             </button>
-          </p>
+          </span>
         );
       },
       Header: FILE_NAME,
