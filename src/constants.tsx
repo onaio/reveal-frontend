@@ -75,6 +75,7 @@ export const RETIRE_REASON = 'retire_reason';
 export const EVENT_LABEL = 'Event';
 export const FORM_SUBMISSION_FIELD = 'formsubmissionField';
 export const MDA_LITE_STRUCTURES = 'mda_lite_structures';
+export const BATCH_SIZE = 'batch_size';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';

@@ -189,3 +189,9 @@ Below is a list of currently supported environment variables:
 
   - **not Required**; _(string)_
   - reporting stops indicators, defalut value is `kenya2021`
+
+- **REACT_APP_CLIENTS_LIST_BATCH_SIZE**
+
+  - **Optional**
+  - limit of the number of clients record to get from api.
+  - default: `200`
