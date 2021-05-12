@@ -1,8 +1,10 @@
+import { ProgressBar } from '@onaio/progress-indicators';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset, { SupersetAdhocFilterOption } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
 import { centroid, featureCollection, polygon as turfPolygon } from '@turf/turf';
 import geojson from 'geojson';
+import { get } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import Helmet from 'react-helmet';
 import { GeoJSONLayer } from 'react-mapbox-gl';
@@ -10,24 +12,35 @@ import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
+import { format } from 'util';
 import { MemoizedGisidaLite } from '../../../../components/GisidaLite';
 import { getZoomCenterAndBounds } from '../../../../components/GisidaLite/helpers';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading';
 import {
+  HIDDEN_MAP_LEGEND_ITEMS,
   SUPERSET_MAX_RECORDS,
+  SUPERSET_MDA_LITE_REPORTING_INDICATOR_ROWS,
+  SUPERSET_MDA_LITE_REPORTING_INDICATOR_STOPS,
   SUPERSET_MDA_LITE_REPORTING_JURISDICTIONS_DATA_SLICES,
   SUPERSET_MDA_LITE_REPORTING_PLANS_SLICE,
   SUPERSET_MDA_LITE_REPORTING_WARD_GEOJSON_SLICE,
 } from '../../../../configs/env';
 import {
   HOME,
+  LEGEND_LABEL,
   MAP_LOAD_ERROR,
   MDA_LITE_REPORTING_TITLE,
+  NUMERATOR_OF_DENOMINATOR_UNITS,
+  PEOPLE,
+  PROGRESS,
   SUBCOUNTY_LABEL,
 } from '../../../../configs/lang';
+import { indicatorThresholdsMDALite } from '../../../../configs/settings';
 import {
+  BUSINESS_STATUS,
+  CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
   DefaultMapDimensions,
   HOME_URL,
   MDA_LITE_STRUCTURES,
@@ -55,7 +68,13 @@ import genericStructuresReducer, {
   reducerName as genericStructuresReducerName,
   StructureFeatureCollection,
 } from '../../../../store/ducks/generic/structures';
-import { buildGsLiteLayers } from '../../FocusInvestigation/map/active/helpers/utils';
+import { buildGsLiteLayers, PolygonColor } from '../../FocusInvestigation/map/active/helpers/utils';
+import {
+  defaultIndicatorStop,
+  getMDAIndicatorRows,
+  MDAIndicatorRows,
+  MDALiteIndicatorStops,
+} from './helpers';
 
 /** register the reducers */
 reducerRegistry.register(genericJurisdictionsReducerName, GenericJurisdictionsReducer);
@@ -170,6 +189,18 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
     url: '',
   };
 
+  const indicatorRows = get(MDAIndicatorRows, SUPERSET_MDA_LITE_REPORTING_INDICATOR_ROWS, null);
+  let sidebarIndicatorRows = null;
+  if (indicatorRows !== null) {
+    sidebarIndicatorRows = getMDAIndicatorRows(indicatorRows, subcountyData);
+  }
+
+  const indicatorStops = get(
+    MDALiteIndicatorStops,
+    SUPERSET_MDA_LITE_REPORTING_INDICATOR_STOPS,
+    defaultIndicatorStop
+  );
+
   const pageTitle = `${MDA_LITE_REPORTING_TITLE}: ${currentPage.label}`;
   const breadcrumbProps = {
     currentPage,
@@ -209,12 +240,19 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
   const pointsFC = centroidPoints ? featureCollection(centroidPoints) : null;
 
   const preferedColor = '#FFDC00'; // color for map lite and map text
+
+  const polygonLineColor: PolygonColor = {
+    property: BUSINESS_STATUS,
+    stops: indicatorStops,
+    type: CIRCLE_PAINT_COLOR_CATEGORICAL_TYPE,
+  };
+
   const wardLayers = buildGsLiteLayers(
     MDA_LITE_STRUCTURES,
     null,
     polygonsFC as geojson.FeatureCollection,
     {
-      polygonLinePaintColor: preferedColor,
+      polygonLineColor,
     }
   );
 
@@ -247,6 +285,10 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
       <Row>
         <Col>
           <h3 className="mb-3 page-title">{pageTitle}</h3>
+        </Col>
+      </Row>
+      <Row noGutters={true}>
+        <Col xs={9}>
           <div className="generic-report-table">
             {wardLayers.length ? (
               <MemoizedGisidaLite
@@ -258,6 +300,57 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
             ) : (
               <div>{MAP_LOAD_ERROR}</div>
             )}
+          </div>
+        </Col>
+        <Col xs={3}>
+          <div className="mapSidebar">
+            <h5>{currentPage && currentPage.label}</h5>
+            <hr />
+            {indicatorStops && (
+              <div className="mapLegend">
+                <h6>{LEGEND_LABEL}</h6>
+                {indicatorStops.map(
+                  (stop, i) =>
+                    !HIDDEN_MAP_LEGEND_ITEMS.includes(stop[0]) && (
+                      <div className="sidebar-legend-item" key={i}>
+                        <span
+                          className="sidebar-legend-color"
+                          style={{ backgroundColor: stop[1] }}
+                        />
+                        <span className="sidebar-legend-label">{stop[0]}</span>
+                      </div>
+                    )
+                )}
+                <hr />
+              </div>
+            )}
+            {sidebarIndicatorRows &&
+              sidebarIndicatorRows.map((row: any, i: number) => (
+                <div className="responseItem" key={i}>
+                  <h6>{row.title}</h6>
+                  {!row.listDisplay && <p className="indicator-description">{row.description}</p>}
+                  {!row.listDisplay && (
+                    <ProgressBar
+                      lineColor={indicatorThresholdsMDALite.GREEN_THRESHOLD.color}
+                      lineColorThresholds={indicatorThresholdsMDALite || null}
+                      value={row.percentage}
+                    />
+                  )}
+                  <p className="indicator-breakdown">
+                    {`${PROGRESS}: `}
+                    {!row.listDisplay &&
+                      format(
+                        NUMERATOR_OF_DENOMINATOR_UNITS,
+                        row.listDisplay
+                          ? Number(row.denominator) - Number(row.numerator)
+                          : row.numerator,
+                        row.denominator,
+                        row.unit || PEOPLE
+                      )}{' '}
+                    {!row.listDisplay ? `(${row.percentage}%)` : `${row.value} ${row.unit}`}
+                  </p>
+                </div>
+              ))}
           </div>
         </Col>
       </Row>

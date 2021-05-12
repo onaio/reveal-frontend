@@ -1,8 +1,9 @@
 import { Dictionary } from '@onaio/utils';
 import { toast } from 'react-toastify';
-import { OPENSRP_API_BASE_URL } from '../../../../../configs/env';
+import { CLIENTS_LIST_BATCH_SIZE, OPENSRP_API_BASE_URL } from '../../../../../configs/env';
 import { FILE_UPLOADED_SUCCESSFULLY } from '../../../../../configs/lang';
 import {
+  BATCH_SIZE,
   OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT,
   OPENSRP_UPLOAD_ENDPOINT,
 } from '../../../../../constants';
@@ -25,8 +26,11 @@ export const loadFiles = async (
     setLoading(true);
   }
   const serve = new serviceClass(OPENSRP_FILE_UPLOAD_HISTORY_ENDPOINT);
+  const params = {
+    [BATCH_SIZE]: CLIENTS_LIST_BATCH_SIZE,
+  };
   await serve
-    .list()
+    .list(params)
     .then((response: File[]) => {
       store.dispatch(fetchFileAction(response, true));
     })
