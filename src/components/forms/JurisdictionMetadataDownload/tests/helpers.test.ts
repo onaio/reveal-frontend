@@ -1,13 +1,25 @@
-import { getAllowedMetaDataIdentifiers, MetaDataIdentifierParams } from '../helpers';
+import { MetadataOptions } from '../../../../helpers/utils';
+import {
+  getAllowedMetaDataIdentifiers,
+  JurisdictionsMetaDataIdentifierParams,
+  StructuresMetaDataIdentifierParams,
+} from '../helpers';
 
 describe('helperes', () => {
   it('getAllowedMetaDataIdentifiers works correctly', () => {
     expect(getAllowedMetaDataIdentifiers([])).toEqual([]);
 
     expect(getAllowedMetaDataIdentifiers(['COVERAGE', 'POPULATION', 'RISK'])).toEqual([
-      MetaDataIdentifierParams.COVERAGE,
-      MetaDataIdentifierParams.POPULATION,
-      MetaDataIdentifierParams.RISK,
+      JurisdictionsMetaDataIdentifierParams.COVERAGE,
+      JurisdictionsMetaDataIdentifierParams.POPULATION,
+      JurisdictionsMetaDataIdentifierParams.RISK,
     ]);
+
+    expect(
+      getAllowedMetaDataIdentifiers(
+        ['COVERAGE', 'POPULATION', 'RISK'],
+        MetadataOptions.StructureMetadata
+      )
+    ).toEqual([StructuresMetaDataIdentifierParams.POPULATION]);
   });
 });

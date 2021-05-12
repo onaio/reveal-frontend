@@ -13,7 +13,10 @@ import {
   JURISDICTION_METADATA_RISK,
   JURISDICTION_METADATA_STUCTURES,
   JURISDICTION_METADATA_TARGET,
+  STRUCTURE_METADATA_OTHER_POPULATION,
+  STRUCTURE_METADATA_POPULATION,
 } from '../../../constants';
+import { MetadataOptions } from '../../../helpers/utils';
 
 /** select Option */
 export interface SelectOption {
@@ -22,7 +25,7 @@ export interface SelectOption {
 }
 
 /** assign all jurisdiction metadata identifiers to a constant */
-export const MetaDataIdentifierParams = {
+export const JurisdictionsMetaDataIdentifierParams = {
   COVERAGE: { value: JURISDICTION_METADATA_COVERAGE, label: COVERAGE_LABEL },
   OTHER_POPULATION: {
     label: OTHER_POPULATION_LABEL,
@@ -33,17 +36,41 @@ export const MetaDataIdentifierParams = {
   STRUCTURE: { value: JURISDICTION_METADATA_STUCTURES, label: STRUCTURE_LABEL },
   TARGET: { value: JURISDICTION_METADATA_TARGET, label: TARGET_LABEL },
 } as const;
+export type JurisdictionsMetaDataIdentifierParams = keyof typeof JurisdictionsMetaDataIdentifierParams;
 
-export type MetaDataIdentifierParams = keyof typeof MetaDataIdentifierParams;
+/** assign all jurisdiction metadata identifiers to a constant */
+export const StructuresMetaDataIdentifierParams = {
+  OTHER_POPULATION: {
+    label: OTHER_POPULATION_LABEL,
+    value: STRUCTURE_METADATA_OTHER_POPULATION,
+  },
+  POPULATION: { value: STRUCTURE_METADATA_POPULATION, label: POPULATION_LABEL },
+} as const;
+export type StructuresMetaDataIdentifierParams = keyof typeof StructuresMetaDataIdentifierParams;
+
+/** group all metadata options */
+export const allSettingsMetadata = {
+  [MetadataOptions.JurisdictionMetadata]: JurisdictionsMetaDataIdentifierParams,
+  [MetadataOptions.StructureMetadata]: StructuresMetaDataIdentifierParams,
+};
 
 /**
  * filter allowed identifier options
- * @param {MetaDataIdentifierParams[]} allowedIdentifiers - allowed options keys list
+ * @param {JurisdictionsMetaDataIdentifierParams[]} allowedIdentifiers - allowed options keys list
  */
-export const getAllowedMetaDataIdentifiers = (allowedIdentifiers: MetaDataIdentifierParams[]) => {
+export const getAllowedMetaDataIdentifiers = (
+  allowedIdentifiers: JurisdictionsMetaDataIdentifierParams[],
+  metadataOption: MetadataOptions = MetadataOptions.JurisdictionMetadata,
+  allMetadataObj: typeof allSettingsMetadata = allSettingsMetadata
+) => {
+  const metadataIdentifierParams = allMetadataObj[metadataOption];
   const allowedOptions: SelectOption[] = [];
-  Object.entries(MetaDataIdentifierParams).forEach(([key, value]) => {
-    if (allowedIdentifiers.includes(key as MetaDataIdentifierParams)) {
+  Object.entries(metadataIdentifierParams).forEach(([key, value]) => {
+    if (
+      allowedIdentifiers.includes(
+        key as JurisdictionsMetaDataIdentifierParams | StructuresMetaDataIdentifierParams
+      )
+    ) {
       allowedOptions.push(value);
     }
   });

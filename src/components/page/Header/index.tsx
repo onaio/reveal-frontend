@@ -32,6 +32,7 @@ import {
   ENABLE_POPULATION_SERVER_SETTINGS,
   ENABLE_PRACTITIONERS,
   ENABLE_SMC,
+  ENABLE_STRUCTURE_METADATA_UPLOAD,
   ENABLE_TEAMS,
   ENABLE_USERS,
   NAVBAR_BRAND_IMG_SRC,
@@ -65,6 +66,7 @@ import {
   SERVER_SETTINGS,
   SIGN_OUT,
   SMC_REPORTING_TITLE,
+  STRUCTURE_METADATA,
   STUDENTS_TITLE,
 } from '../../../configs/lang';
 import {
@@ -90,6 +92,7 @@ import {
   REPORT_MDA_PLAN_URL,
   REPORT_MDA_POINT_PLAN_URL,
   REPORT_SMC_PLAN_URL,
+  STRUCTURE_METADATA_URL,
   VIEW_DRAFT_FILES_URL,
 } from '../../../constants';
 import './Header.css';
@@ -140,6 +143,7 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
       ENABLE_MDA_POINT ||
       ENABLE_CONFIG_FORM ||
       ENABLE_JURISDICTION_METADATA_UPLOAD ||
+      ENABLE_STRUCTURE_METADATA_UPLOAD ||
       ENABLE_POPULATION_SERVER_SETTINGS;
 
     const enableMonitorDropDown =
@@ -418,6 +422,17 @@ export class HeaderComponent extends React.Component<HeaderProps, State> {
                           activeClassName="active"
                         >
                           {JURISDICTION_METADATA}
+                        </NavLink>
+                      </DropdownItem>
+                    )}
+                    {ENABLE_STRUCTURE_METADATA_UPLOAD && (
+                      <DropdownItem>
+                        <NavLink
+                          to={STRUCTURE_METADATA_URL}
+                          className="nav-link"
+                          activeClassName="active"
+                        >
+                          {STRUCTURE_METADATA}
                         </NavLink>
                       </DropdownItem>
                     )}
