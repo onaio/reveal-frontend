@@ -2,7 +2,6 @@
 
 exports[`src/containers/pages/JurisdictionMetadata renders page correctly 1`] = `
 Object {
-  "HierachyFormSubmit": [Function],
   "currentPageLabel": "Jurisdiction Metadata",
   "currentPageUrl": "/jurisdiction-metadata",
   "hierachyDownloadSteps": Array [
@@ -14,6 +13,7 @@ Object {
   ],
   "hierachyDownloadTitle": "How To Update The Jurisdiction Metadata",
   "hierachyDownloadUrl": "location/hierarchy",
+  "hierachyFormSubmit": [Function],
   "identifierOptions": Array [
     Object {
       "label": "Coverage",

@@ -2,7 +2,6 @@
 
 exports[`src/containers/pages/StructureMetadata renders page correctly 1`] = `
 Object {
-  "HierachyFormSubmit": [Function],
   "currentPageLabel": "Structure Metadata",
   "currentPageUrl": "/structure-metadata",
   "hierachyDownloadSteps": Array [
@@ -14,6 +13,7 @@ Object {
   ],
   "hierachyDownloadTitle": "How To Update The Structure Metadata",
   "hierachyDownloadUrl": "location/findStructuresByAncestor",
+  "hierachyFormSubmit": [Function],
   "identifierOptions": Array [
     Object {
       "label": "Other Population (Unofficial)",
