@@ -1,9 +1,11 @@
-import ListView, { ListViewProps } from '@onaio/list-view';
+import { DrillDownTable } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import React, { ReactNode, useState } from 'react';
+import { Dictionary } from '@onaio/utils';
+import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
+import { Cell } from 'react-table';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { ExportForm } from '../../../../components/forms/ExportForm';
@@ -12,6 +14,11 @@ import HeaderBreadcrumb, {
   BreadCrumbProps,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import Loading from '../../../../components/page/Loading/index';
+import {
+  defaultOptions,
+  renderInFilterFactory,
+} from '../../../../components/Table/DrillDownFilters/utils';
+import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
 import { CLIENT_LABEL } from '../../../../configs/env';
 import {
   ADD_NEW_CSV,
@@ -19,7 +26,6 @@ import {
   DOWNLOAD,
   FILE_NAME,
   HOME,
-  NO_DATA_FOUND,
   OWNER,
   STUDENTS_TITLE,
   UPLOAD_DATE,
@@ -30,24 +36,32 @@ import {
   CLIENTS_LIST_URL,
   HOME_URL,
   OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT,
-  TABLE_BORDERED_CLASS,
+  QUERY_PARAM_TITLE,
   UPLOAD_CLIENT_CSV_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
+import { getQueryParams, RouteParams } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
-import { fetchFiles, File } from '../../../../store/ducks/opensrp/clientfiles/index';
+import {
+  fetchFiles,
+  File,
+  makeFilesArraySelector,
+} from '../../../../store/ducks/opensrp/clientfiles/index';
 import filesReducer, {
-  getFilesArray,
   reducerName as filesReducerName,
 } from '../../../../store/ducks/opensrp/clientfiles/index';
 import { ClientUpload } from '../ClientUpload';
 import { handleDownload, loadFiles } from './helpers/serviceHooks';
+
 /** register the plans reducer */
 reducerRegistry.register(filesReducerName, filesReducer);
+/** initialize files selector  */
+const filesArraySelector = makeFilesArraySelector();
+
 /** interface to describe props for ClientListView component */
 export interface ClientListViewProps {
   fetchFilesActionCreator: typeof fetchFiles;
-  files: File[] | null;
+  files: File[];
   serviceClass: typeof OpenSRPService;
   clientLabel: string;
 }
@@ -55,28 +69,8 @@ export interface ClientListViewProps {
 export const defaultClientListViewProps: ClientListViewProps = {
   clientLabel: CLIENT_LABEL,
   fetchFilesActionCreator: fetchFiles,
-  files: null,
+  files: [],
   serviceClass: OpenSRPService,
-};
-/**
- * Builds list view table data
- * @param {File[] } rowData file data coming from opensrp/history endpoint
- */
-export const buildListViewData: (rowData: File[]) => ReactNode[][] | undefined = rowData => {
-  return rowData.map((row: File, key: number) => {
-    const { url, fileName } = row;
-    return [
-      <p key={key}>
-        {fileName} &nbsp;
-        {/* tslint:disable-next-line jsx-no-lambda */}
-        <a href="#" onClick={() => handleDownload(url, fileName, OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT)}>
-          {`(${DOWNLOAD})`}
-        </a>
-      </p>,
-      row.providerID,
-      row.uploadDate,
-    ];
-  });
 };
 
 export const ClientListView = (props: ClientListViewProps & RouteComponentProps) => {
@@ -95,19 +89,69 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
      * We do not need to re-run since this effect doesn't depend on any values from api yet
      */
   }, []);
-  /** Overide renderRows to render html inside td */
-  const listViewProps: Pick<ListViewProps, 'data' | 'headerItems' | 'tableClass'> = {
-    data: [],
-    headerItems: [FILE_NAME, OWNER, UPLOAD_DATE],
-    tableClass: TABLE_BORDERED_CLASS,
-  };
-  if (files && files.length) {
-    listViewProps.data = buildListViewData(files) || [];
-  }
+
   /** Load Modal once we hit this route */
   if (location.pathname === UPLOAD_CLIENT_CSV_URL) {
     return <ClientUpload />;
   }
+
+  /** table columns */
+  const columns = [
+    {
+      Cell: (fileObj: Cell<File>) => {
+        const original = fileObj.row.original;
+        return (
+          <span key={original.identifier}>
+            {fileObj.value} &nbsp;
+            <button
+              className="btn btn-link"
+              // tslint:disable-next-line: jsx-no-lambda
+              onClick={() =>
+                handleDownload(original.url, original.fileName, OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT)
+              }
+            >
+              {`(${DOWNLOAD})`}
+            </button>
+          </span>
+        );
+      },
+      Header: FILE_NAME,
+      accessor: 'fileName',
+    },
+    {
+      Header: OWNER,
+      accessor: 'providerID',
+    },
+    {
+      Header: UPLOAD_DATE,
+      accessor: 'uploadDate',
+    },
+  ];
+
+  const tableProps = {
+    columns,
+    data: files as Dictionary[],
+    identifierField: 'identifier',
+    paginate: true,
+    renderInBottomFilterBar: renderInFilterFactory({
+      showColumnHider: false,
+      showFilters: false,
+      showPagination: true,
+      showRowHeightPicker: false,
+      showSearch: false,
+    }),
+    renderInTopFilterBar: renderInFilterFactory({
+      ...defaultOptions,
+      componentProps: props,
+      queryParam: QUERY_PARAM_TITLE,
+      showColumnHider: false,
+      showRowHeightPicker: false,
+    }),
+    renderNullDataComponent: () => <NoDataComponent />,
+    resize: true,
+    useDrillDown: false,
+  };
+
   /** props to pass to the headerBreadCrumb */
   const breadcrumbProps: BreadCrumbProps = {
     currentPage: {
@@ -151,8 +195,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
       </Row>
       <Row id="table-row">
         <Col>
-          <ListView {...listViewProps} />
-          {!(files && files.length) && <div>{NO_DATA_FOUND}</div>}
+          <DrillDownTable {...tableProps} />
         </Col>
       </Row>
       <hr />
@@ -163,8 +206,11 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
 ClientListView.defaultProps = defaultClientListViewProps;
 
 /** maps props to state via selectors */
-const mapStateToProps = (state: Partial<Store>) => {
-  const files = getFilesArray(state);
+const mapStateToProps = (state: Partial<Store>, ownProps: RouteComponentProps<RouteParams>) => {
+  const searchedTitle = getQueryParams(ownProps.location)[QUERY_PARAM_TITLE] as string;
+  const files = filesArraySelector(state, {
+    fileName: searchedTitle,
+  });
   return {
     files,
   };

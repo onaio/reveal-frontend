@@ -3,11 +3,13 @@ import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedClientListView, { ClientListView } from '../';
 import { STUDENTS_TITLE } from '../../../../../configs/lang';
+import { QUERY_PARAM_TITLE } from '../../../../../constants';
 import store from '../../../../../store';
 import reducer, {
   fetchFiles,
@@ -45,7 +47,7 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
     const mock: any = jest.fn();
     const props = {
       fetchFilesActionCreator: jest.fn(),
-      files: null,
+      files: [],
       history,
       location: mock,
       match: mock,
@@ -57,7 +59,7 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
     );
   });
 
-  it('renders ClientListView correctly $ changes page title', () => {
+  it('renders ClientListView correctly $ changes page title', async () => {
     const mock: any = jest.fn();
     // mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
@@ -73,6 +75,11 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
         <ClientListView {...props} />
       </Router>
     );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual(STUDENTS_TITLE);
     expect(wrapper.find(ClientListView).props().files).toEqual(fixtures.ClientListViewprops.files);
@@ -98,7 +105,7 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
     const props = {
       clientLabel: 'Students',
       fetchFilesActionCreator: jest.fn(),
-      files: null,
+      files: [],
       history,
       location: mock,
       match: mock,
@@ -108,12 +115,14 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
         <ClientListView {...props} />
       </Router>
     );
-    await flushPromises();
-    wrapper.update();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
 
-    expect(wrapper.find(ClientListView).props().files).toEqual(null);
+    expect(wrapper.find('DrillDownTable').props().data).toEqual([]);
     expect(wrapper.find('HeaderBreadcrumb').length).toEqual(1);
-    expect(wrapper.find('.listview-thead').length).toEqual(1);
+    expect(wrapper.find('DrillDownTable').length).toEqual(1);
     expect(wrapper.find('HeaderBreadcrumb').props()).toEqual({
       currentPage: {
         label: 'Students',
@@ -126,11 +135,17 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
         },
       ],
     });
-    expect(wrapper.find('#table-row .col div').text()).toEqual('No Data Found');
+    expect(wrapper.find('NoDataComponent').length).toBeTruthy();
+    expect(
+      wrapper
+        .find('NoDataComponent')
+        .at(1)
+        .text()
+    ).toEqual('No Data Found');
     wrapper.unmount();
   });
 
-  it('works with the Redux store', () => {
+  it('works with the Redux store', async () => {
     store.dispatch(fetchFiles([fixtures.files[0]]));
     const mock: any = jest.fn();
     // mock.mockImplementation(() => Promise.resolve(fixtures.plans));
@@ -146,25 +161,45 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
         </Router>
       </Provider>
     );
-    wrapper.update();
-    expect(
-      wrapper
-        .find('.table')
-        .at(0)
-        .props()
-    ).toMatchSnapshot();
-    expect(
-      wrapper
-        .find('.listview-thead')
-        .at(0)
-        .props()
-    ).toMatchSnapshot();
-    expect(
-      wrapper
-        .find('.listview-tbody')
-        .at(0)
-        .props()
-    ).toMatchSnapshot();
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot();
+    expect(wrapper.find('.thead .tr').text()).toEqual('File NameOwnerUpload Date');
+    expect(wrapper.find('.tbody .tr').length).toEqual(1);
+    expect(wrapper.find('.tbody .tr .td').length).toEqual(3);
+    wrapper.unmount();
+  });
+
+  it('Search works correctly', async () => {
+    store.dispatch(fetchFiles(fixtures.files));
+    const mock = jest.fn();
+    const props = {
+      history,
+      location: {
+        hash: '',
+        pathname: '',
+        search: `${QUERY_PARAM_TITLE}=junior`,
+        state: '',
+      },
+      match: mock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedClientListView {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    expect(wrapper.find('DrillDownTable').props().data?.length).toEqual(1);
+    expect(wrapper.find('DrillDownTable').props().data).toEqual([fixtures.files[2]]);
     wrapper.unmount();
   });
 });
