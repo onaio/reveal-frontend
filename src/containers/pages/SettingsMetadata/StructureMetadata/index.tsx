@@ -4,6 +4,13 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Card, CardBody, Col, Row } from 'reactstrap';
+import JurisdictionHierachyDownload, {
+  defaultInitialValues as defaultHierachyValues,
+} from '../../../../components/forms/JurisdictionHierachyDownload';
+import {
+  JurisdictionHierachyDownloadFormProps,
+  submitStructureHierachyForm,
+} from '../../../../components/forms/JurisdictionHierachyDownload/helpers';
 import JurisdictionMetadata, {
   defaultInitialValues,
   JurisdictionMetadataFormProps,
@@ -36,6 +43,7 @@ import {
 } from '../../../../configs/lang';
 import {
   HOME_URL,
+  OPENSRP_STRUCTURE_HIERARCHY_ENDPOINT,
   OPENSRP_V1_SETTINGS_ENDPOINT,
   OPENSRP_V2_SETTINGS,
   STRUCTURE_METADATA_URL,
@@ -88,6 +96,13 @@ const StructureMetadataImportView = () => {
     submitForm: formSubmit,
   };
 
+  /** props for the Jurisdiction Hierarchy form */
+  const jurisdictionMetadataDownloadFormProp: JurisdictionHierachyDownloadFormProps = {
+    initialValues: defaultHierachyValues,
+    serviceClass: new OpenSRPService(OPENSRP_STRUCTURE_HIERARCHY_ENDPOINT),
+    submitForm: submitStructureHierachyForm,
+  };
+
   return (
     <div>
       <Helmet>
@@ -107,7 +122,7 @@ const StructureMetadataImportView = () => {
                 <li>{JURISDICTION_UPLOAD_STEP_4}</li>
                 <li>{JURISDICTION_UPLOAD_STEP_5}</li>
               </ol>
-              {/* Add component for downloading structures template here */}
+              <JurisdictionHierachyDownload {...jurisdictionMetadataDownloadFormProp} />
             </CardBody>
           </Card>
         </Col>

@@ -8,8 +8,11 @@ import { toast } from 'react-toastify';
 import { Card, CardBody, Col, Row } from 'reactstrap';
 import JurisdictionHierachyDownload, {
   defaultInitialValues as defaultHierachyValues,
-  JurisdictionHierachyDownloadFormProps,
 } from '../../../../components/forms/JurisdictionHierachyDownload';
+import {
+  JurisdictionHierachyDownloadFormProps,
+  submitJurisdictionHierachyForm,
+} from '../../../../components/forms/JurisdictionHierachyDownload/helpers';
 import JurisdictionMetadata, {
   defaultInitialValues,
   JurisdictionMetadataFormProps,
@@ -140,6 +143,7 @@ const JurisdictionMetadataImportView = () => {
   const jurisdictionMetadataDownloadFormProp: JurisdictionHierachyDownloadFormProps = {
     initialValues: defaultHierachyValues,
     serviceClass: new OpenSRPService(OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT),
+    submitForm: submitJurisdictionHierachyForm,
   };
 
   return (

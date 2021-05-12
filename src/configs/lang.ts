@@ -169,6 +169,10 @@ export const JURISDICTION_HIERARCHY_TEMPLATE = translate(
   'JURISDICTION_HIERARCHY_TEMPLATE',
   'JurisdictionHierachyTemplate'
 );
+export const STRUCTURE_HIERARCHY_TEMPLATE = translate(
+  'STRUCTURE_HIERARCHY_TEMPLATE',
+  'StructureHierachyTemplate'
+);
 export const SELECT_COUNTRY = translate('SELECT_COUNTRY', 'Select Country');
 export const NEW_TITLE = translate('NEW_TITLE', 'New');
 export const PLAN_TITLE = translate('PLAN_TITLE', 'Plan');
