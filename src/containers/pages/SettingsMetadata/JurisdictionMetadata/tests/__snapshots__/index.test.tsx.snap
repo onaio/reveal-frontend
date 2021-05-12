@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/containers/pages/JurisdictionMetadata renders page correctly 1`] = `
+Object {
+  "currentPageLabel": "Jurisdiction Metadata",
+  "currentPageUrl": "/jurisdiction-metadata",
+  "hierachyDownloadSteps": Array [
+    "Click on the download template CSV button below.",
+    "Open the downloaded file and complete the risk and target details on the respective columns.",
+    "Save the updated CSV file.",
+    "Select the saved file on the upload form.",
+    "Click the \\"Upload File\\" button to complete the process.",
+  ],
+  "hierachyDownloadTitle": "How To Update The Jurisdiction Metadata",
+  "hierachyDownloadUrl": "location/hierarchy",
+  "hierachyFormSubmit": [Function],
+  "identifierOptions": Array [
+    Object {
+      "label": "Coverage",
+      "value": "jurisdiction_metadata-coverage",
+    },
+    Object {
+      "label": "Other Population (Unofficial)",
+      "value": "jurisdiction_metadata-other-population",
+    },
+    Object {
+      "label": "Population",
+      "value": "jurisdiction_metadata-population",
+    },
+    Object {
+      "label": "Risk",
+      "value": "jurisdiction_metadata-risk",
+    },
+    Object {
+      "label": "Structures",
+      "value": "jurisdiction_metadata-structures",
+    },
+    Object {
+      "label": "Target",
+      "value": "jurisdiction_metadata-target",
+    },
+  ],
+  "metadataDownloadTitle": "Download Jurisdiction Metadata",
+  "metadataOption": "jurisdiction_metadata",
+  "metdataUploadTitle": "Upload Jurisdiction Metadata",
+  "pageTitle": "Jurisdiction Metadata",
+  "serviceClass": [Function],
+}
+`;

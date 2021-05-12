@@ -35,6 +35,11 @@ export const ENABLE_JURISDICTION_METADATA_UPLOAD =
   process.env.REACT_APP_ENABLE_JURISDICTION_METADATA_UPLOAD === 'true';
 export type ENABLE_JURISDICTION_METADATA_UPLOAD = typeof ENABLE_JURISDICTION_METADATA_UPLOAD;
 
+/** Do you want to enable Structure Metadata Upload */
+export const ENABLE_STRUCTURE_METADATA_UPLOAD =
+  process.env.REACT_APP_ENABLE_STRUCTURE_METADATA_UPLOAD === 'true';
+export type ENABLE_STRUCTURE_METADATA_UPLOAD = typeof ENABLE_STRUCTURE_METADATA_UPLOAD;
+
 /** Do you want to enable the IRS features? */
 export const ENABLE_IRS = process.env.REACT_APP_ENABLE_IRS === 'true';
 export type ENABLE_IRS = typeof ENABLE_IRS;

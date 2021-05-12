@@ -18,6 +18,7 @@ import { HOME_URL, OPENSRP_V1_SETTINGS_ENDPOINT } from '../../../constants';
 import {
   creatSettingsPayloads,
   growl,
+  MetadataOptions,
   PapaResult,
   SettingConfiguration,
 } from '../../../helpers/utils';
@@ -43,6 +44,7 @@ export interface JurisdictionMetadataFormProps {
     values?: JurisdictionMetadataFormFields
   ) => void;
   initialValues: JurisdictionMetadataFormFields;
+  metadataOption: MetadataOptions;
   redirectAfterAction: string;
 }
 
@@ -69,8 +71,12 @@ export const submitForm = (
 ) => {
   if (values) {
     handleFile(values.file, results => {
-      const { serviceClass } = props;
-      const payloads: SettingConfiguration[] = creatSettingsPayloads(results);
+      const { serviceClass, metadataOption } = props;
+      const payloads: SettingConfiguration[] = creatSettingsPayloads(
+        results,
+        false,
+        metadataOption
+      );
       if (payloads.length > 0) {
         const valuesToSend = { settingConfigurations: payloads };
         serviceClass
@@ -163,6 +169,7 @@ const JurisdictionMetadataForm = (props: JurisdictionMetadataFormProps) => {
 const defaultProps: JurisdictionMetadataFormProps = {
   disabledFields: [],
   initialValues: defaultInitialValues,
+  metadataOption: MetadataOptions.JurisdictionMetadata,
   redirectAfterAction: HOME_URL,
   serviceClass: new OpenSRPService(OPENSRP_V1_SETTINGS_ENDPOINT),
   submitForm,

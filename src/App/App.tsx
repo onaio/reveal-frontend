@@ -90,6 +90,7 @@ import {
   REPORT_SMC_PLAN_URL,
   SESSION_EXPIRED_URL,
   SINGLE_ORGANIZATION_URL,
+  STRUCTURE_METADATA_URL,
   VIEW_DRAFT_FILES_URL,
 } from '../constants';
 import ConnectedHeader from '../containers/ConnectedHeader';
@@ -125,7 +126,6 @@ import ConnectedIRSLitePlansList from '../containers/pages/IRSLite/plans';
 import ConnectedAutoSelectView from '../containers/pages/JurisdictionAssignment/AutoSelectJurisdictions';
 import { ConnectedEntryView } from '../containers/pages/JurisdictionAssignment/EntryView';
 import ConnectedJurisdictionAssignmentView from '../containers/pages/JurisdictionAssignment/ManualSelectJurisdiction';
-import JurisdictionMetadata from '../containers/pages/JurisdictionMetadata';
 import ConnectedMDALiteCddReports from '../containers/pages/MDALite/cddReports/cdds';
 import ConnectedMDALiteSupervisorReports from '../containers/pages/MDALite/cddReports/supervisors';
 import ConnectedMdaLiteJurisdictionReport from '../containers/pages/MDALite/jurisdictionsReport';
@@ -145,6 +145,8 @@ import { ConnectedPlanAssignment } from '../containers/pages/PlanAssignment';
 import ConnectedCreateEditPractitionerView from '../containers/pages/PractitionerViews/CreateEditPractitioner';
 import ConnectedPractitionersListView from '../containers/pages/PractitionerViews/PractitionerListView';
 import { EditServerSettings } from '../containers/pages/ServerSettings/EditSettings';
+import JurisdictionMetadata from '../containers/pages/SettingsMetadata/JurisdictionMetadata';
+import StructureMetadataImportView from '../containers/pages/SettingsMetadata/StructureMetadata';
 import ConnectedSMCJurisdictionReport from '../containers/pages/SMC/jurisdictionsReport';
 import ConnectedSMCReportingMap from '../containers/pages/SMC/Map';
 import ConnectedSMCPlansList from '../containers/pages/SMC/plans';
@@ -682,6 +684,14 @@ const App = () => {
                   exact={true}
                   path={JURISDICTION_METADATA_URL}
                   component={JurisdictionMetadata}
+                />
+                {/* Upload Structure Metadata view */}
+                <ConnectedPrivateRoute
+                  redirectPath={APP_CALLBACK_URL}
+                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  exact={true}
+                  path={STRUCTURE_METADATA_URL}
+                  component={StructureMetadataImportView}
                 />
                 {/* server settings - Editing population characteristics */}
                 <ConnectedPrivateRoute

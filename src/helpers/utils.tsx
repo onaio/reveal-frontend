@@ -45,6 +45,7 @@ import {
   NO_INVESTIGATIONS_FOUND,
   NO_OPTIONS,
   SESSION_EXPIRED_ERROR,
+  STRUCTURE_METADATA,
 } from '../configs/lang';
 import {
   FIReasons,
@@ -891,6 +892,12 @@ export interface SettingConfiguration {
   teamId?: string;
 }
 
+/** Enum representing the possible metadata options */
+export enum MetadataOptions {
+  JurisdictionMetadata = 'jurisdiction_metadata',
+  StructureMetadata = 'structure_metadata',
+}
+
 /**
  * Create payload for sending settings to OpenSRP v1 Settings endpoint
  * Rules applied on creating payload:
@@ -900,11 +907,16 @@ export interface SettingConfiguration {
  */
 export const creatSettingsPayloads = (
   result: PapaResult,
-  addProvider: boolean = false
+  addProvider: boolean = false,
+  metadataOption: MetadataOptions = MetadataOptions.JurisdictionMetadata
 ): SettingConfiguration[] => {
   let payloads: SettingConfiguration[] = [];
   const { data } = result;
   const username = getUser(store.getState()).username;
+  const metadataType =
+    metadataOption === MetadataOptions.JurisdictionMetadata
+      ? JURISDICTION_METADATA
+      : STRUCTURE_METADATA;
   // check if jurisdiction_id exists
   if (data.length > 0 && data[0].jurisdiction_id) {
     // get the metadata items
@@ -912,7 +924,7 @@ export const creatSettingsPayloads = (
     const filteredHeaders = headers.filter(f => ![JURISDICTION_ID, JURISDICTION_NAME].includes(f));
     loop1: for (const header of filteredHeaders) {
       const settings: Setting[] = [];
-      const identifier = `jurisdiction_metadata-${header}`;
+      const identifier = `${metadataOption}-${header}`;
       // add the metadata values with jurisdiction as the key
       for (const item of data) {
         const entries = Object.entries(item);
@@ -927,7 +939,7 @@ export const creatSettingsPayloads = (
               PLAN_UUID_NAMESPACE
             );
             const setting: Setting = {
-              description: `${JURISDICTION_METADATA} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
+              description: `${metadataType} for ${item.jurisdiction_name} id ${item.jurisdiction_id}`,
               key: item.jurisdiction_id,
               label: item.jurisdiction_name ? item.jurisdiction_name : item.jurisdiction_id,
               uuid,
