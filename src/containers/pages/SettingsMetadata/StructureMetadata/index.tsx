@@ -1,37 +1,15 @@
-/** Jurisdiction Metadata page
- * Displays Jurisdiction Metadata import form
+/** Structure Metadata page
+ * Displays Structure Metadata import form
  */
 import React from 'react';
-import Helmet from 'react-helmet';
-import { Card, CardBody, Col, Row } from 'reactstrap';
-import JurisdictionHierachyDownload, {
-  defaultInitialValues as defaultHierachyValues,
-} from '../../../../components/forms/JurisdictionHierachyDownload';
-import {
-  JurisdictionHierachyDownloadFormProps,
-  submitStructureHierachyForm,
-} from '../../../../components/forms/JurisdictionHierachyDownload/helpers';
-import JurisdictionMetadata, {
-  defaultInitialValues,
-  JurisdictionMetadataFormProps,
-  submitForm,
-} from '../../../../components/forms/JurisdictionMetadata';
-import JurisdictionMetadataDownload, {
-  defaultInitialValues as initialValues,
-  JurisdictionMetadataDownloadFormProps,
-  submitForm as formSubmit,
-} from '../../../../components/forms/JurisdictionMetadataDownload';
+import { submitStructureHierachyForm } from '../../../../components/forms/JurisdictionHierachyDownload/helpers';
 import {
   getAllowedMetaDataIdentifiers,
   JurisdictionsMetaDataIdentifierParams,
 } from '../../../../components/forms/JurisdictionMetadataDownload/helpers';
-import HeaderBreadcrumb, {
-  BreadCrumbProps,
-} from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import { ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS } from '../../../../configs/env';
 import {
   DOWNLOAD_STRUCTURE_METADATA,
-  HOME,
   HOW_TO_UPDATE_STRUCTURE_METADATA,
   JURISDICTION_UPLOAD_STEP_1,
   JURISDICTION_UPLOAD_STEP_2,
@@ -42,15 +20,12 @@ import {
   UPLOAD_STRUCTURE_METADATA,
 } from '../../../../configs/lang';
 import {
-  HOME_URL,
   OPENSRP_STRUCTURE_HIERARCHY_ENDPOINT,
-  OPENSRP_V1_SETTINGS_ENDPOINT,
-  OPENSRP_V2_SETTINGS,
   STRUCTURE_METADATA_URL,
 } from '../../../../constants';
 import { MetadataOptions } from '../../../../helpers/utils';
 import { OpenSRPService } from '../../../../services/opensrp';
-import '../JurisdictionMetadata/index.css';
+import { GenericSettingsMetadata, GenericSettingsMetadataProps } from '../genericMetadata';
 
 /** get enabled identifier options */
 const enabledIdentifierOptions = getAllowedMetaDataIdentifiers(
@@ -58,95 +33,33 @@ const enabledIdentifierOptions = getAllowedMetaDataIdentifiers(
   MetadataOptions.StructureMetadata
 );
 
-/** JurisdictionMetadataImportView component */
+/** StructureMetadataImportView component */
 const StructureMetadataImportView = () => {
-  //  props for breadcrumbs
-  const breadcrumbProps: BreadCrumbProps = {
-    currentPage: {
-      label: STRUCTURE_METADATA,
-      url: STRUCTURE_METADATA_URL,
-    },
-    pages: [],
-  };
-  const homePage = {
-    label: `${HOME}`,
-    url: `${HOME_URL}`,
-  };
-  breadcrumbProps.pages = [homePage];
-
-  const metadataOption = MetadataOptions.StructureMetadata;
-
-  /** props for the Jurisdiction Metadata form */
-  const jurisdictionMetadataFormProps: JurisdictionMetadataFormProps = {
-    disabledFields: [],
-    initialValues: defaultInitialValues,
-    metadataOption,
-    redirectAfterAction: HOME_URL,
-    serviceClass: new OpenSRPService(OPENSRP_V1_SETTINGS_ENDPOINT),
-    submitForm,
-  };
-
-  /** props for the Jurisdiction Metadata form */
-  const jurisdictionMetadataDownloadFormProps: JurisdictionMetadataDownloadFormProps = {
-    disabledFields: [],
+  const structureMetadataProps: GenericSettingsMetadataProps = {
+    currentPageLabel: STRUCTURE_METADATA,
+    currentPageUrl: STRUCTURE_METADATA_URL,
+    hierachyDownloadSteps: [
+      JURISDICTION_UPLOAD_STEP_1,
+      JURISDICTION_UPLOAD_STEP_2,
+      JURISDICTION_UPLOAD_STEP_3,
+      JURISDICTION_UPLOAD_STEP_4,
+      JURISDICTION_UPLOAD_STEP_5,
+    ],
+    hierachyDownloadTitle: HOW_TO_UPDATE_STRUCTURE_METADATA,
+    hierachyDownloadUrl: OPENSRP_STRUCTURE_HIERARCHY_ENDPOINT,
+    hierachyFormSubmit: submitStructureHierachyForm,
     identifierOptions: enabledIdentifierOptions,
-    initialValues,
-    metadataOption,
-    serviceClass: new OpenSRPService(OPENSRP_V2_SETTINGS),
-    submitForm: formSubmit,
-  };
-
-  /** props for the Jurisdiction Hierarchy form */
-  const jurisdictionMetadataDownloadFormProp: JurisdictionHierachyDownloadFormProps = {
-    initialValues: defaultHierachyValues,
-    serviceClass: new OpenSRPService(OPENSRP_STRUCTURE_HIERARCHY_ENDPOINT),
-    submitForm: submitStructureHierachyForm,
+    metadataDownloadTitle: DOWNLOAD_STRUCTURE_METADATA,
+    metadataOption: MetadataOptions.StructureMetadata,
+    metdataUploadTitle: UPLOAD_STRUCTURE_METADATA,
+    pageTitle: STRUCTURE_METADATA,
+    serviceClass: OpenSRPService,
   };
 
   return (
-    <div>
-      <Helmet>
-        <title>{STRUCTURE_METADATA}</title>
-      </Helmet>
-      <HeaderBreadcrumb {...breadcrumbProps} />
-      <h3 className="mb-3 mt-5 page-title">{STRUCTURE_METADATA}</h3>
-      <Row>
-        <Col md={6}>
-          <Card>
-            <CardBody className="meta-card-body">
-              <h5 className="mb-3 mt-5 page-title">{HOW_TO_UPDATE_STRUCTURE_METADATA}</h5>
-              <ol>
-                <li>{JURISDICTION_UPLOAD_STEP_1}</li>
-                <li>{JURISDICTION_UPLOAD_STEP_2}</li>
-                <li>{JURISDICTION_UPLOAD_STEP_3}</li>
-                <li>{JURISDICTION_UPLOAD_STEP_4}</li>
-                <li>{JURISDICTION_UPLOAD_STEP_5}</li>
-              </ol>
-              <JurisdictionHierachyDownload {...jurisdictionMetadataDownloadFormProp} />
-            </CardBody>
-          </Card>
-        </Col>
-        <Col md={6}>
-          <Card>
-            <CardBody className="meta-card-body">
-              <h5 className="mb-3 mt-5 page-title">{UPLOAD_STRUCTURE_METADATA}</h5>
-              <JurisdictionMetadata {...jurisdictionMetadataFormProps} />
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-      <hr />
-      <Row>
-        <Col md={6}>
-          <Card>
-            <CardBody className="meta-card-body">
-              <h5 className="mb-3 mt-5 page-title">{DOWNLOAD_STRUCTURE_METADATA}</h5>
-              <JurisdictionMetadataDownload {...jurisdictionMetadataDownloadFormProps} />
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-    </div>
+    <React.Fragment>
+      <GenericSettingsMetadata {...structureMetadataProps} />
+    </React.Fragment>
   );
 };
 

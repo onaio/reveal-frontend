@@ -1,18 +1,21 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
-import { waitFor } from '@testing-library/react';
 import { mount } from 'enzyme';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import { JURISDICTION_METADATA } from '../../../../../configs/lang';
-import { JURISDICTION_METADATA_URL } from '../../../../../constants';
-import * as helperUtils from '../../../../../helpers/utils';
+import {
+  JURISDICTION_METADATA,
+  JURISDICTION_UPLOAD_STEP_1,
+  JURISDICTION_UPLOAD_STEP_2,
+  JURISDICTION_UPLOAD_STEP_3,
+  JURISDICTION_UPLOAD_STEP_4,
+  JURISDICTION_UPLOAD_STEP_5,
+} from '../../../../../configs/lang';
 import store from '../../../../../store';
 import * as orgDucks from '../../../../../store/ducks/opensrp/organizations';
-import * as fixtures from '../../../../../store/ducks/tests/fixtures';
-import JurisdictionMetadataImportView, { downloadCsvTemplate } from '../index';
+import JurisdictionMetadataImportView from '../index';
 
 reducerRegistry.register(orgDucks.reducerName, orgDucks.default);
 
@@ -26,58 +29,57 @@ describe('src/containers/pages/JurisdictionMetadata', () => {
 
   it('renders page correctly', () => {
     // see it renders form when organization is null
-    const mock: any = jest.fn();
-    const props = {
-      history,
-      location: mock,
-      match: {
-        isExact: true,
-        params: {},
-        path: `${JURISDICTION_METADATA_URL}`,
-        url: `${JURISDICTION_METADATA_URL}`,
-      },
-    };
     const wrapper = mount(
       <Provider store={store}>
         <Router history={history}>
-          <JurisdictionMetadataImportView {...props} />
+          <JurisdictionMetadataImportView />
         </Router>
       </Provider>
     );
     // look for crucial components or pages that should be displayed
 
-    // expect a form
-    expect(wrapper.find('form').length).toEqual(3);
-
     // page title
     const helmet = Helmet.peek();
     expect(helmet.title).toEqual(JURISDICTION_METADATA);
+    expect(wrapper.find('h3').text()).toEqual('Jurisdiction Metadata');
+
+    // page card titles
+    expect(wrapper.find('h5').map(title => title.text())).toEqual([
+      'How To Update The Jurisdiction Metadata',
+      'Upload Jurisdiction Metadata',
+      'Download Jurisdiction Metadata',
+    ]);
+
+    // update Jurisdiction metadata instructions
+    expect(
+      wrapper
+        .find('ol')
+        .at(1)
+        .text()
+    ).toEqual(
+      `${JURISDICTION_UPLOAD_STEP_1}${JURISDICTION_UPLOAD_STEP_2}${JURISDICTION_UPLOAD_STEP_3}${JURISDICTION_UPLOAD_STEP_4}${JURISDICTION_UPLOAD_STEP_5}`
+    );
 
     // breadcrumb
     const breadcrumbWrapper = wrapper.find('Breadcrumb');
     expect(breadcrumbWrapper.length).toEqual(1);
+    expect(
+      wrapper
+        .find('ol')
+        .at(0)
+        .text()
+    ).toEqual('HomeJurisdiction Metadata');
+
+    // GenericSettingsMetadata component
+    expect(wrapper.find('GenericSettingsMetadata').length).toEqual(1);
+    expect(wrapper.find('GenericSettingsMetadata').props()).toMatchSnapshot();
 
     // and the form?
-    const form = wrapper.find('JurisdictionMetadataForm');
-    expect(form.length).toEqual(1);
+    expect(wrapper.find('form').length).toEqual(3);
+    expect(wrapper.find('JurisdictionMetadataForm').length).toEqual(1);
+    expect(wrapper.find('JurisdictionMetadataDownloadForm').length).toEqual(1);
+    expect(wrapper.find('JurisdictionHierachyDownloadForm').length).toEqual(1);
 
     wrapper.unmount();
-  });
-
-  it('downloads CSV template', async () => {
-    const mockDownload: any = jest.fn();
-    (helperUtils as any).downloadFile = mockDownload;
-    const mockedOpenSRPservice = jest.fn().mockImplementation(() => {
-      return {
-        list: () => {
-          return Promise.resolve(fixtures.jurisdictionsResponse);
-        },
-      };
-    });
-    downloadCsvTemplate(mockedOpenSRPservice);
-    await waitFor(() => {
-      expect(mockedOpenSRPservice).toHaveBeenCalledTimes(1);
-      expect(mockDownload).toBeCalled();
-    });
   });
 });

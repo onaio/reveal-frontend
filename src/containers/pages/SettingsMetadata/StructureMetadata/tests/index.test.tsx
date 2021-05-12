@@ -68,10 +68,15 @@ describe('src/containers/pages/StructureMetadata', () => {
         .text()
     ).toEqual('HomeStructure Metadata');
 
+    // GenericSettingsMetadata component
+    expect(wrapper.find('GenericSettingsMetadata').length).toEqual(1);
+    expect(wrapper.find('GenericSettingsMetadata').props()).toMatchSnapshot();
+
     // expect a form
-    expect(wrapper.find('form').length).toEqual(2);
+    expect(wrapper.find('form').length).toEqual(3);
     expect(wrapper.find('JurisdictionMetadataForm').length).toEqual(1);
     expect(wrapper.find('JurisdictionMetadataDownloadForm').length).toEqual(1);
+    expect(wrapper.find('JurisdictionHierachyDownloadForm').length).toEqual(1);
 
     wrapper.unmount();
   });
