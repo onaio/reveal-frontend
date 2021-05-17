@@ -169,6 +169,10 @@ export const JURISDICTION_HIERARCHY_TEMPLATE = translate(
   'JURISDICTION_HIERARCHY_TEMPLATE',
   'JurisdictionHierachyTemplate'
 );
+export const STRUCTURE_HIERARCHY_TEMPLATE = translate(
+  'STRUCTURE_HIERARCHY_TEMPLATE',
+  'StructureHierachyTemplate'
+);
 export const SELECT_COUNTRY = translate('SELECT_COUNTRY', 'Select Country');
 export const NEW_TITLE = translate('NEW_TITLE', 'New');
 export const PLAN_TITLE = translate('PLAN_TITLE', 'Plan');
@@ -196,6 +200,19 @@ export const UPLOAD_JURISDICTION_METADATA = translate(
 export const HOW_TO_UPDATE_JURISDICTION_METADATA = translate(
   'HOW_TO_UPDATE_JURISDICTION_METADATA',
   'How To Update The Jurisdiction Metadata'
+);
+export const STRUCTURE_METADATA = translate('STRUCTURE_METADATA', 'Structure Metadata');
+export const DOWNLOAD_STRUCTURE_METADATA = translate(
+  'DOWNLOAD_STRUCTURE_METADATA',
+  'Download Structure Metadata'
+);
+export const UPLOAD_STRUCTURE_METADATA = translate(
+  'UPLOAD_STRUCTURE_METADATA',
+  'Upload Structure Metadata'
+);
+export const HOW_TO_UPDATE_STRUCTURE_METADATA = translate(
+  'HOW_TO_UPDATE_STRUCTURE_METADATA',
+  'How To Update The Structure Metadata'
 );
 
 export const REACTIVE = translate('REACTIVE', 'Reactive');

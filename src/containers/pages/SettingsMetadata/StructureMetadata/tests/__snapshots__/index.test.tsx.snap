@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/containers/pages/StructureMetadata renders page correctly 1`] = `
+Object {
+  "currentPageLabel": "Structure Metadata",
+  "currentPageUrl": "/structure-metadata",
+  "hierachyDownloadSteps": Array [
+    "Click on the download template CSV button below.",
+    "Open the downloaded file and complete the risk and target details on the respective columns.",
+    "Save the updated CSV file.",
+    "Select the saved file on the upload form.",
+    "Click the \\"Upload File\\" button to complete the process.",
+  ],
+  "hierachyDownloadTitle": "How To Update The Structure Metadata",
+  "hierachyDownloadUrl": "location/findStructuresByAncestor",
+  "hierachyFormSubmit": [Function],
+  "identifierOptions": Array [
+    Object {
+      "label": "Other Population (Unofficial)",
+      "value": "structure_metadata-other-population",
+    },
+    Object {
+      "label": "Population",
+      "value": "structure_metadata-population",
+    },
+  ],
+  "metadataDownloadTitle": "Download Structure Metadata",
+  "metadataOption": "structure_metadata",
+  "metdataUploadTitle": "Upload Structure Metadata",
+  "pageTitle": "Structure Metadata",
+  "serviceClass": [Function],
+}
+`;

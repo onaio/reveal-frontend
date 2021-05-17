@@ -123,6 +123,7 @@ export const REACT_CALLBACK_PATH = '/oauth/callback/:id';
 export const CLIENTS_LIST_URL = '/clients';
 export const UPLOAD_CLIENT_CSV_URL = '/clients/upload';
 export const JURISDICTION_METADATA_URL = '/jurisdiction-metadata';
+export const STRUCTURE_METADATA_URL = '/structure-metadata';
 export const GO_BACK_TEXT = 'Go Back';
 export const MANIFEST_RELEASE_URL = '/manifest/releases';
 export const VIEW_DRAFT_FILES_URL = '/files/draft';
@@ -172,6 +173,7 @@ export const OPENSRP_PLANS_BY_USER_FILTER = 'plans/user';
 export const OPENSRP_V1_SETTINGS_ENDPOINT = 'settings/sync';
 export const OPENSRP_V2_SETTINGS = 'v2/settings/';
 export const OPENSRP_JURISDICTION_HIERARCHY_ENDPOINT = 'location/hierarchy';
+export const OPENSRP_STRUCTURE_HIERARCHY_ENDPOINT = 'location/findStructuresByAncestor';
 export const OPENSRP_PLAN_HIERARCHY_ENDPOINT = 'location/hierarchy/plan';
 export const OPENSRP_FIND_LOCATION_BY_JURISDICTION_IDS = `location/findByJurisdictionIds`;
 export const OPENSRP_ACTIVE = 'Active';
@@ -268,6 +270,10 @@ export const JURISDICTION_METADATA_OTHER_POPULATION = 'jurisdiction_metadata-oth
 export const JURISDICTION_CSV_TEMPLATE = 'jurisdiction_id,jurisdiction_name,risk,coverage';
 export const JURISDICTION_CSV_FILE_NAME = 'jurisdiction-metadata.csv';
 export const GET_ALL = 'getAll';
+
+/** structure metadata */
+export const STRUCTURE_METADATA_POPULATION = 'structure_metadata-population';
+export const STRUCTURE_METADATA_OTHER_POPULATION = 'structure_metadata-other-population';
 
 /** CSV File MIME Types */
 export const TEXT_CSV = 'text/csv';

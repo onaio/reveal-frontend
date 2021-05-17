@@ -20,9 +20,13 @@ import {
 } from '../../../configs/lang';
 import { OPENSRP_V2_SETTINGS, TEXT_CSV } from '../../../constants';
 import { displayError } from '../../../helpers/errors';
-import { downloadFile, successGrowl } from '../../../helpers/utils';
+import { downloadFile, MetadataOptions, successGrowl } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
-import { getAllowedMetaDataIdentifiers, MetaDataIdentifierParams, SelectOption } from './helpers';
+import {
+  getAllowedMetaDataIdentifiers,
+  JurisdictionsMetaDataIdentifierParams,
+  SelectOption,
+} from './helpers';
 
 /** yup validation schema for Jurisdiction Metadata Form input */
 export const JurisdictionSchema = Yup.object().shape({
@@ -80,15 +84,17 @@ const createCsv = (entries: JurisdictionMetadataFile[], fileName: string): void 
 /**
  * Download CSV file from obtained data
  */
-export const download = (response: JurisdictionMetadataResponse[]) => {
+export const download = (
+  response: JurisdictionMetadataResponse[],
+  metadataOption: MetadataOptions
+) => {
   if (!response.length) {
     return;
   }
 
   const entries: JurisdictionMetadataFile[] = [];
-
   response.forEach(item => {
-    const metaType = item.settingIdentifier.replace('jurisdiction_metadata-', '');
+    const metaType = item.settingIdentifier.replace(`${metadataOption}-`, '');
     const entry: JurisdictionMetadataFile = {
       jurisdiction_id: item.key,
       jurisdiction_name: item.label,
@@ -111,6 +117,7 @@ export interface JurisdictionMetadataDownloadFormProps {
     props: JurisdictionMetadataDownloadFormProps,
     values: JurisdictionMetadataDownloadFormFields
   ) => void;
+  metadataOption: MetadataOptions;
   identifierOptions?: SelectOption[];
   initialValues: JurisdictionMetadataDownloadFormFields;
 }
@@ -125,7 +132,7 @@ export const submitForm = (
   props: JurisdictionMetadataDownloadFormProps,
   values: JurisdictionMetadataDownloadFormFields
 ) => {
-  const { serviceClass } = props;
+  const { serviceClass, metadataOption } = props;
   const params = {
     identifier: values.identifier.value,
     serverVersion: 0,
@@ -134,7 +141,7 @@ export const submitForm = (
     .list(params)
     .then((response: JurisdictionMetadataResponse[]) => {
       if (response.length) {
-        download(response);
+        download(response, metadataOption);
         successGrowl(FILE_DOWNLOADED_SUCCESSFULLY);
       } else {
         displayError(new Error(ERROR_NO_JURISDICTION_METADATA_FOUND));
@@ -150,7 +157,7 @@ export const submitForm = (
 
 /** get enabled identifier options */
 const enabledIdentifierOptions = getAllowedMetaDataIdentifiers(
-  ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS as MetaDataIdentifierParams[]
+  ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS as JurisdictionsMetaDataIdentifierParams[]
 );
 
 const JurisdictionMetadataDownloadForm = (props: JurisdictionMetadataDownloadFormProps) => {
@@ -219,6 +226,7 @@ const defaultProps: JurisdictionMetadataDownloadFormProps = {
   disabledFields: [],
   identifierOptions: enabledIdentifierOptions,
   initialValues: defaultInitialValues,
+  metadataOption: MetadataOptions.JurisdictionMetadata,
   serviceClass: new OpenSRPService(OPENSRP_V2_SETTINGS),
   submitForm,
 };

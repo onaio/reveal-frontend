@@ -180,6 +180,12 @@ Below is a list of currently supported environment variables:
   - to activate set the env to `true`, any other value will be interpreted as false
   - show FI reason column on the plans list view instead of intervention type column
 
+- **REACT_APP_ENABLE_STRUCTURE_METADATA_UPLOAD**
+
+  - **not Required**; _(string)_
+  - to activate set the env to `true`, any other value will be interpreted as false
+  - enables the structure metadata page
+
 - **REACT_APP_SUPERSET_MDA_LITE_REPORTING_INDICATOR_ROWS**
 
   - **not Required**; _(string)_
