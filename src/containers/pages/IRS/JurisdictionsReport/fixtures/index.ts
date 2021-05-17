@@ -1,7 +1,10 @@
 import { DrillDownColumn } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { Cell } from 'react-table';
-import { getIRSThresholdAdherenceIndicator } from '../../../../../helpers/indicators';
+import {
+  getIRSThresholdAdherenceIndicator,
+  renderPercentage,
+} from '../../../../../helpers/indicators';
 
 /* tslint:disable no-var-requires */
 export const ZambiaJurisdictionsJSON = require('./zambia_jurisdictions.json');
@@ -223,13 +226,13 @@ export const mdaPointColumns = [
     accessor: 'sacrefmedreason',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => renderPercentage(cell),
     Header: 'ADR Reported (%)',
     accessor: 'mmaadr',
     sortType: 'basic',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => renderPercentage(cell),
     Header: 'ADR Severe (%)',
     accessor: 'mmaadrsev',
     sortType: 'basic',

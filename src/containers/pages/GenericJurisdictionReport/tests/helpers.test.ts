@@ -58,6 +58,14 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
     expect(JSON.stringify(helpers.mdaJurisdictionsColumns)).toEqual(
       JSON.stringify(fixtures.mdaPointColumns)
     );
+    // check ADR Reported (%) value function
+    expect(helpers.mdaJurisdictionsColumns[5].Cell?.toString()).toEqual(
+      fixtures.mdaPointColumns[5].Cell?.toString()
+    );
+    // check ADR Severe (%) value function
+    expect(helpers.mdaJurisdictionsColumns[6].Cell?.toString()).toEqual(
+      fixtures.mdaPointColumns[6].Cell?.toString()
+    );
   });
 
   it('getColumnsToUse: should return correct columns', () => {
