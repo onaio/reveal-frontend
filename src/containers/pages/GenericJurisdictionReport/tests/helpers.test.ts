@@ -58,6 +58,9 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
     expect(JSON.stringify(helpers.mdaJurisdictionsColumns)).toEqual(
       JSON.stringify(fixtures.mdaPointColumns)
     );
+    expect(helpers.mdaJurisdictionsColumns[6].Cell?.toString()).toEqual(
+      fixtures.mdaPointColumns[6].Cell?.toString() // check function for adverse reaction
+    );
   });
 
   it('should call correct functions for adverse reaction columns', () => {
