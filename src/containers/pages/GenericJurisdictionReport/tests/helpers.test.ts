@@ -63,10 +63,9 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
   it('should call correct functions for adverse reaction columns', () => {
     const adrReportedExp = helpers.mdaJurisdictionsColumns[6].Cell.toString();
     const adrSevereExp = helpers.mdaJurisdictionsColumns[7].Cell.toString();
-    const shouldRec = 'cell => (0, _indicators.renderPercentage)(cell)';
 
-    expect(adrReportedExp).toEqual(shouldRec);
-    expect(adrSevereExp).toEqual(shouldRec);
+    expect(adrReportedExp).toEqual('cell => (0, _indicators.renderPercentage)(cell)');
+    expect(adrSevereExp).toEqual('cell => (0, _indicators.renderPercentage)(cell)');
   });
 
   it('getColumnsToUse: should return correct columns', () => {
