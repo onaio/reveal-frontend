@@ -258,13 +258,13 @@ export const mdaJurisdictionsColumns = [
     accessor: 'sacrefmedreason',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => renderPercentage(cell),
     Header: 'ADR Reported (%)',
     accessor: 'mmaadr',
     sortType: 'basic',
   },
   {
-    Cell: (cell: Cell) => getIRSThresholdAdherenceIndicator(cell),
+    Cell: (cell: Cell) => renderPercentage(cell),
     Header: 'ADR Severe (%)',
     accessor: 'mmaadrsev',
     sortType: 'basic',
