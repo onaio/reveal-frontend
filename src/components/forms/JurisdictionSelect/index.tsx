@@ -1,6 +1,6 @@
 import { Dictionary } from '@onaio/utils/dist/types/types';
 import { FieldConfig, FieldProps, FormikProps } from 'formik';
-import React, { useState } from 'react';
+import React, { FormEvent, useState } from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
 import { SELECT } from '../../../configs/lang';
 import { OPENSRP_ACTIVE, OPENSRP_FIND_BY_PROPERTIES, OPENSRP_LOCATION } from '../../../constants';
@@ -8,6 +8,8 @@ import { displayError } from '../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../helpers/utils';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
 import { NOT_AVAILABLE } from '../../TreeWalker/constants';
+import { getNameTitle } from '../PlanForm/helpers';
+import { event as FormEv } from '../PlanForm/tests/fixtures';
 import './style.css';
 
 /** interface for jurisdiction options
@@ -208,6 +210,21 @@ export const promiseOptions = (
       });
   });
 
+const onSelectionComplete = (e: FormEvent<Element>, form: FormikProps<any>) => {
+  const target = e.target as HTMLInputElement;
+  const fieldsThatChangePlanTitle = ['interventionType', 'fiStatus', 'date', 'jurisdictions[0].id'];
+
+  const nameTitle = getNameTitle(e, form.values);
+  if (
+    fieldsThatChangePlanTitle.includes(target.name) ||
+    !form.values.title ||
+    form.values.title === ''
+  ) {
+    form.setFieldValue('title', nameTitle[1]);
+  }
+  form.setFieldValue('name', nameTitle[0]);
+};
+
 /**
  * Handles async select onchange with options
  * @param optionVal Selected options
@@ -269,6 +286,15 @@ export const handleChangeWithOptions = (
           if (fiStatusFieldName) {
             const val = optionVal.fiStatus || NOT_AVAILABLE;
             form.setFieldValue(fiStatusFieldName, val);
+            form.setFieldTouched(fiStatusFieldName, true);
+            const updatedForm = { ...form };
+            updatedForm.values.jurisdictions[0] = { id: optionVal.value, name: optionVal.label };
+            const target = FormEv.target as HTMLInputElement;
+            target.name = fiStatusFieldName;
+            target.value = val;
+            FormEv.target = target;
+            const valuesOfInterest = { ...FormEv };
+            onSelectionComplete(valuesOfInterest, updatedForm);
           }
           if (labelFieldName) {
             form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
