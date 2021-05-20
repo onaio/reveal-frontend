@@ -7,14 +7,13 @@ import flushPromises from 'flush-promises';
 import { cloneDeep } from 'lodash';
 import React from 'react';
 import { MemoryRouter } from 'react-router-dom';
-import PlanForm, { defaultInitialValues, propsForUpdatingPlans } from '..';
+import PlanForm, { defaultInitialValues, handlePlanTitleChange, propsForUpdatingPlans } from '..';
 import { AN_ERROR_OCCURRED } from '../../../../configs/lang';
 import * as helperErrors from '../../../../helpers/errors';
 import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
-import { onSelectionComplete } from '../../JurisdictionSelect';
 import { generatePlanDefinition, getPlanFormValues, planActivitiesMap } from '../helpers';
 import * as fixtures from './fixtures';
 
@@ -1816,7 +1815,7 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
     wrapper
       .find('select[name="fiStatus"]')
       .simulate('change', { target: { name: 'fiStatus', value: 'B2' } });
-    onSelectionComplete(fixtures.event, form);
+    handlePlanTitleChange(fixtures.event, form);
 
     expect(
       (wrapper

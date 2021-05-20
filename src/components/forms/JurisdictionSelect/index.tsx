@@ -1,6 +1,6 @@
 import { Dictionary } from '@onaio/utils/dist/types/types';
 import { FieldConfig, FieldProps, FormikProps } from 'formik';
-import React, { FormEvent, useState } from 'react';
+import React, { useState } from 'react';
 import AsyncSelect, { Props as AsyncSelectProps } from 'react-select/async';
 import { SELECT } from '../../../configs/lang';
 import { OPENSRP_ACTIVE, OPENSRP_FIND_BY_PROPERTIES, OPENSRP_LOCATION } from '../../../constants';
@@ -8,8 +8,7 @@ import { displayError } from '../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../helpers/utils';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
 import { NOT_AVAILABLE } from '../../TreeWalker/constants';
-import { fieldsThatChangePlanTitle } from '../PlanForm';
-import { getNameTitle } from '../PlanForm/helpers';
+import { handlePlanTitleChange } from '../PlanForm';
 import { event as FormEv } from '../PlanForm/tests/fixtures';
 import './style.css';
 
@@ -212,25 +211,6 @@ export const promiseOptions = (
   });
 
 /**
- * Sets value in name and title field
- * @param e Form event
- * @param form Formik form Object
- */
-export const onSelectionComplete = (e: FormEvent<Element>, form: FormikProps<any>) => {
-  const target = e.target as HTMLInputElement;
-  const nameTitle = getNameTitle(e, form.values);
-
-  if (
-    fieldsThatChangePlanTitle.includes(target.name) ||
-    !form.values.title ||
-    form.values.title === ''
-  ) {
-    form.setFieldValue('title', nameTitle[1]);
-  }
-  form.setFieldValue('name', nameTitle[0]);
-};
-
-/**
  * Handles async select onchange with options
  * @param optionVal Selected options
  * @param newParamsToUse Params to use for the next api call
@@ -299,7 +279,7 @@ export const handleChangeWithOptions = (
             target.value = val;
             FormEv.target = target;
             const valuesOfInterest = { ...FormEv };
-            onSelectionComplete(valuesOfInterest, updatedForm);
+            handlePlanTitleChange(valuesOfInterest, updatedForm);
           }
           if (labelFieldName) {
             form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
