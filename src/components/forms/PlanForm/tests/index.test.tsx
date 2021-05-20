@@ -14,6 +14,7 @@ import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/
 import store from '../../../../store';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
+import { onSelectionComplete } from '../../JurisdictionSelect';
 import { generatePlanDefinition, getPlanFormValues, planActivitiesMap } from '../helpers';
 import * as fixtures from './fixtures';
 
@@ -1780,5 +1781,60 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
         method: 'POST',
       },
     ]);
+  });
+
+  it('Plan title is set correctly on jurisdiction select', async () => {
+    const container = document.createElement('div');
+    document.body.appendChild(container);
+
+    const defaults = {
+      ...defaultInitialValues,
+      activities: planActivitiesMap[InterventionType.DynamicFI],
+    };
+
+    const wrapper = mount(
+      <MemoryRouter>
+        <PlanForm initialValues={defaults} />
+      </MemoryRouter>,
+      { attachTo: container }
+    );
+    const form = (wrapper
+      .find('FieldInner')
+      .first()
+      .props() as any).formik;
+
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'Dynamic-FI' } });
+    form.setFieldValue('jurisdictions[0].id', '1337');
+    wrapper
+      .find('input[name="jurisdictions[0].name"]')
+      .simulate('change', { target: { name: 'jurisdictions[0].name', value: 'test' } });
+    wrapper
+      .find('select[name="fiReason"]')
+      .simulate('change', { target: { name: 'fiReason', value: 'Routine' } });
+    wrapper
+      .find('select[name="fiStatus"]')
+      .simulate('change', { target: { name: 'fiStatus', value: 'B2' } });
+    onSelectionComplete(fixtures.event, form);
+
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.jurisdictions
+    ).toEqual([{ id: '1337', name: 'test' }]);
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.name
+    ).toEqual('B2-test-2017-07-13');
+    expect(
+      (wrapper
+        .find('FieldInner')
+        .first()
+        .props() as any).formik.values.title
+    ).toEqual('B2 test 2017-07-13');
   });
 });

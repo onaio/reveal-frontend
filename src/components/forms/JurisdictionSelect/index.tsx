@@ -210,7 +210,12 @@ export const promiseOptions = (
       });
   });
 
-const onSelectionComplete = (e: FormEvent<Element>, form: FormikProps<any>) => {
+/**
+ * Sets value in name and title field
+ * @param e Form event
+ * @param form Formik form Object
+ */
+export const onSelectionComplete = (e: FormEvent<Element>, form: FormikProps<any>) => {
   const target = e.target as HTMLInputElement;
   const fieldsThatChangePlanTitle = ['interventionType', 'fiStatus', 'date', 'jurisdictions[0].id'];
 
