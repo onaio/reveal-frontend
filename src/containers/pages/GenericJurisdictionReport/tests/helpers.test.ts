@@ -60,6 +60,14 @@ describe('containers/pages/IRS/JurisdictionsReport/helpers', () => {
     );
   });
 
+  it('should call correct functions for adverse reaction columns', () => {
+    const adrReportedExp = helpers.mdaJurisdictionsColumns[6].Cell.toString();
+    const adrSevereExp = helpers.mdaJurisdictionsColumns[7].Cell.toString();
+    const shouldRec = /(renderPercentage)/i;
+    expect(adrReportedExp).toMatch(shouldRec);
+    expect(adrSevereExp).toMatch(shouldRec);
+  });
+
   it('getColumnsToUse: should return correct columns', () => {
     const jurisdiction = superset.processData(MDAJurisdictionsJSON) || [];
     const jurisdictionColumn = 'zambiaMDAUpper2020';
