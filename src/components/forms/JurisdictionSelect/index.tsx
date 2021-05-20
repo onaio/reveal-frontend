@@ -8,6 +8,7 @@ import { displayError } from '../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../helpers/utils';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
 import { NOT_AVAILABLE } from '../../TreeWalker/constants';
+import { fieldsThatChangePlanTitle } from '../PlanForm';
 import { getNameTitle } from '../PlanForm/helpers';
 import { event as FormEv } from '../PlanForm/tests/fixtures';
 import './style.css';
@@ -217,9 +218,8 @@ export const promiseOptions = (
  */
 export const onSelectionComplete = (e: FormEvent<Element>, form: FormikProps<any>) => {
   const target = e.target as HTMLInputElement;
-  const fieldsThatChangePlanTitle = ['interventionType', 'fiStatus', 'date', 'jurisdictions[0].id'];
-
   const nameTitle = getNameTitle(e, form.values);
+
   if (
     fieldsThatChangePlanTitle.includes(target.name) ||
     !form.values.title ||

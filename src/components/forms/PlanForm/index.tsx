@@ -146,6 +146,14 @@ const defaultInterventionType = PLAN_TYPES_ALLOWED_TO_CREATE
   ? (PLAN_TYPES_ALLOWED_TO_CREATE[0] as InterventionType)
   : InterventionType.FI;
 
+/** list of fields that changes the plan title */
+export const fieldsThatChangePlanTitle = [
+  'interventionType',
+  'fiStatus',
+  'date',
+  'jurisdictions[0].id',
+];
+
 /** initial values for plan Form */
 export const defaultInitialValues: PlanFormFields = {
   activities: planActivitiesMap[defaultInterventionType],
@@ -394,12 +402,6 @@ const PlanForm = (props: PlanFormProps) => {
             /* tslint:disable-next-line jsx-no-lambda */
             onChange={(e: FormEvent) => {
               const target = e.target as HTMLInputElement;
-              const fieldsThatChangePlanTitle = [
-                'interventionType',
-                'fiStatus',
-                'date',
-                'jurisdictions[0].id',
-              ];
               const nameTitle = getNameTitle(e, values);
               if (
                 fieldsThatChangePlanTitle.includes(target.name) ||
