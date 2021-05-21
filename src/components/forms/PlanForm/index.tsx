@@ -1,6 +1,6 @@
 import FormikEffect from '@onaio/formik-effect';
 import { Dictionary } from '@onaio/utils';
-import { ErrorMessage, Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
 import { xor } from 'lodash';
 import moment from 'moment';
 import React, { FormEvent, useEffect, useState } from 'react';
@@ -108,7 +108,7 @@ import {
   generatePlanDefinition,
   getFormActivities,
   getGoalUnitFromActionCode,
-  getNameTitle,
+  handlePlanTitleChange,
   isFIOrDynamicFI,
   onSubmitSuccess,
   planActivitiesMap,
@@ -203,26 +203,6 @@ export interface PlanFormProps {
   addPlan?: typeof addPlanDefinition /** Add new/update plan to redux store */;
   beforeSubmit: BeforeSubmit /** called before submission starts, return true to proceed with submission */;
 }
-
-/**
- * Sets value in name and title field
- * @param e Form event
- * @param form Formik form Object
- */
-export const handlePlanTitleChange = (e: FormEvent<Element>, form: FormikProps<any>) => {
-  const target = e.target as HTMLInputElement;
-  const fieldsThatChangePlanTitle = ['interventionType', 'fiStatus', 'date', 'jurisdictions[0].id'];
-  const nameTitle = getNameTitle(e, form.values);
-
-  if (
-    fieldsThatChangePlanTitle.includes(target.name) ||
-    !form.values.title ||
-    form.values.title === ''
-  ) {
-    form.setFieldValue('title', nameTitle[1]);
-  }
-  form.setFieldValue('name', nameTitle[0]);
-};
 
 /** Plan Form component */
 const PlanForm = (props: PlanFormProps) => {

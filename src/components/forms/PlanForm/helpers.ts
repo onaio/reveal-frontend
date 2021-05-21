@@ -1,6 +1,6 @@
 import { Dictionary } from '@onaio/utils';
 import { parseISO } from 'date-fns';
-import { FormikErrors } from 'formik';
+import { FormikErrors, FormikProps } from 'formik';
 import { findKey, pick } from 'lodash';
 import moment from 'moment';
 import { FormEvent } from 'react';
@@ -942,4 +942,24 @@ export const onSubmitSuccess = (
 
   setSubmitting(false);
   setAreWeDoneHere(true);
+};
+
+/**
+ * Sets value in name and title field
+ * @param e Form event
+ * @param form Formik form Object
+ */
+export const handlePlanTitleChange = (e: FormEvent<Element>, form: FormikProps<any>) => {
+  const target = e.target as HTMLInputElement;
+  const fieldsThatChangePlanTitle = ['interventionType', 'fiStatus', 'date', 'jurisdictions[0].id'];
+  const nameTitle = getNameTitle(e, form.values);
+
+  if (
+    fieldsThatChangePlanTitle.includes(target.name) ||
+    !form.values.title ||
+    form.values.title === ''
+  ) {
+    form.setFieldValue('title', nameTitle[1]);
+  }
+  form.setFieldValue('name', nameTitle[0]);
 };

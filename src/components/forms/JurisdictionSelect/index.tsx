@@ -8,7 +8,7 @@ import { displayError } from '../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../helpers/utils';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
 import { NOT_AVAILABLE } from '../../TreeWalker/constants';
-import { handlePlanTitleChange } from '../PlanForm';
+import { handlePlanTitleChange } from '../PlanForm/helpers';
 import { event as FormEv } from '../PlanForm/tests/fixtures';
 import './style.css';
 
