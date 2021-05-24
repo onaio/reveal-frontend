@@ -1213,9 +1213,10 @@ const PlanForm = (props: PlanFormProps) => {
                                       type="button"
                                       className="btn btn-primary btn-sm mb-1 addActivity"
                                       onClick={() => {
-                                        values.activities.push(thisActivity);
+                                        const newActivities = [...values.activities, thisActivity];
+                                        setFieldValue('activities', newActivities);
                                         const newActivityValues = getConditionAndTriggers(
-                                          values.activities,
+                                          newActivities,
                                           disabledFields.includes('activities')
                                         );
                                         setActionConditions(newActivityValues.conditions);
