@@ -927,4 +927,74 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     // check submit button - should not be disabled
     expect(wrapper.find('#planform-submit-button button').prop('disabled')).toEqual(false);
   });
+
+  it('should pass correct array to hide fields for case triggered draft plans', async () => {
+    const envModule = require('../../../../../configs/env');
+    envModule.HIDE_PLAN_FORM_FIELDS_ON_EDIT = hiddenFields;
+    envModule.CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES = true;
+    // create divs for condition and triggers - should equal number of activities
+    [0, 1, 2, 3, 4, 5].forEach(id => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    //  change
+    const useContext = DynamicFIPlan.useContext.map(context => {
+      return context.code === 'fiReason'
+        ? { ...context, valueCodableConcept: 'Case Triggered' }
+        : context;
+    });
+
+    const DynamicFIPlanCopy = {
+      ...DynamicFIPlan,
+      status: 'draft',
+      useContext,
+    };
+    const mock = jest.fn();
+    const props = {
+      fetchPlan: mock,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: DynamicFIPlanCopy.identifier },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${DynamicFIPlanCopy.identifier}`,
+      },
+      plan: DynamicFIPlanCopy as PlanDefinition,
+    };
+    fetch.mockResponseOnce(JSON.stringify([DynamicFIPlanCopy]));
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+    });
+    wrapper.update();
+
+    // have buttons for removing activities
+    expect((wrapper.find('PlanForm').props() as PlanFormProps).addAndRemoveActivities).toBeTruthy();
+    // have hidden fields data
+    expect((wrapper.find('PlanForm').props() as PlanFormProps).hiddenFields).toEqual(hiddenFields);
+    // check some fields if they are hidden
+    // intervention type hidded
+    expect(
+      wrapper
+        .find('select[name="interventionType"]')
+        .closest('div')
+        .prop('hidden')
+    ).toBeTruthy();
+    // Fi reason hidded
+    expect(
+      wrapper
+        .find('select[name="fiReason"]')
+        .closest('div')
+        .prop('hidden')
+    ).toBeTruthy();
+  });
 });
