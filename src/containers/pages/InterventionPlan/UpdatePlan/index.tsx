@@ -27,6 +27,7 @@ import {
   NEW_PLAN_URL,
   OPENSRP_PLANS,
   PLAN_LIST_URL,
+  ROUTINE,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
 import { OpenSRPService } from '../../../../services/opensrp';
@@ -138,10 +139,20 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     planStatus === PlanStatus.DRAFT &&
     isFIOrDynamicFI(initialValues.interventionType) &&
     initialValues.fiReason === CASE_TRIGGERED;
+
+  const isCaseTriggeredOrRoutinePlan =
+    CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES &&
+    (planStatus === PlanStatus.DRAFT ||
+      planStatus === PlanStatus.ACTIVE ||
+      planStatus === PlanStatus.COMPLETE) &&
+    isFIOrDynamicFI(initialValues.interventionType) &&
+    initialValues.fiReason !== CASE_TRIGGERED &&
+    initialValues.fiReason !== ROUTINE;
+
   const hiddenFields =
     HIDE_PLAN_FORM_FIELDS_ON_EDIT.length > 0 &&
     hideFieldsOnPlanStatuses.includes(initialValues.status) &&
-    !isCaseTriggeredAndDraft
+    !isCaseTriggeredOrRoutinePlan
       ? HIDE_PLAN_FORM_FIELDS_ON_EDIT
       : [];
 
