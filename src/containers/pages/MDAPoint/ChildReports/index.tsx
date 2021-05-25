@@ -30,9 +30,13 @@ import {
   YES,
 } from '../../../../configs/lang';
 import {
+  CONTRAINDICATED,
   HOME_URL,
   MDA_POINT_CHILD_REPORT_URL,
+  PREGNANT,
+  REFUSED,
   REPORT_MDA_POINT_PLAN_URL,
+  SICK,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -68,6 +72,21 @@ const tableHeaders = [
   ALB_TABLETS_DISTRIBUTED,
 ];
 
+/**
+ * get value to be displayed on SACs columns
+ * @param {string | null} value - reason why drug was not administered
+ * @param {boolean} isRefusedColumn - indicates which column is being checked
+ */
+export const getSACsColumnsValues = (value: string | null, isRefusedColumn: boolean) => {
+  if (value === REFUSED) {
+    return isRefusedColumn ? YES : NO;
+  }
+  if ([PREGNANT, SICK, CONTRAINDICATED].includes(value as string)) {
+    return isRefusedColumn ? NO : YES;
+  }
+  return '';
+};
+
 /*
  * returns list of childrens
  * @param {ChildReport[]} props
@@ -78,7 +97,7 @@ export const extractChildData = (data: ChildReport[]) => {
     let valueOfInterest;
     if (value === null || value === undefined) {
       valueOfInterest = '';
-    } else if (value === 0) {
+    } else if (+value === 0) {
       valueOfInterest = NO;
     } else {
       valueOfInterest = YES;
@@ -92,8 +111,8 @@ export const extractChildData = (data: ChildReport[]) => {
       sch.sactanationalid ? sch.sactanationalid : '',
       returnRowValue(sch.sactacurrenroll),
       returnRowValue(sch.mmadrugadmin),
-      returnRowValue(sch.mmanodrugadminreason),
-      returnRowValue(sch.mmanodrugadminreason),
+      getSACsColumnsValues(sch.mmanodrugadminreason as string, true),
+      getSACsColumnsValues(sch.mmanodrugadminreason as string, false),
       returnRowValue(sch.mmaadr),
       sch.mmapzqdosagegiven,
       sch.mmaalbgiven,
