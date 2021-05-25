@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset, { SupersetAdhocFilterOption } from '@onaio/superset-connector';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -10,6 +11,7 @@ import HeaderBreadcrumb, {
   Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
+  SUPERSET_MAX_RECORDS,
   SUPERSET_MDA_POINT_CHILD_REPORT_DATA_SLICE,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES,
 } from '../../../../configs/env';
@@ -58,6 +60,8 @@ interface ChildReportsProps extends ChildSupersetDataTableProps {
   pageTitle: string | null;
   pageUrl: string;
   prevPage: Page[] | null;
+  jurisdictionId?: string;
+  planId?: string;
 }
 
 const tableHeaders = [
@@ -135,6 +139,8 @@ const ChildReportList = (props: ChildReportsProps) => {
     headerItems,
     tableClass,
     prevPage,
+    jurisdictionId,
+    planId,
   } = props;
 
   const homePage = [
@@ -157,11 +163,22 @@ const ChildReportList = (props: ChildReportsProps) => {
     pages,
   };
 
+  const filters: SupersetAdhocFilterOption[] = [];
+  if (jurisdictionId) {
+    filters.push({ comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' });
+  }
+  if (planId) {
+    filters.push({ comparator: planId, operator: '==', subject: 'plan_id' });
+  }
+
+  const supersetFetchParams = superset.getFormData(SUPERSET_MAX_RECORDS, filters);
+
   const listViewProps: ChildSupersetDataTableProps = {
     data,
     fetchItems,
     headerItems,
     service,
+    supersetFetchParams,
     supersetSliceId,
     tableClass,
   };
@@ -249,8 +266,10 @@ const mapStateToProps = (
     data,
     fetchItems,
     headerItems,
+    jurisdictionId,
     pageTitle,
     pageUrl,
+    planId,
     prevPage,
     service,
     supersetSliceId,
