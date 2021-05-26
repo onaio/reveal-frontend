@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history';
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
-import ConnectedChildReports, { ChildReportList, extractChildData } from '..';
+import ConnectedChildReports, { ChildReportList, extractChildData, getSACsColumnsValues } from '..';
 import { MDA_POINT_CHILD_REPORT_URL } from '../../../../../constants';
 import store from '../../../../../store';
 import GenericJurisdictionsReducer, {
@@ -76,8 +76,8 @@ describe('components/MDA Reports/MDAPlansList', () => {
     store.dispatch(FetchMDAPointChildReportAction(fixtures.MDAPointChildReportData));
 
     const tableData = [
-      ['annonymous user', '2345', 'No', 'Yes', 'No', 'No', 'No', 0, 0],
-      ['known man', '843', 'No', 'No', 'Yes', 'Yes', 'No', 0, 0],
+      ['annonymous user', '2345', 'No', 'Yes', 'No', 'Yes', 'No', 0, 0],
+      ['known man', '843', 'No', 'No', 'Yes', 'No', 'No', 0, 0],
     ];
 
     fetch.mockResponseOnce(fixtures.MDAPointChildReportData);
@@ -129,5 +129,23 @@ describe('components/MDA Reports/MDAPlansList', () => {
     ];
     const tableData = [['test user', '2345', 'Yes', '', '', '', 'No', 'test', 0]];
     expect(extractChildData(childData)).toEqual(tableData);
+  });
+
+  it('evaluates SACs columns correctly', () => {
+    // null values
+    expect(getSACsColumnsValues(null, true)).toEqual('');
+    expect(getSACsColumnsValues(null, false)).toEqual('');
+    // pregnant value
+    expect(getSACsColumnsValues('pregnant', true)).toEqual('No');
+    expect(getSACsColumnsValues('pregnant', false)).toEqual('Yes');
+    // sick value
+    expect(getSACsColumnsValues('sick', true)).toEqual('No');
+    expect(getSACsColumnsValues('sick', false)).toEqual('Yes');
+    // contraindicated value
+    expect(getSACsColumnsValues('contraindicated', true)).toEqual('No');
+    expect(getSACsColumnsValues('contraindicated', false)).toEqual('Yes');
+    // refused value
+    expect(getSACsColumnsValues('refused', true)).toEqual('Yes');
+    expect(getSACsColumnsValues('refused', false)).toEqual('No');
   });
 });

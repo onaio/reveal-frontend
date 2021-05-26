@@ -1,4 +1,5 @@
 import ListView from '@onaio/list-view';
+import { SupersetFormData } from '@onaio/superset-connector';
 import React, { useEffect, useState } from 'react';
 import Loading from '../../../../../components/page/Loading';
 import { NO_ROWS_FOUND } from '../../../../../configs/lang';
@@ -14,12 +15,21 @@ export interface ChildSupersetDataTableProps {
   fetchItems: typeof FetchMDAPointChildReportAction;
   headerItems: React.ReactNode[];
   service: typeof supersetFetch;
+  supersetFetchParams?: SupersetFormData;
   supersetSliceId: string;
   tableClass?: string;
 }
 
 export const ChildSupersetDataTable = (props: ChildSupersetDataTableProps) => {
-  const { supersetSliceId, fetchItems, service, data, headerItems, tableClass } = props;
+  const {
+    supersetSliceId,
+    fetchItems,
+    service,
+    data,
+    headerItems,
+    tableClass,
+    supersetFetchParams,
+  } = props;
 
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -27,7 +37,7 @@ export const ChildSupersetDataTable = (props: ChildSupersetDataTableProps) => {
   async function loadData() {
     try {
       setLoading(data.length < 1);
-      await service(supersetSliceId).then((result: ChildReport[]) => {
+      await service(supersetSliceId, supersetFetchParams).then((result: ChildReport[]) => {
         fetchItems(result);
       });
     } catch (e) {

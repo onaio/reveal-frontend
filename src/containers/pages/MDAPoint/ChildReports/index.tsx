@@ -1,4 +1,5 @@
 import reducerRegistry from '@onaio/redux-reducer-registry';
+import superset, { SupersetAdhocFilterOption } from '@onaio/superset-connector';
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -10,6 +11,7 @@ import HeaderBreadcrumb, {
   Page,
 } from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
 import {
+  SUPERSET_MAX_RECORDS,
   SUPERSET_MDA_POINT_CHILD_REPORT_DATA_SLICE,
   SUPERSET_MDA_POINT_REPORTING_JURISDICTIONS_DATA_SLICES,
 } from '../../../../configs/env';
@@ -30,9 +32,13 @@ import {
   YES,
 } from '../../../../configs/lang';
 import {
+  CONTRAINDICATED,
   HOME_URL,
   MDA_POINT_CHILD_REPORT_URL,
+  PREGNANT,
+  REFUSED,
   REPORT_MDA_POINT_PLAN_URL,
+  SICK,
 } from '../../../../constants';
 import { RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
@@ -54,6 +60,8 @@ interface ChildReportsProps extends ChildSupersetDataTableProps {
   pageTitle: string | null;
   pageUrl: string;
   prevPage: Page[] | null;
+  jurisdictionId?: string;
+  planId?: string;
 }
 
 const tableHeaders = [
@@ -68,6 +76,21 @@ const tableHeaders = [
   ALB_TABLETS_DISTRIBUTED,
 ];
 
+/**
+ * get value to be displayed on SACs columns
+ * @param {string | null} value - reason why drug was not administered
+ * @param {boolean} isRefusedColumn - indicates which column is being checked
+ */
+export const getSACsColumnsValues = (value: string | null, isRefusedColumn: boolean) => {
+  if (value === REFUSED) {
+    return isRefusedColumn ? YES : NO;
+  }
+  if ([PREGNANT, SICK, CONTRAINDICATED].includes(value as string)) {
+    return isRefusedColumn ? NO : YES;
+  }
+  return '';
+};
+
 /*
  * returns list of childrens
  * @param {ChildReport[]} props
@@ -78,7 +101,7 @@ export const extractChildData = (data: ChildReport[]) => {
     let valueOfInterest;
     if (value === null || value === undefined) {
       valueOfInterest = '';
-    } else if (value === 0) {
+    } else if (+value === 0) {
       valueOfInterest = NO;
     } else {
       valueOfInterest = YES;
@@ -92,8 +115,8 @@ export const extractChildData = (data: ChildReport[]) => {
       sch.sactanationalid ? sch.sactanationalid : '',
       returnRowValue(sch.sactacurrenroll),
       returnRowValue(sch.mmadrugadmin),
-      returnRowValue(sch.mmanodrugadminreason),
-      returnRowValue(sch.mmanodrugadminreason),
+      getSACsColumnsValues(sch.mmanodrugadminreason as string, true),
+      getSACsColumnsValues(sch.mmanodrugadminreason as string, false),
       returnRowValue(sch.mmaadr),
       sch.mmapzqdosagegiven,
       sch.mmaalbgiven,
@@ -116,6 +139,8 @@ const ChildReportList = (props: ChildReportsProps) => {
     headerItems,
     tableClass,
     prevPage,
+    jurisdictionId,
+    planId,
   } = props;
 
   const homePage = [
@@ -138,11 +163,22 @@ const ChildReportList = (props: ChildReportsProps) => {
     pages,
   };
 
+  const filters: SupersetAdhocFilterOption[] = [];
+  if (jurisdictionId) {
+    filters.push({ comparator: jurisdictionId, operator: '==', subject: 'jurisdiction_id' });
+  }
+  if (planId) {
+    filters.push({ comparator: planId, operator: '==', subject: 'plan_id' });
+  }
+
+  const supersetFetchParams = superset.getFormData(SUPERSET_MAX_RECORDS, filters);
+
   const listViewProps: ChildSupersetDataTableProps = {
     data,
     fetchItems,
     headerItems,
     service,
+    supersetFetchParams,
     supersetSliceId,
     tableClass,
   };
@@ -230,8 +266,10 @@ const mapStateToProps = (
     data,
     fetchItems,
     headerItems,
+    jurisdictionId,
     pageTitle,
     pageUrl,
+    planId,
     prevPage,
     service,
     supersetSliceId,
