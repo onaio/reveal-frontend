@@ -851,4 +851,80 @@ describe('components/InterventionPlan/UpdatePlan', () => {
       ).toBeFalsy();
     });
   });
+
+  it('on case triggered activities adding activity should enable save button', async () => {
+    const envModule = require('../../../../../configs/env');
+    envModule.HIDE_PLAN_FORM_FIELDS_ON_EDIT = hiddenFields;
+    envModule.CASE_TRIGGERED_DRAFT_EDIT_ADD_ACTIVITIES = true;
+    // create divs for condition and triggers - should equal number of activities
+    [0, 1, 2, 3, 4, 5].forEach(id => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    //  change
+    const useContext = DynamicFIPlan.useContext.map(context => {
+      return context.code === 'fiReason'
+        ? { ...context, valueCodableConcept: 'Case Triggered' }
+        : context;
+    });
+
+    const DynamicFIPlanCopy = {
+      ...DynamicFIPlan,
+      action: [DynamicFIPlan.action[0]],
+      goal: [DynamicFIPlan.goal[0]],
+      status: 'draft',
+      useContext,
+    };
+    const mock = jest.fn();
+    const props = {
+      fetchPlan: mock,
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: DynamicFIPlanCopy.identifier },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${DynamicFIPlanCopy.identifier}`,
+      },
+      plan: DynamicFIPlanCopy as PlanDefinition,
+    };
+    fetch.mockResponseOnce(JSON.stringify([DynamicFIPlanCopy]));
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <UpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+    });
+    wrapper.update();
+    // check submit button
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toEqual(true);
+
+    // check buttons removing and adding activities
+    expect(wrapper.find('.removeActivity').length).toEqual(0);
+    expect(wrapper.find('Button .add-more-activities').length).toEqual(1);
+
+    // add another activity
+    wrapper.find('Button .add-more-activities').simulate('click');
+    expect(wrapper.find('.addActivity').length).toEqual(5);
+    expect(wrapper.find('.addActivity').map(activity => activity.text())).toEqual([
+      'Add Blood Screening Activity',
+      'Add Bednet Distribution Activity',
+      'Add Larval Dipping Activity',
+      'Add Mosquito Collection Activity',
+      'Add BCC Activity',
+    ]);
+    wrapper
+      .find('.addActivity')
+      .at(0)
+      .simulate('click');
+    expect(wrapper.find('.removeActivity').length).toEqual(2);
+    // check submit button - should not be disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toEqual(false);
+  });
 });

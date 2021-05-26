@@ -224,6 +224,7 @@ export const mdaPointColumns = [
   {
     Header: 'SACs Sick/Pregnant/Contraindicated',
     accessor: 'sacrefmedreason',
+    minWidth: 280,
   },
   {
     Cell: (cell: Cell) => renderPercentage(cell),

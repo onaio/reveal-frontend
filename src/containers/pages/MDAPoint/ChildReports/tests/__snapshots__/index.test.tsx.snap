@@ -212,7 +212,7 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
             "No",
             "Yes",
             "No",
-            "No",
+            "Yes",
             "No",
             0,
             0,
@@ -253,7 +253,7 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
           className="listview-th"
           key="5"
         >
-          No
+          Yes
         </td>
         <td
           className="listview-th"
@@ -289,7 +289,7 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
             "No",
             "No",
             "Yes",
-            "Yes",
+            "No",
             "No",
             0,
             0,
@@ -330,7 +330,7 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
           className="listview-th"
           key="5"
         >
-          Yes
+          No
         </td>
         <td
           className="listview-th"
