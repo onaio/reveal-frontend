@@ -277,7 +277,6 @@ export const handleChangeWithOptions = (
             const target = FormEv.target as HTMLInputElement;
             target.name = fiStatusFieldName;
             target.value = val;
-            FormEv.target = target;
             const valuesOfInterest = { ...FormEv };
             handlePlanTitleChange(valuesOfInterest, updatedForm);
           }
