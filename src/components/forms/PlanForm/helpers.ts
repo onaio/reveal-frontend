@@ -949,7 +949,7 @@ export const onSubmitSuccess = (
  * @param e Form event
  * @param form Formik form Object
  */
-export const handlePlanTitleChange = (e: FormEvent<Element>, form: FormikProps<any>) => {
+export const handlePlanTitleChange = (e: FormEvent<Element>, form: FormikProps<PlanFormFields>) => {
   const target = e.target as HTMLInputElement;
   const fieldsThatChangePlanTitle = ['interventionType', 'fiStatus', 'date', 'jurisdictions[0].id'];
   const nameTitle = getNameTitle(e, form.values);
