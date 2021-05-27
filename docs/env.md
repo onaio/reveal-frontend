@@ -201,3 +201,9 @@ Below is a list of currently supported environment variables:
   - **Optional**
   - limit of the number of clients record to get from api.
   - default: `200`
+
+- **REACT_APP_HIDE_PLAN_FORM_FIELDS_ON_CREATE**
+
+  - **not Required**; _(string)_
+  - Plan form fields to be hidden when creating new plan.
+  - Options: caseNum, interventionType, jurisdictions, fiReason, fiStatus, title, triggersAndConditions activityActionDefinitionUri, activityActionDescription, activityActionTitle, activityActionReason activityTimingPeriodStart, activityTimingPeriodEnd, activityGoalPriority, activityGoalValue
