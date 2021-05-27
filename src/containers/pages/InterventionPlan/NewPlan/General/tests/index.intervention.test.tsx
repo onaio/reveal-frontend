@@ -22,6 +22,7 @@ mockedStore.dispatch = jest.fn();
 
 jest.mock('../../../../../../configs/env', () => ({
   ENABLED_FI_REASONS: ['Case Triggered', 'Routine'],
+  HIDE_PLAN_FORM_FIELDS_ON_CREATE: [],
   PLAN_TYPES_ALLOWED_TO_CREATE: ['IRS'],
   PLAN_TYPES_WITH_MULTI_JURISDICTIONS: ['IRS', 'MDA-Point', 'Dynamic-IRS', 'Dynamic-MDA'],
 }));
