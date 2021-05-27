@@ -269,11 +269,17 @@ export const handleChangeWithOptions = (
           form.setFieldValue(field.name, optionVal.value);
           form.setFieldTouched(field.name, true);
           if (fiStatusFieldName) {
+            const jurisdictionIdx = field.name
+              .split('[')[1]
+              .split(']')[0]; /** get jurisdiction index from field name prop */
             const val = optionVal.fiStatus || NOT_AVAILABLE;
             form.setFieldValue(fiStatusFieldName, val);
             form.setFieldTouched(fiStatusFieldName, true);
             const updatedForm = { ...form };
-            updatedForm.values.jurisdictions[0] = { id: optionVal.value, name: optionVal.label };
+            updatedForm.values.jurisdictions[jurisdictionIdx] = {
+              id: optionVal.value,
+              name: optionVal.label,
+            };
             const target = FormEv.target as HTMLInputElement;
             target.name = fiStatusFieldName;
             target.value = val;
