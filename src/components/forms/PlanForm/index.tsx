@@ -1187,18 +1187,7 @@ const PlanForm = (props: PlanFormProps) => {
                           toggle={toggleActivityModal}
                           className="activity-modal"
                         >
-                          <ModalHeader toggle={toggleActivityModal}>
-                            {ADD_ACTIVITY}
-                            <button
-                              type="button"
-                              className="close"
-                              data-dismiss="modal"
-                              aria-label="Close"
-                              style={{ color: '6c757d', fontSize: '30px' }}
-                            >
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </ModalHeader>
+                          <ModalHeader toggle={toggleActivityModal}>{ADD_ACTIVITY}</ModalHeader>
                           <ModalBody>
                             {/** we want to allow the user to only add activities that are not already selected */}
                             <ul className="list-unstyled">
