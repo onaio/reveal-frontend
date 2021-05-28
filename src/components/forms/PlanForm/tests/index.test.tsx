@@ -1522,6 +1522,13 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
       await flushPromises();
       wrapper.update();
     });
+    // check header modal buttons
+    expect(wrapper.find('.modal-header').length).toEqual(1);
+    expect(wrapper.find('.modal-header h5').text()).toEqual('Add Activity');
+    // we should have one cancel button
+    expect(wrapper.find('.modal-header button').length).toEqual(1);
+    expect(wrapper.find('.modal-header button').text()).toEqual('×');
+
     // there should be one activity that can be added back
     expect(wrapper.find(`button.addActivity`).length).toEqual(1);
     // lets click the button in the modal and add back the activity we had removed
