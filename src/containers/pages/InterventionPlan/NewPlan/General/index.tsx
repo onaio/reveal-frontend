@@ -14,7 +14,10 @@ import {
 import HeaderBreadcrumb, {
   Page,
 } from '../../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
-import { AUTO_SELECT_FI_CLASSIFICATION } from '../../../../../configs/env';
+import {
+  AUTO_SELECT_FI_CLASSIFICATION,
+  HIDE_PLAN_FORM_FIELDS_ON_CREATE,
+} from '../../../../../configs/env';
 import {
   COUNTRY,
   CREATE_NEW_PLAN,
@@ -125,6 +128,7 @@ const BaseNewPlan = (props: BaseNewPlanProps) => {
     actionCreator: fetchPlanRecordsCreator,
     autoSelectFIStatus: AUTO_SELECT_FI_CLASSIFICATION,
     formHandler: formValuesHandler,
+    hiddenFields: HIDE_PLAN_FORM_FIELDS_ON_CREATE.length > 0 ? HIDE_PLAN_FORM_FIELDS_ON_CREATE : [],
   };
 
   return (

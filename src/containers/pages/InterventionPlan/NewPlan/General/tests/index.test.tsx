@@ -519,4 +519,107 @@ describe('containers/pages/NewPlan', () => {
     const payloadOfInterest = extractPlanRecordResponseFromPlanPayload(payload);
     expect(mockedStore.dispatch).toHaveBeenLastCalledWith(fetchPlanRecords([payloadOfInterest]));
   });
+
+  it('Hides specified fields', async () => {
+    fetch.mockResponseOnce(jurisdictionLevel0JSON);
+    fetch.mockResponseOnce(JSON.stringify([]));
+
+    const envModule = require('../../../../../../configs/env');
+    envModule.HIDE_PLAN_FORM_FIELDS_ON_CREATE = [
+      'interventionType',
+      'fiReason',
+      'activityActionTitle',
+      'activityActionReason',
+      'activityActionDefinitionUri',
+      'activityTimingPeriodStart',
+      'activityTimingPeriodEnd',
+      'activityGoalPriority',
+      'triggersAndConditions',
+    ];
+    // create divs for condition and triggers toggles - should equal number of activities
+    const FIPlanActivitiesCountArray = new Array(7).fill('activity');
+    FIPlanActivitiesCountArray.forEach(id => {
+      const div1 = document.createElement('div');
+      div1.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div1);
+    });
+    document.body.appendChild(div);
+    const wrapper = mount(
+      <Provider store={mockStore({})}>
+        <Router history={history}>
+          <ConnectedBaseNewPlan />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await new Promise<any>(resolve => setImmediate(resolve));
+    });
+    wrapper.update();
+
+    // intervention type hidded
+    expect(
+      wrapper
+        .find('select[name="interventionType"]')
+        .closest('div')
+        .prop('hidden')
+    ).toBeTruthy();
+    // Fi reason hidded
+    expect(
+      wrapper
+        .find('select[name="fiReason"]')
+        .closest('div')
+        .prop('hidden')
+    ).toBeTruthy();
+
+    // hidden fields on activities
+    FIPlanActivitiesCountArray.forEach((_, i) => {
+      // actionReason hidded
+      expect(
+        wrapper
+          .find(`select[name="activities[${i}].actionReason"]`)
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // actionTitle hidded
+      expect(
+        wrapper
+          .find(`input[name="activities[${i}].actionTitle"]`)
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // goalPriority hidden
+      expect(
+        wrapper
+          .find(`select[name="activities[${i}].goalPriority"]`)
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // timingPeriodStart hidded
+      expect(
+        wrapper
+          .find({ for: `activities-${0}-timingPeriodStart` })
+          .closest('div')
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+      // timingPeriodEnd hiden
+      expect(
+        wrapper
+          .find({ for: `activities-${0}-timingPeriodEnd` })
+          .closest('div')
+          .closest('div')
+          .prop('hidden')
+      ).toBeTruthy();
+    });
+
+    // change to dynamic activity to see if trigger and conditions are hidden
+    wrapper
+      .find('select[name="interventionType"]')
+      .simulate('change', { target: { name: 'interventionType', value: 'Dynamic-FI' } });
+    const DynamicFIPlanActivitiesCountArray = new Array(6).fill('activity');
+    // triggers and conditions toggle buttons hidden
+    DynamicFIPlanActivitiesCountArray.forEach((_, i) => {
+      expect(wrapper.find(`#plan-trigger-conditions-div-${i} button`).prop('hidden')).toBeTruthy();
+    });
+  });
 });
