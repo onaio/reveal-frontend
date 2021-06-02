@@ -286,7 +286,7 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
           Array [
             "known man",
             "843",
-            "No",
+            "Yes",
             "No",
             "Yes",
             "No",
@@ -312,7 +312,7 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
           className="listview-th"
           key="2"
         >
-          No
+          Yes
         </td>
         <td
           className="listview-th"

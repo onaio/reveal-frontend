@@ -77,7 +77,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
 
     const tableData = [
       ['annonymous user', '2345', 'No', 'Yes', 'No', 'Yes', 'No', 0, 0],
-      ['known man', '843', 'No', 'No', 'Yes', 'No', 'No', 0, 0],
+      ['known man', '843', 'Yes', 'No', 'Yes', 'No', 'No', 0, 0],
     ];
 
     fetch.mockResponseOnce(fixtures.MDAPointChildReportData);
@@ -122,7 +122,7 @@ describe('components/MDA Reports/MDAPlansList', () => {
         mmanodrugadminreason: null,
         mmapzqdosagegiven: 'test',
         plan_id: '40357eff-81b6-4e32-bd3d-484019689f7c',
-        sactacurrenroll: 1,
+        sactacurrenroll: 'Yes',
         sactanationalid: '2345',
         school_location_id: '154153',
       },
