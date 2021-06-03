@@ -113,7 +113,7 @@ export const extractChildData = (data: ChildReport[]) => {
     return [
       `${sch.client_first_name} ${sch.client_last_name}`,
       sch.sactanationalid ? sch.sactanationalid : '',
-      returnRowValue(sch.sactacurrenroll),
+      sch.sactacurrenroll ? sch.sactacurrenroll : '',
       returnRowValue(sch.mmadrugadmin),
       getSACsColumnsValues(sch.mmanodrugadminreason as string, true),
       getSACsColumnsValues(sch.mmanodrugadminreason as string, false),
