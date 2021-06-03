@@ -138,10 +138,11 @@ const UpdatePlan = (props: RouteComponentProps<RouteParams> & UpdatePlanProps) =
     planStatus === PlanStatus.DRAFT &&
     isFIOrDynamicFI(initialValues.interventionType) &&
     initialValues.fiReason === CASE_TRIGGERED;
+
   const hiddenFields =
     HIDE_PLAN_FORM_FIELDS_ON_EDIT.length > 0 &&
     hideFieldsOnPlanStatuses.includes(initialValues.status) &&
-    !isCaseTriggeredAndDraft
+    isFIOrDynamicFI(initialValues.interventionType)
       ? HIDE_PLAN_FORM_FIELDS_ON_EDIT
       : [];
 
