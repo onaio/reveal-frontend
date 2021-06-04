@@ -587,14 +587,19 @@ export function extractActivitiesFromPlanForm(
  * @param {PlanFormFields} formValues - the form values
  * @returns {[string, string]} - the plan name and title
  */
-export const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [string, string] => {
+export const getNameTitle = (
+  event: FormEvent,
+  formValues: PlanFormFields,
+  editMode: boolean = false
+): [string, string] => {
   const target = event.target as HTMLInputElement;
   const currentInterventionType =
     target.name === INTERVENTION_TYPE_CODE ? target.value : formValues.interventionType;
   const currentFiStatus = target.name === FI_STATUS_CODE ? target.value : formValues.fiStatus;
 
   let currentJurisdiction = '';
-  if (formValues.jurisdictions.length > 0) {
+  const hasJurName = !!(formValues.jurisdictions.length > 0 && formValues.jurisdictions[0].name);
+  if (hasJurName) {
     currentJurisdiction = formValues.jurisdictions[0].name;
   }
 
@@ -612,8 +617,8 @@ export const getNameTitle = (event: FormEvent, formValues: PlanFormFields): [str
         return e;
       }
     });
-    name = result.join('-');
-    title = result.join(' ');
+    name = editMode && target.name !== 'name' ? formValues.name : result.join('-');
+    title = editMode && target.name !== 'title' && !hasJurName ? formValues.name : result.join(' ');
   } else {
     const result = [name, moment(currentDate).format(DATE_FORMAT.toUpperCase())].map(e => {
       if (e) {
@@ -880,8 +885,8 @@ export function getPlanFormValues(planObject: PlanDefinition): PlanFormFields {
     interventionType,
     jurisdictions: planObject.jurisdiction.map(e => ({
       id: e.code,
-      name: e.code,
-    })) /** a little cheating: since we dnt have the name yet, we just use code */,
+      name: '',
+    })) /** a little cheating: since we dnt have the name yet, we just use '' */,
     name: planObject.name,
     opensrpEventId:
       eventIdUseContext.length > 0 ? eventIdUseContext[0].valueCodableConcept : undefined,

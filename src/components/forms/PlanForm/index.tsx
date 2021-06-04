@@ -400,7 +400,7 @@ const PlanForm = (props: PlanFormProps) => {
                 'date',
                 'jurisdictions[0].id',
               ];
-              const nameTitle = getNameTitle(e, values);
+              const nameTitle = getNameTitle(e, values, editMode);
               if (
                 fieldsThatChangePlanTitle.includes(target.name) ||
                 !values.title ||
