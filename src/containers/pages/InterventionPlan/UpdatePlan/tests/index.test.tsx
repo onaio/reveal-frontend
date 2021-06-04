@@ -672,6 +672,68 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     ]);
     expect(fetch.mock.calls[3][0]).toEqual('https://test.smartregister.org/opensrp/rest/plans');
     expect(fetch.mock.calls[3][1].method).toEqual('PUT');
+    wrapper.unmount();
+  });
+
+  it('editing plans with doe not change name', async () => {
+    const planCopy = {
+      ...CaseTriggeredDynamicFIPlan,
+      name: 'A2 ตะฝั่งสูง (6302010701) 2021-06-04',
+    };
+    // create divs for condition and triggers toggles
+    planCopy.action.forEach((_, id) => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    fetch.mockResponse(JSON.stringify(planCopy));
+
+    const mock: any = jest.fn();
+    const thisPlansId = planCopy.identifier;
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: thisPlansId },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${thisPlansId}`,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedUpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    // submit button is disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeTruthy();
+
+    // activate the plan and save
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: 'active' } });
+    // submit button is enabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
+
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+
+    // check the data submitted - should include case confirmation
+    const submitedData: PlanDefinition = JSON.parse(fetch.mock.calls[3][1].body);
+    expect(submitedData.name).toEqual(planCopy.name);
+    expect(submitedData.title).toEqual(planCopy.title);
+    expect(submitedData.status).toEqual('active');
+    wrapper.unmount();
   });
 
   it('hides expected columns', async () => {
