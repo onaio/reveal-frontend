@@ -68,15 +68,15 @@ export const updatePlanFormProps = {
     jurisdictions: [
       {
         id: '35968df5-f335-44ae-8ae5-25804caa2d86',
-        name: '35968df5-f335-44ae-8ae5-25804caa2d86',
+        name: '',
       },
       {
         id: '3952',
-        name: '3952',
+        name: '',
       },
       {
         id: 'ac7ba751-35e8-4b46-9e53-3cbaad193697',
-        name: 'ac7ba751-35e8-4b46-9e53-3cbaad193697',
+        name: '',
       },
     ],
     name: 'TwoTwoOne_01_IRS_2019-07-10',

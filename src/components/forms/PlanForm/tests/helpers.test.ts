@@ -311,9 +311,9 @@ describe('containers/forms/PlanForm/helpers', () => {
     expect(plan.taskGenerationStatus).toEqual('True');
     // multiple jurisdictions are gotten right
     expect(getPlanFormValues(plans[1]).jurisdictions).toEqual([
-      { id: '35968df5-f335-44ae-8ae5-25804caa2d86', name: '35968df5-f335-44ae-8ae5-25804caa2d86' },
-      { id: '3952', name: '3952' },
-      { id: 'ac7ba751-35e8-4b46-9e53-3cbaad193697', name: 'ac7ba751-35e8-4b46-9e53-3cbaad193697' },
+      { id: '35968df5-f335-44ae-8ae5-25804caa2d86', name: '' },
+      { id: '3952', name: '' },
+      { id: 'ac7ba751-35e8-4b46-9e53-3cbaad193697', name: '' },
     ]);
   });
 

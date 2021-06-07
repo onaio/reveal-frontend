@@ -936,7 +936,7 @@ export const planFormValues2 = {
   fiStatus: 'A2',
   identifier: '356b6b84-fc36-4389-a44a-2b038ed2f38d',
   interventionType: 'FI',
-  jurisdictions: [{ id: '3952', name: '3952' }],
+  jurisdictions: [{ id: '3952', name: '' }],
   name: 'A2-Lusaka_Akros_Focus_2',
   opensrpEventId: undefined,
   start: moment('2019-05-20T00:00:00.000Z').toDate(),
