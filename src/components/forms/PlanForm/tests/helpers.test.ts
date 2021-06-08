@@ -31,6 +31,7 @@ import {
   DynamicFIPlan,
   event,
   event2,
+  event3,
   expectedActivity,
   expectedActivityEmptyField,
   expectedExtractActivityFromPlanformResult,
@@ -139,7 +140,7 @@ describe('containers/forms/PlanForm/helpers', () => {
   });
 
   it('check getNameTitle returns the correct value when nothing is selected', () => {
-    const target = event2.target as HTMLInputElement;
+    const target = event3.target as HTMLInputElement;
     expect(getNameTitle(target, values)).toEqual(['IRS-2019-08-09', 'IRS 2019-08-09']);
     expect(getNameTitle(target, valuesWithJurisdiction)).toEqual([
       'IRS-2019-08-09',
