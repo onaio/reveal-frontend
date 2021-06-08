@@ -3,7 +3,6 @@ import { parseISO } from 'date-fns';
 import { FormikErrors } from 'formik';
 import { findKey, pick } from 'lodash';
 import moment from 'moment';
-import { FormEvent } from 'react';
 import * as Yup from 'yup';
 import {
   ACTION_UUID_NAMESPACE,
@@ -583,16 +582,15 @@ export function extractActivitiesFromPlanForm(
 
 /**
  * Get the plan name and title
- * @param {FormEvent} event - the event object
+ * @param {HTMLInputElement} target - the event target object
  * @param {PlanFormFields} formValues - the form values
  * @returns {[string, string]} - the plan name and title
  */
 export const getNameTitle = (
-  event: FormEvent,
+  target: HTMLInputElement,
   formValues: PlanFormFields,
   editMode: boolean = false
 ): [string, string] => {
-  const target = event.target as HTMLInputElement;
   const currentInterventionType =
     target.name === INTERVENTION_TYPE_CODE ? target.value : formValues.interventionType;
   const currentFiStatus = target.name === FI_STATUS_CODE ? target.value : formValues.fiStatus;

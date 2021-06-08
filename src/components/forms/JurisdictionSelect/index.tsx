@@ -8,6 +8,7 @@ import { displayError } from '../../../helpers/errors';
 import { reactSelectNoOptionsText } from '../../../helpers/utils';
 import { getFilterParams, OpenSRPService, URLParams } from '../../../services/opensrp';
 import { NOT_AVAILABLE } from '../../TreeWalker/constants';
+import { getNameTitle } from '../PlanForm/helpers';
 import './style.css';
 
 /** interface for jurisdiction options
@@ -269,6 +270,25 @@ export const handleChangeWithOptions = (
           if (fiStatusFieldName) {
             const val = optionVal.fiStatus || NOT_AVAILABLE;
             form.setFieldValue(fiStatusFieldName, val);
+            form.setFieldTouched(labelFieldName, true);
+
+            // update plan title and name
+            const customTarget = new EventTarget() as HTMLInputElement;
+            customTarget.value = val;
+            customTarget.name = fiStatusFieldName;
+            const { jurisdictions } = form.values;
+            const newJur = {
+              id: optionVal.value,
+              name: optionVal.label,
+            };
+            const values = {
+              ...form.values,
+              jurisdictions:
+                jurisdictions.length && jurisdictions[0].id ? [...jurisdictions, newJur] : [newJur],
+            };
+            const nameTitle = getNameTitle(customTarget, values);
+            form.setFieldValue('title', nameTitle[1]);
+            form.setFieldValue('name', nameTitle[0]);
           }
           if (labelFieldName) {
             form.setFieldValue(labelFieldName, optionVal.label); /** dirty hack */
