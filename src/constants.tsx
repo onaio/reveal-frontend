@@ -141,6 +141,7 @@ export const MANUAL_ASSIGN_JURISDICTIONS_URL = '/manualSelectJurisdictions';
 export const AUTO_ASSIGN_JURISDICTIONS_URL = '/auoSelectJurisdictions';
 export const EXPRESS_TOKEN_REFRESH_URL = '/refresh/token';
 export const SESSION_EXPIRED_URL = '/session/expired';
+export const PAGE_NOT_FOUND_URL = '/page-not-found';
 /** how long after opening a logout window should we wait before redirecting to express' server logout
  * I am not sure the optimum value for this, mozilla firefox seems to take some
  * time loading up the logoutWindow and actually making the request.
