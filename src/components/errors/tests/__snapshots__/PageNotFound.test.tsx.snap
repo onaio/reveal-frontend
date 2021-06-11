@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/components/errors/PageNotFound render correctly 1`] = `
+<PageNotFound>
+  <Container
+    fluid={true}
+    tag="div"
+  >
+    <div
+      className="container-fluid"
+    >
+      <Row
+        className="text-center"
+        style={
+          Object {
+            "marginTop": "40px",
+          }
+        }
+        tag="div"
+      >
+        <div
+          className="text-center row"
+          style={
+            Object {
+              "marginTop": "40px",
+            }
+          }
+        >
+          <Col
+            md={
+              Object {
+                "offset": 4,
+                "size": 4,
+              }
+            }
+            sm="12"
+            tag="div"
+            widths={
+              Array [
+                "xs",
+                "sm",
+                "md",
+                "lg",
+                "xl",
+              ]
+            }
+          >
+            <div
+              className="col-sm-12 col-md-4 offset-md-4"
+            >
+              <h1>
+                404
+              </h1>
+              <div>
+                <p>
+                  Oops! The page you are looking for can not be found.
+                </p>
+              </div>
+            </div>
+          </Col>
+        </div>
+      </Row>
+    </div>
+  </Container>
+</PageNotFound>
+`;
