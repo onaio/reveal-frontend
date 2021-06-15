@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router';
 import { Store } from 'redux';
 import { PlanDefinition } from '../../../../src/configs/settings';
-import { MemoizedGisidaLite } from '../../../components/GisidaLite';
+import { MemoizedGisidaLiteWrapper } from '../../../components/GisidaLite';
 import Loading from '../../../components/page/Loading';
 import { getJurisdictions } from '../../../components/TreeWalker/helpers';
 import { INVALID_GEOMETRIES, JURISDICTION_NOT_FOUND, MAP_LOAD_ERROR } from '../../../configs/lang';
@@ -195,7 +195,7 @@ const AssignmentMapWrapper = (props: AssignmentMapWrapperProps) => {
 
   return (
     <div className="map">
-      <MemoizedGisidaLite
+      <MemoizedGisidaLiteWrapper
         layers={[...structures]}
         zoom={zoom}
         mapCenter={mapCenter}

@@ -51,7 +51,7 @@ const history = createBrowserHistory();
 jest.mock('../../../../components/GisidaLite', () => {
   const MemoizedGisidaLiteMock = () => <div>I love oov</div>;
   return {
-    MemoizedGisidaLite: MemoizedGisidaLiteMock,
+    MemoizedGisidaLiteWrapper: MemoizedGisidaLiteMock,
   };
 });
 jest.mock('../../../../configs/env', () => ({

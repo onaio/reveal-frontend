@@ -4,7 +4,7 @@ import { SingleObject } from '@onaio/cbv';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import superset from '@onaio/superset-connector';
 import React, { useEffect, useState } from 'react';
-import { MemoizedGisidaLite } from '../../components/GisidaLite';
+import { MemoizedGisidaLiteWrapper } from '../../components/GisidaLite';
 import Loading from '../../components/page/Loading';
 import { SUPERSET_JURISDICTIONS_SLICE } from '../../configs/env';
 import { AN_ERROR_OCCURRED, JURISDICTION_LOADING_ERROR } from '../../configs/lang';
@@ -97,7 +97,7 @@ export const JurisdictionMap = (props: JurisdictionMapProps) => {
 
   return (
     <div className={cssClass}>
-      <MemoizedGisidaLite
+      <MemoizedGisidaLiteWrapper
         layers={jurisdictionLayers}
         zoom={zoom}
         mapCenter={mapCenter}
