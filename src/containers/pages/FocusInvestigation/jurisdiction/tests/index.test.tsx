@@ -275,6 +275,8 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
         .props().data
     ).toEqual([extractPlan(fixtures.plan99 as Plan)]);
 
+    expect(wrapper.find('.current-plans .break-text').length).toEqual(2); // current routine and reactive plans
+
     expect(
       wrapper
         .find('.current-plans DrillDownTable')
@@ -307,6 +309,9 @@ describe('containers/FocusInvestigation/Jurisdiction', () => {
     ).toEqual({
       plansArray: [fixtures.plan103],
     });
+
+    expect(wrapper.find('.current-plans .break-text').length).toEqual(2); // complete routine and reactive plans
+
     expect(toJson(wrapper.find('.complete-plans LinkAsButton a').first())).toMatchSnapshot(
       'Link to create new plans'
     );
