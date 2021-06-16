@@ -1073,3 +1073,9 @@ export const ONE_TO_FOUR_YEARS = translate('ONE_TO_FOUR_YEARS', '1-4');
 export const FIVE_TO_FOURTEEN_YEARS = translate('FOUR_TO_FOURTEEN_YEARS', '5-14');
 export const FIFTEEN_YEARS_AND_ABOVE = translate('FIFTEEN_YEARS_AND_ABOVE', '15+');
 export const HISTORICAL_INDEX_CASES = translate('HISTORICAL_INDEX_CASES', 'historical index cases');
+
+export const PAGE_NOT_FOUND = translate('PAGE_NOT_FOUND', '404');
+export const PAGE_NOT_FOUND_ERROR_MESSAGE = translate(
+  'PAGE_NOT_FOUND_ERROR_MESSAGE',
+  'Oops! The page you are looking for can not be found.'
+);
