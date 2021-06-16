@@ -12,7 +12,6 @@ ENV PATH /project/node_modules/.bin:$PATH
 RUN chown -R node .
 USER node
 
-RUN touch /project/.env
 RUN cp /project/.env.sample /project/.env \
       && yarn
 
@@ -49,7 +48,7 @@ RUN chmod +x /usr/local/bin/app.sh
 WORKDIR /usr/src/web
 
 COPY --from=build /project/node_modules /usr/src/web/node_modules
-COPY --from=build /project/app/build /usr/src/web
+COPY --from=build /project/build /usr/src/web
 
 RUN chown -R node /usr/src/web
 
@@ -63,7 +62,6 @@ RUN chown -R node /usr/src/app
 USER node
 
 ENV EXPRESS_REACT_BUILD_PATH /usr/src/web/
-ENV NODE_ENV development
 
 EXPOSE 3000
 
