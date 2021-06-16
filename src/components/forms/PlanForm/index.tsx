@@ -400,7 +400,7 @@ const PlanForm = (props: PlanFormProps) => {
                 'date',
                 'jurisdictions[0].id',
               ];
-              const nameTitle = getNameTitle(e, values, editMode);
+              const nameTitle = getNameTitle(target, values, editMode);
               if (
                 fieldsThatChangePlanTitle.includes(target.name) ||
                 !values.title ||
@@ -579,7 +579,7 @@ const PlanForm = (props: PlanFormProps) => {
                                     : 'async-select'
                                 }
                                 labelFieldName={`jurisdictions[${index}].name`}
-                                fiStatusFieldName="fiStatus"
+                                fiStatusFieldName={autoSelectFIStatus ? 'fiStatus' : ''}
                               />
                               <Field
                                 type="hidden"

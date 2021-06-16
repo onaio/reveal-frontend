@@ -11,7 +11,7 @@
     "@mapbox/geo-viewport": "^0.4.0",
     "@mapbox/geojson-extent": "^0.3.2",
     "@onaio/cbv": "^0.0.1",
-    "@onaio/connected-private-route": "^0.0.11",
+    "@onaio/connected-private-route": "^0.1.0",
     "@onaio/drill-down-table": "^1.0.4",
     "@onaio/element-map": "^0.0.2",
     "@onaio/formik-effect": "^0.0.1",
