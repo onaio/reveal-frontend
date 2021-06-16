@@ -2413,12 +2413,12 @@
   dependencies:
     "@onaio/redux-reducer-registry" "^0.0.9"
 
-"@onaio/connected-private-route@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@onaio/connected-private-route/-/connected-private-route-0.0.11.tgz#c7c721cdb01e972a147a4a60eff93a4ef8148289"
-  integrity sha512-YACSSoTpdjRUVdwSB0qcr5kiv2MuhfMesZZIRU6u1NGeAfPD+lEHR6dfJT3sCd7H0TYyFqcP2FgrqVOODkVB2Q==
+"@onaio/connected-private-route@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@onaio/connected-private-route/-/connected-private-route-0.1.0.tgz#30cbac1a222f9c21902cb76e46d15708f844908e"
+  integrity sha512-4XlTZwV+p2Kj2Wdvwxc+cy6qLwoTs7Nsg1In0TeyQzL5oOoMBQlgJMFZj8bJxfleO1ui9jweODkt2zdyMglMGg==
   dependencies:
-    "@onaio/session-reducer" "^0.0.11"
+    "@onaio/session-reducer" "^0.0.13"
 
 "@onaio/connected-reducer-registry@^0.0.3":
   version "0.0.3"
@@ -2513,6 +2513,11 @@
   version "0.0.12"
   resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.12.tgz#8a72bd80442a6f6c10138b3b3fac0455324042e1"
   integrity sha512-BbsIuhMhPeM7BnbSiPUOKZFZeTQLjSqYBrWAJeA/gotH1c20csYDRfI1bhopOmVx0dbigm7saDFfOX963jpULA==
+
+"@onaio/session-reducer@^0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@onaio/session-reducer/-/session-reducer-0.0.13.tgz#96c5749b4c84b47a662ce753a5bec414b565f0df"
+  integrity sha512-A5FdwFyV1Y4NQiyo/aA3g1nlNFsu7rXzR7jGT6J0Nj6ag9xuh6XOG3fyLgBLRbNTB1+Y1g3iFYX8MN89sJrAeQ==
 
 "@onaio/superset-connector@^0.0.13":
   version "0.0.13"

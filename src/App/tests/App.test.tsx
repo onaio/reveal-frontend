@@ -149,4 +149,28 @@ describe('App', () => {
     expect(GoogleAnalytics.pageview).not.toBeCalled();
     wrapper.unmount();
   });
+
+  it('can not navigate to disabled route', () => {
+    const envModule = require('../../configs/env');
+    envModule.ENABLE_PLANNING = false; // disable planning tool page
+    envModule.ENABLE_TEAMS = true; // enable teams page
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+
+    // navigate to disabled page
+    history.push('/plans/planning'); // navigate to planning tool page
+    wrapper.update();
+    expect(wrapper.find('Router').prop('history').location.pathname).toEqual('/page-not-found');
+
+    // navigate to enabled page
+    history.push('/teams'); // navigate to teams page
+    wrapper.update();
+    expect(wrapper.find('Router').prop('history').location.pathname).toEqual('/teams');
+  });
 });

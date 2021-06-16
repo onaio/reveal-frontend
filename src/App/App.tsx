@@ -25,6 +25,23 @@ import Loading from '../components/page/Loading';
 import {
   BACKEND_ACTIVE,
   DISABLE_LOGIN_PROTECTION,
+  ENABLE_ASSIGN,
+  ENABLE_CONFIG_FORM,
+  ENABLE_DYNAMIC_MDA,
+  ENABLE_FI,
+  ENABLE_IRS,
+  ENABLE_IRS_LITE,
+  ENABLE_IRS_MOPUP_REPORTING,
+  ENABLE_IRS_PERFORMANCE_REPORT,
+  ENABLE_JURISDICTION_METADATA_UPLOAD,
+  ENABLE_MDA_LITE,
+  ENABLE_MDA_POINT,
+  ENABLE_PLANNING,
+  ENABLE_POPULATION_SERVER_SETTINGS,
+  ENABLE_PRACTITIONERS,
+  ENABLE_SMC,
+  ENABLE_STRUCTURE_METADATA_UPLOAD,
+  ENABLE_TEAMS,
   GA_CODE,
   GA_ENV,
   TOAST_AUTO_CLOSE_DELAY,
@@ -37,6 +54,7 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import '@onaio/drill-down-table/dist/table.css';
 import { TokenExpired } from '@onaio/gatekeeper';
+import { PageNotFound } from '../components/errors/PageNotFound';
 import { CustomLogout } from '../components/Logout';
 import { Footer } from '../components/page/Footer';
 import {
@@ -72,6 +90,7 @@ import {
   NEW_PLAN_URL,
   NEW_PLANNING_PLAN_URL,
   ORGANIZATIONS_LIST_URL,
+  PAGE_NOT_FOUND_URL,
   PERFORMANCE_REPORT_IRS_PLAN_URL,
   PLAN_COMPLETION_URL,
   PLAN_LIST_URL,
@@ -231,6 +250,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_POINT}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={REPORT_MDA_POINT_PLAN_URL}
                   component={ConnectedMDAPointPlansList}
@@ -238,6 +259,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_POINT}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_MDA_POINT_PLAN_URL}/:planId`}
                   component={ConnectedMdaPointJurisdictionReport}
@@ -245,6 +268,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_POINT}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_MDA_POINT_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMdaPointJurisdictionReport}
@@ -252,6 +277,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_POINT}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${MDA_POINT_LOCATION_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedSchoolReports}
@@ -259,6 +286,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_POINT}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${MDA_POINT_CHILD_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedChildReports}
@@ -267,6 +296,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_SMC}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={REPORT_SMC_PLAN_URL}
                   component={ConnectedSMCPlansList}
@@ -274,6 +305,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_SMC}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_SMC_PLAN_URL}/:planId`}
                   component={ConnectedSMCJurisdictionReport}
@@ -281,6 +314,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_SMC}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedSMCJurisdictionReport}
@@ -288,6 +323,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_SMC}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedSMCReportingMap}
@@ -296,6 +333,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_LITE}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={REPORT_MDA_LITE_PLAN_URL}
                   component={ConnectedMDALitePlansList}
@@ -303,6 +342,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_LITE}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_MDA_LITE_PLAN_URL}/:planId`}
                   component={ConnectedMdaLiteJurisdictionReport}
@@ -310,6 +351,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_LITE}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_MDA_LITE_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMdaLiteJurisdictionReport}
@@ -317,6 +360,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_LITE}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_MDA_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedMDALiteMapReport}
@@ -324,6 +369,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_LITE}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_MDA_LITE_WARD_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMDALiteWardsReport}
@@ -331,6 +378,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_LITE}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_MDA_LITE_CDD_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMDALiteSupervisorReports}
@@ -338,6 +387,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_LITE}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_MDA_LITE_CDD_REPORT_URL}/:planId/:jurisdictionId/:supervisorId`}
                   component={ConnectedMDALiteCddReports}
@@ -346,6 +397,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={REPORT_IRS_PLAN_URL}
                   component={ConnectedIRSPlansList}
@@ -353,6 +406,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId`}
                   component={ConnectedJurisdictionReport}
@@ -360,6 +415,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedJurisdictionReport}
@@ -368,6 +425,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS_LITE}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={REPORT_IRS_LITE_PLAN_URL}
                   component={ConnectedIRSLitePlansList}
@@ -375,6 +434,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS_LITE}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_IRS_LITE_PLAN_URL}/:planId`}
                   component={ConnectedJurisdictionReportLite}
@@ -382,14 +443,18 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS_LITE}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedJurisdictionReportLite}
                 />
-                {/* IRS Reporting Map view */}
+                {/* IRS Lite Reporting Map view */}
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS_LITE}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedIRSLiteReportingMap}
@@ -398,6 +463,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedIRSReportingMap}
@@ -406,6 +473,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={PERFORMANCE_REPORT_IRS_PLAN_URL}
                   component={IRSPlanPerfomenceReport}
@@ -413,6 +482,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId`}
                   component={ConnectedIRSPerfomenceReport}
@@ -420,6 +491,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedIRSPerfomenceReport}
@@ -427,6 +500,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/:dataCollector`}
                   component={ConnectedIRSPerfomenceReport}
@@ -434,6 +509,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/:dataCollector/:sop`}
                   component={ConnectedIRSPerfomenceReport}
@@ -442,6 +519,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_DYNAMIC_MDA}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={REPORT_MDA_PLAN_URL}
                   component={ConnectedMDAPLansList}
@@ -449,6 +528,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_DYNAMIC_MDA}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_MDA_PLAN_URL}/:planId`}
                   component={ConnectedMDAJurisdictionReport}
@@ -456,6 +537,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_DYNAMIC_MDA}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_MDA_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMDAJurisdictionReport}
@@ -464,6 +547,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_ASSIGN}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${ASSIGN_PLAN_URL}`}
                   component={OpenSRPPlansList}
@@ -472,6 +557,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_ASSIGN}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${ASSIGN_PLAN_URL}/:planId`}
                   component={ConnectedPlanAssignment}
@@ -479,6 +566,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_ASSIGN}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${ASSIGN_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedPlanAssignment}
@@ -487,6 +576,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_FI}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={FI_URL}
                   component={ActiveFocusInvestigation}
@@ -495,6 +586,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_FI}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${FI_SINGLE_URL}/:jurisdictionId`}
                   component={FIJurisdiction}
@@ -502,6 +595,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_FI}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${FI_FILTER_URL}/:jurisdiction_parent_id/:plan_id?`}
                   component={ActiveFocusInvestigation}
@@ -510,6 +605,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_FI}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${PLAN_COMPLETION_URL}/:id`}
                   component={ConnectedPlanCompletion}
@@ -518,6 +615,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_FI}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${FI_SINGLE_MAP_URL}/:id/`}
                   component={SingleActiveFIMap}
@@ -526,6 +625,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_FI}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${FI_SINGLE_MAP_URL}/:id/:goalId`}
                   component={SingleActiveFIMap}
@@ -558,6 +659,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_TEAMS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={ORGANIZATIONS_LIST_URL}
                   component={ConnectedOrgsListView}
@@ -566,6 +669,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_TEAMS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={CREATE_ORGANIZATION_URL}
                   component={ConnectedCreateEditOrgView}
@@ -574,6 +679,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_TEAMS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${EDIT_ORGANIZATION_URL}/:id`}
                   component={ConnectedCreateEditOrgView}
@@ -582,6 +689,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_TEAMS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${SINGLE_ORGANIZATION_URL}/:id`}
                   component={ConnectedSingleOrgView}
@@ -590,22 +699,18 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_MDA_POINT}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={false}
                   path={CLIENTS_LIST_URL}
                   component={ConnectedClientListView}
-                />
-                {/* single organization view */}
-                <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path={`${SINGLE_ORGANIZATION_URL}/:id`}
-                  component={ConnectedSingleOrgView}
                 />
                 {/* Practitioner listing page */}
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_PRACTITIONERS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={PRACTITIONERS_LIST_URL}
                   component={ConnectedPractitionersListView}
@@ -614,6 +719,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_PRACTITIONERS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={CREATE_PRACTITIONER_URL}
                   component={ConnectedCreateEditPractitionerView}
@@ -622,6 +729,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_PRACTITIONERS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${EDIT_PRACTITIONER_URL}/:id`}
                   component={ConnectedCreateEditPractitionerView}
@@ -630,6 +739,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_PRACTITIONERS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${ASSIGN_PRACTITIONERS_URL}/:id`}
                   component={ConnectedAssignPractitioner}
@@ -638,6 +749,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_CONFIG_FORM}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={MANIFEST_RELEASE_URL}
                   component={ManifestReleasesPage}
@@ -645,6 +758,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_CONFIG_FORM}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${MANIFEST_RELEASE_URL}/:id`}
                   component={ManifestFiles}
@@ -652,6 +767,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_CONFIG_FORM}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={JSON_VALIDATORS_URL}
                   component={JSONValidatorListPage}
@@ -659,6 +776,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_CONFIG_FORM}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${MANIFEST_FILE_UPLOAD}/:type`}
                   component={ConnectedUploadConfigFilePage}
@@ -666,6 +785,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_CONFIG_FORM}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${MANIFEST_FILE_UPLOAD}/:type/:id`}
                   component={ConnectedUploadConfigFilePage}
@@ -673,6 +794,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_CONFIG_FORM}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={VIEW_DRAFT_FILES_URL}
                   component={ManifestDraftFilesPage}
@@ -681,6 +804,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_JURISDICTION_METADATA_UPLOAD}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={JURISDICTION_METADATA_URL}
                   component={JurisdictionMetadata}
@@ -689,6 +814,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_STRUCTURE_METADATA_UPLOAD}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={STRUCTURE_METADATA_URL}
                   component={StructureMetadataImportView}
@@ -697,6 +824,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_POPULATION_SERVER_SETTINGS}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={EDIT_SERVER_SETTINGS_URL}
                   component={EditServerSettings}
@@ -704,6 +833,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_PLANNING}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={PLANNING_VIEW_URL}
                   component={DraftPlans}
@@ -711,6 +842,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_PLANNING}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={NEW_PLANNING_PLAN_URL}
                   component={NewPlanForPlanning}
@@ -718,6 +851,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_PLANNING}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
                   component={ConnectedJurisdictionAssignmentView}
@@ -725,6 +860,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_PLANNING}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId`}
                   component={ConnectedJurisdictionAssignmentView}
@@ -732,6 +869,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_PLANNING}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
                   component={ConnectedAutoSelectView}
@@ -739,6 +878,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_PLANNING}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId`}
                   component={ConnectedAutoSelectView}
@@ -746,6 +887,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_PLANNING}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${ASSIGN_JURISDICTIONS_URL}/:planId`}
                   component={ConnectedEntryView}
@@ -753,6 +896,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS_MOPUP_REPORTING}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={IRS_MOP_UP_REPORT_URL}
                   component={IRSMopUpReporting}
@@ -760,6 +905,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS_MOPUP_REPORTING}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${IRS_MOP_UP_REPORT_URL}/:planId`}
                   component={ConnectedMopup}
@@ -767,6 +914,8 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  routerEnabled={ENABLE_IRS_MOPUP_REPORTING}
+                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${IRS_MOP_UP_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMopup}
@@ -831,6 +980,9 @@ const App = () => {
                     );
                   }}
                 />
+                {/* page not found */}
+                <Route path="*" exact={true} component={PageNotFound} />
+                <Redirect from="*" to={PAGE_NOT_FOUND_URL} />
               </Switch>
             </Col>
           </Row>
