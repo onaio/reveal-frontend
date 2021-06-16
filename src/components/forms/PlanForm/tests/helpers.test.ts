@@ -122,24 +122,27 @@ describe('containers/forms/PlanForm/helpers', () => {
   });
 
   it('check getNameTitle returns the correct value when Focus Investigation(FI) is selected', () => {
-    expect(getNameTitle(event, values)).toEqual(['A1--2019-08-09', 'A1  2019-08-09']);
-    expect(getNameTitle(event, valuesWithJurisdiction)).toEqual([
+    const target = event.target as HTMLInputElement;
+    expect(getNameTitle(target, values)).toEqual(['A1--2019-08-09', 'A1  2019-08-09']);
+    expect(getNameTitle(target, valuesWithJurisdiction)).toEqual([
       'A1-TLv2_01-2019-08-09',
       'A1 TLv2_01 2019-08-09',
     ]);
   });
 
   it('check getNameTitle returns the correct value when IRS is selected', () => {
-    expect(getNameTitle(event2, values)).toEqual(['IRS-2019-08-09', 'IRS 2019-08-09']);
-    expect(getNameTitle(event2, valuesWithJurisdiction)).toEqual([
+    const target = event2.target as HTMLInputElement;
+    expect(getNameTitle(target, values)).toEqual(['IRS-2019-08-09', 'IRS 2019-08-09']);
+    expect(getNameTitle(target, valuesWithJurisdiction)).toEqual([
       'IRS-2019-08-09',
       'IRS 2019-08-09',
     ]);
   });
 
   it('check getNameTitle returns the correct value when nothing is selected', () => {
-    expect(getNameTitle(event3, values)).toEqual(['IRS-2019-08-09', 'IRS 2019-08-09']);
-    expect(getNameTitle(event3, valuesWithJurisdiction)).toEqual([
+    const target = event3.target as HTMLInputElement;
+    expect(getNameTitle(target, values)).toEqual(['IRS-2019-08-09', 'IRS 2019-08-09']);
+    expect(getNameTitle(target, valuesWithJurisdiction)).toEqual([
       'IRS-2019-08-09',
       'IRS 2019-08-09',
     ]);

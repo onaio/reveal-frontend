@@ -2,6 +2,7 @@ import { fireEvent, render } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import flushPromises from 'flush-promises';
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import JurisdictionSelect, { SelectOption } from '..';
 import defaultProps, {
   handleChange as handleChangeHandler,
@@ -10,6 +11,7 @@ import defaultProps, {
 } from '..';
 import { OPENSRP_FIND_BY_PROPERTIES, OPENSRP_LOCATION } from '../../../../constants';
 import { OpenSRPService } from '../../../../services/opensrp';
+import { defaultInitialValues } from '../../PlanForm';
 
 jest.mock('../../../../configs/env');
 // tslint:disable-next-line: no-var-requires
@@ -119,7 +121,9 @@ describe('components/forms/JurisdictionSelect', () => {
       serviceClass: mockedOpenSRPservice,
     };
     const { container, getByText } = render(<JurisdictionSelect {...props} />);
-    await flushPromises();
+    await act(async () => {
+      await flushPromises();
+    });
     expect(mockedOpenSRPservice).toBeCalledTimes(1);
     expect(promiseOptions).toHaveBeenCalledTimes(1);
     const placeholder = getByText('Select');
@@ -262,7 +266,9 @@ describe('components/forms/JurisdictionSelect', () => {
       fireEvent.keyDown(inputValue, { key: 'ArrowDown', code: 40 });
       expect(container.querySelector('.jurisdiction__menu')).toMatchSnapshot('Jurisdiction Menu');
       fireEvent.click(getByText('Sinda'));
-      await flushPromises();
+      await act(async () => {
+        await flushPromises();
+      });
     }
     // At initial load JurisdictionStatus should be true
     expect(promiseOptions.mock.calls[0][3]).toEqual(true);
@@ -314,5 +320,53 @@ describe('components/forms/JurisdictionSelect', () => {
     expect(fetch.mock.calls[0][0]).toEqual(
       'https://test.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=parentId:395X,status:Active'
     );
+  });
+
+  it('sets form values correctly', async () => {
+    const mock = jest.fn();
+    fetch.resetMocks();
+    fetch.mockResponse(JSON.stringify([]));
+    const mockOptions: SelectOption = { label: 'Akros', value: '395X', fiStatus: 'A1' };
+    const service = new OpenSRPService(`${OPENSRP_LOCATION}/${OPENSRP_FIND_BY_PROPERTIES}`);
+    const partialForm = {
+      setFieldTouched: jest.fn(),
+      setFieldValue: jest.fn(),
+      values: defaultInitialValues,
+    };
+
+    handleChangeHandler(
+      {},
+      true,
+      service,
+      mockOptions,
+      [],
+      true,
+      true,
+      true,
+      mock,
+      mock,
+      mock,
+      mock,
+      mock,
+      mock,
+      'jurisdictions[0].name',
+      'fiStatus',
+      partialForm as any,
+      { name: 'jurisdoction[0].id' } as any,
+      handleChangeWithOptionsHandler,
+      mock
+    );
+    await act(async () => {
+      await new Promise(resolve => setImmediate(resolve));
+    });
+    expect(partialForm.setFieldValue).toBeCalledTimes(5);
+    expect(partialForm.setFieldValue.mock.calls).toEqual([
+      ['jurisdoction[0].id', mockOptions.value], // sets jurisdiction id
+      ['fiStatus', mockOptions.fiStatus], // sets focus investigation status
+      ['title', 'A1 Akros 2017-07-13'], // sets focus plan title
+      ['name', 'A1-Akros-2017-07-13'], // sets focus plan name
+      ['jurisdictions[0].name', mockOptions.label], // sets jurisdiction name
+    ]);
+    expect(partialForm.setFieldTouched).toBeCalledTimes(3);
   });
 });
