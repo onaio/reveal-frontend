@@ -16,6 +16,7 @@ import {
   ONE_TO_FOUR_YEARS,
   OTHER_POP_COVERAGE,
   OTHER_POP_TARGET,
+  PZQ_DISTRIBUTED,
   RECEIVED_BY_CDD,
   REMAINING_WITH_CDD,
   RETURNED_TO_SUPERVISOR,
@@ -273,6 +274,10 @@ export const mdaJurisdictionsColumns = [
   {
     Header: 'Alb Tablets Distributed',
     accessor: 'albdist',
+  },
+  {
+    Header: PZQ_DISTRIBUTED,
+    accessor: 'PzqDist',
   },
 ];
 
