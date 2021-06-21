@@ -1,7 +1,7 @@
 /** This module handles settings taken from environment variables */
 
 import { IGNORE } from '../constants';
-import { setEnv } from '../helpers/utils';
+import { setEnv } from './utils';
 
 /** The website name */
 export const WEBSITE_NAME = setEnv('REACT_APP_WEBSITE_NAME', 'Reveal');
