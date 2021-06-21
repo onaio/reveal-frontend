@@ -4,7 +4,7 @@ import { IGNORE } from '../constants';
 import { setEnv } from './utils';
 
 /** The website name */
-export const WEBSITE_NAME = setEnv('REACT_APP_WEBSITE_NAME', 'Reveal');
+export const WEBSITE_NAME: string = setEnv('REACT_APP_WEBSITE_NAME', 'Reveal');
 export type WEBSITE_NAME = typeof WEBSITE_NAME;
 
 /** The website language */
