@@ -532,7 +532,7 @@ export const jsxColumns = (colType: string): Array<DrillDownColumn<Dictionary>> 
             Cell: (cell: Cell) => {
               const original: Dictionary = cell.row.original;
               return (
-                <div>
+                <div className="break-text">
                   {original.focusArea.trim() && (
                     <Link to={`${FI_SINGLE_MAP_URL}/${original.id}`}>{cell.value}</Link>
                   )}
