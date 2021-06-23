@@ -74,7 +74,8 @@
         "albdist": 0,
         "sacregistered": 0,
         "mmacov": 0,
-        "mmacovper": 0
+        "mmacovper": 0,
+        "pzqdist": 10
       },
       {
         "id": "6f59664d-01a3-5d65-b480-855346a89a2c",
@@ -93,7 +94,8 @@
         "albdist": 0,
         "sacregistered": 6,
         "mmacov": 0,
-        "mmacovper": 0
+        "mmacovper": 0,
+        "pzqdist": 4
       },
       {
         "id": "92302c47-f880-55b2-bbb5-c1a306af86d2",
@@ -112,7 +114,8 @@
         "albdist": 0,
         "sacregistered": 6,
         "mmacov": 2,
-        "mmacovper": 0.3333333333333333
+        "mmacovper": 0.3333333333333333,
+        "pzqdist": 6
       },
       {
         "id": "20c544a8-2661-58a7-94df-79eafed4a60f",
@@ -131,7 +134,8 @@
         "albdist": 0,
         "sacregistered": 6,
         "mmacov": 0,
-        "mmacovper": 0
+        "mmacovper": 0,
+        "pzqdist": 8
       },
       {
         "id": "f4746c0b-0bcf-5d5a-a8ff-422826e62642",
@@ -150,7 +154,8 @@
         "albdist": 0,
         "sacregistered": 6,
         "mmacov": 2,
-        "mmacovper": 0.3333333333333333
+        "mmacovper": 0.3333333333333333,
+        "pzqdist": 14
       },
       {
         "id": "203f158a-08a7-58dc-a31b-d44f548534fb",
@@ -169,7 +174,8 @@
         "albdist": 0,
         "sacregistered": 6,
         "mmacov": 0,
-        "mmacovper": 0
+        "mmacovper": 0,
+        "pzqdist": 12
       },
       {
         "id": "0e0d98e6-7140-5d60-8e3e-e1a181693f7d",
@@ -188,7 +194,8 @@
         "albdist": 0,
         "sacregistered": 0,
         "mmacov": 0,
-        "mmacovper": 0
+        "mmacovper": 0,
+        "pzqdist": 0
       },
       {
         "id": "abfe5aba-abcb-5416-b254-2b595da625dd",
@@ -207,7 +214,8 @@
         "albdist": 0,
         "sacregistered": 6,
         "mmacov": 2,
-        "mmacovper": 0.3333333333333333
+        "mmacovper": 0.3333333333333333,
+        "pzqdist": 0
       },
       {
         "id": "50504c6d-d72a-5fb8-bedc-383ea521a365",
@@ -226,7 +234,8 @@
         "albdist": 0,
         "sacregistered": 0,
         "mmacov": 0,
-        "mmacovper": 0
+        "mmacovper": 0,
+        "pzqdist": 10
       },
       {
         "id": "75143335-c019-52b6-8dcc-0967d640e2f0",
@@ -245,7 +254,8 @@
         "albdist": 0,
         "sacregistered": 0,
         "mmacov": 0,
-        "mmacovper": 0
+        "mmacovper": 0,
+        "pzqdist": 5
       }
     ]
   }

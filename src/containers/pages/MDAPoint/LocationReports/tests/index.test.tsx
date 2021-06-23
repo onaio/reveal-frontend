@@ -85,8 +85,8 @@ describe('components/MDA Reports/MDAPlansList', () => {
     store.dispatch(FetchMDAPointLocationReportAction(fixtures.MDAPointSchoolReportData));
 
     const tableData = [
-      ['11 - 15', 9, 6, '66.67%', 0, 0, '0.00%', '0.00%', 0],
-      ['< 6', 6, 0, '0.00%', 0, 0, '0.00%', '0.00%', 0],
+      ['11 - 15', 9, 6, '66.67%', 0, 0, '0.00%', '0.00%', 0, 10],
+      ['< 6', 6, 0, '0.00%', 0, 0, '0.00%', '0.00%', 0, 5],
     ];
 
     fetch.mockResponseOnce(fixtures.MDAPointSchoolReportData);

@@ -1,6 +1,7 @@
 import { DrillDownColumn } from '@onaio/drill-down-table';
 import { Dictionary } from '@onaio/utils';
 import { Cell } from 'react-table';
+import { PZQ_DISTRIBUTED } from '../../../../../configs/lang';
 import {
   getIRSThresholdAdherenceIndicator,
   renderPercentage,
@@ -241,6 +242,10 @@ export const mdaPointColumns = [
   {
     Header: 'Alb Tablets Distributed',
     accessor: 'albdist',
+  },
+  {
+    Header: PZQ_DISTRIBUTED,
+    accessor: 'PzqDist',
   },
 ];
 /* tslint:enable no-var-requires */

@@ -406,6 +406,7 @@ export const MDAPointSchoolReportData = [
     mmaadr: 0,
     mmaadrsev: 0,
     albdist: 0,
+    pzqdist: 10,
   },
   {
     plan_id: '40357eff-81b6-4e32-bd3d-484019689f7c',
@@ -423,6 +424,7 @@ export const MDAPointSchoolReportData = [
     mmaadr: 0,
     mmaadrsev: 0,
     albdist: 0,
+    pzqdist: 5,
   },
   {
     plan_id: '40357eff-81b6-4e32-bd3d-484019689f7c',
@@ -440,6 +442,7 @@ export const MDAPointSchoolReportData = [
     mmaadr: 0,
     mmaadrsev: 0,
     albdist: 0,
+    pzqdist: 6,
   },
   {
     plan_id: '9f19b77c-b9a5-5832-a4e5-4b461d18fce7',
@@ -457,6 +460,7 @@ export const MDAPointSchoolReportData = [
     mmaadr: 0,
     mmaadrsev: 0,
     albdist: 0,
+    pzqdist: 0,
   },
   {
     plan_id: '9f19b77c-b9a5-5832-a4e5-4b461d18fce7',
@@ -474,6 +478,7 @@ export const MDAPointSchoolReportData = [
     mmaadr: 0,
     mmaadrsev: 0,
     albdist: 0,
+    pzqdist: 8,
   },
 ];
 

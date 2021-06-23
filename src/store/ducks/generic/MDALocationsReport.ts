@@ -23,6 +23,7 @@ export interface LocationReport {
   mmaadr: number;
   mmaadrsev: number;
   albdist: number;
+  pzqdist: number;
 }
 
 // actions
