@@ -19,7 +19,7 @@ export const ClientListViewprops = {
       fileName: 'Gicandi_school.csv',
       identifier: '1234',
       providerID: 'Mowshaqs',
-      uploadDate: '4/05/2020',
+      uploadDate: '4/05/2021',
       url:
         'https://user-images.githubusercontent.com/12836913/81139056-3be46680-8f19-11ea-92f8-fb1ab7877626.png',
     },
@@ -27,7 +27,7 @@ export const ClientListViewprops = {
       fileName: 'Junior_school.csv',
       identifier: '12345',
       providerID: 'Mowshaqs',
-      uploadDate: '4/05/2020',
+      uploadDate: '4/05/2019',
       url:
         'https://user-images.githubusercontent.com/12836913/81139056-3be46680-8f19-11ea-92f8-fb1ab7877626.png',
     },
@@ -70,7 +70,7 @@ export const files = [
     fileName: 'Gicandi_school.csv',
     identifier: '1234',
     providerID: 'Mowshaqs',
-    uploadDate: '4/05/2020',
+    uploadDate: '4/05/2021',
     url:
       'https://user-images.githubusercontent.com/12836913/81139056-3be46680-8f19-11ea-92f8-fb1ab7877626.png',
   },
@@ -78,7 +78,7 @@ export const files = [
     fileName: 'Junior_school.csv',
     identifier: '12345',
     providerID: 'Mowshaqs',
-    uploadDate: '4/05/2020',
+    uploadDate: '4/05/2019',
     url:
       'https://user-images.githubusercontent.com/12836913/81139056-3be46680-8f19-11ea-92f8-fb1ab7877626.png',
   },

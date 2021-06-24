@@ -1,4 +1,4 @@
-import { DrillDownTable } from '@onaio/drill-down-table';
+import { DrillDownColumn, DrillDownTable } from '@onaio/drill-down-table';
 import reducerRegistry from '@onaio/redux-reducer-registry';
 import { Dictionary } from '@onaio/utils';
 import React, { useState } from 'react';
@@ -96,7 +96,7 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
   }
 
   /** table columns */
-  const columns = [
+  const columns: Array<DrillDownColumn<any>> = [
     {
       Cell: (fileObj: Cell<File>) => {
         const original = fileObj.row.original;
@@ -125,6 +125,12 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
     {
       Header: UPLOAD_DATE,
       accessor: 'uploadDate',
+      sortType: (a, b) => {
+        if (a === b) {
+          return 0;
+        }
+        return Date.parse(a.original.uploadDate) > Date.parse(b.original.uploadDate) ? 1 : -1;
+      },
     },
   ];
 
@@ -211,6 +217,7 @@ const mapStateToProps = (state: Partial<Store>, ownProps: RouteComponentProps<Ro
   const files = filesArraySelector(state, {
     fileName: searchedTitle,
   });
+  files.sort((a, b) => Date.parse(b.uploadDate) - Date.parse(a.uploadDate));
   return {
     files,
   };
