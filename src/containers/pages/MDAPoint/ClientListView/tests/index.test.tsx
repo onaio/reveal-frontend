@@ -146,7 +146,7 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
   });
 
   it('works with the Redux store', async () => {
-    store.dispatch(fetchFiles([fixtures.files[0]]));
+    store.dispatch(fetchFiles(fixtures.files));
     const mock: any = jest.fn();
     // mock.mockImplementation(() => Promise.resolve(fixtures.plans));
     const props = {
@@ -168,8 +168,37 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
 
     expect(wrapper.find('DrillDownTable').props()).toMatchSnapshot();
     expect(wrapper.find('.thead .tr').text()).toEqual('File NameOwnerUpload Date');
-    expect(wrapper.find('.tbody .tr').length).toEqual(1);
-    expect(wrapper.find('.tbody .tr .td').length).toEqual(3);
+    expect(wrapper.find('.tbody .tr').length).toEqual(3);
+    expect(wrapper.find('.tbody .tr .td').length).toEqual(9);
+    // are the rows sorted from latest item to oldest by default
+    expect(wrapper.find('.tbody .tr').map(row => row.text())).toEqual([
+      'Gicandi_school.csv  (Download)Mowshaqs4/05/2021',
+      'Barush_school.csv  (Download)Mowshaqs4/05/2020',
+      'Junior_school.csv  (Download)Mowshaqs4/05/2019',
+    ]);
+    // click on the date column to sort (should sort from oldest to latest)
+    wrapper
+      .find('.thead .tr .th')
+      .at(2)
+      .simulate('click');
+    wrapper.update();
+    expect(wrapper.find('.tbody .tr').map(row => row.text())).toEqual([
+      'Junior_school.csv  (Download)Mowshaqs4/05/2019',
+      'Barush_school.csv  (Download)Mowshaqs4/05/2020',
+      'Gicandi_school.csv  (Download)Mowshaqs4/05/2021',
+    ]);
+    // click on the date column to sort (should sort from latest to oldest)
+    wrapper
+      .find('.thead .tr .th')
+      .at(2)
+      .simulate('click');
+    wrapper.update();
+    expect(wrapper.find('.tbody .tr').map(row => row.text())).toEqual([
+      'Gicandi_school.csv  (Download)Mowshaqs4/05/2021',
+      'Barush_school.csv  (Download)Mowshaqs4/05/2020',
+      'Junior_school.csv  (Download)Mowshaqs4/05/2019',
+    ]);
+
     wrapper.unmount();
   });
 
