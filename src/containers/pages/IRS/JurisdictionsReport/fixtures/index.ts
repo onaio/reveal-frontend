@@ -245,7 +245,7 @@ export const mdaPointColumns = [
   },
   {
     Header: PZQ_DISTRIBUTED,
-    accessor: 'PzqDist',
+    accessor: 'pzqdist',
   },
 ];
 /* tslint:enable no-var-requires */

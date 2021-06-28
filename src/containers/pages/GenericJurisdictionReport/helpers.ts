@@ -277,7 +277,7 @@ export const mdaJurisdictionsColumns = [
   },
   {
     Header: PZQ_DISTRIBUTED,
-    accessor: 'PzqDist',
+    accessor: 'pzqdist',
   },
 ];
 
