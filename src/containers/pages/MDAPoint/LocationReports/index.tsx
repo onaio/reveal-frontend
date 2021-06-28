@@ -32,6 +32,7 @@ import {
   MDA_POINT_PLANS,
   MDA_POINT_SCHOOL_REPORT_TITLE,
   MMA_COVERAGE,
+  PZQ_DISTRIBUTED,
   SACS_REFUSED,
   SACS_SICK,
   TOTAL_SACS_REGISTERED,
@@ -77,6 +78,7 @@ const tableHeaders = [
   `${ADR_REPORTED} (%)`,
   `${ADR_SEVERE} (%)`,
   ALB_TABLETS_DISTRIBUTED,
+  PZQ_DISTRIBUTED,
 ];
 
 /**
@@ -238,6 +240,7 @@ const mapStateToProps = (
       percentage(sch.mmaadr, 2).value,
       percentage(sch.mmaadrsev, 2).value,
       sch.albdist,
+      sch.pzqdist,
     ];
   });
 
