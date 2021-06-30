@@ -46,7 +46,7 @@ import {
   SMC_REPORT_STRUCTURES,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { RouteParams } from '../../../../helpers/utils';
+import { featureCollectionHasFeatures, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -150,7 +150,7 @@ const SMCReportingMap = (props: SMCReportingMapProps & RouteComponentProps<Route
   /** async function to load the data */
   async function loadData() {
     try {
-      setLoading(!focusArea || !jurisdiction || !plan || !structures); // set loading when there is no data
+      setLoading(!focusArea || !jurisdiction || !plan || !featureCollectionHasFeatures(structures)); // set loading when there is no data
 
       let fetchLocationParams: SupersetFormData | null = null;
       if (jurisdictionId) {

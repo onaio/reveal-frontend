@@ -27,9 +27,9 @@ import {
   SUPERSET_MAX_RECORDS,
 } from '../../../../configs/env';
 import {
-  AN_ERROR_OCCURRED,
   HOME,
   IRS_LITE_REPORTING_TITLE,
+  JURISDICTION_NOT_FOUND,
   LEGEND_LABEL,
   MAP_LOAD_ERROR,
   NUMERATOR_OF_DENOMINATOR_UNITS,
@@ -46,7 +46,7 @@ import {
   REPORT_IRS_LITE_PLAN_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { RouteParams } from '../../../../helpers/utils';
+import { featureCollectionHasFeatures, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -151,7 +151,7 @@ const IRSLiteReportingMap = (
   /** async function to load the data */
   async function loadData() {
     try {
-      setLoading(!focusArea || !jurisdiction || !plan || !structures); // set loading when there is no data
+      setLoading(!focusArea || !jurisdiction || !plan || !featureCollectionHasFeatures(structures)); // set loading when there is no data
 
       let fetchLocationParams: SupersetFormData | null = null;
       if (jurisdictionId) {
@@ -230,7 +230,7 @@ const IRSLiteReportingMap = (
   }
 
   if (!focusArea || !plan || !jurisdiction) {
-    return <ErrorPage errorMessage={AN_ERROR_OCCURRED} />;
+    return <ErrorPage errorMessage={JURISDICTION_NOT_FOUND} />;
   }
 
   const baseURL = `${REPORT_IRS_LITE_PLAN_URL}/${plan.plan_id}`;

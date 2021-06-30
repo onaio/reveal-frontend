@@ -48,7 +48,7 @@ import {
   REPORT_MDA_LITE_PLAN_URL,
 } from '../../../../constants';
 import { displayError } from '../../../../helpers/errors';
-import { RouteParams } from '../../../../helpers/utils';
+import { featureCollectionHasFeatures, RouteParams } from '../../../../helpers/utils';
 import supersetFetch from '../../../../services/superset';
 import GenericJurisdictionsReducer, {
   fetchGenericJurisdictions,
@@ -114,7 +114,7 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
 
   // load data
   async function loadData() {
-    setLoading(!wardData);
+    setLoading(!featureCollectionHasFeatures(wardData));
     try {
       const planIdFilter: SupersetAdhocFilterOption[] = [];
       const jurisdictionFilter: SupersetAdhocFilterOption[] = [];

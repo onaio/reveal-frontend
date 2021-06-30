@@ -79,6 +79,7 @@ import {
   SETTINGS_CONFIGURATION,
 } from '../constants';
 import store from '../store';
+import { StructureFeatureCollection } from '../store/ducks/generic/structures';
 import {
   InterventionType,
   Plan,
@@ -420,6 +421,16 @@ export function wrapFeatureCollection<T>(objFeatureCollection: T[]): FeatureColl
     type: FEATURE_COLLECTION,
   };
 }
+
+/**
+ * check if a geojson has features
+ * @param {StructureFeatureCollection | null} featureCollection - FeatureCollection
+ * @returns {boolean}
+ */
+export function featureCollectionHasFeatures(featureCollection: StructureFeatureCollection | null) {
+  return Boolean(featureCollection && featureCollection?.features.length > 0);
+}
+
 export function toggleLayer(allLayers: Dictionary, currentGoal: string, stores: any, Actions: any) {
   let layer;
   let eachLayer: string;
