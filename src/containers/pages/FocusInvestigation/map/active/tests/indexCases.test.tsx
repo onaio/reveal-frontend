@@ -24,7 +24,7 @@ jest.mock('react-mapbox-gl', () => {
 
   return {
     __esModule: true,
-    default: jest.fn().mockReturnValue(defaultMock),
+    default: () => defaultMock,
     GeoJSONLayer: () => <span>GeoJSONLayer</span>,
     ZoomControl: () => <span>ZoomControl</span>,
   };
@@ -97,8 +97,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(componentProps.historicalPolyIndexCases.features.length).toEqual(2);
 
     // gisida lite layers
-    const gisidaLiteProps: any = wrapper.find('GisidaLite').props();
-    const { layers } = gisidaLiteProps;
+    const GisidaLiteWrapperProps: any = wrapper.find('GisidaLiteWrapper').props();
+    const { layers } = GisidaLiteWrapperProps;
 
     layers.forEach((layer: any) => {
       const layerProps = layer.props;
@@ -154,8 +154,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(componentProps.historicalPolyIndexCases.features.length).toEqual(2);
 
     // gisida lite layers
-    const gisidaLiteProps: any = wrapper.find('GisidaLite').props();
-    const { layers } = gisidaLiteProps;
+    const GisidaLiteWrapperProps: any = wrapper.find('GisidaLiteWrapper').props();
+    const { layers } = GisidaLiteWrapperProps;
 
     layers.forEach((layer: any) => {
       const layerProps = layer.props;
@@ -212,8 +212,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(componentProps.historicalPolyIndexCases.features.length).toEqual(2);
 
     // gisida lite layers
-    expect(wrapper.find('GisidaLite').find('Ripple').length).toEqual(0);
-    expect(wrapper.find('GisidaLite').text()).toEqual('Map is in the box');
+    expect(wrapper.find('GisidaLiteWrapper').find('Ripple').length).toEqual(0);
+    expect(wrapper.find('GisidaLiteWrapper').text()).toEqual('Map is in the box');
   });
 
   it('does not display map if jurisdiction has no geojson', async () => {
@@ -249,9 +249,10 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       wrapper.update();
     });
 
-    expect(wrapper.find('GisidaLite').text()).toEqual(
+    expect(wrapper.find('GisidaLiteWrapper').text()).toEqual(
       'An error ocurred. Please try and refresh the page.The specific error is: Could not load points on map'
     );
+    expect(wrapper.find('GisidaLite').find('GisidaLite').length).toEqual(0);
   });
 
   it('displays map if only plans and jurisdiction available', async () => {
@@ -299,8 +300,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
     expect(componentProps.historicalPolyIndexCases.features.length).toEqual(0);
 
     // gisida lite layers
-    const gisidaLiteProps: any = wrapper.find('GisidaLite').props();
-    const { layers } = gisidaLiteProps;
+    const GisidaLiteWrapperProps: any = wrapper.find('GisidaLiteWrapper').props();
+    const { layers } = GisidaLiteWrapperProps;
 
     layers.forEach((layer: any) => {
       const layerProps = layer.props;
@@ -309,8 +310,8 @@ describe('containers/pages/FocusInvestigation/activeMap', () => {
       delete localLayer.data;
       expect(localLayer).toMatchSnapshot();
     });
-    expect(wrapper.find('GisidaLite').find('Ripple').length).toEqual(0);
-    expect(wrapper.find('GisidaLite').text()).toEqual('Map is in the box');
+    expect(wrapper.find('GisidaLiteWrapper').find('Ripple').length).toEqual(0);
+    expect(wrapper.find('GisidaLiteWrapper GisidaLite').text()).toEqual('Map is in the box');
   });
 
   it('displays error page if plan not found', async () => {

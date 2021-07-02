@@ -1,8 +1,9 @@
+import { MemoizedGisidaLite } from '@onaio/gisida-lite';
 import { isEqual } from 'lodash';
 import { EventData, Style } from 'mapbox-gl';
 import { Map } from 'mapbox-gl';
 import React, { Fragment, useEffect } from 'react';
-import ReactMapboxGl, { ZoomControl } from 'react-mapbox-gl';
+import { ZoomControl } from 'react-mapbox-gl';
 import { FitBounds, Props } from 'react-mapbox-gl/lib/map';
 import { Events } from 'react-mapbox-gl/lib/map-events';
 import { GISIDA_MAPBOX_TOKEN } from '../../configs/env';
@@ -44,12 +45,12 @@ const gisidaLiteDefaultProps: GisidaLiteProps = {
   scrollZoom: true,
 };
 
-const Mapbox = ReactMapboxGl({
+const mapBoxConfigs = {
   accessToken: GISIDA_MAPBOX_TOKEN,
   attributionControl: true,
   customAttribution: '&copy; Reveal',
   injectCSS: true,
-});
+};
 
 /**
  * Really simple Gisida :)
@@ -59,7 +60,7 @@ const Mapbox = ReactMapboxGl({
  * TODO: Add support for handlers and popups
  * TODO: Fix map jankiness
  */
-const GisidaLite = (props: GisidaLiteProps) => {
+const GisidaLiteWrapper = (props: GisidaLiteProps) => {
   const [renderLayers, setRenderLayers] = React.useState<boolean>(false);
 
   const {
@@ -147,17 +148,20 @@ const GisidaLite = (props: GisidaLiteProps) => {
   }
 
   return (
-    <Mapbox {...mapBoxProps}>
-      <>
-        {renderLayers &&
-          layers.map((item: any) => <Fragment key={`gsLite-${item.key}`}>{item}</Fragment>)}
-        <ZoomControl />
-      </>
-    </Mapbox>
+    <MemoizedGisidaLite
+      reactMapboxGlConfigs={mapBoxConfigs}
+      layers={
+        renderLayers
+          ? layers.map((item: any) => <Fragment key={`gsLite-${item.key}`}>{item}</Fragment>)
+          : []
+      }
+      mapComponents={[<ZoomControl key="zoom-ctl" />]}
+      mapConfigs={mapBoxProps}
+    />
   );
 };
 
-GisidaLite.defaultProps = gisidaLiteDefaultProps;
+GisidaLiteWrapper.defaultProps = gisidaLiteDefaultProps;
 
 /**
  * Custom equality method for React.memo
@@ -168,6 +172,6 @@ export const arePropsEqual = (prevProps: GisidaLiteProps, nextProps: GisidaLiteP
   return isEqual(prevProps.layers, nextProps.layers);
 };
 
-const MemoizedGisidaLite = React.memo(GisidaLite, arePropsEqual);
+const MemoizedGisidaLiteWrapper = React.memo(GisidaLiteWrapper, arePropsEqual);
 
-export { GisidaLite, MemoizedGisidaLite };
+export { GisidaLiteWrapper, MemoizedGisidaLiteWrapper };
