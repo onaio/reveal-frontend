@@ -135,6 +135,7 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
             "ADR Reported (%)",
             "ADR Severe (%)",
             "Alb Tablets Distributed",
+            "PZQ tablets distributed",
           ]
         }
       >
@@ -192,6 +193,12 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
         >
           Alb Tablets Distributed
         </th>
+        <th
+          className="listview-td"
+          key="9"
+        >
+          PZQ tablets distributed
+        </th>
       </ElementMap>
     </tr>
   </thead>
@@ -216,6 +223,7 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
             "0.00%",
             "0.00%",
             0,
+            10,
           ]
         }
       >
@@ -273,6 +281,12 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
         >
           0
         </td>
+        <td
+          className="listview-th"
+          key="9"
+        >
+          10
+        </td>
       </ElementMap>
     </tr>
     <tr
@@ -293,6 +307,7 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
             "0.00%",
             "0.00%",
             0,
+            5,
           ]
         }
       >
@@ -349,6 +364,12 @@ exports[`components/MDA Reports/MDAPlansList should render school reports correc
           key="8"
         >
           0
+        </td>
+        <td
+          className="listview-th"
+          key="9"
+        >
+          5
         </td>
       </ElementMap>
     </tr>
