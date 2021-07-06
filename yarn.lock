@@ -2468,6 +2468,15 @@
     query-string "^6.4.2"
     reactstrap "^7.1.0"
 
+"@onaio/gisida-lite@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@onaio/gisida-lite/-/gisida-lite-0.0.2.tgz#a654823b95e63c976f532e5dbdadad143342900f"
+  integrity sha512-/6RFUb2xsynBJyEcfa8pYdn1a7AnVXErqtcXe+62JE7z/14AHTOk5QvN/YcoLZV5jl+MBTkqzgTFhu7QQ8moaA==
+  dependencies:
+    lodash "^4.17.21"
+    mapbox-gl "^1.11.0"
+    react-mapbox-gl "^4.8.6"
+
 "@onaio/google-analytics@^0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@onaio/google-analytics/-/google-analytics-0.0.2.tgz#8c723e788a4d3d2506d8e9fa58a080e056ee6dda"
@@ -11249,6 +11258,11 @@ lodash@^4.17.19:
   version "4.17.20"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
   integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
+
+lodash@^4.17.21:
+  version "4.17.21"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
 
 log-driver@^1.2.7:
   version "1.2.7"

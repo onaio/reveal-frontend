@@ -13,7 +13,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
-import { MemoizedGisidaLite } from '../../../../components/GisidaLite';
+import { MemoizedGisidaLiteWrapper } from '../../../../components/GisidaLite';
 import { getZoomCenterAndBounds } from '../../../../components/GisidaLite/helpers';
 import NotFound from '../../../../components/NotFound';
 import HeaderBreadcrumb from '../../../../components/page/HeaderBreadcrumb/HeaderBreadcrumb';
@@ -291,7 +291,7 @@ const MDALiteMapReport = (props: MDALiteMapProps & RouteComponentProps<RoutePara
         <Col xs={9}>
           <div className="generic-report-table">
             {wardLayers.length ? (
-              <MemoizedGisidaLite
+              <MemoizedGisidaLiteWrapper
                 layers={[...wardLayers]}
                 zoom={zoom}
                 mapCenter={mapCenter}

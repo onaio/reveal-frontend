@@ -10,7 +10,7 @@ import { RouteComponentProps } from 'react-router';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
-import { MemoizedGisidaLite } from '../../../../components/GisidaLite';
+import { MemoizedGisidaLiteWrapper } from '../../../../components/GisidaLite';
 import { getZoomCenterAndBounds } from '../../../../components/GisidaLite/helpers';
 import NotFound from '../../../../components/NotFound';
 import { ErrorPage } from '../../../../components/page/ErrorPage';
@@ -333,7 +333,7 @@ const IRSLiteReportingMap = (
       <Row noGutters={true}>
         <Col xs={9}>
           {gsLayers.length ? (
-            <MemoizedGisidaLite
+            <MemoizedGisidaLiteWrapper
               layers={[...gsLayers]}
               zoom={zoom}
               mapCenter={mapCenter}

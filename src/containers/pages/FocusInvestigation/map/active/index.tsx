@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 import { Col, Row } from 'reactstrap';
 import { Store } from 'redux';
 import { format } from 'util';
-import { MemoizedGisidaLite } from '../../../../../components/GisidaLite';
+import { MemoizedGisidaLiteWrapper } from '../../../../../components/GisidaLite';
 import { getCenter } from '../../../../../components/GisidaLite/helpers';
 import HeaderBreadcrumb, {
   BreadCrumbProps,
@@ -406,7 +406,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
       <div className="row no-gutters mb-5">
         <div className="col-9">
           <div className="map">
-            <MemoizedGisidaLite
+            <MemoizedGisidaLiteWrapper
               layers={gsLayers}
               mapCenter={mapCenter}
               mapBounds={mapBounds}

@@ -39,7 +39,7 @@ jest.mock('../../../../../../components/GisidaLite', () => {
   const MemoizedGisidaLiteMock = () => <div>I love oov</div>;
   return {
     GisidaLite: GisidaLiteMock,
-    MemoizedGisidaLite: MemoizedGisidaLiteMock,
+    MemoizedGisidaLiteWrapper: MemoizedGisidaLiteMock,
   };
 });
 
