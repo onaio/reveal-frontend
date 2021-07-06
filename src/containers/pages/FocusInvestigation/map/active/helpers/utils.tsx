@@ -158,7 +158,7 @@ export const fetchData = async (
   fetchIndexCaseActionCreator: typeof fetchIndexCaseDetails,
   plan: Plan,
   supersetService: typeof supersetFetch,
-  setIsFetchingJurisdiction: (state: boolean) => void
+  setIsFetchingJurisdiction: null | ((state: boolean) => void) = null
 ): Promise<void> => {
   if (plan && plan.plan_id) {
     /** define superset filter params for jurisdictions */
@@ -182,7 +182,9 @@ export const fetchData = async (
     ]);
 
     if (SUPERSET_JURISDICTIONS_SLICE !== '0') {
-      setIsFetchingJurisdiction(true);
+      if (setIsFetchingJurisdiction) {
+        setIsFetchingJurisdiction(true);
+      }
       supersetCall(
         SUPERSET_JURISDICTIONS_SLICE,
         fetchJurisdictionsActionCreator,
@@ -191,7 +193,11 @@ export const fetchData = async (
       )
         // tslint:disable-next-line: no-floating-promises
         .catch(() => displayError(new Error(AN_ERROR_OCCURRED)))
-        .finally(() => setIsFetchingJurisdiction(false));
+        .finally(() => {
+          if (setIsFetchingJurisdiction) {
+            setIsFetchingJurisdiction(false);
+          }
+        });
     }
 
     if (SUPERSET_STRUCTURES_SLICE !== '0') {

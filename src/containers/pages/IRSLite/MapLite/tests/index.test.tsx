@@ -457,7 +457,7 @@ describe('components/IRS Reports/IRSLiteReportingMap', () => {
       wrapper.update();
     });
     expect(wrapper.find('ErrorPage').text()).toEqual(
-      'An error ocurred. Please try and refresh the page.The specific error is: An Error Ocurred'
+      'An error ocurred. Please try and refresh the page.The specific error is: Map failed to load: Jurisdiction not found'
     );
     wrapper.unmount();
   });
