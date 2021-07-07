@@ -182,9 +182,7 @@ export const fetchData = async (
     ]);
 
     if (SUPERSET_JURISDICTIONS_SLICE !== '0') {
-      if (setIsFetchingJurisdiction) {
-        setIsFetchingJurisdiction(true);
-      }
+      setIsFetchingJurisdiction?.(true);
       supersetCall(
         SUPERSET_JURISDICTIONS_SLICE,
         fetchJurisdictionsActionCreator,
@@ -193,11 +191,7 @@ export const fetchData = async (
       )
         // tslint:disable-next-line: no-floating-promises
         .catch(() => displayError(new Error(AN_ERROR_OCCURRED)))
-        .finally(() => {
-          if (setIsFetchingJurisdiction) {
-            setIsFetchingJurisdiction(false);
-          }
-        });
+        .finally(() => setIsFetchingJurisdiction?.(false));
     }
 
     if (SUPERSET_STRUCTURES_SLICE !== '0') {
