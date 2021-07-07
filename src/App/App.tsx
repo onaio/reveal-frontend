@@ -210,6 +210,13 @@ const AuthGrantType = BACKEND_ACTIVE ? AUTHORIZATION_CODE : IMPLICIT;
 const APP_LOGIN_URL = BACKEND_ACTIVE ? BACKEND_LOGIN_URL : REACT_LOGIN_URL;
 const APP_CALLBACK_PATH = BACKEND_ACTIVE ? BACKEND_CALLBACK_PATH : REACT_CALLBACK_PATH;
 
+const commonRouteProps = {
+  disableLoginProtection: DISABLE_LOGIN_PROTECTION,
+  exact: true,
+  redirectPath: APP_CALLBACK_URL,
+  routerDisabledRedirectPath: PAGE_NOT_FOUND_URL,
+};
+
 /** Main App component */
 const App = () => {
   useEffect(() => {
@@ -239,213 +246,141 @@ const App = () => {
               {GA_CODE && <RouteTracker />}
               <Switch>
                 {/* Home Page view */}
-                <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
-                  path="/"
-                  component={Home}
-                />
+                <ConnectedPrivateRoute {...commonRouteProps} path="/" component={Home} />
                 {/* MDA point Reporting plan table view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_POINT}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={REPORT_MDA_POINT_PLAN_URL}
                   component={ConnectedMDAPointPlansList}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_POINT}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_MDA_POINT_PLAN_URL}/:planId`}
                   component={ConnectedMdaPointJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_POINT}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_MDA_POINT_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMdaPointJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_POINT}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${MDA_POINT_LOCATION_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedSchoolReports}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_POINT}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${MDA_POINT_CHILD_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedChildReports}
                 />
                 {/* SMC Reporting plan table view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_SMC}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={REPORT_SMC_PLAN_URL}
                   component={ConnectedSMCPlansList}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_SMC}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_SMC_PLAN_URL}/:planId`}
                   component={ConnectedSMCJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_SMC}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedSMCJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_SMC}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedSMCReportingMap}
                 />
                 {/* MDA Lite Reporting plan table view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_LITE}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={REPORT_MDA_LITE_PLAN_URL}
                   component={ConnectedMDALitePlansList}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_LITE}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_MDA_LITE_PLAN_URL}/:planId`}
                   component={ConnectedMdaLiteJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_LITE}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_MDA_LITE_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMdaLiteJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_LITE}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_MDA_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedMDALiteMapReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_LITE}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_MDA_LITE_WARD_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMDALiteWardsReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_LITE}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_MDA_LITE_CDD_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMDALiteSupervisorReports}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_LITE}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_MDA_LITE_CDD_REPORT_URL}/:planId/:jurisdictionId/:supervisorId`}
                   component={ConnectedMDALiteCddReports}
                 />
                 {/* IRS Reporting plan table view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={REPORT_IRS_PLAN_URL}
                   component={ConnectedIRSPlansList}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId`}
                   component={ConnectedJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedJurisdictionReport}
                 />
                 {/* IRS Lite Reporting plan table view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS_LITE}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={REPORT_IRS_LITE_PLAN_URL}
                   component={ConnectedIRSLitePlansList}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS_LITE}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_IRS_LITE_PLAN_URL}/:planId`}
                   component={ConnectedJurisdictionReportLite}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS_LITE}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedJurisdictionReportLite}
                 />
@@ -461,462 +396,320 @@ const App = () => {
                 />
                 {/* IRS Reporting Map view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedIRSReportingMap}
                 />
                 {/* IRS performance Reporting view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={PERFORMANCE_REPORT_IRS_PLAN_URL}
                   component={IRSPlanPerfomenceReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId`}
                   component={ConnectedIRSPerfomenceReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedIRSPerfomenceReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/:dataCollector`}
                   component={ConnectedIRSPerfomenceReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/:dataCollector/:sop`}
                   component={ConnectedIRSPerfomenceReport}
                 />
                 {/* MDA Reporting plan table view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_DYNAMIC_MDA}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={REPORT_MDA_PLAN_URL}
                   component={ConnectedMDAPLansList}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_DYNAMIC_MDA}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_MDA_PLAN_URL}/:planId`}
                   component={ConnectedMDAJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_DYNAMIC_MDA}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${REPORT_MDA_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMDAJurisdictionReport}
                 />
                 {/* Plan Assignment views for Plan */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_ASSIGN}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${ASSIGN_PLAN_URL}`}
                   component={OpenSRPPlansList}
                 />
                 {/* Plan assignment views for Plan & Jurisdictions */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_ASSIGN}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${ASSIGN_PLAN_URL}/:planId`}
                   component={ConnectedPlanAssignment}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_ASSIGN}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${ASSIGN_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedPlanAssignment}
                 />
                 {/* Focus Investigation Reporting list view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
+                  {...commonRouteProps}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
                   routerEnabled={ENABLE_FI}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={FI_URL}
                   component={ActiveFocusInvestigation}
                 />
                 {/* Focus Area detail view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_FI}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${FI_SINGLE_URL}/:jurisdictionId`}
                   component={FIJurisdiction}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_FI}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${FI_FILTER_URL}/:jurisdiction_parent_id/:plan_id?`}
                   component={ActiveFocusInvestigation}
                 />
                 {/* Focus Investigation completion confirmation view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_FI}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${PLAN_COMPLETION_URL}/:id`}
                   component={ConnectedPlanCompletion}
                 />
                 {/* Focus Investigation Reporting map view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_FI}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${FI_SINGLE_MAP_URL}/:id/`}
                   component={SingleActiveFIMap}
                 />
                 {/* Focus Investigation Reporting map view (with goal layers) */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_FI}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${FI_SINGLE_MAP_URL}/:id/:goalId`}
                   component={SingleActiveFIMap}
                 />
                 {/* New Focus Investigation Plan form view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
+                  {...commonRouteProps}
                   path={NEW_PLAN_URL}
                   component={BaseNewPlan}
                 />
                 {/* Edit Focus Investigation Plan form view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
+                  {...commonRouteProps}
                   path={`${PLAN_UPDATE_URL}/:id`}
                   component={ConnectedUpdatePlan}
                 />
                 {/* Manage Plans list view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
+                  {...commonRouteProps}
                   path={PLAN_LIST_URL}
                   component={PlanDefinitionList}
                 />
                 {/** Organization list view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_TEAMS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={ORGANIZATIONS_LIST_URL}
                   component={ConnectedOrgsListView}
                 />
                 {/** organization create view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_TEAMS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={CREATE_ORGANIZATION_URL}
                   component={ConnectedCreateEditOrgView}
                 />
                 {/** Organization edit view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_TEAMS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${EDIT_ORGANIZATION_URL}/:id`}
                   component={ConnectedCreateEditOrgView}
                 />
                 {/* single organization view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_TEAMS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${SINGLE_ORGANIZATION_URL}/:id`}
                   component={ConnectedSingleOrgView}
                 />
                 {/* Student listing page */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_MDA_POINT}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={false}
                   path={CLIENTS_LIST_URL}
                   component={ConnectedClientListView}
                 />
                 {/* Practitioner listing page */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_PRACTITIONERS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={PRACTITIONERS_LIST_URL}
                   component={ConnectedPractitionersListView}
                 />
                 {/** practitioner create view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_PRACTITIONERS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={CREATE_PRACTITIONER_URL}
                   component={ConnectedCreateEditPractitionerView}
                 />
                 {/** Practitioner edit view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_PRACTITIONERS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${EDIT_PRACTITIONER_URL}/:id`}
                   component={ConnectedCreateEditPractitionerView}
                 />
                 {/** Assign practitioners to organization view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_PRACTITIONERS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${ASSIGN_PRACTITIONERS_URL}/:id`}
                   component={ConnectedAssignPractitioner}
                 />
                 {/** form config views */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_CONFIG_FORM}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={MANIFEST_RELEASE_URL}
                   component={ManifestReleasesPage}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_CONFIG_FORM}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${MANIFEST_RELEASE_URL}/:id`}
                   component={ManifestFiles}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_CONFIG_FORM}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={JSON_VALIDATORS_URL}
                   component={JSONValidatorListPage}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_CONFIG_FORM}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${MANIFEST_FILE_UPLOAD}/:type`}
                   component={ConnectedUploadConfigFilePage}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_CONFIG_FORM}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${MANIFEST_FILE_UPLOAD}/:type/:id`}
                   component={ConnectedUploadConfigFilePage}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_CONFIG_FORM}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={VIEW_DRAFT_FILES_URL}
                   component={ManifestDraftFilesPage}
                 />
                 {/* Upload Jurisdiction Metadata view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_JURISDICTION_METADATA_UPLOAD}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={JURISDICTION_METADATA_URL}
                   component={JurisdictionMetadata}
                 />
                 {/* Upload Structure Metadata view */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_STRUCTURE_METADATA_UPLOAD}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={STRUCTURE_METADATA_URL}
                   component={StructureMetadataImportView}
                 />
                 {/* server settings - Editing population characteristics */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_POPULATION_SERVER_SETTINGS}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={EDIT_SERVER_SETTINGS_URL}
                   component={EditServerSettings}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_PLANNING}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={PLANNING_VIEW_URL}
                   component={DraftPlans}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_PLANNING}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={NEW_PLANNING_PLAN_URL}
                   component={NewPlanForPlanning}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_PLANNING}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
                   component={ConnectedJurisdictionAssignmentView}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_PLANNING}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId`}
                   component={ConnectedJurisdictionAssignmentView}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_PLANNING}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
                   component={ConnectedAutoSelectView}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_PLANNING}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId`}
                   component={ConnectedAutoSelectView}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_PLANNING}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${ASSIGN_JURISDICTIONS_URL}/:planId`}
                   component={ConnectedEntryView}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS_MOPUP_REPORTING}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={IRS_MOP_UP_REPORT_URL}
                   component={IRSMopUpReporting}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS_MOPUP_REPORTING}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${IRS_MOP_UP_REPORT_URL}/:planId`}
                   component={ConnectedMopup}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
+                  {...commonRouteProps}
                   routerEnabled={ENABLE_IRS_MOPUP_REPORTING}
-                  routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
-                  exact={true}
                   path={`${IRS_MOP_UP_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMopup}
                 />
@@ -955,9 +748,7 @@ const App = () => {
                 />
                 {/* tslint:enable jsx-no-lambda */}
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
+                  {...commonRouteProps}
                   path={LOGOUT_URL}
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
@@ -965,9 +756,7 @@ const App = () => {
                   }}
                 />
                 <ConnectedPrivateRoute
-                  redirectPath={APP_CALLBACK_URL}
-                  disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  exact={true}
+                  {...commonRouteProps}
                   path={SESSION_EXPIRED_URL}
                   // tslint:disable-next-line: jsx-no-lambda
                   component={() => {
