@@ -1253,7 +1253,7 @@ const PlanForm = (props: PlanFormProps) => {
               (key, i) =>
                 defaultHiddenFields.includes(key) && (
                   <small key={i} className="form-text text-danger">
-                    {`${i + 1}  ${key}: ${errors[key as keyof typeof initialValues]}`}.
+                    {`${i + 1}.  ${key}: ${errors[key as keyof typeof initialValues]}`}.
                   </small>
                 )
             )}

@@ -736,6 +736,73 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     wrapper.unmount();
   });
 
+  it('shows errors for hidden fields', async () => {
+    const planCopy = {
+      ...DynamicFIPlan,
+      status: 'draft',
+      useContext: DynamicFIPlan.useContext.map(context => {
+        if (context.code === 'taskGenerationStatus') {
+          return { ...context, valueCodableConcept: 'bad status' };
+        }
+        return context;
+      }),
+    };
+    // create divs for condition and triggers toggles
+    planCopy.action.forEach((_, id) => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    fetch.mockResponse(JSON.stringify(planCopy));
+
+    const mock: any = jest.fn();
+    const thisPlansId = planCopy.identifier;
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: thisPlansId },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${thisPlansId}`,
+      },
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedUpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    // submit button is disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeTruthy();
+
+    // activate the plan and save
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: 'active' } });
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeTruthy();
+    expect(wrapper.find('small').length).toEqual(1);
+    expect(wrapper.find('small').text()).toEqual(
+      '1.  taskGenerationStatus: taskGenerationStatus must be one of the following values: False, True, Disabled, ignore, internal.'
+    );
+
+    wrapper.unmount();
+  });
+
   it('hides expected columns', async () => {
     // create divs for condition and triggers - should equal number of activities
     [0, 1, 2, 3, 4, 5].forEach(id => {
