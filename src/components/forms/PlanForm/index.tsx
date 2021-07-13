@@ -186,6 +186,7 @@ export interface PlanFormProps {
   allowMoreJurisdictions: boolean /** should we allow one to add more jurisdictions */;
   autoSelectFIStatus: boolean /** should fi classification be auto selected */;
   cascadingSelect: boolean /** should we use cascading selects for jurisdiction selection */;
+  defaultHiddenFields: string[] /** field that will always be hidden */;
   disabledActivityFields: string[] /** activity fields that are disabled */;
   disabledFields: string[] /** fields that are disabled */;
   formHandler: (
@@ -217,6 +218,7 @@ const PlanForm = (props: PlanFormProps) => {
     allFormActivities,
     allowMoreJurisdictions,
     cascadingSelect,
+    defaultHiddenFields,
     disabledActivityFields,
     disabledFields,
     formHandler,
@@ -1247,6 +1249,14 @@ const PlanForm = (props: PlanFormProps) => {
                 </ModalBody>
               </Modal>
             )}
+            {Object.keys(errors).map(
+              (key, i) =>
+                defaultHiddenFields.includes(key) && (
+                  <small key={i} className="form-text text-danger">
+                    {`${i + 1}  ${key}: ${errors[key as keyof typeof initialValues]}`}.
+                  </small>
+                )
+            )}
             <hr className="mb-2" />
             <Button
               type="submit"
@@ -1273,6 +1283,13 @@ export const defaultProps: PlanFormProps = {
   autoSelectFIStatus: false,
   beforeSubmit: () => true,
   cascadingSelect: true,
+  defaultHiddenFields: [
+    'opensrpEventId',
+    'version',
+    'taskGenerationStatus',
+    'teamAssignmentStatus',
+    'date',
+  ],
   disabledActivityFields: [],
   disabledFields: [],
   formHandler: (_, __) => void 0,
