@@ -1,7 +1,7 @@
 import FormikEffect from '@onaio/formik-effect';
 import { Dictionary } from '@onaio/utils';
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
-import { xor } from 'lodash';
+import { intersection, xor } from 'lodash';
 import moment from 'moment';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
@@ -46,6 +46,7 @@ import {
   DYNAMIC_IRS_TITLE,
   DYNAMIC_MDA_TITLE,
   END_DATE,
+  ERRORS_LABEL,
   FOCUS_AREA_HEADER,
   FOCUS_CLASSIFICATION_LABEL,
   FOCUS_INVESTIGATION,
@@ -1249,13 +1250,23 @@ const PlanForm = (props: PlanFormProps) => {
                 </ModalBody>
               </Modal>
             )}
-            {Object.keys(errors).map(
-              (key, i) =>
-                defaultHiddenFields.includes(key) && (
-                  <small key={i} className="form-text text-danger">
-                    {`${i + 1}.  ${key}: ${errors[key as keyof typeof initialValues]}`}.
-                  </small>
-                )
+            {/* show errors for hidden fields */
+            intersection(Object.keys(errors), defaultHiddenFields).length > 0 && (
+              <div className="alert alert-danger" role="alert">
+                <h4 className="alert-heading text-center">{ERRORS_LABEL}</h4>
+                <ol>
+                  {Object.keys(errors).map(
+                    (key, i) =>
+                      defaultHiddenFields.includes(key) && (
+                        <li className="error-list">
+                          <small key={i} className="form-text text-danger">
+                            {`${key}: ${errors[key as keyof typeof initialValues]}`}.
+                          </small>
+                        </li>
+                      )
+                  )}
+                </ol>
+              </div>
             )}
             <hr className="mb-2" />
             <Button

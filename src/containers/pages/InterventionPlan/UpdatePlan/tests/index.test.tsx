@@ -783,6 +783,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
 
     // submit button is disabled
     expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeTruthy();
+    expect(wrapper.find('.alert-danger').length).toEqual(0);
 
     // activate the plan and save
     wrapper
@@ -795,9 +796,11 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     });
 
     expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeTruthy();
-    expect(wrapper.find('small').length).toEqual(1);
-    expect(wrapper.find('small').text()).toEqual(
-      '1.  taskGenerationStatus: taskGenerationStatus must be one of the following values: False, True, Disabled, ignore, internal.'
+    expect(wrapper.find('.alert-danger').length).toEqual(1);
+    expect(wrapper.find('.alert-danger h4').text()).toEqual('Errors!');
+    expect(wrapper.find('.alert-danger small').length).toEqual(1);
+    expect(wrapper.find('.alert-danger small').text()).toEqual(
+      'taskGenerationStatus: taskGenerationStatus must be one of the following values: False, True, Disabled, ignore, internal.'
     );
 
     wrapper.unmount();

@@ -1079,3 +1079,5 @@ export const PAGE_NOT_FOUND_ERROR_MESSAGE = translate(
   'PAGE_NOT_FOUND_ERROR_MESSAGE',
   'Oops! The page you are looking for can not be found.'
 );
+
+export const ERRORS_LABEL = translate('ERRORS_LABEL', 'Errors!');
