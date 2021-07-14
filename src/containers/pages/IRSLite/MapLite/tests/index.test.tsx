@@ -457,7 +457,7 @@ describe('components/IRS Reports/IRSLiteReportingMap', () => {
       wrapper.update();
     });
     expect(wrapper.find('ErrorPage').text()).toEqual(
-      'An error ocurred. Please try and refresh the page.The specific error is: An Error Ocurred'
+      'An error ocurred. Please try and refresh the page.The specific error is: Map failed to load: Jurisdiction not found'
     );
     wrapper.unmount();
   });
@@ -494,6 +494,12 @@ describe('components/IRS Reports/IRSLiteReportingMap', () => {
         </Router>
       </Provider>
     );
+
+    //  map or error components should load when all the promises are resolved
+    wrapper.update();
+    expect(wrapper.find('MemoizedGisidaLiteMock').length).toEqual(0);
+    expect(wrapper.find('ErrorPage').length).toEqual(0);
+
     await act(async () => {
       await flushPromises();
       wrapper.update();

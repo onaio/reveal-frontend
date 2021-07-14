@@ -93,6 +93,11 @@ describe('components/MDA/Lite/Reports/wards', () => {
         </Router>
       </Provider>
     );
+    //  map or error components should load when all the promises are resolved
+    wrapper.update();
+    expect(wrapper.find('MemoizedGisidaLiteMock').length).toEqual(0);
+    expect(wrapper.find('ErrorPage').length).toEqual(0);
+
     await act(async () => {
       await flushPromises();
     });
