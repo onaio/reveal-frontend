@@ -62,6 +62,7 @@ describe('components/SMC Reports/SMCReportingMap', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
   it('renders without crashing', () => {
@@ -123,6 +124,11 @@ describe('components/SMC Reports/SMCReportingMap', () => {
         </Router>
       </Provider>
     );
+
+    //  map or error components should load when all the promises are resolved
+    wrapper.update();
+    expect(wrapper.find('ErrorPage').length).toEqual(0);
+    expect(wrapper.find('MemoizedGisidaLiteMock').length).toEqual(0);
 
     await act(async () => {
       await flushPromises();
@@ -278,9 +284,14 @@ describe('components/SMC Reports/SMCReportingMap', () => {
       </Provider>
     );
 
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
     const jurisdiction = getJurisdictionById(store.getState(), jurisdictionId);
 
-    expect(buildGsLiteLayersSpy).toBeCalledTimes(1);
+    expect(buildGsLiteLayersSpy).toBeCalledTimes(2);
     expect(buildGsLiteLayersSpy).toBeCalledWith(
       'SMC_report_structures',
       null,
@@ -304,7 +315,7 @@ describe('components/SMC Reports/SMCReportingMap', () => {
       }
     );
 
-    expect(buildJurisdictionLayersSpy).toBeCalledTimes(1);
+    expect(buildJurisdictionLayersSpy).toBeCalledTimes(2);
     expect(buildJurisdictionLayersSpy).toBeCalledWith(jurisdiction);
 
     wrapper.unmount();
@@ -347,6 +358,7 @@ describe('components/SMC Reports/SMCReportingMap', () => {
 
     await act(async () => {
       await flushPromises();
+      wrapper.update();
     });
 
     const mapProps = wrapper.find('MemoizedGisidaLiteMock').props();

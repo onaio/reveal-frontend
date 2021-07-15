@@ -179,6 +179,7 @@ export const defaultMapSingleFIProps: MapSingleFIProps = {
 /** Map View for Single Active Focus Investigation */
 const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RouteParams>) => {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isFetchingJurisdiction, setIsFetchingJurisdiction] = React.useState(false);
 
   React.useEffect(() => {
     if (!props.plan) {
@@ -231,7 +232,8 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
         props.fetchTasksActionCreator,
         props.fetchIndexCaseActionCreator,
         props.plan,
-        props.supersetService
+        props.supersetService,
+        setIsFetchingJurisdiction
       )
         // tslint:disable-next-line: no-floating-promises
         .catch((_: Error) => displayError(new Error(AN_ERROR_OCCURRED)))
@@ -265,7 +267,7 @@ const SingleActiveFIMap = (props: MapSingleFIProps & RouteComponentProps<RoutePa
     currentPointIndexCases,
     currentPolyIndexCases,
   } = props;
-  if (isLoading) {
+  if (isLoading || isFetchingJurisdiction) {
     return <Loading />;
   }
 
