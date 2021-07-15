@@ -797,9 +797,15 @@ describe('components/InterventionPlan/UpdatePlan', () => {
 
     expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeTruthy();
     expect(wrapper.find('.alert-danger').length).toEqual(1);
-    expect(wrapper.find('.alert-danger h4').text()).toEqual('Errors!');
-    expect(wrapper.find('.alert-danger small').length).toEqual(1);
-    expect(wrapper.find('.alert-danger small').text()).toEqual(
+    expect(
+      wrapper
+        .find('.alert-danger h5')
+        .text()
+        .trim()
+    ).toEqual('Please resolve the following error(s) before saving this plan');
+    expect(wrapper.find('.alert-danger ol').length).toEqual(1);
+    expect(wrapper.find('.alert-danger ol li').length).toEqual(1);
+    expect(wrapper.find('.alert-danger ol li').text()).toEqual(
       'taskGenerationStatus: taskGenerationStatus must be one of the following values: False, True, Disabled, ignore, internal.'
     );
 

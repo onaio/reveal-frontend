@@ -35,4 +35,5 @@
 
 .error-list {
   list-style: decimal !important;
+  font-size: 14px;
 }

@@ -46,12 +46,12 @@ import {
   DYNAMIC_IRS_TITLE,
   DYNAMIC_MDA_TITLE,
   END_DATE,
-  ERRORS_LABEL,
   FOCUS_AREA_HEADER,
   FOCUS_CLASSIFICATION_LABEL,
   FOCUS_INVESTIGATION,
   FOCUS_INVESTIGATION_STATUS_REASON,
   GOAL_LABEL,
+  HIDDEN_ERRORS_LABEL,
   INTERVENTION_TYPE_LABEL,
   IRS_TITLE,
   LOCATIONS,
@@ -1253,15 +1253,13 @@ const PlanForm = (props: PlanFormProps) => {
             {/* show errors for hidden fields */
             intersection(Object.keys(errors), defaultHiddenFields).length > 0 && (
               <div className="alert alert-danger" role="alert">
-                <h4 className="alert-heading text-center">{ERRORS_LABEL}</h4>
+                <h5 className="alert-heading">&emsp;{HIDDEN_ERRORS_LABEL}</h5>
                 <ol>
                   {Object.keys(errors).map(
                     (key, i) =>
                       defaultHiddenFields.includes(key) && (
-                        <li className="error-list">
-                          <small key={i} className="form-text text-danger">
-                            {`${key}: ${errors[key as keyof typeof initialValues]}`}.
-                          </small>
+                        <li key={i} className="error-list">
+                          {`${key}: ${errors[key as keyof typeof initialValues]}`}.
                         </li>
                       )
                   )}
