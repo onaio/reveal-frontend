@@ -1079,3 +1079,8 @@ export const PAGE_NOT_FOUND_ERROR_MESSAGE = translate(
   'PAGE_NOT_FOUND_ERROR_MESSAGE',
   'Oops! The page you are looking for can not be found.'
 );
+
+export const HIDDEN_ERRORS_LABEL = translate(
+  'HIDDEN_ERRORS_LABEL',
+  'Please resolve the following error(s) before saving this plan'
+);

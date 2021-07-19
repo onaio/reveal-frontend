@@ -1,7 +1,7 @@
 import FormikEffect from '@onaio/formik-effect';
 import { Dictionary } from '@onaio/utils';
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
-import { xor } from 'lodash';
+import { intersection, xor } from 'lodash';
 import moment from 'moment';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
@@ -51,6 +51,7 @@ import {
   FOCUS_INVESTIGATION,
   FOCUS_INVESTIGATION_STATUS_REASON,
   GOAL_LABEL,
+  HIDDEN_ERRORS_LABEL,
   INTERVENTION_TYPE_LABEL,
   IRS_TITLE,
   LOCATIONS,
@@ -186,6 +187,7 @@ export interface PlanFormProps {
   allowMoreJurisdictions: boolean /** should we allow one to add more jurisdictions */;
   autoSelectFIStatus: boolean /** should fi classification be auto selected */;
   cascadingSelect: boolean /** should we use cascading selects for jurisdiction selection */;
+  defaultHiddenFields: string[] /** field that will always be hidden */;
   disabledActivityFields: string[] /** activity fields that are disabled */;
   disabledFields: string[] /** fields that are disabled */;
   formHandler: (
@@ -217,6 +219,7 @@ const PlanForm = (props: PlanFormProps) => {
     allFormActivities,
     allowMoreJurisdictions,
     cascadingSelect,
+    defaultHiddenFields,
     disabledActivityFields,
     disabledFields,
     formHandler,
@@ -1247,6 +1250,22 @@ const PlanForm = (props: PlanFormProps) => {
                 </ModalBody>
               </Modal>
             )}
+            {/* show errors for hidden fields */
+            intersection(Object.keys(errors), defaultHiddenFields).length > 0 && (
+              <div className="alert alert-danger" role="alert">
+                <h5 className="alert-heading">&emsp;{HIDDEN_ERRORS_LABEL}</h5>
+                <ol>
+                  {Object.keys(errors).map(
+                    (key, i) =>
+                      defaultHiddenFields.includes(key) && (
+                        <li key={i} className="error-list">
+                          {`${key}: ${errors[key as keyof typeof initialValues]}`}.
+                        </li>
+                      )
+                  )}
+                </ol>
+              </div>
+            )}
             <hr className="mb-2" />
             <Button
               type="submit"
@@ -1273,6 +1292,13 @@ export const defaultProps: PlanFormProps = {
   autoSelectFIStatus: false,
   beforeSubmit: () => true,
   cascadingSelect: true,
+  defaultHiddenFields: [
+    'opensrpEventId',
+    'version',
+    'taskGenerationStatus',
+    'teamAssignmentStatus',
+    'date',
+  ],
   disabledActivityFields: [],
   disabledFields: [],
   formHandler: (_, __) => void 0,
