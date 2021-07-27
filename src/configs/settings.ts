@@ -843,7 +843,7 @@ export const planActivities: PlanActivities = {
         {
           expression: {
             description: 'Jurisdiction type location',
-            expression: "Location.physicalType.text = 'jdn'",
+            expression: "Location.physicalType.coding.exists(code='jdn')",
           },
           kind: APPLICABILITY_CONDITION_KIND,
         },

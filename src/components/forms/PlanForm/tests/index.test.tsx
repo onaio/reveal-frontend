@@ -1668,7 +1668,7 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
       `"ConditionsExpression$this.is(FHIR.QuestionnaireResponse) or $this.type.where(id='locationType').text = 'Mosquito Collection Point'DescriptionStructure is a mosquito collection pointExpression$this.is(FHIR.Location) or (questionnaire = 'Register_Structure' and $this.item.where(linkId='structureType').answer.value ='Mosquito Collection Point')DescriptionApply to mosquito collection point in Register_Structure questionnaires"`
     );
     expect(conditions.at(5).text()).toMatchInlineSnapshot(
-      `"ConditionsExpressionLocation.physicalType.text = 'jdn'DescriptionJurisdiction type location"`
+      `"ConditionsExpressionLocation.physicalType.coding.exists(code='jdn')DescriptionJurisdiction type location"`
     );
 
     // dynamic fi trigers
