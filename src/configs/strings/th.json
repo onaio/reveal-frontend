@@ -432,7 +432,7 @@
     "description": "table header: (abbreviated) for the notification date of a plan"
   },
   "STATUS_HEADER": {
-    "message": "ระยะท้องที่",
+    "message": "สถานะแผน",
     "description": "column header: containing the status of plans"
   },
   "REASON_HEADER": {
@@ -496,7 +496,7 @@
     "description": "table lable: inidcating a jurisdiction is a Spray Area"
   },
   "FOCUS_AREA_HEADER": {
-    "message": "กลุ่มบ้าน",
+    "message": "หมู่",
     "description": "form label: for the Focus Area specified in a Focus Investigation plan"
   },
   "FOCUS_INVESTIGATIONS": {
@@ -808,7 +808,7 @@
     "description": "priority level of a plan activity"
   },
   "VILLAGE": {
-    "message": "กลุ่มบ้าน",
+    "message": "หมู่",
     "description": "column header: the Village in which a focus investigation takes place"
   },
   "ROUTINE_TITLE": {
@@ -900,7 +900,7 @@
     "description": "species reported in case Details for case triggered plans"
   },
   "DIAGNOSIS_DATE": {
-    "message": "วันที่ตรวจ",
+    "message": "วันที่เจาะเลือด",
     "description": "date of Diagnosis"
   },
   "CLASSIFICATION": {
