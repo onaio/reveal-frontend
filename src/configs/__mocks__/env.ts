@@ -247,3 +247,5 @@ export const AUTO_SELECT_FI_CLASSIFICATION = false;
 export const PLAN_LIST_SHOW_FI_REASON_COLUMN = false;
 
 export const CLIENTS_LIST_BATCH_SIZE = 100;
+
+export const AUTO_ENABLE_NAVIGATION_TO = [];

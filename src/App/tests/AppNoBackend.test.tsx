@@ -8,6 +8,7 @@ import store from '../../store';
 import App from '../App';
 
 jest.mock('../../configs/env', () => ({
+  AUTO_ENABLE_NAVIGATION_TO: [],
   BACKEND_ACTIVE: false,
   DISPLAYED_PLAN_TYPES: ['FI', 'IRS', 'IRS-Lite', 'MDA', 'MDA-Point'],
   ENABLED_JURISDICTION_METADATA_IDENTIFIER_OPTIONS: 'COVERAGE,POPULATION,RISK,STRUCTURE,TARGET,OTHER_POPULATION'.split(
