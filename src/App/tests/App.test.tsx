@@ -146,11 +146,16 @@ describe('App', () => {
     );
     expect(GoogleAnalytics.pageview).not.toBeCalled();
     history.push(PLAN_LIST_URL);
+
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+    });
+
     expect(GoogleAnalytics.pageview).not.toBeCalled();
     wrapper.unmount();
   });
 
-  it('can not navigate to disabled route', () => {
+  it('can not navigate to disabled route', async () => {
     const envModule = require('../../configs/env');
     envModule.ENABLE_PLANNING = false; // disable planning tool page
     envModule.ENABLE_TEAMS = true; // enable teams page
@@ -165,12 +170,53 @@ describe('App', () => {
 
     // navigate to disabled page
     history.push('/plans/planning'); // navigate to planning tool page
-    wrapper.update();
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     expect(wrapper.find('Router').prop('history').location.pathname).toEqual('/page-not-found');
 
     // navigate to enabled page
     history.push('/teams'); // navigate to teams page
-    wrapper.update();
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
     expect(wrapper.find('Router').prop('history').location.pathname).toEqual('/teams');
+
+    wrapper.unmount();
+  });
+
+  it('can navigate to disabled route if configured', async () => {
+    const envModule = require('../../configs/env');
+    envModule.ENABLE_PLANNING = false; // disable planning tool page
+    envModule.ENABLE_TEAMS = false; // disable teams page
+    envModule.AUTO_ENABLE_NAVIGATION_TO = ['/plans/planning'];
+
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </Provider>
+    );
+
+    // navigate to disabled page with auto navigation enabled
+    history.push('/plans/planning'); // navigate to planning tool page
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+    expect(wrapper.find('Router').prop('history').location.pathname).toEqual('/plans/planning');
+
+    // navigate to disabled page with auto navigation not enabled
+    history.push('/teams'); // navigate to teams page
+    await act(async () => {
+      await new Promise<unknown>(resolve => setImmediate(resolve));
+      wrapper.update();
+    });
+    expect(wrapper.find('Router').prop('history').location.pathname).toEqual('/page-not-found');
+
+    wrapper.unmount();
   });
 });
