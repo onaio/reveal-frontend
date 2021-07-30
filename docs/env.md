@@ -211,6 +211,6 @@ Below is a list of currently supported environment variables:
 - **REACT_APP_AUTO_ENABLE_NAVIGATION_TO**
 
   - **Optional**
-  - List of all base URLS to allow navigation to even when the routes are diasbled.
+  - List of all base URLS to allow navigation to, even when the routes are diasbled.
   - Options: /assign, /plans/list, /teams etc
   - default: ''
