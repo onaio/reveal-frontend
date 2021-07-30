@@ -23,6 +23,7 @@ import { Col, Container, Row } from 'reactstrap';
 import CustomConnectedAPICallBack from '../components/page/CustomCallback';
 import Loading from '../components/page/Loading';
 import {
+  AUTO_ENABLE_NAVIGATION_TO,
   BACKEND_ACTIVE,
   DISABLE_LOGIN_PROTECTION,
   ENABLE_ASSIGN,
@@ -250,137 +251,186 @@ const App = () => {
                 {/* MDA point Reporting plan table view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_POINT}
+                  routerEnabled={
+                    ENABLE_MDA_POINT ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_POINT_PLAN_URL)
+                  }
                   path={REPORT_MDA_POINT_PLAN_URL}
                   component={ConnectedMDAPointPlansList}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_POINT}
+                  routerEnabled={
+                    ENABLE_MDA_POINT ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_POINT_PLAN_URL)
+                  }
                   path={`${REPORT_MDA_POINT_PLAN_URL}/:planId`}
                   component={ConnectedMdaPointJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_POINT}
+                  routerEnabled={
+                    ENABLE_MDA_POINT ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_POINT_PLAN_URL)
+                  }
                   path={`${REPORT_MDA_POINT_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMdaPointJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_POINT}
+                  routerEnabled={
+                    ENABLE_MDA_POINT ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(MDA_POINT_LOCATION_REPORT_URL)
+                  }
                   path={`${MDA_POINT_LOCATION_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedSchoolReports}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_POINT}
+                  routerEnabled={
+                    ENABLE_MDA_POINT ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(MDA_POINT_CHILD_REPORT_URL)
+                  }
                   path={`${MDA_POINT_CHILD_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedChildReports}
                 />
                 {/* SMC Reporting plan table view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_SMC}
+                  routerEnabled={
+                    ENABLE_SMC || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_SMC_PLAN_URL)
+                  }
                   path={REPORT_SMC_PLAN_URL}
                   component={ConnectedSMCPlansList}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_SMC}
+                  routerEnabled={
+                    ENABLE_SMC || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_SMC_PLAN_URL)
+                  }
                   path={`${REPORT_SMC_PLAN_URL}/:planId`}
                   component={ConnectedSMCJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_SMC}
+                  routerEnabled={
+                    ENABLE_SMC || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_SMC_PLAN_URL)
+                  }
                   path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedSMCJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_SMC}
+                  routerEnabled={
+                    ENABLE_SMC || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_SMC_PLAN_URL)
+                  }
                   path={`${REPORT_SMC_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedSMCReportingMap}
                 />
                 {/* MDA Lite Reporting plan table view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_LITE}
+                  routerEnabled={
+                    ENABLE_MDA_LITE || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_LITE_PLAN_URL)
+                  }
                   path={REPORT_MDA_LITE_PLAN_URL}
                   component={ConnectedMDALitePlansList}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_LITE}
+                  routerEnabled={
+                    ENABLE_MDA_LITE || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_LITE_PLAN_URL)
+                  }
                   path={`${REPORT_MDA_LITE_PLAN_URL}/:planId`}
                   component={ConnectedMdaLiteJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_LITE}
+                  routerEnabled={
+                    ENABLE_MDA_LITE || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_LITE_PLAN_URL)
+                  }
                   path={`${REPORT_MDA_LITE_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMdaLiteJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_LITE}
+                  routerEnabled={
+                    ENABLE_MDA_LITE || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_LITE_PLAN_URL)
+                  }
                   path={`${REPORT_MDA_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedMDALiteMapReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_LITE}
+                  routerEnabled={
+                    ENABLE_MDA_LITE || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_LITE_PLAN_URL)
+                  }
                   path={`${REPORT_MDA_LITE_WARD_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMDALiteWardsReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_LITE}
+                  routerEnabled={
+                    ENABLE_MDA_LITE || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_LITE_PLAN_URL)
+                  }
                   path={`${REPORT_MDA_LITE_CDD_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMDALiteSupervisorReports}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_LITE}
+                  routerEnabled={
+                    ENABLE_MDA_LITE || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_LITE_PLAN_URL)
+                  }
                   path={`${REPORT_MDA_LITE_CDD_REPORT_URL}/:planId/:jurisdictionId/:supervisorId`}
                   component={ConnectedMDALiteCddReports}
                 />
                 {/* IRS Reporting plan table view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS}
+                  routerEnabled={
+                    ENABLE_IRS || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_IRS_PLAN_URL)
+                  }
                   path={REPORT_IRS_PLAN_URL}
                   component={ConnectedIRSPlansList}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS}
+                  routerEnabled={
+                    ENABLE_IRS || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_IRS_PLAN_URL)
+                  }
                   path={`${REPORT_IRS_PLAN_URL}/:planId`}
                   component={ConnectedJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS}
+                  routerEnabled={
+                    ENABLE_IRS || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_IRS_PLAN_URL)
+                  }
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedJurisdictionReport}
                 />
                 {/* IRS Lite Reporting plan table view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS_LITE}
+                  routerEnabled={
+                    ENABLE_IRS_LITE || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_IRS_LITE_PLAN_URL)
+                  }
                   path={REPORT_IRS_LITE_PLAN_URL}
                   component={ConnectedIRSLitePlansList}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS_LITE}
+                  routerEnabled={
+                    ENABLE_IRS_LITE || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_IRS_LITE_PLAN_URL)
+                  }
                   path={`${REPORT_IRS_LITE_PLAN_URL}/:planId`}
                   component={ConnectedJurisdictionReportLite}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS_LITE}
+                  routerEnabled={
+                    ENABLE_IRS_LITE || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_IRS_LITE_PLAN_URL)
+                  }
                   path={`${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedJurisdictionReportLite}
                 />
@@ -388,7 +438,9 @@ const App = () => {
                 <ConnectedPrivateRoute
                   redirectPath={APP_CALLBACK_URL}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  routerEnabled={ENABLE_IRS_LITE}
+                  routerEnabled={
+                    ENABLE_IRS_LITE || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_IRS_LITE_PLAN_URL)
+                  }
                   routerDisabledRedirectPath={PAGE_NOT_FOUND_URL}
                   exact={true}
                   path={`${REPORT_IRS_LITE_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
@@ -397,77 +449,106 @@ const App = () => {
                 {/* IRS Reporting Map view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS}
+                  routerEnabled={
+                    ENABLE_IRS || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_IRS_PLAN_URL)
+                  }
                   path={`${REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/${MAP}`}
                   component={ConnectedIRSReportingMap}
                 />
                 {/* IRS performance Reporting view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
+                  routerEnabled={
+                    ENABLE_IRS_PERFORMANCE_REPORT ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(PERFORMANCE_REPORT_IRS_PLAN_URL)
+                  }
                   path={PERFORMANCE_REPORT_IRS_PLAN_URL}
                   component={IRSPlanPerfomenceReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
+                  routerEnabled={
+                    ENABLE_IRS_PERFORMANCE_REPORT ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(PERFORMANCE_REPORT_IRS_PLAN_URL)
+                  }
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId`}
                   component={ConnectedIRSPerfomenceReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
+                  routerEnabled={
+                    ENABLE_IRS_PERFORMANCE_REPORT ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(PERFORMANCE_REPORT_IRS_PLAN_URL)
+                  }
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedIRSPerfomenceReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
+                  routerEnabled={
+                    ENABLE_IRS_PERFORMANCE_REPORT ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(PERFORMANCE_REPORT_IRS_PLAN_URL)
+                  }
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/:dataCollector`}
                   component={ConnectedIRSPerfomenceReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS_PERFORMANCE_REPORT}
+                  routerEnabled={
+                    ENABLE_IRS_PERFORMANCE_REPORT ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(PERFORMANCE_REPORT_IRS_PLAN_URL)
+                  }
                   path={`${PERFORMANCE_REPORT_IRS_PLAN_URL}/:planId/:jurisdictionId/:dataCollector/:sop`}
                   component={ConnectedIRSPerfomenceReport}
                 />
                 {/* MDA Reporting plan table view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_DYNAMIC_MDA}
+                  routerEnabled={
+                    ENABLE_DYNAMIC_MDA || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_PLAN_URL)
+                  }
                   path={REPORT_MDA_PLAN_URL}
                   component={ConnectedMDAPLansList}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_DYNAMIC_MDA}
+                  routerEnabled={
+                    ENABLE_DYNAMIC_MDA || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_PLAN_URL)
+                  }
                   path={`${REPORT_MDA_PLAN_URL}/:planId`}
                   component={ConnectedMDAJurisdictionReport}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_DYNAMIC_MDA}
+                  routerEnabled={
+                    ENABLE_DYNAMIC_MDA || AUTO_ENABLE_NAVIGATION_TO.includes(REPORT_MDA_PLAN_URL)
+                  }
                   path={`${REPORT_MDA_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMDAJurisdictionReport}
                 />
                 {/* Plan Assignment views for Plan */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_ASSIGN}
+                  routerEnabled={
+                    ENABLE_ASSIGN || AUTO_ENABLE_NAVIGATION_TO.includes(ASSIGN_PLAN_URL)
+                  }
                   path={`${ASSIGN_PLAN_URL}`}
                   component={OpenSRPPlansList}
                 />
                 {/* Plan assignment views for Plan & Jurisdictions */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_ASSIGN}
+                  routerEnabled={
+                    ENABLE_ASSIGN || AUTO_ENABLE_NAVIGATION_TO.includes(ASSIGN_PLAN_URL)
+                  }
                   path={`${ASSIGN_PLAN_URL}/:planId`}
                   component={ConnectedPlanAssignment}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_ASSIGN}
+                  routerEnabled={
+                    ENABLE_ASSIGN || AUTO_ENABLE_NAVIGATION_TO.includes(ASSIGN_PLAN_URL)
+                  }
                   path={`${ASSIGN_PLAN_URL}/:planId/:jurisdictionId`}
                   component={ConnectedPlanAssignment}
                 />
@@ -475,41 +556,43 @@ const App = () => {
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
                   disableLoginProtection={DISABLE_LOGIN_PROTECTION}
-                  routerEnabled={ENABLE_FI}
+                  routerEnabled={ENABLE_FI || AUTO_ENABLE_NAVIGATION_TO.includes(FI_URL)}
                   path={FI_URL}
                   component={ActiveFocusInvestigation}
                 />
                 {/* Focus Area detail view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_FI}
+                  routerEnabled={ENABLE_FI || AUTO_ENABLE_NAVIGATION_TO.includes(FI_SINGLE_URL)}
                   path={`${FI_SINGLE_URL}/:jurisdictionId`}
                   component={FIJurisdiction}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_FI}
+                  routerEnabled={ENABLE_FI || AUTO_ENABLE_NAVIGATION_TO.includes(FI_FILTER_URL)}
                   path={`${FI_FILTER_URL}/:jurisdiction_parent_id/:plan_id?`}
                   component={ActiveFocusInvestigation}
                 />
                 {/* Focus Investigation completion confirmation view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_FI}
+                  routerEnabled={
+                    ENABLE_FI || AUTO_ENABLE_NAVIGATION_TO.includes(PLAN_COMPLETION_URL)
+                  }
                   path={`${PLAN_COMPLETION_URL}/:id`}
                   component={ConnectedPlanCompletion}
                 />
                 {/* Focus Investigation Reporting map view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_FI}
+                  routerEnabled={ENABLE_FI || AUTO_ENABLE_NAVIGATION_TO.includes(FI_SINGLE_MAP_URL)}
                   path={`${FI_SINGLE_MAP_URL}/:id/`}
                   component={SingleActiveFIMap}
                 />
                 {/* Focus Investigation Reporting map view (with goal layers) */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_FI}
+                  routerEnabled={ENABLE_FI || AUTO_ENABLE_NAVIGATION_TO.includes(FI_SINGLE_MAP_URL)}
                   path={`${FI_SINGLE_MAP_URL}/:id/:goalId`}
                   component={SingleActiveFIMap}
                 />
@@ -534,35 +617,45 @@ const App = () => {
                 {/** Organization list view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_TEAMS}
+                  routerEnabled={
+                    ENABLE_TEAMS || AUTO_ENABLE_NAVIGATION_TO.includes(ORGANIZATIONS_LIST_URL)
+                  }
                   path={ORGANIZATIONS_LIST_URL}
                   component={ConnectedOrgsListView}
                 />
                 {/** organization create view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_TEAMS}
+                  routerEnabled={
+                    ENABLE_TEAMS || AUTO_ENABLE_NAVIGATION_TO.includes(CREATE_ORGANIZATION_URL)
+                  }
                   path={CREATE_ORGANIZATION_URL}
                   component={ConnectedCreateEditOrgView}
                 />
                 {/** Organization edit view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_TEAMS}
+                  routerEnabled={
+                    ENABLE_TEAMS || AUTO_ENABLE_NAVIGATION_TO.includes(EDIT_ORGANIZATION_URL)
+                  }
                   path={`${EDIT_ORGANIZATION_URL}/:id`}
                   component={ConnectedCreateEditOrgView}
                 />
                 {/* single organization view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_TEAMS}
+                  routerEnabled={
+                    ENABLE_TEAMS || AUTO_ENABLE_NAVIGATION_TO.includes(SINGLE_ORGANIZATION_URL)
+                  }
                   path={`${SINGLE_ORGANIZATION_URL}/:id`}
                   component={ConnectedSingleOrgView}
                 />
                 {/* Student listing page */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_MDA_POINT}
+                  routerEnabled={
+                    ENABLE_MDA_POINT || AUTO_ENABLE_NAVIGATION_TO.includes(CLIENTS_LIST_URL)
+                  }
                   exact={false}
                   path={CLIENTS_LIST_URL}
                   component={ConnectedClientListView}
@@ -570,146 +663,206 @@ const App = () => {
                 {/* Practitioner listing page */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_PRACTITIONERS}
+                  routerEnabled={
+                    ENABLE_PRACTITIONERS ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(PRACTITIONERS_LIST_URL)
+                  }
                   path={PRACTITIONERS_LIST_URL}
                   component={ConnectedPractitionersListView}
                 />
                 {/** practitioner create view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_PRACTITIONERS}
+                  routerEnabled={
+                    ENABLE_PRACTITIONERS ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(CREATE_PRACTITIONER_URL)
+                  }
                   path={CREATE_PRACTITIONER_URL}
                   component={ConnectedCreateEditPractitionerView}
                 />
                 {/** Practitioner edit view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_PRACTITIONERS}
+                  routerEnabled={
+                    ENABLE_PRACTITIONERS ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(EDIT_PRACTITIONER_URL)
+                  }
                   path={`${EDIT_PRACTITIONER_URL}/:id`}
                   component={ConnectedCreateEditPractitionerView}
                 />
                 {/** Assign practitioners to organization view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_PRACTITIONERS}
+                  routerEnabled={
+                    ENABLE_PRACTITIONERS ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(ASSIGN_PRACTITIONERS_URL)
+                  }
                   path={`${ASSIGN_PRACTITIONERS_URL}/:id`}
                   component={ConnectedAssignPractitioner}
                 />
                 {/** form config views */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_CONFIG_FORM}
+                  routerEnabled={
+                    ENABLE_CONFIG_FORM || AUTO_ENABLE_NAVIGATION_TO.includes(MANIFEST_RELEASE_URL)
+                  }
                   path={MANIFEST_RELEASE_URL}
                   component={ManifestReleasesPage}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_CONFIG_FORM}
+                  routerEnabled={
+                    ENABLE_CONFIG_FORM || AUTO_ENABLE_NAVIGATION_TO.includes(MANIFEST_RELEASE_URL)
+                  }
                   path={`${MANIFEST_RELEASE_URL}/:id`}
                   component={ManifestFiles}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_CONFIG_FORM}
+                  routerEnabled={
+                    ENABLE_CONFIG_FORM || AUTO_ENABLE_NAVIGATION_TO.includes(JSON_VALIDATORS_URL)
+                  }
                   path={JSON_VALIDATORS_URL}
                   component={JSONValidatorListPage}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_CONFIG_FORM}
+                  routerEnabled={
+                    ENABLE_CONFIG_FORM || AUTO_ENABLE_NAVIGATION_TO.includes(MANIFEST_FILE_UPLOAD)
+                  }
                   path={`${MANIFEST_FILE_UPLOAD}/:type`}
                   component={ConnectedUploadConfigFilePage}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_CONFIG_FORM}
+                  routerEnabled={
+                    ENABLE_CONFIG_FORM || AUTO_ENABLE_NAVIGATION_TO.includes(MANIFEST_FILE_UPLOAD)
+                  }
                   path={`${MANIFEST_FILE_UPLOAD}/:type/:id`}
                   component={ConnectedUploadConfigFilePage}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_CONFIG_FORM}
+                  routerEnabled={
+                    ENABLE_CONFIG_FORM || AUTO_ENABLE_NAVIGATION_TO.includes(VIEW_DRAFT_FILES_URL)
+                  }
                   path={VIEW_DRAFT_FILES_URL}
                   component={ManifestDraftFilesPage}
                 />
                 {/* Upload Jurisdiction Metadata view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_JURISDICTION_METADATA_UPLOAD}
+                  routerEnabled={
+                    ENABLE_JURISDICTION_METADATA_UPLOAD ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(JURISDICTION_METADATA_URL)
+                  }
                   path={JURISDICTION_METADATA_URL}
                   component={JurisdictionMetadata}
                 />
                 {/* Upload Structure Metadata view */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_STRUCTURE_METADATA_UPLOAD}
+                  routerEnabled={
+                    ENABLE_STRUCTURE_METADATA_UPLOAD ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(STRUCTURE_METADATA_URL)
+                  }
                   path={STRUCTURE_METADATA_URL}
                   component={StructureMetadataImportView}
                 />
                 {/* server settings - Editing population characteristics */}
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_POPULATION_SERVER_SETTINGS}
+                  routerEnabled={
+                    ENABLE_POPULATION_SERVER_SETTINGS ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(EDIT_SERVER_SETTINGS_URL)
+                  }
                   path={EDIT_SERVER_SETTINGS_URL}
                   component={EditServerSettings}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_PLANNING}
+                  routerEnabled={
+                    ENABLE_PLANNING || AUTO_ENABLE_NAVIGATION_TO.includes(PLANNING_VIEW_URL)
+                  }
                   path={PLANNING_VIEW_URL}
                   component={DraftPlans}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_PLANNING}
+                  routerEnabled={
+                    ENABLE_PLANNING || AUTO_ENABLE_NAVIGATION_TO.includes(NEW_PLANNING_PLAN_URL)
+                  }
                   path={NEW_PLANNING_PLAN_URL}
                   component={NewPlanForPlanning}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_PLANNING}
+                  routerEnabled={
+                    ENABLE_PLANNING ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(MANUAL_ASSIGN_JURISDICTIONS_URL)
+                  }
                   path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
                   component={ConnectedJurisdictionAssignmentView}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_PLANNING}
+                  routerEnabled={
+                    ENABLE_PLANNING ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(MANUAL_ASSIGN_JURISDICTIONS_URL)
+                  }
                   path={`${MANUAL_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId`}
                   component={ConnectedJurisdictionAssignmentView}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_PLANNING}
+                  routerEnabled={
+                    ENABLE_PLANNING ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(AUTO_ASSIGN_JURISDICTIONS_URL)
+                  }
                   path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId/:parentId`}
                   component={ConnectedAutoSelectView}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_PLANNING}
+                  routerEnabled={
+                    ENABLE_PLANNING ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(AUTO_ASSIGN_JURISDICTIONS_URL)
+                  }
                   path={`${AUTO_ASSIGN_JURISDICTIONS_URL}/:planId/:rootId`}
                   component={ConnectedAutoSelectView}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_PLANNING}
+                  routerEnabled={
+                    ENABLE_PLANNING || AUTO_ENABLE_NAVIGATION_TO.includes(ASSIGN_JURISDICTIONS_URL)
+                  }
                   path={`${ASSIGN_JURISDICTIONS_URL}/:planId`}
                   component={ConnectedEntryView}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS_MOPUP_REPORTING}
+                  routerEnabled={
+                    ENABLE_IRS_MOPUP_REPORTING ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(IRS_MOP_UP_REPORT_URL)
+                  }
                   path={IRS_MOP_UP_REPORT_URL}
                   component={IRSMopUpReporting}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS_MOPUP_REPORTING}
+                  routerEnabled={
+                    ENABLE_IRS_MOPUP_REPORTING ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(IRS_MOP_UP_REPORT_URL)
+                  }
                   path={`${IRS_MOP_UP_REPORT_URL}/:planId`}
                   component={ConnectedMopup}
                 />
                 <ConnectedPrivateRoute
                   {...commonRouteProps}
-                  routerEnabled={ENABLE_IRS_MOPUP_REPORTING}
+                  routerEnabled={
+                    ENABLE_IRS_MOPUP_REPORTING ||
+                    AUTO_ENABLE_NAVIGATION_TO.includes(IRS_MOP_UP_REPORT_URL)
+                  }
                   path={`${IRS_MOP_UP_REPORT_URL}/:planId/:jurisdictionId`}
                   component={ConnectedMopup}
                 />

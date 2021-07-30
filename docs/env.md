@@ -207,3 +207,10 @@ Below is a list of currently supported environment variables:
   - **not Required**; _(string)_
   - Plan form fields to be hidden when creating new plan.
   - Options: caseNum, interventionType, jurisdictions, fiReason, fiStatus, title, triggersAndConditions activityActionDefinitionUri, activityActionDescription, activityActionTitle, activityActionReason activityTimingPeriodStart, activityTimingPeriodEnd, activityGoalPriority, activityGoalValue
+
+- **REACT_APP_AUTO_ENABLE_NAVIGATION_TO**
+
+  - **Optional**
+  - List of all base URLS to allow navigation to even when the routes are diasbled.
+  - Options: /assign, /plans/list, /teams etc
+  - default: ''

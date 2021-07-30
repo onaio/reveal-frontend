@@ -820,3 +820,8 @@ export type PLAN_LIST_SHOW_FI_REASON_COLUMN = typeof PLAN_LIST_SHOW_FI_REASON_CO
 /** The max number of client records to get from OpenSRP API endpoint */
 export const CLIENTS_LIST_BATCH_SIZE = Number(setEnv('REACT_APP_CLIENTS_LIST_BATCH_SIZE', 200));
 export type CLIENTS_LIST_BATCH_SIZE = typeof CLIENTS_LIST_BATCH_SIZE;
+
+export const AUTO_ENABLE_NAVIGATION_TO = String(
+  setEnv('REACT_APP_AUTO_ENABLE_NAVIGATION_TO', '')
+).split(',');
+export type AUTO_ENABLE_NAVIGATION_TO = typeof AUTO_ENABLE_NAVIGATION_TO;
