@@ -500,7 +500,9 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     expect(confirmSpy).toBeCalledTimes(1);
     expect(confirmSpy).toBeCalledWith('You are about to complete a plan, click ok to proceed');
 
-    expect(fetch.mock.calls[1][0]).toEqual('https://test.smartregister.org/opensrp/rest/plans');
+    expect(fetch.mock.calls[1][0]).toEqual(
+      'https://test.smartregister.org/opensrp/rest/plans?revoke_assignments=true'
+    );
     expect(fetch.mock.calls[1][1].method).toEqual('PUT');
   });
 
@@ -584,7 +586,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
       version: 2,
     };
     expect(fetch.mock.calls[2]).toEqual([
-      'https://test.smartregister.org/opensrp/rest/plans',
+      'https://test.smartregister.org/opensrp/rest/plans?revoke_assignments=true',
       {
         'Cache-Control': 'no-cache',
         Pragma: 'no-cache',
@@ -597,6 +599,141 @@ describe('components/InterventionPlan/UpdatePlan', () => {
         method: 'PUT',
       },
     ]);
+    wrapper.unmount();
+  });
+
+  it('Adds update param (revoke_assignments) correctly', async () => {
+    const envModule = require('../../../../../configs/env');
+    envModule.REVOKE_COMPLETE_AND_RETIRED_PLANS_TEAM_ASSIGNMENTS = false;
+    // create divs for condition and triggers toggles
+    CaseTriggeredDynamicFIPlan.action.forEach((_, id) => {
+      const div = document.createElement('div');
+      div.setAttribute('id', `plan-trigger-conditions-${id}`);
+      document.body.appendChild(div);
+    });
+
+    fetch.mockResponse(JSON.stringify(CaseTriggeredDynamicFIPlan));
+
+    // mock window confirmation dialogue and simulate true click
+    const confirmSpy = jest.spyOn(window, 'confirm');
+    confirmSpy.mockImplementation(jest.fn(() => true));
+
+    const mock: any = jest.fn();
+    const thisPlansId = CaseTriggeredDynamicFIPlan.identifier;
+    const props = {
+      history,
+      location: mock,
+      match: {
+        isExact: true,
+        params: { id: thisPlansId },
+        path: `${PLAN_UPDATE_URL}/:id`,
+        url: `${PLAN_UPDATE_URL}/${thisPlansId}`,
+      },
+    };
+    let wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedUpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    // submit button is disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeTruthy();
+
+    // active plan
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: 'active' } });
+    // submit button is disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
+
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+    // does not add param for active plans
+    expect(fetch.mock.calls[3][0]).toEqual('https://test.smartregister.org/opensrp/rest/plans');
+    expect(fetch.mock.calls[3][1].method).toEqual('PUT');
+    fetch.resetMocks();
+    wrapper.unmount();
+
+    // Complete plan
+    wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedUpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: 'complete' } });
+    // submit button is disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
+
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+    expect(confirmSpy).toBeCalledTimes(1);
+    // adds param to complete plans
+    expect(fetch.mock.calls[2][0]).toEqual(
+      'https://test.smartregister.org/opensrp/rest/plans?revoke_assignments=false'
+    );
+    expect(fetch.mock.calls[2][1].method).toEqual('PUT');
+    fetch.resetMocks();
+    wrapper.unmount();
+
+    // Retired the plan and save
+    wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedUpdatePlan {...props} />
+        </Router>
+      </Provider>
+    );
+
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+
+    wrapper
+      .find('select[name="status"]')
+      .simulate('change', { target: { name: 'status', value: 'retired' } });
+    // submit button is disabled
+    expect(wrapper.find('#planform-submit-button button').prop('disabled')).toBeFalsy();
+
+    await act(async () => {
+      wrapper.find('form').simulate('submit');
+    });
+    wrapper.update();
+
+    // Select retire reason
+    wrapper
+      .find('select[name="retireReason"]')
+      .simulate('change', { target: { name: 'retireReason', value: 'DUPLICATE' } });
+
+    await act(async () => {
+      wrapper.find('RetirePlanForm form').simulate('submit');
+    });
+
+    // adds param to retired plans
+    expect(fetch.mock.calls[3][0]).toEqual(
+      'https://test.smartregister.org/opensrp/rest/plans?revoke_assignments=false'
+    );
+    expect(fetch.mock.calls[3][1].method).toEqual('PUT');
+    wrapper.unmount();
   });
 
   it('edit Dynamic FI plans with case confirmation action', async () => {
@@ -675,7 +812,7 @@ describe('components/InterventionPlan/UpdatePlan', () => {
     wrapper.unmount();
   });
 
-  it('editing plans with doe not change name', async () => {
+  it('editing plans does not change name', async () => {
     const planCopy = {
       ...CaseTriggeredDynamicFIPlan,
       name: 'A2 ตะฝั่งสูง (6302010701) 2021-06-04',
