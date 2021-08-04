@@ -218,6 +218,6 @@ Below is a list of currently supported environment variables:
 - **REACT_APP_REVOKE_COMPLETE_AND_RETIRED_PLANS_TEAM_ASSIGNMENTS**
 
   - **Optional**
-  - Specify if OpenSRP will revoking team assignments for complete and retired plans or not.
+  - OpenSRP update plan endpoint parameter (`revoke_assignments`) value. Determines if team assignments for complete and retired plans will be revoked or not.
   - Options: 'true' and 'false'. Any other value defaults to 'false'.
   - default: 'true'
