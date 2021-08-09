@@ -29,6 +29,7 @@ import {
   MDA_POINT_FORM_INTERVENTION_TITLE,
   PLAN_TYPES_ALLOWED_TO_CREATE,
   PLAN_TYPES_WITH_MULTI_JURISDICTIONS,
+  REVOKE_COMPLETE_AND_RETIRED_PLANS_TEAM_ASSIGNMENTS,
 } from '../../../configs/env';
 import {
   ACTION,
@@ -88,7 +89,12 @@ import {
   PlanDefinition,
   planStatusDisplay,
 } from '../../../configs/settings';
-import { MDA_POINT_ADVERSE_EFFECTS_CODE, OPENSRP_PLANS, PLAN_LIST_URL } from '../../../constants';
+import {
+  MDA_POINT_ADVERSE_EFFECTS_CODE,
+  OPENSRP_PLANS,
+  PLAN_LIST_URL,
+  REVOKE_ASSIGNMENTS,
+} from '../../../constants';
 import { displayError } from '../../../helpers/errors';
 import { extractPlanRecordResponseFromPlanPayload } from '../../../helpers/utils';
 import { OpenSRPService } from '../../../services/opensrp';
@@ -333,8 +339,14 @@ const PlanForm = (props: PlanFormProps) => {
   const savePlan = (payload: PlanDefinition, setSubmitting: SetSubmittingType) => {
     const apiService = new OpenSRPService(OPENSRP_PLANS);
     if (editMode) {
+      const isCompleteOrRetired = [PlanStatus.COMPLETE, PlanStatus.RETIRED].includes(
+        payload.status as PlanStatus
+      );
+      const params = isCompleteOrRetired
+        ? { [REVOKE_ASSIGNMENTS]: REVOKE_COMPLETE_AND_RETIRED_PLANS_TEAM_ASSIGNMENTS }
+        : null;
       apiService
-        .update(payload)
+        .update(payload, params)
         .then(() => {
           onSubmitSuccess(setSubmitting, setAreWeDoneHere, payload, addPlan);
         })

@@ -80,6 +80,7 @@ export const REFUSED = 'refused';
 export const PREGNANT = 'pregnant';
 export const SICK = 'sick';
 export const CONTRAINDICATED = 'contraindicated';
+export const REVOKE_ASSIGNMENTS = 'revoke_assignments';
 
 // internal urls
 export const BACKEND_LOGIN_URL = '/fe/login';

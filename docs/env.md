@@ -214,3 +214,10 @@ Below is a list of currently supported environment variables:
   - List of all base URLS to allow navigation to, even when the routes are diasbled.
   - Options: /assign, /plans/list, /teams etc
   - default: ''
+
+- **REACT_APP_REVOKE_COMPLETE_AND_RETIRED_PLANS_TEAM_ASSIGNMENTS**
+
+  - **Optional**
+  - OpenSRP update plan endpoint parameter (`revoke_assignments`) value. Determines if team assignments for complete and retired plans will be revoked or not.
+  - Options: 'true' and 'false'. Any other value defaults to 'false'.
+  - default: 'true'
