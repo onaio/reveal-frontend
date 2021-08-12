@@ -169,8 +169,8 @@ export const translateEvent = (event: Event): TranslatedEvent => {
       [INVESTIGATION_DATE]: caseInformation.investigationDate,
       [CASE_NOTIF_DATE_HEADER]: caseInformation.notificationDate,
       [PATIENT_NAME]: caseInformation.patientName,
-      [SPECIES]: caseInformation.species,
       [SURNAME]: caseInformation.surname,
+      [SPECIES]: caseInformation.species,
     },
     caseNumber: event.caseNumber,
     fociInformation: {
