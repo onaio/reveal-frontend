@@ -2349,9 +2349,11 @@ export const emptyCurrentRoutinePlans = [
   },
   {
     Header: VILLAGE,
+    id: 'village',
   },
   {
     Header: FOCUS_AREA_HEADER,
+    id: 'focus-area',
   },
   {
     Header: STATUS_HEADER,

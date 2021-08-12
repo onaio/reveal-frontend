@@ -234,7 +234,7 @@ export const FIJurisdiction = (props: FIJurisdictionProps & RouteComponentProps<
         });
         const locationColumns: Array<DrillDownColumn<Dictionary>> = getLocationColumns(
           locationHierarchy,
-          true
+          false
         );
         /**  Handle Columns Unique for Routine and Reactive Tables */
         const columnsBasedOnReason = [];

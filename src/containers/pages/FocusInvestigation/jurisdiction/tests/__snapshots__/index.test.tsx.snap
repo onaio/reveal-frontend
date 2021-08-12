@@ -5,15 +5,10 @@ Object {
   "CellComponent": [Function],
   "columns": Array [
     Object {
+      "Cell": [Function],
       "Header": "Name",
-      "columns": Array [
-        Object {
-          "Cell": [Function],
-          "Header": "",
-          "accessor": "plan_title",
-          "minWidth": 160,
-        },
-      ],
+      "accessor": "plan_title",
+      "minWidth": 160,
     },
     Object {
       "Header": "FI Status",
@@ -51,15 +46,10 @@ Object {
   "CellComponent": [Function],
   "columns": Array [
     Object {
+      "Cell": [Function],
       "Header": "Name",
-      "columns": Array [
-        Object {
-          "Cell": [Function],
-          "Header": "",
-          "accessor": "plan_title",
-          "minWidth": 160,
-        },
-      ],
+      "accessor": "plan_title",
+      "minWidth": 160,
     },
     Object {
       "Header": "FI Status",
@@ -69,50 +59,25 @@ Object {
     },
     Object {
       "Header": "Province",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "province",
-        },
-      ],
+      "accessor": "province",
     },
     Object {
       "Header": "District",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "district",
-        },
-      ],
+      "accessor": "district",
     },
     Object {
       "Header": "Canton",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "canton",
-        },
-      ],
+      "accessor": "canton",
     },
     Object {
       "Header": "Village",
-      "columns": Array [
-        Object {
-          "Header": "",
-          "accessor": "village",
-        },
-      ],
+      "accessor": "village",
     },
     Object {
+      "Cell": [Function],
       "Header": "Focus Area",
-      "columns": Array [
-        Object {
-          "Cell": [Function],
-          "Header": "",
-          "accessor": "focusArea",
-          "minWidth": 150,
-        },
-      ],
+      "accessor": "focusArea",
+      "minWidth": 150,
     },
     Object {
       "Header": "Status",
@@ -129,15 +94,10 @@ Object {
       "accessor": "plan_effective_period_end",
     },
     Object {
+      "Cell": [Function],
       "Header": "Action",
-      "columns": Array [
-        Object {
-          "Cell": [Function],
-          "Header": "",
-          "accessor": "plan_status",
-          "minWidth": 70,
-        },
-      ],
+      "accessor": "plan_status",
+      "minWidth": 70,
     },
   ],
   "data": Any<Array>,
@@ -160,15 +120,10 @@ Object {
   "CellComponent": [Function],
   "columns": Array [
     Object {
+      "Cell": [Function],
       "Header": "Name",
-      "columns": Array [
-        Object {
-          "Cell": [Function],
-          "Header": "",
-          "accessor": "plan_title",
-          "minWidth": 160,
-        },
-      ],
+      "accessor": "plan_title",
+      "minWidth": 160,
     },
     Object {
       "Header": "Date Completed",
@@ -209,15 +164,10 @@ Object {
   "CellComponent": [Function],
   "columns": Array [
     Object {
+      "Cell": [Function],
       "Header": "Name",
-      "columns": Array [
-        Object {
-          "Cell": [Function],
-          "Header": "",
-          "accessor": "plan_title",
-          "minWidth": 160,
-        },
-      ],
+      "accessor": "plan_title",
+      "minWidth": 160,
     },
     Object {
       "Header": "Date Completed",

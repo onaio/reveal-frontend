@@ -510,70 +510,54 @@ export const jsxColumns = (colType: string): Array<DrillDownColumn<Dictionary>> 
   if (colType === 'focusarea') {
     return [
       {
+        Cell: (cell: Cell) => {
+          const original: Dictionary = cell.row.original;
+          return (
+            <div>
+              {original.focusArea.trim() && cell.value}
+              &nbsp;&nbsp;
+              {original.focusArea.trim() && (
+                <Link to={`${FI_SINGLE_URL}/${original.jurisdiction_id}`}>
+                  <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
+                </Link>
+              )}
+            </div>
+          );
+        },
         Header: FOCUS_AREA_HEADER,
-        columns: [
-          {
-            Cell: (cell: Cell) => {
-              const original: Dictionary = cell.row.original;
-              return (
-                <div>
-                  {original.focusArea.trim() && cell.value}
-                  &nbsp;&nbsp;
-                  {original.focusArea.trim() && (
-                    <Link to={`${FI_SINGLE_URL}/${original.jurisdiction_id}`}>
-                      <FontAwesomeIcon icon={['fas', 'external-link-square-alt']} />
-                    </Link>
-                  )}
-                </div>
-              );
-            },
-            Header: '',
-            accessor: 'focusArea',
-            minWidth: 150,
-          },
-        ],
+        accessor: 'focusArea',
+        minWidth: 150,
       },
     ];
   } else if (colType === 'name') {
     return [
       {
+        Cell: (cell: Cell) => {
+          const original: Dictionary = cell.row.original;
+          return (
+            <div className="break-text">
+              {original.focusArea.trim() && (
+                <Link to={`${FI_SINGLE_MAP_URL}/${original.id}`}>{cell.value}</Link>
+              )}
+              &nbsp;
+              <NewRecordBadge recordDate={original.plan_date} />
+            </div>
+          );
+        },
         Header: NAME,
-        columns: [
-          {
-            Cell: (cell: Cell) => {
-              const original: Dictionary = cell.row.original;
-              return (
-                <div className="break-text">
-                  {original.focusArea.trim() && (
-                    <Link to={`${FI_SINGLE_MAP_URL}/${original.id}`}>{cell.value}</Link>
-                  )}
-                  &nbsp;
-                  <NewRecordBadge recordDate={original.plan_date} />
-                </div>
-              );
-            },
-            Header: '',
-            accessor: 'plan_title',
-            minWidth: 160,
-          },
-        ],
+        accessor: 'plan_title',
+        minWidth: 160,
       },
     ];
   } else if ('action') {
     return [
       {
-        // Not clear on what it should show
+        Cell: () => {
+          return null;
+        },
         Header: ACTION,
-        columns: [
-          {
-            Cell: () => {
-              return null;
-            },
-            Header: '',
-            accessor: 'plan_status',
-            minWidth: 70,
-          },
-        ],
+        accessor: 'plan_status',
+        minWidth: 70,
       },
     ];
   } else {
