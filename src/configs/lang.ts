@@ -117,6 +117,10 @@ export const USERS_FETCH_ERROR = translate(
   'USERS_FETCH_ERROR',
   'Sorry, something went wrong when we tried to fetch users'
 );
+export const PLANS_FETCH_ERROR = translate(
+  'PLANS_FETCH_ERROR',
+  'Sorry, something went wrong when we tried to fetch plans'
+);
 export const NO_PLAN_FOUND_ERROR = translate(
   'NO_PLAN_FOUND_ERROR',
   'Sorry, no plan found in the cloud!'

@@ -4,7 +4,7 @@ import { isPlanTypeEnabled } from '../../components/forms/PlanForm/helpers';
 import { USER_HAS_NO_PLAN_ASSIGNMENTS } from '../../configs/lang';
 import { PlanDefinition } from '../../configs/settings';
 import {
-  OPENSRP_GET_ALL_PLANS,
+  OPENSRP_GET_PLANS_COUNT,
   OPENSRP_PLANS,
   OPENSRP_PLANS_BY_USER_FILTER,
   PLAN_INTERVENTION_TYPE,
@@ -59,29 +59,51 @@ export async function loadPlansByUserFilter<T>(
     });
 }
 
+// fetch total number of users
+export const fetchPlansCount = async (service: typeof OpenSRPService) => {
+  const serve = new service(OPENSRP_GET_PLANS_COUNT);
+  const response = await serve.list(PLANS_SERVICE_FILTER_PARAM).catch(err => {
+    // displayError(new Error(PLANS_FETCH_ERROR));
+    displayError(err);
+  });
+  return response;
+};
+
 /** fetch plans payload from the opensrp api
  * @param {OpenSRPService} service - openSRPService
  * @param {ActionCreator<FetchPlanRecordsAction>} actionCreator - action creator for fetchPlanRecords
  * @param {Dispatch<SetStateAction<boolean>>} - setState function
  */
-export const loadOpenSRPPlans = (
+export const loadOpenSRPPlans = async (
   service: typeof OpenSRPService,
   actionCreator: ActionCreator<FetchPlanRecordsAction>,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  const OpenSrpPlanService = new service(OPENSRP_GET_ALL_PLANS);
-  OpenSrpPlanService.list(PLANS_SERVICE_FILTER_PARAM)
-    .then((plans: PlanDefinition[]) => {
-      const extractedPlanRecords = plans
-        .map(plan => extractPlanRecordResponseFromPlanPayload(plan))
-        .filter(plan => !!plan);
-      actionCreator(extractedPlanRecords as PlanRecordResponse[]);
-      setLoading(false);
-    })
-    .catch(err => {
-      setLoading(false);
-      displayError(err);
-    });
+  const plansCount = await fetchPlansCount(service);
+  if (typeof plansCount !== 'undefined') {
+    let currentPageNumber = 1;
+    const count: number = plansCount.count;
+    const planPromises = [];
+    const serve = new service(OPENSRP_PLANS);
+    const pages = count / 300;
+    while (currentPageNumber <= pages) {
+      currentPageNumber += 1;
+      planPromises.push(serve.list({ pageNumber: currentPageNumber, pageSize: 300 }));
+    }
+    Promise.allSettled(planPromises).then(results =>
+      // tslint:disable-next-line: no-floating-promises
+      results.forEach(result => {
+        if (result.status === 'fulfilled') {
+          const plans: PlanDefinition[] = result.value;
+          const extractedPlanRecords = plans
+            .map(plan => extractPlanRecordResponseFromPlanPayload(plan))
+            .filter(plan => !!plan);
+          actionCreator(extractedPlanRecords as PlanRecordResponse[]);
+        }
+      })
+    );
+    setLoading(false);
+  }
 };
 
 /** fetch single plan payload from the opensrp api
