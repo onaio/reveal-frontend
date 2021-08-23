@@ -1,6 +1,7 @@
 import { SupersetAdhocFilterOption } from '@onaio/superset-connector';
 import { ActionCreator, AnyAction } from 'redux';
 import { isPlanTypeEnabled } from '../../components/forms/PlanForm/helpers';
+import { OPENSRP_MAX_PLANS_PER_REQUEST } from '../../configs/env';
 import { USER_HAS_NO_PLAN_ASSIGNMENTS } from '../../configs/lang';
 import { PlanDefinition } from '../../configs/settings';
 import {
@@ -63,7 +64,6 @@ export async function loadPlansByUserFilter<T>(
 export const fetchPlansCount = async (service: typeof OpenSRPService) => {
   const serve = new service(OPENSRP_GET_PLANS_COUNT);
   const response = await serve.list(PLANS_SERVICE_FILTER_PARAM).catch(err => {
-    // displayError(new Error(PLANS_FETCH_ERROR));
     displayError(err);
   });
   return response;
@@ -81,27 +81,38 @@ export const loadOpenSRPPlans = async (
 ) => {
   const plansCount = await fetchPlansCount(service);
   if (typeof plansCount !== 'undefined') {
-    let currentPageNumber = 1;
-    const count: number = plansCount.count;
-    const planPromises = [];
+    const pages = Math.ceil(plansCount.count / OPENSRP_MAX_PLANS_PER_REQUEST);
     const serve = new service(OPENSRP_PLANS);
-    const pages = count / 300;
+    const planPromises = [];
+
+    let currentPageNumber = 1;
     while (currentPageNumber <= pages) {
+      planPromises.push(
+        serve.list({ pageNumber: currentPageNumber, pageSize: OPENSRP_MAX_PLANS_PER_REQUEST })
+      );
       currentPageNumber += 1;
-      planPromises.push(serve.list({ pageNumber: currentPageNumber, pageSize: 300 }));
     }
-    Promise.allSettled(planPromises).then(results =>
+
+    Promise.allSettled(planPromises).then(results => {
+      let allPlans: PlanDefinition[] = [];
       // tslint:disable-next-line: no-floating-promises
       results.forEach(result => {
         if (result.status === 'fulfilled') {
           const plans: PlanDefinition[] = result.value;
-          const extractedPlanRecords = plans
-            .map(plan => extractPlanRecordResponseFromPlanPayload(plan))
-            .filter(plan => !!plan);
-          actionCreator(extractedPlanRecords as PlanRecordResponse[]);
+          allPlans = [...allPlans, ...plans];
+        } else {
+          displayError(new Error(result.reason));
         }
-      })
-    );
+      });
+      if (allPlans.length > 0) {
+        const extractedPlanRecords = allPlans
+          .map(plan => extractPlanRecordResponseFromPlanPayload(plan))
+          .filter(plan => !!plan);
+        actionCreator(extractedPlanRecords as PlanRecordResponse[]);
+      }
+      setLoading(false);
+    });
+  } else {
     setLoading(false);
   }
 };
