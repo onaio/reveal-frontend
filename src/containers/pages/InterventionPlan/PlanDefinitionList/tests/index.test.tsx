@@ -124,11 +124,18 @@ describe('components/InterventionPlan/PlanDefinitionList', () => {
 
   it('sort works correctly for intervention type column', async () => {
     const mockList = jest.fn(async () => []);
-    const mockClass: any = jest.fn().mockImplementation(() => {
+    const mockClass: any = jest.fn();
+    mockClass.mockImplementationOnce(() => {
+      return {
+        list: jest.fn(async () => ({ count: 1000 })),
+      };
+    });
+    mockClass.mockImplementationOnce(() => {
       return {
         list: mockList,
       };
     });
+    fetch.mockResponseOnce(JSON.stringify({ count: 200 }));
     fetch.mockResponseOnce(fixtures.plansJSON);
     const props = {
       history,
