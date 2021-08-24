@@ -60,7 +60,10 @@ export async function loadPlansByUserFilter<T>(
     });
 }
 
-// fetch total number of users
+/**
+ * fetch total number of all plans
+ * @param {OpenSRPService} service - openSRPService
+ */
 export const fetchPlansCount = async (service: typeof OpenSRPService) => {
   const serve = new service(OPENSRP_GET_PLANS_COUNT);
   const response = await serve.list(PLANS_SERVICE_FILTER_PARAM).catch(err => {
