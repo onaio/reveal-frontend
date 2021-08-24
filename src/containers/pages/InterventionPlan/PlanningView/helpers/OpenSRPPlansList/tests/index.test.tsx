@@ -45,7 +45,8 @@ describe('src/../PlanningView/OpenSRPPlansList', () => {
 
   it('works correctly with store', async () => {
     const mock: any = jest.fn();
-    fetch.mockResponse(plansJSON);
+    fetch.mockResponseOnce(JSON.stringify({ count: 200 }));
+    fetch.mockResponseOnce(plansJSON);
     const props = {
       history,
       location: mock,
