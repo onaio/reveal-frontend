@@ -82,9 +82,13 @@ export const handleDownload = async (
   name: string,
   endpoint: string,
   params?: Dictionary,
+  baseURL?: string,
   serviceClass: any = OpenSRPService
 ) => {
-  const downloadService = new serviceClass(endpoint);
+  let downloadService = new serviceClass(endpoint);
+  if (baseURL) {
+    downloadService = new serviceClass(endpoint, baseURL);
+  }
   downloadService
     .readFile(id, params)
     .then((res: typeof Blob) => {

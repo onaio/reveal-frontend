@@ -19,7 +19,7 @@ import {
   renderInFilterFactory,
 } from '../../../../components/Table/DrillDownFilters/utils';
 import { NoDataComponent } from '../../../../components/Table/NoDataComponent';
-import { CLIENT_LABEL } from '../../../../configs/env';
+import { CLIENT_LABEL, OPENSRP_API_BASE_URL } from '../../../../configs/env';
 import {
   ADD_NEW_CSV,
   CLIENTS_TITLE,
@@ -60,6 +60,7 @@ const filesArraySelector = makeFilesArraySelector();
 
 /** interface to describe props for ClientListView component */
 export interface ClientListViewProps {
+  baseURL: string;
   fetchFilesActionCreator: typeof fetchFiles;
   files: File[];
   serviceClass: typeof OpenSRPService;
@@ -67,6 +68,7 @@ export interface ClientListViewProps {
 }
 /** default props for ClientListView component */
 export const defaultClientListViewProps: ClientListViewProps = {
+  baseURL: OPENSRP_API_BASE_URL.replace('rest/', ''),
   clientLabel: CLIENT_LABEL,
   fetchFilesActionCreator: fetchFiles,
   files: [],
@@ -74,7 +76,7 @@ export const defaultClientListViewProps: ClientListViewProps = {
 };
 
 export const ClientListView = (props: ClientListViewProps & RouteComponentProps) => {
-  const { location, files, clientLabel } = props;
+  const { location, files, clientLabel, baseURL } = props;
 
   const [loading, setLoading] = useState(false);
 
@@ -100,6 +102,9 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
     {
       Cell: (fileObj: Cell<File>) => {
         const original = fileObj.row.original;
+        const urlParams = {
+          'dynamic-media-directory': true,
+        };
         return (
           <span key={original.identifier}>
             {fileObj.value} &nbsp;
@@ -107,7 +112,13 @@ export const ClientListView = (props: ClientListViewProps & RouteComponentProps)
               className="btn btn-link"
               // tslint:disable-next-line: jsx-no-lambda
               onClick={() =>
-                handleDownload(original.url, original.fileName, OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT)
+                handleDownload(
+                  original.identifier,
+                  original.fileName,
+                  OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT,
+                  urlParams,
+                  baseURL
+                )
               }
             >
               {`(${DOWNLOAD})`}
