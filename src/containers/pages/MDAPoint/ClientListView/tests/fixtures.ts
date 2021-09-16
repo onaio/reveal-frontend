@@ -83,3 +83,27 @@ export const files = [
       'https://user-images.githubusercontent.com/12836913/81139056-3be46680-8f19-11ea-92f8-fb1ab7877626.png',
   },
 ];
+
+export const files2 = [
+  {
+    fileName: 'Enhletjeni cc - Child roster test QA.csv',
+    identifier: '8bfee034-f172-4c3c-afd7-aeba3f72acd5',
+    providerID: '301faf1d-6cfb-4ed1-997c-46b44146ab05',
+    uploadDate: 'Sep 14, 2021, 10:42:42 AM',
+    url: '8bfee034-f172-4c3c-afd7-aeba3f72acd5.csv',
+  },
+  {
+    fileName: 'Test Lomahasha - Emafusini Nazarene D - Child roster test QA.csv',
+    identifier: '08b8b86b-0a74-494a-93fb-fd6a5f188d01',
+    providerID: '301faf1d-6cfb-4ed1-997c-46b44146ab05',
+    uploadDate: 'Sep 7, 2021, 9:05:21 AM',
+    url: '08b8b86b-0a74-494a-93fb-fd6a5f188d01.csv',
+  },
+  {
+    fileName: 'reuben_client_upload_sigcineni_catholic.csv',
+    identifier: '1b0f7197-5dee-4c5b-a939-2957d0d403c1',
+    providerID: '301faf1d-6cfb-4ed1-997c-46b44146ab05',
+    uploadDate: 'Aug 31, 2021, 12:40:41 PM',
+    url: '1b0f7197-5dee-4c5b-a939-2957d0d403c1.csv',
+  },
+];

@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router';
 import ConnectedClientListView, { ClientListView } from '../';
+import { OPENSRP_API_BASE_URL } from '../../../../../configs/env';
 import { STUDENTS_TITLE } from '../../../../../configs/lang';
 import { QUERY_PARAM_TITLE } from '../../../../../constants';
 import store from '../../../../../store';
@@ -17,6 +18,10 @@ import reducer, {
   removeFilesAction,
 } from '../../../../../store/ducks/opensrp/clientfiles';
 import * as fixtures from './fixtures';
+
+/* tslint:disable-next-line no-var-requires */
+const fetch = require('jest-fetch-mock');
+
 reducerRegistry.register(reducerName, reducer);
 const history = createBrowserHistory();
 jest.mock('../../../../../configs/env');
@@ -230,5 +235,45 @@ describe('containers/pages/MDAPoints/ClientListView', () => {
     expect(wrapper.find('DrillDownTable').props().data?.length).toEqual(1);
     expect(wrapper.find('DrillDownTable').props().data).toEqual([fixtures.files[2]]);
     wrapper.unmount();
+  });
+
+  it('CSV download works', async () => {
+    store.dispatch(fetchFiles(fixtures.files2));
+    const mock: any = jest.fn();
+    const props = {
+      baseURL: OPENSRP_API_BASE_URL.replace('rest/', ''),
+      history,
+      location: mock,
+      match: mock,
+    };
+    const wrapper = mount(
+      <Provider store={store}>
+        <Router history={history}>
+          <ConnectedClientListView {...props} />
+        </Router>
+      </Provider>
+    );
+    await act(async () => {
+      await flushPromises();
+      wrapper.update();
+    });
+    wrapper
+      .find('.btn-link')
+      .at(0)
+      .simulate('click');
+    await act(async () => {
+      await flushPromises();
+    });
+    expect(fetch.mock.calls[1]).toEqual([
+      'https://test.smartregister.org/opensrp/multimedia/media/8bfee034-f172-4c3c-afd7-aeba3f72acd5?dynamic-media-directory=true',
+      {
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer null',
+          'content-type': 'application/json;charset=UTF-8',
+        },
+        method: 'GET',
+      },
+    ]);
   });
 });
