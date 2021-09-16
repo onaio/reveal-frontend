@@ -78,7 +78,7 @@ describe('src/containers/pages/ClientListView/helpers/servicehooks', () => {
       };
     });
 
-    handleDownload('123', 'student', OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT, undefined, mockClass).catch(
+    handleDownload('123', 'student', OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT, {}, '', mockClass).catch(
       e => {
         throw e;
       }
@@ -86,7 +86,7 @@ describe('src/containers/pages/ClientListView/helpers/servicehooks', () => {
     await flushPromises();
 
     // calls the correct endpoint
-    expect(mockClass).toHaveBeenCalledWith('upload/download');
+    expect(mockClass).toHaveBeenCalledWith(OPENSRP_UPLOAD_DOWNLOAD_ENDPOINT);
 
     // Uses the correct service method
     expect(mockReadFile).toHaveBeenCalledTimes(1);
