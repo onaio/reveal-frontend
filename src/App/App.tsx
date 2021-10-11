@@ -16,6 +16,7 @@ import { initGoogleAnalytics, RouteTracker, setDimensions } from '@onaio/google-
 import { getUser } from '@onaio/session-reducer';
 import React, { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
+import { hot } from 'react-hot-loader/root';
 import { Route, Switch } from 'react-router';
 import { Redirect } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -941,4 +942,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default hot(App);
