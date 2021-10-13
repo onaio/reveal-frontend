@@ -401,6 +401,9 @@ export type OPENSRP_USER_URL = typeof OPENSRP_USER_URL;
 export const OPENSRP_OAUTH_STATE = setEnv('REACT_APP_OPENSRP_OAUTH_STATE', 'opensrp');
 export type OPENSRP_OAUTH_STATE = typeof OPENSRP_OAUTH_STATE;
 
+export const SUPERSET_OAUTH_STATE = setEnv('REACT_APP_SUPERSET_OAUTH_STATE', '');
+export type SUPERSET_OAUTH_STATE = typeof SUPERSET_OAUTH_STATE;
+
 export const OPENSRP_LOGOUT_URL = setEnv(
   'REACT_APP_OPENSRP_LOGOUT_URL',
   'https://reveal-stage.smartregister.org/opensrp/logout.do'
