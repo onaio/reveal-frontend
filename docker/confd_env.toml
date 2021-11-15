@@ -120,4 +120,5 @@ keys = [
   "/react/app/superset/mda/lite/reporting/ward/geojson/slice",
   "/react/app/show/map/at/jurisdiction/level",
   "/react/app/clients/list/batch/size",
+  "/react/app/superset/oauth/state",
 ]
