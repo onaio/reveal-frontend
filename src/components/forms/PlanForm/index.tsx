@@ -1150,6 +1150,7 @@ const PlanForm = (props: PlanFormProps) => {
                                 className="btn-light btn-block"
                                 id={`plan-trigger-conditions-${index}`}
                                 hidden={hiddenFields.includes('triggersAndConditions')}
+                                disabled={hiddenFields.includes('triggersAndConditions')}
                               >
                                 {`${TRIGGERS_LABEL} ${AND} ${CONDITIONS_LABEL}`}
                               </Button>
