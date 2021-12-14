@@ -620,6 +620,10 @@ describe('containers/pages/NewPlan', () => {
     // triggers and conditions toggle buttons hidden
     DynamicFIPlanActivitiesCountArray.forEach((_, i) => {
       expect(wrapper.find(`#plan-trigger-conditions-div-${i} button`).prop('hidden')).toBeTruthy();
+      // button disabled
+      expect(
+        wrapper.find(`#plan-trigger-conditions-div-${i} button`).prop('disabled')
+      ).toBeTruthy();
     });
   });
 });
