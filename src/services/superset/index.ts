@@ -2,7 +2,12 @@ import reducerRegistry from '@onaio/redux-reducer-registry';
 import { getOauthProviderState } from '@onaio/session-reducer';
 import superset, { SupersetConnectorConfig } from '@onaio/superset-connector';
 import { Dictionary } from '@onaio/utils';
-import { OPENSRP_OAUTH_STATE, SUPERSET_API_BASE, SUPERSET_API_ENDPOINT } from '../../configs/env';
+import {
+  OPENSRP_OAUTH_STATE,
+  SUPERSET_API_BASE,
+  SUPERSET_API_ENDPOINT,
+  SUPERSET_OAUTH_STATE,
+} from '../../configs/env';
 import { ERROR_PERMISSION_DENIED } from '../../configs/lang';
 import { SUPERSET_ACCESS_DENIED_MESSAGE } from '../../constants';
 import { displayError } from '../../helpers/errors';
@@ -60,7 +65,8 @@ const supersetFetch = async (
      * to enable the use of multiple providers, we store the provider name in the
      * `state` parameter so that we can use it here
      */
-    provider: getOauthProviderState(store.getState()) || OPENSRP_OAUTH_STATE,
+    provider:
+      SUPERSET_OAUTH_STATE || getOauthProviderState(store.getState()) || OPENSRP_OAUTH_STATE,
     token: '',
   };
 
