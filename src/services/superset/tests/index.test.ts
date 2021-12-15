@@ -117,6 +117,32 @@ describe('services/superset', () => {
 
     expect(processDataMock).toHaveBeenCalledWith(fixtures.sliceResponse);
   });
+
+  it('sets superset oauth state correctly', async () => {
+    store.dispatch(resetSuperset());
+
+    const envModule = require('../../../configs/env');
+    const supersetState = 'superset-oauth-state';
+    envModule.SUPERSET_OAUTH_STATE = supersetState;
+
+    const authZMock = jest.spyOn(superset, 'authZ');
+
+    fetchMock.get(`${SUPERSET_API_BASE}oauth-authorized/${supersetState}`, JSON.stringify({}));
+    fetchMock.get(
+      `${SUPERSET_API_BASE}superset/slice_json/1337`,
+      JSON.stringify(fixtures.sliceResponse)
+    );
+
+    await supersetFetch('1337');
+
+    expect(authZMock.mock.calls[0][0]).toEqual({
+      base: 'http://localhost',
+      endpoint: 'slice',
+      extraPath: '1337',
+      provider: supersetState,
+      token: '',
+    });
+  });
 });
 
 describe('services/superset/fetchCallback', () => {

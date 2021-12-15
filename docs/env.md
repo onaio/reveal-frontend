@@ -227,3 +227,9 @@ Below is a list of currently supported environment variables:
   - **Optional**
   - Number of years plans team assignment will be valid.
   - default: 0
+
+- **REACT_APP_SUPERSET_OAUTH_STATE**
+
+  - **Optional**
+  - Value of superset provider oauth state
+  - Defaults to the value of `REACT_APP_OPENSRP_OAUTH_STATE` if not provided.
