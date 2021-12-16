@@ -1,5 +1,6 @@
 import { get, keyBy } from 'lodash';
 import moment from 'moment';
+import { PLAN_TEAM_ASSIGNMENT_EXPIRY_YEARS } from '../../../../../configs/env';
 import { PlanDefinition } from '../../../../../configs/settings';
 import { Assignment } from '../../../../../store/ducks/opensrp/assignments';
 import { TreeNode } from '../../../../../store/ducks/opensrp/hierarchies/types';
@@ -25,7 +26,11 @@ export const getPayload = (
 ): Assignment[] => {
   const now = moment(new Date());
   let startDate = now.format();
-  const endDate = moment(selectedPlan.effectivePeriod.end).format();
+  let endDate = moment(selectedPlan.effectivePeriod.end).format();
+
+  if (PLAN_TEAM_ASSIGNMENT_EXPIRY_YEARS > 0) {
+    endDate = now.add(PLAN_TEAM_ASSIGNMENT_EXPIRY_YEARS, 'years').format();
+  }
 
   const payload: Assignment[] = [];
   const assignmentsByOrgId = keyBy(existingAssignments, 'organization');

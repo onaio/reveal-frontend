@@ -22,6 +22,21 @@ export const assignments = [
   },
 ];
 
+export const customYearAssignments = [
+  {
+    ...assignments[0],
+    toDate: '2024-12-30T00:00:00+00:00',
+  },
+  {
+    ...assignments[1],
+    toDate: '2024-12-30T00:00:00+00:00',
+  },
+  {
+    ...assignments[2],
+    toDate: '2024-12-30T00:00:00+00:00',
+  },
+];
+
 export const assignment4 = {
   fromDate: '2019-12-30T00:00:00+00:00',
   jurisdiction: '0ddd9ad1-452b-4825-a92a-49cb9fc82d18',

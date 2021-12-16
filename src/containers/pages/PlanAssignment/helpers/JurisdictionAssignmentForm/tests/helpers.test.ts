@@ -2,7 +2,9 @@ import MockDate from 'mockdate';
 import { raZambiaNode } from '../../../../../../components/TreeWalker/tests/fixtures';
 import { plans } from '../../../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { getPayload } from '../helpers';
-import { assignment4, assignment5, assignments } from './fixtures';
+import { assignment4, assignment5, assignments, customYearAssignments } from './fixtures';
+
+jest.mock('../../../../../../configs/env');
 
 describe('PlanAssignment/helpers', () => {
   beforeEach(() => {
@@ -91,5 +93,20 @@ describe('PlanAssignment/helpers', () => {
         toDate: '2019-12-30T00:00:00+00:00',
       },
     ]);
+  });
+
+  it('Add expected expiry years', () => {
+    const envModule = require('../../../../../../configs/env');
+    envModule.PLAN_TEAM_ASSIGNMENT_EXPIRY_YEARS = 5;
+
+    if (!raZambiaNode) {
+      fail();
+    }
+
+    const plan = plans[0];
+    const selectedOrgs = ['1', '2', '3'];
+
+    const payload = getPayload(selectedOrgs, plan, raZambiaNode);
+    expect(payload).toEqual(customYearAssignments);
   });
 });

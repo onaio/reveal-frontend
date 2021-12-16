@@ -222,6 +222,12 @@ Below is a list of currently supported environment variables:
   - Options: 'true' and 'false'. Any other value defaults to 'false'.
   - default: 'true'
 
+- **REACT_APP_PLAN_TEAM_ASSIGNMENT_EXPIRY_YEARS**
+
+  - **Optional**
+  - Number of years plans team assignment will be valid.
+  - default: 0
+
 - **REACT_APP_SUPERSET_OAUTH_STATE**
 
   - **Optional**
