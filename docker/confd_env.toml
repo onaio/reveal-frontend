@@ -122,4 +122,5 @@ keys = [
   "/react/app/clients/list/batch/size",
   "/react/app/plan/team/assignment/expiry/years",
   "/react/app/superset/oauth/state",
+  "/react/app/show/indefinite/plan/team/assignments",
 ]
