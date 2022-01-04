@@ -110,15 +110,15 @@ describe('reducers/assignments', () => {
     expect(assignments.length).toBe(1);
   });
 
-  it('should fetch indefinate assignemnts', () => {
+  it('should fetch indefinite assignemnts', () => {
     const envModule = require('../../../../../configs/env');
-    // should not fetch indefinate assignments when env set false
+    // should not fetch indefinite assignments when env set false
     envModule.SHOW_INDEFINITE_PLAN_TEAM_ASSIGNMENTS = false;
     store.dispatch(fetchAssignments([fixtures.assignment8 as any]));
     let assignments = getAssignmentsArrayByPlanId(store.getState(), fixtures.assignment8.plan);
     expect(assignments.length).toBe(0);
 
-    // should fetch indefinate assignments when env set true
+    // should fetch indefinite assignments when env set true
     envModule.SHOW_INDEFINITE_PLAN_TEAM_ASSIGNMENTS = true;
     store.dispatch(fetchAssignments([fixtures.assignment8 as any]));
     assignments = getAssignmentsArrayByPlanId(store.getState(), fixtures.assignment8.plan);

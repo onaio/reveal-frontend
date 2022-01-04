@@ -237,5 +237,5 @@ Below is a list of currently supported environment variables:
 - **REACT_APP_SHOW_INDEFINITE_PLAN_TEAM_ASSIGNMENTS**
 
   - **Optional**
-  - Whether plans with indefinate teams assigned will be shown or not.
+  - Whether plans with indefinite teams assigned will be shown or not.
   - Options: 'true' and 'false'. Any other value defaults to 'false'.
