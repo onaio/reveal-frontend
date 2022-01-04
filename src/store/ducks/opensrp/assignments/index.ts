@@ -5,6 +5,7 @@ import moment from 'moment';
 import { Store } from 'redux';
 import { AnyAction } from 'redux';
 import SeamlessImmutable from 'seamless-immutable';
+import { SHOW_INDEFINITE_PLAN_TEAM_ASSIGNMENTS } from '../../../../configs/env';
 import { setDefaultValues } from '../../../../helpers/utils';
 
 /** The reducer name */
@@ -17,6 +18,7 @@ export interface Assignment {
   plan: string;
   fromDate: string;
   toDate: string;
+  rawEndDate?: number | null;
 }
 
 // action interfaces
@@ -205,7 +207,11 @@ export function getAssignmentsByPlanId(state: Partial<Store>): { [key: string]: 
  */
 export function getAssignmentsArrayByPlanId(state: Partial<Store>, planId: string): Assignment[] {
   const assignments = get(getAssignmentsByPlanId(state), planId) || [];
-  return assignments.filter(obj => moment(obj.toDate) >= moment());
+  return assignments.filter(
+    obj =>
+      moment(obj.toDate) >= moment() ||
+      (obj.rawEndDate === null && SHOW_INDEFINITE_PLAN_TEAM_ASSIGNMENTS)
+  );
 }
 
 /** Get all assignments by plan id and by jurisdiction id

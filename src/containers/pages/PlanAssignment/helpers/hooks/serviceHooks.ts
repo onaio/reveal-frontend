@@ -24,6 +24,7 @@ export const ProcessReceivedAssignments = (data: AssignmentResponse[]): Assignme
       jurisdiction: assignment.jurisdictionId,
       organization: assignment.organizationId,
       plan: assignment.planId,
+      rawEndDate: assignment.toDate,
       toDate: moment(assignment.toDate).format(),
     };
   });
