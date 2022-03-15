@@ -109,4 +109,34 @@ describe('PlanAssignment/helpers', () => {
     const payload = getPayload(selectedOrgs, plan, raZambiaNode);
     expect(payload).toEqual(customYearAssignments);
   });
+
+  it('Retires plans correctly - toDate dates should be set to current date', () => {
+    const envModule = require('../../../../../../configs/env');
+    envModule.PLAN_TEAM_ASSIGNMENT_EXPIRY_YEARS = 5;
+
+    if (!raZambiaNode) {
+      fail();
+    }
+
+    const plan = plans[0];
+    const selectedOrgs = ['2'];
+    const initialOrgs = ['1', '2', '3'];
+
+    const payload = getPayload(selectedOrgs, plan, raZambiaNode, initialOrgs);
+    // current date set to 30/12/2019
+    expect(payload).toEqual([
+      {
+        ...customYearAssignments[1],
+        toDate: '2024-12-30T00:00:00+00:00',
+      },
+      {
+        ...customYearAssignments[0],
+        toDate: '2019-12-30T00:00:00+00:00',
+      },
+      {
+        ...customYearAssignments[2],
+        toDate: '2019-12-30T00:00:00+00:00',
+      },
+    ]);
+  });
 });
