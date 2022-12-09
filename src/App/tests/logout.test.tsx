@@ -1,116 +1,56 @@
-import * as sessionDux from '@onaio/session-reducer';
+import { getOpenSRPUserInfo } from '@onaio/gatekeeper';
+import { authenticateUser } from '@onaio/session-reducer';
+import * as serverLogout from '@opensrp/server-logout';
 import { mount } from 'enzyme';
+import flushPromises from 'flush-promises';
 import { createBrowserHistory } from 'history';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
-import * as utils from '../../helpers/errors';
+import { MemoryRouter } from 'react-router';
+import { jwtAccessToken } from '../../services/opensrp/tests/fixtures/session';
 import store from '../../store';
 import App from '../App';
-import { expressAPIResponse } from './fixtures';
 
 jest.mock('../../configs/env');
 
-// tslint:disable-next-line: no-var-requires
-const fetch = require('jest-fetch-mock');
+const realLocation = window.location;
+
 const history = createBrowserHistory();
 
 describe('src/app.logout', () => {
-  it('attempts to logout user', async () => {
-    fetch.mockResponse(JSON.stringify(expressAPIResponse));
-    delete window.location;
-    const hrefMock = jest.fn();
-    (window.location as any) = {
-      set href(url: string) {
-        hrefMock(url);
+  beforeAll(() => {
+    const { authenticated, user, extraData } = getOpenSRPUserInfo({
+      oAuth2Data: {
+        access_token: jwtAccessToken,
+        state: 'opensrp',
+        token_expires_at: '2017-07-13T20:30:59.000Z',
+        token_type: 'bearer',
       },
-    };
-
-    const wrapper = mount(
-      <Provider store={store}>
-        <Router history={history}>
-          <App />
-        </Router>
-      </Provider>
-    );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
-    wrapper.update();
-
-    // At this point we have an authenticated user
-    const loggedIn = sessionDux.isAuthenticated(store.getState());
-    expect(loggedIn).toBeTruthy();
-
-    // simulate logout
-    history.push('/logout');
-    await act(async () => {
-      await new Promise(resolve => setImmediate(resolve));
-      wrapper.update();
     });
 
-    expect(fetch.mock.calls).toEqual([
-      ['http://localhost:3000/oauth/state'],
-      [
-        'https://opensrp/logout',
-        {
-          headers: {
-            accept: 'application/json',
-            authorization: 'Bearer hunter2',
-            'content-type': 'application/json;charset=UTF-8',
-          },
-          method: 'GET',
-        },
-      ],
-    ]);
-
-    expect(hrefMock.mock.calls).toEqual([
-      ['https://keycloak/logout?redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Flogout'],
-    ]);
+    store.dispatch(authenticateUser(authenticated, user, extraData));
   });
 
-  it('failed logout', async () => {
-    const err = new Error('Could not log out');
-    fetch.mockReject(err);
+  beforeEach(() => {
+    window.location = realLocation;
+    // Reset history
+    history.push('/');
+  });
 
-    const errorSpy = jest.spyOn(utils, 'displayError');
-    delete window.location;
-    const hrefMock = jest.fn();
-    (window.location as any) = {
-      set href(url: string) {
-        hrefMock(url);
-      },
-    };
-
+  it('correctly logs out user', async () => {
+    const mock = jest.spyOn(serverLogout, 'logout');
     const wrapper = mount(
       <Provider store={store}>
-        <Router history={history}>
+        <MemoryRouter initialEntries={[{ pathname: `/logout` }]}>
           <App />
-        </Router>
+        </MemoryRouter>
       </Provider>
     );
-    await new Promise<unknown>(resolve => setImmediate(resolve));
-    wrapper.update();
-
-    // At this point we have an authenticated user
-    const loggedIn = sessionDux.isAuthenticated(store.getState());
-    expect(loggedIn).toBeTruthy();
-
-    // simulate logout
-    history.push('/logout');
     await act(async () => {
-      await new Promise(resolve => setImmediate(resolve));
+      await flushPromises();
       wrapper.update();
     });
-
-    // expect(fetch.mock.calls).toEqual();
-
-    // keycloack url was not set
-    expect(hrefMock).not.toHaveBeenCalled();
-
-    // TODO - determine why this are 3 calls instead of 1
-    expect(errorSpy.mock.calls).toEqual([[err], [err], [err]]);
-
-    // current url
-    expect(wrapper.find('Router').props().history.location.pathname).toEqual('/');
+    expect(mock).toHaveBeenCalled();
   });
 });

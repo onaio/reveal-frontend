@@ -217,7 +217,7 @@ if (ENABLE_OPENSRP_OAUTH) {
     authorizationUri: OPENSRP_AUTHORIZATION_URL,
     clientId: OPENSRP_CLIENT_ID,
     redirectUri: `${DOMAIN_NAME}/oauth/callback/OpenSRP/`,
-    scopes: ['read', 'write'],
+    scopes: ['profile', 'openid'],
     state: OPENSRP_OAUTH_STATE,
     userUri: OPENSRP_USER_URL,
   };

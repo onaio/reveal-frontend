@@ -3,7 +3,7 @@
 exports[`components/forms/LocationSelect renders downloads: download form fetch calls 1`] = `
 Array [
   Array [
-    "https://reveal-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status:Active,geographicLevel:0&return_geometry=false",
+    "https://opensrp-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status:Active,geographicLevel:0&return_geometry=false",
     Object {
       "headers": Object {
         "accept": "application/json",
@@ -14,7 +14,7 @@ Array [
     },
   ],
   Array [
-    "https://reveal-stage.smartregister.org/opensrp/rest/upload/template?event_name=Child Registration&location_id=bac41d87-b09d-4e76-be3b-3b6d07399891",
+    "https://opensrp-stage.smartregister.org/opensrp/rest/upload/template?event_name=Child Registration&location_id=bac41d87-b09d-4e76-be3b-3b6d07399891",
     Object {
       "headers": Object {
         "accept": "application/json",
@@ -30,7 +30,7 @@ Array [
 exports[`components/forms/LocationSelect renders renders correctly: fetch calls 1`] = `
 Array [
   Array [
-    "https://reveal-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status:Active,geographicLevel:0&return_geometry=false",
+    "https://opensrp-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status:Active,geographicLevel:0&return_geometry=false",
     Object {
       "headers": Object {
         "accept": "application/json",
@@ -41,7 +41,7 @@ Array [
     },
   ],
   Array [
-    "https://reveal-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status:Active,parentId:bac41d87-b09d-4e76-be3b-3b6d07399891&return_geometry=false",
+    "https://opensrp-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status:Active,parentId:bac41d87-b09d-4e76-be3b-3b6d07399891&return_geometry=false",
     Object {
       "headers": Object {
         "accept": "application/json",
@@ -52,7 +52,7 @@ Array [
     },
   ],
   Array [
-    "https://reveal-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status:Active,parentId:7e595783-c414-4903-bfcd-60c2035dc09e&return_geometry=false",
+    "https://opensrp-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status:Active,parentId:7e595783-c414-4903-bfcd-60c2035dc09e&return_geometry=false",
     Object {
       "headers": Object {
         "accept": "application/json",
@@ -63,7 +63,7 @@ Array [
     },
   ],
   Array [
-    "https://reveal-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status:Active,parentId:f0de23e0-1e42-49e1-a60f-58d920401718&return_geometry=false",
+    "https://opensrp-stage.smartregister.org/opensrp/rest/location/findByProperties?is_jurisdiction=true&properties_filter=status:Active,parentId:f0de23e0-1e42-49e1-a60f-58d920401718&return_geometry=false",
     Object {
       "headers": Object {
         "accept": "application/json",

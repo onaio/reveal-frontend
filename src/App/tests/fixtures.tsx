@@ -1,8 +1,10 @@
+import { jwtAccessToken } from '../../services/opensrp/tests/fixtures/session';
+
 export const expressAPIResponse = {
   gatekeeper: {
     result: {
       oAuth2Data: {
-        access_token: 'hunter2',
+        access_token: jwtAccessToken,
         expires_in: 1142,
         refresh_token: 'iloveoov',
         scope: 'read write',
@@ -18,7 +20,7 @@ export const expressAPIResponse = {
     authenticated: true,
     extraData: {
       oAuth2Data: {
-        access_token: 'hunter2',
+        access_token: jwtAccessToken,
         expires_in: 1142,
         refresh_token: 'iloveoov',
         scope: 'read write',

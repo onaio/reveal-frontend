@@ -10,7 +10,7 @@ import {
   OpenSRPService,
 } from '../index';
 import { createPlan, plansListResponse } from './fixtures/plans';
-import { OpenSRPAPIResponse } from './fixtures/session';
+import { jwtAccessToken, OpenSRPAPIResponse } from './fixtures/session';
 /* tslint:disable-next-line no-var-requires */
 const fetch = require('jest-fetch-mock');
 
@@ -27,7 +27,7 @@ describe('services/OpenSRP', () => {
     store.dispatch(authenticateUser(authenticated, user, extraData));
     expect(getDefaultHeaders('hunter2')).toEqual({
       accept: 'application/json',
-      authorization: 'Bearer hunter2',
+      authorization: `Bearer hunter2`,
       'content-type': 'application/json;charset=UTF-8',
     });
   });
@@ -36,7 +36,7 @@ describe('services/OpenSRP', () => {
     const output = {
       headers: {
         accept: 'application/json',
-        authorization: 'Bearer hunter2',
+        authorization: `Bearer hunter2`,
         'content-type': 'application/json;charset=UTF-8',
       },
       method: 'POST',
@@ -49,7 +49,7 @@ describe('services/OpenSRP', () => {
     const output = {
       headers: {
         accept: 'application/json',
-        authorization: 'Bearer hunter2',
+        authorization: `Bearer ${jwtAccessToken}`,
         'content-type': 'application/json;charset=UTF-8',
       },
       method: 'POST',
@@ -85,7 +85,7 @@ describe('services/OpenSRP', () => {
         {
           headers: {
             accept: 'application/json',
-            authorization: 'Bearer hunter2',
+            authorization: `Bearer ${jwtAccessToken}`,
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'GET',
@@ -128,7 +128,7 @@ describe('services/OpenSRP', () => {
         {
           headers: {
             accept: 'application/json',
-            authorization: 'Bearer hunter2',
+            authorization: `Bearer ${jwtAccessToken}`,
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'DELETE',
@@ -164,7 +164,7 @@ describe('services/OpenSRP', () => {
         {
           headers: {
             accept: 'application/json',
-            authorization: 'Bearer hunter2',
+            authorization: `Bearer ${jwtAccessToken}`,
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'GET',
@@ -215,7 +215,7 @@ describe('services/OpenSRP', () => {
           body: JSON.stringify(createPlan),
           headers: {
             accept: 'application/json',
-            authorization: 'Bearer hunter2',
+            authorization: `Bearer ${jwtAccessToken}`,
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'POST',
@@ -263,7 +263,7 @@ describe('services/OpenSRP', () => {
           body: JSON.stringify(obj),
           headers: {
             accept: 'application/json',
-            authorization: 'Bearer hunter2',
+            authorization: `Bearer ${jwtAccessToken}`,
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'PUT',

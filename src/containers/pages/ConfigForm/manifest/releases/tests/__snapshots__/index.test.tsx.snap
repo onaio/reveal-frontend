@@ -13,7 +13,7 @@ Object {
   "accessToken": [Function],
   "appIdLabel": "App Id",
   "appVersionLabel": "App Version",
-  "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
+  "baseURL": "https://opensrp-stage.smartregister.org/opensrp/rest/",
   "currentUrl": "/manifest/releases",
   "customAlert": [Function],
   "data": Array [
