@@ -39,8 +39,8 @@ jobs:
           command: yarn lint-snap
 
       - run:
-          name: cp envs
-          command: cp .env.sample .env
+          name: create .env file
+          command: echo -e "SKIP_PREFLIGHT_CHECK=true\nGENERATE_SOURCEMAP=false\n" > .env
 
       - run:
           name: Run tests
