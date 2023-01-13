@@ -11,7 +11,7 @@ Object {
     width="64px"
   />,
   "accessToken": [Function],
-  "baseURL": "https://opensrp-stage.smartregister.org/opensrp/rest/",
+  "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
   "customAlert": [Function],
   "draftFilesUrl": "/files/draft",
   "endpoint": "clientForm",
@@ -57,7 +57,7 @@ Object {
     width="64px"
   />,
   "accessToken": [Function],
-  "baseURL": "https://opensrp-stage.smartregister.org/opensrp/rest/",
+  "baseURL": "https://reveal-stage.smartregister.org/opensrp/rest/",
   "customAlert": [Function],
   "draftFilesUrl": "/files/draft",
   "endpoint": "clientForm",
