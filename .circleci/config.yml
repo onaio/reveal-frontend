@@ -43,9 +43,5 @@ jobs:
           command: echo -e "SKIP_PREFLIGHT_CHECK=true\nGENERATE_SOURCEMAP=false\n" > .env
 
       - run:
-          name: Run tests
-          command: yarn test --runInBand --verbose --coverage=true --forceExit --detectOpenHandles
-
-      - run:
-          name: Run coveralls
+          name: Run tests and coverage reporting
           command: yarn coveralls
