@@ -4,7 +4,10 @@ import { mount, shallow } from 'enzyme';
 import toJson from 'enzyme-to-json';
 import React from 'react';
 import { act } from 'react-dom/test-utils';
-import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
+import {
+  jwtAccessToken,
+  OpenSRPAPIResponse,
+} from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
 import * as fixtures from '../../PlanForm/tests/fixtures';
 import StudentExportForm from '../StudentExportForm';
@@ -100,7 +103,7 @@ describe('components/forms/ExportForm', () => {
         {
           headers: {
             accept: 'application/json',
-            authorization: 'Bearer hunter2',
+            authorization: `Bearer ${jwtAccessToken}`,
             'content-type': 'application/json;charset=UTF-8',
           },
           method: 'GET',

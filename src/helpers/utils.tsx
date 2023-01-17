@@ -155,7 +155,7 @@ export function getLocationColumns(
  * user info getter function
  * @param {{[key: string]: any }} apiResponse - the API response object
  */
-export function oAuthUserInfoGetter(apiResponse: { [key: string]: any }): SessionState | void {
+export function oAuthUserInfoGetter(apiResponse: any): SessionState | void {
   if (Object.keys(apiResponse).includes('oAuth2Data')) {
     switch (apiResponse.oAuth2Data.state) {
       case OPENSRP_OAUTH_STATE:

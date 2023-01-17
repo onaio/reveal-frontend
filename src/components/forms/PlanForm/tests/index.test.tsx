@@ -10,7 +10,10 @@ import { MemoryRouter } from 'react-router-dom';
 import PlanForm, { defaultInitialValues, propsForUpdatingPlans } from '..';
 import { AN_ERROR_OCCURRED } from '../../../../configs/lang';
 import * as helperErrors from '../../../../helpers/errors';
-import { OpenSRPAPIResponse } from '../../../../services/opensrp/tests/fixtures/session';
+import {
+  jwtAccessToken,
+  OpenSRPAPIResponse,
+} from '../../../../services/opensrp/tests/fixtures/session';
 import store from '../../../../store';
 import { plans } from '../../../../store/ducks/opensrp/PlanDefinition/tests/fixtures';
 import { InterventionType, PlanStatus } from '../../../../store/ducks/plans';
@@ -977,7 +980,7 @@ describe('containers/forms/PlanForm - Submission', () => {
         body: JSON.stringify(payload),
         headers: {
           accept: 'application/json',
-          authorization: 'Bearer hunter2',
+          authorization: `Bearer ${jwtAccessToken}`,
           'content-type': 'application/json;charset=UTF-8',
         },
         method: 'POST',
@@ -1023,7 +1026,7 @@ describe('containers/forms/PlanForm - Submission', () => {
         body: JSON.stringify(payload),
         headers: {
           accept: 'application/json',
-          authorization: 'Bearer hunter2',
+          authorization: `Bearer ${jwtAccessToken}`,
           'content-type': 'application/json;charset=UTF-8',
         },
         method: 'PUT',
@@ -1070,7 +1073,7 @@ describe('containers/forms/PlanForm - Submission', () => {
         body: JSON.stringify(payload),
         headers: {
           accept: 'application/json',
-          authorization: 'Bearer hunter2',
+          authorization: `Bearer ${jwtAccessToken}`,
           'content-type': 'application/json;charset=UTF-8',
         },
         method: 'PUT',
@@ -1399,7 +1402,7 @@ describe('containers/forms/PlanForm - Submission', () => {
         body: JSON.stringify(fixtures.MDAPointPayload),
         headers: {
           accept: 'application/json',
-          authorization: 'Bearer hunter2',
+          authorization: `Bearer ${jwtAccessToken}`,
           'content-type': 'application/json;charset=UTF-8',
         },
         method: 'POST',
@@ -1762,7 +1765,7 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
       {
         headers: {
           accept: 'application/json',
-          authorization: 'Bearer hunter2',
+          authorization: `Bearer ${jwtAccessToken}`,
           'content-type': 'application/json;charset=UTF-8',
         },
         method: 'GET',
@@ -1781,7 +1784,7 @@ describe('containers/forms/PlanForm - Dynamic Form Activities', () => {
         body: JSON.stringify(fixtures.MDALitePlanPayload),
         headers: {
           accept: 'application/json',
-          authorization: 'Bearer hunter2',
+          authorization: `Bearer ${jwtAccessToken}`,
           'content-type': 'application/json;charset=UTF-8',
         },
         method: 'POST',

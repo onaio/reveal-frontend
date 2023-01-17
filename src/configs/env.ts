@@ -381,20 +381,20 @@ export type OPENSRP_CLIENT_ID = typeof OPENSRP_CLIENT_ID;
 // notice the ending is NOT / here
 export const OPENSRP_ACCESS_TOKEN_URL = setEnv(
   'REACT_APP_OPENSRP_ACCESS_TOKEN_URL',
-  'https://reveal-stage.smartregister.org/opensrp/oauth/token'
+  'https://keycloak-stage.smartregister.org/auth/realms/opensrp-web-stage/protocol/openid-connect/token'
 );
 export type OPENSRP_ACCESS_TOKEN_URL = typeof OPENSRP_ACCESS_TOKEN_URL;
 
 // notice the ending is NOT / here
 export const OPENSRP_AUTHORIZATION_URL = setEnv(
   'REACT_APP_OPENSRP_AUTHORIZATION_URL',
-  'https://reveal-stage.smartregister.org/opensrp/oauth/authorize'
+  'https://keycloak-stage.smartregister.org/auth/realms/opensrp-web-stage/protocol/openid-connect/auth'
 );
 export type OPENSRP_AUTHORIZATION_URL = typeof OPENSRP_AUTHORIZATION_URL;
 
 export const OPENSRP_USER_URL = setEnv(
   'REACT_APP_OPENSRP_USER_URL',
-  'https://reveal-stage.smartregister.org/opensrp/user-details'
+  'https://keycloak-stage.smartregister.org/auth/realms/FHIR_Android/protocol/openid-connect/userinfo'
 );
 export type OPENSRP_USER_URL = typeof OPENSRP_USER_URL;
 
@@ -404,10 +404,7 @@ export type OPENSRP_OAUTH_STATE = typeof OPENSRP_OAUTH_STATE;
 export const SUPERSET_OAUTH_STATE = setEnv('REACT_APP_SUPERSET_OAUTH_STATE', '');
 export type SUPERSET_OAUTH_STATE = typeof SUPERSET_OAUTH_STATE;
 
-export const OPENSRP_LOGOUT_URL = setEnv(
-  'REACT_APP_OPENSRP_LOGOUT_URL',
-  'https://reveal-stage.smartregister.org/opensrp/logout.do'
-);
+export const OPENSRP_LOGOUT_URL = setEnv('REACT_APP_OPENSRP_LOGOUT_URL', undefined);
 export type OPENSRP_LOGOUT_URL = typeof OPENSRP_LOGOUT_URL;
 
 // notice the trailing /
